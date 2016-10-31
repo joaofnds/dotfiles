@@ -1,0 +1,65 @@
+[options]
+resize_grip = false
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+visible_bell = false
+mouse_autohide = true
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+#font = Inconsolata 14
+font = Inconsolata for Powerline 14
+scrollback_lines = 1000
+search_wrap = true
+
+# transparency
+transparency = 0.0
+pseudo_transparency = false
+
+# cursor
+cursor_blink = system
+cursor_shape = block
+
+# Materia Theme
+
+[colors]
+
+# special
+foreground      = #cdd3de
+foreground_bold = #cdd3de
+cursor          = #cdd3de
+background      = #263238
+
+# black
+color0  = #263238
+color8  = #707880
+
+# red
+color1  = #ec5f67
+color9  = #ea9560
+
+# green
+color2  = #8bd649
+color10 = #2c393f
+
+# yellow
+color3  = #ffcc00
+color11 = #37474f
+
+# blue
+color4  = #89ddff
+color12 = #c9ccd3
+
+# magenta
+color5  = #82aaff
+color13 = #d5dbe5
+
+# cyan
+color6  = #80cbc4
+color14 = #ec5f67
+
+# white
+color7  = #cdd3de
+color15 = #ffffff
