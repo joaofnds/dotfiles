@@ -1,8 +1,8 @@
 " Powerline
 " Desktop powerline path
-" set rtp+=/usr/local/lib/python3.5/dist-packages/powerline/bindings/vim/
+set rtp+=/usr/local/lib/python3.5/dist-packages/powerline/bindings/vim/
 " Notebook powerline path
-set rtp+=/home/joaofnds/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+" set rtp+=/home/joaofnds/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 
 " Always show statusline
 set laststatus=2
@@ -25,24 +25,21 @@ set tabstop=4
 " Enable show commands
 set showcmd
 
-" Set things for GUI
-set guifont=Inconsolata\ for\ Powerline\ Medium\ 14
-" guioptions can be abreviated to 'go'
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
-set guioptions-=r  "remove right-hand scroll bar
-set guioptions-=L  "remove left-hand scroll bar
-
-
 " Pathogen
 execute pathogen#infect()
 filetype plugin indent on
 syntax on
 
 " Map NERDTree
+"
+" Toggle NERDTree with ctrl+n
 map <C-n> :NERDTreeToggle<CR>
+" Open NERDTree on file context with \+n
+map <Leader>n :NERDTreeFind<CR>
 " Show hidden files inside NERDTree ( "I" cand toggle this without bindings )
 " let NERDTreeShowHidden=1
+" Automatically delete the buffer of the file you just deleted with NerdTree
+let NERDTreeAutoDeleteBuffer = 1
 
 " vim-smooth-scroll bindings
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 25, 2)<CR>
