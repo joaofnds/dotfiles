@@ -24,6 +24,12 @@ lnif() {
 	ln -fs $1 $2
 }
 
+# git
+echo "Setting up gitconfig..."
+sudo apt install git-core
+lnif $dotfiles/.gitconfig $HOME/.gitconfig
+
+# dotfiles dir
 echo "Installing/Updating dotfiles..."
 
 if [ ! -e $dotfiles/.git ]; then
@@ -153,7 +159,30 @@ lnif $dotfiles/.emacs.d $HOME/.emacs.d
 
 # zsh
 echo "Setting up zsh..."
+sudo apt install zsh
 lnif $dotfiles/.zshrc $HOME/.zshrc
+echo " ######### ZSH was installed, to change your default shell for it run chsh -s `which zsh` #########"
+
+## oh-my-zsh
+echo "Installing oh-my-zsh"
+
+export ZSH="$HOME/.dotfiles/.oh-my-zsh"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+lnif $dotfiles/.oh-my-zsh $HOME/.oh-my-zsh
+
+echo "Installing powerlevel9k theme"
+
+if [ ! -d $HOME/.oh-my-zsh/custom/themes ]; then
+	mkdir -p $dotfiles/.oh-my-zsh/custom/themes
+fi
+git clone https://github.com/bhilburn/powerlevel9k.git $HOME/.oh-my-zsh/custom/themes/powerlevel9k
+
+wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/octicons-regular.ttf"
+wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/fontawesome-regular.ttf"
+wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/devicons-regular.ttf"
+wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/pomicons-regular.ttf"
+mv *.ttf $HOME/.fonts/
+sudo fc-cache -fv $HOME/.fonts
 
 # fish
 echo "Setting up fish..."
@@ -182,6 +211,3 @@ fi
 
 lnif $dotfiles/.config/termite $HOME/.config/termite
 
-# git
-echo "Setting up gitconfig..."
-lnif $dotfiles/.gitconfig $HOME/.gitconfig

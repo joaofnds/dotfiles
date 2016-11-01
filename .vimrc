@@ -18,6 +18,7 @@ set relativenumber
 
 " Set tab lenght
 set tabstop=4
+set shiftwidth=4
 
 " Enable show commands
 set showcmd
