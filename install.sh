@@ -166,7 +166,7 @@ echo " ######### ZSH was installed, to change your default shell for it run chsh
 ## oh-my-zsh
 echo "Installing oh-my-zsh"
 
-export ZSH="$HOME/.dotfiles/.oh-my-zsh"; sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone git://github.com/robbyrussell/oh-my-zsh.git $dotfiles/.oh-my-zsh
 
 lnif $dotfiles/.oh-my-zsh $HOME/.oh-my-zsh
 
@@ -211,3 +211,11 @@ fi
 
 lnif $dotfiles/.config/termite $HOME/.config/termite
 
+# base16-shell
+
+if [ ! -d $HOME/.config ]; then
+	mkdir -p $HOME/.config
+fi
+
+git clone https://github.com/chriskempson/base16-shell.git $dotfiles/.config/base16-shell
+lnif $dotfiles/.config/base16-shell $HOME/.config/base16-shell
