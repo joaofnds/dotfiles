@@ -41,15 +41,15 @@ lnif $dotfiles/.vimrc $HOME/.vimrc
 lnif $dotfiles/.vimrc_background $HOME/.vimrc_background
 lnif $dotfiles/.gvimrc $HOME/.gvimrc
 lnif $dotfiles/.vim $HOME/.vim
-git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-git clone https://github.com/Xuyuanp/nerdtree-git-plugin.git ~/.vim/bundle/nerdtree-git-plugin
-git clone https://github.com/tomtom/tlib_vim.git ~/.vim/bundle/tlib_vim
-git clone https://github.com/MarcWeber/vim-addon-mw-utils.git ~/.vim/bundle/vim-addon-mw-utils
-git clone git://github.com/tpope/vim-fugitive.git ~/.vim/bundle/vim-fugitive
-git clone https://github.com/xolox/vim-misc.git ~/.vim/bundle/vim-misc
-git clone https://github.com/xolox/vim-notes.git ~/.vim/bundle/vim-notes
-git clone https://github.com/garbas/vim-snipmate.git ~/.vim/bundle/vim-snipmate
-git clone git://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
+git clone https://github.com/scrooloose/nerdtree.git $dotfiles/.vim/bundle/nerdtree
+git clone https://github.com/Xuyuanp/nerdtree-git-plugin.git $dotfiles/.vim/bundle/nerdtree-git-plugin
+git clone https://github.com/tomtom/tlib_vim.git $dotfiles/.vim/bundle/tlib_vim
+git clone https://github.com/MarcWeber/vim-addon-mw-utils.git $dotfiles/.vim/bundle/vim-addon-mw-utils
+git clone git://github.com/tpope/vim-fugitive.git $dotfiles/.vim/bundle/vim-fugitive
+git clone https://github.com/xolox/vim-misc.git $dotfiles/.vim/bundle/vim-misc
+git clone https://github.com/xolox/vim-notes.git $dotfiles/.vim/bundle/vim-notes
+git clone https://github.com/garbas/vim-snipmate.git $dotfiles/.vim/bundle/vim-snipmate
+git clone git://github.com/tpope/vim-surround.git $dotfiles/.vim/bundle/vim-surround
 
 
 # powerline-status
