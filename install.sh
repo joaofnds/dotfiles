@@ -42,6 +42,29 @@ lnif $dotfiles/.vimrc_background $HOME/.vimrc_background
 lnif $dotfiles/.gvimrc $HOME/.gvimrc
 lnif $dotfiles/.vim $HOME/.vim
 
+# powerline-status
+echo "Setting up powerline"
+## Installing and upgrading pip
+echo "Installing python-pip"
+sudo apt install python-pip
+
+echo "Upgrading pip"
+pip install --upgrade pip
+
+## Installing powerline
+echo "Installing powerline"
+pip install --user powerline-status
+wget https://github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf
+
+## Installing powerline fonts
+echo "Moving powerline fonts to appropriate folders"
+if [ ! -d $HOME/.fonts ]; then
+		mkdir $HOME/.fonts
+fi
+mv Inconsolata\ for\ Powerline.otf $HOME/.fonts/
+echo "Updating fonts cache"
+sudo fc-cache -vf $HOME/.fonts/
+
 # Emacs
 echo "Setting up emacs..."
 lnif $dotfiles/.emacs $HOME/.emacs

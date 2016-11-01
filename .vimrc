@@ -1,8 +1,5 @@
 " Powerline
-" Desktop powerline path
-set rtp+=/usr/local/lib/python3.5/dist-packages/powerline/bindings/vim/
-" Notebook powerline path
-" set rtp+=/home/joaofnds/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 
 " Always show statusline
 set laststatus=2
