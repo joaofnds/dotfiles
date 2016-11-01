@@ -10,6 +10,7 @@ export PATH=$HOME/.local/bin:$PATH
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="agnoster"
 ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_MODE='awesome-fontconfig'
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
