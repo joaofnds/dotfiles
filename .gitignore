@@ -1,5 +1,4 @@
-.addr.env
-.config/fish/fish-history
+.vim/bundle/*
 
 ### VIM ###
 # swap
