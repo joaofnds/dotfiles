@@ -19,9 +19,11 @@ lnif() {
 			mkdir $backupdir
 		fi
 		echo "Saving $2 inside '$backupdir'"
-		mv -f $2 $backupdir
+		mv -rf $2 $backupdir
+	elif [ -h $2 ]; then
+		rm -f $2
 	fi
-	ln -fs $1 $2
+	ln -fsv $1 $2
 }
 
 # git
@@ -139,6 +141,12 @@ pip install --upgrade pip
 echo "Installing powerline"
 pip install --user powerline-status
 
+wget https://raw.githubusercontent.com/google/fonts/master/ofl/inconsolata/Inconsolata-Regular.ttf
+mv Inconsolata-Regular.ttf $HOME/.fonts/
+wget https://raw.githubusercontent.com/google/fonts/master/ofl/inconsolata/Inconsolata-Bold.ttf
+mv Inconsolata-Bold.ttf $HOME/.fonts/
+sudo fc-cache -vf $HOME/.fonts/
+
 ## Installing powerline fonts
 echo "Installing Inconsolata For Powerline font"
 wget https://github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf
@@ -203,7 +211,7 @@ lnif $dotfiles/.Xdefaults $HOME/.Xdefaults
 lnif $dotfiles/.Xresources $HOME/.Xresources
 
 # termite
-echo "Setting up terminte..."
+echo "Setting up termite..."
 
 if [ ! -d $HOME/.config ];then
 	mkdir -p $HOME/.config
@@ -217,5 +225,9 @@ if [ ! -d $HOME/.config ]; then
 	mkdir -p $HOME/.config
 fi
 
-git clone https://github.com/chriskempson/base16-shell.git $dotfiles/.config/base16-shell
+if [ -d $dotfiles/.config/base16-shell ]; then
+	git --git-dir=$dotfiles/.config/base16-shell/.git pull
+else
+	git clone https://github.com/chriskempson/base16-shell.git $dotfiles/.config/base16-shell
+fi
 lnif $dotfiles/.config/base16-shell $HOME/.config/base16-shell
