@@ -87,12 +87,16 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [[ -f ~/.aliases ]]; then
+if [[ -f $HOME/.aliases ]]; then
 		source $HOME/.aliases
 fi
 
-if [[ -f ~/.env ]]; then
+if [[ -f $HOME/.env ]]; then
 		source $HOME/.env
+fi
+
+if [[ -f $HOME/.hdw.env ]]; then
+	source $HOME/.hdw.env
 fi
 
 # Powerline
