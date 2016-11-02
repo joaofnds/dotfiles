@@ -2,3 +2,5 @@ URxvt.font: xft:Inconsolata\ for\ Powerline:pixelsize=18
 URxvt.scrollBar: false
 URxvt.internalBorder:      0
 URxvt.externalBorder:      0
+
+xterm*VT100*faceName:  Inconsolata for Powerline:style=Book:size=14:antialias=false
