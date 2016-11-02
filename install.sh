@@ -26,7 +26,7 @@ lnif() {
 
 # git
 echo "Setting up gitconfig..."
-sudo apt install git-core
+sudo apt install git
 lnif $dotfiles/.gitconfig $HOME/.gitconfig
 
 # dotfiles dir
