@@ -42,6 +42,15 @@ else
 	cd $dotfiles && git pull
 fi
 
+# Font
+echo "Installing Inconsolata Nerd font"
+if [ ! -d $HOME/.fonts ]; then
+		mkdir $HOME/.fonts
+fi
+cp -f $dotfiles/.fonts/Inconsolata\ Nerd\ Font\ Complete.ttf $HOME/.fonts/
+echo "Updating fonts cache"
+sudo fc-cache -vf $HOME/.fonts/
+
 # Bash
 echo "Setting up bash..."
 lnif $dotfiles/user.bashrc $HOME/.bashrc
@@ -123,7 +132,13 @@ if [ -e $dotfiles/.vim/bundle/vim-surround ]; then
 	git --git-dir=$dotfiles/.vim/bundle/vim-surround/.git pull
 else
 	echo "Cloning vim-surround"
-	git clone git://github.com/tpope/vim-surround.git $dotfiles/.vim/bundle/vim-surround
+	git clone https://github.com/tpope/vim-surround.git $dotfiles/.vim/bundle/vim-surround
+fi
+
+if [ -e $dotfiles/.vim/bundle/vim-devicons ]; then
+	git --dit-dir:$dotfiles/.vim/bundle/vim-devicons/.git pull
+else
+	git clone https://github.com/ryanoasis/vim-devicons $dotfiles/.vim/bundle/vim-devicons
 fi
 
 
@@ -140,25 +155,6 @@ pip install --upgrade pip
 ## Installing powerline
 echo "Installing powerline"
 pip install --user powerline-status
-
-wget https://raw.githubusercontent.com/google/fonts/master/ofl/inconsolata/Inconsolata-Regular.ttf
-mv Inconsolata-Regular.ttf $HOME/.fonts/
-wget https://raw.githubusercontent.com/google/fonts/master/ofl/inconsolata/Inconsolata-Bold.ttf
-mv Inconsolata-Bold.ttf $HOME/.fonts/
-sudo fc-cache -vf $HOME/.fonts/
-
-## Installing powerline fonts
-echo "Installing Inconsolata For Powerline font"
-wget https://github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf
-
-## Installing powerline fonts
-echo "Moving powerline fonts to appropriate folders"
-if [ ! -d $HOME/.fonts ]; then
-		mkdir $HOME/.fonts
-fi
-mv Inconsolata\ for\ Powerline.otf $HOME/.fonts/
-echo "Updating fonts cache"
-sudo fc-cache -vf $HOME/.fonts/
 
 # Emacs
 echo "Setting up emacs..."
@@ -184,13 +180,6 @@ if [ ! -d $HOME/.oh-my-zsh/custom/themes ]; then
 	mkdir -p $dotfiles/.oh-my-zsh/custom/themes
 fi
 git clone https://github.com/bhilburn/powerlevel9k.git $HOME/.oh-my-zsh/custom/themes/powerlevel9k
-
-wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/octicons-regular.ttf"
-wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/fontawesome-regular.ttf"
-wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/devicons-regular.ttf"
-wget "https://raw.githubusercontent.com/gabrielelana/awesome-terminal-fonts/master/fonts/pomicons-regular.ttf"
-mv *.ttf $HOME/.fonts/
-sudo fc-cache -fv $HOME/.fonts
 
 # fish
 echo "Setting up fish..."
