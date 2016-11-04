@@ -12,6 +12,8 @@ But of course, if you wan't to try it, `bash ./install.sh` will do it.
 * https://github.com/tpope/vim-pathogen
 * https://github.com/tpope/vim-surround
 * https://github.com/tpope/vim-surround
+* https://github.com/ryanoasis/vim-devicons
+* https://github.com/ryanoasis/nerd-fonts
 * https://github.com/scrooloose/nerdtree
 * https://github.com/terryma/vim-smooth-scroll
 * https://github.com/dracula/dracula-theme
