@@ -50,6 +50,18 @@ snippet esc
 # comment
 snippet //
 	<!-- ${1} -->${0}
+# html:5
+snippet html:5
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>${1:Document}</title>
+	</head>
+	<body>
+		${0}
+	</body>
+	</html>
 # Generic Doctype
 snippet doctype HTML 4.01 Strict
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
