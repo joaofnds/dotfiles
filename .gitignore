@@ -1,4 +1,6 @@
 .vim/bundle/*
+.config/base16-shell
+.oh-my-zsh
 
 ### VIM ###
 # swap
