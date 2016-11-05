@@ -143,6 +143,13 @@ else
 	git clone https://github.com/ryanoasis/vim-devicons $dotfiles/.vim/bundle/vim-devicons
 fi
 
+if [ -e $dotfiles/.vim/bundle/emmet-vim ]; then
+	echo "Applying pull to emmet-vim"
+	git --git-dir=$dotfiles/.vim/bundle/emmet-vim/.git pull
+else
+	echo "Cloning emmet-vim"
+	git clone https://github.com/mattn/emmet-vim $dotfiles/.vim/bundle/emmet-vim
+fi
 
 
 # powerline-status
