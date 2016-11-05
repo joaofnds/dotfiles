@@ -136,8 +136,10 @@ else
 fi
 
 if [ -e $dotfiles/.vim/bundle/vim-devicons ]; then
-	git --dit-dir:$dotfiles/.vim/bundle/vim-devicons/.git pull
+	echo "Applying pull to vim-devicons"
+	git --git-dir=$dotfiles/.vim/bundle/vim-devicons/.git pull
 else
+	echo "Cloning vim-devicons"
 	git clone https://github.com/ryanoasis/vim-devicons $dotfiles/.vim/bundle/vim-devicons
 fi
 
@@ -196,7 +198,7 @@ lnif $dotfiles/.tmux.conf $HOME/.tmux.conf
 
 # urxvt
 echo "Setting up urxvt..."
-lnif $dotfiles/.Xdefaults $HOME/.Xdefaults
+lnif $dotfiles/.Xresources $HOME/.Xdefaults
 lnif $dotfiles/.Xresources $HOME/.Xresources
 
 # termite
