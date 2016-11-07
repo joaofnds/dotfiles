@@ -151,6 +151,14 @@ else
 	git clone https://github.com/mattn/emmet-vim $dotfiles/.vim/bundle/emmet-vim
 fi
 
+if [ -e $dotfiles/.vim/bundle/auto-pairs ]; then
+	echo "Applying pull to auto-pairs"
+	git --git-dir=$dotfiles/.vim/bundle/auto-pairs/.git pull
+else
+	echo "Cloning auto-pairs"
+	git clone git://github.com/jiangmiao/auto-pairs.git $dotfiles/.vim/bundle/auto-pairs
+fi
+
 
 # powerline-status
 echo "Setting up powerline"
