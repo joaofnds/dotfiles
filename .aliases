@@ -1,6 +1,6 @@
 alias fmp='xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Finger" 1 1 255'
 alias upgrade='sudo apt update && sudo apt full-upgrade && sudo apt autoremove'
 alias say='echo "$1" | espeak 2>/dev/null'
-alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskAddr'
+alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 alias gitconfig='git config --global user.name "João Fernandes" && git config --global user.email "joaovitorfernandes2@gmail.com"'
 alias gitstore='git config credential.helper store' 
