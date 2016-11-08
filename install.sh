@@ -159,6 +159,14 @@ else
 	git clone git://github.com/jiangmiao/auto-pairs.git $dotfiles/.vim/bundle/auto-pairs
 fi
 
+if [ -e $dotfiles/.vim/bundle/ctrlp-vim ]; then
+	echo "Applying pull to ctrlp-vim"
+	git --git-dir=$dotfiles/.vim/bundle/ctrlp-vim/.git pull
+else
+	echo "Cloning ctrlp-vim"
+	git clone https://github.com/ctrlpvim/ctrlp.vim.git $dotfiles/.vim/bundle/ctrlp-vim
+fi
+
 
 # powerline-status
 echo "Setting up powerline"

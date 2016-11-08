@@ -15,6 +15,7 @@ But of course, if you wan't to try it, `bash ./install.sh` will do it.
 * https://github.com/ryanoasis/vim-devicons
 * https://github.com/mattn/emmet-vim
 * https://github.com/jiangmiao/auto-pairs
+* https://github.com/ctrlpvim/ctrlp.vim
 * https://github.com/ryanoasis/nerd-fonts
 * https://github.com/scrooloose/nerdtree
 * https://github.com/terryma/vim-smooth-scroll

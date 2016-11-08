@@ -52,3 +52,4 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 25, 4)<CR>
 imap jj <Esc>
 
 filetype plugin on
+set autochdir
