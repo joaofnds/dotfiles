@@ -22,6 +22,7 @@ But of course, if you wan't to try it, `bash ./install.sh` will do it.
 * https://github.com/dracula/dracula-theme
 * https://github.com/powerline/fonts
 * https://github.com/bhilburn/powerlevel9k
+* https://github.com/chriskempson/base16
 * https://github.com/chriskempson/base16-shell
 * https://github.com/chriskempson/base16-builder
 * https://github.com/Corwind/termite-install
