@@ -167,6 +167,13 @@ else
 	git clone https://github.com/ctrlpvim/ctrlp.vim.git $dotfiles/.vim/bundle/ctrlp-vim
 fi
 
+if [ -e $dotfiles/.vim/bundle/vim-vue ]; then
+	echo "Applying pull to vim-vue"
+	git --git-dir=$dotfiles/.vim/bundle/vim-vue/.git pull
+else
+	echo "Cloning vim-vue"
+	git clone https://github.com/posva/vim-vue.git $dotfiles/.vim/bundle/vim-vue
+fi
 
 # powerline-status
 echo "Setting up powerline"
