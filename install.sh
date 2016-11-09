@@ -175,6 +175,14 @@ else
 	git clone https://github.com/posva/vim-vue.git $dotfiles/.vim/bundle/vim-vue
 fi
 
+if [ -e $dotfiles/.vim/bundle/syntastic ]; then
+	echo "Applying pull to syntastic"
+	git --git-dir=$dotfiles/.vim/bundle/syntastic/.git pull
+else
+	echo "Cloning syntastic"
+	git clone https://github.com/scrooloose/syntastic.git $dotfiles/.vim/bundle/syntastic
+fi
+
 # powerline-status
 echo "Setting up powerline"
 ## Installing and upgrading pip
