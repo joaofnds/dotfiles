@@ -34,6 +34,8 @@ set shiftwidth=4
 " Enable show commands
 set showcmd
 
+let g:Powerline_symbols = 'fancy'
+
 " Pathogen
 execute pathogen#infect()
 filetype plugin indent on
@@ -78,3 +80,4 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+nnoremap ,c :exe ':silent !google-chrome-stable %'<CR>
