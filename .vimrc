@@ -19,6 +19,14 @@ set number
 " Enable relative line numbers
 set relativenumber
 
+" 'autoindent' does nothing more than copy the indentation from the previous
+"  line, when starting a new line.
+set autoindent
+
+" 'smartindent' automatically inserts one extra level of indentation in some
+"  cases, and works for C-like files. 
+set smartindent
+
 " Set tab lenght
 set tabstop=4
 set shiftwidth=4
