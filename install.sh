@@ -119,12 +119,20 @@ else
 	git clone https://github.com/xolox/vim-notes.git $dotfiles/.vim/bundle/vim-notes
 fi
 
-if [ -e $dotfiles/.vim/bundle/vim-snipmate ]; then
-	echo "Applying pull to vim-snipmate"
-	git --git-dir=$dotfiles/.vim/bundle/vim-snipmate/.git pull
+if [ -e $dotfiles/.vim/bundle/ultisnips ]; then
+	echo "Applying pull to ultisnips"
+	git --git-dir=$dotfiles/.vim/bundle/ultisnips/.git pull
 else
-	echo "Cloning vim-snipmate"
-	git clone https://github.com/garbas/vim-snipmate.git $dotfiles/.vim/bundle/vim-snipmate
+	echo "Cloning ultisnips"
+	git clone git://github.com/SirVer/ultisnips.git $dotfiles/.vim/bundle/ultisnips
+fi
+
+if [ -e $dotfiles/.vim/bundle/vim-snippets ]; then
+	echo "Applying pull to vim-snippets"
+	git --git-dir=$dotfiles/.vim/bundle/vim-snippets/.git pull
+else
+	echo "Cloning vim-snippets"
+	 git clone https://github.com/honza/vim-snippets.git $dotfiles/.vim/bundle/vim-snippets
 fi
 
 if [ -e $dotfiles/.vim/bundle/vim-surround ]; then
@@ -181,6 +189,20 @@ if [ -e $dotfiles/.vim/bundle/syntastic ]; then
 else
 	echo "Cloning syntastic"
 	git clone https://github.com/scrooloose/syntastic.git $dotfiles/.vim/bundle/syntastic
+fi
+
+echo "Installing cmake..."
+sudo apt install cmake
+
+if [ -e $dotfiles/.vim/bundle/YouCompleteMe ]; then
+	echo "Applying pull to YouCompleteMe"
+	git --git-dir=$dotfiles/.vim/bundle/YouCompleteMe/.git pull --recurse-submodules
+	bash $dotiles/.vim/bundle/YouCompleteMe/install.sh --clang-completer
+else
+	echo "Cloning YouCompleteMe"
+	git clone https://github.com/Valloric/YouCompleteMe.git $dotfiles/.vim/bundle/YouCompleteMe
+	git --git-dir=$dotfiles/.vim/bundle/YouCompleteMe/.git submodule update --init --recursive
+	python $dotiles/.vim/bundle/YouCompleteMe/install.py --clang-completer
 fi
 
 # powerline-status

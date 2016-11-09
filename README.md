@@ -17,6 +17,9 @@ But of course, if you wan't to try it, `bash ./install.sh` will do it.
 * https://github.com/ctrlpvim/ctrlp.vim
 * https://github.com/posva/vim-vue
 * https://github.com/vim-syntastic/syntastic
+* https://github.com/Valloric/YouCompleteMe
+* https://github.com/SirVer/ultisnips
+* https://github.com/honza/vim-snippets
 * https://github.com/ryanoasis/nerd-fonts
 * https://github.com/scrooloose/nerdtree
 * https://github.com/terryma/vim-smooth-scroll
