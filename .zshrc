@@ -2,6 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
+# yarn global packages path
+export PATH=$HOME/.yarn-config/global/node_modules/.bin:$PATH
+
 export TERM="xterm-256color"
 
 # Path to your oh-my-zsh installation.
@@ -109,3 +112,6 @@ fi
 # Add base16-shell scripts
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+# Android home path for react-native
+export PATH=${PATH}:${ANDROID_HOME}/tools
