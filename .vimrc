@@ -16,6 +16,9 @@ set encoding=utf8
 " Enable line Numbers
 set number
 
+" Disable line wrap
+set nowrap
+
 " Enable relative line numbers
 set relativenumber
 
