@@ -43,10 +43,11 @@ else
 fi
 
 # Font
-echo "Installing Inconsolata Nerd font"
+echo "Installing Inconsolata and Monaco Nerd font"
 if [ ! -d $HOME/.fonts ]; then
 		mkdir $HOME/.fonts
 fi
+cp -f $dotfiles/.fonts/Monaco\ Nerd\ Font\ Complete\ Mono.ttf $HOME/.fonts/
 cp -f $dotfiles/.fonts/Inconsolata\ Nerd\ Font\ Complete.ttf $HOME/.fonts/
 echo "Updating fonts cache"
 sudo fc-cache -vf $HOME/.fonts/
