@@ -22,16 +22,19 @@ But of course, if you wan't to try it, `bash ./install.sh` will do it.
 * https://github.com/SirVer/ultisnips
 * https://github.com/honza/vim-snippets
 * https://github.com/othree/yajs.vim
+
 #### 2. Fonts
 * https://github.com/ryanoasis/nerd-fonts
 * https://github.com/taohex/font
 * https://github.com/powerline/fonts
+
 #### 3. Themes
 * https://github.com/dracula/dracula-theme
 * https://github.com/bhilburn/powerlevel9k
 * https://github.com/chriskempson/base16
 * https://github.com/chriskempson/base16-shell
 * https://github.com/chriskempson/base16-builder
+
 #### 4. Others
 * https://github.com/Corwind/termite-install
 * https://github.com/github/gitignore

@@ -211,8 +211,11 @@ if [ -e $dotfiles/.vim/bundle/YouCompleteMe ]; then
 	bash $dotiles/.vim/bundle/YouCompleteMe/install.sh --clang-completer
 else
 	echo "Cloning YouCompleteMe"
+	PWD=$(pwd)
 	git clone https://github.com/Valloric/YouCompleteMe.git $dotfiles/.vim/bundle/YouCompleteMe
-	git --git-dir=$dotfiles/.vim/bundle/YouCompleteMe/.git submodule update --init --recursive
+	cd $dotfiles/.vim/bundle/YouCompleteMe
+	git submodule update --init --recursive
+	cd "$PWD"
 	python $dotiles/.vim/bundle/YouCompleteMe/install.py --clang-completer
 fi
 
