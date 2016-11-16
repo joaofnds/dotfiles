@@ -201,6 +201,14 @@ else
 	git clone https://github.com/othree/yajs.vim $dotfiles/.vim/bundle/yajs
 fi
 
+if [ -e $dotfiles/.vim/bundle/base16-vim ]; then
+	echo "Applying pull to base16-vim"
+	git --git-dir=$dotfiles/.vim/bundle/base16-vim/.git pull
+else
+	echo "Cloning base16-vim"
+	git clone https://github.com/chriskempson/base16-vim.git $dotfiles/.vim/bundle/base16-vim
+fi
+
 
 echo "Installing cmake..."
 sudo apt install cmake

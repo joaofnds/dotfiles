@@ -22,6 +22,7 @@ But of course, if you wan't to try it, `bash ./install.sh` will do it.
 * https://github.com/SirVer/ultisnips
 * https://github.com/honza/vim-snippets
 * https://github.com/othree/yajs.vim
+* https://github.com/chriskempson/base16-vim
 
 #### 2. Fonts
 * https://github.com/ryanoasis/nerd-fonts
