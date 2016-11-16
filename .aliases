@@ -5,3 +5,8 @@ alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 alias gitconfig='git config --global user.name "João Fernandes" && git config --global user.email "joaovitorfernandes2@gmail.com"'
 alias gitstore='git config credential.helper store' 
 alias rrwsv='sudo systemctl restart nginx.service && sudo systemctl restart php7.0-fpm'
+
+AndEmu() {
+	emulator -avd "$1" -gpu swiftshader -qemu -enable-kvm
+}
+

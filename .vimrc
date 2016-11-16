@@ -5,7 +5,7 @@ set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 set laststatus=2
 
 " Set colorscheme
-colorscheme dracula
+" colorscheme dracula
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
@@ -72,6 +72,9 @@ set autochdir
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+let base16colorspace=256  " Access colors present in 256 colorspace"
+colorscheme base16-oceanicnext
 
 " Syntastic
 set statusline+=%#warningmsg#
