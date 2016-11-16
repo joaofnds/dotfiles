@@ -49,6 +49,7 @@ if [ ! -d $HOME/.fonts ]; then
 fi
 cp -f $dotfiles/.fonts/Monaco\ Nerd\ Font\ Complete\ Mono.ttf $HOME/.fonts/
 cp -f $dotfiles/.fonts/Inconsolata\ Nerd\ Font\ Complete.ttf $HOME/.fonts/
+wget -O $HOME/.fonts/Monaco\ Nerd\ Font\ Complete\ Mono.ttf https://raw.githubusercontent.com/taohex/font/master/Monaco%20for%20Powerline%20Nerd%20Font%20Complete.otf
 echo "Updating fonts cache"
 sudo fc-cache -vf $HOME/.fonts/
 
@@ -192,6 +193,15 @@ else
 	git clone https://github.com/scrooloose/syntastic.git $dotfiles/.vim/bundle/syntastic
 fi
 
+if [ -e $dotfiles/.vim/bundle/yajs ]; then
+	echo "Applying pull to yajs"
+	git --git-dir=$dotfiles/.vim/bundle/yajs/.git pull
+else
+	echo "Cloning yajs"
+	git clone https://github.com/othree/yajs.vim $dotfiles/.vim/bundle/yajs
+fi
+
+
 echo "Installing cmake..."
 sudo apt install cmake
 
@@ -201,8 +211,11 @@ if [ -e $dotfiles/.vim/bundle/YouCompleteMe ]; then
 	bash $dotiles/.vim/bundle/YouCompleteMe/install.sh --clang-completer
 else
 	echo "Cloning YouCompleteMe"
+	PWD=$(pwd)
 	git clone https://github.com/Valloric/YouCompleteMe.git $dotfiles/.vim/bundle/YouCompleteMe
-	git --git-dir=$dotfiles/.vim/bundle/YouCompleteMe/.git submodule update --init --recursive
+	cd $dotfiles/.vim/bundle/YouCompleteMe
+	git submodule update --init --recursive
+	cd "$PWD"
 	python $dotiles/.vim/bundle/YouCompleteMe/install.py --clang-completer
 fi
 
