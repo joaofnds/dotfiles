@@ -114,6 +114,10 @@ if [ -f ~/.hdw.env ]; then
 	. ~/.hdw.env
 fi
 
+if [ -d ~/.local/bin ]; then
+	export PATH="$PATH:~/.local/bin"
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -132,13 +136,13 @@ export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 
 # POWERLINE CONFIGURATION
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
     . /usr/share/powerline/bindings/bash/powerline.sh
 fi
+
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
 
 
 # Enable Base16 themes
