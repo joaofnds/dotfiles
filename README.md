@@ -37,5 +37,7 @@ But of course, if you wan't to try it, `bash ./install.sh` will do it.
 * https://github.com/chriskempson/base16-builder
 
 #### 4. Others
+* https://www.zsh.org/
+* https://github.com/robbyrussell/oh-my-zsh
 * https://github.com/Corwind/termite-install
 * https://github.com/github/gitignore
