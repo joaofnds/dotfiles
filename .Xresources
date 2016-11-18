@@ -8,4 +8,4 @@ URxvt*boldFont:             xft:Monaco for Powerline:bold:size=12
 URxvt*italicFont:           xft:Monaco for Powerline:italic:size=12
 URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=12
 
-xterm*VT100*faceName:  Inconsolata Nerd Font:style=Book:size=14:antialias=false
+xterm*VT100*faceName:  Monaco for Powerline:style=Book:size=12:antialias=false
