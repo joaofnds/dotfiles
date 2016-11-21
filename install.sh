@@ -216,7 +216,7 @@ sudo apt install cmake
 if [ -e $dotfiles/.vim/bundle/YouCompleteMe ]; then
 	echo "Applying pull to YouCompleteMe"
 	git --git-dir=$dotfiles/.vim/bundle/YouCompleteMe/.git pull --recurse-submodules
-	bash $dotiles/.vim/bundle/YouCompleteMe/install.sh --clang-completer
+	bash $dotfiles/.vim/bundle/YouCompleteMe/install.sh --clang-completer
 else
 	echo "Cloning YouCompleteMe"
 	PWD=$(pwd)
