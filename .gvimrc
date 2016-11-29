@@ -1,5 +1,5 @@
 " Set things for GUI
-set guifont=Inconsolata\ Nerd\ Font\ 14
+set guifont=Monaco\ for\ Powerline\ 12
 " guioptions can be abreviated to 'go'
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
