@@ -250,7 +250,7 @@ bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 
 # Autostart apps
 exec_always hsetroot -solid "#000000"
-exec --no-startup-id "compton -fcC"
+exec --no-startup-id "compton"
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
 exec /home/joaofnds/.config/i3/screenlayout.sh
