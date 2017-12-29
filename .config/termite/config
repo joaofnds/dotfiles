@@ -1,0 +1,63 @@
+[options]
+resize_grip = false
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+visible_bell = false
+mouse_autohide = true
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+font = IBM Plex Mono 12
+scrollback_lines = 1000
+search_wrap = true
+
+# transparency
+transparency = 0.0
+pseudo_transparency = false
+
+# cursor
+cursor_blink = system
+cursor_shape = block
+
+# One Dark Theme
+[colors]
+
+# special
+foreground      = #abb2bf
+foreground_bold = #abb2bf
+cursor          = #abb2bf
+background      = #1e2127
+
+# black
+color0  = #1e2127
+color8  = #5c6370
+
+# red
+color1  = #e06c75
+color9  = #e06c75
+
+# green
+color2  = #98c379
+color10 = #98c379
+
+# yellow
+color3  = #d19a66
+color11 = #d19a66
+
+# blue
+color4  = #61afef
+color12 = #61afef
+
+# magenta
+color5  = #c678dd
+color13 = #c678dd
+
+# cyan
+color6  = #56b6c2
+color14 = #56b6c2
+
+# white
+color7  = #abb2bf
+color15 = #ffffff
