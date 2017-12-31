@@ -1,105 +1,88 @@
-" Always show statusline
-set laststatus=2
+" ================ General Config ====================
 
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
+set encoding=utf8  " Set encoding
+set laststatus=2   " Always show statusline
+set number         " Enable line Numbers
+set relativenumber " Enable relative line numbers
+set nowrap         " Disable line wrap
+set showcmd        "Show incomplete cmds down the bottom
+set showmode       "Show current mode down the bottom
+set visualbell     "No sounds"
+set autochdir      " Set CWD when as rootdir when opening vim
+set autoread       "Reload files changed outside vim
+set hidden         " This makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
 
-" Set encoding
-set encoding=utf8
+" ================ Indentation ================
 
-" Enable line Numbers
-set number
-
-" Disable line wrap
-set nowrap
-
-" Enable relative line numbers
-set relativenumber
-
-" 'autoindent' does nothing more than copy the indentation from the previous
-"  line, when starting a new line.
 set autoindent
-
-" 'smartindent' automatically inserts one extra level of indentation in some
-"  cases, and works for C-like files.
 set smartindent
-
-" Set tab lenght
-set tabstop=2
+set smarttab
 set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
 
-" Enable show commands
-set showcmd
+" Auto indent pasted text
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
+
+filetype indent on
+
+" ================ Colors ==============
+
+set t_Co=256       " Use 256 colours (Use this setting only if your terminal supports 256 colors)
+" Access colors present in 256 colorspace"
+let base16colorspace=256
+color dracula      "Set color scheme
+
+syntax on
+filetype plugin on " Detect filetype and set syntax
+
+" ================ Turn Off Swap Files ==============
+
+set noswapfile
+set nobackup
+set nowb
+
+" ================ Persistent Undo ==================
+" Keep undo history across sessions, by storing in file.
+if has('persistent_undo') && isdirectory(expand('~').'/.vim/backups')
+  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+  set undodir=~/.vim/backups
+  set undofile
+endif
+
+" ================ Folds ================
+
+set foldmethod=indent   "fold based on indent
+set foldnestmax=3       "deepest fold is 3 levels
+set nofoldenable        "dont fold by default
+
+" ================ Completion =======================
+
+set wildmode=list:longest
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+
+" ================ Search ===========================
+
+set incsearch       " Find the next match as we type the search
+set hlsearch        " Highlight searches by default
+set ignorecase      " Ignore case when searching...
+set smartcase       " ...unless we type a capital
+
 
 " map jj to <Esc>
 imap jj <Esc>
 
-" Nerd tree toggle on Ctrl+n
-map <C-n> :NERDTreeToggle<CR>
+so ~/.vim/settings.vim
 
-" Detect filetype and set syntax
-filetype plugin on
-
-" Set CWD when as rootdir when opening vim
-set autochdir
-
-let base16colorspace=256  " Access colors present in 256 colorspace"
-syntax on
-color dracula
-
-" remap ',c' to open current file in chrome
-" nnoremap ,c :exe ':silent !google-chrome-stable %'<CR>
-
-" Set airline theme
-let g:airline_powerline_fonts = 1
-let g:airline_theme='bubblegum'
-
-" Install vim-plug, if not installed
-if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall
-endif
-
-call plug#begin()
-" General plugins
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sensible'
-
-Plug 'scrooloose/nerdtree'
-
-Plug 'Raimondi/delimitMate'
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --js-completer' }
-
-" Git plugins
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
-""" Languages
-
-" Go plugins
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-
-" Javascript plugins
-Plug 'pangloss/vim-javascript'
-
-" HTML plugins
-Plug 'mattn/emmet-vim'
-
-""" Visual
-
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
-
-" Theme
-Plug 'dracula/vim'
-
-call plug#end()
+" Heavely inspired by github.com/skwp/dotfiles
