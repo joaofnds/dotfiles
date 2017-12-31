@@ -9,7 +9,8 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = IBM Plex Mono 12
+# font = IBM Plex Mono 12
+font = IBMPlexMono Nerd Font Mono 12
 scrollback_lines = 1000
 search_wrap = true
 
