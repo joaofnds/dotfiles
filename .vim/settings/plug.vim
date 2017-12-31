@@ -17,8 +17,8 @@ Plug 'scrooloose/nerdtree'
 
 " Plug 'Raimondi/delimitMate'
 
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --js-completer' }
 
@@ -31,22 +31,21 @@ Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 
 " Go plugins
-"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
 " Javascript plugins
-"Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 
 " HTML plugins
-"Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 """ Visual
 
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
 
 " Theme
-" Plug 'dracula/vim'
+Plug 'dracula/vim'
 
 call plug#end()
