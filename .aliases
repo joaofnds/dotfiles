@@ -1,8 +1,8 @@
 fmp() {
 	xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Finger" 1 1 255
-	xinput --set-prop 12 271 2
-	xinput --set-prop 12 284 -20 -20
-	xinput --set-prop 12 286 1 1
+	xinput --set-prop 12 "Device Accel Profile" 2
+	xinput --set-prop 12 "Synaptics Scrolling Distance" -20 -20
+	xinput --set-prop 12 "Synaptics Two-Finger Scrolling" 1 1
 }
 
 alias upgrade='sudo apt update; sudo apt full-upgrade; sudo apt autoremove'
