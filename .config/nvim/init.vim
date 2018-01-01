@@ -32,9 +32,10 @@ filetype indent on
 " ================ Colors ==============
 
 set t_Co=256       " Use 256 colours (Use this setting only if your terminal supports 256 colors)
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " Access colors present in 256 colorspace"
 let base16colorspace=256
-" color dracula      "Set color scheme
+color onedark      "Set color scheme
 
 syntax on
 filetype plugin on " Detect filetype and set syntax

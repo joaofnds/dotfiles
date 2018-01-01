@@ -47,7 +47,4 @@ Plug 'mattn/emmet-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Theme
-Plug 'dracula/vim'
-
 call plug#end()
