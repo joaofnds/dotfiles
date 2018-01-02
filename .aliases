@@ -5,6 +5,8 @@ fmp() {
 	xinput --set-prop 12 "Synaptics Two-Finger Scrolling" 1 1
 }
 
+alias vim='nvim'
+
 alias upgrade='sudo apt update; sudo apt full-upgrade; sudo apt autoremove'
 
 alias say='echo "$1" | espeak 2>/dev/null'

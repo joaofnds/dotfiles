@@ -25,8 +25,8 @@ Plug 'junegunn/fzf.vim'
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --js-completer' }
 
 " Git plugins
-" Plug 'tpope/vim-fugitive'
-" Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 """ Languages
 
