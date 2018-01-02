@@ -43,8 +43,7 @@ Plug 'mattn/emmet-vim'
 
 """ Visual
 
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Lightline
+Plug 'itchyny/lightline.vim'
 
 call plug#end()
