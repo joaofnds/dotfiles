@@ -241,7 +241,6 @@ bindsym $mod+n exec "/usr/bin/thunar"
 bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 
 # Autostart apps
-exec_always hsetroot -fill ~/Pictures/wallpaper.jpg
 exec --no-startup-id "compton"
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
