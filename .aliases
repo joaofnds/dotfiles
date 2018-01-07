@@ -6,7 +6,8 @@ alias gitstore='git config credential.helper store'
 
 fmp() {
   xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Finger" 1 1 255
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Profile" 2 xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Scrolling Distance" -20 -20
+  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Profile" 2
+  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Scrolling Distance" -20 -20
   xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Two-Finger Scrolling" 1 1
   xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Profile"	2
   xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Constant Deceleration"	2.500000
