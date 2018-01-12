@@ -223,12 +223,17 @@ bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%-
 bindsym $mod+XF86AudioRaiseVolume exec amixer -D pulse sset Master 1%+
 bindsym $mod+XF86AudioLowerVolume exec amixer -D pulse sset Master 1%-
 
+# brightness cotnrol
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# toggle wifi
+bindsym XF86WLAN exec if [ $(nmcli n) = enabled ]; then nmcli n off; else nmcli n on; fi
 
 # mute
 bindsym XF86AudioMute exec amixer sset Master toggle
 
+# media
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
