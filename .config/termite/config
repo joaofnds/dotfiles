@@ -21,35 +21,49 @@ pseudo_transparency = false
 cursor_blink = system
 cursor_shape = block
 
-# one dark
 [colors]
-
 # special
-foreground      = #abb2bf
-foreground_bold = #abb2bf
-cursor          =
-background      = #282c34
+foreground      = #fcfcfa
+foreground_bold = #fcfcfa
+cursor          = #fcfcfa
+background      = #403e41
 
 # black
-color0  = #282c34
-color8  = #5c6370
+color0  = #2d2a2e
+color8  = #727072
 
 # red
-color1  = #e06c75
-color9  = #be5046
+color1  = #ff6188
+color9  = #ff6188
 
 # green
-color2  = #98c379
-color10 = #7a9f60
+color2  = #a9dc76
+color10 = #a9dc76
 
 # yellow
-color3  = #e5c07b
-color11 = #d19a66
+color3  = #ffd866
+color11 = #ffd866
 
 # blue
-color4  = #61afef
-color12 = #3b84c0
+color4  = #fc9867
+color12 = #fc9867
 
 # magenta
-color5  = #c678dd
-color13 = #9a52af
+color5  = #ab9df2
+color13 = #ab9df2
+
+# cyan
+color6  = #78dce8
+color14 = #78dce8
+
+# white
+color7  = #fcfcfa
+color15 = #fcfcfa
+
+# Extra colors
+color16 = #fd971f
+color17 = #cc6633
+color18 = #383830
+color19 = #49483e
+color20 = #a59f85
+color21 = #f5f4f1
