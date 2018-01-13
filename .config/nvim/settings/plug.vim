@@ -28,14 +28,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 """ Languages
-
 Plug 'sheerun/vim-polyglot'
+Plug 'scrooloose/syntastic'
 
 " Go plugins
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
 " Javascript plugins
 Plug 'pangloss/vim-javascript'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
+" Plug 'marijnh/tern_for_vim'
+
+" Graphql
+Plug 'jparise/vim-graphql'
 
 " HTML plugins
 Plug 'mattn/emmet-vim'
