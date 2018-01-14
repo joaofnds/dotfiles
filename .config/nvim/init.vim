@@ -31,8 +31,8 @@ filetype indent on
 
 " ================ Colors ==============
 
-set t_Co=256       " Use 256 colours (Use this setting only if your terminal supports 256 colors)
-color onedark      "Set color scheme
+set t_Co=256                " Use 256 colours (Use this setting only if your terminal supports 256 colors)
+colorscheme Monokai-Refined "Set color scheme
 
 syntax on
 filetype plugin on " Detect filetype and set syntax
