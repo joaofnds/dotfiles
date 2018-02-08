@@ -1,38 +1,5 @@
 alias vim='nvim'
-alias say='echo "$1" | espeak 2>/dev/null'
 alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 alias gitconfig='git config --global user.name "João Fernandes"; git config --global user.email "joaovitorfernandes2@gmail.com"'
 alias gitstore='git config credential.helper store'
 
-fmp() {
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Finger" 1 1 255
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Profile" 2
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Scrolling Distance" -20 -20
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Two-Finger Scrolling" 1 1
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Profile"	2
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Constant Deceleration"	2.500000
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Adaptive Deceleration"	1.000000
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Velocity Scaling"	12.500000
-}
-
-upgrade() {
-  sudo apt update
-  sudo apt full-upgrade
-  sudo apt autoremove
-}
-
-AndEmu() {
-	emulator -avd "$1" -gpu swiftshader -qemu -enable-kvm
-}
-
-startminikube() {
-  minikube start --insecure-registry=192.168.99.1:5000
-  # minikube already changes context on `start`
-  # kubectl config use-context minikube
-  eval $(minikube docker-env)
-}
-
-stopminikube() {
-  minikube stop
-  eval $(minikube docker-env -u)
-}
