@@ -33,6 +33,7 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Set terminal to use 256colors
 export TERM="xterm-256color"
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
