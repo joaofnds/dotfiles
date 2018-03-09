@@ -17,11 +17,11 @@ Plug 'jiangmiao/auto-pairs'
 
 Plug 'scrooloose/nerdtree'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'zchee/deoplete-go', { 'do': 'make'}
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
 
 " Git plugins
 Plug 'tpope/vim-fugitive'
@@ -36,11 +36,11 @@ Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
 " Javascript plugins
 Plug 'pangloss/vim-javascript'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 " Plug 'marijnh/tern_for_vim'
 
 " Graphql
-Plug 'jparise/vim-graphql'
+" Plug 'jparise/vim-graphql'
 
 " HTML plugins
 Plug 'mattn/emmet-vim'
