@@ -15,11 +15,11 @@ set $down j
 set $up k
 set $right l
 
-set $font IBM Plex Mono
+set $font Operator Mono Book
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango: $font 9
+font pango: $font 12
 
 # thin borders
 hide_edge_borders both
@@ -35,7 +35,7 @@ hide_edge_borders both
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec termite
+bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -196,7 +196,7 @@ client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color       
 # finds out, if available)
 bar {
   status_command i3status
-	font pango: $font 9
+	font pango: $font 15
 
 	colors {
 		background $bg-color
