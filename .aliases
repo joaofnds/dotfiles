@@ -3,3 +3,14 @@ alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 alias gitconfig='git config --global user.name "João Fernandes"; git config --global user.email "joaovitorfernandes2@gmail.com"'
 alias gitstore='git config credential.helper store'
 
+docker_remove_none_images() {
+        image_ids=$(docker images | awk '{print $1, $3}' | grep "<none>" | awk '{ print $2 }')
+
+        containers_using_none_images=$(docker ps -a | awk '{print $1, $2 }' | grep $image_ids | awk '{ print $1 }')
+        if [ -n $containers_using_none_images ]; then
+                docker stop $containers_using_none_images
+                docker rm $containers_using_none_images
+        fi
+        docker rmi $image_ids
+}
+
