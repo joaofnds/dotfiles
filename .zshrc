@@ -36,3 +36,5 @@ export TERM="xterm-256color"
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
+# Command-line fuzzy finder (github.com/junegunn/fzf)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
