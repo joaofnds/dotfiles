@@ -23,6 +23,8 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'jremmen/vim-ripgrep'
+
 " Git plugins
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
