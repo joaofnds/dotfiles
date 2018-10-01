@@ -15,6 +15,8 @@ Plug 'tpope/vim-sensible'
 
 Plug 'jiangmiao/auto-pairs'
 
+Plug 'junegunn/vim-easy-align'
+
 Plug 'scrooloose/nerdtree'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
