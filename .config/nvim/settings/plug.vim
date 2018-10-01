@@ -33,7 +33,8 @@ Plug 'airblade/vim-gitgutter'
 
 """ Languages
 Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
+" Plug 'scrooloose/syntastic'
 
 " Go plugins
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
