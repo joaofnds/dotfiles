@@ -16,6 +16,7 @@ Plug 'tpope/vim-sensible'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'junegunn/vim-easy-align'
+Plug 'Yggdroot/indentLine'
 
 Plug 'scrooloose/nerdtree'
 
