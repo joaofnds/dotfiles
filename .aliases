@@ -3,13 +3,22 @@ alias gitconfig='git config --global user.name "João Fernandes"; git config --g
 alias gitstore='git config credential.helper store'
 
 docker_remove_none_images() {
-        image_ids=$(docker images | awk '{print $1, $3}' | grep "<none>" | awk '{ print $2 }')
+	image_ids=$(docker images | awk '{print $1, $3}' | grep "<none>" | awk '{ print $2 }')
 
-        containers_using_none_images=$(docker ps -a | awk '{print $1, $2 }' | grep $image_ids | awk '{ print $1 }')
-        if [ -n $containers_using_none_images ]; then
-                docker stop $containers_using_none_images
-                docker rm $containers_using_none_images
-        fi
-        docker rmi $image_ids
+  if [[ -z $image_ids ]]
+  then
+    echo "no images"
+    exit 0
+  fi
+
+  containers_using_none_images=$(docker ps -a | awk '{print $1, $2 }' | grep "$image_ids" | awk '{ print $1 }')
+
+  if [[ -n $containers_using_none_images ]]
+  then
+    docker stop $containers_using_none_images
+    docker rm $containers_using_none_images
+  fi
+
+  docker rmi $image_ids
 }
 
