@@ -37,6 +37,9 @@ Plug 'sheerun/vim-polyglot'
 Plug 'w0rp/ale'
 " Plug 'scrooloose/syntastic'
 
+" Rails
+Plug 'tpope/vim-rails'
+
 " Go plugins
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
