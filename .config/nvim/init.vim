@@ -88,6 +88,6 @@ set smartcase       " ...unless we type a capital
 " map jj to <Esc>
 imap jj <Esc>
 
-so $NVIM_HOME/settings.vim
+so $NVIM_HOME/plug.vim
 
 " Heavely inspired by github.com/skwp/dotfiles
