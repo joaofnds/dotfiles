@@ -4,9 +4,9 @@
 
 """ solarized
 " let g:solarized_termcolors=256
-" syntax enable
 " colorscheme solarized
 
 """ grubox
 colorscheme gruvbox
 set background=dark
+syntax enable
