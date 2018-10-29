@@ -55,6 +55,9 @@ Plug 'pangloss/vim-javascript'
 Plug 'mattn/emmet-vim'
 
 """ Visual
+" Plug 'keitanakamura/neodark.vim'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 
 " Lightline
 Plug 'itchyny/lightline.vim'
