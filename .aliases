@@ -1,24 +1,26 @@
-alias vim='nvim'
-alias say='echo "$1" | espeak 2>/dev/null'
 alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 alias gitconfig='git config --global user.name "João Fernandes"; git config --global user.email "joaovitorfernandes2@gmail.com"'
 alias gitstore='git config credential.helper store'
+alias list_notes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
 
-fmp() {
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Finger" 1 1 255
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Profile" 2
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Scrolling Distance" -20 -20
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Synaptics Two-Finger Scrolling" 1 1
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Profile"	2
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Constant Deceleration"	2.500000
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Adaptive Deceleration"	1.000000
-  xinput --set-prop "AlpsPS/2 ALPS GlidePoint" "Device Accel Velocity Scaling"	12.500000
-}
+docker_remove_none_images() {
+	image_ids=$(docker images | awk '{print $1, $3}' | grep "<none>" | awk '{ print $2 }')
 
-upgrade() {
-  sudo apt update
-  sudo apt full-upgrade
-  sudo apt autoremove
+  if [[ -z $image_ids ]]
+  then
+    echo "no images"
+    exit 0
+  fi
+
+  containers_using_none_images=$(docker ps -a | awk '{print $1, $2 }' | grep "$image_ids" | awk '{ print $1 }')
+
+  if [[ -n $containers_using_none_images ]]
+  then
+    docker stop $containers_using_none_images
+    docker rm $containers_using_none_images
+  fi
+
+  docker rmi $image_ids
 }
 
 AndEmu() {
