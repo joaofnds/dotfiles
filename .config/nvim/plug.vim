@@ -1,7 +1,7 @@
 " ================ Install vim-plug if not installed ==============
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
@@ -15,6 +15,9 @@ Plug 'tpope/vim-sensible'
 
 Plug 'jiangmiao/auto-pairs'
 
+Plug 'junegunn/vim-easy-align'
+Plug 'Yggdroot/indentLine'
+
 Plug 'scrooloose/nerdtree'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -23,32 +26,45 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'jremmen/vim-ripgrep'
+
 " Git plugins
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 """ Languages
 Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
+" Plug 'scrooloose/syntastic'
+
+" Rails
+Plug 'tpope/vim-rails'
 
 " Go plugins
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
 " Javascript plugins
 Plug 'pangloss/vim-javascript'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 " Plug 'marijnh/tern_for_vim'
 
 " Graphql
-Plug 'jparise/vim-graphql'
+" Plug 'jparise/vim-graphql'
 
 " HTML plugins
 Plug 'mattn/emmet-vim'
 
 """ Visual
+Plug 'morhetz/gruvbox'
 
 " Lightline
 Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
+" Load plugged settings
+let vimsettings = $NVIM_HOME.'/settings'
+
+for fpath in split(globpath(vimsettings, '*.vim'), '\n')
+  exe 'source' fpath
+endfor

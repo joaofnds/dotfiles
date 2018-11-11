@@ -9,7 +9,7 @@ set nowrap         " Disable line wrap
 set showcmd        "Show incomplete cmds down the bottom
 set showmode       "Show current mode down the bottom
 set visualbell     "No sounds"
-set autochdir      " Set CWD when as rootdir when opening vim
+set noautochdir    " Dont set CWD when as rootdir when opening vim
 set autoread       "Reload files changed outside vim
 set hidden         " This makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
 
@@ -22,6 +22,7 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set expandtab
+set list listchars=tab:⇥\ ,trail:·
 
 " Auto indent pasted text
 nnoremap p p=`]<C-o>
@@ -32,7 +33,6 @@ filetype indent on
 " ================ Colors ==============
 
 set t_Co=256                " Use 256 colours (Use this setting only if your terminal supports 256 colors)
-colorscheme Monokai-Refined "Set color scheme
 
 syntax on
 filetype plugin on " Detect filetype and set syntax
@@ -89,6 +89,6 @@ set smartcase       " ...unless we type a capital
 " map jj to <Esc>
 imap jj <Esc>
 
-so $NVIM_HOME/settings.vim
+so $NVIM_HOME/plug.vim
 
 " Heavely inspired by github.com/skwp/dotfiles
