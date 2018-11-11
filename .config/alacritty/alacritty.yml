@@ -84,7 +84,7 @@ font:
     family: Dank Mono
     style: Regular
 
-  # Italic font face
+  # Bold font face
   bold:
     family: Dank Mono
     style: Bold
