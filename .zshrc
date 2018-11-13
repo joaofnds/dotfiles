@@ -34,6 +34,7 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 export TERM="xterm-256color"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.oh-my-zsh/plugins/z/z.sh ] && source ~/.oh-my-zsh/plugins/z/z.sh
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
