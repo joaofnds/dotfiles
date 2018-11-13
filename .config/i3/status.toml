@@ -31,7 +31,7 @@ block = "sound"
 [[block]]
 block = "time"
 interval = 60
-format = "%a %d/%m %R"
+format = "%a %b %d %R (%x)"
 
 [theme]
 name = "solarized-dark"

@@ -208,7 +208,7 @@ client.background       $base07
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    font pango:Dank Mono, FontAwesome 18
+    font pango:Dank Mono, FontAwesome 14
     position top
     status_command i3status-rs $HOME/.config/i3/status.toml
     colors {
@@ -262,8 +262,9 @@ bindsym $mod+n exec "/usr/bin/thunar"
 bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 
 # Autostart apps
-exec nitrogen --save --set-zoom-fill ~/Pictures/wallpaper.jpg
+exec --no-startup-id nitrogen --save --set-zoom-fill ~/Pictures/wallpaper.jpg
+exec --no-startup-id xflux -l -31.7611637 -g -52.3318757,14 -r 1
+exec --no-startup-id xset r rate 200 50
 exec --no-startup-id "compton"
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
-exec /home/joaofnds/.config/i3/screenlayout.sh
