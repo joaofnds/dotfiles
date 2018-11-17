@@ -18,6 +18,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
 
+Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'scrooloose/nerdtree'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
