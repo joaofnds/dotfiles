@@ -39,15 +39,13 @@ alert = ${self.base0C}
 
 [bar/top]
 width = 100%
-height = 40
-radius = 6.0
-fixed-center = true
+height = 48
+radius = 12.0
 
-
-border-top-size = 10
-border-bottom-size = 10
-border-left-size = 800
-border-right-size = 800
+border-top-size = 8
+border-bottom-size = 8
+border-left-size = 16
+border-right-size = 16
 
 border-top-color = #00000000
 border-bottom-color = #00000000
@@ -57,7 +55,7 @@ border-right-color = #00000000
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 4
+line-size = 5
 line-color = ${colors.primary}
 
 border-size = 4
@@ -66,7 +64,7 @@ border-color = ${colors.foreground}
 padding-left = 0
 padding-right = 2
 
-module-margin-left = 1
+module-margin-left = 2
 module-margin-right = 2
 
 font-0 = Dank Mono:size=18;2
@@ -77,15 +75,10 @@ font-4 = siji:pixelsize=10;1
 
 modules-left = i3
 modules-center =
-modules-right = alsa memory cpu wlan temperature datetime powermenu
+modules-right = alsa memory cpu eth temperature datetime powermenu
 
 tray-position = right
 tray-padding = 2
-
-wm-restack = i3
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -157,43 +150,21 @@ format-prefix = "💾 "
 format-prefix-foreground = ${colors.foreground}
 label = %percentage_used%%
 
-[module/wlan]
-type = internal/network
-interface = net1
-interval = 3.0
-
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground}
-
 [module/eth]
 type = internal/network
-interface = eth1
+interface = eth0
 interval = 3.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = " "
+format-connected-underline = ${colors.background}
+format-connected-prefix = "🔗 "
 format-connected-prefix-foreground = ${colors.foreground}
 label-connected = %local_ip%
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground}
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = "🙅‍♂️"
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground}
 
 [module/datetime]
 type = internal/date
