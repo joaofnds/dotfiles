@@ -18,10 +18,9 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
 
-Plug 'scrooloose/nerdtree'
+Plug 'christoomey/vim-tmux-navigator'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'scrooloose/nerdtree'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -40,13 +39,14 @@ Plug 'w0rp/ale'
 " Rails
 Plug 'tpope/vim-rails'
 
+" Ruby
+Plug 'tpope/vim-endwise'
+
 " Go plugins
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Javascript plugins
 Plug 'pangloss/vim-javascript'
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
-" Plug 'marijnh/tern_for_vim'
 
 " Graphql
 " Plug 'jparise/vim-graphql'
