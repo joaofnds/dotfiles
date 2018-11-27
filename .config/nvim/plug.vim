@@ -45,6 +45,9 @@ Plug 'tpope/vim-endwise'
 " Go plugins
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" Elixir
+Plug 'elixir-lang/vim-elixir'
+
 " Javascript plugins
 Plug 'pangloss/vim-javascript'
 
