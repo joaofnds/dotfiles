@@ -85,9 +85,10 @@ set hlsearch        " Highlight searches by default
 set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
 
+" ================ keymaps ===========================
 
-" map jj to <Esc>
-imap jj <Esc>
+" fix rubocop offensed with <leader>ra
+nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
 
 so $NVIM_HOME/plug.vim
 
