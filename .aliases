@@ -46,5 +46,6 @@ stopminikube() {
 
 update() {
   yaourt -Syuua
+  ncu u -g
   nvim +PlugUpgrade +PlugUpdate +qall
 }
