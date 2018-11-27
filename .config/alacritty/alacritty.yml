@@ -86,17 +86,17 @@ tabspaces: 4
 font:
   # Normal (roman) font face
   normal:
-    family: Dank Mono
+    family: Fira Code
     style: Regular
 
   # Bold font face
   bold:
-    family: Dank Mono
+    family: Fira Code
     style: Bold
 
   # Italic font face
   italic:
-    family: Dank Mono
+    family: Fira Code
     style: Italic
 
   # Point size

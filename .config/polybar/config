@@ -53,8 +53,8 @@ padding-right = 2
 module-margin-left = 2
 module-margin-right = 2
 
-font-0 = Dank Mono:size=18;4
-font-1 = FontAwesome:size=12;
+font-0 = Fira Code:size=18;4
+font-1 = Fura Code Nerd Font:size=24;4
 font-2 = NotoEmoji-Regular:scale=6;2
 font-3 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-4 = siji:pixelsize=10;1
@@ -110,7 +110,7 @@ label-urgent-padding = 2
 type = internal/cpu
 interval = 0.5
 format = <label> <ramp-coreload>
-label = 🖥️
+label = 
 
 ramp-coreload-0 = ▁
 ramp-coreload-0-foreground = ${colors.base0B}
@@ -132,7 +132,7 @@ ramp-coreload-7-foreground = ${colors.base08}
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "💾 "
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground}
 label = %percentage_used%%
 
@@ -142,7 +142,7 @@ interface = eth1
 interval = 3.0
 
 format-connected-underline = ${colors.background}
-format-connected-prefix = "🔗 "
+format-connected-prefix = "力 "
 format-connected-prefix-foreground = ${colors.foreground}
 label-connected = %local_ip%
 
@@ -154,13 +154,13 @@ label-disconnected-foreground = ${colors.foreground}
 
 [module/datetime]
 type = internal/date
-format = ⏳ <label>
+format =  <label>
 
 date = %d-%m-%Y
-date-alt = 📅 %A, %d %B %Y
+date-alt = %A, %d %B %Y
 
 time = %H:%M
-time-alt = 🕒 %H:%M:%S
+time-alt = %H:%M:%S
 
 label = %time% %date%
 
@@ -168,10 +168,10 @@ label = %time% %date%
 type = internal/alsa
 
 format-volume = <label-volume> <bar-volume>
-label-volume = 🔉
+label-volume = 墳
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇
+label-muted = 
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -196,7 +196,7 @@ thermal-zone = 0
 warn-temperature = 60
 
 format = <ramp> <label>
-format-prefix = "🌡️ "
+format-prefix = " "
 format-underline = ${colors.background}
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
