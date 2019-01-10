@@ -13,7 +13,16 @@ set noautochdir    " Dont set CWD when as rootdir when opening vim
 set autoread       "Reload files changed outside vim
 set hidden         " This makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
 set tags=./tags
+
+" ================ Resizing ================
+" Re-balance when vim is resize
 autocmd VimResized * :wincmd =
+
+" Zoom in with <leader>-
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+
+" Re-balance with <leader>=
+nnoremap <leader>= :wincmd =<cr>
 
 " ================ Indentation ================
 
@@ -88,6 +97,8 @@ set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
 
 " ================ keymaps ===========================
+
+map <Space> <Leader>
 
 " fix rubocop offensed with <leader>ra
 nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
