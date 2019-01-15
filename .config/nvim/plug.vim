@@ -33,7 +33,7 @@ Plug 'airblade/vim-gitgutter'
 
 """ Languages
 Plug 'sheerun/vim-polyglot'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 " Plug 'scrooloose/syntastic'
 
 " Rails
@@ -43,7 +43,7 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
 
 " Go plugins
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
