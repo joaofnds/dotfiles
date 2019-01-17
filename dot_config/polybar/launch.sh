@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" }}
 #!/usr/bin/env bash
 
 # Terminate already running bar instances
@@ -10,3 +11,5 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 polybar top
 
 echo "Bars launched..."
+
+{{- end }}

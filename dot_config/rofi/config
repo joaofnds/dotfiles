@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" }}
 rofi.font: Fira Code 18
 rofi.theme: ~/.config/rofi/base16-gruvbox-dark-pale.rasi
 rofi.modi: drun,run,window,ssh
@@ -9,3 +10,5 @@ rofi.sidebar-mode: true
 rofi.matching: normal
 rofi.display-run: binary
 rofi.display-drun: program
+
+{{- end }}

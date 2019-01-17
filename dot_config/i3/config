@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" }}
 #  _ _____                    __ _
 # (_)___ /    ___ ___  _ __  / _(_) __ _
 # | | |_ \   / __/ _ \| '_ \| |_| |/ _` |
@@ -281,3 +282,4 @@ exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
 exec --no-startup-id redshift-gtk -l $LAT:$LON
 
+{{- end }}

@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" }}
 ;==========================================================
 ;
 ;
@@ -207,3 +208,5 @@ screenchange-reload = true
 [global/wm]
 margin-top = 5
 margin-bottom = 5
+
+{{- end }}

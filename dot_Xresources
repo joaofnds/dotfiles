@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" }}
 ! special
 *.foreground:   #dab997
 *.background:   #262626
@@ -34,4 +35,4 @@
 ! white
 *.color7:       #dab997
 *.color15:      #ebdbb2
-
+{{- end }}
