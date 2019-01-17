@@ -279,4 +279,5 @@ exec --no-startup-id "compton"
 # start volume applets
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
+exec --no-startup-id redshift-gtk -l $LAT:$LON
 

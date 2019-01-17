@@ -61,7 +61,7 @@ font-4 = siji:pixelsize=10;1
 
 modules-left = i3
 modules-center =
-modules-right = alsa memory cpu eth temperature datetime powermenu
+modules-right = alsa memory cpu eth datetime powermenu
 
 tray-position = right
 tray-padding = 2
@@ -200,26 +200,6 @@ bar-volume-fill-font = 2
 bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground}
-
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-format = <ramp> <label>
-format-prefix = " "
-format-underline = ${colors.background}
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label = %temperature-c%
-label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 😰
-ramp-1 = 🥵
-ramp-2 = 🔥
-ramp-foreground = ${colors.foreground}
 
 [settings]
 screenchange-reload = true
