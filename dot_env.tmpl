@@ -10,6 +10,10 @@ export EDITOR=nvim
 
 export NNN_DE_FILE_MANAGER=open
 
+{{- if eq .chezmoi.os "linux" }}
+export PATH=$HOME/.linuxbrew/bin:$PATH
+{{- end }}
+
 ###############
 ## Languages ##
 ###############
