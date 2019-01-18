@@ -26,6 +26,15 @@ fi
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
+# TMUX helpers
+_not_inside_tmux() { [[ -z "$TMUX" ]] }
+
+ensure_tmux_is_running() {
+  if _not_inside_tmux; then
+    tat
+  fi
+}
+
 ######################
 # User configuration #
 ######################
@@ -38,3 +47,6 @@ export TERM="xterm-256color"
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
+
+
+ensure_tmux_is_running
