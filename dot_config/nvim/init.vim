@@ -1,4 +1,7 @@
 let $NVIM_HOME = $HOME.'/.config/nvim'
+
+let mapleader = "\<Space>"
+
 " ================ General Config ====================
 
 set encoding=utf8  " Set encoding
@@ -97,8 +100,6 @@ set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
 
 " ================ keymaps ===========================
-
-map <Space> <Leader>
 
 " fix rubocop offensed with <leader>ra
 nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
