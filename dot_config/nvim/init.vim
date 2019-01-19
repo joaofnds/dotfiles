@@ -104,6 +104,8 @@ set smartcase       " ...unless we type a capital
 " fix rubocop offensed with <leader>ra
 nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
 
+
+" Vim TMUX Runner
 nnoremap <leader>v- :VtrOpenRunner { "orientation": "v", "percentage": 50 }<cr>
 nnoremap <leader>v= :VtrOpenRunner { "orientation": "h", "percentage": 50  }<cr>
 nnoremap <leader>va :VtrAttachToPane<cr>
@@ -122,6 +124,11 @@ nnoremap <leader>cr :VtrClearRunner<cr>
 nnoremap <leader>fc :VtrFlushCommand<cr>
 
 vnoremap <leader>sl :VtrSendLinesToRunner<cr>
+
+" Vim-RSpec
+let g:rspec_command = "call VtrSendCommand('rspec {spec}')"
+map <Leader>tf :call RunCurrentSpecFile()<CR>
+map <Leader>tn :call RunNearestSpec()<CR>
 
 so $NVIM_HOME/plug.vim
 

@@ -20,6 +20,7 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
+Plug 'thoughtbot/vim-rspec'
 
 Plug 'scrooloose/nerdtree'
 
