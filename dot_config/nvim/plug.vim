@@ -13,21 +13,27 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 
-Plug 'jiangmiao/auto-pairs'
+Plug 'MarcWeber/vim-addon-mw-utils' " snipmate dependency
+Plug 'tomtom/tlib_vim' " snipmate dependency
+Plug 'garbas/vim-snipmate'
 
+Plug 'scrooloose/nerdtree'
+
+" Formatting
+Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
+
+" Shell util integrations
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'jremmen/vim-ripgrep'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'thoughtbot/vim-rspec'
 
-Plug 'scrooloose/nerdtree'
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-Plug 'jremmen/vim-ripgrep'
 
 " Git plugins
 Plug 'tpope/vim-fugitive'
