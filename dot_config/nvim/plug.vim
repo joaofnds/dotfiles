@@ -13,11 +13,19 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 
-Plug 'MarcWeber/vim-addon-mw-utils' " snipmate dependency
-Plug 'tomtom/tlib_vim' " snipmate dependency
-Plug 'garbas/vim-snipmate'
-
 Plug 'scrooloose/nerdtree'
+
+" Asynchronous completion framework
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Keyword completion system
+Plug 'shougo/neocomplete.vim'
+
+" Snippets plugin
+Plug 'sirver/ultisnips'
+
+" Snippets bundle
+Plug 'honza/vim-snippets'
 
 " Formatting
 Plug 'jiangmiao/auto-pairs'
