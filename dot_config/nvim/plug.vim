@@ -76,8 +76,8 @@ Plug 'mattn/emmet-vim'
 """ Visual
 Plug 'morhetz/gruvbox'
 
-" Lightline
-Plug 'itchyny/lightline.vim'
+" Status line
+Plug 'vim-airline/vim-airline'
 
 call plug#end()
 
