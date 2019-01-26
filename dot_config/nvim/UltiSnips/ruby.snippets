@@ -1,0 +1,7 @@
+snippet spec_class "class spec boilerplate" b
+require 'spec_helper'
+
+describe ${1:SomeClass}${2:, ${3:'#${4:some_action}'}${5:, type: :${6:spec_type}}} do
+	$7
+end
+endsnippet
