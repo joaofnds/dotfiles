@@ -98,8 +98,13 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 # Rofi
-bindsym $mod+Shift+d exec rofi -show run
+## Open aplications applications
 bindsym $mod+d exec rofi -show drun
+## Open binaries
+bindsym $mod+Shift+d exec rofi -show run
+# switch between windows oppened windwos
+bindsym $mod+Tab exec rofi -show window
+bindsym Mod1+Tab exec rofi -show window
 
 # change focus
 bindsym $mod+$left  focus left
