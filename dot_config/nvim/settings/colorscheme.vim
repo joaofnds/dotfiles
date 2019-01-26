@@ -1,2 +1,2 @@
 let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme gruvbox
+colorscheme base16-gruvbox-dark-medium
