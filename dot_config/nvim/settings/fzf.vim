@@ -1,4 +1,10 @@
 noremap <C-p> :FZF<CR>
+noremap <C-b> :Buffers<CR>
+noremap <leader>zgf :GFiles?<CR>
+noremap <leader>zl :Lines<CR>
+noremap <leader>zbl :BLines<CR>
+noremap <leader>zr :Tags<CR>
+noremap <leader>zbt :BTags<CR>
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -16,6 +22,3 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
   \ 'source': 'rg -n ^ --color always',
   \ 'options': '--ansi --delimiter : --nth 3..',
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
-
-" Advanced customization using autoload functions
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '40%'})
