@@ -8,6 +8,9 @@ export NVIM_HOME=$HOME/.config/nvim
 export PATH=/usr/local/bin:$PATH
 export EDITOR=nvim
 
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 export NNN_DE_FILE_MANAGER=open
 
 {{- if eq .chezmoi.os "linux" }}
