@@ -2,6 +2,7 @@ alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 alias list_notes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
 alias lsfiles='la | rg ^-'
 alias lsdirs='la | rg ^d'
+alias gbD='git branch --delete $(git branch | fzf -m)'
 
 startminikube() {
   minikube start --insecure-registry=192.168.99.1:5000
