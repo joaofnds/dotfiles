@@ -14,7 +14,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export NNN_DE_FILE_MANAGER=open
 
 {{- if eq .chezmoi.os "linux" }}
-export PATH=$HOME/.linuxbrew/bin:$PATH
+export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 {{- end }}
 
 ###############
