@@ -7,7 +7,7 @@ session_exists() {
 }
 
 not_in_tmux() {
-  [[ -z "$TMUX" ]]
+  [ -z "$TMUX" ]
 }
 
 if not_in_tmux; then
