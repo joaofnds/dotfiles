@@ -58,6 +58,8 @@ Plug 'tpope/vim-rails'
 
 " Ruby
 Plug 'tpope/vim-endwise'
+" Plug 'uplus/deoplete-solargraph'
+" Plug 'hackhowtofaq/vim-solargraph'
 
 " Go plugins
 Plug 'fatih/vim-go'
