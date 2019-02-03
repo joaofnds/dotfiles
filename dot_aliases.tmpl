@@ -1,8 +1,24 @@
 alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
+
+# files listing
 alias list_notes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
 alias lsfiles='la | rg ^-'
 alias lsdirs='la | rg ^d'
+
+# git
 alias gbD='git branch --delete $(git branch | fzf -m)'
+
+# ruby and rails
+alias be='bundle exec'
+alias ruba'be rubocop -REa -f fu'
+
+# docker
+alias dcp='docker-compose'
+alias dcpe='docker-compose exec'
+alias dcpp='docker-compose ps'
+alias dcpu='docker-compose up'
+alias dcpd='docker-compose down'
+alias dcpr='docker-compose restart'
 
 startminikube() {
   minikube start --insecure-registry=192.168.99.1:5000
@@ -19,13 +35,13 @@ stopminikube() {
 update() {
 
   {{- if eq .chezmoi.os "linux" }}
-    yaourt -Syuua
+  yaourt -Syuua
   {{- end }}
 
   {{- if eq .chezmoi.os "darwin" }}
-    brew update
-    brew upgrade
-    brew cleanup
+  brew update
+  brew upgrade
+  brew cleanup
   {{- end }}
 
   ncu u -g
