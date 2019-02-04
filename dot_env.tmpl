@@ -15,7 +15,6 @@ export PATH=$HOME/.bin:$PATH
 
 export NVIM_HOME=$HOME/.config/nvim
 export PATH=/usr/local/bin:$PATH
-export EDITOR=nvim
 
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -38,17 +37,22 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.local/share/protoc/bin/protoc
 
 # ruby
-if command -v rbenv 1>/dev/null 2>&1; then
-  eval "$(rbenv init -)"
-fi
+export RBENV_ROOT="$HOME/.rbenv"
+export PATH="$RBENV_ROOT/shims:$PATH"
+init_rbenv() {
+  if command -v rbenv 1>/dev/null 2>&1; then
+    eval "$(rbenv init -)"
+  fi
+}
 
 # python
-# @see: https://github.com/pyenv/pyenv/wiki/common-build-problems
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
+init_pyenv() {
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
+}
 
 # flutter
 export FLUTTER_PATH=$HOME/dev/sdk/flutter
