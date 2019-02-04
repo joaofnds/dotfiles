@@ -52,7 +52,6 @@ ensure_tmux_is_running() {
 export TERM="xterm-256color"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.oh-my-zsh/plugins/z/z.sh ] && source ~/.oh-my-zsh/plugins/z/z.sh
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
