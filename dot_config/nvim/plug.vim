@@ -58,6 +58,8 @@ Plug 'tpope/vim-rails'
 
 " Ruby
 Plug 'tpope/vim-endwise'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
 " Plug 'uplus/deoplete-solargraph'
 " Plug 'hackhowtofaq/vim-solargraph'
 

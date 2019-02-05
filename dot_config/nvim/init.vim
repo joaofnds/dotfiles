@@ -98,6 +98,8 @@ set smartcase       " ...unless we type a capital
 " fix rubocop offensed with <leader>ra
 nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
 
+runtime macros/matchit.vim
+
 so $NVIM_HOME/plug.vim
 
 " Heavely inspired by github.com/skwp/dotfiles
