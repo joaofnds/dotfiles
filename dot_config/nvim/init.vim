@@ -16,6 +16,7 @@ set noautochdir    " Dont set CWD when as rootdir when opening vim
 set autoread       "Reload files changed outside vim
 set hidden         " This makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
 set tags=./tags
+set nocompatible
 
 " ================ Resizing ================
 " Re-balance when vim is resize
