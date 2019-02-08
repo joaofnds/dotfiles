@@ -98,6 +98,7 @@ set smartcase       " ...unless we type a capital
 
 " fix rubocop offensed with <leader>ra
 nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
+nnoremap <silent> <leader>ga :silent !git add %<cr>
 
 runtime macros/matchit.vim
 
