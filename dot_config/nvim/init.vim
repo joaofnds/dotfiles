@@ -9,12 +9,13 @@ set laststatus=2   " Always show statusline
 set number         " Enable line Numbers
 set relativenumber " Enable relative line numbers
 set nowrap         " Disable line wrap
-set showcmd        "Show incomplete cmds down the bottom
-set showmode       "Show current mode down the bottom
-set visualbell     "No sounds"
+set showcmd        " Show incomplete cmds down the bottom
+set showmode       " Show current mode down the bottom
+set visualbell     " No sounds"
 set noautochdir    " Dont set CWD when as rootdir when opening vim
-set autoread       "Reload files changed outside vim
+set autoread       " Reload files changed outside vim
 set hidden         " This makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
+set colorcolumn=80 " Display a column at the 80th column
 set tags=./tags
 set nocompatible
 
