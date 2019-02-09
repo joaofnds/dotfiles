@@ -20,6 +20,9 @@ alias dcpu='docker-compose up'
 alias dcpd='docker-compose down'
 alias dcpr='docker-compose restart'
 
+# remove `rails generate` alias to be able to user ripgrep
+unalias rg
+
 startminikube() {
   minikube start --insecure-registry=192.168.99.1:5000
   # minikube already changes context on `start`
