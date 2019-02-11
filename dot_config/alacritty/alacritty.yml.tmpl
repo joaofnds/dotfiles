@@ -114,7 +114,13 @@ font:
     style: Italic
 
   # Point size
-  size: 18.0
+  {{- if eq .chezmoi.os "linux" }}
+  size: 14.0
+  {{- end }}
+
+  {{- if eq .chezmoi.os "darwin" }}
+    size: 18.0
+  {{- end }}
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
