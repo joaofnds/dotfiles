@@ -1,6 +1,8 @@
+{{- if eq .chezmoi.os "linux" }}
 remove Lock = Caps_Lock
 remove Control = Escape
 keysym Escape = Caps_Lock
 keysym Caps_Lock = Escape
 add Lock = Caps_Lock
 add Control = Escape
+{{- end }}
