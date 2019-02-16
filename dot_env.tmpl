@@ -54,6 +54,15 @@ init_pyenv() {
   fi
 }
 
+# nodenv
+export NODENV_ROOT="$HOME/.nodenv"
+export PATH="$NODENV_ROOT/bin:$PATH"
+init_nodenv() {
+  if command -v nodenv 1>/dev/null 2>&1; then
+    eval "$(nodenv init -)"
+  fi
+}
+
 # flutter
 export FLUTTER_PATH=$HOME/dev/sdk/flutter
 export PATH=$FLUTTER_PATH/bin:$PATH
