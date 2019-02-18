@@ -8,6 +8,7 @@ alias lsdirs='la | rg ^d'
 # git
 alias gbD='git branch --delete $(git branch | fzf -m)'
 alias gcof='gco $(git status -s | fzf -m | awk '\''{ print $2  }'\'' )'
+alias grf='git reset HEAD $(git status -s | fzf -m | awk '\''{ print $2  }'\'')'
 alias gaf='git add $(git status -s | fzf -m | awk '\''{ print $2  }'\'')'
 
 # ruby and rails
