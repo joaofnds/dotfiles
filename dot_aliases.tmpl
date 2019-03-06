@@ -22,6 +22,7 @@ alias dcpp='docker-compose ps'
 alias dcpu='docker-compose up'
 alias dcpd='docker-compose down'
 alias dcpr='docker-compose restart'
+alias drmi='docker rmi $(docker images | sed "1 d" | fzf -m | awk '\''{ print $3  }'\'')'
 alias spawn_postgres='docker run --rm -p 5432:5432 --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:alpine'
 
 # remove `rails generate` alias to be able to user ripgrep
