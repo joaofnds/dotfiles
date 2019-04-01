@@ -50,6 +50,7 @@ Plug 'airblade/vim-gitgutter'
 
 """ Languages
 Plug 'sheerun/vim-polyglot'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 " Plug 'w0rp/ale'
 " Plug 'scrooloose/syntastic'
 
