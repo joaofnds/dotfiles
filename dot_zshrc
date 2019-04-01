@@ -16,7 +16,6 @@ plugins=(
   ruby
   vi-mode
   z
-  zsh-autosuggestions
 )
 
 # Load oh-my-zsh
