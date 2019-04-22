@@ -13,14 +13,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-rsi'
-
 Plug 'scrooloose/nerdtree'
-
-" Asynchronous completion framework
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" Keyword completion system
-Plug 'shougo/neocomplete.vim'
 
 " Snippets plugin
 Plug 'sirver/ultisnips'
@@ -43,16 +36,17 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'thoughtbot/vim-rspec'
 
-
 " Git plugins
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 """ Languages
+
+" General language syntax highlight
 Plug 'sheerun/vim-polyglot'
+
+" Language server protocal integrations
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-" Plug 'w0rp/ale'
-" Plug 'scrooloose/syntastic'
 
 " Rails
 Plug 'tpope/vim-rails'
@@ -61,8 +55,6 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
-" Plug 'uplus/deoplete-solargraph'
-" Plug 'hackhowtofaq/vim-solargraph'
 
 " Go plugins
 Plug 'fatih/vim-go'
