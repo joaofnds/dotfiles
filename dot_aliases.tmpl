@@ -40,7 +40,7 @@ stopminikube() {
 update() {
 
   {{- if eq .chezmoi.os "linux" }}
-  yaourt -Syuua
+  yay -Syu
   {{- end }}
 
   {{- if eq .chezmoi.os "darwin" }}
