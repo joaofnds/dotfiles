@@ -42,7 +42,7 @@ export RBENV_ROOT="$HOME/.rbenv"
 export PATH="$RBENV_ROOT/shims:$PATH"
 # lazy load rbenv
 if type rbenv > /dev/null; then
-  export PATH="${rbenv_ROOT}/bin:${rbenv_ROOT}/shims:${PATH}"
+  export PATH="${RBENV_ROOT}/bin:${RBENV_ROOT}/shims:${PATH}"
   function rbenv() {
     unset -f rbenv
     eval "$(command rbenv init -)"
@@ -86,7 +86,7 @@ export NODENV_ROOT="$HOME/.nodenv"
 export PATH="$NODENV_ROOT/bin:$PATH"
 # lazy load nodenv
 if type nodenv > /dev/null; then
-  export PATH="${nodenv_ROOT}/bin:${nodenv_ROOT}/shims:${PATH}"
+  export PATH="${NODENV_ROOT}/bin:${NODENV_ROOT}/shims:${PATH}"
   function nodenv() {
     unset -f nodenv
     eval "$(command nodenv init -)"
