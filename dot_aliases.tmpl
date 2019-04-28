@@ -46,6 +46,7 @@ update() {
   {{- if eq .chezmoi.os "darwin" }}
   brew update
   brew upgrade
+  brew cask upgrade
   brew cleanup
   {{- end }}
 
