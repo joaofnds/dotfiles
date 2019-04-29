@@ -1,7 +1,7 @@
 alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 
 # files listing
-alias list_notes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
+alias lsnotes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
 alias lsfiles='la | rg ^-'
 alias lsdirs='la | rg ^d'
 
@@ -38,7 +38,6 @@ stopminikube() {
 }
 
 update() {
-
   {{- if eq .chezmoi.os "linux" }}
   yay -Syu
   {{- end }}

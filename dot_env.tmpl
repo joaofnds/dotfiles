@@ -17,14 +17,10 @@ export NVIM_HOME=$HOME/.config/nvim
 export PATH=/usr/local/bin:$PATH
 
 export FZF_DEFAULT_COMMAND='fd --type f'
-FZF_DEFAULT_OPTS='--layout=reverse --inline-info'
+export FZF_DEFAULT_OPTS='--layout=reverse --inline-info'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export NNN_DE_FILE_MANAGER=open
-
-{{- if eq .chezmoi.os "linux" }}
-export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
-{{- end }}
 
 ###############
 ## Languages ##
@@ -32,10 +28,10 @@ export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # Go
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+export PATH=$GOPATH/bin:$PATH
 
 # protobuff
-export PATH=$PATH:$HOME/.local/share/protoc/bin/protoc
+export PATH=$HOME/.local/share/protoc/bin/protoc:$PATH
 
 # ruby
 export RBENV_ROOT="$HOME/.rbenv"
@@ -103,19 +99,19 @@ if type node > /dev/null; then
 fi
 
 # flutter
-export FLUTTER_PATH=$HOME/dev/sdk/flutter
-export PATH=$FLUTTER_PATH/bin:$PATH
+# export FLUTTER_PATH=$HOME/code/sdk/flutter
+# export PATH=$FLUTTER_PATH/bin:$PATH
 
 # JS
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # Android home path for react-native
 {{- if eq .chezmoi.os "linux" }}
-export ANDROID_HOME=~/Android/Sdk
+export ANDROID_HOME=$HOME/Android/Sdk
 {{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
-export ANDROID_HOME=~/Library/Android/sdk
+export ANDROID_HOME=$HOME/Library/Android/sdk
 {{- end }}
 export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
