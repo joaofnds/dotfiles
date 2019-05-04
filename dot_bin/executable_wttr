@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+curl --compressed "wttr.in?format=%c%20%20%t"
