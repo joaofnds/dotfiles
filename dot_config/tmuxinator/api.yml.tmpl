@@ -1,0 +1,43 @@
+# /Users/joaofnds/.config/tmuxinator/api.yml
+
+name: api
+root: ~/code/donamaid/api
+
+{{- if eq .chezmoi.os "linux" }}
+on_project_start: docker-compose up -d
+{{- end }}
+{{- if eq .chezmoi.os "darwin" }}
+on_project_start: docker-compose up -d postgres redis
+{{- end }}
+on_project_stop: docker-compose down
+
+{{- if eq .chezmoi.os "darwin" }}
+# Runs in each window and pane before window/pane specific commands
+pre_window: source env.sh
+{{- end }}
+
+startup_window: editor
+startup_pane: 0
+
+attach: true
+
+{{- if eq .chezmoi.os "linux" }}
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - nvim .
+        - docker-compose exec server bash
+  - logs: tail -f log/development.log
+{{- end }}
+
+{{- if eq .chezmoi.os "darwin" }}
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - nvim .
+        - source env.sh
+  - server: bundle exec rails s
+  - logs: tail -f log/development.log
+{{- end }}
