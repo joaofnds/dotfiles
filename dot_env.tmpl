@@ -33,71 +33,6 @@ export PATH=$GOPATH/bin:$PATH
 # protobuff
 export PATH=$HOME/.local/share/protoc/bin/protoc:$PATH
 
-# ruby
-export RBENV_ROOT="$HOME/.rbenv"
-export PATH="$RBENV_ROOT/shims:$PATH"
-# lazy load rbenv
-if type rbenv > /dev/null; then
-  export PATH="${RBENV_ROOT}/bin:${RBENV_ROOT}/shims:${PATH}"
-  function rbenv() {
-    unset -f rbenv
-    eval "$(command rbenv init -)"
-    rbenv $@
-  }
-fi
-# lazy load ruby
-if type ruby > /dev/null; then
-  function ruby() {
-    unset -f ruby
-    rbenv &>/dev/null
-    ruby $@
-  }
-fi
-
-
-# python
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-# lazy load pyenv
-if type pyenv > /dev/null; then
-  export PATH="${PYENV_ROOT}/bin:${PYENV_ROOT}/shims:${PATH}"
-  function pyenv() {
-    unset -f pyenv
-    eval "$(command pyenv init -)"
-    pyenv $@
-  }
-fi
-# lazy load python
-if type python > /dev/null; then
-  function python() {
-    unset -f python
-    pyenv &>/dev/null
-    python $@
-  }
-fi
-
-
-# nodenv
-export NODENV_ROOT="$HOME/.nodenv"
-export PATH="$NODENV_ROOT/bin:$PATH"
-# lazy load nodenv
-if type nodenv > /dev/null; then
-  export PATH="${NODENV_ROOT}/bin:${NODENV_ROOT}/shims:${PATH}"
-  function nodenv() {
-    unset -f nodenv
-    eval "$(command nodenv init -)"
-    nodenv $@
-  }
-fi
-# lazy load node
-if type node > /dev/null; then
-  function node() {
-    unset -f node
-    nodenv &>/dev/null
-    node $@
-  }
-fi
-
 # flutter
 # export FLUTTER_PATH=$HOME/code/sdk/flutter
 # export PATH=$FLUTTER_PATH/bin:$PATH
@@ -115,3 +50,8 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 {{- end }}
 export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
+
+# asdf version manager
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
