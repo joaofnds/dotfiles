@@ -9,7 +9,13 @@ module.exports = {
     updateChannel: 'stable',
 
     // default font size in pixels for all tabs
+    {{- if eq .chezmoi.os "linux" }}
     fontSize: 20,
+    {{- end }}
+
+    {{- if eq .chezmoi.os "darwin" }}
+    fontSize: 18,
+    {{- end }}
 
     // font family with optional fallbacks
     fontFamily: 'Dank Mono',
