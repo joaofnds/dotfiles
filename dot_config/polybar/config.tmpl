@@ -15,25 +15,25 @@
 ;==========================================================
 
 [colors]
-base00 = ${xrdb:color0:#000000}
-base01 = ${xrdb:color10:#000000}
-base02 = ${xrdb:color11:#000000}
-base03 = ${xrdb:color8:#000000}
-base04 = ${xrdb:color12:#000000}
-base05 = ${xrdb:color7:#000000}
-base06 = ${xrdb:color13:#000000}
-base07 = ${xrdb:color15:#000000}
-base08 = ${xrdb:color1:#000000}
-base09 = ${xrdb:color9:#000000}
-base0A = ${xrdb:color3:#000000}
-base0B = ${xrdb:color2:#000000}
-base0C = ${xrdb:color6:#000000}
-base0D = ${xrdb:color4:#000000}
-base0E = ${xrdb:color5:#000000}
-base0F = ${xrdb:color14:#000000}
+base00 = ${xrdb:color0}
+base01 = ${xrdb:color10}
+base02 = ${xrdb:color11}
+base03 = ${xrdb:color8}
+base04 = ${xrdb:color12}
+base05 = ${xrdb:color7}
+base06 = ${xrdb:color13}
+base07 = ${xrdb:color15}
+base08 = ${xrdb:color1}
+base09 = ${xrdb:color9}
+base0A = ${xrdb:color3}
+base0B = ${xrdb:color2}
+base0C = ${xrdb:color6}
+base0D = ${xrdb:color4}
+base0E = ${xrdb:color5}
+base0F = ${xrdb:color14}
 
-background = ${self.base00}
-foreground = ${self.base05}
+foreground = ${xrdb:foreground}
+background = ${xrdb:background}
 primary = ${self.base0A}
 secondary = ${self.base0B}
 alert = ${self.base0C}
@@ -186,13 +186,13 @@ label-volume-foreground = ${root.foreground}
 label-muted = 
 
 bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
+bar-volume-foreground-0 = ${colors.base00}
+bar-volume-foreground-1 = ${colors.base00}
+bar-volume-foreground-2 = ${colors.base00}
+bar-volume-foreground-3 = ${colors.base00}
+bar-volume-foreground-4 = ${colors.base00}
+bar-volume-foreground-5 = ${colors.base08}
+bar-volume-foreground-6 = ${colors.base0B}
 bar-volume-gradient = false
 bar-volume-indicator = |
 bar-volume-indicator-font = 2
