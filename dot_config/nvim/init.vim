@@ -46,14 +46,6 @@ nnoremap P P=`]<C-o>
 
 filetype indent on
 
-" ================ Colors ==============
-
-set t_Co=256                " Use 256 colours (Use this setting only if your terminal supports 256 colors)
-
-syntax on
-filetype plugin on " Detect filetype and set syntax
-set termguicolors
-
 " ================ Turn Off Swap Files ==============
 
 set noswapfile

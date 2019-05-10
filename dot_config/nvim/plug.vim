@@ -72,8 +72,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'mattn/emmet-vim'
 
 """ Visual
-Plug 'chriskempson/base16-vim'
-
 " Status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
