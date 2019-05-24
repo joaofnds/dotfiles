@@ -26,7 +26,7 @@ windows:
   - editor:
       layout: even-horizontal
       panes:
-        - nvim .
+        - emacs .
         - docker-compose exec server bash
   - logs: tail -f log/development.log
   - git: lazygit
@@ -37,7 +37,7 @@ windows:
   - editor:
       layout: even-horizontal
       panes:
-        - nvim .
+        - emacs .
         - source env.sh
   - server: bundle exec rails s
   - git: lazygit
