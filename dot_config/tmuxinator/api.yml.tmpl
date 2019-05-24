@@ -13,9 +13,7 @@ on_project_stop: docker-compose down
 
 {{- if eq .chezmoi.os "darwin" }}
 # Runs in each window and pane before window/pane specific commands
-pre_window:
-  - asdf shell ruby 2.6.2
-  - source env.sh
+pre_window: source env.sh
 {{- end }}
 
 startup_window: editor
@@ -28,9 +26,10 @@ windows:
   - editor:
       layout: even-horizontal
       panes:
-        - nvim .
+        - emacs .
         - docker-compose exec server bash
   - logs: tail -f log/development.log
+  - git: lazygit
 {{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
@@ -38,7 +37,8 @@ windows:
   - editor:
       layout: even-horizontal
       panes:
-        - nvim .
+        - emacs .
         - source env.sh
   - server: bundle exec rails s
+  - git: lazygit
 {{- end }}

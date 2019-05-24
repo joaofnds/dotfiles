@@ -2,6 +2,7 @@ alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 
 alias t='tmux'
 alias tx='tmuxinator'
+alias e='emacs'
 
 # files listing
 alias lsnotes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
@@ -10,9 +11,10 @@ alias lsdirs='la | rg ^d'
 
 # git
 alias gbD='git branch --delete $(git branch | fzf -m)'
-alias gcof='gco $(git status -s | fzf -m | awk '\''{ print $2  }'\'' )'
-alias grf='git reset HEAD $(git status -s | fzf -m | awk '\''{ print $2  }'\'')'
-alias gaf='git add $(git status -s | fzf -m | awk '\''{ print $2  }'\'')'
+alias gselectwip='git status -s | fzf -m | awk '\''{ print $2  }'\'''
+alias gcof='gselectwip | xargs git checkout --'
+alias grf='gselectwip | xargs git reset HEAD'
+alias gaf='gselectwip | xargs git add'
 
 # ruby and rails
 alias be='bundle exec'
