@@ -26,10 +26,9 @@ windows:
   - editor:
       layout: even-horizontal
       panes:
-        - emacs .
+        - eval $EDITOR .
         - docker-compose exec server bash
   - logs: tail -f log/development.log
-  - git: lazygit
 {{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
@@ -37,8 +36,7 @@ windows:
   - editor:
       layout: even-horizontal
       panes:
-        - emacs .
+        - eval $EDITOR .
         - source env.sh
   - server: bundle exec rails s
-  - git: lazygit
 {{- end }}
