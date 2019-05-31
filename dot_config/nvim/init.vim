@@ -19,15 +19,11 @@ set colorcolumn=80 " Display a column at the 80th column
 set tags=./tags
 set nocompatible
 
-" ================ Resizing ================
+set splitbelow " Default horizontal split direction
+set splitright " Default vertical split direction
+
 " Re-balance when vim is resize
 autocmd VimResized * :wincmd =
-
-" Zoom in with <leader>-
-nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
-
-" Re-balance with <leader>=
-nnoremap <leader>= :wincmd =<cr>
 
 " ================ Indentation ================
 
@@ -91,7 +87,99 @@ set smartcase       " ...unless we type a capital
 
 " fix rubocop offensed with <leader>ra
 nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
+
+" == Buffers
+" buffer next: Go to next buffer
+nnoremap <leader>bn :bn<cr>
+nnoremap <leader>b] :bn<cr>
+" buffer previous: Go to previous buffer
+nnoremap <leader>bp :bp<cr>
+nnoremap <leader>b[ :bp<cr>
+" buffer delete: Delete current buffer
+nnoremap <leader>bd :bd<cr>
+nnoremap <leader>bk :bd<cr>
+" buffer last: Go to last oppened buffer
+nnoremap <leader>bl :bl<cr>
+" buffer save: Writes buffer
+nnoremap <leader>bs :w<cr>
+
+" == Project
+" project .: Open sidebard on current context
+nnoremap <leader>p. :NERDTreeFind<cr>
+" Find files
+nnoremap <leader><leader> :FZF<cr>
+
+" == Git
+" git status: open git
+nnoremap <leader>gs :Gst<cr>
+" git add: git add current buffer
 nnoremap <silent> <leader>ga :silent !git add %<cr>
+
+" == Windows
+" Zoom in
+nnoremap <leader>w- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>wmb :wincmd _<cr>:wincmd \|<cr>
+" Re-balance windows
+nnoremap <leader>w= :wincmd =<cr>
+"Max out the height of the current split
+nnoremap <leader>w_ :wincmd _<cr>
+nnoremap <leader>wms :wincmd _<cr>
+"Max out the width of the current split
+nnoremap <leader>w\| :wincmd \|<cr>
+nnoremap <leader>wmv :wincmd \|<cr>
+" window new: New empty window
+nnoremap <leader>wN :new<cr>
+" window vertical new: New vertical empty window
+nnoremap <leader>wV :bnew<cr>
+" window split: Open a horizontal split
+nnoremap <leader>ws :sp<cr>
+" window vertical split: Open a vertical split
+nnoremap <leader>wv :vsp<cr>
+" window quit: Close current window
+nnoremap <leader>wq :q<cr>
+" window breakout: break out split into window
+nnoremap <leader>wB :wincmd T<cr>
+" window kill others: kill other windows
+nnoremap <leader>wo :wincmd o<cr>
+" window rotate: swaps windows
+nnoremap <leader>wr :wincmd r<cr>
+
+" window left: moves the cursor buffer on the left
+nnoremap <leader>wh :wincmd h<cr>
+" window down: moves the cursor buffer on the bottom
+nnoremap <leader>wj :wincmd j<cr>
+" window up: moves the cursor buffer on the top
+nnoremap <leader>wk :wincmd k<cr>
+" window right: moves the cursor buffer on the right
+nnoremap <leader>wl :wincmd l<cr> 
+
+" window move left: moves buffer to the left
+nnoremap <leader>wH :wincmd H<cr>
+" window move down: moves the buffer to the bottom
+nnoremap <leader>wJ :wincmd J<cr>
+" window move up: moves the buffer to the top
+nnoremap <leader>wK :wincmd K<cr>
+" window move right: moves cursor buffer to the right
+nnoremap <leader>wL :wincmd L<cr> 
+
+" == Toggles
+" toggle sidebar: Open sidebar
+nnoremap <leader>ts :NERDTreeToggle<cr>
+
+" == Files
+" file todo: opens TODO.md in a vertical split
+nnoremap <leader>ft :vsplit ~/TODO.md<cr>
+" find here: sarches for file in the current directory
+nnoremap <leader>f/ :FZF %:p:h<cr>
+nnoremap <leader>ff :FZF %:p:h<cr>
+" find save: writes the buffer (same as <leader>bs)
+nnoremap <leader>fs :w<cr>
+
+" == Open
+" open project: open project sidebar
+nnoremap <leader>op :NERDTreeToggle<cr>
+" open dired: open the current folder
+nnoremap <leader>o- :e .<cr>
 
 runtime macros/matchit.vim
 
