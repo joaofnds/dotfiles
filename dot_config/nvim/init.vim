@@ -106,6 +106,9 @@ nnoremap <leader>bs :w<cr>
 " == Project
 " project .: Open sidebard on current context
 nnoremap <leader>p. :NERDTreeFind<cr>
+nnoremap <leader>p/ :NERDTreeCWD<cr>
+nnoremap <leader>pp :NERDTreeFocus<cr>
+
 " Find files
 nnoremap <leader><leader> :FZF<cr>
 
@@ -180,6 +183,24 @@ nnoremap <leader>fs :w<cr>
 nnoremap <leader>op :NERDTreeToggle<cr>
 " open dired: open the current folder
 nnoremap <leader>o- :e .<cr>
+
+" == Code
+" next definition
+nnoremap <leader>cn :tn<cr>
+" previous definition
+nnoremap <leader>cp :tp<cr>
+" list definitions
+nnoremap <leader>cs :ts<cr>
+
+" jump to definition
+nnoremap <leader>cD <C-]>
+" jump back from definition
+nnoremap <leader>cb <C-t>
+" preview definition
+nnoremap <leader>cP <C-W>}
+" see all definitions
+nnoremap <leader>cL <C-W>}
+
 
 runtime macros/matchit.vim
 
