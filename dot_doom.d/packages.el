@@ -9,3 +9,4 @@
 (package! solarized-theme)
 (package! emamux)
 (package! emamux-ruby-test)
+(package! centaur-tabs)
