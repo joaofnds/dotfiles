@@ -1,5 +1,7 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
+(require 'tmux-pane)
+
 (setq
  doom-font (font-spec :family "Dank Mono" :size 18)
  doom-big-font (font-spec :family "Dank Mono" :size 24)
@@ -7,6 +9,7 @@
  indent-tabs-mode nil
  make-backup-files nil
  projectile-project-search-path '("~/code/")
+ tmux-pane-mode t
  dired-dwim-target t
  org-bullets-bullet-list '("⁖")
  org-tags-column -80)
