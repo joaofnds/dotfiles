@@ -27,7 +27,9 @@ windows:
       layout: even-horizontal
       panes:
         - eval $EDITOR .
-        - docker-compose exec server bash
+        - docker-compose exec server sh
+  - git: lazygit
+  - docker: lazydocker
   - logs: tail -f log/development.log
 {{- end }}
 
@@ -39,4 +41,7 @@ windows:
         - eval $EDITOR .
         - source env.sh
   - server: bundle exec rails s
+  - git: lazygit
+  - docker: lazydocker
+  - logs: tail -f log/development.log
 {{- end }}
