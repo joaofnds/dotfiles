@@ -57,3 +57,18 @@ update() {
 
   asdf update
 }
+
+syncgit() {
+  pushd ~/org
+  git pull
+  popd
+
+  pushd ~/code/dotfiles
+  git pull
+  popd
+
+  pushd ~/code/donamaid/api
+  git pull
+  popd
+}
+
