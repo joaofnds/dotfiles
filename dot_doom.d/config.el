@@ -26,7 +26,15 @@
 (after! org
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
-        :n "M-k" #'org-metaup))
+        :n "M-k" #'org-metaup)
+  (setq
+   org-todo-keywords '((sequence "TODO(t)" "PROJ(p!)" "|" "DONE(d!)")
+                       (sequence "[ ](T)"  "[-](P)"  "[?](M@)" "|" "[X](D!)")
+                       (sequence "NEXT(n)" "WAIT(w@/!)" "HOLD(h@/!)" "|" "ABRT(c@)"))
+   org-enforce-todo-dependencies t
+   org-enforce-todo-checkbox-dependencies t
+   org-log-done 'time
+   org-log-into-drawer t))
 
 (after! ruby
   (add-to-list 'hs-special-modes-alist
