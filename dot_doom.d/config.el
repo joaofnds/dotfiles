@@ -3,6 +3,7 @@
 (require 'tmux-pane)
 
 (setq
+ doom-theme 'doom-solarized-dark
  doom-font (font-spec :family "Dank Mono" :size 18)
  doom-big-font (font-spec :family "Dank Mono" :size 24)
 
