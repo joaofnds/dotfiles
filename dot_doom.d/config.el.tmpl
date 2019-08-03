@@ -4,8 +4,15 @@
 
 (setq
  doom-theme 'doom-solarized-dark
+
+{{- if eq .chezmoi.os "darwin" }}
  doom-font (font-spec :family "Dank Mono" :size 18)
  doom-big-font (font-spec :family "Dank Mono" :size 24)
+{{- end }}
+{{- if eq .chezmoi.os "linux" }}
+ doom-font (font-spec :family "Dank Mono" :size 28)
+ doom-big-font (font-spec :family "Dank Mono" :size 34)
+{{- end }}
 
  display-line-numbers t
  display-line-numbers-type 'relative
