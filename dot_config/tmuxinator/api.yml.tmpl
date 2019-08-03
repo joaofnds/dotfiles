@@ -24,19 +24,17 @@ attach: true
 {{- if eq .chezmoi.os "linux" }}
 windows:
   - editor:
-      layout: even-horizontal
+      layout: main-vertical
       panes:
         - eval $EDITOR .
         - docker-compose exec server sh
-  - git: lazygit
   - docker: lazydocker
-  - logs: tail -f log/development.log
 {{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
 windows:
   - editor:
-      layout: even-horizontal
+      layout: main-vertical
       panes:
         - eval $EDITOR .
         - source env.sh
