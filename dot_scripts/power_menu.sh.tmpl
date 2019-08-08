@@ -1,0 +1,26 @@
+{{- if eq .chezmoi.os "linux" }}
+#!/bin/bash
+
+res=$(echo "lock|logout|reboot|shutdown|hibernate" | rofi -sep "|" -dmenu -i -p 'Power Menu: ' "" -width 9 -l 5 -hide-scrollbar -eh 4 -location 3 -yoffset 20 -padding 12 -opacity 100 -font "Misc Tamsyn 9" -auto-select -no-fullscreen)
+
+if [ $res = "lock" ]; then
+    /usr/local/bin/lock.sh
+fi
+
+if [ $res = "logout" ]; then
+    i3-msg exit
+fi
+
+if [ $res = "reboot" ]; then
+    systemctl reboot
+fi
+
+if [ $res = "shutdown" ]; then
+    systemctl poweroff
+fi
+
+if [ $res = "hibernate" ]; then
+    systemctl hibernate
+fi
+exit 0
+{{- end }}

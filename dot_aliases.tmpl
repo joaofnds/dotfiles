@@ -58,6 +58,16 @@ update() {
   asdf update
 }
 
+update!() {
+  update
+
+  syncgit
+
+  doom update
+  doom upgrade
+  doom autoremove
+}
+
 syncgit() {
   pushd ~/org
   git pull
