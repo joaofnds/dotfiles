@@ -8,3 +8,4 @@
 (package! tmux-pane)
 (package! projectile-rails)
 (package! evil-rails)
+(package! ranger)
