@@ -4,15 +4,18 @@
 
 (setq
  doom-theme 'doom-solarized-dark
+ doom-themes-enable-bold t      ; if nil, bold is universally disabled
+ doom-themes-enable-italic t    ; if nil, italics is universally disabled
+ doom-themes-treemacs-theme "doom-colors" ; use the colorful treemacs theme
 
-{{- if eq .chezmoi.os "darwin" }}
+ {{- if eq .chezmoi.os "darwin" }}
  doom-font (font-spec :family "Dank Mono" :size 18)
  doom-big-font (font-spec :family "Dank Mono" :size 24)
-{{- end }}
-{{- if eq .chezmoi.os "linux" }}
+ {{- end }}
+ {{- if eq .chezmoi.os "linux" }}
  doom-font (font-spec :family "Dank Mono" :size 28)
  doom-big-font (font-spec :family "Dank Mono" :size 34)
-{{- end }}
+ {{- end }}
 
  display-line-numbers t
  display-line-numbers-type 'relative
@@ -30,6 +33,17 @@
 
  org-bullets-bullet-list '("⁖")
  org-tags-column -80)
+
+; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+
+;; Enable custom neotree theme
+(doom-themes-neotree-config)
+;; or for treemacs users
+(doom-themes-treemacs-config)
+
+;; Corrects (and improves) org-mode's native fontification.
+(doom-themes-org-config)
 
 (map! :leader
       :v "e s r" #'emamux:send-region

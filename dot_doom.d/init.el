@@ -28,15 +28,15 @@
        ;;indent-guides     ; highlighted indent columns
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink the current line after jumping
-       ;;neotree           ; a project drawer, like NERDTree for vim
+       neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
        ;;pretty-code       ; replace bits of code with pretty symbols
        ;;tabbar            ; FIXME an (incomplete) tab bar for Emacs
-       treemacs          ; a project drawer, like neotree but cooler
-       ;;unicode           ; extended unicode support for various languages
+       ;; treemacs          ; a project drawer, like neotree but cooler
+       unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
@@ -178,3 +178,47 @@
        ;; provides a Spacemacs-inspired keybinding scheme and a smartparens
        ;; config. Use it as a reference for your own modules.
        (default +bindings +smartparens))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
+ '(custom-safe-themes
+   (quote
+    ("cb477d192ee6456dc2eb5ca5a0b7bd16bdb26514be8f8512b937291317c7b166" default)))
+ '(fci-rule-color "#405A61")
+ '(jdee-db-active-breakpoint-face-colors (cons "#073642" "#268bd2"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#073642" "#859900"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
+ '(objed-cursor-color "#dc322f")
+ '(vc-annotate-background "#002b36")
+ '(vc-annotate-color-map
+   (list
+    (cons 20 "#859900")
+    (cons 40 "#959300")
+    (cons 60 "#a58e00")
+    (cons 80 "#b58900")
+    (cons 100 "#bc7407")
+    (cons 120 "#c35f0e")
+    (cons 140 "#cb4b16")
+    (cons 160 "#cd4439")
+    (cons 180 "#d03d5d")
+    (cons 200 "#d33682")
+    (cons 220 "#d63466")
+    (cons 240 "#d9334a")
+    (cons 260 "#dc322f")
+    (cons 280 "#ba3f41")
+    (cons 300 "#994d54")
+    (cons 320 "#775b67")
+    (cons 340 "#405A61")
+    (cons 360 "#405A61")))
+ '(vc-annotate-very-old-color nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
