@@ -87,3 +87,13 @@ syncgit() {
 npmkill () {
   fd -H -E '.vscode' -E '.config' -E '.local' -E '.npm' -E '.nodenv' -t 'd' 'node_modules' . | fzf -m
 }
+
+function video-to-gif() {
+  movie=$1
+  height=$(mdls -name kMDItemPixelHeight ${movie} | rg -o '[0-9]+')
+  width=$(mdls -name kMDItemPixelWidth ${movie} | rg -o '[0-9]+')
+  dimensions="${width}x${height}"
+  filename=$(basename "$movie")
+  name="${filename%.*}"
+  ffmpeg -i ${movie} -s ${dimensions} -pix_fmt rgb24 -r 10 -f gif ${name}.gif
+}
