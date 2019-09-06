@@ -1,0 +1,48 @@
+{{- if eq .chezmoi.os "linux" }}
+[Default Applications]
+inode/directory=pantheon-files.desktop
+x-scheme-handler/trash=pantheon-files.desktop
+
+text/html=google-chrome.desktop
+application/xhtml+xml=google-chrome.desktop
+application/rss+xml=google-chrome.desktop
+application/rdf+xml=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+text/xml=google-chrome.desktop
+
+text/plain=emacs.desktop
+text/css=emacs.desktop
+text/javascript=emacs.desktop
+text/mathml=emacs.desktop
+text/x-c++hdr=emacs.desktop
+text/x-c++src=emacs.desktop
+text/x-csrc=emacs.desktop
+text/x-chdr=emacs.desktop
+text/x-dtd=emacs.desktop
+text/x-java=emacs.desktop
+text/x-javascript=emacs.desktop
+text/x-makefile=emacs.desktop
+text/x-moc=emacs.desktop
+text/x-pascal=emacs.desktop
+text/x-patch=emacs.desktop
+text/x-perl=emacs.destkop
+text/x-php=emacs.destkop
+text/x-python=emacs.destkop
+text/x-sql=emacs.desktop
+text/x-tcl=emacs.desktop
+text/x-tex=emacs.desktop
+application/javascript=emacs.destkop
+application/x-cgi=emacs.desktop
+application/x-javascript=emacs.desktop
+application/x-perl=emacs.desktop
+application/x-php=emacs.desktop
+application/x-python=emacs.desktop
+application/x-shellscript=emacs.desktop
+application/xml=emacs.desktop
+application/xml-dtd=emacs.desktop
+
+[Added Associations]
+inode/directory=pantheon-files.desktop;
+x-scheme-handler/trash=pantheon-files.desktop;
+{{- end }}
