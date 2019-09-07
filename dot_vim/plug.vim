@@ -57,7 +57,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
 
 " Go plugins
-Plug 'fatih/vim-go'
+Plug 'govim/govim'
 
 " HTML plugins
 Plug 'mattn/emmet-vim'
