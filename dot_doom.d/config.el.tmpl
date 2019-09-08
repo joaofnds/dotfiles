@@ -47,6 +47,9 @@
 ;; Corrects (and improves) org-mode's native fontification.
 (doom-themes-org-config)
 
+;; Turn on the local ~projectile-rails-mode~ for the buffers which belong to a Rails project (either application or an engine).
+(projectile-rails-global-mode)
+
 (map! :leader
       :v "e s r" #'emamux:send-region
       :n "e s c" #'emamux:send-command)

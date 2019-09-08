@@ -7,4 +7,3 @@
 (package! emamux-ruby-test)
 (package! tmux-pane)
 (package! projectile-rails)
-(package! evil-rails)
