@@ -65,7 +65,8 @@ update!() {
 
   doom update
   doom upgrade
-  doom autoremove
+  doom purge
+  doom refresh
 }
 
 syncgit() {
@@ -82,3 +83,7 @@ syncgit() {
   popd
 }
 
+
+npmkill () {
+  fd -H -E '.vscode' -E '.config' -E '.local' -E '.npm' -E '.nodenv' -t 'd' 'node_modules' . | fzf -m
+}
