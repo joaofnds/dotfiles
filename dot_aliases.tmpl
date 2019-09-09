@@ -49,23 +49,26 @@ update() {
   {{- end }}
 
   {{- if eq .chezmoi.os "darwin" }}
+  update-brew
+  {{- end }}
+
+  syncgit
+  update-doom
+}
+
+{{- if eq .chezmoi.os "darwin" }}
+update-brew() {
   brew update
   brew upgrade
   brew cask upgrade
   brew cleanup
-  {{- end }}
-
-  asdf update
 }
+{{- end }}
 
-update!() {
-  update
-
-  syncgit
-
-  doom update
+update-doom() {
   doom upgrade
   doom purge
+  doom autoloads
   doom refresh
 }
 
