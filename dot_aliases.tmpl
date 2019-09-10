@@ -54,6 +54,8 @@ update() {
 
   syncgit
   update-doom
+
+  noti --title 'Finished update' --message ''
 }
 
 {{- if eq .chezmoi.os "darwin" }}
