@@ -18,7 +18,6 @@ alias gaf='gselectwip | xargs git add'
 
 # ruby and rails
 alias be='bundle exec'
-alias ruba='be rubocop -REa -f fu'
 
 # docker
 alias dcp='docker-compose'
@@ -54,6 +53,7 @@ update() {
 
   syncgit
   update-doom
+  vim +PlugUpgrade +PlugUpdate +PlugClean +qall
 
   noti --title 'Finished update' --message ''
 }
