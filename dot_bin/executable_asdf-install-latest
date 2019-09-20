@@ -2,24 +2,33 @@
 
 require 'scanf'
 
-plugins = [
-  "clojure",
-  "crystal",
-  "dart",
-  "erlang",
-  "elixir",
-  "elm",
-  "golang",
-  "haskell",
-  # "java",
-  "kotlin",
-  "kubectl",
-  "minikube",
-  "nodejs",
-  "protoc",
-  "python",
-  "ruby",
-  "rust",
+plugins = %w[
+  clojure
+  cmake
+  crystal
+  dart
+  deno
+  elixir
+  elm
+  erlang
+  flutter
+  golang
+  haskell
+  imagemagick
+  java
+  kotlin
+  kubectl
+  minikube
+  mongodb
+  mysql
+  nodejs
+  postgres
+  protoc
+  python
+  redis
+  ruby
+  rust
+  sqlite
 ]
 
 def fill(arr, len, fill_value)
