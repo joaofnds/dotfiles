@@ -13,7 +13,7 @@ plugins=(encode64 git z)
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
-export EDITOR='emacs -nw'
+export EDITOR=vim
 
 # TMUX helpers
 _not_inside_tmux() { [[ -z "$TMUX" ]] }
