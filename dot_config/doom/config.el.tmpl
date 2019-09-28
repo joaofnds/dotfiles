@@ -48,11 +48,11 @@
 (doom-themes-org-config)
 
 ;; Turn on the local ~projectile-rails-mode~ for the buffers which belong to a Rails project (either application or an engine).
-(projectile-rails-global-mode)
+;;(projectile-rails-global-mode)
 
-(map! :leader
-      :v "e s r" #'emamux:send-region
-      :n "e s c" #'emamux:send-command)
+;;(map! :leader
+;;      :v "e s r" #'emamux:send-region
+;;      :n "e s c" #'emamux:send-command)
 
 (after! org
   (map! :map org-mode-map
@@ -66,11 +66,3 @@
    org-enforce-todo-checkbox-dependencies t
    org-log-done 'time
    org-log-into-drawer t))
-
-(after! ruby
-  (add-to-list 'hs-special-modes-alist
-               `(ruby-mode
-                 ,(rx (or "def" "class" "module" "do" "{" "[")) ; Block start
-                 ,(rx (or "}" "]" "end"))                       ; Block end
-                 ,(rx (or "#" "=begin"))                        ; Comment start
-                 ruby-forward-sexp nil)))
