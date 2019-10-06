@@ -1,68 +1,90 @@
-;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
+; -*- mode: emacs-lisp; lexical-binding: t; -*-
 
 (require 'tmux-pane)
 
-(setq
+(setq initial-frame-alist '((width . 120) (height . 50))
 
- initial-frame-alist '((width . 100) (height . 50))
+      ;; doom
+      doom-theme 'doom-solarized-dark
+      doom-themes-enable-bold t      ; if nil, bold is universally disabled
+      doom-themes-enable-italic t    ; if nil, italics is universally disabled
+      {{- if eq .chezmoi.os "darwin" }}
+      doom-font (font-spec :family "Dank Mono" :weight 'normal :size 18)
+      doom-big-font (font-spec :family "Dank Mono" :weight 'normal :size 24)
+      {{- end }}
+      {{- if eq .chezmoi.os "linux" }}
+      doom-font (font-spec :family "Dank Mono" :weight 'normal :size 28)
+      doom-big-font (font-spec :family "Dank Mono" :weight 'normal :size 34)
+      {{- end }}
 
- doom-theme 'doom-solarized-dark
- doom-themes-enable-bold t      ; if nil, bold is universally disabled
- doom-themes-enable-italic t    ; if nil, italics is universally disabled
+      ;; line numbers
+      display-line-numbers t
+      display-line-numbers-type 'relative
+      display-line-numbers-current-absolute t
 
- {{- if eq .chezmoi.os "darwin" }}
- doom-font (font-spec :family "Dank Mono" :size 18)
- doom-big-font (font-spec :family "Dank Mono" :size 24)
- {{- end }}
- {{- if eq .chezmoi.os "linux" }}
- doom-font (font-spec :family "Dank Mono" :size 28)
- doom-big-font (font-spec :family "Dank Mono" :size 34)
- {{- end }}
+      ;; indentation
+      tab-width 2
+      indent-tabs-mode nil
 
- display-line-numbers t
- display-line-numbers-type 'relative
- display-line-numbers-current-absolute t
+      ;; projectile
+      make-backup-files nil
+      projectile-project-search-path '("~/code/")
+      projectile-enable-caching nil
 
- tab-width 2
- indent-tabs-mode nil
+      ;; ivy
+      +ivy-project-search-engines '(ag rg)
 
- make-backup-files nil
- projectile-project-search-path '("~/code/")
+      ;; enabled modes
+      tmux-pane-mode t
 
- +ivy-project-search-engines '(ag rg)
+      dired-dwim-target t)
 
- tmux-pane-mode t
 
- dired-dwim-target t
-
- org-bullets-bullet-list '("⁖")
- org-tags-column -80)
-
-; Enable flashing mode-line on errors
+;; Enable flashing mode-line on errors
 (doom-themes-visual-bell-config)
 
 ;; Enable custom neotree theme
-(doom-themes-neotree-config)
+;;(doom-themes-neotree-config)
 
 ;; Corrects (and improves) org-mode's native fontification.
 (doom-themes-org-config)
-
-;; Turn on the local ~projectile-rails-mode~ for the buffers which belong to a Rails project (either application or an engine).
-;;(projectile-rails-global-mode)
-
-;;(map! :leader
-;;      :v "e s r" #'emamux:send-region
-;;      :n "e s c" #'emamux:send-command)
 
 (after! org
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
-  (setq
-   org-todo-keywords '((sequence "TODO(t)" "PROJ(p!)" "|" "DONE(d!)")
-                       (sequence "[ ](T)"  "[-](P)"  "[?](M@)" "|" "[X](D!)")
-                       (sequence "NEXT(n)" "WAIT(w@/!)" "HOLD(h@/!)" "|" "ABRT(c@)"))
-   org-enforce-todo-dependencies t
-   org-enforce-todo-checkbox-dependencies t
-   org-log-done 'time
-   org-log-into-drawer t))
+  (setq org-todo-keywords '((sequence "TODO(t)" "PROJ(p!)" "|" "DONE(d!)")
+                            (sequence "[ ](T)"  "[-](P)"  "[?](M@)" "|" "[X](D!)")
+                            (sequence "NEXT(n)" "WAIT(w@/!)" "HOLD(h@/!)" "|" "ABRT(c@)"))
+        ;; custom char for org bullets
+        org-bullets-bullet-list '("⁖")
+        ;; The column to which tags should be indented in a headline
+        org-tags-column -80
+        ;; Non-nil means undone TODO entries will block switching the parent to DONE
+        org-enforce-todo-dependencies t
+        ;; Non-nil means unchecked boxes will block switching the parent to DONE
+        org-enforce-todo-checkbox-dependencies t
+        ;; Information to record when a task moves to the DONE state.
+        org-log-done 'time
+        ;; Non-nil means insert state change notes and time stamps into a drawer
+        org-log-into-drawer t))
+
+(add-hook! '(go-mode-hook js2-mode-hook enh-ruby-mode-hook)
+           #'(hs-minor-mode lsp-deferred yas-minor-mode))
+
+(add-hook 'emacs-lisp-mode-hook #'hs-minor-mode)
+(add-hook 'org-mode-hook #'yas-minor-mode)
+
+(add-to-list 'hs-special-modes-alist
+             '(ruby-mode "\\(def\\|do\\|class\\|begin\\|ensure\\|if\\|unless\\|{\\)"
+                         "\\(end\\|end\\|end\\|end\\|end\\|end\\|end\\|}\\)"
+                         "#"
+                         (lambda (arg) (ruby-end-of-block))
+                         nil))
+
+(map! :leader
+      :n "l d" #'lsp-find-definition
+      :n "l R" #'lsp-find-references
+      :n "l r" #'lsp-rename
+      :n "l f" #'lsp-format-region
+      :n "l F" #'lsp-format-buffer)

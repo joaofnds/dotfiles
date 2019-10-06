@@ -1,14 +1,7 @@
-;; -*- no-byte-compile: t; -*-
-;;; .doom.d/packages.el
+; -*- mode: emacs-lisp; no-byte-compile: t; -*-
 
-;;(package! emamux)
-;;(package! emamux-ruby-test)
+;; Negivate seamlessly between tmux and emacs
 (package! tmux-pane)
 
-
-(package! projectile)
 (package! projectile-rails)
-
-;; Convert english words between singular and plural.
-;; Needed by projectile-rails
-(package! inflections)
+(package! inflections) ; Needed by projectile-rails
