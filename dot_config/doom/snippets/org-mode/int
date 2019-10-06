@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: int
+# --
+\int${1:_${2:a}^${3:b}} ${4:f(x)} \,\mathrm{d}x $0
