@@ -43,20 +43,21 @@
 
        :editor
        (evil +everywhere) ; come to the dark side, we have cookies
+       file-templates    ; auto-snippets for empty files
+       multiple-cursors  ; editing in many places at once
        snippets           ; my elves. They type so I don't have to
-       ;; fold               ; (nigh) universal code folding
-
-       ;;file-templates    ; auto-snippets for empty files
-       ;;(format +onsave)  ; automated prettiness
-       ;;lispy             ; vim for lisp, for people who dont like vim
-       ;;multiple-cursors  ; editing in many places at once
-       ;;objed             ; text object editing for the innocent
+       ;;fold               ; (nigh) universal code folding
        ;;parinfer          ; turn lisp into python, sort of
+       ;;lispy             ; vim for lisp, for people who dont like vim
+
+       ;;(format +onsave)  ; automated prettiness
+       ;;objed             ; text object editing for the innocent
        ;;rotate-text       ; cycle region at point between text candidates
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       dired   ; making dired pretty [functional]
+       (dired            ; making dired pretty [functional]
+        +ranger)         ; bringing the goodness of ranger to dired
 
        ;;electric          ; smarter, keyword-based electric-indent
        ;;vc                ; version-control and Emacs, sitting in a tree
