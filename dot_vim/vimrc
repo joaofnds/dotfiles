@@ -25,6 +25,9 @@ set splitright " Default vertical split direction
 " Re-balance when vim is resize
 autocmd VimResized * :wincmd =
 
+" Remove visual selection with <esc>
+noremap <silent><esc> <esc>:nohl<CR><esc>
+
 " ================ Indentation ================
 
 set autoindent
