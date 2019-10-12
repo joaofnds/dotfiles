@@ -5,3 +5,4 @@
 
 (package! projectile-rails)
 (package! inflections) ; Needed by projectile-rails
+(package! evil-lion)
