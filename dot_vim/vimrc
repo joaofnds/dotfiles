@@ -26,7 +26,8 @@ set splitright " Default vertical split direction
 autocmd VimResized * :wincmd =
 
 " Remove visual selection with <esc>
-noremap <silent><esc> <esc>:nohl<CR><esc>
+nnoremap <esc> :nohlsearch<return><esc>
+nnoremap <esc>^[ <esc>^[
 
 " ================ Indentation ================
 
