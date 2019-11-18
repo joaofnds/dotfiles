@@ -1,6 +1,7 @@
 ; -*- mode: emacs-lisp; lexical-binding: t; -*-
 
 (require 'tmux-pane)
+
 (evil-lion-mode)
 
 (setq initial-frame-alist '((width . 120) (height . 50))
@@ -9,14 +10,14 @@
       doom-theme 'doom-solarized-dark
       doom-themes-enable-bold t      ; if nil, bold is universally disabled
       doom-themes-enable-italic t    ; if nil, italics is universally disabled
-      {{- if eq .chezmoi.os "darwin" }}
+      {{- if eq .chezmoi.os "darwin"}}
       doom-font (font-spec :family "Dank Mono" :weight 'normal :size 18)
       doom-big-font (font-spec :family "Dank Mono" :weight 'normal :size 24)
-      {{- end }}
-      {{- if eq .chezmoi.os "linux" }}
+      {{- end}}
+      {{- if eq .chezmoi.os "linux"}}
       doom-font (font-spec :family "Dank Mono" :weight 'normal :size 28)
       doom-big-font (font-spec :family "Dank Mono" :weight 'normal :size 34)
-      {{- end }}
+      {{- end}}
 
       ;; line numbers
       display-line-numbers t
@@ -38,7 +39,41 @@
       ;; enabled modes
       tmux-pane-mode t
 
-      dired-dwim-target t)
+      dired-dwim-target t
+
+      line-spacing '0.25
+
+      ;; Set text centered and wrapped
+      visual-fill-column-width 120
+      visual-fill-column-center-text t
+
+      ;; make the fringe stand out from the background
+      solarized-distinct-fringe-background t
+
+      ;; Don't change the font for some headings and titles
+      solarized-use-variable-pitch nil
+
+      ;; make the modeline high contrast
+      solarized-high-contrast-mode-line t
+
+      ;; Use less bolding
+      solarized-use-less-bold nil
+
+      ;; Use more italics
+      solarized-use-more-italic t
+
+      ;; Use less colors for indicators such as git:gutter, flycheck and similar
+      solarized-emphasize-indicators nil
+
+      ;; Don't change size of org-mode headlines (but keep other size-changes)
+      solarized-scale-org-headlines nil
+
+      ;; Avoid all font-size changes
+      solarized-height-minus-1 1.0
+      solarized-height-plus-1 1.0
+      solarized-height-plus-2 1.0
+      solarized-height-plus-3 1.0
+      solarized-height-plus-4 1.0)
 
 
 ;; Enable flashing mode-line on errors
