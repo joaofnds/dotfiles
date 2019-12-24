@@ -47,6 +47,10 @@ stopminikube() {
 }
 
 update() {
+  tmux new-window -n  'doom' 'doom upgrade && exit'
+  tmux new-window -n 'vim' 'vim +PlugUpgrade +PlugUpdate +PlugClean +qall && exit'
+  tmux new-window -n 'asdf' 'asdf plugin-update --all'
+
   {{- if eq .chezmoi.os "linux" }}
   yay -Syu
   {{- end }}
@@ -54,12 +58,6 @@ update() {
   {{- if eq .chezmoi.os "darwin" }}
   update-brew
   {{- end }}
-
-  syncgit
-  update-doom
-  vim +PlugUpgrade +PlugUpdate +PlugClean +qall
-
-  noti --title 'Finished update' --message ''
 }
 
 {{- if eq .chezmoi.os "darwin" }}
@@ -70,13 +68,6 @@ update-brew() {
   brew cleanup
 }
 {{- end }}
-
-update-doom() {
-  doom upgrade
-  doom purge
-  doom autoloads
-  doom refresh
-}
 
 syncgit() {
   pushd ~/notes
