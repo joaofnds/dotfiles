@@ -45,9 +45,6 @@ Plug 'airblade/vim-gitgutter'
 " General language syntax highlight
 Plug 'sheerun/vim-polyglot'
 
-" Language server protocal integrations
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-
 " Rails
 Plug 'tpope/vim-rails'
 
@@ -55,9 +52,6 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
-
-" Go plugins
-Plug 'govim/govim'
 
 " HTML plugins
 Plug 'mattn/emmet-vim'
