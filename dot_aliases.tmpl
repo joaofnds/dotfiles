@@ -1,3 +1,5 @@
+# -*- mode: sh; -*-
+
 alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 
 alias t='tmux'
@@ -29,6 +31,8 @@ alias dcpr='docker-compose restart'
 alias drmi='docker rmi $(docker images | sed "1 d" | fzf -m | awk '\''{ print $3  }'\'')'
 alias spawn_postgres='docker run --rm -p 5432:5432 --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:alpine'
 alias spawn_nginx='docker run --rm --name nginx -v $PWD:/usr/share/nginx/html -p 3000:80 -d nginx:alpine nginx -g "daemon off;"'
+
+alias ddc='ddcctl -d 1 -b'
 
 startminikube() {
   minikube start --insecure-registry=192.168.99.1:5000
