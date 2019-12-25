@@ -49,9 +49,6 @@ def sem_ver(version_str)
 end
 
 def greater_version(a, b)
-  return -1 if a == 'stable'
-  return 1 if b == 'stable'
-
   a_major, a_minor, a_patch = sem_ver(a)
   b_major, b_minor, b_patch = sem_ver(b)
 
@@ -69,19 +66,22 @@ end
 
 def install_plugin(plugin)
   `asdf plugin-add #{plugin}`
-  sorted_versions = `asdf list-all #{plugin}`
-  .split("\n")
-.grep(/^(\d+(\.\d+){1,2}|stable)$/)
-  .sort { |a, b| greater_version(a, b) }
+  sorted_versions =
+    `asdf list-all #{plugin}`
+      .split("\n")
+      .grep(/^\d+(\.\d+){1,2}$/)
+      .sort { |a, b| greater_version(a, b) }
 
   if sorted_versions.empty?
-  puts "could not find versions for #{plugin}"
+    puts "could not find versions for #{plugin}"
   else
-  latest_version = sorted_versions[0]
-  puts "installing #{plugin}: #{latest_version}"
-  `asdf install #{plugin} #{latest_version}`
-  puts "setting asdf global #{plugin} #{latest_version}"
-  `asdf global #{plugin} #{latest_version}`
+    latest_version = sorted_versions[0]
+
+    puts "installing #{plugin}: #{latest_version}"
+    `asdf install #{plugin} #{latest_version}`
+
+    puts "setting asdf global #{plugin} to #{latest_version}"
+    `asdf global #{plugin} #{latest_version}`
   end
 end
 
