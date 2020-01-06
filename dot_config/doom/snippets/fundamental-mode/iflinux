@@ -1,0 +1,4 @@
+# key: iflinux
+# --
+{{- if eq .chezmoi.os "linux" }}
+{{- end }}
