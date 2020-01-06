@@ -36,3 +36,4 @@
 	user = joaofnds
 [diff]
 	algorithm = histogram
+	indentHeuristic = true
