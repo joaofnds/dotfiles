@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+ueberzug_library=`ueberzug library`
+source "$ueberzug_library"
+
+read height width < <(stty size)
+
+ImageLayer 0< <(
+    ImageLayer::add [identifier]="$1" [path]="$1" [x]=0 [y]=0 [max_height]="$height" [max_width]="$width"
+    read
+    ImageLayer::remove [identifier]="$1"
+) &> /dev/null
