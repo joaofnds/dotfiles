@@ -1,6 +1,8 @@
 # interpreter for shell commands (needs to be POSIX compatible)
 set shell sh
 
+set color256
+
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
 # exit on error and option '-u' is used to give error for unset variables.
@@ -20,7 +22,7 @@ set ifs "\n"
 # leave some space at the top and the bottom of the screen
 set scrolloff 10
 
-set previewer bat
+set previewer preview
 
 # use enter for shell commands
 map <enter> shell

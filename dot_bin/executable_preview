@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+case "$1" in
+    *.tar*) tar tf "$1";;
+    *.zip) unzip -l "$1";;
+    *.rar) unrar l "$1";;
+    *.7z) 7z l "$1";;
+    *.pdf) pdftotext "$1" -;;
+    *.png|*.jpg|*.jpeg|*.gif) chafa --fill=block -c 256 "$1";;
+    *.mp4) echo "Video file";;
+    *) bat --color=always --theme=base16 --plain "$1";;
+esac
