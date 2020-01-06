@@ -34,3 +34,5 @@
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [github]
 	user = joaofnds
+[diff]
+	algorithm = histogram
