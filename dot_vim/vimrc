@@ -21,6 +21,8 @@ set nocompatible
 
 set splitbelow " Default horizontal split direction
 set splitright " Default vertical split direction
+set diffopt+=algorithm:patience
+set diffopt+=indent-heuristic
 
 " Re-balance when vim is resize
 autocmd VimResized * :wincmd =
