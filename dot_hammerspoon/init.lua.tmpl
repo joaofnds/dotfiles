@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "darwin" }}
 function get_window_under_mouse()
   local pos = hs.geometry.new(hs.mouse.getAbsolutePosition())
   local screen = hs.mouse.getCurrentScreen()
@@ -55,3 +56,4 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
 end)
 
 hs.alert.show("Config Reloaded")
+{{- end }}
