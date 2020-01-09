@@ -1,0 +1,21 @@
+name: sucupira
+root: ~/code/indeorum/sucupira-sync
+
+on_project_start: docker-compose up -d
+on_project_stop: docker-compose down
+
+startup_window: editor
+startup_pane: 0
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - vim .
+        - docker-compose exec airflow bash
+        - docker-compose exec mongo bash
+  - monitoring:
+      layout: even-horizontal
+      panes:
+        - lazydocker
+        - gotop
