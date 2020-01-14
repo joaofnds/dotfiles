@@ -1,9 +1,0 @@
-{{- if eq .chezmoi.os "linux" }}
-fading = true;			    # Fade windows during opacity changes.
-
-# Each step changes 1% of opacity, taking 1 millisecond.
-# So a complete fade (out+in) transition takes 200 milliseconds
-fade-delta = 1;		      # The time between steps in a fade in milliseconds. (default 10).
-fade-in-step = 0.01;		# Opacity change between steps while fading in. (default 0.028).
-fade-out-step = 0.01;		# Opacity change between steps while fading out. (default 0.03).
-{{- end }}
