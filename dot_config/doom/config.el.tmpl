@@ -4,7 +4,10 @@
 
 (evil-lion-mode)
 
-(setq initial-frame-alist '((width . 120) (height . 50))
+(setq user-full-name "João Fernandes"
+      user-email-address "joaofnds@joaofnds.com"
+
+      initial-frame-alist '((width . 120) (height . 50))
 
       ;; doom
       doom-theme 'doom-solarized-dark
@@ -18,6 +21,9 @@
       doom-font (font-spec :family "Dank Mono" :weight 'normal :size 28)
       doom-big-font (font-spec :family "Dank Mono" :weight 'normal :size 34)
       {{- end}}
+
+      ;; org
+      org-directory "~/notes/"
 
       ;; line numbers
       display-line-numbers t
