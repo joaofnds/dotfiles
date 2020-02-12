@@ -5,9 +5,7 @@ require 'scanf'
 _ = %w[
   crystal
   dart
-  deno
   flutter
-  imagemagick
   kotlin
   kubectl
   minikube
@@ -20,11 +18,13 @@ _ = %w[
 plugins = %w[
   clojure
   cmake
-  elixir
+  deno
   elm
   erlang
+  elixir
   golang
   haskell
+  imagemagick
   java
   nodejs
   postgres
