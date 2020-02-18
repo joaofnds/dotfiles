@@ -49,7 +49,7 @@ stopminikube() {
 }
 
 update() {
-  tmux new-window -n  'doom' 'doom upgrade'
+  tmux new-window -n  'doom' 'doom --yes upgrade'
   tmux new-window -n 'vim' 'vim +PlugUpgrade +PlugUpdate +PlugClean +qall'
   tmux new-window -n 'asdf' 'asdf plugin-update --all'
 
