@@ -13,25 +13,26 @@ _ = %w[
   mysql
   protoc
   sqlite
+  deno
 ]
 
 plugins = %w[
+  java
   clojure
   cmake
-  deno
   elm
   erlang
   elixir
   golang
   haskell
   imagemagick
-  java
   nodejs
   postgres
   python
   redis
   ruby
   rust
+  shellcheck
 ]
 
 def fill(arr, len, fill_value)
