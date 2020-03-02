@@ -7,6 +7,7 @@ alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
 alias t='tmux'
 alias tx='tmuxinator'
 alias txstart='tmuxinator list -n | tail -n +2 | fzf | xargs tmuxinator start'
+alias tatt='tmux attach -t $(tmux ls | fzf -1 | cut -d: -f1)'
 alias e='emacs'
 
 # files listing
