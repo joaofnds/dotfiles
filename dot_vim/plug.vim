@@ -1,5 +1,4 @@
-" ================ Install vim-plug if not installed ==============
-
+" Install vim-plug if not installed
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -8,55 +7,43 @@ endif
 
 call plug#begin()
 " General plugins
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-surround'   " mappings to {delete,change,add} surrounding pairs
+Plug 'tpope/vim-commentary' " comment stuf out
+Plug 'tpope/vim-repeat'     " repeat commands event after a plugin map
+Plug 'tpope/vim-sensible'   " Sensible vim defaults
+Plug 'tpope/vim-rsi'        " Readline keybinds
 Plug 'scrooloose/nerdtree'
 
-" Snippets plugin
-Plug 'sirver/ultisnips'
-
-" Snippets bundle
-Plug 'honza/vim-snippets'
-
-" Formatting
-Plug 'jiangmiao/auto-pairs'
+" # Formatting
 Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
 
-" Shell util integrations
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" # Shell util integrations
+Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
-
-Plug 'jremmen/vim-ripgrep'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'thoughtbot/vim-rspec'
 
-" Git plugins
+" # Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-""" Languages
+" # Languages and Projects
 
-" General language syntax highlight
-Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-projectionist' " granular project configuration
 
-" Rails
+" ## LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" ## Rails
 Plug 'tpope/vim-rails'
 
-" Ruby
-Plug 'tpope/vim-endwise'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
+" # Visual
+" Theme
+Plug 'altercation/vim-colors-solarized'
 
-" HTML plugins
-Plug 'mattn/emmet-vim'
-
-""" Visual
 " Status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'

@@ -21,10 +21,12 @@ set nocompatible
 
 set splitbelow " Default horizontal split direction
 set splitright " Default vertical split direction
+
+" Better diff algorithms
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
 
-" Re-balance when vim is resize
+" Re-balance when vim is resized
 autocmd VimResized * :wincmd =
 
 " Remove visual selection with <esc>
@@ -47,6 +49,15 @@ nnoremap p p=`]<C-o>
 nnoremap P P=`]<C-o>
 
 filetype indent on
+
+" Identation for python files
+autocmd BufNewFile,BufRead *.py
+    \ set expandtab         " replace tabs with spaces
+    \ set autoindent        " copy indent when starting a new line
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set foldmethod=indent " indent based on spaces
 
 " ================ Turn Off Swap Files ==============
 
@@ -71,8 +82,10 @@ set nofoldenable        "dont fold by default
 " ================ Completion =======================
 
 set wildmode=list:longest
-set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildmenu                " enable ctrl-n and ctrl-p to scroll thru matches
+
+" stuff to ignore when tab completing
+set wildignore=*.o,*.obj,*~
 set wildignore+=*vim/backups*
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
@@ -82,129 +95,138 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 
-" ================ Search ===========================
+" # Search
 
 set incsearch       " Find the next match as we type the search
 set hlsearch        " Highlight searches by default
 set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
 
-" ================ keymaps ===========================
+" # Keymaps
 
-" fix rubocop offensed with <leader>ra
-nnoremap <silent> <leader>ra :silent !bundle exec rubocop -a %<cr>
+" ## Buffers
 
-" == Buffers
 " buffer next: Go to next buffer
 nnoremap <leader>bn :bn<cr>
 nnoremap <leader>b] :bn<cr>
+
 " buffer previous: Go to previous buffer
 nnoremap <leader>bp :bp<cr>
 nnoremap <leader>b[ :bp<cr>
+
 " buffer delete: Delete current buffer
 nnoremap <leader>bd :bd<cr>
 nnoremap <leader>bk :bd<cr>
+
 " buffer last: Go to last oppened buffer
 nnoremap <leader>bl :bl<cr>
+
 " buffer save: Writes buffer
 nnoremap <leader>bs :w<cr>
 
-" == Project
-" project .: Open sidebard on current context
-nnoremap <leader>p. :NERDTreeFind<cr>
-nnoremap <leader>p/ :NERDTreeCWD<cr>
-nnoremap <leader>pp :NERDTreeFocus<cr>
+" ## Git
 
-" Find files
-nnoremap <leader><leader> :FZF<cr>
-
-" == Git
 " git status: open git
 nnoremap <leader>gs :Gst<cr>
+
 " git add: git add current buffer
 nnoremap <silent> <leader>ga :silent !git add %<cr>
 
-" == Windows
+" ## Windows
+
 " Zoom in
 nnoremap <leader>w- :wincmd _<cr>:wincmd \|<cr>
-nnoremap <leader>wmb :wincmd _<cr>:wincmd \|<cr>
+
 " Re-balance windows
 nnoremap <leader>w= :wincmd =<cr>
+
 "Max out the height of the current split
 nnoremap <leader>w_ :wincmd _<cr>
 nnoremap <leader>wms :wincmd _<cr>
+
 "Max out the width of the current split
 nnoremap <leader>w\| :wincmd \|<cr>
 nnoremap <leader>wmv :wincmd \|<cr>
+
 " window new: New empty window
 nnoremap <leader>wN :new<cr>
+
 " window vertical new: New vertical empty window
 nnoremap <leader>wV :bnew<cr>
+
 " window split: Open a horizontal split
 nnoremap <leader>ws :sp<cr>
+
 " window vertical split: Open a vertical split
 nnoremap <leader>wv :vsp<cr>
+
 " window quit: Close current window
 nnoremap <leader>wq :q<cr>
+
 " window breakout: break out split into window
 nnoremap <leader>wB :wincmd T<cr>
+
 " window kill others: kill other windows
 nnoremap <leader>wo :wincmd o<cr>
+
 " window rotate: swaps windows
 nnoremap <leader>wr :wincmd r<cr>
 
 " window left: moves the cursor buffer on the left
 nnoremap <leader>wh :wincmd h<cr>
+
 " window down: moves the cursor buffer on the bottom
 nnoremap <leader>wj :wincmd j<cr>
+
 " window up: moves the cursor buffer on the top
 nnoremap <leader>wk :wincmd k<cr>
+
 " window right: moves the cursor buffer on the right
 nnoremap <leader>wl :wincmd l<cr> 
 
 " window move left: moves buffer to the left
 nnoremap <leader>wH :wincmd H<cr>
+
 " window move down: moves the buffer to the bottom
 nnoremap <leader>wJ :wincmd J<cr>
+
 " window move up: moves the buffer to the top
 nnoremap <leader>wK :wincmd K<cr>
+
 " window move right: moves cursor buffer to the right
 nnoremap <leader>wL :wincmd L<cr> 
 
-" == Toggles
-" toggle sidebar: Open sidebar
-nnoremap <leader>ts :NERDTreeToggle<cr>
+" ## Files
 
-" == Files
 " file todo: opens TODO.md in a vertical split
 nnoremap <leader>ft :vsplit ~/TODO.md<cr>
-" find here: sarches for file in the current directory
-nnoremap <leader>f/ :FZF %:p:h<cr>
-nnoremap <leader>ff :FZF %:p:h<cr>
-" find save: writes the buffer (same as <leader>bs)
+
+" find files: searches whole project for a file
+nnoremap <leader><leader> :FZF<cr>
+
+" find here: searches for a file in the current directory
+nnoremap <leader>. :FZF %:p:h<cr>
+
+" file save: writes the buffer (same as <leader>bs)
 nnoremap <leader>fs :w<cr>
 
-" == Open
+" ## Open
+
 " open project: open project sidebar
 nnoremap <leader>op :NERDTreeToggle<cr>
+" open here: open project sidebar at the current file
+nnoremap <leader>o. :NERDTreeFind<CR>
+
 " open dired: open the current folder
 nnoremap <leader>o- :e .<cr>
 
-" == Code
-" next definition
-nnoremap <leader>cn :tn<cr>
-" previous definition
-nnoremap <leader>cp :tp<cr>
-" list definitions
-nnoremap <leader>cs :ts<cr>
-
-" jump to definition
-nnoremap <leader>cD <C-]>
-" jump back from definition
-nnoremap <leader>cb <C-t>
-" preview definition
-nnoremap <leader>cP <C-W>}
-" see all definitions
-nnoremap <leader>cL <C-W>}
+" ## Code
+nnoremap <leader>cn :tn<cr> " next definition
+nnoremap <leader>cp :tp<cr> " previous definition
+nnoremap <leader>cs :ts<cr> " list definitions
+nnoremap <leader>cD <C-]>   " jump to definition
+nnoremap <leader>cb <C-t>   " jump back from definition
+nnoremap <leader>cP <C-W>}  " preview definition
+nnoremap <leader>cL <C-W>}  " see all definitions
 
 so $VIM_HOME/plug.vim
