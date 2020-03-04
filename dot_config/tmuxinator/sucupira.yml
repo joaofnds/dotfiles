@@ -19,3 +19,5 @@ windows:
       panes:
         - lazydocker
         - gotop
+
+  - git: tig
