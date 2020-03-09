@@ -2,20 +2,6 @@
 
 require 'scanf'
 
-_ = %w[
-  crystal
-  dart
-  flutter
-  kotlin
-  kubectl
-  minikube
-  mongodb
-  mysql
-  protoc
-  sqlite
-  deno
-]
-
 plugins = %w[
   java
   clojure
@@ -25,7 +11,6 @@ plugins = %w[
   elixir
   golang
   haskell
-  imagemagick
   nodejs
   postgres
   python
