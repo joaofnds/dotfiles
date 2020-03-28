@@ -1,3 +1,14 @@
+let g:coc_global_extensions = [
+  \ 'coc-emmet',
+  \ 'coc-html',
+  \ 'coc-json',
+  \ 'coc-pairs',
+  \ 'coc-python',
+  \ 'coc-snippets',
+  \ 'coc-solargraph',
+  \ 'coc-yaml'
+  \ ]
+
 """"""""""
 " Functions and Commands
 
