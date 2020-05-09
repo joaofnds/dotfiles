@@ -35,6 +35,10 @@ alias dcpd='docker-compose down'
 alias dcpr='docker-compose restart'
 alias drm='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs docker rm'
 alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs docker rmi -f'
+
+alias dmc='docker-machine'
+alias dmcs='eval $(docker-machine ls | sed "1d" | fzf -1 | awk '\''{ print $1 }'\'' | xargs docker-machine env)'
+
 alias spawn_postgres='docker run --rm -p 5432:5432 --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:alpine'
 alias spawn_nginx='docker run --rm --name nginx -v $PWD:/usr/share/nginx/html -p 3000:80 -d nginx:alpine nginx -g "daemon off;"'
 
