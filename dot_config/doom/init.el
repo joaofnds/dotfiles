@@ -166,6 +166,7 @@
        (web              ; the tubes
         +html
         +css)
+       yaml
 
        :email
        ;;(mu4e +gmail)
