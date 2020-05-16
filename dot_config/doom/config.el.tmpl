@@ -91,6 +91,8 @@
 ;; Corrects (and improves) org-mode's native fontification.
 (doom-themes-org-config)
 
+(defalias 'forward-evil-word 'forward-evil-symbol)
+
 (after! org
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
