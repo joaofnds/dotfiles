@@ -1,7 +1,7 @@
 name: sucupira
 root: ~/code/indeorum/sucupira-sync
 
-on_project_start: ./up.sh
+on_project_start: make run
 on_project_stop: docker-compose down
 
 startup_window: editor
