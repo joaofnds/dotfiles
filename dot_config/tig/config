@@ -1,0 +1,5 @@
+set tab-size = 4
+set line-graphics = utf-8
+set refresh-mode = auto
+set main-view-date = relative
+set main-view-author = email-user
