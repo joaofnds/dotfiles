@@ -2,6 +2,12 @@
 ## Shell ##
 ###########
 
+export ZSH=$HOME/.oh-my-zsh
+export ZSH_THEME="joaofnds"
+plugins=(encode64 fzf git docker-machine-name z)
+
+export EDITOR=vim
+
 # Set your language environment
 export LANG=en_US.UTF-8
 
@@ -54,8 +60,3 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 {{- end }}
 export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
-
-# asdf version manager
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-

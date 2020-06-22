@@ -119,3 +119,12 @@ function video-to-gif() {
   name="${filename%.*}"
   ffmpeg -i ${movie} -s ${dimensions} -pix_fmt rgb24 -r 10 -f gif ${name}.gif
 }
+
+# TMUX helpers
+_not_inside_tmux() { [[ -z "$TMUX" ]] }
+
+ensure_tmux_is_running() {
+  if _not_inside_tmux; then
+    tat
+  fi
+}

@@ -1,33 +1,7 @@
-# Path to oh-my-zsh
-export ZSH=$HOME/.oh-my-zsh
-
-export ZSH_THEME="joaofnds"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(encode64 fzf git docker-machine-name z)
-
-# Load oh-my-zsh
-source $ZSH/oh-my-zsh.sh
-
-export EDITOR=vim
-
-# TMUX helpers
-_not_inside_tmux() { [[ -z "$TMUX" ]] }
-
-ensure_tmux_is_running() {
-  if _not_inside_tmux; then
-    tat
-  fi
-}
-
-######################
-# User configuration #
-######################
-
 [ -f $HOME/.env ] && source $HOME/.env
+[ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
+[ -d $HOME/.asdf ] && source $HOME/.asdf/asdf.sh \
+                   && source $HOME/.asdf/completions/asdf.bash
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
 
