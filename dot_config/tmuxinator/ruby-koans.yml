@@ -1,0 +1,9 @@
+name: ruby-koans
+root: ~/code/ruby/koans
+
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - vim koans
+        - ls koans/*.rb | entr -c rake
