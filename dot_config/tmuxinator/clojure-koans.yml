@@ -1,0 +1,9 @@
+name: clojure-koans
+root: ~/code/clojure/koans
+
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - vim koans
+        - lein koan run
