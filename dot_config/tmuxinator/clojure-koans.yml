@@ -5,5 +5,5 @@ windows:
   - editor:
       layout: even-horizontal
       panes:
-        - vim koans
+        - emacs -nw .
         - lein koan run

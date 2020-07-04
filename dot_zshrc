@@ -5,4 +5,6 @@
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
 
+eval "$(direnv hook zsh)"
+
 ensure_tmux_is_running
