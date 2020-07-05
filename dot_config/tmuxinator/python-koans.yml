@@ -1,0 +1,9 @@
+name: python-koans
+root: ~/code/python/koans
+
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - vim koans
+        - ls koans/*.py | entr -c ./run.sh
