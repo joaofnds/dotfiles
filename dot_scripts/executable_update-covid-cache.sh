@@ -2,6 +2,8 @@
 
 set -e
 
-/usr/bin/curl -s https://corona.lmao.ninja/v2/countries/brazil |
-  /usr/local/bin/jq '["💀", .deaths, "(", .todayDeaths, ") 🦠", .active, "(", .todayCases, ")"] | join("")' |
-  /usr/bin/tr -d "\"\n" > /Users/joaofnds/.cache/covid
+HOME=$(eval echo "~$joaofnds")
+
+curl -s https://corona.lmao.ninja/v2/countries/brazil |
+  jq '["💀", .deaths, "(", .todayDeaths, ") 🦠", .active, "(", .todayCases, ")"] | join("")' |
+  tr -d "\"\n" > $HOME/.cache/covid

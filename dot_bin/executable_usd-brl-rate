@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
-cat /Users/joaofnds/.cache/USD-BRL-rate
+
+cat ~/.cache/usd-brl-rate
