@@ -28,3 +28,5 @@
 [diff]
 	algorithm = histogram
 	indentHeuristic = true
+[pull]
+	rebase = false
