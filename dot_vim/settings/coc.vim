@@ -1,5 +1,6 @@
 let g:coc_global_extensions = [
   \ 'coc-emmet',
+  \ 'coc-go',
   \ 'coc-html',
   \ 'coc-json',
   \ 'coc-pairs',
