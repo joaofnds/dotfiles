@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+fd -H \
+  -E '.vscode' \
+  -E '.config' \
+  -E '.local' \
+  -E '.npm' \
+  -E '.nodenv' \
+  -t 'd' 'node_modules' . \
+  -x du {} \
+| sort -rnk1 \
+| awk '{ print $2 }' \
+| xargs du -sh \
+| fzf -m \
+| awk '{ print $2 }' \
+| xargs -p -n1 rm -rf

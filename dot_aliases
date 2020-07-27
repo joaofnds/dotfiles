@@ -70,23 +70,6 @@ syncgit() {
   popd
 }
 
-npmkill () {
-  fd -H \
-    -E '.vscode' \
-    -E '.config' \
-    -E '.local' \
-    -E '.npm' \
-    -E '.nodenv' \
-    -t 'd' 'node_modules' . \
-    -x du {} \
-  | sort -rnk1 \
-  | awk '{ print $2 }' \
-  | xargs du -sh \
-  | fzf -m \
-  | awk '{ print $2 }' \
-  | xargs -p -n1 rm -rf
-}
-
 function video-to-gif() {
   movie=$1
   height=$(mdls -name kMDItemPixelHeight ${movie} | rg -o '[0-9]+')
