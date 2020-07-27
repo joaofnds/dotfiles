@@ -30,3 +30,5 @@
 	indentHeuristic = true
 [pull]
 	rebase = false
+[init]
+	defaultBranch = main
