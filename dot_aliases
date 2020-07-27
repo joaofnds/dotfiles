@@ -56,20 +56,6 @@ stopminikube() {
   eval $(minikube docker-env -u)
 }
 
-syncgit() {
-  pushd ~/notes
-  git pull
-  popd
-
-  pushd ~/code/dotfiles
-  git pull
-  popd
-
-  pushd ~/code/donamaid/api
-  git pull
-  popd
-}
-
 function video-to-gif() {
   movie=$1
   height=$(mdls -name kMDItemPixelHeight ${movie} | rg -o '[0-9]+')
