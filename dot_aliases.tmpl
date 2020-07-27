@@ -70,15 +70,6 @@ update() {
   {{- end }}
 }
 
-{{- if eq .chezmoi.os "darwin" }}
-update-brew() {
-  brew update
-  brew upgrade
-  brew cask upgrade
-  brew cleanup
-}
-{{- end }}
-
 syncgit() {
   pushd ~/notes
   git pull
