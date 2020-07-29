@@ -39,8 +39,6 @@ alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs
 alias dmc='docker-machine'
 alias dmcs='eval $(docker-machine ls | sed "1d" | fzf -1 | awk '\''{ print $1 }'\'' | xargs docker-machine env)'
 
-alias spawn_nginx='docker run --rm --name nginx -v $PWD:/usr/share/nginx/html -p 3000:80 -d nginx:alpine nginx -g "daemon off;"'
-
 alias ddc='ddcctl -d 1 -b'
 
 startminikube() {

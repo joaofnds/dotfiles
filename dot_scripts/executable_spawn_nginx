@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+docker run \
+    --rm \
+    --name nginx \
+    -v $PWD:/usr/share/nginx/html \
+    -p 3000:80 \
+    -d nginx:alpine nginx -g "daemon off;"
