@@ -68,6 +68,7 @@ brew "watch"
 brew "wget"
 brew "wireshark", link: false
 brew "xsv"
+brew "yq"
 brew "z"
 brew "zsh"
 brew "github/gh/gh"
