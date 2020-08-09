@@ -2,17 +2,26 @@
 
 (require 'tmux-pane)
 
-(evil-lion-mode)
-
 (setq user-full-name "João Fernandes"
       user-email-address "joaofnds@joaofnds.com"
 
+      make-backup-files nil
+
       initial-frame-alist '((width . 120) (height . 50))
 
-      ;; doom
+      tab-width 2
+      indent-tabs-mode nil
+
+      visual-fill-column-width 120
+      visual-fill-column-center-text t
+
+      display-line-numbers t
+      display-line-numbers-type 'relative
+      display-line-numbers-current-absolute t
+
       doom-theme 'doom-solarized-dark
-      doom-themes-enable-bold t      ; if nil, bold is universally disabled
-      doom-themes-enable-italic t    ; if nil, italics is universally disabled
+      doom-themes-enable-bold t
+      doom-themes-enable-italic t
       {{- if eq .chezmoi.os "darwin"}}
       doom-font (font-spec :family "Iosevka SS08" :weight 'light :size 18)
       doom-big-font (font-spec :family "Iosevka SS08" :weight 'light :size 24)
@@ -25,71 +34,14 @@
       ;; org
       org-directory "~/notes/"
 
-      ;; line numbers
-      display-line-numbers t
-      display-line-numbers-type 'relative
-      display-line-numbers-current-absolute t
-
-      ;; indentation
-      tab-width 2
-      indent-tabs-mode nil
-
-      ;; projectile
-      make-backup-files nil
       projectile-project-search-path '("~/code/")
       projectile-enable-caching nil
 
-      ;; ivy
-      +ivy-project-search-engines '(ag rg)
+      +ivy-project-search-engines '(ag)
 
-      ;; enabled modes
       tmux-pane-mode t
-
       dired-dwim-target t
-
-      line-spacing '0.25
-
-      ;; Set text centered and wrapped
-      visual-fill-column-width 120
-      visual-fill-column-center-text t
-
-      ;; make the fringe stand out from the background
-      solarized-distinct-fringe-background t
-
-      ;; Don't change the font for some headings and titles
-      solarized-use-variable-pitch nil
-
-      ;; make the modeline high contrast
-      solarized-high-contrast-mode-line t
-
-      ;; Use less bolding
-      solarized-use-less-bold nil
-
-      ;; Use more italics
-      solarized-use-more-italic t
-
-      ;; Use less colors for indicators such as git:gutter, flycheck and similar
-      solarized-emphasize-indicators nil
-
-      ;; Don't change size of org-mode headlines (but keep other size-changes)
-      solarized-scale-org-headlines nil
-
-      ;; Avoid all font-size changes
-      solarized-height-minus-1 1.0
-      solarized-height-plus-1 1.0
-      solarized-height-plus-2 1.0
-      solarized-height-plus-3 1.0
-      solarized-height-plus-4 1.0)
-
-
-;; Enable flashing mode-line on errors
-(doom-themes-visual-bell-config)
-
-;; Enable custom neotree theme
-;;(doom-themes-neotree-config)
-
-;; Corrects (and improves) org-mode's native fontification.
-(doom-themes-org-config)
+      evil-lion-mode t)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
@@ -100,8 +52,6 @@
   (setq org-todo-keywords '((sequence "TODO(t)" "PROJ(p!)" "|" "DONE(d!)")
                             (sequence "[ ](T)"  "[-](P)"  "[?](M@)" "|" "[X](D!)")
                             (sequence "NEXT(n)" "WAIT(w@/!)" "HOLD(h@/!)" "|" "ABRT(c@)"))
-        ;; custom char for org bullets
-        org-superstar-headline-bullets-list '("⁖")
         ;; The column to which tags should be indented in a headline
         org-tags-column -80
         ;; Non-nil means undone TODO entries will block switching the parent to DONE
@@ -116,8 +66,8 @@
 (add-hook! '(go-mode-hook js2-mode-hook enh-ruby-mode-hook)
            #'(hs-minor-mode lsp-deferred yas-minor-mode))
 
-(add-hook 'emacs-lisp-mode-hook #'hs-minor-mode)
 (add-hook 'org-mode-hook #'yas-minor-mode)
+(add-hook 'emacs-lisp-mode-hook #'hs-minor-mode)
 
 (add-to-list 'hs-special-modes-alist
              '(ruby-mode "\\(def\\|do\\|class\\|begin\\|ensure\\|if\\|unless\\|{\\)"
@@ -132,5 +82,3 @@
       :n "l r" #'lsp-rename
       :n "l f" #'lsp-format-region
       :n "l F" #'lsp-format-buffer)
-
-(tmux-pane-mode t)
