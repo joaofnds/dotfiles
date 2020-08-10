@@ -39,9 +39,7 @@
 
       +ivy-project-search-engines '(ag)
 
-      tmux-pane-mode t
-      dired-dwim-target t
-      evil-lion-mode t)
+      dired-dwim-target t)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
@@ -82,3 +80,6 @@
       :n "l r" #'lsp-rename
       :n "l f" #'lsp-format-region
       :n "l F" #'lsp-format-buffer)
+
+(tmux-pane-mode t)
+(evil-lion-mode t)
