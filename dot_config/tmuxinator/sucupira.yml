@@ -1,5 +1,5 @@
 name: sucupira
-root: ~/code/indeorum/sucupira-sync
+root: ~/code/indeorum/sucupira-etl
 
 on_project_start: make run
 on_project_stop: docker-compose down
