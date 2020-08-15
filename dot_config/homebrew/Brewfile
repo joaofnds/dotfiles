@@ -20,6 +20,7 @@ brew "chezmoi"
 brew "clisp"
 brew "cmake"
 brew "coreutils"
+brew "curl"
 brew "diff-so-fancy"
 brew "docker", link: false
 brew "docker-compose", link: false
