@@ -41,8 +41,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-rails'
 
 " # Visual
-" Theme
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
+
 
 " Status line
 Plug 'vim-airline/vim-airline'
