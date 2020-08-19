@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo
+set -euo pipefail
 
 gem install tmuxinator rubocop solargraph rcodetools scanf
