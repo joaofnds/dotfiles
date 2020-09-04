@@ -14,6 +14,7 @@
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        workspaces        ; tab emulation, persistence & separate workspaces
+       neotree           ; a project drawer, like NERDTree for vim
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
