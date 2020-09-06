@@ -300,7 +300,7 @@ fileviewer *.docx docx2txt.pl %f -
 " Or leave it for automatic detection
 "
 " fileviewer *[^/] pygmentize -O style=solarized-dark -f console256 -g
-fileviewer *[^/] highlight -O xterm256
+fileviewer *[^/] highlight -O xterm256 --failsafe
 
 " Displaying pictures in terminal
 "
