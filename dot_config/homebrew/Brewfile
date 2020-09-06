@@ -27,8 +27,8 @@ brew "docker-compose", link: false
 brew "docker-machine"
 brew "dust"
 brew "editorconfig"
-brew "emacs"
 brew "pkg-config"
+brew "emacs", link: false
 brew "entr"
 brew "exercism"
 brew "fd"
