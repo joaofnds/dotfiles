@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+docker run \
+    --rm \
+    --name mongo \
+    -p 27017:27017 \
+    -d mongo
