@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+docker container run -d \
+  --rm \
+  --name portainer \
+  -p 9000:9000 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  portainer/portainer \
+  --admin-password '$2y$05$BZ27gXsOUJkoMF5Y381Kcu1pyWicdnjBN/Qh/OVCkDqd/DQTLtzz2' \
+  -H 'unix:///var/run/docker.sock'
