@@ -72,6 +72,7 @@
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
+       tty               ; improve the terminal Emacs experience
 
        :app
        irc               ; how neckbeards socialize
