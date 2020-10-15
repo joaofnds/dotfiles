@@ -63,7 +63,7 @@
        (json +lsp)       ; At least it ain't XML
        (javascript +lsp) ; all(hope(abandon(ye(who(enter(here))))))
        markdown          ; writing docs for people to ignore
-       (org +pretty)     ; organize your plain life in plain text
+       org               ; organize your plain life in plain text
        (python +lsp)     ; beautiful is better than ugly
        (ruby +lsp +rails); 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (sh +lsp)         ; she sells {ba,z,fi}sh shells on the C xor
