@@ -221,6 +221,8 @@ filetype *.html,*.htm
        \ vim,
 fileviewer *.html,*.htm w3m -dump -T text/html
 
+fileviewer *.md,*.markdown glow
+
 " Object
 filetype *.o nm %f | less
 
