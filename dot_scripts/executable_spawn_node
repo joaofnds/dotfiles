@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+docker run \
+    --rm \
+    --name node \
+    -p 27017:27017 \
+    -v $PWD:/pwd \
+    -it \
+    node:alpine \
+    sh
