@@ -382,6 +382,9 @@ nnoremap ,c :write | edit $MYVIFMRC | restart<cr>
 " Open MacVim to edit vifmrc
 nnoremap ,C :!mvim --remote-tab-silent $MYVIFMRC &<cr>
 
+" Change the other pane to the current pane directory and synchronize cursor position
+nnoremap g. :sync!<cr>
+
 " Toggle wrap setting on ,w key
 nnoremap ,w :set wrap!<cr>
 
