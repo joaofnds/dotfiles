@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'scanf'
+
+SEMVER_FORMAT = /^\d+(\.\d+){1,2}$/.freeze
 
 plugins = %w[
   java
@@ -20,17 +23,41 @@ plugins = %w[
   shellcheck
 ]
 
+class TmuxPane
+  def self.run_shell(command)
+    `tmux run-shell "#{command}"`
+  end
+
+  def create!
+    `tmux new-window -n "#{name}" -d`
+  end
+
+  def run_command(shell_command)
+    `tmux send-keys -t #{name} "#{shell_command}" Enter`
+  end
+
+  def kill!
+    `tmux kill-window -t #{name}`
+  end
+
+  private
+
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
 def fill(arr, len, fill_value)
   len.times do |i|
-    if arr[i].nil?
-      arr[i] = fill_value
-    end
+    arr[i] = fill_value if arr[i].nil?
   end
   arr
 end
 
 def sem_ver(version_str)
-  major, minor, patch = version_str.scanf("%d.%d.%d")
+  major, minor, patch = version_str.scanf('%d.%d.%d')
   fill([major, minor, patch], 3, 0)
 end
 
@@ -51,12 +78,16 @@ def greater_version(a, b)
 end
 
 def install_plugin(plugin)
-  `asdf plugin-add #{plugin}`
+  tmux_pane = TmuxPane.new(plugin.strip)
+  tmux_pane.create!
+
+  tmux_pane.run_command "asdf plugin-add #{plugin}"
+
   sorted_versions =
-    `asdf list-all #{plugin}`
-      .split("\n")
-      .grep(/^\d+(\.\d+){1,2}$/)
-      .sort { |a, b| greater_version(a, b) }
+    TmuxPane.run_shell(`asdf list-all #{plugin}`)
+    .split("\n")
+    .grep(SEMVER_FORMAT)
+    .sort { |a, b| greater_version(a, b) }
 
   if sorted_versions.empty?
     puts "could not find versions for #{plugin}"
@@ -64,16 +95,16 @@ def install_plugin(plugin)
     latest_version = sorted_versions[0]
 
     puts "installing #{plugin}: #{latest_version}"
-    `asdf install #{plugin} #{latest_version}`
+    tmux_pane.run_command "asdf install #{plugin} #{latest_version}"
 
     puts "setting asdf global #{plugin} to #{latest_version}"
-    `asdf global #{plugin} #{latest_version}`
+    tmux_pane.run_command "asdf global #{plugin} #{latest_version}"
   end
+  tmux_pane.kill!
 end
 
-
-plugins.each { |p| install_plugin(p) }
-# plugins
-#   .map { |p| Thread.new { install_plugin(p) } }
-#   .map { |t| t.join }
+# plugins.each { |p| install_plugin(p) }
+plugins
+  .map { |p| Thread.new { install_plugin(p) } }
+  .map(&:join)
 puts
