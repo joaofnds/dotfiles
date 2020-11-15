@@ -27,8 +27,8 @@
       doom-themes-enable-bold t
       doom-themes-enable-italic t
       {{- if eq .chezmoi.os "darwin"}}
-      doom-font (font-spec :family "Iosevka SS08" :weight 'light :size 18)
-      doom-big-font (font-spec :family "Iosevka SS08" :weight 'light :size 24)
+      doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 18)
+      doom-big-font (font-spec :family "Iosevka SS08" :weight 'normal :size 24)
       {{- end}}
       {{- if eq .chezmoi.os "linux"}}
       doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 28)
@@ -63,7 +63,12 @@
         ;; Information to record when a task moves to the DONE state.
         org-log-done 'time
         ;; Non-nil means insert state change notes and time stamps into a drawer
-        org-log-into-drawer t))
+        org-log-into-drawer t
+
+        org-agenda-files '("~/notes/home.org"
+                           "~/notes/skore/skore.org"
+                           "~/notes/ufpel/computer-lab/computer-lab.org"
+                           "~/notes/ufpel/computer-theory/computer-theory.org")))
 
 (add-hook! '(go-mode-hook js2-mode-hook enh-ruby-mode-hook)
            #'(hs-minor-mode lsp-deferred yas-minor-mode))
