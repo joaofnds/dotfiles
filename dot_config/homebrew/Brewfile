@@ -80,7 +80,7 @@ brew "vim"
 brew "wakeonlan"
 brew "watch"
 brew "wget"
-brew "wireshark"
+brew "wireshark", link: false
 brew "xsv"
 brew "yq"
 brew "z"
