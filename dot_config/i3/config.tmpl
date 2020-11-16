@@ -294,7 +294,7 @@ exec --no-startup-id xflux -l -31.7611637 -g -52.3318757,14 -r 1
 # set mouse speed
 exec --no-startup-id xset r rate 200 50
 # start compton
-exec --no-startup-id "picom"
+exec --no-startup-id "picom --backend glx --vsync"
 # start volume applets
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon

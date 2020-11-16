@@ -1,20 +1,20 @@
 [user]
-	email = joaofnds@joaofnds.com
-	name = João Fernandes
-	signingKey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
+    email = joaofnds@joaofnds.com
+    name = João Fernandes
+    signingKey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
 
 [alias]
-  pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
-  pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
-# for bitbucket/stash remotes
-  spr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull-requests/$1/from:pr/$1 && git checkout pr/$1; }; f"
+    pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+    # for bitbucket/stash remotes
+    spr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull-requests/$1/from:pr/$1 && git checkout pr/$1; }; f"
 
   
 [commit]
-	gpgSign = true
+    gpgSign = true
 
 [color]
-	ui = true
+    ui = true
 
 [core]
     pager = delta --theme='Monokai Extended'
@@ -23,14 +23,17 @@
     diffFilter = delta --color-only
 
 [github]
-	user = joaofnds
+    user = joaofnds
 
 [diff]
-	algorithm = histogram
-	indentHeuristic = true
+    algorithm = histogram
+    indentHeuristic = true
+
 [pull]
-	rebase = false
+    rebase = false
+
 [init]
-	defaultBranch = main
+    defaultBranch = main
+
 [gpg]
-	program = /usr/local/bin/gpg
+    program = /usr/local/bin/gpg
