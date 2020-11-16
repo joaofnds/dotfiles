@@ -9,7 +9,6 @@
     # for bitbucket/stash remotes
     spr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull-requests/$1/from:pr/$1 && git checkout pr/$1; }; f"
 
-  
 [commit]
     gpgSign = true
 
