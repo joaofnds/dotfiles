@@ -46,7 +46,8 @@
        (eval +overlay)   ; run code, run (also, repls)
        lookup            ; navigate your code and its documentation
        lsp
-       magit             ; a git porcelain for Emacs
+       (magit            ; a git porcelain for Emacs
+         +forge)         ; a porcelain for managing issues and PRs
        make              ; run make tasks from Emacs
        pdf               ; pdf enhancements
        rgb               ; creating color strings
