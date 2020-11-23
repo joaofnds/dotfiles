@@ -46,6 +46,20 @@
 
       dired-dwim-target t)
 
+(setq
+ message-send-mail-function   'smtpmail-send-it
+ starttls-use-gnutls          t
+ smtpmail-default-smtp-server "smtp.gmail.com"
+ smtpmail-smtp-server         "smtp.gmail.com"
+ smtpmail-stream-type         'starttls)
+
+(set-email-account!
+ "Gmail"
+ '((user-full-name     . "João Fernandes")
+   (user-mail-address  . "joaovitorfernandes2@gmail.com")
+   (smtpmail-smtp-user . "joaovitorfernandes2@gmail.com"))
+ t)
+
 (global-set-key (kbd "C-s") 'swiper)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
