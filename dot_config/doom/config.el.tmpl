@@ -51,7 +51,8 @@
  starttls-use-gnutls          t
  smtpmail-default-smtp-server "smtp.gmail.com"
  smtpmail-smtp-server         "smtp.gmail.com"
- smtpmail-stream-type         'starttls)
+ smtpmail-stream-type         'starttls
+ +notmuch-sync-backend 'mbsync)
 
 (set-email-account!
  "Gmail"
