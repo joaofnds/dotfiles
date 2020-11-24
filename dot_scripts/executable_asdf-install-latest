@@ -21,6 +21,7 @@ plugins = %w[
   ruby
   rust
   shellcheck
+  terraform
 ]
 
 class TmuxPane
