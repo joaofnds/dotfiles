@@ -1,7 +1,7 @@
 IMAPAccount gmail
 Host imap.gmail.com
 Port 993
-User joaovitorfernandes2
+User joaovitorfernandes2@gmail.com
 PassCmd "gpg -d ~/.mbsyncpass.gpg"
 AuthMechs LOGIN
 SSLType IMAPS
@@ -12,8 +12,8 @@ IMAPStore gmail-remote
 Account gmail
 
 MaildirStore gmail-local
-Path ~/Mail/
-Inbox ~/Mail/Inbox
+Path ~/Mail/gmail/
+Inbox ~/Mail/gmail/inbox
 SubFolders Verbatim
 
 Channel gmail
@@ -21,4 +21,7 @@ Master :gmail-remote:
 Slave :gmail-local:
 Patterns *
 CopyArrivalDate yes
-Create Slave
+Create Both
+Remove Both
+Expunge Both
+SyncState *
