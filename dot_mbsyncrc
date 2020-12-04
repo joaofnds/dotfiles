@@ -7,6 +7,7 @@ AuthMechs LOGIN
 SSLType IMAPS
 SSLVersions SSLv3
 CertificateFile /usr/local/etc/openssl/cert.pem
+Timeout 0
 
 IMAPStore gmail-remote
 Account gmail
