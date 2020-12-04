@@ -49,21 +49,6 @@
 
 (add-to-list 'org-modules 'habits)
 
-(setq
- message-send-mail-function   'smtpmail-send-it
- starttls-use-gnutls          t
- smtpmail-default-smtp-server "smtp.gmail.com"
- smtpmail-smtp-server         "smtp.gmail.com"
- smtpmail-stream-type         'starttls
- +notmuch-sync-backend 'mbsync)
-
-(set-email-account!
- "Gmail"
- '((user-full-name     . "João Fernandes")
-   (user-mail-address  . "joaovitorfernandes2@gmail.com")
-   (smtpmail-smtp-user . "joaovitorfernandes2@gmail.com"))
- t)
-
 (global-set-key (kbd "C-s") 'swiper)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
@@ -112,6 +97,8 @@
       :n "l r" #'lsp-rename
       :n "l f" #'lsp-format-region
       :n "l F" #'lsp-format-buffer)
+
+(load "~/.config/doom/mail-config.el")
 
 (tmux-pane-mode t)
 (evil-lion-mode t)
