@@ -29,3 +29,36 @@ Create Both
 Remove Both
 Expunge Both
 SyncState *
+
+
+###########################
+# joao.fernandes@skore.io #
+###########################
+IMAPAccount skore
+Host imap.gmail.com
+Port 993
+User joao.fernandes@skore.io
+PassCmd "gpg -d ~/.mbsyncpass.skore.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersions SSLv3
+CertificateFile /usr/local/etc/openssl/cert.pem
+Timeout 0
+
+IMAPStore skore-remote
+Account skore
+
+MaildirStore skore-local
+Path ~/Mail/skore/
+Inbox ~/Mail/skore/inbox
+SubFolders Verbatim
+
+Channel skore
+Master :skore-remote:
+Slave :skore-local:
+Patterns *
+CopyArrivalDate yes
+Create Both
+Remove Both
+Expunge Both
+SyncState *
