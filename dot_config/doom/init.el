@@ -45,7 +45,7 @@
        editorconfig      ; let someone else argue about tabs vs spaces
        (eval +overlay)   ; run code, run (also, repls)
        lookup            ; navigate your code and its documentation
-       lsp
+       (lsp +peek)
        (magit            ; a git porcelain for Emacs
          +forge)         ; a porcelain for managing issues and PRs
        make              ; run make tasks from Emacs
