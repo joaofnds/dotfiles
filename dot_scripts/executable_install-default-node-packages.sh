@@ -2,4 +2,7 @@
 
 set -euo pipefail
 
-npm i -g typescript node-cljfmt prettier
+npm i -g typescript \
+         node-cljfmt \
+         prettier \
+         snowpack
