@@ -62,3 +62,36 @@ Create Both
 Remove Both
 Expunge Both
 SyncState *
+
+
+################################
+# jvfdsguerra@inf.ufpel.edu.br #
+################################
+IMAPAccount ufpel
+Host imap.gmail.com
+Port 993
+User jvfdsguerra@inf.ufpel.edu.br
+PassCmd "gpg -d ~/.mbsyncpass.ufpel.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersions SSLv3
+CertificateFile /usr/local/etc/openssl/cert.pem
+Timeout 0
+
+IMAPStore ufpel-remote
+Account ufpel
+
+MaildirStore ufpel-local
+Path ~/Mail/ufpel/
+Inbox ~/Mail/ufpel/inbox
+SubFolders Verbatim
+
+Channel ufpel
+Master :ufpel-remote:
+Slave :ufpel-local:
+Patterns *
+CopyArrivalDate yes
+Create Both
+Remove Both
+Expunge Both
+SyncState *
