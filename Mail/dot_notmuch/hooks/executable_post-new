@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+notmuch tag +daily-coding-problem -- from:dailycodingproblem.com 'subject:"/Problem #[[:digit:]]+/"' -tag:daily-coding-problem
+
+$HOME/.local/bin/afew --tag --new
