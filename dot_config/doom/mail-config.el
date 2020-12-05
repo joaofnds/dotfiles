@@ -11,6 +11,7 @@
         notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox" :key "i")
           (:name "archive" :query "tag:archived" :key "a")
+          (:name "new" :query "tag:new" :key "n")
           (:name "unread" :query "tag:unread" :key "u")
           (:name "sent" :query "tag:sent" :key "t")
           (:name "drafts" :query "tag:draft" :key "d")
@@ -24,11 +25,13 @@
 
 (def-tag-toggle "inbox")
 (def-tag-toggle "archived")
+(def-tag-toggle "new")
 
 (map! :map notmuch-search-mode
       :leader
       :prefix-map ("mt" . "toggle")
       :n "i" #'notmuch-search-toggle-inbox
       :n "a" #'notmuch-search-toggle-archived
+      :n "n" #'notmuch-search-toggle-new
       :n "u" #'evil-collection-notmuch-search-toggle-unread
       :n "d" #'evil-collection-notmuch-search-toggle-delete)

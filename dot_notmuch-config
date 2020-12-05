@@ -47,7 +47,7 @@ primary_email=joaovitorfernandes2@gmail.com
 #		in the mail store.
 #
 [new]
-tags=unread;inbox;
+tags=new
 ignore=
 
 # Search configuration
