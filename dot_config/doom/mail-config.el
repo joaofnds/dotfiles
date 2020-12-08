@@ -1,13 +1,15 @@
-(setq message-send-mail-function   'smtpmail-send-it
-      starttls-use-gnutls          t
-      smtpmail-smtp-user           "joaovitorfernandes2@gmail.com"
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server         "smtp.gmail.com"
-      smtpmail-stream-type         'starttls)
 
 (after! notmuch
-  (setq +notmuch-sync-backend 'mbsync
-        +notmuch-mail-folder "~/Mail"
+  (setq message-send-mail-function   'smtpmail-send-it
+        send-mail-function           'smtpmail-send-it
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server         "smtp.gmail.com"
+        smtpmail-smtp-user           "joaovitorfernandes2@gmail.com"
+        smtpmail-stream-type         'starttls
+        smtpmail-smtp-service        587
+        starttls-use-gnutls          t
+        +notmuch-sync-backend        'mbsync
+        +notmuch-mail-folder         "~/Mail"
         notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox" :key "i")
           (:name "archive" :query "tag:archived" :key "a")
