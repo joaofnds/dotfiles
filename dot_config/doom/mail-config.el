@@ -17,19 +17,24 @@
           (:name "drafts" :query "tag:draft" :key "d")
           (:name "all mail" :query "*" :key "*"))))
 
-(defmacro def-tag-toggle (tag-name)
-  `(defun ,(make-symbol (concat "notmuch-search-toggle-" tag-name)) ()
-     ,(concat "Toggle " tag-name " tag for message.")
-     (interactive)
-     (evil-collection-notmuch-toggle-tag tag-name "search" 'notmuch-search-next-thread)))
+(defun notmuch-search-toggle-inbox ()
+  "Toggle deleted tag for message."
+  (interactive)
+  (evil-collection-notmuch-toggle-tag "inbox" "search"))
 
-(def-tag-toggle "inbox")
-(def-tag-toggle "archived")
-(def-tag-toggle "new")
+(defun notmuch-search-toggle-archived ()
+  "Toggle deleted tag for message."
+  (interactive)
+  (evil-collection-notmuch-toggle-tag "archived" "search"))
+
+(defun notmuch-search-toggle-new ()
+  "Toggle deleted tag for message."
+  (interactive)
+  (evil-collection-notmuch-toggle-tag "new" "search"))
 
 (map! :map notmuch-search-mode
       :leader
-      :prefix-map ("mt" . "toggle")
+      :prefix-map ("t" . "toggle")
       :n "i" #'notmuch-search-toggle-inbox
       :n "a" #'notmuch-search-toggle-archived
       :n "n" #'notmuch-search-toggle-new
