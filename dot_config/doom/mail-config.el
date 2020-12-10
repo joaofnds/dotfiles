@@ -8,8 +8,12 @@
         smtpmail-stream-type         'starttls
         smtpmail-smtp-service        587
         starttls-use-gnutls          t
+
         +notmuch-sync-backend        'mbsync
         +notmuch-mail-folder         "~/Mail"
+
+        notmuch-archive-tags '("-inbox" "-unread" "+archived")
+
         notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox" :key "i")
           (:name "archive" :query "tag:archived" :key "a")
