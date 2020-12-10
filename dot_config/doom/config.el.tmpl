@@ -29,13 +29,12 @@
       doom-themes-enable-italic t
       {{- if eq .chezmoi.os "darwin"}}
       doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 18)
-      doom-big-font (font-spec :family "Iosevka SS08" :weight 'normal :size 24)
       doom-variable-pitch-font (font-spec :family "Iosevka Aile")
       {{- end}}
       {{- if eq .chezmoi.os "linux"}}
       doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 28)
-      doom-big-font (font-spec :family "Iosevka SS08" :weight 'normal :size 34)
       {{- end}}
+      doom-big-font-increment 6
 
       ;; org
       org-directory "~/notes/"
