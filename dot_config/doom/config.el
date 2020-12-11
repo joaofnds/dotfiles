@@ -27,13 +27,8 @@
       doom-theme 'doom-solarized-dark
       doom-themes-enable-bold t
       doom-themes-enable-italic t
-      {{- if eq .chezmoi.os "darwin"}}
       doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 18)
       doom-variable-pitch-font (font-spec :family "Iosevka Aile")
-      {{- end}}
-      {{- if eq .chezmoi.os "linux"}}
-      doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 28)
-      {{- end}}
       doom-big-font-increment 6
 
       ;; org
