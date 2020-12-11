@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-pip install black docker 'python-language-server[all]' pyls-black
+pip install black 'python-language-server[all]' pyls-black
