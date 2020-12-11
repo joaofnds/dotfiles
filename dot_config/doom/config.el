@@ -51,9 +51,9 @@
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
-  (setq org-todo-keywords '((sequence "TODO(t)" "PROJ(p!)" "|" "DONE(d!)")
-                            (sequence "[ ](T)"  "[-](P)"  "[?](M@)" "|" "[X](D!)")
-                            (sequence "NEXT(n)" "WAIT(w@/!)" "HOLD(h@/!)" "|" "ABRT(c@)"))
+  (setq org-todo-keywords '((sequence "TODO(t)" "DOING(d!)" "DONE(f!)")
+                            (sequence "[ ](T)" "[-](D!)" "[X](F!)")
+                            (type "BLOCKED(b@)" "[?](B@)"))
         ;; The column to which tags should be indented in a headline
         org-tags-column -80
         ;; Non-nil means undone TODO entries will block switching the parent to DONE
