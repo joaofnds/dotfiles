@@ -1,6 +1,8 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t; -*-
 
 (require 'tmux-pane)
+(require 'tree-sitter)
+(require 'tree-sitter-langs)
 
 (setq user-full-name "João Fernandes"
       user-mail-address "joaofnds@joaofnds.com"
@@ -77,6 +79,7 @@
 (add-hook 'org-mode-hook #'yas-minor-mode)
 (add-hook 'emacs-lisp-mode-hook #'hs-minor-mode)
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 (add-to-list 'hs-special-modes-alist
              '(ruby-mode "\\(def\\|do\\|class\\|begin\\|ensure\\|if\\|unless\\|{\\)"
@@ -96,3 +99,4 @@
 
 (tmux-pane-mode t)
 (evil-lion-mode t)
+(global-tree-sitter-mode)
