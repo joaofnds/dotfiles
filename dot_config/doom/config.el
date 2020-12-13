@@ -43,8 +43,6 @@
 
       dired-dwim-target t)
 
-(add-to-list 'org-modules 'habits)
-
 (global-set-key (kbd "C-s") 'swiper)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
