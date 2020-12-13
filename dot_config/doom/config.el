@@ -56,6 +56,12 @@
                          (lambda (arg) (ruby-end-of-block))
                          nil))
 
+(defun reload-known-projects ()
+  (-each
+      (-concat
+       '("~/notes" "~/code/dotfiles" "~/code/exercism")
+       (f-directories "~/code/skore"))
+    'projectile-add-known-project))
 
 (load "~/.config/doom/mail-config.el")
 
