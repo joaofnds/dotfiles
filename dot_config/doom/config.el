@@ -55,7 +55,7 @@
         :n "M-k" #'org-metaup)
   (setq org-todo-keywords '((sequence "TODO(t)" "DOING(d!)" "DONE(f!)")
                             (sequence "[ ](T)" "[-](D!)" "[X](F!)")
-                            (type "BLOCKED(b@)" "[?](B@)"))
+                            (type "BLOCKED(b@)" "[?](B@)" "CANCELLED(c@!)"))
         ;; The column to which tags should be indented in a headline
         org-tags-column -80
         ;; Non-nil means undone TODO entries will block switching the parent to DONE
