@@ -11,7 +11,7 @@
         +notmuch-sync-backend        'mbsync
         +notmuch-mail-folder         "~/Mail"
 
-        notmuch-archive-tags '("-inbox" "-unread" "+archived")
+        notmuch-archive-tags '("-inbox" "-unread" "-new" "+archived")
 
         notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox" :key "i")
