@@ -63,8 +63,19 @@
        (f-directories "~/code/skore"))
     'projectile-add-known-project))
 
-(load "~/.config/doom/mail-config.el")
 
-(tmux-pane-mode t)
-(evil-lion-mode t)
-(global-tree-sitter-mode)
+(defun after-doom-loaded ()
+  (require 'tmux-pane)
+  (require 'tree-sitter)
+  (require 'tree-sitter-langs)
+
+  (load "mail-config")
+  (load "org-config")
+
+  (global-spell-fu-mode -1)
+  (spell-fu-mode -1)
+  (tmux-pane-mode +1)
+  (evil-lion-mode +1)
+  (global-tree-sitter-mode +1))
+
+(add-hook 'doom-after-init-modules-hook #'after-doom-loaded)
