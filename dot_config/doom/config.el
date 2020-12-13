@@ -56,12 +56,6 @@
                          (lambda (arg) (ruby-end-of-block))
                          nil))
 
-(map! :leader
-      :n "l d" #'lsp-find-definition
-      :n "l R" #'lsp-find-references
-      :n "l r" #'lsp-rename
-      :n "l f" #'lsp-format-region
-      :n "l F" #'lsp-format-buffer)
 
 (load "~/.config/doom/mail-config.el")
 
