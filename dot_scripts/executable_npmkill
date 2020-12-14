@@ -1,13 +1,17 @@
 #!/usr/bin/env sh
 
-fd -H \
-  -E '.vscode' \
-  -E '.config' \
-  -E '.local' \
-  -E '.npm' \
-  -E '.nodenv' \
-  -t 'd' 'node_modules' . \
-  -x du {} \
+fd --hidden \
+  --prune \
+  --no-ignore \
+  --exclude '.vscode' \
+  --exclude '.config' \
+  --exclude '.local' \
+  --exclude '.npm' \
+  --exclude '.nodenv' \
+  --type directory \
+  --fixed-strings \
+  node_modules \
+  --exec du {} \
 | sort -rnk1 \
 | awk '{ print $2 }' \
 | xargs du -sh \
