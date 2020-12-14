@@ -9,7 +9,7 @@ PassCmd "gpg -d ~/.mbsyncpass.gpg"
 AuthMechs LOGIN
 SSLType IMAPS
 SSLVersions SSLv3
-CertificateFile /usr/local/etc/openssl/cert.pem
+CertificateFile /usr/local/etc/openssl@1.1/cert.pem
 Timeout 0
 
 IMAPStore gmail-remote
@@ -42,7 +42,7 @@ PassCmd "gpg -d ~/.mbsyncpass.skore.gpg"
 AuthMechs LOGIN
 SSLType IMAPS
 SSLVersions SSLv3
-CertificateFile /usr/local/etc/openssl/cert.pem
+CertificateFile /usr/local/etc/openssl@1.1/cert.pem
 Timeout 0
 
 IMAPStore skore-remote
@@ -75,7 +75,7 @@ PassCmd "gpg -d ~/.mbsyncpass.ufpel.gpg"
 AuthMechs LOGIN
 SSLType IMAPS
 SSLVersions SSLv3
-CertificateFile /usr/local/etc/openssl/cert.pem
+CertificateFile /usr/local/etc/openssl@1.1/cert.pem
 Timeout 0
 
 IMAPStore ufpel-remote
