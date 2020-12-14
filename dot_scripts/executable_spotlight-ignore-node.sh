@@ -9,7 +9,7 @@ sudo fd \
   --absolute-path \
   --prune \
   node_modules \
-  --exec PlistBuddy \
+  --exec /usr/libexec/PlistBuddy \
     -c "Add :Exclusions: string {}" \
     /System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist
 
