@@ -45,6 +45,7 @@
 (add-hook! '(go-mode-hook js2-mode-hook enh-ruby-mode-hook)
            #'(hs-minor-mode lsp-deferred yas-minor-mode))
 
+(add-hook 'org-mode-hook #'spell-fu-mode-disable)
 (add-hook 'emacs-lisp-mode-hook #'hs-minor-mode)
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
