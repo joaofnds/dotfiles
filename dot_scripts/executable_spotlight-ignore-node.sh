@@ -1,17 +1,20 @@
 #!/usr/bin/env sh
 
-sudo /usr/libexec/PlistBuddy -c "Delete :Exclusions" /System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist
-sudo /usr/libexec/PlistBuddy -c "Add :Exclusions array" /System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist
+BUDDY=/usr/libexec/PlistBuddy
+PLIST_FILE="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
 
-sudo fd \
+sudo $BUDDY -c "Delete :Exclusions" "$PLIST_FILE"
+sudo $BUDDY -c "Add :Exclusions array"  "$PLIST_FILE"
+
+fd \
   --type directory \
   --fixed-strings \
   --absolute-path \
   --prune \
   node_modules \
-  --exec /usr/libexec/PlistBuddy \
+  --exec sudo $BUDDY \
     -c "Add :Exclusions: string {}" \
-    /System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist
+    "$PLIST_FILE"
 
 sudo launchctl stop com.apple.metadata.mds
 sudo launchctl start com.apple.metadata.mds
