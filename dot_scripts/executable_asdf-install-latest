@@ -8,10 +8,15 @@ SEMVER_FORMAT = /^\d+(\.\d+){1,2}$/.freeze
 plugins = %w[
   java
   clojure
-  cmake
-  elm
   erlang
   elixir
+
+  cmake
+  deno
+  direnv
+  elm
+  gcloud
+  github-cli
   golang
   haskell
   nodejs
@@ -22,6 +27,7 @@ plugins = %w[
   rust
   shellcheck
   terraform
+  tfsec
 ]
 
 class TmuxPane
