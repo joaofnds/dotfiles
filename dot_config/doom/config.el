@@ -42,20 +42,9 @@
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
-(add-hook! '(go-mode-hook js2-mode-hook enh-ruby-mode-hook)
-           #'(hs-minor-mode lsp-deferred yas-minor-mode))
-
 (add-hook 'org-mode-hook #'spell-fu-mode-disable)
-(add-hook 'emacs-lisp-mode-hook #'hs-minor-mode)
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-
-(add-to-list 'hs-special-modes-alist
-             '(ruby-mode "\\(def\\|do\\|class\\|begin\\|ensure\\|if\\|unless\\|{\\)"
-                         "\\(end\\|end\\|end\\|end\\|end\\|end\\|end\\|}\\)"
-                         "#"
-                         (lambda (arg) (ruby-end-of-block))
-                         nil))
 
 (defun reload-known-projects ()
   (-each
