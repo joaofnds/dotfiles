@@ -4,11 +4,15 @@
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
+
   (setq org-directory "~/notes"
 
         org-todo-keywords '((sequence "TODO(t)" "DOING(d!)" "DONE(f!)")
                             (sequence "[ ](T)" "[-](D!)" "[X](F!)")
                             (type "BLOCKED(b@)" "[?](B@)" "CANCELLED(c@!)"))
+
+        org-modules '(org-habit)
+
         ;; The column to which tags should be indented in a headline
         org-tags-column -80
         ;; Non-nil means undone TODO entries will block switching the parent to DONE
@@ -21,6 +25,7 @@
         org-log-into-drawer t
 
         org-agenda-files '("~/notes/home.org"
+                           "~/notes/habits.org"
                            "~/notes/skore/skore.org"
                            "~/notes/ufpel/computer-lab/computer-lab.org"
                            "~/notes/ufpel/computer-theory/computer-theory.org"
