@@ -10,6 +10,7 @@ alias txstart='tmuxinator start $(tmuxinator list -n | tail -n +2 | fzf)'
 alias txstop='tmuxinator stop $(tmuxinator list -n | tail -n +2 | fzf)'
 alias tatt='tmux attach -t $(tmux ls | fzf -1 | cut -d: -f1)'
 alias e='emacs'
+alias ec='emacsclient'
 
 # files listing
 alias lsnotes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
