@@ -12,7 +12,7 @@ alias tatt='tmux attach -t $(tmux ls | fzf -1 | cut -d: -f1)'
 alias e='emacs'
 alias ec='emacsclient'
 
-alias ytdl="youtube-dl -f '(bestvideo+bestaudio/best)'"
+alias ytdl="youtube-dl -f '(bestvideo+bestaudio/best)' --merge-output-format=mkv"
 
 # files listing
 alias lsnotes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
