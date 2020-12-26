@@ -36,10 +36,6 @@
        :term
        vterm             ; the best terminal emulation in Emacs
 
-       :checkers
-       syntax            ; tasing you for every semicolon you forget
-       (spell +hunspell) ; tasing you for misspelling mispelling
-
        :tools
        docker
        editorconfig      ; let someone else argue about tabs vs spaces

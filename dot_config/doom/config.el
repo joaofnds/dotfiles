@@ -42,7 +42,6 @@
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
-(add-hook 'org-mode-hook #'spell-fu-mode-disable)
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
@@ -53,7 +52,6 @@
        (f-directories "~/code/skore"))
     'projectile-add-known-project))
 
-
 (defun after-doom-loaded ()
   (require 'tmux-pane)
   (require 'tree-sitter)
@@ -62,8 +60,6 @@
   (load "mail-config")
   (load "org-config")
 
-  (global-spell-fu-mode -1)
-  (spell-fu-mode -1)
   (tmux-pane-mode +1)
   (evil-lion-mode +1)
   (global-tree-sitter-mode +1))
