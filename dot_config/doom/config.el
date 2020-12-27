@@ -1,5 +1,3 @@
-;; -*- mode: emacs-lisp; lexical-binding: t; -*-
-
 (add-to-list 'load-path "~/.config/doom")
 
 (setq user-full-name "João Fernandes"
