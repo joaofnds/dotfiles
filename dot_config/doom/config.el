@@ -36,6 +36,8 @@
 
       dired-dwim-target t)
 
+(setq-hook! 'ruby-mode-hook +format-with-lsp t)
+
 (global-set-key (kbd "C-s") 'swiper)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
