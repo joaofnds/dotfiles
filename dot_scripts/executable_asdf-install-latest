@@ -2,6 +2,10 @@
 
 class ASDF
   class << self
+    def update_plugin(plugin)
+      `asdf plugin-update #{plugin}`
+    end
+
     def plugin_list
       `asdf plugin-list`.split("\n")
     end
@@ -33,16 +37,14 @@ class Plugin
 end
 
 class PluginManager
-  def update_to_latest
-    install_latest
-    set_global_to_latest
+  def self.update(plugin_name)
+    plugin = Plugin.new(plugin_name)
+    new(plugin).tap(&:update_to_latest)
   end
 
-  private
-
-  def install_latest
-    puts "[#{plugin}] installing latest version"
-    ASDF.install_latest(plugin.name)
+  def update_to_latest
+    update_plugin
+    install_latest
   end
 
   def set_global_to_latest
@@ -51,16 +53,28 @@ class PluginManager
     ASDF.global(plugin.name, latest_version)
   end
 
+  private
+
   attr_reader :plugin
 
   def initialize(plugin)
     @plugin = plugin
   end
+
+  def update_plugin
+    ASDF.update_plugin(plugin.name)
+  end
+
+  def install_latest
+    puts "[#{plugin}] installing latest version"
+    ASDF.install_latest(plugin.name)
+  end
 end
 
+# We can update each language concurrently, but as setting the global version
+# just writes to ~/.tool-versions (single file), we need to do this in series.
 ASDF.plugin_list.map do |plugin_name|
   Ractor.new plugin_name do |plugin_name|
-    plugin = Plugin.new(plugin_name)
-    PluginManager.new(plugin).update_to_latest
+    PluginManager.update(plugin_name)
   end
-end.each(&:take)
+end.map(&:take).each(&:set_global_to_latest)
