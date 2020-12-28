@@ -14,7 +14,7 @@ class ASDF
       `asdf install #{plugin} latest`
     end
 
-    def set_global(plugin, version)
+    def global(plugin, version)
       `asdf global #{plugin} #{version}`
     end
   end
@@ -48,7 +48,7 @@ class PluginManager
   def set_global_to_latest
     latest_version = ASDF.list(plugin.name).last
     puts "[#{plugin}] setting global version to #{latest_version}"
-    ASDF.set_global(plugin.name, latest_version)
+    ASDF.global(plugin.name, latest_version)
   end
 
   attr_reader :plugin
