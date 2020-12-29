@@ -5,13 +5,13 @@
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
 
+  (add-to-list 'org-modules 'org-habit)
+
   (setq org-directory "~/notes"
 
         org-todo-keywords '((sequence "TODO(t)" "DOING(d!)" "DONE(f!)")
                             (sequence "[ ](T)" "[-](D!)" "[X](F!)")
                             (type "BLOCKED(b@)" "[?](B@)" "CANCELLED(c@!)"))
-
-        org-modules '(org-habit)
 
         ;; The column to which tags should be indented in a headline
         org-tags-column -80
