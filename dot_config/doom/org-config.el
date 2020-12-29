@@ -13,6 +13,8 @@
                             (sequence "[ ](T)" "[-](D!)" "[X](F!)")
                             (type "BLOCKED(b@)" "[?](B@)" "CANCELLED(c@!)"))
 
+        ;; Hide emphasis marker characters (~foo~ -> foo, =foo= -> foo)
+        org-hide-emphasis-markers t
         ;; The column to which tags should be indented in a headline
         org-tags-column -80
         ;; Non-nil means undone TODO entries will block switching the parent to DONE
