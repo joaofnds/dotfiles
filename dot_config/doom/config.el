@@ -48,7 +48,7 @@
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
-(defun reload-known-projects ()
+(defun jf/reload-known-projects ()
   (-each
       (-concat
        '("~/notes" "~/code/dotfiles" "~/code/exercism")
