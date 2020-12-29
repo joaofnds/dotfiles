@@ -5,6 +5,6 @@ docker container run -d \
   --name portainer \
   -p 9000:9000 \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  portainer/portainer-ce:2.0.0-alpine \
+  portainer/portainer-ce:2.0.1-alpine \
   --admin-password '$2y$05$BZ27gXsOUJkoMF5Y381Kcu1pyWicdnjBN/Qh/OVCkDqd/DQTLtzz2' \
   -H 'unix:///var/run/docker.sock'
