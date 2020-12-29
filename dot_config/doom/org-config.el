@@ -53,4 +53,7 @@
   (set-face-attribute 'org-level-5 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-5)
   (set-face-attribute 'org-level-6 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-6)
   (set-face-attribute 'org-level-7 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-7)
-  (set-face-attribute 'org-level-8 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-8))
+  (set-face-attribute 'org-level-8 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-8)
+
+  (defun jf/toggle-org-markers ()
+    (setf org-hide-emphasis-markers (if org-hide-emphasis-markers nil t))))
