@@ -1,3 +1,5 @@
+;; https://wwwtech.de/articles/2016/jul/my-personal-mail-setup
+
 (after! notmuch
   (setq message-send-mail-function   'smtpmail-send-it
         send-mail-function           'smtpmail-send-it
