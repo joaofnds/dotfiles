@@ -4,17 +4,29 @@
 
  :aliases
  {:test {:extra-paths ["test"]}
-  :rebl {:extra-deps {com.cognitect/rebl          {:mvn/version "0.9.242"}
-                      org.openjfx/javafx-fxml     {:mvn/version "15-ea+6"}
-                      org.openjfx/javafx-controls {:mvn/version "15-ea+6"}
-                      org.openjfx/javafx-swing    {:mvn/version "15-ea+6"}
-                      org.openjfx/javafx-base     {:mvn/version "15-ea+6"}
-                      org.openjfx/javafx-web      {:mvn/version "15-ea+6"}
-                      ;; deps for file datafication
-                      org.clojure/data.csv        {:mvn/version "1.0.0"}
-                      org.clojure/data.json       {:mvn/version "1.0.0"}
-                      org.yaml/snakeyaml          {:mvn/version "1.27"}}
-         :main-opts ["-m" "cognitect.rebl"]}}
+  :inspect/rebl {:extra-deps {com.cognitect/rebl          {:mvn/version "0.9.242"}
+                              org.openjfx/javafx-fxml     {:mvn/version "15-ea+6"}
+                              org.openjfx/javafx-controls {:mvn/version "15-ea+6"}
+                              org.openjfx/javafx-swing    {:mvn/version "15-ea+6"}
+                              org.openjfx/javafx-base     {:mvn/version "15-ea+6"}
+                              org.openjfx/javafx-web      {:mvn/version "15-ea+6"}
+                              ;; deps for file datafication
+                              org.clojure/data.csv        {:mvn/version "1.0.0"}
+                              org.clojure/data.json       {:mvn/version "1.0.0"}
+                              org.yaml/snakeyaml          {:mvn/version "1.27"}}
+                 :main-opts ["-m" "cognitect.rebl"]}
+
+  :middleware/nrebl
+  {:extra-deps {rickmoynihan/nrebl.middleware {:mvn/version "0.3.1"}}
+   :main-opts  ["-e" "((requiring-resolve,'cognitect.rebl/ui))"
+                "-m" "nrepl.cmdline"
+                "-i"
+                "--middleware" "[nrebl.middleware/wrap-nrebl,cider.nrepl/cider-middleware]"]}
+
+  :lib/cider-nrepl
+  {:extra-deps {nrepl/nrepl                   {:mvn/version "0.8.3"}
+                cider/cider-nrepl             {:mvn/version "0.25.5"}
+                refactor-nrepl/refactor-nrepl {:mvn/version "2.5.0"}}}}
 
  :mvn/repos {"cognitect-dev-tools"
              {:url "https://dev-tools.cognitect.com/maven/releases/"}}}
