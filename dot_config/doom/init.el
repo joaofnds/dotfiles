@@ -65,7 +65,7 @@
        (ruby +lsp +rails); 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (sh +lsp)         ; she sells {ba,z,fi}sh shells on the C xor
        web               ; the tubes
-       (yaml +lsp)              ; JSON, but readable
+       yaml              ; JSON, but readable
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
