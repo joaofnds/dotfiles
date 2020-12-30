@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-gem install tmuxinator rubocop solargraph rcodetools scanf
+gem install rubocop solargraph
