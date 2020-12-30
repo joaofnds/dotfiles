@@ -75,7 +75,6 @@
        notmuch
 
        :app
-       irc               ; how neckbeards socialize
        (rss +org)        ; emacs as an RSS reader
 
        :config
