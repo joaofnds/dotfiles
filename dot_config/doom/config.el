@@ -56,12 +56,11 @@
     'projectile-add-known-project))
 
 (defun after-doom-loaded ()
+  (load "org-config")
+
   (require 'tmux-pane)
   (require 'tree-sitter)
   (require 'tree-sitter-langs)
-
-  (load "mail-config")
-  (load "org-config")
 
   (tmux-pane-mode +1)
   (evil-lion-mode +1)
