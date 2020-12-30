@@ -57,7 +57,7 @@
        elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        (go +lsp)         ; the hipster dialect
-       (json +lsp)       ; At least it ain't XML
+       json              ; At least it ain't XML
        (javascript +lsp) ; all(hope(abandon(ye(who(enter(here))))))
        markdown          ; writing docs for people to ignore
        org               ; organize your plain life in plain text
