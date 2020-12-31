@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+url="$1"
+last_path_part="${url##*/}"
+path_without_extension="${last_path_part%.*}"
+output="$path_without_extension.html"
+
+monolith -IaFfjMv "$url" -o "$output"
