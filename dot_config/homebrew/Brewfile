@@ -1,3 +1,4 @@
+tap "clojure/tools"
 tap "github/gh"
 tap "heroku/brew"
 tap "homebrew/bundle"
