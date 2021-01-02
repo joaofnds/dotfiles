@@ -55,9 +55,13 @@
        (f-directories "~/code/skore"))
     'projectile-add-known-project))
 
-(defun clojure-setup+ ()
-  (setq cider-clojure-cli-global-options "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl"))
-(add-hook! 'clojure-mode-hook #'clojure-setup+)
+(setq default-cider-options "-M:lib/cider-nrepl"
+      cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
+
+(defun clj/toggle-cider-rebl ()
+  (if (string= cider-clojure-cli-global-options default-cider-options)
+      (setq cider-clojure-cli-global-options cider-options-with-rebl)
+    (setq cider-clojure-cli-global-options default-cider-options)))
 
 (defun after-doom-loaded ()
   (load "org-config")
