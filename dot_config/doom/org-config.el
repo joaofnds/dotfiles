@@ -6,6 +6,7 @@
         :n "M-k" #'org-metaup)
 
   (add-to-list 'org-modules 'org-habit)
+  (add-to-list 'org-modules 'org-mouse)
 
   (setq org-directory "~/notes"
 
