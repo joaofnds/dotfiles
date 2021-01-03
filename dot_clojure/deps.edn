@@ -29,6 +29,9 @@
                 "-i"
                 "-f" "rebel-readline.main/-main"]}
 
+  :middleware/nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
+                     :main-opts  ["-m" "nrepl.cmdline" "-i"]}
+
   :middleware/nrebl
   {:extra-deps {rickmoynihan/nrebl.middleware {:mvn/version "0.3.1"}}
    :main-opts  ["-e" "((requiring-resolve,'cognitect.rebl/ui))"
