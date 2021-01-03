@@ -32,5 +32,6 @@
                 cider/cider-nrepl             {:mvn/version "0.25.5"}
                 refactor-nrepl/refactor-nrepl {:mvn/version "2.5.0"}}}}
 
- :mvn/repos {"cognitect-dev-tools"
-             {:url "https://dev-tools.cognitect.com/maven/releases/"}}}
+ :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://repo.clojars.org"}
+             "cognitect-dev-tools" {:url "https://dev-tools.cognitect.com/maven/releases/"}}}
