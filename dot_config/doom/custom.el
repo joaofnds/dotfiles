@@ -33,6 +33,7 @@
      "https://medium.com/feed/discord-engineering/tagged/engineering"
      "https://medium.com/feed/netflix-techblog"
      "https://oremacs.com/atom.xml"
+     "https://otavio.dev/feed/"
      "https://practicalli.github.io/blog/feed.xml"
      "https://scotch.io/feed"
      "https://www.intercom.com/blog/engineering/feed/"
