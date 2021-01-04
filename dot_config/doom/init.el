@@ -52,7 +52,6 @@
        :lang
        (clojure +lsp)     ; java with a lisp
        common-lisp        ; if you've seen one lisp, you've seen them all
-       data               ; config/data formats
        (elixir +lsp)      ; erlang done right
        elm                ; care for a cup of TEA?
        emacs-lisp         ; drown in parentheses
