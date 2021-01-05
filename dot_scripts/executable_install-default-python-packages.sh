@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-pip install --user black 'python-language-server[all]' pyls-black
+pip install --user black 'python-language-server[all]' pyls-black grip
