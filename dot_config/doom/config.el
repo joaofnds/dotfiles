@@ -66,6 +66,14 @@
       (setq cider-clojure-cli-global-options cider-options-with-rebl)
     (setq cider-clojure-cli-global-options default-cider-options)))
 
+(defun neotree/move-node ()
+  "Move current node to another directory."
+  (interactive)
+  (if-let* ((current-path (neo-buffer--get-filename-current-line))
+            (to-path (read-directory-name (format "Move %s to:" (f-filename current-path))))
+            (is-directory (f-directory-p to-path)))
+      (f-move current-path to-path)))
+
 (defun after-doom-loaded ()
   (load "org-config")
 
