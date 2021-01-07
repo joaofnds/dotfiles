@@ -76,6 +76,8 @@
         (rename-file current-path to-path)))
   (neo-buffer--refresh t))
 
+(defalias 'neotree-add-node 'neotree-create-node)
+
 (defun after-doom-loaded ()
   (load "org-config")
 
