@@ -78,6 +78,16 @@
 
 (defalias 'neotree-add-node 'neotree-create-node)
 
+(map! :map neotree-mode-map
+      :n "m a" #'neotree-add-node
+      :n "m m" #'neotree-move-node
+      :n "m d" #'neotree-delete-node
+      :n "m c" #'neotree-copy-node
+
+      :n "A" #'neotree-stretch-toggle
+      :n "i" #'neotree-enter-horizontal-split
+      :n "s" #'neotree-enter-vertical-split)
+
 (defun after-doom-loaded ()
   (load "org-config")
 
