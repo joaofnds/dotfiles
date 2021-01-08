@@ -10,7 +10,7 @@
        ;; ophints            ; highlight the region an operation acts on
        (popup +defaults)  ; tame sudden yet inevitable temporary windows
        vc-gutter          ; vcs diff in the fringe
-       vi-tilde-fringe    ; fringe tildes to mark beyond EOB
+       ;; vi-tilde-fringe    ; fringe tildes to mark beyond EOB
        workspaces         ; tab emulation, persistence & separate workspaces
        neotree            ; a project drawer, like NERDTree for vim
 
