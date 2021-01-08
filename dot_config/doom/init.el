@@ -36,7 +36,7 @@
 
        :tools
        docker
-       editorconfig       ; let someone else argue about tabs vs spaces
+       ;; editorconfig       ; let someone else argue about tabs vs spaces
        (eval +overlay)    ; run code, run (also, repls)
        lookup             ; navigate your code and its documentation
        (lsp +peek)
