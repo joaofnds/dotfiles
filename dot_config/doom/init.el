@@ -42,10 +42,9 @@
        (lsp +peek)
        (magit             ; a git porcelain for Emacs
          +forge)          ; a porcelain for managing issues and PRs
-       make               ; run make tasks from Emacs
-       pdf                ; pdf enhancements
-       rgb                ; creating color strings
-       tmux               ; an API for interacting with tmux
+       ;; make               ; run make tasks from Emacs
+       ;; pdf                ; pdf enhancements
+       ;; tmux               ; an API for interacting with tmux
 
        :lang
        (clojure +lsp)     ; java with a lisp
