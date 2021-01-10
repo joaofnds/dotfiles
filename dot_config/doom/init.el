@@ -56,7 +56,6 @@
 
        :os
        (:if IS-MAC macos) ; improve compatibility with macOS
-       tty                ; improve the terminal Emacs experience
 
        :app
        (rss +org)         ; emacs as an RSS reader
