@@ -38,9 +38,6 @@
 
       dired-dwim-target t)
 
-(evil-define-key 'normal neotree-mode-map
-  (kbd "g r") 'neotree-refresh)
-
 (setq-hook! 'ruby-mode-hook +format-with-lsp t)
 
 (after! elfeed

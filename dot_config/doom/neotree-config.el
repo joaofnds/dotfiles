@@ -20,4 +20,6 @@
 
       :n "A" #'neotree-stretch-toggle
       :n "i" #'neotree-enter-horizontal-split
-      :n "s" #'neotree-enter-vertical-split)
+      :n "s" #'neotree-enter-vertical-split
+
+      :n "g r" #'neotree-refresh)
