@@ -43,7 +43,9 @@
 (after! elfeed
   (setq-default elfeed-search-filter "@30-months-ago +unread"))
 
-(global-set-key (kbd "C-s") 'swiper)
+(map!
+ "C-s" #'swiper)
+
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
