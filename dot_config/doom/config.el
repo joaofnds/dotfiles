@@ -66,11 +66,11 @@
     (setq cider-clojure-cli-global-options default-cider-options)))
 
 (after! neotree
-  (load "neotree-config")
+  (load! "neotree-config")
   (message "neotree-config loaded"))
 
 (after! org
-  (load "org-config")
+  (load! "org-config")
   (message "org-config loaded"))
 
 (defun after-doom-loaded ()
