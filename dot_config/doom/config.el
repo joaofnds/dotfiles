@@ -44,7 +44,9 @@
   (setq-default elfeed-search-filter "@30-months-ago +unread"))
 
 (map!
- "C-s" #'swiper)
+ "C-s" #'swiper
+ :leader
+ "o e" #'elfeed)
 
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
