@@ -65,16 +65,17 @@
       (setq cider-clojure-cli-global-options cider-options-with-rebl)
     (setq cider-clojure-cli-global-options default-cider-options)))
 
-(defun after-doom-loaded ()
-  (load "org-config")
+(after! neotree
   (load "neotree-config")
+  (message "neotree-config loaded"))
 
-  (require 'tmux-pane)
-  (require 'tree-sitter)
-  (require 'tree-sitter-langs)
+(after! org
+  (load "org-config")
+  (message "org-config loaded"))
 
-  (tmux-pane-mode +1)
-  (evil-lion-mode +1)
-  (global-tree-sitter-mode +1))
+(defun after-doom-loaded ()
+  (tmux-pane-mode t)
+  (global-tree-sitter-mode t)
+  (evil-lion-mode t))
 
-(add-hook 'doom-after-init-modules-hook #'after-doom-loaded)
+(add-hook 'emacs-startup-hook #'after-doom-loaded)
