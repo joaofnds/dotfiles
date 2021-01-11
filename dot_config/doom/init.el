@@ -1,4 +1,4 @@
-;;; init.el -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 (doom! :completion
        company            ; the ultimate code completion backend

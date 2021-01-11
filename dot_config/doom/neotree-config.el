@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (defun neotree-move-node ()
   "Move current node to another directory."
   (interactive)

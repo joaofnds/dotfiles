@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (add-hook 'org-mode-hook #'yas-minor-mode)
 
 (after! org

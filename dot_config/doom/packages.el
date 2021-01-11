@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (package! magit-delta)       ; Use Delta when displaying diffs in Magit
 (package! prettier-js)       ; Use prettier to formar JavaScript files
 (package! terraform-mode)    ; Major mode of terraform configuration file
