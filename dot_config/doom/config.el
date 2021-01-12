@@ -41,7 +41,7 @@
 (setq-hook! 'ruby-mode-hook +format-with-lsp t)
 
 (after! elfeed
-  (setq-default elfeed-search-filter "@40-months-ago +unread"))
+  (setq-default elfeed-search-filter "@50-months-ago +unread"))
 
 (map!
  "C-s" #'swiper
