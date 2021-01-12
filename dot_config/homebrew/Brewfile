@@ -27,7 +27,7 @@ brew "coreutils"
 brew "curl"
 brew "ddrescue"
 brew "diff-so-fancy"
-brew "docker-compose"
+brew "docker-compose", link: false
 brew "docker-machine"
 brew "dust"
 brew "editorconfig"
