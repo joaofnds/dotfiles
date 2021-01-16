@@ -41,7 +41,7 @@
 (setq-hook! 'ruby-mode-hook +format-with-lsp t)
 
 (after! elfeed
-  (setq-default elfeed-search-filter "@8-years-ago +unread")
+  (setq-default elfeed-search-filter "+unread")
   (map! :map elfeed-search-mode-map
         :n "g r" #'elfeed-update))
 
