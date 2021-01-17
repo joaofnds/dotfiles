@@ -37,7 +37,7 @@ alt - t : yabai -m window --toggle split
 
 alt + shift - space : yabai -m window --toggle float
 
-alt - right : yabai -m window --ratio rl:0.1
+alt - right : yabai -m window --ratio rel:0.1
 alt - left : yabai -m window --ratio rel:-0.1
 
 alt + shift - c : skhd --reload
