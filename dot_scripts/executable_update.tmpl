@@ -5,7 +5,7 @@ tmux new-window 'nvim +PlugUpgrade +PlugUpdate +PlugClean +CocUpdateSync +qall'
 tmux split-window 'asdf-install-latest'
 
 {{- if eq .chezmoi.os "linux" }}
-yay -Syu
+paru
 {{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
