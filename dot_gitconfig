@@ -38,3 +38,10 @@ defaultBranch = main
 
 [gpg]
 program = /usr/local/bin/gpg
+
+[url "git@github.com:"]
+insteadOf = "@gh:"
+
+
+[url "https://github.com/"]
+insteadOf = "gh:"
