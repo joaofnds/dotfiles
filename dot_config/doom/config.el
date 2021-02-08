@@ -27,7 +27,7 @@
       doom-theme 'doom-solarized-dark
       doom-themes-enable-bold t
       doom-themes-enable-italic t
-      doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 16)
+      doom-font (font-spec :family "Iosevka SS08" :weight 'normal :size 18)
       doom-variable-pitch-font (font-spec :family "Iosevka Aile")
       doom-big-font-increment 6
 
