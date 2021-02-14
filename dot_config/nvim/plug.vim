@@ -3,24 +3,24 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin()
+
 " General plugins
-Plug 'tpope/vim-surround'   " mappings to {delete,change,add} surrounding pairs
-Plug 'tpope/vim-commentary' " comment stuf out
-Plug 'tpope/vim-repeat'     " repeat commands event after a plugin map
 Plug 'tpope/vim-sensible'   " Sensible vim defaults
 Plug 'tpope/vim-rsi'        " Readline keybinds
+Plug 'tpope/vim-repeat'     " repeat commands event after a plugin map
+Plug 'tpope/vim-commentary' " comment stuf out
+Plug 'tpope/vim-surround'   " mappings to {delete,change,add} surrounding pairs
 Plug 'scrooloose/nerdtree'
 
-" # Formatting
+" Formatting
 Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
 
-" # Shell util integrations
+" Shell integrations
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -28,21 +28,15 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 " Plug 'thoughtbot/vim-rspec'
 
-" # Git
+" Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-" # Languages and Projects
+" Languages and Projects
 
 " Plug 'tpope/vim-projectionist' " granular project configuration
 
-" ## LSP
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" ## Rails
-" Plug 'tpope/vim-rails'
-
-" # Visual
+" Visual
 " Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8'
 
