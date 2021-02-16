@@ -38,7 +38,7 @@
        lookup             ; navigate your code and its documentation
        (lsp +peek)
        (magit             ; a git porcelain for Emacs
-         +forge)          ; a porcelain for managing issues and PRs
+        +forge)           ; a porcelain for managing issues and PRs
 
        :lang
        (clojure +lsp)     ; java with a lisp
@@ -46,8 +46,8 @@
        (elixir +lsp)      ; erlang done right
        emacs-lisp         ; drown in parentheses
        (go +lsp)          ; the hipster dialect
-       json               ; At least it ain't XML
        (javascript +lsp)  ; all(hope(abandon(ye(who(enter(here))))))
+       json               ; At least it ain't XML
        org                ; organize your plain life in plain text
        (python +lsp)      ; beautiful is better than ugly
        (ruby +lsp +rails) ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
