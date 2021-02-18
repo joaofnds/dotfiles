@@ -18,6 +18,7 @@ gpgSign = true
 ui = true
 
 [core]
+excludesFile = ~/.gitignore
 pager = delta --theme='Monokai Extended'
 
 [interactive]
