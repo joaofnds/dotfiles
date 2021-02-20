@@ -40,14 +40,14 @@
         variable-pich-font-family "Iosevka Aile"
         cursive-font-family "CMU Classical Serif")
 
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Aile")
+  (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 1.0)
   (set-face-attribute 'org-document-title nil :font variable-pich-font-family :height 1.5)
   (set-face-attribute 'org-document-info nil :font variable-pich-font-family :height 1.2)
   (set-face-attribute 'org-document-info-keyword nil :height 0.9 :inherit 'shadow)
   (set-face-attribute 'org-meta-line nil :height 0.9 :inherit 'shadow)
   (set-face-attribute 'org-quote nil :font cursive-font-family :height 1.2 :inherit 'org-quote)
-  (set-face-attribute 'org-todo nil :weight 'ultrabold)
-  (set-face-attribute 'org-tag nil :font variable-pich-font-family)
+  (set-face-attribute 'org-todo nil :weight 'ultrabold :height 1.0)
+  (set-face-attribute 'org-tag nil :font variable-pich-font-family :height 1.0)
   (set-face-attribute 'org-code nil :font fixed-pitch-font-family :height 1.0)
   (set-face-attribute 'org-verbatim nil :font "CMU Typewriter Text" :height 1.1)
   (set-face-attribute 'org-level-1 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-1)
