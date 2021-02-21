@@ -4,6 +4,8 @@ plugins=(encode64 fzf git z)
 
 export EDITOR=nvim
 
+export MANPAGER="bat --plain"
+
 # Set language environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
