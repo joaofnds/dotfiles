@@ -31,7 +31,7 @@
 
         org-agenda-files '("~/notes/home.org"
                            "~/notes/habits.org"
-                           "~/notes/skore/skore.org"
+                           "~/notes/melhor-envio/melhor-envio.org"
                            "~/notes/ufpel/computer-lab/computer-lab.org"
                            "~/notes/ufpel/computer-theory/computer-theory.org"
                            "~/notes/theo.org")
