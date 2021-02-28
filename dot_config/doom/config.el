@@ -64,7 +64,7 @@
   (-each
       (-concat
        '("~/notes" "~/code/dotfiles" "~/code/exercism")
-       (f-directories "~/code/skore"))
+       (f-directories "~/code/melhor-envio"))
     'projectile-add-known-project))
 
 (setq default-cider-options "-M:lib/cider-nrepl"
