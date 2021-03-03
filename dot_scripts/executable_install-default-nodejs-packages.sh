@@ -4,6 +4,5 @@ set -euo pipefail
 
 npm i -g typescript \
          typescript-language-server \
-         node-cljfmt \
          prettier \
          snowpack
