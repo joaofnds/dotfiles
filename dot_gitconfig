@@ -46,3 +46,6 @@ insteadOf = "@gh:"
 
 [url "https://github.com/"]
 insteadOf = "gh:"
+
+[url "git@bitbucket.org:"]
+	insteadOf = https://bitbucket.org/
