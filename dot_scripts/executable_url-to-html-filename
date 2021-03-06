@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+url="${1%/*}" # remove trailing slashe from url
+output=""
+
+last_path_part="${url##*/}"
+path_without_extension="${last_path_part%.*}"
+
+if [[ -z $path_without_extension ]]; then
+	output="$path_without_extension.html"
+else
+	output="$last_path_part.html"
+fi
+
+echo $output
