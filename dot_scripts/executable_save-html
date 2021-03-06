@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+url="$1"
+output="$2"
+if [[ -z $output ]]; then
+	output=$(url-to-html-filename $url)
+fi
+
+echo $output
+
+monolith \
+	--ignore-errors \
+	--isolate \
+	--no-audio \
+	--no-css \
+	--no-fonts \
+	--no-frames \
+	--no-js \
+	--no-metadata \
+	--no-video \
+	--output "$output" \
+	"$url"
