@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 
 url="$1"
-last_path_part="${url##*/}"
-path_without_extension="${last_path_part%.*}"
-output="$path_without_extension.html"
+output="$2"
+if [[ -z $output ]]; then
+	output=$(url-to-html-filename $url)
+fi
 
 monolith -IaFfjMv "$url" -o "$output"
