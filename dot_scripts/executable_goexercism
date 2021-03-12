@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+tmux split-window 'fd -e go | entr -c go vet'
+tmux split-window 'fd -e go | entr -c golint'
+tmux split-window 'fd -e go | entr -c go doc -all'
+
+tmux select-layout even-vertical
+
+fd -e go | entr -c go test
