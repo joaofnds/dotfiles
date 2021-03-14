@@ -21,6 +21,10 @@ class ASDF
     def global(plugin, version)
       `asdf global #{plugin} #{version}`
     end
+
+    def reshim
+      `asdf reshim`
+    end
   end
 end
 
@@ -78,3 +82,5 @@ ASDF.plugin_list.map do |plugin_name|
     PluginManager.update(plugin_name)
   end
 end.map(&:take).each(&:set_global_to_latest)
+
+ASDF.reshim
