@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'tempfile'
+
 class ASDF
   class << self
     def update_plugin(plugin)
@@ -10,8 +12,12 @@ class ASDF
       `asdf plugin-list`.split("\n")
     end
 
-    def list(plugin)
-      `asdf list #{plugin}`.split("\n")
+    def list(plugin = nil)
+      if plugin.nil?
+        `asdf list`
+      else
+        `asdf list #{plugin}`.split("\n")
+      end
     end
 
     def install_latest(plugin)
@@ -75,6 +81,8 @@ class PluginManager
   end
 end
 
+before = ASDF.list
+
 # We can update each language concurrently, but as setting the global version
 # just writes to ~/.tool-versions (single file), we need to do this in series.
 ASDF.plugin_list.map do |plugin_name|
@@ -84,3 +92,15 @@ ASDF.plugin_list.map do |plugin_name|
 end.map(&:take).each(&:set_global_to_latest)
 
 ASDF.reshim
+
+after = ASDF.list
+
+Tempfile.open('a') do |a|
+  Tempfile.open('b') do |b|
+    a.write(before)
+    b.write(after)
+    [a, b].each(&:flush)
+
+    system("delta --file-style omit #{a.path} #{b.path}")
+  end
+end
