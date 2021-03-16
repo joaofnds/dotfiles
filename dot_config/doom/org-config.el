@@ -34,30 +34,26 @@
                            "~/notes/melhor-envio/melhor-envio.org"
                            "~/notes/ufpel/computer-lab/computer-lab.org"
                            "~/notes/ufpel/computer-theory/computer-theory.org"
-                           "~/notes/theo.org")
+                           "~/notes/theo.org"))
 
-        fixed-pitch-font-family "Iosevka SS08"
-        variable-pich-font-family "Iosevka Aile"
-        cursive-font-family "CMU Classical Serif")
-
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 1.0)
-  (set-face-attribute 'org-document-title nil :font variable-pich-font-family :height 1.5)
-  (set-face-attribute 'org-document-info nil :font variable-pich-font-family :height 1.2)
+  (set-face-attribute 'variable-pitch nil :font jf/font/variable-family :height 1.0)
+  (set-face-attribute 'org-document-title nil :font jf/font/variable-family :height 1.5)
+  (set-face-attribute 'org-document-info nil :font jf/font/variable-family :height 1.2)
   (set-face-attribute 'org-document-info-keyword nil :height 0.9 :inherit 'shadow)
   (set-face-attribute 'org-meta-line nil :height 0.9 :inherit 'shadow)
-  (set-face-attribute 'org-quote nil :font cursive-font-family :height 1.2 :inherit 'org-quote)
-  (set-face-attribute 'org-todo nil :weight 'ultrabold :height 1.0)
-  (set-face-attribute 'org-tag nil :font variable-pich-font-family :height 1.0)
-  (set-face-attribute 'org-code nil :font fixed-pitch-font-family :height 1.0)
+  (set-face-attribute 'org-quote nil :font jf/font/cursive-family :height 1.2 :inherit 'org-quote)
+  (set-face-attribute 'org-todo nil :weight 'semibold :height 1.0)
+  (set-face-attribute 'org-tag nil :font jf/font/variable-family :height 1.0)
+  (set-face-attribute 'org-code nil :font jf/font/fixed-family :height 1.0)
   (set-face-attribute 'org-verbatim nil :font "CMU Typewriter Text" :height 1.1)
-  (set-face-attribute 'org-level-1 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-1)
-  (set-face-attribute 'org-level-2 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-2)
-  (set-face-attribute 'org-level-3 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-3)
-  (set-face-attribute 'org-level-4 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-4)
-  (set-face-attribute 'org-level-5 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-5)
-  (set-face-attribute 'org-level-6 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-6)
-  (set-face-attribute 'org-level-7 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-7)
-  (set-face-attribute 'org-level-8 nil :font variable-pich-font-family :height 1.0 :inherit 'outline-8)
+  (set-face-attribute 'org-level-1 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-1)
+  (set-face-attribute 'org-level-2 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-2)
+  (set-face-attribute 'org-level-3 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-3)
+  (set-face-attribute 'org-level-4 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-4)
+  (set-face-attribute 'org-level-5 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-5)
+  (set-face-attribute 'org-level-6 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-6)
+  (set-face-attribute 'org-level-7 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-7)
+  (set-face-attribute 'org-level-8 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-8)
 
   (defun jf/toggle-org-markers ()
     (setf org-hide-emphasis-markers (if org-hide-emphasis-markers nil t))))

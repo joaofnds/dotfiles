@@ -24,15 +24,18 @@
       display-line-numbers-type 'relative
       display-line-numbers-current-absolute t
 
-      font-size (cond
-                  (IS-LINUX 16)
-                  (t 18))
+
+      jf/font/fixed-family    "Iosevka SS08"
+      jf/font/cursive-family  "CMU Classical Serif"
+      jf/font/variable-family "Iosevka Aile"
+      jf/font/size (cond (IS-LINUX 16)
+                         (t 18))
 
       doom-theme 'doom-solarized-dark
       doom-themes-enable-bold t
       doom-themes-enable-italic t
-      doom-font (font-spec :family "Iosevka SS08" :size font-size)
-      doom-variable-pitch-font (font-spec :family "Iosevka Aile")
+      doom-font (font-spec :family jf/font/fixed-family :size jf/font/size)
+      doom-variable-pitch-font (font-spec :family jf/font/variable-family)
       doom-big-font-increment 6
 
       projectile-project-search-path '("~/code/")
