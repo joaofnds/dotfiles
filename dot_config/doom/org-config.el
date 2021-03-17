@@ -31,9 +31,8 @@
 
         org-agenda-files '("~/notes/home.org"
                            "~/notes/habits.org"
+                           "~/notes/ufpel/ufpel.org"
                            "~/notes/melhor-envio/melhor-envio.org"
-                           "~/notes/ufpel/computer-lab/computer-lab.org"
-                           "~/notes/ufpel/computer-theory/computer-theory.org"
                            "~/notes/theo.org"))
 
   (set-face-attribute 'variable-pitch nil :font jf/font/variable-family :height 1.0)
