@@ -70,6 +70,12 @@
        (f-directories "~/code/melhor-envio"))
     'projectile-add-known-project))
 
+(defun jf/restore-frame-size ()
+  (set-frame-size
+   (selected-frame)
+   (alist-get 'width initial-frame-alist)
+   (alist-get 'height initial-frame-alist)))
+
 (setq default-cider-options "-M:lib/cider-nrepl"
       cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
 
