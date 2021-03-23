@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+
+export RESTIC_REPOSITORY=$(gpg --decrypt $HOME/.config/restic/resticrepo.gpg)
+export RESTIC_PASSWORD_COMMAND="gpg -d $HOME/.config/restic/resticpass.gpg"
+
+backup() {
+	restic backup --verbose "$HOME/.emacs.d/.local/elfeed"
+}
+
+restore() {
+	restic restore latest --path "$HOME/.emacs.d/.local/elfeed" --target /
+}
+
+help() {
+	cat <<__EOF__
+usage: elfeed [backup | restore]
+__EOF__
+}
+
+case $1 in
+backup)
+	backup
+	;;
+restore)
+	restore
+	;;
+*)
+	help
+	;;
+esac
