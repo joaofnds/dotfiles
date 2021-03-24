@@ -9,3 +9,15 @@
 (package! tree-sitter)       ; Parser generator tool and an incremental parsing library
 (package! tree-sitter-langs) ; Populates global registries of grammars and queries
 (package! grip-mode)         ; Instant Github-flavored Markdown/Org preview using Grip
+
+(disable-packages!
+ haml-mode
+ pug-mode
+ slim-mode
+ less-css-mode
+ stylus-mode
+ sws-mode
+ rainbow-mode
+ helm-css-scss
+ coffee-mode
+ skewer-mode)
