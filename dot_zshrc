@@ -3,7 +3,7 @@
 [ -d $HOME/.asdf ] && source $HOME/.asdf/asdf.sh \
                    && source $HOME/.asdf/completions/asdf.bash
 [ -f $HOME/.aliases ] && source $HOME/.aliases
-[ -f $HOME/.hdw.env ] && source $HOME/.hdw.env
+[ -f $HOME/.hardware.env ] && source $HOME/.hardware.env
 
 eval "$(direnv hook zsh)"
 
