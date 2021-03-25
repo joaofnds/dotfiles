@@ -2,7 +2,7 @@
 
 alias screensaver='open /System/Library/CoreServices/ScreenSaverEngine.app'
 
-alias wakeDesk='wakeonlan -i $homeIP -p 7 $deskMAC'
+alias wakedesk='wakeonlan -i $HOME_IP -p 7 $DESK_MAC'
 
 alias t='tmux'
 alias tx='tmuxinator'
