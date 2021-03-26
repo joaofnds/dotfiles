@@ -76,6 +76,15 @@
    (alist-get 'width initial-frame-alist)
    (alist-get 'height initial-frame-alist)))
 
+(defun jf/download-exercism-exercise ()
+  (interactive)
+  (let* ((track-dir (read-directory-name "track: " "~/code/exercism"))
+         (track (f-filename track-dir))
+         (exercise (read-string "exercise: "))
+         (command (s-concat "exercism download --exercise=" exercise " --track=" track))
+         (should-run (y-or-n-p (s-concat "Should run '" command "'?"))))
+    (when should-run (shell-command command))))
+
 (setq default-cider-options "-M:lib/cider-nrepl"
       cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
 
