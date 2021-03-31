@@ -1,13 +1,22 @@
 #!/usr/bin/env zsh
 
-export RESTIC_REPOSITORY=$(gpg --decrypt $HOME/.config/restic/resticrepo.gpg)
-export RESTIC_PASSWORD_COMMAND="gpg -d $HOME/.config/restic/resticpass.gpg"
+set_restic_vars() {
+	if [[ -z $RESTIC_REPOSITORY ]]; then
+		export RESTIC_REPOSITORY=$(gpg --decrypt $HOME/.config/restic/resticrepo.gpg)
+	fi
+
+	if [[ -z $RESTIC_PASSWORD_COMMAND ]]; then
+		export RESTIC_PASSWORD_COMMAND="gpg -d $HOME/.config/restic/resticpass.gpg"
+	fi
+}
 
 backup() {
+	set_restic_vars
 	restic backup --verbose "$HOME/.emacs.d/.local/elfeed"
 }
 
 restore() {
+	set_restic_vars
 	restic restore latest --path "$HOME/.emacs.d/.local/elfeed" --target /
 }
 
