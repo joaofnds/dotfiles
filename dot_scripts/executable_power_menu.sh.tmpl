@@ -1,7 +1,7 @@
 {{- if eq .chezmoi.os "linux" }}
 #!/bin/bash
 
-option=$(rofi -sep "|" -dmenu -i -p "Power Menu" -width 10 -lines 5 -hide-scrollbar -location 3 -yoffset 32 -xoffset -8 -auto-select <<< "Lock|Logout|Reboot|Shutdown|Hibernate")
+option=$(rofi -sep "|" -dmenu -i -p "Power Menu" -width 10 -lines 5 -hide-scrollbar -location 3 -yoffset 32 -xoffset -8 <<< "Lock|Logout|Reboot|Shutdown|Hibernate")
 
 case $option in
   *Lock) i3lock-fancy ;;
