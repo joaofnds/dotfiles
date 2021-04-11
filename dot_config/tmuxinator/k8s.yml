@@ -2,7 +2,7 @@ name: k8s
 root: ~/code/k8s
 
 windows:
-  - zsh:
+  - k9s: k9s
   - port-forwards:
       layout: even-vertical
       panes:
