@@ -12,8 +12,8 @@
 
   (setq org-directory "~/notes"
 
-        org-todo-keywords '((sequence "TODO(t)" "DOING(d!)" "DONE(f!)")
-                            (sequence "[ ](T)" "[-](D!)" "[X](F!)")
+        org-todo-keywords '((sequence "TODO(t)" "DOING(p!)" "DONE(d!)")
+                            (sequence "[ ](T)" "[-](P!)" "[X](D!)")
                             (type "BLOCKED(b@)" "[?](B@)" "CANCELLED(c@!)"))
 
         ;; Hide emphasis marker characters (~foo~ -> foo, =foo= -> foo)
