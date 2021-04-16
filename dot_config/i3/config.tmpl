@@ -290,8 +290,6 @@ bindsym $mod+n exec "/usr/bin/nautilus"
 exec ~/.screenlayout/S2421HGF.sh
 # set wallpaper
 exec --no-startup-id nitrogen --save --set-zoom-fill ~/Pictures/wallpaper.jpg
-# start flux
-exec --no-startup-id xflux -l -31.7611637 -g -52.3318757,14 -r 1
 # set mouse speed
 exec --no-startup-id xset r rate 200 50
 # start compton
@@ -299,6 +297,6 @@ exec --no-startup-id "picom --backend glx --vsync"
 # start volume applets
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
-exec --no-startup-id redshift-gtk -l $LAT:$LON
+exec --no-startup-id synergy
 
 {{- end }}
