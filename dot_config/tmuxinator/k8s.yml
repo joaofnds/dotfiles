@@ -8,8 +8,6 @@ windows:
   - port-forwards:
       layout: even-vertical
       panes:
-        - kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
-        - kubectl port-forward -n logging svc/elasticsearch-kibana 5601:5601
+        - kubectl port-forward -n monitoring  deployments/prometheus-grafana 3000:3000
+        - kubectl port-forward -n istio-system  svc/kiali 20001:20001
         - kubectl port-forward -n argocd svc/argocd-server 8080:80
-        - kubectl port-forward svc/consul-consul-ui 8081:80
-        - kubectl port-forward svc/vault 8200:8200
