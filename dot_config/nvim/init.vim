@@ -46,10 +46,6 @@ set tabstop=2
 set expandtab
 set list listchars=tab:⇥\ ,trail:·
 
-" Auto indent pasted text
-nnoremap p p=`]<C-o>
-nnoremap P P=`]<C-o>
-
 filetype indent on
 
 " Identation for python files
