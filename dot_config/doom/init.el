@@ -50,8 +50,8 @@
        json               ; At least it ain't XML
        ;; lua                ; one-based indices? one-based indices
        org                ; organize your plain life in plain text
-       (python +lsp)      ; beautiful is better than ugly
        (ruby +lsp +rails) ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       ;; (python +lsp)      ; beautiful is better than ugly
        scheme             ; a fully conniving family of lisps
        (sh +lsp)          ; she sells {ba,z,fi}sh shells on the C xor
        web                ; the tubes
