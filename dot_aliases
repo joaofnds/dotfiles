@@ -25,6 +25,7 @@ alias gselectwip='git status -s | fzf -m | awk '\''{ print $2  }'\'''
 alias gcof='gselectwip | xargs git checkout --'
 alias grf='gselectwip | xargs git reset HEAD'
 alias gaf='gselectwip | xargs git add'
+alias subreposdiffs="fd --type directory --no-ignore --hidden --prune '^.git$' -x git -C {//} diff"
 
 # ruby and rails
 alias be='bundle exec'
