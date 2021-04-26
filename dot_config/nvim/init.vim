@@ -68,11 +68,14 @@ set nowb
 " Persistent Undo
 
 " Keep undo history across sessions, by storing in file.
-if has('persistent_undo') && isdirectory($NVIM_HOME.'/backups')
+if !isdirectory($NVIM_HOME.'/backups')
   silent !mkdir $NVIM_HOME/backups > /dev/null 2>&1
-  set undodir=$NVIM_HOME/backups
-  set undofile
 endif
+
+set noswapfile
+set nobackup
+set undodir=$NVIM_HOME/backups
+set undofile
 
 """"""""""
 " Folds
