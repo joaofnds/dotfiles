@@ -56,3 +56,8 @@
 
   (defun jf/toggle-org-markers ()
     (setf org-hide-emphasis-markers (if org-hide-emphasis-markers nil t))))
+
+(after! org-agenda
+  (require 'calfw)
+  (require 'calfw-org)
+  (setq cfw:org-agenda-schedule-args '(:timestamp)))

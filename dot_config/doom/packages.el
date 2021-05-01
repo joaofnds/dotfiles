@@ -10,6 +10,8 @@
 (package! tree-sitter-langs) ; Populates global registries of grammars and queries
 (package! grip-mode)         ; Instant Github-flavored Markdown/Org preview using Grip
 (package! php-mode)
+(package! calfw)             ; Calendar view framework on Emacs
+(package! calfw-org)         ; Calendar view for org-agenda
 
 (disable-packages!
  haml-mode
