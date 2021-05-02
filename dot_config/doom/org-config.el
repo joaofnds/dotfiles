@@ -3,6 +3,9 @@
 (add-hook 'org-mode-hook #'yas-minor-mode)
 
 (after! org
+  (require 'calfw)
+  (require 'calfw-org)
+
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
@@ -57,7 +60,16 @@
   (defun jf/toggle-org-markers ()
     (setf org-hide-emphasis-markers (if org-hide-emphasis-markers nil t))))
 
-(after! org-agenda
-  (require 'calfw)
-  (require 'calfw-org)
-  (setq cfw:org-agenda-schedule-args '(:timestamp)))
+(after! calfw-org
+  (setq cfw:org-overwrite-default-keybinding t)
+  (map! (:leader
+         :desc "Calendar" "o c" #'cfw:open-org-calendar)
+
+        :map cfw:calendar-mode-map
+        ;; "SPC" nil
+        ;; [return] #'cfw:org-open-agenda-day
+        "q"      #'cfw:org-clean-exit
+        "v d"    #'cfw:change-view-day
+        "v w"    #'cfw:change-view-week
+        "v W"    #'cfw:change-view-two-weeks
+        "v m"    #'cfw:change-view-month))
