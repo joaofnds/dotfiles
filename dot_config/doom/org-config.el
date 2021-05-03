@@ -61,15 +61,32 @@
     (setf org-hide-emphasis-markers (if org-hide-emphasis-markers nil t))))
 
 (after! calfw-org
-  (setq cfw:org-overwrite-default-keybinding t)
-  (map! (:leader
-         :desc "Calendar" "o c" #'cfw:open-org-calendar)
 
-        :map cfw:calendar-mode-map
-        ;; "SPC" nil
-        ;; [return] #'cfw:org-open-agenda-day
-        "q"      #'cfw:org-clean-exit
-        "v d"    #'cfw:change-view-day
-        "v w"    #'cfw:change-view-week
-        "v W"    #'cfw:change-view-two-weeks
-        "v m"    #'cfw:change-view-month))
+  (setq cfw:org-overwrite-default-keybinding nil
+        cfw:org-capture-template `("c" "calfw2org"
+                                   entry
+                                   (file ,(f-join org-directory +org-capture-todo-file))
+                                   "* %?\n %(cfw:org-capture-day)")
+        org-capture-templates
+        (append org-capture-templates (list cfw:org-capture-template)))
+
+  (map! :leader
+        :desc "Calendar" "o c" #'cfw:open-org-calendar)
+
+  (map! :map cfw:calendar-mode-map
+
+        "SPC"    nil
+        [return] #'cfw:org-open-agenda-day
+
+        :desc "capture"             "c" #'org-capture
+        :desc "go to next day"      "l" #'cfw:navi-next-day-command
+        :desc "go to previous day"  "h" #'cfw:navi-previous-day-command
+        :desc "go to next item"     "j" #'cfw:navi-next-item-command
+        :desc "go to previous item" "k" #'cfw:navi-prev-item-command
+        :desc "quit"                "q" #'cfw:org-clean-exit
+
+        (:prefix "v"
+         "d"    #'cfw:change-view-day
+         "w"    #'cfw:change-view-week
+         "W"    #'cfw:change-view-two-weeks
+         "m"    #'cfw:change-view-month)))
