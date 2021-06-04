@@ -13,6 +13,7 @@ alias e='emacs'
 alias ec='emacsclient'
 
 alias ytdl="youtube-dl -f '(bestvideo+bestaudio/best)' --merge-output-format=mkv"
+alias musicdl="youtube-dl --extract-audio --audio-format flac --audio-quality 0"
 
 # files listing
 alias lsnotes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
