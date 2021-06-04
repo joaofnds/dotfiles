@@ -34,6 +34,8 @@ Plug 'airblade/vim-gitgutter'
 
 " Languages and Projects
 
+Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
 " Plug 'tpope/vim-projectionist' " granular project configuration
 
 " Visual

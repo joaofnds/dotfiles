@@ -112,3 +112,4 @@ set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
 
 so $NVIM_HOME/plug.vim
+lua require('init')
