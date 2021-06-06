@@ -105,6 +105,12 @@ nnoremap <leader><leader> :FZF<cr>
 " find here: searches for a file in the current directory
 nnoremap <leader>. :FZF %:p:h<cr>
 
+" search using ag
+nnoremap <leader>sp :Ag<cr>
+
+" search buffers using fzf
+nnoremap <leader>bb :Buf<cr>
+
 " file save: writes the buffer (same as <leader>bs)
 nnoremap <leader>fs :w<cr>
 
