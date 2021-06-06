@@ -36,6 +36,9 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'glepnir/lspsaga.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 " Plug 'tpope/vim-projectionist' " granular project configuration
 
 " Visual
