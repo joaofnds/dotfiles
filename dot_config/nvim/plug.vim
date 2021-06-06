@@ -15,6 +15,7 @@ Plug 'tpope/vim-repeat'     " repeat commands event after a plugin map
 Plug 'tpope/vim-commentary' " comment stuf out
 Plug 'tpope/vim-surround'   " mappings to {delete,change,add} surrounding pairs
 Plug 'scrooloose/nerdtree'
+Plug 'folke/which-key.nvim'
 
 " Formatting
 Plug 'junegunn/vim-easy-align'
