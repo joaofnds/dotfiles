@@ -9,7 +9,7 @@
 (package! tree-sitter)       ; Parser generator tool and an incremental parsing library
 (package! tree-sitter-langs) ; Populates global registries of grammars and queries
 (package! grip-mode)         ; Instant Github-flavored Markdown/Org preview using Grip
-(package! php-mode)
+(package! php-mode)          ; How would you know it's a variable if the dollar wasn't there, right?
 (package! calfw)             ; Calendar view framework on Emacs
 (package! calfw-org)         ; Calendar view for org-agenda
 
