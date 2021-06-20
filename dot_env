@@ -30,3 +30,5 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export ELS_INSTALL_PREFIX="$PATH:$HOME/code/repos/elixir-ls/release"
 export PATH="$ELS_INSTALL_PREFIX:$PATH"
+
+export GO111MODULE=on
