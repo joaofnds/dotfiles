@@ -20,6 +20,7 @@ Plug 'folke/which-key.nvim'
 " Formatting
 Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Shell integrations
 Plug '/usr/local/opt/fzf'

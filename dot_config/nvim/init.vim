@@ -55,7 +55,7 @@ autocmd BufNewFile,BufRead *.py
     \ set tabstop=4
     \ set softtabstop=4
     \ set shiftwidth=4
-    \ set foldmethod=indent " indent based on spaces
+    \ set foldmethod=expr
 
 """"""""""
 " Turn Off Swap Files
@@ -80,7 +80,7 @@ set undofile
 """"""""""
 " Folds
 
-set foldmethod=indent " fold based on indent
+set foldmethod=expr " fold based on indent
 set foldnestmax=3     " deepest fold is 3 levels
 set nofoldenable      " dont fold by default
 
