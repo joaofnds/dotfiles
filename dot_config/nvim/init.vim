@@ -76,6 +76,15 @@ set noswapfile
 set nobackup
 set undodir=$NVIM_HOME/backups
 set undofile
+set backupcopy=yes " overwrite files to update, instead of renaming + rewriting
+set backupdir=$NVIM_HOME/backups//
+set backupdir+=.
+
+if exists('$SUDO_USER')
+  " don't create root-owned files
+  set nobackup
+  set nowritebackup
+endif
 
 """"""""""
 " Folds
