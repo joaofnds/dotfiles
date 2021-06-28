@@ -1,6 +1,7 @@
 local lsp = {}
 
 local lspconfig = require "lspconfig"
+local lspinstall = require "lspinstall"
 local saga = require "lspsaga"
 local utils = require("utils")
 
@@ -15,9 +16,14 @@ function on_attach()
 end
 
 function lsp.init()
-    lspconfig.tsserver.setup {
-        on_attach = on_attach
-    }
+    lspinstall.setup()
+
+    local servers = lspinstall.installed_servers()
+    for _, server in pairs(servers) do
+        lspconfig[server].setup {
+            on_attach = on_attach
+        }
+    end
 end
 
 return lsp

@@ -36,6 +36,7 @@ Plug 'airblade/vim-gitgutter'
 " Languages and Projects
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
