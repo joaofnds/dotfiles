@@ -28,8 +28,7 @@
       jf/font/fixed-family    "Iosevka SS08"
       jf/font/cursive-family  "CMU Classical Serif"
       jf/font/variable-family "Iosevka Aile"
-      jf/font/size (cond (IS-LINUX 16)
-                         (t 18))
+      jf/font/size (if IS-MAC 18 16)
 
       doom-theme 'doom-solarized-dark
       doom-themes-enable-bold t
