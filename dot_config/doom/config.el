@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (add-to-list 'load-path "~/.config/doom")
+(add-to-list 'load-path "~/.emacs.d/.local/straight/build-27.2/tree-sitter-langs/bin")
 
 (setq user-full-name "João Fernandes"
       user-mail-address "joaofnds@joaofnds.com"
