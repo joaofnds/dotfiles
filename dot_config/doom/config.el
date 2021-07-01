@@ -60,7 +60,12 @@
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode t)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (defun jf/reload-known-projects ()
   (-each
@@ -100,7 +105,6 @@
 
 (defun after-doom-loaded ()
   (tmux-pane-mode t)
-  (global-tree-sitter-mode t)
   (evil-lion-mode t))
 
 (add-hook 'emacs-startup-hook #'after-doom-loaded)
