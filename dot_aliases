@@ -11,6 +11,7 @@ alias txstop='tmuxinator stop $(tmuxinator list -n | tail -n +2 | fzf)'
 alias tatt='tmux attach -t "$(tmux ls | fzf -1 | cut -d: -f1)"'
 alias e='emacs'
 alias ec='emacsclient'
+alias asdfrm='plugin=$(asdf plugin-list | fzf) && asdf list $plugin | fzf -m | xargs -n 1 asdf uninstall $plugin'
 
 alias ytdl="youtube-dl -f '(bestvideo+bestaudio/best)' --merge-output-format=mkv"
 alias musicdl="youtube-dl --extract-audio --audio-format flac --audio-quality 0"
