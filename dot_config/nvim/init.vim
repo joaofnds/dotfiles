@@ -3,17 +3,17 @@ let $NVIM_HOME = $HOME.'/.config/nvim'
 let mapleader = "\<Space>"
 
 """"""""""
-" General Config 
+" General Config
 
 set encoding=utf8  " Set encoding
-set laststatus=2   " Always show statusline
+set laststatus=2   " Always show status line
 set number         " Enable line Numbers
 set relativenumber " Enable relative line numbers
 set nowrap         " Disable line wrap
 set showcmd        " Show incomplete cmds down the bottom
 set showmode       " Show current mode down the bottom
 set visualbell     " No sounds"
-set noautochdir    " Dont set CWD when as rootdir when opening vim
+set noautochdir    " Don't set CWD when as rootdir when opening vim
 set autoread       " Reload files changed outside vim
 set hidden         " This makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
 set colorcolumn=80 " Display a column at the 80th column
@@ -44,18 +44,18 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set expandtab
-set list listchars=tab:⇥\ ,trail:·
+set list listchars=tab:\ \ ,trail:·
 
 filetype indent on
 
-" Identation for python files
+" Indentation for python files
 autocmd BufNewFile,BufRead *.py
     \ set expandtab         " replace tabs with spaces
     \ set autoindent        " copy indent when starting a new line
     \ set tabstop=4
     \ set softtabstop=4
     \ set shiftwidth=4
-    \ set foldmethod=indent " indent based on spaces
+    \ set foldmethod=expr
 
 """"""""""
 " Turn Off Swap Files
@@ -76,13 +76,22 @@ set noswapfile
 set nobackup
 set undodir=$NVIM_HOME/backups
 set undofile
+set backupcopy=yes " overwrite files to update, instead of renaming + rewriting
+set backupdir=$NVIM_HOME/backups//
+set backupdir+=.
+
+if exists('$SUDO_USER')
+  " don't create root-owned files
+  set nobackup
+  set nowritebackup
+endif
 
 """"""""""
 " Folds
 
-set foldmethod=indent " fold based on indent
+set foldmethod=expr " fold based on indent
 set foldnestmax=3     " deepest fold is 3 levels
-set nofoldenable      " dont fold by default
+set nofoldenable      " don't fold by default
 
 """"""""""
 " Completion

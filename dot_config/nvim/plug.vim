@@ -20,6 +20,7 @@ Plug 'folke/which-key.nvim'
 " Formatting
 Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Shell integrations
 Plug '/usr/local/opt/fzf'
@@ -36,7 +37,10 @@ Plug 'airblade/vim-gitgutter'
 " Languages and Projects
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
 Plug 'glepnir/lspsaga.nvim'
+Plug 'hrsh7th/nvim-compe'
+
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
