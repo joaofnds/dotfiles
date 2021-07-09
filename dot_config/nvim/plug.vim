@@ -16,6 +16,7 @@ Plug 'tpope/vim-commentary' " comment stuf out
 Plug 'tpope/vim-surround'   " mappings to {delete,change,add} surrounding pairs
 Plug 'scrooloose/nerdtree'
 Plug 'folke/which-key.nvim'
+Plug 'romgrk/barbar.nvim'   " pretty tabline
 
 " Formatting
 Plug 'junegunn/vim-easy-align'
