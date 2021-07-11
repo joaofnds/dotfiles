@@ -48,6 +48,7 @@
   (set-face-attribute 'org-tag nil :font jf/font/variable-family :height 1.0)
   (set-face-attribute 'org-code nil :font jf/font/fixed-family :height 1.0)
   (set-face-attribute 'org-verbatim nil :font "CMU Typewriter Text" :height 1.1)
+  (set-face-attribute 'org-quote nil :font jf/font/cursive-family :height 1.2)
   (set-face-attribute 'org-level-1 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-1)
   (set-face-attribute 'org-level-2 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-2)
   (set-face-attribute 'org-level-3 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-3)
