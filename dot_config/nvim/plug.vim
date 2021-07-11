@@ -16,6 +16,7 @@ Plug 'tpope/vim-commentary' " comment stuf out
 Plug 'tpope/vim-surround'   " mappings to {delete,change,add} surrounding pairs
 Plug 'scrooloose/nerdtree'
 Plug 'folke/which-key.nvim'
+Plug 'romgrk/barbar.nvim'   " pretty tabline
 
 " Formatting
 Plug 'junegunn/vim-easy-align'
@@ -56,9 +57,6 @@ Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
-" Load plugged settings
-let vimsettings = $NVIM_HOME.'/settings'
-
-for fpath in split(globpath(vimsettings, '*.vim'), '\n')
+for fpath in split(globpath('~/.config/nvim/settings/', '*.vim'), '\n')
   exe 'source' fpath
 endfor

@@ -1,3 +1,6 @@
+require("settings")
+vim.cmd([[source ~/.config/nvim/plug.vim]])
+require("config.saga")
 require("config.lsp").init()
 require("config.telescope")
 require("config.which-key")

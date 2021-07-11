@@ -27,7 +27,7 @@
 
 
       jf/font/fixed-family    "Iosevka SS08"
-      jf/font/cursive-family  "CMU Classical Serif"
+      jf/font/cursive-family  "CMU Serif"
       jf/font/variable-family "Iosevka Aile"
       jf/font/size (if IS-MAC 18 16)
 
