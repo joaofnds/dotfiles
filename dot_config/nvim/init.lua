@@ -1,3 +1,7 @@
+vim.cmd("source autocmds.vim")
+vim.cmd("source plug.vim")
+require("settings")
+require("config.saga")
 require("config.lsp").init()
 require("config.telescope")
 require("config.which-key")

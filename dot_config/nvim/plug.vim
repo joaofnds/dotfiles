@@ -57,9 +57,6 @@ Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
-" Load plugged settings
-let vimsettings = $NVIM_HOME.'/settings'
-
-for fpath in split(globpath(vimsettings, '*.vim'), '\n')
+for fpath in split(globpath('settings', '*.vim'), '\n')
   exe 'source' fpath
 endfor
