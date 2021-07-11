@@ -57,6 +57,6 @@ Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
-for fpath in split(globpath('settings', '*.vim'), '\n')
+for fpath in split(globpath('~/.config/nvim/settings/', '*.vim'), '\n')
   exe 'source' fpath
 endfor

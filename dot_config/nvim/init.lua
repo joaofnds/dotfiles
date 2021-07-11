@@ -1,6 +1,5 @@
-vim.cmd("source autocmds.vim")
-vim.cmd("source plug.vim")
 require("settings")
+vim.cmd([[source ~/.config/nvim/plug.vim]])
 require("config.saga")
 require("config.lsp").init()
 require("config.telescope")
