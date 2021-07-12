@@ -1,0 +1,10 @@
+I manage my dotfiles using [[https://github.com/twpayne/chezmoi][chezmoi]].
+
+This repo includes configs for macOS and my riced up [[https://i3wm.org/][i3]] (I use [[https://archlinux.org/][arch]] btw...).
+
+I mainly use [[https://github.com/hlissner/doom-emacs][Doom]] [[https://www.gnu.org/software/emacs/][Emacs]], but I also maintain my [[https://neovim.io/][Neovim]] configured with some
+bling just in case I need to pop up an editor for a quick edit in the terminal.
+Speaking of the terminal, I use [[https://github.com/alacritty/alacritty][alacritty]]. It's fast. In it, I live at all times
+inside [[https://github.com/tmux/tmux][tmux]].
+
+I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything.
