@@ -53,8 +53,7 @@
   (split-string (etr:tmux "list-panes -F #{pane_index}")))
 
 (defun etr:other-panes ()
-  (interactive)
-  "Lists panes without focus."
+  "Lists panes not running the current emacs."
   (let* ((output (etr:tmux "list-panes -F '#{pane_pid} #{pane_index}'"))
          (lines (split-string (string-trim output)))
          this-pid (emacs-pid))
@@ -154,17 +153,21 @@
    (line-beginning-position)
    (line-end-position)))
 
-
 (cl-defun etr:current-selection ()
+  "Currently selected string on the buffer. Nil if marker is not active."
   (when mark-active
     (buffer-substring-no-properties
      (region-beginning)
      (region-end))))
 
 (cl-defun etr:sanitize-buffer-string (str)
+  "Sanitizes a string grabbed from the buffer.
+   This is intented to by applied to strings that are going to be
+   sended to a terminal."
   (s-trim (shell-quote-argument str)))
 
 (cl-defun etr:send-lines ()
+  "Sends current selected text (or current line if no selection) to tmux."
   (interactive)
   (etr:send-command (etr:sanitize-buffer-string (or (etr:current-selection) (etr:current-line)))))
 
