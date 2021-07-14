@@ -55,10 +55,11 @@
 (defun etr:other-panes ()
   (interactive)
   "Lists panes without focus."
-  (let* ((output (etr:tmux "list-panes -F '#{pane_active} #{pane_index}'"))
-         (lines (split-string (string-trim output))))
-    (cl-loop for (active pane) on lines by #'cddr
-             when (equal active "0")
+  (let* ((output (etr:tmux "list-panes -F '#{pane_pid} #{pane_index}'"))
+         (lines (split-string (string-trim output)))
+         this-pid (emacs-pid))
+    (cl-loop for (pid pane) on lines by #'cddr
+             unless (equal pid emacs-pid)
              collect pane)))
 
 (defun etr:prompt (prompt &rest args)
