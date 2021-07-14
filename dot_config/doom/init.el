@@ -7,6 +7,7 @@
        :ui
        doom               ; what makes DOOM look the way it does
        modeline           ; snazzy, Atom-inspired modeline, plus API
+       emoji              ; 🙂
        (popup +defaults)  ; tame sudden yet inevitable temporary windows
        vc-gutter          ; vcs diff in the fringe
        workspaces         ; tab emulation, persistence & separate workspaces
