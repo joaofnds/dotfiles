@@ -103,6 +103,13 @@
 (after! org
   (load! "org-config"))
 
+(with-eval-after-load "emacs-tmux-runner"
+  (map!
+   (:leader
+    (:prefix-map ("x" . "tmux")
+     (:prefix-map ("s" . "send")
+      :desc "lines" "l" #'etr:send-lines)))))
+
 (defun after-doom-loaded ()
   (tmux-pane-mode t)
   (evil-lion-mode t)
