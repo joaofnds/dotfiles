@@ -87,6 +87,7 @@
   (let ((panes (etr:other-panes)))
     (if (= (length panes) 1)
         (car panes)
+      (etr:display-panes)
       (etr:prompt "Pane:" panes))))
 
 (defun etr:set-session ()
