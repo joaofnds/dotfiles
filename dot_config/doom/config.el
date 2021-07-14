@@ -103,6 +103,7 @@
 
 (defun after-doom-loaded ()
   (tmux-pane-mode t)
-  (evil-lion-mode t))
+  (evil-lion-mode t)
+  (load! "emacs-tmux-runner"))
 
 (add-hook 'emacs-startup-hook #'after-doom-loaded)
