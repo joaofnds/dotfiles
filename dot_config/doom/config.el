@@ -98,6 +98,9 @@
       (setq cider-clojure-cli-global-options cider-options-with-rebl)
     (setq cider-clojure-cli-global-options default-cider-options)))
 
+(after! neotree
+  (load! "neotree-config"))
+
 (after! org
   (load! "org-config"))
 
