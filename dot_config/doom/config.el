@@ -57,7 +57,6 @@
  :leader
  "o e" #'elfeed)
 
-
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
