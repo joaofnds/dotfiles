@@ -147,5 +147,24 @@
   (etr:focus-pane pane)
   (etr:tmux "resize-pane -Z"))
 
+(cl-defun etr:current-line ()
+  (buffer-substring-no-properties
+   (line-beginning-position)
+   (line-end-position)))
+
+
+(cl-defun etr:current-selection ()
+  (when mark-active
+    (buffer-substring-no-properties
+     (region-beginning)
+     (region-end))))
+
+(cl-defun etr:sanitize-buffer-string (str)
+  (s-trim (shell-quote-argument str)))
+
+(cl-defun etr:send-lines ()
+  (interactive)
+  (etr:send-command (etr:sanitize-buffer-string (or (etr:current-selection) (etr:current-line)))))
+
 (provide 'emacs-tmux-runner)
 ;;; emacs-tmux-runner.el ends here
