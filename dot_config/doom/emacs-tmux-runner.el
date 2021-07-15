@@ -19,33 +19,50 @@
 ;;
 ;;; Code:
 
+;;; Session:
 (defvar *etr:session* nil)
-(defvar *etr:window* nil)
-(defvar *etr:pane* nil)
-
-(defun etr:tmux (command)
-  (interactive)
-  "Run a tmux shell command.
-  COMMAND is concated with 'tmux '"
-  (shell-command-to-string (concat "tmux " command)))
-
-(cl-defun etr:send-keys (input &optional (target (etr:target-pane)))
-  (interactive)
-  (etr:tmux (format "send-keys -t %s %s" target input)))
-
-(cl-defun etr:send-command (input &optional (target (etr:target-pane)))
-  (interactive)
-  (etr:tmux (format "send-keys -t %s %s C-m" target input)))
 
 (defun etr:list-sessions ()
   (interactive)
   "Lists tmux sessions."
   (split-string (etr:tmux "list-sessions -F '#{session_name}'")))
 
+(defun etr:select-session ()
+  (interactive)
+  "Select a tmux session."
+  (let ((sessions (etr:list-sessions)))
+    (if (= (length sessions) 1)
+        (car sessions)
+      (etr:prompt "Session:" sessions))))
+
+(defun etr:set-session ()
+  (interactive)
+  "Set *session*."
+  (setf *etr:session* (etr:select-session)))
+
+;;; Window:
+(defvar *etr:window* nil)
+
 (defun etr:list-windows ()
   (interactive)
   "Lists tmux windows."
   (split-string (etr:tmux "list-windows -F '#{window_name}'")))
+
+(defun etr:select-window ()
+  (interactive)
+  "Select a tmux window."
+  (let ((windows (etr:list-windows)))
+    (if (= (length windows) 1)
+        (car windows)
+      (etr:prompt "Window:" windows))))
+
+(defun etr:set-window ()
+  (interactive)
+  "Set *window*."
+  (setf *etr:window* (etr:select-window)))
+
+;;; Pane:
+(defvar *etr:pane* nil)
 
 (defun etr:list-panes ()
   (interactive)
@@ -61,26 +78,6 @@
              unless (equal pid emacs-pid)
              collect pane)))
 
-(defun etr:prompt (prompt &rest args)
-  "Print PROMPT and ask for some o ARGS."
-  (apply 'completing-read prompt (append args '(nil t))))
-
-(defun etr:select-session ()
-  (interactive)
-  "Select a tmux session."
-  (let ((sessions (etr:list-sessions)))
-    (if (= (length sessions) 1)
-        (car sessions)
-      (etr:prompt "Session:" sessions))))
-
-(defun etr:select-window ()
-  (interactive)
-  "Select a tmux window."
-  (let ((windows (etr:list-windows)))
-    (if (= (length windows) 1)
-        (car windows)
-      (etr:prompt "Window:" windows))))
-
 (defun etr:select-pane ()
   (interactive)
   "Select a tmux pane."
@@ -90,20 +87,34 @@
       (etr:display-panes)
       (etr:prompt "Pane:" panes))))
 
-(defun etr:set-session ()
-  (interactive)
-  "Set *session*."
-  (setf *etr:session* (etr:select-session)))
-
-(defun etr:set-window ()
-  (interactive)
-  "Set *window*."
-  (setf *etr:window* (etr:select-window)))
-
 (defun etr:set-pane ()
   (interactive)
   "Set *pane*."
   (setf *etr:pane* (etr:select-pane)))
+
+(defun etr:display-panes ()
+  "Displays tmux panes."
+  (etr:tmux "display-panes"))
+
+;;; Altogether:
+
+(defun etr:tmux (command)
+  (interactive)
+  "Run a tmux shell command.
+  COMMAND is concated with 'tmux '"
+  (shell-command-to-string (concat "tmux " command)))
+
+(cl-defun etr:send-keys (input &optional (target (etr:target-pane)))
+  (interactive)
+  (etr:tmux (format "send-keys -t %s %s" target input)))
+
+(cl-defun etr:send-command (input &optional (target (etr:target-pane)))
+  (interactive)
+  (etr:tmux (format "send-keys -t %s %s C-m" target input)))
+
+(defun etr:prompt (prompt &rest args)
+  "Print PROMPT and ask for some o ARGS."
+  (apply 'completing-read prompt (append args '(nil t))))
 
 (cl-defun etr:target-pane ()
   (etr:ensure-target-pane)
@@ -120,10 +131,6 @@
   "Check if session, window and pane are set and set it if not."
   (unless (and *etr:session* *etr:window* *etr:pane*)
     (etr:reset-target-pane)))
-
-(defun etr:display-panes ()
-  "Displays tmux panes."
-  (etr:tmux "display-panes"))
 
 (defun etr:vslip ()
   (interactive)
