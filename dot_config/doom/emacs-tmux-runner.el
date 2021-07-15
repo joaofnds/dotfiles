@@ -142,6 +142,12 @@
   "Splits vertically."
   (etr:tmux "split-window -h"))
 
+(cl-defun etr:clear-pane (&optional (pane (etr:target-pane)))
+  (interactive)
+  "Clears attatched pane.
+  PANE is the tmux pane to focus on"
+  (etr:tmux (format "send-keys -t %s C-l" pane)))
+
 (cl-defun etr:focus-pane (&optional (pane (etr:target-pane)))
   (interactive)
   "Focuses on a tmux pane.
