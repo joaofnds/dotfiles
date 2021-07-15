@@ -96,6 +96,26 @@
   "Displays tmux panes."
   (etr:tmux "display-panes"))
 
+;;; Command:
+(defvar *etr:user-command* nil)
+
+(defun etr:set-user-command ()
+  (setf *etr:user-command* (read-shell-command "command: ")))
+
+(defun etr:forget-user-command ()
+  (interactive)
+  "Forgets user command."
+  (setf *etr:user-command* nil))
+
+(defun etr:assert-user-command-presence ()
+  (unless *etr:user-command* (etr:set-user-command)))
+
+(defun etr:run-user-command ()
+  (interactive)
+  "Runs a user defined command."
+  (etr:assert-user-command-presence)
+  (etr:send-command *etr:user-command*))
+
 ;;; Altogether:
 
 (defun etr:tmux (command)

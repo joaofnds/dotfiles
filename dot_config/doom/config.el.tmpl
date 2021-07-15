@@ -107,8 +107,10 @@
   (map!
    (:leader
     (:prefix-map ("x" . "tmux")
-     (:prefix-map ("s" . "send")
-      :desc "lines" "l" #'etr:send-lines)))))
+     :desc "clear" "c" #'etr:clear-pane
+     :desc "send" "s" #'etr:send-lines
+     :desc "run" "r" #'etr:run-user-command
+     :desc "forget command" "f" #'etr:forget-user-command))))
 
 (defun after-doom-loaded ()
   (tmux-pane-mode t)
