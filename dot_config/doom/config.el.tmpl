@@ -38,59 +38,19 @@
       doom-variable-pitch-font (font-spec :family jf/font/variable-family)
       doom-big-font-increment 6
 
-      projectile-project-search-path '("~/code/")
-      projectile-enable-caching nil
-
       +ivy-project-search-engines '(ag)
 
       dired-dwim-target t)
 
-(setq-hook! 'ruby-mode-hook +format-with-lsp t)
-
-(after! elfeed
-  (setq-default elfeed-search-filter "+unread")
-  (map! :map elfeed-search-mode-map
-        :n "g r" #'elfeed-update))
-
-(map!
- "C-s" #'swiper
- :leader
- "o e" #'elfeed)
+(map! "C-s" #'swiper)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
-
-(defun jf/reload-known-projects ()
-  (-each
-      (-concat
-       '("~/notes" "~/code/dotfiles" "~/code/exercism")
-       (f-directories "~/code/melhor-envio"))
-    'projectile-add-known-project))
 
 (defun jf/restore-frame-size ()
   (set-frame-size
    (selected-frame)
    (alist-get 'width initial-frame-alist)
    (alist-get 'height initial-frame-alist)))
-
-(defun jf/download-exercism-exercise ()
-  (interactive)
-  (let* ((track-dir (read-directory-name "track: " "~/code/exercism"))
-         (track (f-filename track-dir))
-         (exercise (read-string "exercise: "))
-         (command (s-concat "exercism download --exercise=" exercise " --track=" track))
-         (should-run (y-or-n-p (s-concat "Should run '" command "'?"))))
-    (when should-run (shell-command command))))
-
-(setq default-cider-options "-M:lib/cider-nrepl"
-      cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
-
-(defun clj/toggle-cider-rebl ()
-  (if (string= cider-clojure-cli-global-options default-cider-options)
-      (setq cider-clojure-cli-global-options cider-options-with-rebl)
-    (setq cider-clojure-cli-global-options default-cider-options)))
-
-(after! neotree
-  (load! "neotree-config"))
 
 (after! org
   (load! "org-config"))
@@ -104,7 +64,6 @@
 
 (defun after-doom-loaded ()
   (tmux-pane-mode t)
-  (evil-lion-mode t)
   (load! "emacs-tmux-runner"))
 
 (add-hook 'emacs-startup-hook #'after-doom-loaded)
