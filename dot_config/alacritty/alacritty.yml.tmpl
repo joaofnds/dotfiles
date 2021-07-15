@@ -28,12 +28,7 @@ font:
   bold_italic:
     style: Bold Italic
 
-  {{- if eq .chezmoi.os "darwin" }}
-  size: 18
-  {{- end }}
-  {{- if eq .chezmoi.os "linux" }}
-  size: 12
-  {{- end }}
+  size: {{ .code.font.size }}
 
   {{- if eq .chezmoi.os "darwin" }}
   use_thin_strokes: true
