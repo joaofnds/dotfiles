@@ -100,7 +100,7 @@
 (defvar *etr:user-command* nil)
 
 (defun etr:set-user-command ()
-  (setf *etr:user-command* (etr:sanitize-buffer-string (read-shell-command "command: ")))
+  (setf *etr:user-command* (etr:sanitize-buffer-string (read-shell-command "command: "))))
 
 (defun etr:forget-user-command ()
   (interactive)
