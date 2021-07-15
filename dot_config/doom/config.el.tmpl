@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; mode: emacs-lisp -*-
 
 (add-to-list 'load-path "~/.config/doom")
 (add-to-list 'load-path "~/.emacs.d/.local/straight/build-27.2/tree-sitter-langs/bin")
@@ -26,10 +26,10 @@
       display-line-numbers-current-absolute t
 
 
-      jf/font/fixed-family    "Iosevka SS08"
+      jf/font/fixed-family    "{{ .code.font.family }}"
       jf/font/cursive-family  "CMU Serif"
       jf/font/variable-family "Iosevka Aile"
-      jf/font/size (if IS-MAC 18 16)
+      jf/font/size {{ .code.font.size }}
 
       doom-theme 'doom-solarized-dark
       doom-themes-enable-bold t
@@ -56,7 +56,6 @@
  "C-s" #'swiper
  :leader
  "o e" #'elfeed)
-
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
@@ -96,8 +95,16 @@
 (after! org
   (load! "org-config"))
 
+(with-eval-after-load "emacs-tmux-runner"
+  (map!
+   (:leader
+    (:prefix-map ("x" . "tmux")
+     (:prefix-map ("s" . "send")
+      :desc "lines" "l" #'etr:send-lines)))))
+
 (defun after-doom-loaded ()
   (tmux-pane-mode t)
-  (evil-lion-mode t))
+  (evil-lion-mode t)
+  (load! "emacs-tmux-runner"))
 
 (add-hook 'emacs-startup-hook #'after-doom-loaded)

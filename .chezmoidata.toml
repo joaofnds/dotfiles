@@ -1,2 +1,3 @@
-[font]
-  monoFamily = "Iosevka SS08"
+[code.font]
+  family = "Iosevka SS08"
+  size = 18

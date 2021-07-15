@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
 (defun neotree-move-node ()
   "Move current node to another directory."
   (interactive)
@@ -19,6 +21,7 @@
       :n "m c" #'neotree-copy-node
 
       :n "A" #'neotree-stretch-toggle
+      :n "I" #'neotree-hidden-file-toggle
       :n "i" #'neotree-enter-horizontal-split
       :n "s" #'neotree-enter-vertical-split
 
