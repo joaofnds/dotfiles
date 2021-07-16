@@ -46,15 +46,17 @@
 (defun etr:list-windows ()
   (interactive)
   "Lists tmux windows."
-  (split-string (etr:tmux "list-windows -F '#{window_name}'")))
+  (s-lines (etr:tmux "list-windows -F '#{window_index} #{window_name}'")))
 
 (defun etr:select-window ()
   (interactive)
   "Select a tmux window."
   (let ((windows (etr:list-windows)))
-    (if (= (length windows) 1)
-        (car windows)
-      (etr:prompt "Window:" windows))))
+    (first
+     (split-string
+      (if (= (length windows) 1)
+          (first windows)
+        (etr:prompt "Window:" windows))))))
 
 (defun etr:set-window ()
   (interactive)
