@@ -132,7 +132,8 @@
 
 (cl-defun etr:send-command (input &optional (target (etr:target-pane)))
   (interactive)
-  (etr:tmux (format "send-keys -t %s %s C-m" target input)))
+  (etr:send-keys input target)
+  (etr:tmux (format "send-keys -t %s C-m" target)))
 
 (defun etr:prompt (prompt &rest args)
   "Print PROMPT and ask for some o ARGS."
