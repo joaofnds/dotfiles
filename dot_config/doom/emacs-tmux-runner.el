@@ -128,7 +128,7 @@
 
 (cl-defun etr:send-keys (input &optional (target (etr:target-pane)))
   (interactive)
-  (etr:tmux (format "send-keys -t %s %s" target input)))
+  (etr:tmux (format "send-keys -t %s -l %s" target input)))
 
 (cl-defun etr:send-command (input &optional (target (etr:target-pane)))
   (interactive)
