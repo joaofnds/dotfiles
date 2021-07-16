@@ -46,15 +46,17 @@
 (defun etr:list-windows ()
   (interactive)
   "Lists tmux windows."
-  (split-string (etr:tmux "list-windows -F '#{window_name}'")))
+  (s-lines (etr:tmux "list-windows -F '#{window_index} #{window_name}'")))
 
 (defun etr:select-window ()
   (interactive)
   "Select a tmux window."
   (let ((windows (etr:list-windows)))
-    (if (= (length windows) 1)
-        (car windows)
-      (etr:prompt "Window:" windows))))
+    (first
+     (split-string
+      (if (= (length windows) 1)
+          (first windows)
+        (etr:prompt "Window:" windows))))))
 
 (defun etr:set-window ()
   (interactive)
@@ -100,7 +102,7 @@
 (defvar *etr:user-command* nil)
 
 (defun etr:set-user-command ()
-  (setf *etr:user-command* (etr:sanitize-buffer-string (read-shell-command "command: ")))
+  (setf *etr:user-command* (etr:sanitize-buffer-string (read-shell-command "command: "))))
 
 (defun etr:forget-user-command ()
   (interactive)
@@ -126,11 +128,12 @@
 
 (cl-defun etr:send-keys (input &optional (target (etr:target-pane)))
   (interactive)
-  (etr:tmux (format "send-keys -t %s %s" target input)))
+  (etr:tmux (format "send-keys -t %s -l %s" target input)))
 
 (cl-defun etr:send-command (input &optional (target (etr:target-pane)))
   (interactive)
-  (etr:tmux (format "send-keys -t %s %s C-m" target input)))
+  (etr:send-keys input target)
+  (etr:tmux (format "send-keys -t %s C-m" target)))
 
 (defun etr:prompt (prompt &rest args)
   "Print PROMPT and ask for some o ARGS."
