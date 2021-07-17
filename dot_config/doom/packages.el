@@ -3,16 +3,25 @@
 (package! tmux-pane)         ; Negivate seamlessly between tmux and emacs
 
 (disable-packages!
- avy
- htmlize
- org-yt
- ox-clip
- toc-org
- org-cliplink
- ob-async
- solaire-mode
+ amx
  anzu
+ avy
+ counsel-projectile
+ drag-stuff
  evil-anzu
+ github-review
+ htmlize
+ ivy-avy
+ ivy-rich
+ link-hint
  magit-gitflow
  magit-todos
- github-review)
+ ob-async
+ ob-sync
+ org-cliplink
+ org-yt
+ orgit
+ ox-clip
+ solaire-mode
+ toc-org
+ wgrep)
