@@ -15,7 +15,6 @@
        magit              ; a git porcelain for Emacs
 
        :lang
-       emacs-lisp         ; drown in parentheses
        org                ; organize your plain life in plain text
 
        :config
