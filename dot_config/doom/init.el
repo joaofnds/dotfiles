@@ -52,8 +52,9 @@
        (go +lsp)          ; the hipster dialect
        (javascript +lsp)  ; all(hope(abandon(ye(who(enter(here))))))
        json               ; At least it ain't XML
-       lua                ; one-based indices? one-based indices
        org                ; organize your plain life in plain text
+       (lua               ; one-based indices? one-based indices
+        +fennel)          ; fennel language support
        ;; (python +lsp)      ; beautiful is better than ugly
        ;; (ruby +lsp +rails) ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        scheme             ; a fully conniving family of lisps
