@@ -29,6 +29,8 @@
        electric           ; smarter, keyword-based electric-indent
        ibuffer            ; interactive buffer management
        undo               ; persistent, smarter undo for your inevitable mistakes
+       (ibuffer           ; interactive buffer management
+        +icons)           ; enables filetype icons for buffers
        vc                 ; version-control and Emacs, sitting in a tree
 
        :term
