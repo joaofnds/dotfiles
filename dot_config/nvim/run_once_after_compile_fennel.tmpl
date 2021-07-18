@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+# chezmoi can only decide to run scripts based on the contents
+# of the own script, so the following is the infamous GAMBIARRA.
+# It hashes the contents of all fennel scripts and outputs into
+# this file so if one of them changes, we execute rake in order
+# to rebuild lua files. Rake will take care of running only
+# whats needed (:
+cat <<EOF
+{{ output "find" (joinPath .chezmoi.sourceDir "/dot_config/nvim") "-name" "*.fnl" "-exec" "sha256sum" "{}" ";" }}
+EOF
+
+# the sleep is another GAMBIARRA (of course it is). I'm doing this
+# to wait for chezmoi update to apply so rake can build them. So yes,
+# this can cause inconsistencies if chezmoi takes more than 1 second
+# to apply source changes.
+sleep 1 && rake 1>/dev/null 2>/dev/stderr &
