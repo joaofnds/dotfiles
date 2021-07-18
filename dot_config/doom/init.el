@@ -39,7 +39,9 @@
        :tools
        (docker +lsp)
        (eval +overlay)    ; run code, run (also, repls)
-       lookup             ; navigate your code and its documentation
+       (lookup            ; navigate your code and its documentation
+        +dictionary
+        +offline)
        (lsp +peek)
        (magit             ; a git porcelain for Emacs
         +forge)           ; a porcelain for managing issues and PRs
