@@ -1,0 +1,14 @@
+FNL_FILES = Rake::FileList.new('fnl/**/*.fnl')
+
+task default: FNL_FILES.pathmap('%{^fnl/,lua/}X.lua')
+
+directory 'lua'
+
+rule '.lua' => [->(f) { source_for_lua(f) }, 'lua'] do |t|
+  mkdir_p t.name.pathmap('%d')
+  sh "fennel --compile #{t.source} > #{t.name}"
+end
+
+def source_for_lua(lua_file)
+  FNL_FILES.find { |f| f.ext('') == lua_file.pathmap('%{^lua/,fnl/}X') }
+end
