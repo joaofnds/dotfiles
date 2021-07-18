@@ -20,7 +20,7 @@
        fold               ; (nigh) universal code folding
        format             ; automated prettiness
        multiple-cursors   ; editing in many places at once
-       parinfer           ; turn lisp into python, sort of
+       (parinfer +rust)   ; turn lisp into python, sort of
        snippets           ; my elves. They type so I don't have to
        word-wrap          ; soft wrapping with language-aware indent
 
