@@ -58,7 +58,9 @@
         +pandoc)
        ;; (python +lsp)      ; beautiful is better than ugly
        ;; (ruby +lsp +rails) ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       scheme             ; a fully conniving family of lisps
+       (scheme            ; a fully conniving family of lisps
+        +chicken
+        +guile)
        (sh +lsp)          ; she sells {ba,z,fi}sh shells on the C xor
        web                ; the tubes
        yaml               ; JSON, but readable
