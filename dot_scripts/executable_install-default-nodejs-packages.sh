@@ -6,4 +6,5 @@ npm i -g typescript \
          typescript-language-server \
          prettier \
          snowpack \
-         lua-fmt
+         lua-fmt \
+         dockerfile-language-server-nodejs
