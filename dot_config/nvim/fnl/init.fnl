@@ -6,3 +6,4 @@
 (require :config.telescope)
 (require :config.which-key)
 (require :config.treesitter)
+(require :config.gitgutter)
