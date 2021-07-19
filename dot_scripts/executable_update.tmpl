@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 tmux split-window 'PATH=/usr/bin:$PATH doom --yes upgrade'
-tmux new-window 'nvim +PlugUpgrade +PlugUpdate +PlugClean +CocUpdateSync +qall'
+tmux new-window 'nvim +PackerSync'
 tmux split-window 'asdf-install-latest'
 
 {{- if eq .chezmoi.os "linux" }}
