@@ -1,5 +1,6 @@
 (require :settings)
 (vim.cmd "source ~/.config/nvim/plug.vim")
+(require :keybinds)
 (require :config.saga)
 (let [lsp-config (require :config.lsp)]
   (lsp-config.init))
