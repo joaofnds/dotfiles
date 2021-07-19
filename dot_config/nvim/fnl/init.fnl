@@ -7,6 +7,7 @@
 (require :config.gitgutter)
 (require :config.easy-align)
 (require :config.which-key)
+(require :config.indent-line)
 
 (require :config.treesitter)
 (require :config.telescope)
