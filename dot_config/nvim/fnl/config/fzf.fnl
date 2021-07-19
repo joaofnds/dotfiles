@@ -15,15 +15,15 @@
   ;; Insert mode completion
   (u.imap "<c-x><c-k>" "<plug>(fzf-complete-word)")
   (u.imap "<c-x><c-f>" "<plug>(fzf-complete-path)")
-  (u.imap "<c-x><c-j>" "<plug>(fzf-complete-file-ag)")
+  (u.imap "<c-x><c-j>" "<plug>(fzf-complete-file-ag)"))
 
   ;; Global line completion (not just open buffers. ripgrep required.)
-  (vim.api.nvim_set_keymap
-   "i"
-   "<c-x><c-l>"
-   "fzf#vim#complete(fzf#wrap({
-   \ 'prefix': '^.*$',
-   \ 'source': 'rg -n ^ --color always',
-   \ 'options': '--ansi --delimiter : --nth 3..',
-   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))"
-   {"expr" true "noremap" true "silent" true})
+  ;; (vim.api.nvim_set_keymap
+  ;;  "i"
+  ;;  "<c-x><c-l>"
+  ;;  "fzf#vim#complete(fzf#wrap({
+  ;;  \ 'prefix': '^.*$',
+  ;;  \ 'source': 'rg -n ^ --color always',
+  ;;  \ 'options': '--ansi --delimiter : --nth 3..',
+  ;;  \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))"
+  ;;  {"expr" true "noremap" true "silent" true})
