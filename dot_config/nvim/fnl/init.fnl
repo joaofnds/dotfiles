@@ -10,6 +10,7 @@
 (require :config.easy-align)
 (require :config.which-key)
 (require :config.indent-line)
+(require :config.airline)
 
 (require :config.treesitter)
 (require :config.telescope)
