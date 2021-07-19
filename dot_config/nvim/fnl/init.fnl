@@ -1,5 +1,3 @@
-(vim.cmd "source ~/.config/nvim/plug.vim")
-
 (global dump (fn [...] (print (vim.inspect ...))))
 
 (require :settings)
