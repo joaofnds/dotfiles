@@ -1,7 +1,8 @@
+(vim.cmd "source ~/.config/nvim/plug.vim")
+
 (global dump (fn [...] (print (vim.inspect ...))))
 
 (require :settings)
-(vim.cmd "source ~/.config/nvim/plug.vim")
 (require :keybinds)
 
 (require :config.fzf)

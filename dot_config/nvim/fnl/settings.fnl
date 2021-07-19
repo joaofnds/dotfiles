@@ -85,3 +85,16 @@
 (set vim.opt.hlsearch   true) ;; Highlight searches by default
 (set vim.opt.ignorecase true) ;; Ignore case when searching...
 (set vim.opt.smartcase  true) ;; ...unless we type a capital
+
+(set vim.opt.background "dark")
+(set vim.opt.termguicolors true)
+
+(vim.cmd "filetype plugin on")
+(vim.cmd "syntax enable")
+(vim.cmd "colorscheme solarized8")
+
+(vim.cmd "highlight Visual     gui=NONE guibg=#073642 guifg=NONE")
+(vim.cmd "highlight VisualNOS  gui=NONE guibg=#073642 guifg=NONE")
+(vim.cmd "highlight VisualMode gui=NONE guibg=#073642 guifg=NONE")
+(vim.cmd "highlight Search     gui=NONE guibg=#073642 guifg=NONE gui=undercurl,italic")
+(vim.cmd "highlight IncSearch  gui=NONE guibg=#073642 guifg=NONE gui=undercurl,italic")

@@ -114,4 +114,6 @@
   ;; Open
 
   ;; open dired: open the current folder
-  (nnoremap "<leader>o-" ":e .<cr>"))
+  (nnoremap "<leader>o-" ":e .<cr>")
+
+  (nnoremap "<esc>" "<esc>:nohl<CR><esc>"))
