@@ -1,6 +1,10 @@
-FNL_FILES = Rake::FileList.new('fnl/**/*.fnl') + ["init.fnl"]
+require 'rake/clean'
 
-task default: FNL_FILES.pathmap('%{^fnl/,lua/}X.lua')
+SOURCE_FILES = Rake::FileList.new('fnl/**/*.fnl') + ['init.fnl']
+TARGET_FILES = SOURCE_FILES.pathmap('%{^fnl/,lua/}X.lua')
+
+task default: TARGET_FILES
+CLEAN.include(TARGET_FILES)
 
 directory 'lua'
 
@@ -10,5 +14,5 @@ rule '.lua' => [->(f) { source_for_lua(f) }, 'lua'] do |t|
 end
 
 def source_for_lua(lua_file)
-  FNL_FILES.find { |f| f.ext('') == lua_file.pathmap('%{^lua/,fnl/}X') }
+  SOURCE_FILES.find { |f| f.ext('') == lua_file.pathmap('%{^lua/,fnl/}X') }
 end
