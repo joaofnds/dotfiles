@@ -1,6 +1,6 @@
 require 'rake/clean'
 
-SOURCE_FILES = Rake::FileList.new('fnl/**/*.fnl') + ['init.fnl']
+SOURCE_FILES = Rake::FileList.new('fnl/**/*.fnl', '*.fnl')
 TARGET_FILES = SOURCE_FILES.pathmap('%{^fnl/,lua/}X.lua')
 
 task default: TARGET_FILES
