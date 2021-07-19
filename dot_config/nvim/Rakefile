@@ -1,4 +1,4 @@
-FNL_FILES = Rake::FileList.new('fnl/**/*.fnl')
+FNL_FILES = Rake::FileList.new('fnl/**/*.fnl') + ["init.fnl"]
 
 task default: FNL_FILES.pathmap('%{^fnl/,lua/}X.lua')
 
