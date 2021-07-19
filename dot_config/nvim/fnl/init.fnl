@@ -6,4 +6,5 @@
 (require :config.telescope)
 (require :config.which-key)
 (require :config.treesitter)
+(require :config.vim-tmux-runner)
 (require :config.gitgutter)
