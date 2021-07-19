@@ -8,3 +8,4 @@
 (require :config.treesitter)
 (require :config.vim-tmux-runner)
 (require :config.gitgutter)
+(require :config.easy-align)
