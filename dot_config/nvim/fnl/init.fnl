@@ -1,5 +1,6 @@
 (global dump (fn [...] (print (vim.inspect ...))))
 
+(require :packer)
 (require :settings)
 (require :keybinds)
 
