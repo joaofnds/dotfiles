@@ -53,7 +53,9 @@
 (map!
  "C-s" #'swiper
  :leader
- "o e" #'elfeed)
+ :desc "open elfeed" "o e" #'elfeed
+ :desc "reveal in neotree" "o ." #'+neotree/find-this-file)
+
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
