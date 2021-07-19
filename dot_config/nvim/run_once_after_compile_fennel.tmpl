@@ -13,4 +13,4 @@ EOF
 # for chezmoi updates to apply so rake can take them into account. So yes, this
 # can cause inconsistencies if chezmoi takes more than 1 second to apply source
 # changes.
-sleep 1 && rake 1>/dev/null 2>/dev/stderr &
+sleep 1 && rake &>/dev/null &
