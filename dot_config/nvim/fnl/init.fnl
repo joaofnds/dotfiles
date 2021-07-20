@@ -22,3 +22,4 @@
   (lsp-config.init))
 (require :config.compe)
 (require :config.barbar)
+(require :config.twilight)

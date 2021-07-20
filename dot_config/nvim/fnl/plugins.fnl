@@ -51,6 +51,7 @@
 
      ;; Visual
      (use "lifepillar/vim-solarized8")
+     (use "folke/twilight.nvim")
 
      ;; Status line
      (use "vim-airline/vim-airline")
