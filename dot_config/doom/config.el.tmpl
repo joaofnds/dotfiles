@@ -42,7 +42,17 @@
 
       dired-dwim-target t)
 
-(map! "C-s" #'swiper)
+(after! elfeed
+  (setq-default elfeed-search-filter "+unread")
+  (map! :map elfeed-search-mode-map
+        :n "g r" #'elfeed-update))
+
+(map!
+ "C-s" #'swiper
+ :leader
+ :desc "open elfeed" "o e" #'elfeed
+ :desc "reveal in neotree" "o ." #'+neotree/find-this-file)
+
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 

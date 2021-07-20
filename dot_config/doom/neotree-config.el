@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq doom-themes-neotree-file-icons t)
 
 (defun neotree-move-node ()
   "Move current node to another directory."
