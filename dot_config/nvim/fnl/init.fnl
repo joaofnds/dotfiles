@@ -17,7 +17,6 @@
 (require :config.treesitter)
 (require :config.telescope)
 
-(require :config.saga)
 (let [lsp-config (require :config.lsp)]
   (lsp-config.init))
 (require :config.compe)
