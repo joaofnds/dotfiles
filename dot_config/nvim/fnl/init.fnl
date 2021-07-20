@@ -12,13 +12,13 @@
 (require :config.easy-align)
 (require :config.which-key)
 (require :config.indent-line)
-(require :config.airline)
+(require :config.lualine)
 
 (require :config.treesitter)
 (require :config.telescope)
 
-(require :config.saga)
 (let [lsp-config (require :config.lsp)]
   (lsp-config.init))
 (require :config.compe)
 (require :config.barbar)
+(require :config.twilight)
