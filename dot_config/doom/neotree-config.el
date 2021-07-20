@@ -1,7 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(setq doom-themes-neotree-file-icons t)
-
 (defun neotree-move-node ()
   "Move current node to another directory."
   (interactive)
