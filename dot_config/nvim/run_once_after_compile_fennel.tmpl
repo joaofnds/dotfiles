@@ -5,7 +5,7 @@
 # the contents of all fennel scripts and embeds into this file so if one of them
 # changes, chezmoi will run this script, which will run rake and rebuild lua
 # files. Rake will take care of running only whats needed (:
-cat <<EOF
+<<EOF
 {{ output "fd" "-e" "fnl"
                "--base-directory" (joinPath .chezmoi.sourceDir "/dot_config/nvim")
                "-x" "sha256sum" }}
