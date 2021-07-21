@@ -42,10 +42,7 @@
 
       dired-dwim-target t)
 
-(map!
- "C-s" #'swiper
- :leader
- :desc "reveal in neotree" "o ." #'+neotree/find-this-file)
+(map! "C-s" #'swiper)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
