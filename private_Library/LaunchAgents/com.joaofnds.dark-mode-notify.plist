@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- launchctl load -w ~/Library/LaunchAgents/com.joaofnds.dark-mode-notify.plist -->
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.joaofnds.dark-mode-notify</string>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardErrorPath</key>
+    <string>/Users/joaofnds/.log/dark-mode-notify-stderr.log</string>
+    <key>StandardOutPath</key>
+    <string>/Users/joaofnds/.log/dark-mode-notify-stdout.log</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/local/bin/dark-mode-notify</string>
+      <string>/usr/local/bin/zsh</string>
+      <string>-c</string>
+      <string>/Users/joaofnds/.scripts/switch-theme</string>
+    </array>
+  </dict>
+</plist>
