@@ -30,8 +30,10 @@
       jf/font/cursive-family  "CMU Serif"
       jf/font/variable-family "Iosevka Aile"
       jf/font/size {{ .code.font.size }}
+      jf/dark-theme 'doom-solarized-dark
+      jf/light-theme 'doom-solarized-light
 
-      doom-theme 'doom-solarized-dark
+      doom-theme jf/dark-theme
       doom-themes-enable-bold t
       doom-themes-enable-italic t
       doom-font (font-spec :family jf/font/fixed-family :size jf/font/size)
@@ -66,6 +68,14 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode t)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(when IS-MAC
+  (defun jf/apply-theme ()
+      (pcase (plist-get (mac-application-state) :appearance)
+          ("NSAppearanceNameAqua" (load-theme jf/light-theme))
+          ("NSAppearanceNameDarkAqua" (load-theme jf/dark-theme))))
+
+  (add-hook! 'mac-effective-appearance-change-hook #'jf/apply-theme))
 
 (defun jf/reload-known-projects ()
   (-each
