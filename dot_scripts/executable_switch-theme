@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+declare theme
+declare other_theme
+
+is_dark=$(osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode.get()")
+if [[ "$is_dark" == "true" ]]; then
+    theme="dark"
+    other_theme="light"
+else
+    theme="light"
+    other_theme="dark"
+fi;
+
+sed -i "" "s/colors: \*${other_theme}/colors: *${theme}/" ~/.config/alacritty/alacritty.yml
+
+sed -i "" "s/${other_theme}.conf/${theme}.conf/" ~/.config/tmux/tmux.conf
+~/.bin/tmux source-file ~/.config/tmux/tmux.conf
