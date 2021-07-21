@@ -3,6 +3,7 @@
 (require :plugins)
 (require :settings)
 (require :keybinds)
+(require :switch-theme)
 
 (require :config.fzf)
 (require :config.vim-tmux-runner)
@@ -12,7 +13,8 @@
 (require :config.easy-align)
 (require :config.which-key)
 (require :config.indent-line)
-(require :config.lualine)
+(let [setup-fn (require :config.lualine)]
+  (setup-fn "solarized_dark"))
 
 (require :config.treesitter)
 (require :config.telescope)

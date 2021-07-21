@@ -17,3 +17,7 @@ sed -i "" "s/colors: \*${other_theme}/colors: *${theme}/" ~/.config/alacritty/al
 
 sed -i "" "s/${other_theme}.conf/${theme}.conf/" ~/.config/tmux/tmux.conf
 ~/.bin/tmux source-file ~/.config/tmux/tmux.conf
+
+for pid in `pgrep vim`; do
+    kill -SIGUSR1 $pid
+done
