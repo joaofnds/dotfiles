@@ -65,7 +65,7 @@
         +guile)
        (sh +lsp)          ; she sells {ba,z,fi}sh shells on the C xor
        web                ; the tubes
-       yaml               ; JSON, but readable
+       (yaml +lsp)        ; JSON, but readable
 
        :os
        (:if IS-MAC macos) ; improve compatibility with macOS
