@@ -40,12 +40,12 @@
 
 ;; persistent undo
 ;; keep undo history across sessions, by storing in file.
-(when (not (vim.fn.isdirectory "backups"))
-  (os.execute "mkdir backups"))
+(set vim.opt.backupdir  (.. (vim.fn.stdpath "data") "/backups"))
+(when (not (vim.fn.isdirectory vim.o.backupdir))
+  (os.execute (.. "mkdir " vim.o.backupdir)))
 
 (set vim.opt.swapfile   false)
 (set vim.opt.backup     false)
-(set vim.opt.backupdir  (vim.fn.expand "~/.config/nvim/backups"))
 (set vim.opt.backupcopy "yes") ;; overwrite files to update, instead of renaming + rewriting
 (set vim.opt.undodir    vim.o.backupdir)
 (set vim.opt.undofile   true)

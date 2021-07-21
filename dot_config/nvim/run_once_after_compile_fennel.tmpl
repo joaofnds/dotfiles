@@ -5,7 +5,10 @@
 # the contents of all fennel scripts and embeds into this file so if one of them
 # changes, chezmoi will run this script, which will run rake and rebuild lua
 # files. Rake will take care of running only whats needed (:
-cat <<EOF
+# Also note that I'm intentionally using find. I normally use fd for these
+# things, but fd cannot guarantee the order, which was causing this file to
+# always change.
+<<EOF
 {{ output "find" (joinPath .chezmoi.sourceDir "/dot_config/nvim") "-name" "*.fnl" "-exec" "sha256sum" "{}" ";" }}
 EOF
 

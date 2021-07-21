@@ -22,7 +22,8 @@ alias lsfiles='la | rg ^-'
 alias lsdirs='la | rg ^d'
 
 # git
-alias gbD='git branch --delete $(git branch | fzf -m)'
+alias gbd='git branch --delete $(git branch | fzf -m)'
+alias gbD='git push --delete $(git branch -r | fzf -m)'
 alias gselectwip='git status -s | fzf -m | awk '\''{ print $2  }'\'''
 alias gcof='gselectwip | xargs git checkout --'
 alias grf='gselectwip | xargs git reset HEAD'
