@@ -9,6 +9,7 @@
 (package! tree-sitter-langs) ; populates global registries of grammars and queries
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! org-roam)          ; rudimentary roam replica with org-mode
+(package! package-lint)      ; a linting library for elisp package authors
 
 (unpin! format-all)
 
