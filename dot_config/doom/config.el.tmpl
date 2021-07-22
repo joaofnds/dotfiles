@@ -60,8 +60,6 @@
       ("true" (load-theme jf/dark-theme))
       ("false" (load-theme jf/light-theme))))
 
-  (jf/apply-theme)
-
   (define-key special-event-map [sigusr1] 'jf/apply-theme))
 
 (defun jf/reload-known-projects ()
