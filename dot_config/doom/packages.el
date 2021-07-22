@@ -1,6 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(unpin! format-all)
 (package! dash)              ; a modern list library for emacs
 (package! s)                 ; the long lost emacs string manipulation library.
 (package! f)                 ; modern api for working with files and directories
@@ -10,6 +9,8 @@
 (package! tree-sitter-langs) ; populates global registries of grammars and queries
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! org-roam)          ; rudimentary roam replica with org-mode
+
+(unpin! format-all)
 
 (disable-packages!
  haml-mode
