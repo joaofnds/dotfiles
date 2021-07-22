@@ -10,6 +10,8 @@
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! org-roam)          ; rudimentary roam replica with org-mode
 (package! package-lint)      ; a linting library for elisp package authors
+(package! emacs-tmux-runner  ; my port of christoomey/vim-tmux-runner
+  :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
 (unpin! format-all)
 
