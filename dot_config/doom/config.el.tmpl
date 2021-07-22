@@ -115,10 +115,24 @@
   :config
   (org-roam-setup))
 
+
 (add-to-list 'load-path "~/.config/doom")
 
-(after! neotree (load! "neotree-config"))
-(after! org     (load! "org-config"))
+(use-package! neotree
+  :config (load! "neotree-config"))
+
+(use-package! org
+  :defer t
+  :config (load! "org-config"))
+
+(use-package! tmux-pane
+  :defer t
+  :bind (("C-\\" . tmux-pane-omni-window-last)
+         ("C-k"  . tmux-pane-omni-window-up)
+         ("C-j"  . tmux-pane-omni-window-down)
+         ("C-h"  . tmux-pane-omni-window-left)
+         ("C-l"  . tmux-pane-omni-window-right))
+  :config (tmux-pane-mode t))
 
 (with-eval-after-load "emacs-tmux-runner"
   (map!
@@ -131,8 +145,6 @@
      :desc "forget command" "f" #'etr:forget-user-command))))
 
 (defun after-doom-loaded ()
-  (tmux-pane-mode t)
-  (evil-lion-mode t)
   (load! "emacs-tmux-runner"))
 
 (add-hook 'emacs-startup-hook #'after-doom-loaded)
