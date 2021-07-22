@@ -20,3 +20,5 @@
       (set-light))))
 
 (vim.api.nvim_exec "autocmd Signal * call v:lua.switch_theme()" false)
+
+switch_theme

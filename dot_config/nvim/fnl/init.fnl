@@ -3,7 +3,6 @@
 (require :plugins)
 (require :settings)
 (require :keybinds)
-(require :switch-theme)
 
 (require :config.fzf)
 (require :config.vim-tmux-runner)
@@ -24,3 +23,6 @@
 (require :config.compe)
 (require :config.barbar)
 (require :config.twilight)
+
+(let [switch-theme (require :switch-theme)]
+  (switch-theme))
