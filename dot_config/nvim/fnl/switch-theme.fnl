@@ -13,12 +13,10 @@
     (setup-fn "solarized_light")))
 
 (global
- switch-theme
+ switch_theme
  (fn []
    (if (is-macos-dark)
       (set-dark)
       (set-light))))
-
-(global switch_theme switch-theme)
 
 (vim.api.nvim_exec "autocmd Signal * call v:lua.switch_theme()" false)
