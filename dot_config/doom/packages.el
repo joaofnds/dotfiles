@@ -22,4 +22,5 @@
  rainbow-mode
  helm-css-scss
  coffee-mode
- skewer-mode)
+ skewer-mode
+ emojify)
