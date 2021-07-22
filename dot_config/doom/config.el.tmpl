@@ -182,6 +182,7 @@
      :desc "forget command" "f" #'etr:forget-user-command))))
 
 (use-package! elfeed
+  :commands elfeed
   :config
   (map! :map elfeed-search-mode-map
         :n "g r" #'elfeed-update)
