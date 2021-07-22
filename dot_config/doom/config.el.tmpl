@@ -60,9 +60,9 @@
 
 (when IS-MAC
   (defun jf/apply-theme ()
-      (pcase (plist-get (mac-application-state) :appearance)
-          ("NSAppearanceNameAqua" (load-theme jf/light-theme))
-          ("NSAppearanceNameDarkAqua" (load-theme jf/dark-theme))))
+    (pcase (plist-get (mac-application-state) :appearance)
+      ("NSAppearanceNameAqua" (load-theme jf/light-theme))
+      ("NSAppearanceNameDarkAqua" (load-theme jf/dark-theme))))
 
   (add-hook! 'mac-effective-appearance-change-hook #'jf/apply-theme))
 
