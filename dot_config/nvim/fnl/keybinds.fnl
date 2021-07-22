@@ -1,28 +1,8 @@
 (let [{: nnoremap} (require :utils)]
-  ;;; Buffers
-
-  ;; buffer next: go to next buffer
-  (nnoremap "<leader>bn" ":bn<cr>")
-  (nnoremap "<leader>b]" ":bn<cr>")
-
-  ;; buffer previous: go to previous buffer)
-  (nnoremap "<leader>bp" ":bp<cr>")
-  (nnoremap "<leader>b[" ":bp<cr>")
-
-  ;; buffer delete: delete current buffer
-  (nnoremap "<leader>bd" ":bd<cr>")
-  (nnoremap "<leader>bk" ":bd<cr>")
-
-  ;; buffer last: go to last oppened buffer)
-  (nnoremap "<leader>bl" ":bl<cr>")
-
-  ;; buffer save: writes buffer
-  (nnoremap "<leader>bs" ":w<cr>")
-
   ;;; Git
 
   ;; git status: open git
-  (nnoremap "<leader>gs" ":Gst<cr>")
+  (nnoremap "<leader>gg" ":Gst<cr>")
 
   ;; git add: git add current buffer
   (nnoremap "<silent>" "<leader>ga :silent !git add %<cr>")
@@ -106,7 +86,7 @@
   (nnoremap "<leader>sp" ":Ag<cr>")
 
   ;; search buffers using fzf
-  (nnoremap "<leader>bb" ":Buf<cr>")
+  (nnoremap "<leader>bb" ":Buffers<cr>")
 
   ;; file save: writes the buffer (same as <leader>bs)
   (nnoremap "<leader>fs" ":w<cr>")
