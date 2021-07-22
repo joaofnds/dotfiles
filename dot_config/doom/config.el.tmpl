@@ -100,6 +100,7 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package! org-roam
+  :commands (org-roam-node-find org-roam-buffer)
   :custom (org-roam-directory (f-join org-directory "roam"))
   :init
   (map! :after org
