@@ -127,9 +127,6 @@
   :config
   (org-roam-setup))
 
-
-(add-to-list 'load-path "~/.config/doom")
-
 (use-package! neotree
   :defer t
   :config
@@ -161,8 +158,7 @@
           :n "g r" #'neotree-refresh))
 
 (use-package! org
-  :defer t
-  :config (load! "org-config"))
+  :config (load! "~/.config/doom/org-config"))
 
 (use-package! tmux-pane
   :defer t
