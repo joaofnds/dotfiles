@@ -60,11 +60,14 @@
 
 (when IS-MAC
   (defun jf/apply-theme ()
-    (pcase (plist-get (mac-application-state) :appearance)
-      ("NSAppearanceNameAqua" (load-theme jf/light-theme))
-      ("NSAppearanceNameDarkAqua" (load-theme jf/dark-theme))))
+    (interactive)
+    (pcase (string-trim (shell-command-to-string "osascript -l JavaScript -e \"Application('System Events').appearancePreferences.darkMode.get()\""))
+      ("true" (load-theme jf/dark-theme))
+      ("false" (load-theme jf/light-theme))))
 
-  (add-hook! 'mac-effective-appearance-change-hook #'jf/apply-theme))
+  (jf/apply-theme)
+
+  (define-key special-event-map [sigusr1] 'jf/apply-theme))
 
 (defun jf/reload-known-projects ()
   (-each

@@ -13,11 +13,15 @@ else
     other_theme="dark"
 fi;
 
-sed -i "" "s/colors: \*${other_theme}/colors: *${theme}/" ~/.config/alacritty/alacritty.yml
+# update alacritty
+sed -i "" "s/colors: \*${other_theme}/colors: *${theme}/" ~/.config/alacritty/alacritty.yml &
 
-sed -i "" "s/${other_theme}.conf/${theme}.conf/" ~/.config/tmux/tmux.conf
-~/.bin/tmux source-file ~/.config/tmux/tmux.conf
+# update tmux
+sed -i "" "s/${other_theme}.conf/${theme}.conf/" ~/.config/tmux/tmux.conf &&
+  ~/.bin/tmux source-file ~/.config/tmux/tmux.conf &
 
-for pid in `pgrep vim`; do
-    kill -SIGUSR1 $pid
-done
+# update vim
+pgrep vim | xargs -n1 kill -SIGUSR1 &
+
+# update emacs
+pgrep Emacs-x86_64-10_14 | xargs -n1 kill -SIGUSR1 &
