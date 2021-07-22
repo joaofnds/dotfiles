@@ -169,7 +169,9 @@
          ("C-l"  . tmux-pane-omni-window-right))
   :config (tmux-pane-mode t))
 
-(with-eval-after-load "emacs-tmux-runner"
+(use-package! emacs-tmux-runner
+  :defer t
+  :config
   (map!
    (:leader
     (:prefix-map ("x" . "tmux")
@@ -179,14 +181,11 @@
      :desc "attach"         "a" #'etr:reset-target-pane
      :desc "forget command" "f" #'etr:forget-user-command))))
 
-(defun after-doom-loaded ()
-  (load! "emacs-tmux-runner"))
 (use-package! elfeed
   :config
   (map! :map elfeed-search-mode-map
         :n "g r" #'elfeed-update)
 
-(add-hook 'emacs-startup-hook #'after-doom-loaded)
   (setq-default elfeed-search-filter "+unread")
 
   (custom-set-variables
