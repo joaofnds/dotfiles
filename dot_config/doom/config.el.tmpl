@@ -1,7 +1,5 @@
 ;; -*- lexical-binding: t; mode: emacs-lisp -*-
 
-(add-to-list 'load-path "~/.config/doom")
-
 (setq user-full-name "João Fernandes"
       user-mail-address "joaofnds@joaofnds.com"
 
@@ -59,13 +57,6 @@
  :desc "open elfeed" "o e" #'elfeed
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file)
 
-
-(use-package! tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode t)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
 (when IS-MAC
   (defun jf/apply-theme ()
       (pcase (plist-get (mac-application-state) :appearance)
@@ -104,11 +95,17 @@
       (setq cider-clojure-cli-global-options cider-options-with-rebl)
     (setq cider-clojure-cli-global-options default-cider-options)))
 
-(after! neotree
-  (load! "neotree-config"))
+(use-package! tree-sitter
+  :defer t
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode t)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-(after! org
-  (load! "org-config"))
+(add-to-list 'load-path "~/.config/doom")
+
+(after! neotree (load! "neotree-config"))
+(after! org     (load! "org-config"))
 
 (with-eval-after-load "emacs-tmux-runner"
   (map!
