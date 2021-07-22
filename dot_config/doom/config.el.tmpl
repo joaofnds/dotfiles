@@ -46,6 +46,8 @@
 
       dired-dwim-target t)
 
+(defalias 'forward-evil-word 'forward-evil-symbol)
+
 (after! elfeed
   (setq-default elfeed-search-filter "+unread")
   (map! :map elfeed-search-mode-map
@@ -57,8 +59,6 @@
  :desc "open elfeed" "o e" #'elfeed
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file)
 
-
-(defalias 'forward-evil-word 'forward-evil-symbol)
 
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
 
