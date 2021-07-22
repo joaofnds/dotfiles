@@ -42,7 +42,8 @@
 
       +ivy-project-search-engines '(ag)
 
-      dired-dwim-target t)
+      dired-dwim-target t
+      org-roam-v2-ack t)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
@@ -101,6 +102,19 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode t)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package! org-roam
+  :defer t
+  :custom (org-roam-directory (file-truename "~/notes/roam")
+           org-roam-buffer "*scratch*")
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (org-roam-setup))
 
 (add-to-list 'load-path "~/.config/doom")
 

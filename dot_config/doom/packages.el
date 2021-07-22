@@ -9,6 +9,7 @@
 (package! tree-sitter)       ; parser generator tool and an incremental parsing library
 (package! tree-sitter-langs) ; populates global registries of grammars and queries
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
+(package! org-roam)          ; rudimentary roam replica with org-mode
 
 (disable-packages!
  haml-mode
