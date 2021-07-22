@@ -7,7 +7,6 @@
 (package! tmux-pane)         ; Negivate seamlessly between tmux and emacs
 (package! tree-sitter)       ; Parser generator tool and an incremental parsing library
 (package! tree-sitter-langs) ; Populates global registries of grammars and queries
-(package! php-mode)          ; How would you know it's a variable if the dollar wasn't there, right?
 (package! string-inflection) ; underscore -> UPCASE -> CamelCase -> lowerCamelCase conversion of names
 
 (disable-packages!
