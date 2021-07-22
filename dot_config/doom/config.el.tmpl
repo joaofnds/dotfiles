@@ -104,14 +104,28 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package! org-roam
-  :defer t
-  :custom (org-roam-directory (file-truename "~/notes/roam"))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n j" . org-roam-dailies-capture-today))
+  :custom (org-roam-directory (f-join org-directory "roam"))
+  :init
+  (map! :after org
+        :map org-mode-map
+        :localleader
+        :prefix ("m" . "org-roam")
+        "b" #'org-roam-buffer-toggle
+        "f" #'org-roam-node-find
+        "g" #'org-roam-graph
+        "i" #'org-roam-node-insert
+        "t" #'org-roam-tag-add
+        "T" #'org-roam-tag-remove
+        (:prefix ("d" . "by date")
+         :desc "Find previous note" "b" #'org-roam-dailies-find-previous-note
+         :desc "Find date"          "d" #'org-roam-dailies-find-date
+         :desc "Find next note"     "f" #'org-roam-dailies-find-next-note
+         :desc "Find tomorrow"      "m" #'org-roam-dailies-find-tomorrow
+         :desc "Capture today"      "n" #'org-roam-dailies-capture-today
+         :desc "Find today"         "t" #'org-roam-dailies-find-today
+         :desc "Capture Date"       "v" #'org-roam-dailies-capture-date
+         :desc "Find yesterday"     "y" #'org-roam-dailies-find-yesterday
+         :desc "Find directory"     "." #'org-roam-dailies-find-directory))
   :config
   (org-roam-setup))
 
