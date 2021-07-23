@@ -27,6 +27,7 @@
   (nnoremap "<leader>b8" ":BufferGoto 8<CR>")
   (nnoremap "<leader>b9" ":BufferLast<CR>")
 
+  (nnoremap "<leader>bk" ":BufferClose<cr>")
   (nnoremap "<leader>bdd" ":BufferClose<cr>")
   (nnoremap "<leader>bda" ":BufferWipeout<cr>")
   (nnoremap "<leader>bdo" ":BufferCloseAllButCurrent<cr>")
