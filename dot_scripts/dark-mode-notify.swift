@@ -1,5 +1,7 @@
 import Cocoa
 
+// swiftc dark-mode-notify.swift -o /usr/local/bin/dark-mode-notify
+
 @discardableResult
 func shell(_ args: [String]) -> Int32 {
     let task = Process()
