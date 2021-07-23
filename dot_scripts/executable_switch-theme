@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
+
 declare theme
 declare other_theme
 
@@ -18,7 +21,7 @@ sed -i "" "s/colors: \*${other_theme}/colors: *${theme}/" ~/.config/alacritty/al
 
 # update tmux
 sed -i "" "s/${other_theme}.conf/${theme}.conf/" ~/.config/tmux/tmux.conf &&
-  ~/.bin/tmux source-file ~/.config/tmux/tmux.conf &
+  tmux source-file ~/.config/tmux/tmux.conf &
 
 # update vim
 pgrep vim | xargs -n1 kill -SIGUSR1 &
