@@ -12,7 +12,8 @@
 (require :config.easy-align)
 (require :config.which-key)
 (require :config.indent-line)
-(require :config.lualine)
+(let [setup-fn (require :config.lualine)]
+  (setup-fn "solarized_dark"))
 
 (require :config.treesitter)
 (require :config.telescope)
@@ -22,3 +23,6 @@
 (require :config.compe)
 (require :config.barbar)
 (require :config.twilight)
+
+(let [switch-theme (require :switch-theme)]
+  (switch-theme))

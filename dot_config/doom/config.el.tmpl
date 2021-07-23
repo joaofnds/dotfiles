@@ -1,8 +1,5 @@
 ;; -*- lexical-binding: t; mode: emacs-lisp -*-
 
-(add-to-list 'load-path "~/.config/doom")
-(add-to-list 'load-path "~/.emacs.d/.local/straight/build-27.2/tree-sitter-langs/bin")
-
 (setq user-full-name "João Fernandes"
       user-mail-address "joaofnds@joaofnds.com"
 
@@ -30,8 +27,10 @@
       jf/font/cursive-family  "CMU Serif"
       jf/font/variable-family "Iosevka Aile"
       jf/font/size {{ .code.font.size }}
+      jf/dark-theme 'doom-solarized-dark
+      jf/light-theme 'doom-solarized-light
 
-      doom-theme 'doom-solarized-dark
+      doom-theme jf/dark-theme
       doom-themes-enable-bold t
       doom-themes-enable-italic t
       doom-font (font-spec :family jf/font/fixed-family :size jf/font/size)
@@ -40,22 +39,68 @@
 
       +ivy-project-search-engines '(ag)
 
-      dired-dwim-target t)
+      dired-dwim-target t
+      org-roam-v2-ack t)
 
 (map! "C-s" #'swiper)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
-(defun jf/restore-frame-size ()
-  (set-frame-size
-   (selected-frame)
-   (alist-get 'width initial-frame-alist)
-   (alist-get 'height initial-frame-alist)))
+(when IS-MAC
+  (defun jf/apply-theme ()
+    (interactive)
+    (pcase (string-trim (shell-command-to-string "osascript -l JavaScript -e \"Application('System Events').appearancePreferences.darkMode.get()\""))
+      ("true" (load-theme jf/dark-theme))
+      ("false" (load-theme jf/light-theme))))
 
-(after! org
-  (load! "org-config"))
+  (define-key special-event-map [sigusr1] 'jf/apply-theme))
 
-(with-eval-after-load "emacs-tmux-runner"
+(use-package! org-roam
+  :commands (org-roam-node-read)
+  :custom (org-roam-directory (f-join org-directory "roam"))
+  :init
+  (map! :after org
+        :map org-mode-map
+        :leader :prefix ("r" . "roam")
+
+        "c" #'org-roam-capture
+        "f" #'org-roam-node-find
+        "i" #'org-roam-node-insert
+
+        "b" #'org-roam-buffer-toggle
+        "g" #'org-roam-graph
+
+        "t" #'org-roam-tag-add
+        "T" #'org-roam-tag-remove
+        (:prefix ("d" . "dailies")
+         :desc "Find previous note" "b" #'org-roam-dailies-find-previous-note
+         :desc "Find date"          "d" #'org-roam-dailies-find-date
+         :desc "Find next note"     "f" #'org-roam-dailies-find-next-note
+         :desc "Find tomorrow"      "m" #'org-roam-dailies-find-tomorrow
+         :desc "Capture today"      "n" #'org-roam-dailies-capture-today
+         :desc "Find today"         "t" #'org-roam-dailies-find-today
+         :desc "Capture Date"       "v" #'org-roam-dailies-capture-date
+         :desc "Find yesterday"     "y" #'org-roam-dailies-find-yesterday
+         :desc "Find directory"     "." #'org-roam-dailies-find-directory))
+  :config
+  (org-roam-setup))
+
+(use-package! org
+  :defer t
+  :config (load! "~/.config/doom/org-config"))
+
+(use-package! tmux-pane
+  :defer t
+  :bind (("C-\\" . tmux-pane-omni-window-last)
+         ("C-k"  . tmux-pane-omni-window-up)
+         ("C-j"  . tmux-pane-omni-window-down)
+         ("C-h"  . tmux-pane-omni-window-left)
+         ("C-l"  . tmux-pane-omni-window-right))
+  :config (tmux-pane-mode t))
+
+(use-package! emacs-tmux-runner
+  :defer t
+  :config
   (map!
    (:leader
     (:prefix-map ("x" . "tmux")
@@ -64,9 +109,3 @@
                  :desc "run"            "r" #'etr:run-user-command
                  :desc "attach"         "a" #'etr:reset-target-pane
                  :desc "forget command" "f" #'etr:forget-user-command))))
-
-(defun after-doom-loaded ()
-  (tmux-pane-mode t)
-  (load! "emacs-tmux-runner"))
-
-(add-hook 'emacs-startup-hook #'after-doom-loaded)

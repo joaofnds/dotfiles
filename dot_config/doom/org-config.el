@@ -31,7 +31,7 @@
                            "~/notes/habits.org"
                            "~/notes/ufpel/ufpel.org"
                            "~/notes/melhor-envio/melhor-envio.org"
-                           "~/notes/theo.org"))
+                           "~/notes/melhor-envio/melhor-rastreio.org"))
 
   (set-face-attribute 'variable-pitch nil :font jf/font/variable-family :height 1.0)
   (set-face-attribute 'org-document-title nil :font jf/font/variable-family :height 1.5)

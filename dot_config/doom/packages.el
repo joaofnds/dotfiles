@@ -1,6 +1,12 @@
 ;; -*- lexical-binding: t; -*-
 
-(package! tmux-pane)         ; Negivate seamlessly between tmux and emacs
+(package! dash)              ; a modern list library for emacs
+(package! s)                 ; the long lost emacs string manipulation library.
+(package! f)                 ; modern api for working with files and directories
+(package! tmux-pane)         ; negivate seamlessly between tmux and emacs
+(package! org-roam)          ; rudimentary roam replica with org-mode
+(package! emacs-tmux-runner  ; my port of christoomey/vim-tmux-runner
+  :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
 (disable-packages!
  amx
