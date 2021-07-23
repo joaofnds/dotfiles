@@ -20,6 +20,8 @@
      (use "tpope/vim-fugitive")      ;; git interface
      (use "tpope/vim-projectionist") ;; granular project configuration
 
+     (use "jiangmiao/auto-pairs")
+
      (use "airblade/vim-gitgutter")
      (use "scrooloose/nerdtree")
      (use "folke/which-key.nvim")
