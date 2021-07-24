@@ -63,13 +63,14 @@
 (use-package! cider
   :hook cider-mode
   :config
-  (setq default-cider-options "-M:lib/cider-nrepl"
-          cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
+  (setq cider-options-default "-M:lib/cider-nrepl"
+        cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
 
   (defun clj/toggle-cider-rebl ()
-      (if (string= cider-clojure-cli-global-options default-cider-options
-            (setq cider-clojure-cli-global-options cider-options-with-rebl))
-          (setq cider-clojure-cli-global-options default-cider-options))))
+    (setq cider-clojure-cli-global-options
+          (if (string= cider-clojure-cli-global-options cider-options-default)
+              cider-options-with-rebel
+            cider-options-default))))
 
 (use-package! tree-sitter
   :defer t
