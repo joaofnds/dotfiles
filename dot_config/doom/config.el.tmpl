@@ -75,10 +75,11 @@
 (use-package! tree-sitter
   :defer t
   :config
-  (require 'tree-sitter-langs)
   (global-tree-sitter-mode t)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
+(use-package! tree-sitter-langs
+  :after tree-sitter)
 
 (use-package! org-roam
   :commands (org-roam-node-find)
