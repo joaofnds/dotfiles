@@ -78,14 +78,12 @@
   (global-tree-sitter-mode t)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-(use-package! org-roam
-  :commands (org-roam-node-read)
-  :custom (org-roam-directory (f-join org-directory "roam"))
-  :init
-  (map! :after org
-        :map org-mode-map
-        :leader :prefix ("r" . "roam")
 
+(use-package! org-roam
+  :commands (org-roam-node-find)
+  :custom (org-roam-directory (concat org-directory "roam"))
+  :init
+  (map! :leader :prefix ("r" . "roam")
         "c" #'org-roam-capture
         "f" #'org-roam-node-find
         "i" #'org-roam-node-insert
@@ -95,6 +93,7 @@
 
         "t" #'org-roam-tag-add
         "T" #'org-roam-tag-remove
+
         (:prefix ("d" . "dailies")
          :desc "Find previous note" "b" #'org-roam-dailies-find-previous-note
          :desc "Find date"          "d" #'org-roam-dailies-find-date
