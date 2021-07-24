@@ -10,7 +10,7 @@
   (add-to-list 'org-modules 'org-habit)
   (add-to-list 'org-modules 'org-mouse)
 
-  (setq org-directory "~/notes"
+  (setq org-directory "~/notes/"
 
         org-todo-keywords '((sequence "TODO(t)" "DOING(p!)" "DONE(d!)")
                             (sequence "[ ](T)" "[-](P!)" "[X](D!)")

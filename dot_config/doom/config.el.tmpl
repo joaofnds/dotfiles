@@ -58,7 +58,7 @@
 
 (add-hook
  'window-setup-hook
- (lambda () (load! (f-join doom-private-dir "jf"))))
+ (lambda () (load! (concat doom-private-dir "jf"))))
 
 (use-package! cider
   :hook cider-mode
@@ -140,7 +140,7 @@
 
 (use-package! org
   :defer t
-  :config (load! (f-join doom-private-dir "org-config")))
+  :config (load! (concat doom-private-dir "org-config")))
 
 (use-package! tmux-pane
   :defer t
