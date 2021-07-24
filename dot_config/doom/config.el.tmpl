@@ -53,44 +53,23 @@
  :desc "open elfeed" "o e" #'elfeed
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file)
 
-(when IS-MAC
-  (defun jf/apply-theme ()
-    (interactive)
-    (pcase (string-trim (shell-command-to-string "osascript -l JavaScript -e \"Application('System Events').appearancePreferences.darkMode.get()\""))
-      ("true" (load-theme jf/dark-theme))
-      ("false" (load-theme jf/light-theme))))
+(with-eval-after-load "jf"
+  (when IS-MAC (define-key special-event-map [sigusr1] 'jf/apply-theme)))
 
-  (define-key special-event-map [sigusr1] 'jf/apply-theme))
+(add-hook
+ 'window-setup-hook
+ (lambda () (load! (f-join doom-private-dir "jf"))))
 
-(defun jf/reload-known-projects ()
-  (-each
-      (-concat
-       '("~/notes" "~/code/dotfiles" "~/code/exercism")
-       (f-directories "~/code/melhor-envio"))
-    'projectile-add-known-project))
+(use-package! cider
+  :hook cider-mode
+  :config
+  (setq default-cider-options "-M:lib/cider-nrepl"
+          cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
 
-(defun jf/restore-frame-size ()
-  (set-frame-size
-   (selected-frame)
-   (alist-get 'width initial-frame-alist)
-   (alist-get 'height initial-frame-alist)))
-
-(defun jf/download-exercism-exercise ()
-  (interactive)
-  (let* ((track-dir (read-directory-name "track: " "~/code/exercism"))
-         (track (f-filename track-dir))
-         (exercise (read-string "exercise: "))
-         (command (s-concat "exercism download --exercise=" exercise " --track=" track))
-         (should-run (y-or-n-p (s-concat "Should run '" command "'?"))))
-    (when should-run (shell-command command))))
-
-(setq default-cider-options "-M:lib/cider-nrepl"
-      cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
-
-(defun clj/toggle-cider-rebl ()
-  (if (string= cider-clojure-cli-global-options default-cider-options)
-      (setq cider-clojure-cli-global-options cider-options-with-rebl)
-    (setq cider-clojure-cli-global-options default-cider-options)))
+  (defun clj/toggle-cider-rebl ()
+      (if (string= cider-clojure-cli-global-options default-cider-options
+            (setq cider-clojure-cli-global-options cider-options-with-rebl))
+          (setq cider-clojure-cli-global-options default-cider-options))))
 
 (use-package! tree-sitter
   :defer t
@@ -161,7 +140,7 @@
 
 (use-package! org
   :defer t
-  :config (load! "~/.config/doom/org-config"))
+  :config (load! (f-join doom-private-dir "org-config")))
 
 (use-package! tmux-pane
   :defer t
