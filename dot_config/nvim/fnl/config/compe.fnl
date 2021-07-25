@@ -15,7 +15,7 @@
     "max_kind_width" 100
     "max_menu_width" 100
     "documentation"
-    {"border" { "" "" "" " " "" "" "" " "}
+    {"border" ["" "" "" " " "" "" "" " "]
      "winhighlight" "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder"
      "max_width" 120
      "min_width" 60
@@ -27,9 +27,7 @@
      "calc" true
      "nvim_lsp" true
      "nvim_lua" true
-     "vsnip" true
-     "ultisnips" true
-     "luasnip" true}}))
+     "ultisnips" true}}))
 
 (vim.api.nvim_set_keymap "i" "<C-Space>" "compe#complete()" {"noremap" true "silent" true "expr" true})
 (vim.api.nvim_set_keymap "i" "<CR>" "compe#confirm('<CR>')" {"noremap" true "silent" true "expr" true})
