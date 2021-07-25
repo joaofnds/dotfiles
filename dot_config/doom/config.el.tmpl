@@ -153,8 +153,8 @@
   :config (tmux-pane-mode t))
 
 (use-package! emacs-tmux-runner
-  :defer t
-  :config
+  :commands (etr:send-lines etr:run-user-command)
+  :init
   (map!
    (:leader
     (:prefix-map ("x" . "tmux")
