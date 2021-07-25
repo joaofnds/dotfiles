@@ -17,7 +17,12 @@
 
 [core]
   excludesFile = ~/.gitignore
-  pager = delta --theme='Monokai Extended'
+
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
 
 [interactive]
   diffFilter = delta --color-only
@@ -47,3 +52,9 @@
 
 [url "git@bitbucket.org:"]
   insteadOf = https://bitbucket.org/
+
+[delta]
+  plus-style = "syntax #1a412b"
+  minus-style = "syntax #3b3639"
+  syntax-theme = "Solarized (dark)"
+  true-color = true
