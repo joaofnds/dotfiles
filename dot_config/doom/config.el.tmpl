@@ -96,6 +96,15 @@
         "t" #'org-roam-tag-add
         "T" #'org-roam-tag-remove
 
+        (:prefix ("r" . "refs")
+         :desc "add ref"    "a" #'org-roam-ref-add
+         :desc "remove ref" "r" #'org-roam-ref-remove
+         :desc "find ref"   "f" #'org-roam-ref-find)
+
+        (:prefix ("a" . "aliases")
+         :desc "add alias"    "a" #'org-roam-alias-add
+         :desc "remove alias" "r" #'org-roam-alias-remove)
+
         (:prefix ("d" . "dailies")
          :desc "Find previous note" "b" #'org-roam-dailies-find-previous-note
          :desc "Find date"          "d" #'org-roam-dailies-find-date
@@ -106,6 +115,9 @@
          :desc "Capture Date"       "v" #'org-roam-dailies-capture-date
          :desc "Find yesterday"     "y" #'org-roam-dailies-find-yesterday
          :desc "Find directory"     "." #'org-roam-dailies-find-directory))
+
+  (setq org-roam-graph-filetype "png")
+
   :config
   (org-roam-setup))
 
