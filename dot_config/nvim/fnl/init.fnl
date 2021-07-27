@@ -23,6 +23,7 @@
 (require :config.compe)
 (require :config.barbar)
 (require :config.twilight)
+(require :config.gitsigns)
 
 (let [switch-theme (require :switch-theme)]
   (switch-theme))

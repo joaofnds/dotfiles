@@ -22,7 +22,7 @@
 
      (use "jiangmiao/auto-pairs")
 
-     (use "airblade/vim-gitgutter")
+     (use "lewis6991/gitsigns.nvim")
      (use "scrooloose/nerdtree")
      (use "folke/which-key.nvim")
      (use "romgrk/barbar.nvim") ;; pretty tabline
