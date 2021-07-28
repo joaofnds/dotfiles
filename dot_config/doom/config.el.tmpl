@@ -51,7 +51,8 @@
  "C-s" #'swiper
  :leader
  :desc "open elfeed" "o e" #'elfeed
- :desc "reveal in neotree" "o ." #'+neotree/find-this-file)
+ :desc "reveal in neotree" "o ." #'+neotree/find-this-file
+ :desc "grab macOS link"   "o g" #'org-mac-grab-link)
 
 (with-eval-after-load "jf"
   (when IS-MAC (define-key special-event-map [sigusr1] 'jf/apply-theme)))
