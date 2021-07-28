@@ -35,8 +35,8 @@
                            "~/notes/melhor-envio/melhor-envio.org"
                            "~/notes/melhor-envio/melhor-rastreio.org"))
 
-  (set-face-attribute 'org-block-begin-line nil :font jf/font/fixed-family :height 0.8 :inherit 'shadow)
-  (set-face-attribute 'org-block-end-line nil :font jf/font/fixed-family :height 0.8 :inherit 'shadow)
+  (set-face-attribute 'org-block-begin-line nil :font jf/font/fixed-family :height 0.8 :background nil :inherit 'shadow)
+  (set-face-attribute 'org-block-end-line nil :font jf/font/fixed-family :height 0.8 :background nil :inherit 'shadow)
   (set-face-attribute 'org-code nil :font jf/font/fixed-family :height 1.0)
   (set-face-attribute 'org-document-info nil :font jf/font/variable-family :height 1.2)
   (set-face-attribute 'org-document-info-keyword nil :height 0.9 :inherit 'shadow)
