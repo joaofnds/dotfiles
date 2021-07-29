@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+data=$(youtube-dl --dump-single-json $1)
+jq -r '"* [[\(.webpage_url)][\(.title)]]"' <<< "$data"
+jq -r '.entries[] | "** [[\(.webpage_url)][\(.title)]]"' <<< "$data"
