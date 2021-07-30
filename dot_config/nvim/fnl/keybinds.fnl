@@ -1,4 +1,4 @@
-(let [{: nnoremap} (require :utils)]
+(let [{: nnoremap : inoremap} (require :utils)]
   ;;; Git
 
   ;; git status: open git
@@ -95,5 +95,9 @@
 
   ;; open dired: open the current folder
   (nnoremap "<leader>o-" ":e .<cr>")
+
+  ;; undo breakpoints
+  (each [_ c (ipairs ["," "." ";" "(" "[" "{"])]
+    (inoremap c (.. c "<c-g>u")))
 
   (nnoremap "<esc>" "<esc>:nohl<CR><esc>"))
