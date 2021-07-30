@@ -1,4 +1,4 @@
-(let [{: nnoremap : inoremap} (require :utils)]
+(let [{: nnoremap : inoremap : vnoremap} (require :utils)]
   ;;; Git
 
   ;; git status: open git
@@ -99,5 +99,14 @@
   ;; undo breakpoints
   (each [_ c (ipairs ["," "." ";" "(" "[" "{"])]
     (inoremap c (.. c "<c-g>u")))
+
+  (vnoremap "<c-j>" ":m '>+1<cr>gv=gv")
+  (vnoremap "<c-k>" ":m '<-2<cr>gv=gv")
+
+  (inoremap "<C-j>" "<esc>:m .+1<cr>==i")
+  (inoremap "<C-k>" "<esc>:m .-2<cr>==i")
+
+  (nnoremap "<leader>k" ":m .-2<cr>==")
+  (nnoremap "<leader>j" ":m .+1<cr>==")
 
   (nnoremap "<esc>" "<esc>:nohl<CR><esc>"))
