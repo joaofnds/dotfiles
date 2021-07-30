@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
+(package! flymake-grammarly)
 (package! dash)              ; a modern list library for emacs
 (package! s)                 ; the long lost emacs string manipulation library.
 (package! f)                 ; modern api for working with files and directories
