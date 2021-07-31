@@ -62,7 +62,7 @@
  (lambda () (load! (concat doom-private-dir "jf"))))
 
 (use-package! cider
-  :hook cider-mode
+  :hook ((clojure-mode . cider-mode))
   :config
   (setq cider-options-default "-M:lib/cider-nrepl"
         cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
