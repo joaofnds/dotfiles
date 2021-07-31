@@ -9,7 +9,7 @@
 (set vim.opt.showcmd        true)     ;; Show incomplete cmds down the bottom
 (set vim.opt.showmode       true)     ;; Show current mode down the bottom
 (set vim.opt.visualbell     true)     ;; No sounds"
-(set vim.opt.autochdir      true)     ;; Don't set CWD when as rootdir when opening vim
+(set vim.opt.autochdir      false)    ;; Don't set CWD when as rootdir when opening vim
 (set vim.opt.autoread       true)     ;; Reload files changed outside vim
 (set vim.opt.hidden         true)     ;; This makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
 (set vim.opt.colorcolumn    "80")     ;; Display a column at the 80th column
