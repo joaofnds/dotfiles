@@ -73,6 +73,10 @@
               cider-options-with-rebel
             cider-options-default))))
 
+(use-package! flymake-grammarly
+  :after (flymake)
+  :config (flymake-grammarly-load))
+
 (use-package! tree-sitter
   :defer t
   :config
