@@ -50,7 +50,7 @@
   (set-face-attribute 'org-level-7 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-7)
   (set-face-attribute 'org-level-8 nil :font jf/font/variable-family :height 1.0 :inherit 'outline-8)
   (set-face-attribute 'org-meta-line nil :height 0.9 :foreground nil :inherit 'shadow)
-  (set-face-attribute 'org-quote nil :font jf/font/cursive-family :height 1.2 :background nil :inherit 'org-quote)
+  (set-face-attribute 'org-quote nil :font jf/font/cursive-family :height 1.2 :inherit 'default)
   (set-face-attribute 'org-tag nil :font jf/font/variable-family :height 1.0)
   (set-face-attribute 'org-todo nil :weight 'semibold :height 1.0)
   (set-face-attribute 'org-verbatim nil :font "CMU Typewriter Text" :height 1.1)
