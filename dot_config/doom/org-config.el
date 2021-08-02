@@ -56,4 +56,4 @@
 (set-face-attribute 'variable-pitch nil :font jf/font/variable-family :height 1.0)
 
 (defun jf/toggle-org-markers ()
-  (setf org-hide-emphasis-markers (if org-hide-emphasis-markers nil t)))
+  (setf org-hide-emphasis-markers (not org-hide-emphasis-markers)))
