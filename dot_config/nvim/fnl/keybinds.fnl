@@ -108,5 +108,6 @@
 
   (nnoremap "<leader>k" ":m .-2<cr>==")
   (nnoremap "<leader>j" ":m .+1<cr>==")
+  (nnoremap "<leader>cf" ":Neoformat<cr>")
 
   (nnoremap "<esc>" "<esc>:nohl<CR><esc>"))

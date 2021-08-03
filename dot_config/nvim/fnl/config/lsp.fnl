@@ -14,7 +14,7 @@
     (nnoremap "<leader>cs" "<cmd>lua require('lspsaga.signaturehelp').signature_help()<cr>")
     (nnoremap "<leader>cp" "<cmd>lua require('lspsaga.provider').preview_definition()<cr>")
     (nnoremap "<leader>cd" "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<cr>")
-    (nnoremap "<leader>cf" "<cmd>lua vim.lsp.buf.formatting()<cr>")
+    ;; (nnoremap "<leader>cf" "<cmd>lua vim.lsp.buf.formatting()<cr>")
 
     (nnoremap "<leader>cls" ":LspStart<cr>")
     (nnoremap "<leader>clS" ":LspStop<cr>")))

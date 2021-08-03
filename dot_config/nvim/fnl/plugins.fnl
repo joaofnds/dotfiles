@@ -31,6 +31,7 @@
      (use "junegunn/vim-easy-align")
      (use "Yggdroot/indentLine")
      (use "nvim-treesitter/nvim-treesitter")
+     (use "sbdchd/neoformat")
 
      ;; Shell integrations
      (use "/usr/local/opt/fzf")
