@@ -2,7 +2,7 @@
   ;;; Git
 
   ;; git status: open git
-  (nnoremap "<leader>gg" ":Gst<cr>")
+  (nnoremap "<leader>gg" ":Git<cr>")
 
   ;; git add: git add current buffer
   (nnoremap "<silent>" "<leader>ga :silent !git add %<cr>")
