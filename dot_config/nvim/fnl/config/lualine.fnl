@@ -1,6 +1,5 @@
 (fn [theme]
-  (let [lualine (require :lualine)
-        theme (or theme "solarized_dark")]
+  (let [lualine (require :lualine)]
    (lualine.setup
     {"options"
      {"icons_enabled" false
