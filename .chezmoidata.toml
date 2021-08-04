@@ -1,3 +1,11 @@
 [code.font]
   family = "Iosevka SS08"
   size = 18
+
+[emacs.font]
+  family = "Iosevka SS08"
+  size = 18
+
+[alacritty.font]
+  family = "Iosevka SS08"
+  size = 18

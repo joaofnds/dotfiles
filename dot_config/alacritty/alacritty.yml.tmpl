@@ -16,7 +16,7 @@ window:
 
 font:
   normal:
-    family: {{ .code.font.family }}
+    family: {{ .alacritty.font.family }}
     style: Light
 
   bold:
@@ -28,7 +28,7 @@ font:
   bold_italic:
     style: Bold Italic
 
-  size: {{ .code.font.size }}
+  size: {{ .alacritty.font.size }}
 
   {{- if eq .chezmoi.os "darwin" }}
   use_thin_strokes: true
