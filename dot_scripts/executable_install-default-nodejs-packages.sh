@@ -7,4 +7,5 @@ npm i -g typescript \
          prettier \
          snowpack \
          lua-fmt \
-         dockerfile-language-server-nodejs
+         dockerfile-language-server-nodejs \
+         @nestjs/cli
