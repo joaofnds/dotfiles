@@ -103,11 +103,6 @@
   (vnoremap "<c-j>" ":m '>+1<cr>gv=gv")
   (vnoremap "<c-k>" ":m '<-2<cr>gv=gv")
 
-  (inoremap "<C-j>" "<esc>:m .+1<cr>==i")
-  (inoremap "<C-k>" "<esc>:m .-2<cr>==i")
-
-  (nnoremap "<leader>k" ":m .-2<cr>==")
-  (nnoremap "<leader>j" ":m .+1<cr>==")
   (nnoremap "<leader>cf" ":Neoformat<cr>")
 
   (nnoremap "<esc>" "<esc>:nohl<CR><esc>"))
