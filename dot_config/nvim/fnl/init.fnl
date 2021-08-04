@@ -12,8 +12,6 @@
 (require :config.easy-align)
 (require :config.which-key)
 (require :config.indent-line)
-(let [setup-fn (require :config.lualine)]
-  (setup-fn "solarized_dark"))
 
 (require :config.treesitter)
 (require :config.telescope)
