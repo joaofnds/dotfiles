@@ -1,6 +1,4 @@
 (let [u (require :utils)]
-  (u.noremap "<C-p>" ":FZF<CR>")
-  (u.noremap "<C-b>" ":Buffers<CR>")
   (u.noremap "<leader>zgf" ":GFiles?<CR>")
   (u.noremap "<leader>zl" ":Lines<CR>")
   (u.noremap "<leader>zbl" ":BLines<CR>")
