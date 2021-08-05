@@ -14,16 +14,3 @@
   :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
 (unpin! format-all)
-
-(disable-packages!
- haml-mode
- pug-mode
- slim-mode
- less-css-mode
- stylus-mode
- sws-mode
- rainbow-mode
- helm-css-scss
- coffee-mode
- skewer-mode
- emojify)
