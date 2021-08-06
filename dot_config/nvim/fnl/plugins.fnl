@@ -55,6 +55,7 @@
      ;; Visual
      (use "lifepillar/vim-solarized8")
      (use "folke/twilight.nvim")
+     (use "ryanoasis/vim-devicons")
 
      ;; Status line
      (use "hoob3rt/lualine.nvim"))))
