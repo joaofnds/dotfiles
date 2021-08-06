@@ -2,7 +2,7 @@
   (let [lualine (require :lualine)]
    (lualine.setup
     {"options"
-     {"icons_enabled" false
+     {"icons_enabled" true
       "theme" theme
       "component_separators" ["" ""]
       "section_separators" ["" ""]
