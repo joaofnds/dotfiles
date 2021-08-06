@@ -18,6 +18,7 @@
 
 (let [lsp-config (require :config.lsp)]
   (lsp-config.init))
+(require :config.trouble)
 (require :config.compe)
 (require :config.barbar)
 (require :config.twilight)

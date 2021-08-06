@@ -47,6 +47,7 @@
      (use "kabouzeid/nvim-lspinstall")
      (use "glepnir/lspsaga.nvim")
      (use "hrsh7th/nvim-compe")
+     (use "folke/trouble.nvim")
 
      (use "nvim-lua/popup.nvim")
      (use "nvim-lua/plenary.nvim")
@@ -56,6 +57,7 @@
      (use "lifepillar/vim-solarized8")
      (use "folke/twilight.nvim")
      (use "ryanoasis/vim-devicons")
+     (use "kyazdani42/nvim-web-devicons")
 
      ;; Status line
      (use "hoob3rt/lualine.nvim"))))
