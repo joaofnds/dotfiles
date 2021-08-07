@@ -105,6 +105,7 @@ brew "z"
 brew "zeromq"
 brew "zlib"
 brew "zsh"
+brew "zstd"
 
 cask "alacritty"
 cask "android-platform-tools"
