@@ -103,6 +103,7 @@ brew "youtube-dl"
 brew "yq"
 brew "z"
 brew "zeromq"
+brew "zlib"
 brew "zsh"
 
 cask "alacritty"
