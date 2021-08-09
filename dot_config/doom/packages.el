@@ -13,4 +13,8 @@
 (package! emacs-tmux-runner ; my port of christoomey/vim-tmux-runner
   :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
+(package! websocket)         ; org-roam-ui dependency
+(package! org-roam-ui
+  :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+
 (unpin! format-all)
