@@ -57,7 +57,7 @@
 
 ;; folds
 (set vim.opt.foldmethod "expr") ;; fold based on indent
-(set vim.opt.foldnestmax 3)     ;;  deepest fold is 3 levels
+(set vim.opt.foldnestmax 3)     ;; deepest fold is 3 levels
 (set vim.opt.foldenable false)  ;; don't fold by default
 
 ;; completion
