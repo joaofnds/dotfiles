@@ -1,7 +1,7 @@
 {:paths ["src"]
 
- :deps {org.clojure/clojure       {:mvn/version "1.10.1"}
-        org.clojure/clojurescript {:mvn/version "1.10.758"}}
+ :deps {org.clojure/clojure       {:mvn/version "1.10.3"}
+        org.clojure/clojurescript {:mvn/version "1.10.879"}}
 
  :aliases
  {:test {:extra-paths ["test"]
@@ -10,7 +10,7 @@
          :main-opts ["-m" "cognitect.test-runner"]}
 
   :project/new
-  {:replace-deps {seancorfield/clj-new {:mvn/version "1.1.243"}}
+  {:replace-deps {seancorfield/clj-new {:mvn/version "1.1.309"}}
    :exec-fn      clj-new/create
    :exec-args    {:template lib :name practicalli/playground}
    :main-opts    ["-m" "clj-new.create"]}
