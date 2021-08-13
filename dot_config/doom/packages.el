@@ -6,8 +6,6 @@
 
 (package! flymake-grammarly) ; flymake support for grammarly
 
-
-
 (package! tree-sitter)       ; parser generator tool and an incremental parsing library
 (package! tree-sitter-langs) ; populates global registries of grammars and queries
 
