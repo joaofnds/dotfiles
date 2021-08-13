@@ -77,7 +77,7 @@
             cider-options-default))))
 
 (use-package! flymake-grammarly
-  :after (flymake)
+  :commands flymake-mode
   :config (flymake-grammarly-load))
 
 (use-package! tree-sitter
