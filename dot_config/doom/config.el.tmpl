@@ -45,7 +45,6 @@
       parinfer-rust-preferred-mode "indent"
 
       dired-dwim-target t
-      org-roam-v2-ack t
       emojify--refused-image-download-p t)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
@@ -124,7 +123,8 @@
          :desc "Find yesterday"     "y" #'org-roam-dailies-find-yesterday
          :desc "Find directory"     "." #'org-roam-dailies-find-directory))
 
-  (setq org-roam-graph-filetype "png")
+  (setq org-roam-v2-ack t
+        org-roam-graph-filetype "png")
 
   :config
   (org-roam-setup))
