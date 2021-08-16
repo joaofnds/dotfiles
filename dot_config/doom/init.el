@@ -57,6 +57,7 @@
        (lua               ; one-based indices? one-based indices
         +fennel)          ; fennel language support
        (org               ; organize your plain life in plain text
+        +dragndrop
         +journal
         +pandoc)
        ;; (python +lsp)      ; beautiful is better than ugly
