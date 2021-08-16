@@ -27,6 +27,8 @@
       org-log-done 'time
       ;; Non-nil means insert state change notes and time stamps into a drawer
       org-log-into-drawer t
+      ;; increase latex preview height
+      org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
 
       org-agenda-files '("~/notes/home.org"
                          "~/notes/habits.org"
