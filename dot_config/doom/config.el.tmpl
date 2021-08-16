@@ -88,6 +88,11 @@
 (use-package! tree-sitter-langs
   :after tree-sitter)
 
+(use-package! org-journal
+  :after (org)
+  :init
+  (setq org-journal-enable-agenda-integration t))
+
 (use-package! org-roam
   :commands (org-roam-node-find)
   :custom (org-roam-directory (concat org-directory "roam"))
