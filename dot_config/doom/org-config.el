@@ -15,19 +15,12 @@
                           (sequence "[ ](T)" "[-](P!)" "[X](D!)")
                           (type "BLOCKED(b@)" "[?](B@)" "CANCELLED(c@!)"))
 
-      ;; Hide emphasis marker characters (~foo~ -> foo, =foo= -> foo)
       org-hide-emphasis-markers t
-      ;; The column to which tags should be indented in a headline
       org-tags-column -80
-      ;; Non-nil means undone TODO entries will block switching the parent to DONE
       org-enforce-todo-dependencies t
-      ;; Non-nil means unchecked boxes will block switching the parent to DONE
       org-enforce-todo-checkbox-dependencies t
-      ;; Information to record when a task moves to the DONE state.
       org-log-done 'time
-      ;; Non-nil means insert state change notes and time stamps into a drawer
       org-log-into-drawer t
-      ;; increase latex preview height
       org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
 
       org-agenda-files '("~/notes/home.org"
