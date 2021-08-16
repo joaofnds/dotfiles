@@ -94,6 +94,7 @@
   (setq org-journal-enable-agenda-integration t))
 
 (use-package! org-download
+  :after (org)
   :init
   (setq-default
    org-download-method 'directory          ;; download to a directory...
