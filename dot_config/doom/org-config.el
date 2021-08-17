@@ -4,7 +4,10 @@
 
 (map! :map org-mode-map
       :n "M-j" #'org-metadown
-      :n "M-k" #'org-metaup)
+      :n "M-k" #'org-metaup
+
+      :map evil-org-agenda-mode-map
+      :m "q" #'org-agenda-exit)
 
 (add-to-list 'org-modules 'org-habit)
 (add-to-list 'org-modules 'org-mouse)
