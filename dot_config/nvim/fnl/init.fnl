@@ -20,6 +20,7 @@
   (lsp-config.init))
 (require :config.trouble)
 (require :config.compe)
+(require :config.lspkind)
 (require :config.barbar)
 (require :config.twilight)
 (require :config.gitsigns)
