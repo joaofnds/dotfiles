@@ -18,8 +18,7 @@
 (package! package-lint)      ; a linting library for elisp package authors
 
 (package! tmux-pane)         ; negivate seamlessly between tmux and emacs
-(package! emacs-tmux-runner  ; my port of christoomey/vim-tmux-runner
-  :recipe (:local-repo "~/code/emacs-tmux-runner"
-           :build (:not compile)))
+(package! emacs-tmux-runner ; my port of christoomey/vim-tmux-runner
+  :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
 (unpin! format-all)
