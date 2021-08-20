@@ -1,3 +1,4 @@
+tap "askgitdev/askgit"
 tap "clojure/tools"
 tap "github/gh"
 tap "heroku/brew"
@@ -14,6 +15,7 @@ tap "thoughtbot/formulae"
 
 brew "ack"
 brew "annie"
+brew "askgitdev/askgit/askgit"
 brew "aspell"
 brew "automake"
 brew "awscli"
