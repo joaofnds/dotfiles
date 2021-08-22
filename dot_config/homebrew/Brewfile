@@ -10,6 +10,7 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
 tap "rigellute/tap"
+tap "sachaos/tap"
 tap "sniptt-official/tap"
 tap "thoughtbot/formulae"
 
