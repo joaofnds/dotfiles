@@ -13,27 +13,27 @@ source changes, I use a little [[https://www.chezmoi.io/docs/reference/#source-s
 I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything.
 
 * terminal
-[[https://github.com/tmux/tmux][tmux/tmux: terminal multiplexer]]
-[[https://github.com/junegunn/fzf][junegunn/fzf: A command-line fuzzy finder]]
-[[https://github.com/chmln/sd][chmln/sd: Intuitive find & replace CLI (sed alternative)]]
-[[https://github.com/theryangeary/choose][theryangeary/choose: A human-friendly and fast alternative to cut and (sometimes) awk]]
+- [[https://github.com/tmux/tmux][tmux/tmux: terminal multiplexer]]
+- [[https://github.com/junegunn/fzf][junegunn/fzf: A command-line fuzzy finder]]
+- [[https://github.com/chmln/sd][chmln/sd: Intuitive find & replace CLI (sed alternative)]]
+- [[https://github.com/theryangeary/choose][theryangeary/choose: A human-friendly and fast alternative to cut and (sometimes) awk]]
 
 * files
 ** terminal utils
-[[https://github.com/sharkdp/fd][sharkdp/fd: A simple, fast and user-friendly alternative to 'find']]
-[[https://github.com/eradman/entr][eradman/entr: Run arbitrary commands when files change]]
-[[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
+- [[https://github.com/sharkdp/fd][sharkdp/fd: A simple, fast and user-friendly alternative to 'find']]
+- [[https://github.com/eradman/entr][eradman/entr: Run arbitrary commands when files change]]
+- [[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
 
 ** sync
-[[https://github.com/wayned/rsync][wayned/rsync: fast incremental file transfer]]
-[[https://github.com/rclone/rclone][rclone/rclone: rsync for cloud storage]]
-[[https://github.com/twpayne/chezmoi][twpayne/chezmoi: Manage your dotfiles across multiple diverse machines, securely.]]
+- [[https://github.com/wayned/rsync][wayned/rsync: fast incremental file transfer]]
+- [[https://github.com/rclone/rclone][rclone/rclone: rsync for cloud storage]]
+- [[https://github.com/twpayne/chezmoi][twpayne/chezmoi: Manage your dotfiles across multiple diverse machines, securely.]]
 
 ** share
 *** local network
-[[https://github.com/schollz/croc][schollz/croc]]
-[[https://github.com/robinlinus/snapdrop][robinlinus/snapdrop: local file sharing in your browser. Inspired by Apple's Airdrop]]
+- [[https://github.com/schollz/croc][schollz/croc]]
+- [[https://github.com/robinlinus/snapdrop][robinlinus/snapdrop: local file sharing in your browser. Inspired by Apple's Airdrop]]
 
 *** internet
-[[https://github.com/sniptt-official/ots][sniptt-official/ots: share end-to-end encrypted secrets with others via a one-time url]]
-[[https://wormhole.app/][Wormhole - share files with e2e encryption and a link that automatically expires]]
+- [[https://github.com/sniptt-official/ots][sniptt-official/ots: share end-to-end encrypted secrets with others via a one-time url]]
+- [[https://wormhole.app/][Wormhole - share files with e2e encryption and a link that automatically expires]]
