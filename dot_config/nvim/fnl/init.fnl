@@ -24,6 +24,7 @@
 (require :config.barbar)
 (require :config.twilight)
 (require :config.gitsigns)
+(require :config.orgmode)
 
 (let [switch-theme (require :switch-theme)]
   (switch-theme))

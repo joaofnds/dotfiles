@@ -57,6 +57,8 @@
      (use { 1 "iamcco/markdown-preview.nvim"
            "run" (fn [] (vim.call "mkdp#util#install"))})
 
+     (use "kristijanhusak/orgmode.nvim")
+
      ;; Visual
      (use "lifepillar/vim-solarized8")
      (use "folke/twilight.nvim")
