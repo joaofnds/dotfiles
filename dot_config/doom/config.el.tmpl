@@ -91,7 +91,10 @@
 (use-package! org-journal
   :after (org)
   :init
-  (setq org-journal-enable-agenda-integration t))
+  (setq org-journal-enable-agenda-integration t)
+  (map! :leader
+        :desc "Current Entry"
+        "n j ." #'org-journal-open-current-journal-file))
 
 (use-package! org-download
   :after (org)
