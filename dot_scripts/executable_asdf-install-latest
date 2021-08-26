@@ -9,14 +9,14 @@ class ASDF
     end
 
     def plugin_list
-      `asdf plugin-list`.split("\n")
+      `asdf plugin-list`.lines.map(&:strip)
     end
 
     def list(plugin = nil)
       if plugin.nil?
         `asdf list`
       else
-        `asdf list #{plugin}`.split("\n")
+        `asdf list #{plugin}`.lines.map(&:strip)
       end
     end
 
@@ -55,20 +55,28 @@ class PluginManager
   def update_to_latest
     update_plugin
     install_latest
+    install_default_packages if version_changed?
   end
 
   def set_global_to_latest
-    latest_version = ASDF.list(plugin.name).last
+    return unless version_changed?
+
     puts "[#{plugin}] setting global version to #{latest_version}"
     ASDF.global(plugin.name, latest_version)
   end
 
+  def install_default_packages
+    puts "[#{plugin}] installing default packages"
+    system(default_packages_installer_script) if has_default_packages_installer?
+  end
+
   private
 
-  attr_reader :plugin
+  attr_reader :plugin, :current_version
 
   def initialize(plugin)
     @plugin = plugin
+    @current_version = latest_version
   end
 
   def update_plugin
@@ -78,6 +86,23 @@ class PluginManager
   def install_latest
     puts "[#{plugin}] installing latest version"
     ASDF.install_latest(plugin.name)
+  end
+
+  def default_packages_installer_script
+    "install-default-#{plugin.name}-packages.sh"
+  end
+
+  def has_default_packages_installer?
+    `which #{default_packages_installer_script}`
+    $?.success?
+  end
+
+  def latest_version
+    ASDF.list(plugin.name).last
+  end
+
+  def version_changed?
+    current_version != latest_version
   end
 end
 
