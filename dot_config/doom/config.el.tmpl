@@ -49,12 +49,20 @@
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
+(defun jf/notes/open-home ()
+  (interactive)
+  (find-file "~/notes/home.org")
+  (evil-goto-line 25)
+  (evil-scroll-line-up 3)
+  (org-set-startup-visibility))
+
 (map!
  "C-s" #'swiper
  :leader
  :desc "open elfeed" "o e" #'elfeed
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file
- :desc "grab macOS link"   "o g" #'org-mac-grab-link)
+ :desc "grab macOS link"   "o g" #'org-mac-grab-link
+ :desc "home.org" "n h" #'jf/notes/open-home)
 
 (with-eval-after-load "jf"
   (when IS-MAC (define-key special-event-map [sigusr1] 'jf/apply-theme)))
