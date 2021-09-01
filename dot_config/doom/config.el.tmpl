@@ -51,10 +51,11 @@
 
 (defun jf/notes/open-home ()
   (interactive)
-  (find-file "~/notes/home.org")
-  (evil-goto-line 25)
-  (evil-scroll-line-up 3)
-  (org-set-startup-visibility))
+  (let ((drop-in-line 25))
+    (find-file "~/notes/home.org")
+    (evil-goto-line drop-in-line)
+    (evil-scroll-line-to-bottom drop-in-line)
+    (org-set-startup-visibility)))
 
 (map!
  "C-s" #'swiper
