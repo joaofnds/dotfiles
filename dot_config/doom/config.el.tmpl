@@ -72,6 +72,11 @@
  'window-setup-hook
  (lambda () (load! (concat doom-private-dir "jf"))))
 
+(use-package! format-all
+  :commands format-all-buffer
+  :init
+  (map! :leader :desc "format buffer" "c f" #'format-all-buffer))
+
 (use-package! cider
   :hook ((clojure-mode . cider-mode))
   :config
