@@ -36,7 +36,6 @@
 
 [pull]
   rebase = false
-  twohead = ort
 
 [init]
   defaultBranch = main
