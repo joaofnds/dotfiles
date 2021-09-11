@@ -52,6 +52,7 @@
        (elixir +lsp)      ; erlang done right
        emacs-lisp         ; drown in parentheses
        (go +lsp)          ; the hipster dialect
+       (haskell +dante)   ; a language that's lazier than I am
        (javascript +lsp)  ; all(hope(abandon(ye(who(enter(here))))))
        json               ; At least it ain't XML
        (lua               ; one-based indices? one-based indices
