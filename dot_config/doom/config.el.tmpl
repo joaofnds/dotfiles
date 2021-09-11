@@ -77,18 +77,6 @@
   :init
   (map! :leader :desc "format buffer" "c f" #'format-all-buffer))
 
-(use-package! cider
-  :hook ((clojure-mode . cider-mode))
-  :config
-  (setq cider-options-default "-M:lib/cider-nrepl"
-        cider-options-with-rebl "-M:lib/cider-nrepl:inspect/rebl:middleware/nrebl")
-
-  (defun clj/toggle-cider-rebl ()
-    (setq cider-clojure-cli-global-options
-          (if (string= cider-clojure-cli-global-options cider-options-default)
-              cider-options-with-rebel
-            cider-options-default))))
-
 (use-package! flymake-grammarly
   :commands flymake-mode
   :config (flymake-grammarly-load))
