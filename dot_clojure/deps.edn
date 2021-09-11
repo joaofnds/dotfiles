@@ -4,53 +4,29 @@
         org.clojure/clojurescript {:mvn/version "1.10.879"}}
 
  :aliases
- {:test {:extra-paths ["test"]
-         :extra-deps {com.cognitect/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                                                 :sha "209b64504cb3bd3b99ecfec7937b358a879f55c1"}}
-         :main-opts ["-m" "cognitect.test-runner"]}
+ {:test
+  {:extra-paths ["test"]
+   :extra-deps {com.cognitect/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                 :sha "209b64504cb3bd3b99ecfec7937b358a879f55c1"}}
+   :main-opts ["-m" "cognitect.test-runner"]}
 
-  :project/new
-  {:replace-deps {seancorfield/clj-new {:mvn/version "1.1.309"}}
-   :exec-fn      clj-new/create
-   :exec-args    {:template lib :name practicalli/playground}
-   :main-opts    ["-m" "clj-new.create"]}
+  :test/kaocha
+  {:extra-paths ["test"]
+   :extra-deps  {lambdaisland/kaocha {:mvn/version "1.0.887"}}
+   :main-opts   ["-m" "kaocha.runner"]}
 
-  :inspect/rebl {:extra-deps {com.cognitect/rebl          {:mvn/version "0.9.242"}
-                              org.openjfx/javafx-fxml     {:mvn/version "15-ea+6"}
-                              org.openjfx/javafx-controls {:mvn/version "15-ea+6"}
-                              org.openjfx/javafx-swing    {:mvn/version "15-ea+6"}
-                              org.openjfx/javafx-base     {:mvn/version "15-ea+6"}
-                              org.openjfx/javafx-web      {:mvn/version "15-ea+6"}
-                              ;; deps for file datafication
-                              org.clojure/data.csv        {:mvn/version "1.0.0"}
-                              org.clojure/data.json       {:mvn/version "1.0.0"}
-                              org.yaml/snakeyaml          {:mvn/version "1.27"}}
-                 :main-opts ["-m" "cognitect.rebl"]}
+  :repl/nrepl
+  {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
+   :main-opts  ["-m" "nrepl.cmdline" "-i"]}
 
-  :repl/rebel-nrepl
-  {:extra-deps {nrepl/nrepl                {:mvn/version "0.8.3"}
-                cider/cider-nrepl          {:mvn/version "0.25.5"}
-                com.bhauman/rebel-readline {:mvn/version "0.1.4"}}
-   :main-opts  ["-m" "nrepl.cmdline"
-                "--middleware" "[cider.nrepl/cider-middleware]"
-                "-i"
-                "-f" "rebel-readline.main/-main"]}
-
-  :middleware/nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
-                     :main-opts  ["-m" "nrepl.cmdline" "-i"]}
-
-  :middleware/nrebl
-  {:extra-deps {rickmoynihan/nrebl.middleware {:mvn/version "0.3.1"}}
-   :main-opts  ["-e" "((requiring-resolve,'cognitect.rebl/ui))"
-                "-m" "nrepl.cmdline"
-                "-i"
-                "--middleware" "[nrebl.middleware/wrap-nrebl,cider.nrepl/cider-middleware]"]}
-
-  :lib/cider-nrepl
+  :repl/cider
   {:extra-deps {nrepl/nrepl                   {:mvn/version "0.8.3"}
-                cider/cider-nrepl             {:mvn/version "0.25.5"}
-                refactor-nrepl/refactor-nrepl {:mvn/version "2.5.0"}}}}
+                cider/cider-nrepl             {:mvn/version "0.26.0"}
+                refactor-nrepl/refactor-nrepl {:mvn/version "2.5.1"}}
+   :main-opts  ["-m" "nrepl.cmdline"
+                "--middleware" "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"
+                "-i"]}}
 
  :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
-             "clojars" {:url "https://repo.clojars.org"}
-             "cognitect-dev-tools" {:url "https://dev-tools.cognitect.com/maven/releases/"}}}
+             "clojars" {:url "https://repo.clojars.org"}}}
