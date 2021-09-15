@@ -64,6 +64,8 @@
      (use "folke/twilight.nvim")
      (use "ryanoasis/vim-devicons")
      (use "kyazdani42/nvim-web-devicons")
+     (use {1 "eraserhd/parinfer-rust"
+           "run" "cargo build --release"})
 
      ;; Status line
      (use "hoob3rt/lualine.nvim"))))
