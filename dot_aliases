@@ -12,12 +12,11 @@ alias tatt='tmux attach -t "$(tmux ls | fzf -1 | cut -d: -f1)"'
 alias e='emacs'
 alias ec='emacsclient'
 alias asdfrm='plugin=$(asdf plugin-list | fzf) && asdf list $plugin | fzf -m | xargs -n 1 asdf uninstall $plugin'
-alias cm='chezmoi'
 
 alias ytdl="youtube-dl -f '(bestvideo+bestaudio/best)' --merge-output-format=mkv"
 alias musicdl="youtube-dl --extract-audio --audio-format flac --audio-quality 0"
 
-# files listing
+# file listing
 alias lsnotes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
 alias lsfiles='la | rg ^-'
 alias lsdirs='la | rg ^d'
@@ -49,29 +48,6 @@ alias dmcs='eval $(docker-machine ls | sed "1d" | fzf -1 | awk '\''{ print $1 }'
 
 alias ddc='ddcctl -d 1 -b'
 
-startminikube() {
-  minikube start --insecure-registry=192.168.99.1:5000
-  # minikube already changes context on `start`
-  # kubectl config use-context minikube
-  eval $(minikube docker-env)
-}
-
-stopminikube() {
-  minikube stop
-  eval $(minikube docker-env -u)
-}
-
-function video-to-gif() {
-  movie=$1
-  height=$(mdls -name kMDItemPixelHeight ${movie} | rg -o '[0-9]+')
-  width=$(mdls -name kMDItemPixelWidth ${movie} | rg -o '[0-9]+')
-  dimensions="${width}x${height}"
-  filename=$(basename "$movie")
-  name="${filename%.*}"
-  ffmpeg -i ${movie} -s ${dimensions} -pix_fmt rgb24 -r 10 -f gif ${name}.gif
-}
-
-# TMUX helpers
 _not_inside_tmux() { [[ -z "$TMUX" ]] }
 
 ensure_tmux_is_running() {
