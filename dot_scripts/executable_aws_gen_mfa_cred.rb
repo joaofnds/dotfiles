@@ -2,37 +2,40 @@
 
 require 'json'
 require 'inifile'
-require 'English'
 
-aws_mfa_arn = `printenv | fzf | cut -d= -f2`.chomp
+aws_mfa_arn = `printenv | fzf --prompt "arn: " | cut -d= -f2`.chomp
 
 if aws_mfa_arn.empty?
   puts 'Please select an ARN from your env.'
   exit 1
 end
 
-print 'profile: '
-profile = gets.chomp
+puts "arn: #{aws_mfa_arn}"
 
-print 'MFA token: '
+config = IniFile.load(File.join(ENV['HOME'], '.aws', 'credentials'))
+profiles = config.to_h.keys
+
+profile = `fzf --height 10% --prompt="base profile:" <<< "#{profiles.join("\n")}"`.chomp
+puts "profile: #{profile}"
+
+print 'mfa token: '
 token = gets.chomp
 
-out = `aws \
-       --profile stag \
+session_token = `aws \
+       --profile #{profile} \
        sts get-session-token \
        --duration-seconds 86400 \
        --serial-number #{aws_mfa_arn} \
        --token-code #{token}`
 
-unless $CHILD_STATUS.success?
-  puts out
-  exit $CHILD_STATUS.exitstatus
+unless $?.success?
+  puts session_token
+  exit $?.exitstatus
 end
 
-creds = JSON.parse(out)['Credentials']
+creds = JSON.parse(session_token)['Credentials']
 
-config = IniFile.load(File.join(ENV['HOME'], '.aws', 'credentials'))
-config[profile] = {
+config["#{profile}_temp"] = {
   aws_access_key_id: creds['AccessKeyId'],
   aws_secret_access_key: creds['SecretAccessKey'],
   aws_session_token: creds['SessionToken']
