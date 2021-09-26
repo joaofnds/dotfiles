@@ -90,6 +90,10 @@
 (use-package! tree-sitter-langs
   :after tree-sitter)
 
+(use-package! org
+  :defer t
+  :config (load! (concat doom-private-dir "org-config")))
+
 (use-package! org-journal
   :after (org)
   :init
@@ -161,7 +165,6 @@
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
-
 (use-package! org-appear
   :after org
   :init
@@ -202,10 +205,6 @@
           :n "s" #'neotree-enter-vertical-split
 
           :n "g r" #'neotree-refresh))
-
-(use-package! org
-  :defer t
-  :config (load! (concat doom-private-dir "org-config")))
 
 (use-package! tmux-pane
   :defer t
