@@ -161,6 +161,18 @@
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
+
+(use-package! org-appear
+  :after org
+  :init
+  (setq org-appear-autoemphasis t
+        org-appear-autoentities t
+        org-appear-autokeywords t
+        org-appear-autolinks t
+        org-appear-autosubmarkers t)
+  :config
+  (add-hook! 'org-mode-hook #'org-appear-mode))
+
 (use-package! neotree
   :defer t
   :config
