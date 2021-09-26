@@ -21,7 +21,5 @@
 (package! emacs-tmux-runner ; my port of christoomey/vim-tmux-runner
   :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
-(package! prisma-mode
-  :recipe (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
 
 (unpin! format-all)
