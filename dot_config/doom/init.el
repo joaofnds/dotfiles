@@ -43,8 +43,7 @@
         +dictionary
         +offline)
        (lsp +peek)
-       (magit             ; a git porcelain for Emacs
-        +forge)           ; a porcelain for managing issues and PRs
+       magit              ; a git porcelain for Emacs
 
        :lang
        (clojure +lsp)     ; java with a lisp
