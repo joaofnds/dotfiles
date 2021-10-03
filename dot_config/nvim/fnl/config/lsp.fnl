@@ -1,10 +1,22 @@
 (fn on_attach []
   (let [saga (require :lspsaga)
         {: nnoremap : vnoremap} (require :utils)]
-    (saga.init_lsp_saga)
+    (saga.init_lsp_saga
+      { "max_preview_lines" 10
+       "finder_action_keys"
+       {"open" ["o" "<cr>"]
+        "vsplit" "s"
+        "split" "i"
+        "quit" ["q" "<esc>"]
+        "scroll_down" "<c-f>"
+        "scroll_up" "<c-b>"}
+
+       "code_action_keys"   {"quit" ["q" "<esc>"] "exec" "<cr>"}
+       "rename_action_keys" {"quit" ["q" "<esc>"] "exec" "<cr>"}})
 
     (nnoremap "gd" "<cmd>lua vim.lsp.buf.definition()<cr>")
     (nnoremap "gi" "<cmd>lua vim.lsp.buf.implementation()<cr>")
+    (nnoremap "gh" ":Lspsaga lsp_finder<CR>")
     (nnoremap "gr" "<cmd>lua vim.lsp.buf.references()<cr>")
     (nnoremap "K" "<cmd>lua require('lspsaga.hover').render_hover_doc()<cr>")
 
