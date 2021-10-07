@@ -24,6 +24,7 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 - [[https://github.com/sharkdp/fd][sharkdp/fd: A simple, fast and user-friendly alternative to 'find']]
 - [[https://github.com/eradman/entr][eradman/entr: Run arbitrary commands when files change]]
 - [[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
+- [[https://github.com/jhspetersson/fselect][jhspetersson/fselect: Find files with SQL-like queries]]
 
 ** sync
 - [[https://github.com/wayned/rsync][wayned/rsync: fast incremental file transfer]]
