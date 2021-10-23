@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+cat ~/.cache/xlm-usd-rate
