@@ -61,6 +61,7 @@
         +journal
         +pandoc)
        (python +lsp)      ; beautiful is better than ugly
+       (racket +lsp +xp)  ; a DSL for DSLs
        (ruby +lsp +rails) ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (scheme            ; a fully conniving family of lisps
         +guile)
