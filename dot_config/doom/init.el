@@ -44,6 +44,7 @@
         +offline)
        (lsp +peek)
        magit              ; a git porcelain for Emacs
+       make               ; run make tasks from Emacs
 
        :lang
        (clojure +lsp)     ; java with a lisp
