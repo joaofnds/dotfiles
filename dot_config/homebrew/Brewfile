@@ -39,7 +39,6 @@ brew "ddrescue"
 brew "diff-so-fancy"
 brew "dnsmasq", restart_service: true
 brew "docker"
-brew "docker-machine"
 brew "dust"
 brew "editorconfig"
 brew "entr"
