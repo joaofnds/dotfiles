@@ -2,7 +2,6 @@
   (nnoremap "<leader>op" ":NvimTreeToggle<cr>")
   (nnoremap "<leader>o." ":NvimTreeFindFile<cr>"))
 
-(set vim.g.nvim_tree_ignore [".git" "node_modules" ".DS_Store"])
 (set vim.g.nvim_tree_gitignore 1)
 (set vim.g.nvim_tree_group_empty 1)
 (set vim.g.nvim_tree_show_icons
@@ -34,6 +33,7 @@
   (nvim-tree.setup
    {"auto_close" true
     "tree_follow" true
+    "nvim_tree_ignore" [".git" "node_modules" ".DS_Store"]
     "bindings" [{"key" ["<CR>" "o" "<2-LeftMouse>"] "cb" (cb "edit")}
                 {"key" ["<2-RightMouse>" "<C-]>"]   "cb" (cb "cd")}
                 {"key" "<C-v>"  "cb" (cb "vsplit")}
