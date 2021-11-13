@@ -46,6 +46,9 @@ alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs
 
 alias dmc='docker-machine'
 alias dmcs='eval $(docker-machine ls | sed "1d" | fzf -1 | awk '\''{ print $1 }'\'' | xargs docker-machine env)'
+alias k=kubectl
+alias ka='kubectl apply -f'
+alias kd='kubectl delete -f'
 
 alias ddc='ddcctl -d 1 -b'
 
