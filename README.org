@@ -41,4 +41,4 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 - [[https://wormhole.app/][Wormhole - share files with e2e encryption and a link that automatically expires]]
 
 * Keyboard
-I use a [[https://www.zsa.io/moonlander][ZSA Moonlander]], you can find (and fork) [[https://configure.zsa.io/moonlander/layouts/ZQX76a][my layout on Oryx]]
+I use a [[https://www.zsa.io/moonlander][ZSA Moonlander]], you can find (and fork) [[https://configure.zsa.io/moonlander/layouts/ZQX76][my layout on Oryx]]
