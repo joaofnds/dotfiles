@@ -57,4 +57,4 @@
   plus-style = "syntax #1a412b"
   minus-style = "syntax #3b3639"
   syntax-theme = "Solarized (dark)"
-  true-color = true
+  true-color = always
