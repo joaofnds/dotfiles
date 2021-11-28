@@ -2,7 +2,6 @@
   (nnoremap "<leader>op" ":NvimTreeToggle<cr>")
   (nnoremap "<leader>o." ":NvimTreeFindFile<cr>"))
 
-(set vim.g.nvim_tree_gitignore 1)
 (set vim.g.nvim_tree_group_empty 1)
 (set vim.g.nvim_tree_show_icons
      {"files"   1
