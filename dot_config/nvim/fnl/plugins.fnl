@@ -44,7 +44,7 @@
 
      ;; Languages and Projects
      (use "neovim/nvim-lspconfig")
-     (use "kabouzeid/nvim-lspinstall")
+     (use "williamboman/nvim-lsp-installer")
      (use "glepnir/lspsaga.nvim")
      (use "onsails/lspkind-nvim")
      (use "hrsh7th/nvim-compe")

@@ -33,12 +33,9 @@
 
 
 (fn init []
-  (let [lspconfig (require :lspconfig)
-        lspinstall (require :lspinstall)]
-    (lspinstall.setup)
-
-    (each [_ server (pairs (lspinstall.installed_servers))]
-      (let [config (. lspconfig server)]
-        (config.setup {"on_attach" on_attach})))))
+  (let [lspinstall (require :nvim-lsp-installer)]
+    (lspinstall.on_server_ready
+     (lambda [server]
+       (server:setup {"on_attach" on_attach})))))
 
 {"init" init}
