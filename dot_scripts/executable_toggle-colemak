@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-LOCKFILE="$HOME/.colamak"
+LOCKFILE="$HOME/.colemak"
 
 enable() {
 	touch $LOCKFILE
