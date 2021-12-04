@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+LOCKFILE="$HOME/.colamak"
+
+enable() {
+	touch $LOCKFILE
+	echo "enabled"
+}
+
+disable() {
+	rm -f $LOCKFILE
+	echo "disabled"
+}
+
+toggle() {
+	if [ -e $LOCKFILE ]; then
+		disable
+	else
+		enable
+	fi
+}
+
+case $1 in
+up)
+	enable
+	;;
+down)
+	disable
+	;;
+*)
+	toggle
+	;;
+esac
