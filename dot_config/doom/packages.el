@@ -23,6 +23,8 @@
 (package! emacs-tmux-runner ; my port of christoomey/vim-tmux-runner
   :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
+(package! evil-colemak-basics)
+
 (package! org-appear         ; a graphical frontend for exploring org-roam
   :recipe (:host github :repo "awth13/org-appear" :files ("*.el")))
 

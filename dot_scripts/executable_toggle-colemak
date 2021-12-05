@@ -31,3 +31,5 @@ down)
 	toggle
 	;;
 esac
+
+pgrep Emacs-x86_64-10_14 | xargs -n1 kill -SIGUSR1 &

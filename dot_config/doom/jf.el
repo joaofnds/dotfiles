@@ -1,5 +1,12 @@
+(defun refresh-colemak-mode ()
+  (global-evil-colemak-basics-mode
+   (if (f-exists? "~/.colemak") 1 -1)))
+
+(refresh-colemak-mode)
+
 (defun jf/apply-theme ()
   (interactive)
+  (refresh-colemak-mode)
   (pcase (string-trim (shell-command-to-string "osascript -l JavaScript -e \"Application('System Events').appearancePreferences.darkMode.get()\""))
     ("true" (load-theme jf/dark-theme))
     ("false" (load-theme jf/light-theme))))
