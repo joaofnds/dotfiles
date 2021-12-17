@@ -4,6 +4,7 @@ set -euo pipefail
 
 npm i -g typescript \
          typescript-language-server \
+         yaml-language-server \
          prettier \
          snowpack \
          lua-fmt \
