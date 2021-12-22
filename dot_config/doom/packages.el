@@ -4,6 +4,8 @@
 (package! s)                 ; the long lost emacs string manipulation library
 (package! f)                 ; modern api for working with files and directories
 
+(package! dirvish)
+
 (package! flymake-grammarly) ; flymake support for grammarly
 
 (package! tree-sitter)       ; parser generator tool and an incremental parsing library
