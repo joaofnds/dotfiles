@@ -19,7 +19,7 @@ tap "thoughtbot/formulae"
 
 brew "ack"
 brew "annie"
-brew "askgitdev/askgit/askgit"
+brew "askgit"
 brew "aspell"
 brew "automake"
 brew "awscli"
