@@ -42,6 +42,7 @@ brew "curl"
 brew "dagger/tap/dagger"
 brew "ddrescue"
 brew "diff-so-fancy"
+brew "direnv"
 brew "dnsmasq", restart_service: true
 brew "docker"
 brew "dust"
