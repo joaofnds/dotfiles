@@ -45,6 +45,7 @@
        (lsp +peek)
        magit              ; a git porcelain for Emacs
        make               ; run make tasks from Emacs
+       taskrunner         ; taskrunner for all your projects
 
        :lang
        (clojure +lsp)     ; java with a lisp
