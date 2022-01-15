@@ -16,6 +16,9 @@
 (package! org-roam-ui        ; a graphical frontend for exploring org-roam
   :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 
+(package! org-mac-link       ; insert org-mode links to items selected in various mac apps
+  :recipe (:host github :repo "emacsmirror/org-mac-link" :files ("*.el")))
+
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! package-lint)      ; a linting library for elisp package authors
 (package! spongebob-case     ; YoU cAn’T wRiTe A pAcKaGe ThIs StUpId!

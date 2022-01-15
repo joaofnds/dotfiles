@@ -108,6 +108,10 @@
         :desc "Current Entry"
         "n j ." #'org-journal-open-current-journal-file))
 
+(use-package! org-mac-link
+  :after (org)
+  :commands (org-mac-grab-link))
+
 (use-package! org-download
   :after (org)
   :init
