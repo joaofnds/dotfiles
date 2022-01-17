@@ -13,9 +13,7 @@
 
 (package! org-roam)          ; rudimentary roam replica with org-mode
 (package! websocket)         ; org-roam-ui dependency
-(package! org-roam-ui        ; a graphical frontend for exploring org-roam
-  :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
-
+(package! org-roam-ui)       ; a graphical frontend for exploring org-roam
 (package! org-mac-link       ; insert org-mode links to items selected in various mac apps
   :recipe (:host github :repo "emacsmirror/org-mac-link" :files ("*.el")))
 
