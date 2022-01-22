@@ -19,7 +19,6 @@ tap "thoughtbot/formulae"
 tap "weaveworks/tap"
 
 brew "ack"
-brew "annie"
 brew "askgit"
 brew "aspell"
 brew "automake"
