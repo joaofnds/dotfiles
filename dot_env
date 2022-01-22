@@ -4,15 +4,15 @@ plugins=(encode64 fzf git z)
 
 export HISTSIZE=1000000000
 export HISTFILESIZE=$HISTSIZE
+
 export EDITOR=nvim
+export TERM=alacritty
 export MANPAGER="bat --plain"
 
 # Set language environment
 export LC_ALL=en_US.UTF-8
 export LANG=$LC_ALL
 export LANGUAGE=$LC_ALL
-
-export TERM=alacritty
 
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
