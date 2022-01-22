@@ -5,7 +5,6 @@ plugins=(encode64 fzf git z)
 export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
 export EDITOR=nvim
-
 export MANPAGER="bat --plain"
 
 # Set language environment
@@ -24,17 +23,6 @@ export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 
-export VIM_HOME="$HOME/.vim"
-
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS='--layout=reverse --inline-info'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-export ELS_INSTALL_PREFIX="$PATH:$HOME/code/repos/elixir-ls/release"
-export PATH="$ELS_INSTALL_PREFIX:$PATH"
-
-export GO111MODULE=on
-
-export KUBECONFIG="$HOME/.kube/config"
-export KUBECONFIG="$KUBECONFIG:$HOME/.kube/mr.yaml"
-export KUBECONFIG="$KUBECONFIG:$HOME/.kube/desk.yaml"
