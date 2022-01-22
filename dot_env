@@ -2,8 +2,8 @@ export ZSH=$HOME/.oh-my-zsh
 export ZSH_THEME="robbyrussell"
 plugins=(encode64 fzf git z)
 
-export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
+export HISTFILESIZE=$HISTSIZE
 export EDITOR=nvim
 export MANPAGER="bat --plain"
 
