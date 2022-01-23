@@ -34,7 +34,8 @@
      (use "sbdchd/neoformat")
 
      ;; Shell integrations
-     (use "/usr/local/opt/fzf")
+     (use {1 "junegunn/fzf"
+           "run" (fn [] (vim.call "fzf#install"))})
      (use "junegunn/fzf.vim")
 
      (use "christoomey/vim-tmux-navigator")
@@ -54,7 +55,7 @@
      (use "nvim-lua/plenary.nvim")
      (use "nvim-telescope/telescope.nvim")
 
-     (use { 1 "iamcco/markdown-preview.nvim"
+     (use {1 "iamcco/markdown-preview.nvim"
            "run" (fn [] (vim.call "mkdp#util#install"))})
 
      (use "kristijanhusak/orgmode.nvim")
