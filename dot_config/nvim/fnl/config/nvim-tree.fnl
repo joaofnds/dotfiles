@@ -3,6 +3,7 @@
   (nnoremap "<leader>o." ":NvimTreeFindFile<cr>"))
 
 (set vim.g.nvim_tree_group_empty 1)
+(set vim.g.nvim_tree_quit_on_open 1)
 (set vim.g.nvim_tree_show_icons
      {"files"   1
       "folders" 1
