@@ -3,10 +3,11 @@
 {
   srand()
   split($0, chars, "")
-  for (i=1; i<=length($0); i++)
+  for (i = 1; i <= length($0); i++)
     if (rand() < 0.5)
-      printf("%s", toupper(chars[i]))
+      printf "%s", toupper(chars[i])
     else
-      printf("%s", tolower(chars[i]))
+      printf "%s", tolower(chars[i])
+  printf "\n"
 }
 
