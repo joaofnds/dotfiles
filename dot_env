@@ -25,3 +25,7 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS='--layout=reverse --inline-info'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export KUBECONFIG="$HOME/.kube/config"
+export KUBECONFIG="$KUBECONFIG:$HOME/.kube/mr.yaml"
+export KUBECONFIG="$KUBECONFIG:$HOME/.kube/desk.yaml"
