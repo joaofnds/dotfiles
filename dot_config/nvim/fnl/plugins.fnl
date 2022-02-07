@@ -14,33 +14,31 @@
      ;; General plugins
      (use "tpope/vim-sensible")      ;; sensible vim defaults
      (use "tpope/vim-rsi")           ;; readline keybinds
-     (use "tpope/vim-repeat")        ;; repeat commands event after a plugin map
+     (use "tpope/vim-repeat")        ;; repeat commands even after a plugin map
      (use "tpope/vim-commentary")    ;; comment stuf out
      (use "tpope/vim-surround")      ;; mappings to {delete,change,add} surrounding pairs
      (use "tpope/vim-fugitive")      ;; git interface
-     (use "tpope/vim-projectionist") ;; granular project configuration
 
      (use "jiangmiao/auto-pairs")
 
-     (use "lewis6991/gitsigns.nvim")
-     (use "kyazdani42/nvim-tree.lua")
-     (use "folke/which-key.nvim")
-     (use "romgrk/barbar.nvim") ;; pretty tabline
+     (use "lewis6991/gitsigns.nvim")  ;; in buffer git stuff
+     (use "folke/which-key.nvim")     ;; because I can't remeber every keybind
+     (use "romgrk/barbar.nvim")       ;; pretty tabline
+     (use "kyazdani42/nvim-tree.lua") ;; can someone please rewrite nerdtree in lua
 
      ;; Formatting
-     (use "junegunn/vim-easy-align")
-     (use "Yggdroot/indentLine")
-     (use "nvim-treesitter/nvim-treesitter")
-     (use "sbdchd/neoformat")
+     (use "junegunn/vim-easy-align")         ;; ain't nobody got time to align things manually
+     (use "Yggdroot/indentLine")             ;; when za isn't enough
+     (use "nvim-treesitter/nvim-treesitter") ;; oh that's pretty - Kramer
+     (use "sbdchd/neoformat")                ;; format everything
 
      ;; Shell integrations
      (use {1 "junegunn/fzf"
            "run" (fn [] (vim.call "fzf#install"))})
      (use "junegunn/fzf.vim")
 
-     (use "christoomey/vim-tmux-navigator")
-     (use "christoomey/vim-tmux-runner")
-     ;; (use "thoughtbot/vim-rspec")
+     (use "christoomey/vim-tmux-navigator") ;; jumping between vim and tmux, seamlessly
+     (use "christoomey/vim-tmux-runner")    ;; run stuff on tmux, from vim
 
 
      ;; Languages and Projects
@@ -68,5 +66,4 @@
      (use {1 "eraserhd/parinfer-rust"
            "run" "cargo build --release"})
 
-     ;; Status line
      (use "hoob3rt/lualine.nvim"))))
