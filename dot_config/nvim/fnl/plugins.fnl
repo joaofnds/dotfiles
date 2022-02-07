@@ -61,7 +61,7 @@
      (use "kristijanhusak/orgmode.nvim")
 
      ;; Visual
-     (use "lifepillar/vim-solarized8")
+     (use "ishan9299/nvim-solarized-lua")
      (use "folke/twilight.nvim")
      (use "ryanoasis/vim-devicons")
      (use "kyazdani42/nvim-web-devicons")

@@ -6,7 +6,7 @@
 
 (fn set-dark []
   (set vim.opt.background "dark")
-  (lualine "solarized_dark"))
+  (lualine "solarized"))
 
 (fn set-light []
   (set vim.opt.background "light")

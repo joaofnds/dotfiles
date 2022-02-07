@@ -91,7 +91,7 @@
 
 (vim.cmd "filetype plugin on")
 (vim.cmd "syntax enable")
-(vim.cmd "colorscheme solarized8")
+(vim.cmd "colorscheme solarized")
 
 (vim.cmd "highlight Visual     gui=NONE guibg=#073642 guifg=NONE")
 (vim.cmd "highlight VisualNOS  gui=NONE guibg=#073642 guifg=NONE")
