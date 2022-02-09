@@ -7,7 +7,7 @@
 (require :config.fzf)
 (require :config.vim-tmux-runner)
 (require :config.gitgutter)
-(require :config.nvim-tree)
+(require :config.nerdtree)
 (require :config.ultisnips)
 (require :config.easy-align)
 (require :config.which-key)
