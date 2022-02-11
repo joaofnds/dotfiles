@@ -92,9 +92,3 @@
 (vim.cmd "filetype plugin on")
 (vim.cmd "syntax enable")
 (vim.cmd "colorscheme solarized")
-
-(vim.cmd "highlight Visual     gui=NONE guibg=#073642 guifg=NONE")
-(vim.cmd "highlight VisualNOS  gui=NONE guibg=#073642 guifg=NONE")
-(vim.cmd "highlight VisualMode gui=NONE guibg=#073642 guifg=NONE")
-(vim.cmd "highlight Search     gui=NONE guibg=#073642 guifg=NONE gui=undercurl,italic")
-(vim.cmd "highlight IncSearch  gui=NONE guibg=#073642 guifg=NONE gui=undercurl,italic")

@@ -1,4 +1,5 @@
 (local lualine (require :config.lualine))
+(local overrides (require :theme-overrides))
 
 (fn is-macos-dark []
   (let [preference (vim.fn.system "defaults read -g AppleInterfaceStyle")]
@@ -6,11 +7,13 @@
 
 (fn set-dark []
   (set vim.opt.background "dark")
-  (lualine "solarized"))
+  (lualine "solarized")
+  (overrides.dark))
 
 (fn set-light []
   (set vim.opt.background "light")
-  (lualine "solarized_light"))
+  (lualine "solarized_light")
+  (overrides.light))
 
 (global
  switch_theme
