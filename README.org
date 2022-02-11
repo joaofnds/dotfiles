@@ -17,8 +17,6 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 - [[https://github.com/junegunn/fzf][junegunn/fzf: A command-line fuzzy finder]]
 - [[https://github.com/chmln/sd][chmln/sd: Intuitive find & replace CLI (sed alternative)]]
 - [[https://github.com/theryangeary/choose][theryangeary/choose: A human-friendly and fast alternative to cut and (sometimes) awk]]
-- [[https://github.com/mgdm/htmlq][mgdm/htmlq: Like jq, but for HTML]]
-- [[https://github.com/BurntSushi/xsv][BurntSushi/xsv: A fast CSV command line toolkit written in Rust.]]
 
 * files
 ** terminal utils
@@ -26,6 +24,8 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 - [[https://github.com/eradman/entr][eradman/entr: Run arbitrary commands when files change]]
 - [[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
 - [[https://github.com/jhspetersson/fselect][jhspetersson/fselect: Find files with SQL-like queries]]
+- [[https://github.com/BurntSushi/xsv][BurntSushi/xsv: A fast CSV command line toolkit written in Rust.]]
+- [[https://github.com/mgdm/htmlq][mgdm/htmlq: Like jq, but for HTML]]
 
 ** sync
 - [[https://github.com/wayned/rsync][wayned/rsync: fast incremental file transfer]]
