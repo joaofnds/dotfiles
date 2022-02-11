@@ -2,7 +2,8 @@
   (let [saga (require :lspsaga)
         {: nnoremap : vnoremap} (require :utils)]
     (saga.init_lsp_saga
-      { "max_preview_lines" 10
+      {"max_preview_lines" 10
+
        "finder_action_keys"
        {"open" ["o" "<cr>"]
         "vsplit" "s"
@@ -18,10 +19,10 @@
     (nnoremap "gi" "<cmd>lua vim.lsp.buf.implementation()<cr>")
     (nnoremap "gh" ":Lspsaga lsp_finder<CR>")
     (nnoremap "gr" "<cmd>lua vim.lsp.buf.references()<cr>")
-    (nnoremap "K" "<cmd>lua require('lspsaga.hover').render_hover_doc()<cr>")
+    (nnoremap "K" "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 
-    (nnoremap "<leader>ca" "<cmd>lua require('lspsaga.codeaction').code_action()<cr>")
-    (vnoremap "<leader>ca" ":<C-U>lua require('lspsaga.codeaction').range_code_action()<cr>")
+    (nnoremap "<silent><leader>ca" "<cmd>lua require('lspsaga.codeaction').code_action()<CR>")
+    (vnoremap "<silent><leader>ca" ":<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>")
     (nnoremap "<leader>cr" "<cmd>lua require('lspsaga.rename').rename()<cr>")
     (nnoremap "<leader>cs" "<cmd>lua require('lspsaga.signaturehelp').signature_help()<cr>")
     (nnoremap "<leader>cp" "<cmd>lua require('lspsaga.provider').preview_definition()<cr>")
