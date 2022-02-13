@@ -11,6 +11,8 @@
 (package! tree-sitter)       ; parser generator tool and an incremental parsing library
 (package! tree-sitter-langs) ; populates global registries of grammars and queries
 
+(package! org-menu          ; transient menu for org
+  :recipe (:host github :repo "sheijk/org-menu" :files ("*.el")))
 (package! org-roam)          ; rudimentary roam replica with org-mode
 (package! websocket)         ; org-roam-ui dependency
 (package! org-roam-ui)       ; a graphical frontend for exploring org-roam
