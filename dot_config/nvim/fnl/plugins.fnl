@@ -45,6 +45,10 @@
      (use "williamboman/nvim-lsp-installer")
      (use "glepnir/lspsaga.nvim")
      (use "folke/trouble.nvim")
+     (use "hrsh7th/cmp-nvim-lsp")
+     (use "hrsh7th/cmp-buffer")
+     (use "hrsh7th/cmp-path")
+     (use "hrsh7th/nvim-cmp")
 
      (use "nvim-lua/plenary.nvim")
 

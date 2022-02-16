@@ -15,6 +15,7 @@
 (let [lsp-config (require :config.lsp)]
   (lsp-config.init))
 (require :config.trouble)
+(require :config.cmp)
 (require :config.barbar)
 (require :config.gitsigns)
 (require :config.orgmode)
