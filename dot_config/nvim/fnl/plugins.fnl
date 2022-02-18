@@ -31,7 +31,6 @@
      (use "junegunn/vim-easy-align")         ;; ain't nobody got time to align things manually
      (use "Yggdroot/indentLine")             ;; when za isn't enough
      (use "nvim-treesitter/nvim-treesitter") ;; oh that's pretty - Kramer
-     (use "sbdchd/neoformat")                ;; format everything
 
      ;; shell integration
      (use {1 "junegunn/fzf" "run" (fn [] (vim.call "fzf#install"))})
@@ -44,6 +43,7 @@
      (use "neovim/nvim-lspconfig")
      (use "williamboman/nvim-lsp-installer")
      (use "glepnir/lspsaga.nvim")
+     (use "jose-elias-alvarez/null-ls.nvim")
      (use "folke/trouble.nvim")
      (use "hrsh7th/cmp-nvim-lsp")
      (use "hrsh7th/cmp-buffer")

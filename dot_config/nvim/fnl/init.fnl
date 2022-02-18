@@ -14,6 +14,7 @@
 
 (let [lsp-config (require :config.lsp)]
   (lsp-config.init))
+(require :config.null-ls)
 (require :config.trouble)
 (require :config.cmp)
 (require :config.barbar)

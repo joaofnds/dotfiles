@@ -103,6 +103,6 @@
   (vnoremap "<c-j>" ":m '>+1<cr>gv=gv")
   (vnoremap "<c-k>" ":m '<-2<cr>gv=gv")
 
-  (nnoremap "<leader>cf" ":Neoformat<cr>")
+  (nnoremap "<leader>cf" "<cmd>lua vim.lsp.buf.formatting()<cr>")
 
   (nnoremap "<esc>" "<esc>:nohl<CR><esc>"))
