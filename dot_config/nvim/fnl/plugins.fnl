@@ -17,7 +17,6 @@
      (use "tpope/vim-repeat")        ;; repeat commands even after a plugin map
      (use "tpope/vim-commentary")    ;; comment stuf out
      (use "tpope/vim-surround")      ;; mappings to {delete,change,add} surrounding pairs
-     (use "tpope/vim-fugitive")      ;; git interface
 
      (use "jiangmiao/auto-pairs")
      (use {1 "eraserhd/parinfer-rust"  ;; the superior way of writing lisp
