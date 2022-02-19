@@ -12,6 +12,7 @@
 (require :config.indent-line)
 (require :config.lualine)
 (require :config.treesitter)
+(require :config.neogit)
 
 (let [lsp-config (require :config.lsp)]
   (lsp-config.init))
