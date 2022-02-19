@@ -45,12 +45,13 @@
      (use "glepnir/lspsaga.nvim")
      (use "jose-elias-alvarez/null-ls.nvim")
      (use "folke/trouble.nvim")
-     (use "hrsh7th/cmp-nvim-lsp")
-     (use "hrsh7th/cmp-buffer")
-     (use "hrsh7th/cmp-path")
-     (use "hrsh7th/nvim-cmp")
 
-     (use "nvim-lua/plenary.nvim")
+     (use "hrsh7th/nvim-cmp")     ;; complete with:
+     (use "hrsh7th/cmp-nvim-lsp") ;; - lsp
+     (use "hrsh7th/cmp-buffer")   ;; - buffer
+     (use "hrsh7th/cmp-path")     ;; - paths
+
+     (use "nvim-lua/plenary.nvim") ;; the world depends on this
 
      (use {1 "iamcco/markdown-preview.nvim"
            "run" (fn [] (vim.call "mkdp#util#install"))})
