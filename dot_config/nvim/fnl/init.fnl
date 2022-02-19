@@ -19,7 +19,6 @@
 (require :config.cmp)
 (require :config.barbar)
 (require :config.gitsigns)
-(require :config.orgmode)
 
 (let [switch-theme (require :switch-theme)]
   (switch-theme))
