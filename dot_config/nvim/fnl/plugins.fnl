@@ -55,8 +55,6 @@
      (use {1 "iamcco/markdown-preview.nvim"
            "run" (fn [] (vim.call "mkdp#util#install"))})
 
-     (use "nvim-orgmode/orgmode")
-
      ;; visual
      (use "ishan9299/nvim-solarized-lua") ;; works great with lua plugins
      (use "romgrk/barbar.nvim")           ;; pretty tabline
