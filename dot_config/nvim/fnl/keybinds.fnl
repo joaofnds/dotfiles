@@ -96,6 +96,17 @@
   ;; open dired: open the current folder
   (nnoremap "<leader>o-" ":e .<cr>")
 
+  ;; LSP
+  (nnoremap "<leader>cls" ":LspStart<cr>")
+  (nnoremap "<leader>clS" ":LspStop<cr>")
+  (nnoremap "gd" "<cmd>lua vim.lsp.buf.definition()<cr>")
+  (nnoremap "gi" "<cmd>lua vim.lsp.buf.implementation()<cr>")
+  (nnoremap "gr" "<cmd>lua vim.lsp.buf.references()<cr>")
+  (nnoremap "K" "<cmd>lua vim.lsp.buf.hover()<cr>")
+  (nnoremap "<leader>ca" "<cmd>lua vim.lsp.buf.code_action()<cr>")
+  (nnoremap "<leader>cr" "<cmd>lua vim.lsp.buf.rename()<cr>")
+  (nnoremap "<leader>cs" "<cmd>lua vim.lsp.buf.signature_help()<cr>")
+
   ;; undo breakpoints
   (each [_ c (ipairs ["," "." ";" "(" "[" "{"])]
     (inoremap c (.. c "<c-g>u")))

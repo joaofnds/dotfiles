@@ -42,7 +42,6 @@
      ;; lsp
      (use "neovim/nvim-lspconfig")
      (use "williamboman/nvim-lsp-installer")
-     (use "glepnir/lspsaga.nvim")
      (use "jose-elias-alvarez/null-ls.nvim")
      (use "folke/trouble.nvim")
 
