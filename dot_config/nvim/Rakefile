@@ -13,10 +13,14 @@ rule 'lume.lua' do
 end
 
 rule '.lua' => [->(f) { source_for_lua(f) }, 'lua'] do |t|
-  mkdir_p t.name.pathmap('%d')
+  ensure_dir t.name.pathmap('%d')
   sh "fennel --compile #{t.source} > #{t.name}"
 end
 
 def source_for_lua(lua_file)
   SOURCE_FILES.find { |f| f.ext('') == lua_file.pathmap('%{^lua/,fnl/}X') }
+end
+
+def ensure_dir(path)
+  mkdir_p path unless Dir.exists? path
 end
