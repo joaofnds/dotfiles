@@ -32,7 +32,8 @@
       :b {:name "buffers"
           :b [":Buffers<cr>" "search buffers"]}
       :o {:name "open"
-          :- [":e .<cr>" "open the current folder"]}
+          :- [":e .<cr>" "open the current folder"]
+          :p [":MarkdownPreviewToggle<cr>" "toggle markdown preview"]}
       :c {:name "code"
           :a [vim.lsp.buf.code_action "action"]
           :r [vim.lsp.buf.rename "rename"]
