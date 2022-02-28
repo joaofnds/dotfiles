@@ -5,7 +5,6 @@
 (require :keybinds)
 
 (require :config.fzf)
-(require :config.vim-tmux-runner)
 (require :config.easy-align)
 (require :config.which-key)
 (require :config.indent-line)
