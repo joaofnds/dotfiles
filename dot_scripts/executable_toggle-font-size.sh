@@ -15,12 +15,6 @@ fi
 
 sd -s $current $changeto $cmdata
 
-chezmoi diff
-printf "should apply?(y/n) "
-read -q
-
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  chezmoi apply -v
-fi
+chezmoi apply -v $(ag --files-with-matches --fixed-strings --ignore  "dot_scripts" ".font.size" | xargs -n1 chezmoi target-path)
 
 popd
