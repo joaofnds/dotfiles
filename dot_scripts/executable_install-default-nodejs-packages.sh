@@ -9,4 +9,5 @@ npm i -g typescript \
          snowpack \
          lua-fmt \
          dockerfile-language-server-nodejs \
-         @nestjs/cli
+         @nestjs/cli \
+         vmd
