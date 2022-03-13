@@ -7,6 +7,7 @@ go install github.com/DimitarPetrov/stegify@latest
 go install github.com/n7olkachev/imgdiff@latest
 go install golang.org/x/lint/golint@latest
 go install golang.org/x/tools/gopls@latest
+go install github.com/onsi/ginkgo/v2/ginkgo@latest
 
 # doom go module dependencies
 go install github.com/x-motemen/gore/cmd/gore@latest
