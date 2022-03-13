@@ -1,6 +1,6 @@
 (fn on-attach [client buffer]
   (let [{: find} (require :lume)]
-    (when (find ["tsserver" "gopls" "solargraph"] client.name)
+    (when (find ["tsserver" "gopls" "solargraph" "pyright"] client.name)
       (set client.resolved_capabilities.document_formatting false))))
 
 (fn init []
