@@ -6,6 +6,7 @@
 
 (package! dirvish)
 
+(package! vmd-mode)
 (package! flymake-grammarly) ; flymake support for grammarly
 
 (package! tree-sitter)       ; parser generator tool and an incremental parsing library
