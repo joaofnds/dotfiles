@@ -79,7 +79,15 @@
 (use-package! format-all
   :commands format-all-buffer
   :init
-  (map! :leader :desc "format buffer" "c f" #'format-all-buffer))
+  (map! :leader :desc "format buffer" "c f" #'format-all-buffer)
+  :config
+  (setq-default
+   format-all-formatters
+   '(("Go" goimports)
+     ("JavaScript" prettier)
+     ("Python" black)
+     ("Ruby" rubocop)
+     ("Typescript" prettier))))
 
 (use-package! flymake-grammarly
   :commands flymake-mode
