@@ -1,2 +1,4 @@
 (let [gitsigns (require :gitsigns)]
-  (gitsigns.setup))
+  (gitsigns.setup
+    {:signcolumn false
+     :numhl true}))
