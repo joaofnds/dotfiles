@@ -14,6 +14,7 @@
 
 (package! org-menu          ; transient menu for org
   :recipe (:host github :repo "sheijk/org-menu" :files ("*.el")))
+(package! org-ql)            ; org-mode query language
 (package! org-roam)          ; rudimentary roam replica with org-mode
 (package! websocket)         ; org-roam-ui dependency
 (package! org-roam-ui)       ; a graphical frontend for exploring org-roam
