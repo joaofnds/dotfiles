@@ -48,18 +48,18 @@
       :x {:name "tmux"
           :- [":VtrOpenRunner { \"orientation\": \"v\", \"percentage\": 50 }<cr>" "open vertical runner"]
           := [":VtrOpenRunner { \"orientation\": \"h\", \"percentage\": 50  }<cr>" "open horizontal runner"]
-          :C [":VtrClearRunner<cr>" "clear runner"]
+          :C [":VtrSendCtrlC<cr>" "send ctrl-c"]
+          :D [":VtrSendCtrlD<cr>" "send ctrl-d"]
           :F [":VtrFlushCommand<cr>" "flush command"]
+          :R [":VtrResizeRunner<cr>" "resize"]
           :a [":VtrAttachToPane<cr>" "attach"]
-          :c [":VtrSendCommandToRunner<cr>" "send command"]
-          :C [":VtrSendCtrlC<cr>" "detach runner"]
+          :c [":VtrClearRunner<cr>" "clear runner"]
           :d [":VtrDetachRunner<cr>" "detach runner"]
-          :D [":VtrSendCtrlD<cr>" "detach runner"]
           :f [":VtrFocusRunner<cr>" "focus runner"]
           :k [":VtrKillRunner<cr>" "kill runner"]
           :l [":VtrSendLinesToRunner<cr>" "send lines"]
           :o [":VtrReorientRunner<cr>" "reorient"]
-          :r [":VtrResizeRunner<cr>" "resize"]}}
+          :r [":VtrSendCommandToRunner<cr>" "send command"]}}
      :g {:d [vim.lsp.buf.definition "definition"]
          :i [vim.lsp.buf.implementation "implementation"]
          :r [vim.lsp.buf.references "references"]}
