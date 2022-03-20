@@ -27,6 +27,14 @@
       :f {:name "file"
           :t [":vsplit ~/TODO.md<cr>" "file todo: opens TODO.md in a vertical split"]
           :s [":w<cr>" "writes the buffer"]}
+      :g {:name "git"
+          :S [":Gitsigns stage_buffer<cr>" "stage buffer"]
+          :X [":Gitsigns reset_buffer<cr>" "discard buffer"]
+          :g [":Neogit<cr>" "neogit"]
+          :n [":Gitsigns next_hunk<CR>" "next hunk"]
+          :p [":Gitsigns prev_hunk<CR>" "previous hunk"]
+          :s [":Gitsigns stage_hunk<cr>" "stage hunk"]
+          :x [":Gitsigns reset_hunk<cr>" "discard hunk"]}
       :s {:name "search"
           :p [":Ag<cr>" "search project"]}
       :b {:name "buffers"
