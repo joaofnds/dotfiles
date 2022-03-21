@@ -1,4 +1,5 @@
 (let [wk (require :which-key)
+      { : organize-imports } (require :config.lsp)
       trouble (require :trouble)
       next-error (fn [] (trouble.next {:skip_groups true :jump true}))
       prev-error (fn [] (trouble.previous {:skip_groups true :jump true}))]
@@ -58,6 +59,7 @@
           :r [vim.lsp.buf.rename "rename"]
           :s [vim.lsp.buf.signature_help "signature"]
           :f [vim.lsp.buf.formatting "format"]
+          :o [organize-imports "organize imports"]
           :l {:name "lsp"
               :s [":LspStart<cr>" "start"]
               :S [":LspStop<cr>" "stop"]}}
