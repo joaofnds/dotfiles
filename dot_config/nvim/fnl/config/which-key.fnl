@@ -1,4 +1,7 @@
-(let [wk (require :which-key)]
+(let [wk (require :which-key)
+      trouble (require :trouble)
+      next-error (fn [] (trouble.next {:skip_groups true :jump true}))
+      prev-error (fn [] (trouble.previous {:skip_groups true :jump true}))]
   (wk.register
     {:<leader>
      {:<leader> [":FZF<cr>" "find files: searches whole project for a file"]
@@ -73,6 +76,8 @@
           :l [":VtrSendLinesToRunner<cr>" "send lines"]
           :o [":VtrReorientRunner<cr>" "reorient"]
           :r [":VtrSendCommandToRunner<cr>" "send command"]}}
+     "[" {:name "next" :e [next-error "error"]}
+     "]" {:name "previous" :e [prev-error "error"]}
      :g {:d [vim.lsp.buf.definition "definition"]
          :i [vim.lsp.buf.implementation "implementation"]
          :r [vim.lsp.buf.references "references"]}
