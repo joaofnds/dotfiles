@@ -1,7 +1,15 @@
 (let [wk (require :which-key)
       {: organize-imports} (require :config.lsp)]
   (wk.register
-    {:<leader>
+    {:g {:d [vim.lsp.buf.definition "definition"]
+         :i [vim.lsp.buf.implementation "implementation"]
+         :r [vim.lsp.buf.references "references"]}
+     :K [vim.lsp.buf.hover]
+     "[" {:name "next"
+          :e [":lua vim.lsp.diagnostic.goto_next()<cr>" "error"]}
+     "]" {:name "previous"
+          :e [":lua vim.lsp.diagnostic.goto_prev()<cr>" "error"]}
+     :<leader>
      {:<leader> [":FZF<cr>" "find files: searches whole project for a file"]
       :. [":FZF %:p:h<cr>" "search for a file in the current directory"]
       :w {:name "window"
@@ -74,10 +82,4 @@
           :k [":VtrKillRunner<cr>" "kill runner"]
           :l [":VtrSendLinesToRunner<cr>" "send lines"]
           :o [":VtrReorientRunner<cr>" "reorient"]
-          :r [":VtrSendCommandToRunner<cr>" "send command"]}}
-     "[" {:name "next" :e [":lua vim.lsp.diagnostic.goto_next()<cr>" "error"]}
-     "]" {:name "previous" :e [":lua vim.lsp.diagnostic.goto_prev()<cr>" "error"]}
-     :g {:d [vim.lsp.buf.definition "definition"]
-         :i [vim.lsp.buf.implementation "implementation"]
-         :r [vim.lsp.buf.references "references"]}
-     :K [vim.lsp.buf.hover]}))
+          :r [":VtrSendCommandToRunner<cr>" "send command"]}}}))
