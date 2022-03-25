@@ -50,6 +50,9 @@
      (use "hrsh7th/cmp-buffer")   ;; - buffer
      (use "hrsh7th/cmp-path")     ;; - paths
 
+     (use "L3MON4D3/LuaSnip") ;; snippet engine
+     (use "saadparwaiz1/cmp_luasnip") ;; plug luasnip into cmp
+
      (use "nvim-lua/plenary.nvim") ;; the world depends on this
 
      (use {1 "iamcco/markdown-preview.nvim"
