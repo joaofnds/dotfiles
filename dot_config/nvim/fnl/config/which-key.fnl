@@ -82,4 +82,7 @@
           :k [":VtrKillRunner<cr>" "kill runner"]
           :l [":VtrSendLinesToRunner<cr>" "send lines"]
           :o [":VtrReorientRunner<cr>" "reorient"]
-          :r [":VtrSendCommandToRunner<cr>" "send command"]}}}))
+          :r [":VtrSendCommandToRunner<cr>" "send command"]}}})
+  (wk.register
+    {"<leader>xl" [":VtrSendLinesToRunner<cr>" "send lines"]}
+    {:mode "v"}))
