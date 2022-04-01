@@ -4,7 +4,7 @@
     {:g {:d [vim.lsp.buf.definition "definition"]
          :i [vim.lsp.buf.implementation "implementation"]
          :r [vim.lsp.buf.references "references"]}
-     :K [vim.lsp.buf.hover]
+     :K [vim.lsp.buf.hover "hover"]
      "]" {:name "next"
           :e [":lua vim.lsp.diagnostic.goto_next()<cr>" "error"]}
      "[" {:name "previous"
