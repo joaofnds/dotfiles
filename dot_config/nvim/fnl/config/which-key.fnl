@@ -5,9 +5,9 @@
          :i [vim.lsp.buf.implementation "implementation"]
          :r [vim.lsp.buf.references "references"]}
      :K [vim.lsp.buf.hover]
-     "[" {:name "next"
+     "]" {:name "next"
           :e [":lua vim.lsp.diagnostic.goto_next()<cr>" "error"]}
-     "]" {:name "previous"
+     "[" {:name "previous"
           :e [":lua vim.lsp.diagnostic.goto_prev()<cr>" "error"]}
      :<leader>
      {:<leader> [":FZF<cr>" "find files: searches whole project for a file"]
