@@ -47,10 +47,6 @@
       dired-dwim-target t
       emojify--refused-image-download-p t)
 
-(setq org-plantuml-jar-path (expand-file-name "~/.bin/plantuml.jar"))
-(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
-
 (use-package! evil-colemak-basics
   :after f
   :init (setq evil-colemak-basics-layout-mod 'mod-dh))

@@ -12,6 +12,10 @@
 (add-to-list 'org-modules 'org-habit)
 (add-to-list 'org-modules 'org-mouse)
 
+(setq org-plantuml-jar-path (expand-file-name "~/.bin/plantuml.jar"))
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+
 (setq org-directory "~/notes/"
 
       org-todo-keywords '((sequence "TODO(t)" "DOING(p!)" "DONE(d!)")
