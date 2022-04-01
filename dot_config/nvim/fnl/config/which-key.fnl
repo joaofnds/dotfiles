@@ -4,7 +4,8 @@
     {:g {:D [vim.lsp.buf.declaration "declaration"]
          :d [vim.lsp.buf.definition "definition"]
          :i [vim.lsp.buf.implementation "implementation"]
-         :r [vim.lsp.buf.references "references"]}
+         :r [vim.lsp.buf.references "references"]
+         :s [vim.lsp.buf.signature_help "signature help"]}
      :K [vim.lsp.buf.hover "hover"]
      "]" {:name "next"
           :e [":lua vim.lsp.diagnostic.goto_next()<cr>" "error"]}
