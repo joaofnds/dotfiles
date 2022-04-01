@@ -1,7 +1,8 @@
 (let [wk (require :which-key)
       {: organize-imports} (require :config.lsp)]
   (wk.register
-    {:g {:d [vim.lsp.buf.definition "definition"]
+    {:g {:D [vim.lsp.buf.declaration "declaration"]
+         :d [vim.lsp.buf.definition "definition"]
          :i [vim.lsp.buf.implementation "implementation"]
          :r [vim.lsp.buf.references "references"]}
      :K [vim.lsp.buf.hover "hover"]
