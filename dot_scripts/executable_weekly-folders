@@ -27,7 +27,7 @@ i = 1
 
 while curr < stop
   from = curr     # monday
-  to   = curr + 5 # friday
+  to   = curr + 4 # friday
 
   puts "semana #{i} (#{from} - #{to})"
 
