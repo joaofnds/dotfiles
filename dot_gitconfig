@@ -1,7 +1,7 @@
 [user]
   email = joaofnds@joaofnds.com
   name = João Fernandes
-  signingKey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
+  signingkey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
 
 [alias]
   pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
