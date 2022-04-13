@@ -13,7 +13,7 @@
   signoff = true
 
 [commit]
-  gpgsign = true
+	gpgsign = true
 
 [color]
   ui = true
