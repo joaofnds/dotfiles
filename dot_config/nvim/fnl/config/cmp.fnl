@@ -14,7 +14,11 @@
       context (require :cmp.context)]
   (cmp.setup
    {:snippet {:expand (fn [args] (insert (context.new) args.body))}
-    :sources (cmp.config.sources [{:name "nvim_lsp"} {:name "buffer"}])
+    :sources (cmp.config.sources
+              [{:name "nvim_lsp"}
+               {:name "path"}
+               {:name "buffer"}
+               {:name "treesitter"}])
     :mapping
     (cmp.mapping.preset.insert
      {"<c-space>" (cmp.mapping.complete)
