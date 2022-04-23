@@ -1,0 +1,15 @@
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
+HOME=$(eval echo "~$joaofnds")
+
+0 * * * * $HOME/.scripts/update-usd-brl-rate-cache.sh >> $HOME/.log/cron.log 2>&1
+*/10 * * * * $HOME/.scripts/update-xlm-usd-rate-cache.sh >> $HOME/.log/cron.log 2>&1
+*/10 * * * * $HOME/.scripts/update-btc-usd-rate-cache.sh >> $HOME/.log/cron.log 2>&1
+
+# * * * * * command to be executed
+# ┯ ┯ ┯ ┯ ┯
+# │ │ │ │ │
+# │ │ │ │ ╰───── day of week (0 - 6) (Sunday=0)
+# │ │ │ ╰─────── month (1 - 12)
+# │ │ ╰───────── day of month (1 - 31)
+# │ ╰─────────── hour (0 - 23)
+# ╰───────────── min (0 - 59)
