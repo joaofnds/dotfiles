@@ -17,6 +17,7 @@
 (set vim.opt.compatible     false)
 (set vim.opt.splitbelow     true)     ;; Default horizontal split direction
 (set vim.opt.splitright     true)     ;; Default vertical split direction
+(set vim.opt.clipboard      "unnamedplus")
 
 ;; Better diff algorithms
 (vim.opt.diffopt:append { "algorithm:patience" "indent-heuristic" })
