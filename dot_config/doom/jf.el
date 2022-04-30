@@ -11,33 +11,30 @@
     ("true" (load-theme jf/dark-theme))
     ("false" (load-theme jf/light-theme))))
 
-(defun some-prefix (str &rest prefixes)
-  (--some (s-starts-with? it str) prefixes))
-
-(defun remove-known-projects-starting-with (&rest prefixes)
-  (setf projectile-known-projects
-        (--remove
-         (apply 'some-prefix it prefixes)
-         projectile-known-projects)))
-
 (defun git-repo? (path)
   (f-dir? (f-join path ".git")))
 
 (defun repos-from-path (path)
   (-filter 'git-repo? (f-directories path)))
 
+(defun remove-repos-in (path)
+  (-each
+      (--filter (s-starts-with? path it) projectile-known-projects)
+    'projectile-remove-known-project))
+
+(defun add-repos-in (path)
+  (-each (repos-from-path path) 'projectile-add-known-project))
+
+(defun refresh-repos-in (path)
+  (remove-repos-in path)
+  (add-repos-in path))
+
 (defun jf/reload-known-projects ()
-  (let ((me-path "~/code/me")
-        (mr-path "~/code/me/mr"))
-
-    (remove-known-projects-starting-with me-path)
-
-    (-each
-        (-concat
-         '("~/notes" "~/code/dotfiles" "~/code/exercism")
-         (repos-from-path me-path)
-         (repos-from-path mr-path))
-      'projectile-add-known-project)))
+  (refresh-repos-in  "~/code/me")
+  (refresh-repos-in  "~/code/me/mr")
+  (projectile-add-known-project "~/notes")
+  (projectile-add-known-project "~/code/dotfiles")
+  (projectile-add-known-project "~/code/exercism"))
 
 (defun jf/restore-frame-size ()
   (set-frame-size
