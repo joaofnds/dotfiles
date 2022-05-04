@@ -33,8 +33,7 @@
       org-agenda-files '("~/notes/home.org"
                          "~/notes/habits.org"
                          "~/notes/ufpel/ufpel.org"
-                         "~/notes/melhor-envio/melhor-envio.org"
-                         "~/notes/melhor-envio/melhor-rastreio.org"))
+                         "~/notes/skillshare/skillshare.org"))
 
 (set-face-attribute 'org-block-begin-line nil :font jf/font/fixed-family :height 0.8 :background nil :inherit 'shadow)
 (set-face-attribute 'org-block-end-line nil :font jf/font/fixed-family :height 0.8 :background nil :inherit 'shadow)

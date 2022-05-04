@@ -30,8 +30,7 @@
   (add-repos-in path))
 
 (defun jf/reload-known-projects ()
-  (refresh-repos-in  "~/code/me")
-  (refresh-repos-in  "~/code/me/mr")
+  (refresh-repos-in  "~/code/skillshare")
   (projectile-add-known-project "~/notes")
   (projectile-add-known-project "~/code/dotfiles")
   (projectile-add-known-project "~/code/exercism"))
