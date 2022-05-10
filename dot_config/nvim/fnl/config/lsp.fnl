@@ -3,19 +3,21 @@
     {:hint_enable false
      :toggle_key "<C-k>"}))
 
-(fn on-attach [client buffer]
-  (let [{: find} (require :lume)]
-    (when (find ["tsserver" "gopls" "solargraph" "pyright"] client.name)
-      (set client.resolved_capabilities.document_formatting false))))
 
 (fn config []
-  (let [installer (require :nvim-lsp-installer)
+  (let [{: find} (require :lume)
+        installer (require :nvim-lsp-installer)
         lspconfig (require :lspconfig)
-        opts {:on_attach on-attach}]
-    (installer.setup {:ensure_installed ["gopls" "tsserver" "solargraph"]})
-    (lspconfig.gopls.setup opts)
-    (lspconfig.tsserver.setup opts)
-    (lspconfig.solargraph.setup opts)))
+        servers ["tsserver" "gopls" "solargraph" "pyright"]]
+
+    (fn on-attach [client buffer]
+      (when (find servers client.name)
+        (set client.resolved_capabilities.document_formatting false)))
+
+    (installer.setup {:ensure_installed servers})
+
+    (each [server servers]
+      ((.lspconfig server "setup") {:on_attach on-attach}))))
 
 (fn organize-imports [bufnr post]
   (let [buf (vim.api.nvim_buf_get_name (vim.api.nvim_get_current_buf))]
