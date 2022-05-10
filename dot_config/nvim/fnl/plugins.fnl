@@ -6,7 +6,8 @@
 
 (vim.cmd "packadd packer.nvim")
 
-(let [packer (require :packer)]
+(let [packer (require :packer)
+      lsp (require :config.lsp)]
   (packer.startup
    (fn [use]
      (use "wbthomason/packer.nvim")
@@ -41,7 +42,8 @@
 
      ;; lsp
      (use "neovim/nvim-lspconfig")
-     (use "williamboman/nvim-lsp-installer")
+     (use {1 "williamboman/nvim-lsp-installer"
+           :config lsp.config})
      (use "jose-elias-alvarez/null-ls.nvim")
      (use "folke/trouble.nvim")
      (use "ray-x/lsp_signature.nvim")
