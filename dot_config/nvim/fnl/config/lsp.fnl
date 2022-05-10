@@ -1,3 +1,8 @@
+(let [lsp_signature (require :lsp_signature)]
+  (lsp_signature.setup
+    {:hint_enable false
+     :toggle_key "<C-k>"}))
+
 (fn on-attach [client buffer]
   (let [{: find} (require :lume)]
     (when (find ["tsserver" "gopls" "solargraph" "pyright"] client.name)
