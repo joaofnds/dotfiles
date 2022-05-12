@@ -46,16 +46,6 @@
 [gpg]
   program = /usr/local/bin/gpg
 
-[url "git@github.com:"]
-  insteadOf = "@gh:"
-
-
-[url "https://github.com/"]
-  insteadOf = "gh:"
-
-[url "git@bitbucket.org:"]
-  insteadOf = https://bitbucket.org/
-
 [delta]
   plus-style = "syntax #1a412b"
   minus-style = "syntax #3b3639"
