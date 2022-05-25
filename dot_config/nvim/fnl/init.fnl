@@ -7,7 +7,6 @@
 (require :config.fzf)
 (require :config.easy-align)
 (require :config.which-key)
-(require :config.indent-line)
 (require :config.lualine)
 (require :config.treesitter)
 (require :config.neogit)

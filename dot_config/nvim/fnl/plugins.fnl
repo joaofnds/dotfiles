@@ -30,7 +30,6 @@
 
      ;; formatting
      (use "junegunn/vim-easy-align")         ;; ain't nobody got time to align things manually
-     (use "Yggdroot/indentLine")             ;; when za isn't enough
      (use "nvim-treesitter/nvim-treesitter") ;; oh that's pretty - Kramer
 
      ;; shell integration
