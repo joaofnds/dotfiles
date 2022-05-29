@@ -7,7 +7,7 @@
       "keymaps" {"init_selection" "gnn"
                  "node_incremental" "grn"
                  "scope_incremental" "grc"
-                 "node_decremental" "grm"}}})
+                 "node_decremental" "grm"}}}))
 
-  (set vim.opt.foldmethod "expr")
-  (set vim.opt.foldexpr "nvim_treesitter#foldexpr()"))
+(set vim.opt.foldmethod "expr")
+(set vim.opt.foldexpr "nvim_treesitter#foldexpr()")
