@@ -59,3 +59,7 @@ ensure_tmux_is_running() {
     tat
   fi
 }
+
+basepwd() {
+  basename $PWD
+}
