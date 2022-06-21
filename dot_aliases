@@ -41,6 +41,7 @@ alias dcpp='docker compose ps'
 alias dcpu='docker compose up'
 alias dcpd='docker compose down'
 alias dcpr='docker compose restart'
+alias dstop='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs docker stop'
 alias drm='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs docker rm'
 alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs docker rmi -f'
 
