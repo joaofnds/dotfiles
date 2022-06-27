@@ -46,6 +46,7 @@
        magit              ; a git porcelain for Emacs
        make               ; run make tasks from Emacs
        taskrunner         ; taskrunner for all your projects
+       tree-sitter        ; syntax and parsing, sitting in a tree...
 
        :lang
        (clojure +lsp)     ; java with a lisp

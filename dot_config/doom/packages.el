@@ -7,9 +7,6 @@
 (package! vmd-mode)
 (package! flymake-grammarly) ; flymake support for grammarly
 
-(package! tree-sitter)       ; parser generator tool and an incremental parsing library
-(package! tree-sitter-langs) ; populates global registries of grammars and queries
-
 (package! org-menu          ; transient menu for org
   :recipe (:host github :repo "sheijk/org-menu" :files ("*.el")))
 (package! org-ql)            ; org-mode query language
