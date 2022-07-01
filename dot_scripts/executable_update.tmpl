@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-tmux split-window 'PATH=/usr/bin:$PATH doom --yes upgrade --force'
+tmux split-window 'PATH=/usr/bin:$PATH doom upgrade --force'
 tmux new-window 'nvim +PackerSync'
 tmux split-window 'asdf-install-latest'
 
