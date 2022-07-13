@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+fd -uu --glob ".DS_Store" -x rm
