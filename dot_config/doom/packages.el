@@ -7,7 +7,7 @@
 (package! vmd-mode)
 (package! flymake-grammarly) ; flymake support for grammarly
 
-(package! org-menu          ; transient menu for org
+(package! org-menu           ; transient menu for org
   :recipe (:host github :repo "sheijk/org-menu" :files ("*.el")))
 (package! org-ql)            ; org-mode query language
 (package! org-roam)          ; rudimentary roam replica with org-mode
@@ -15,6 +15,8 @@
 (package! org-roam-ui)       ; a graphical frontend for exploring org-roam
 (package! org-mac-link       ; insert org-mode links to items selected in various mac apps
   :recipe (:host github :repo "emacsmirror/org-mac-link" :files ("*.el")))
+(package! org-appear         ; a graphical frontend for exploring org-roam
+  :recipe (:host github :repo "awth13/org-appear" :files ("*.el")))
 
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! package-lint)      ; a linting library for elisp package authors
@@ -26,8 +28,5 @@
   :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
 (package! evil-colemak-basics)
-
-(package! org-appear         ; a graphical frontend for exploring org-roam
-  :recipe (:host github :repo "awth13/org-appear" :files ("*.el")))
 
 (unpin! format-all)
