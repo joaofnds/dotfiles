@@ -1,19 +1,18 @@
 #!/usr/bin/env sh
 
-# chezmoi can only decide when to run scripts based on the contents of the own
-# script, so the following is whats known in Brazil as a Gambiarra. It hashes
-# the contents of all fennel scripts and embeds into this file so if one of them
-# changes, chezmoi will run this script, which will run rake and rebuild lua
-# files. Rake will take care of running only whats needed (:
-# Also note that I'm intentionally using find. I normally use fd for these
+# chezmoi can only decide when to run scripts based on the contents of the
+# script, so the following is what's known in Brazil as a Gambiarra. This
+# command hashes the contents of all fennel scripts and embeds them into this
+# file so if one of them changes, chezmoi will run this script, which will run
+# rake and rebuild Lua files. Rake will take care of running only what's needed.
+# Also, note that I'm intentionally using find. I normally use fd for these
 # things, but fd cannot guarantee the order, which was causing this file to
 # always change.
 <<EOF
 {{ output "find" (joinPath .chezmoi.sourceDir "/dot_config/nvim") "-name" "*.fnl" "-exec" "sha256sum" "{}" ";" }}
 EOF
 
-# the sleep is another Gambiarra (of course it is). I'm doing this just to wait
-# for chezmoi updates to apply so rake can take them into account. So yes, this
-# can cause inconsistencies if chezmoi takes more than 1 second to apply source
-# changes.
+# this sleep is another Gambiarra (of course it is). I'm doing this to wait for
+# chezmoi updates to apply so Rake can account for them. So yes, this can cause
+# inconsistencies if chezmoi takes more than 1 second to apply source changes.
 sleep 1 && rake &>/dev/null &
