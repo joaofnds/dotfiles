@@ -1,7 +1,7 @@
 PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
 HOME=$(eval echo "~$joaofnds")
 
-0 * * * * $HOME/.scripts/update-usd-brl-rate-cache.sh >> $HOME/.log/cron.log 2>&1
+0 * * * * $HOME/.scripts/update-rates.sh >> $HOME/.log/cron.log 2>&1
 */10 * * * * $HOME/.scripts/update-xlm-usd-rate-cache.sh >> $HOME/.log/cron.log 2>&1
 */10 * * * * $HOME/.scripts/update-btc-usd-rate-cache.sh >> $HOME/.log/cron.log 2>&1
 
