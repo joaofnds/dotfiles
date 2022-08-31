@@ -25,6 +25,9 @@
 (fn xnoremap [bind command]
   (vim.api.nvim_set_keymap "x" bind command {"noremap" true "silent" true}))
 
+(fn is-macos []
+  (~= "Darwin" (vim.fn.system "uname")))
+
 {"imap"     imap
  "nmap"     nmap
  "omap"     omap
@@ -35,4 +38,6 @@
  "inoremap" inoremap
  "nnoremap" nnoremap
  "vnoremap" vnoremap
- "xnoremap" xnoremap}
+ "xnoremap" xnoremap
+
+ "is-macos" is-macos}
