@@ -5,7 +5,6 @@
 (package! f)                 ; modern api for working with files and directories
 
 (package! vmd-mode)
-(package! flymake-grammarly) ; flymake support for grammarly
 
 (package! org-menu           ; transient menu for org
   :recipe (:host github :repo "sheijk/org-menu" :files ("*.el")))
