@@ -18,6 +18,5 @@
 (package! emacs-tmux-runner ; my port of christoomey/vim-tmux-runner
   :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
 
-(package! evil-colemak-basics)
 
 (unpin! format-all)
