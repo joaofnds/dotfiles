@@ -74,7 +74,7 @@
 
 (add-hook
  'window-setup-hook
- (lambda () (load! (concat doom-private-dir "jf"))))
+ (lambda () (load! (concat doom-user-dir "jf"))))
 
 (use-package! format-all
   :commands format-all-buffer
@@ -104,7 +104,7 @@
 
 (use-package! org
   :defer t
-  :config (load! (concat doom-private-dir "org-config")))
+  :config (load! (concat doom-user-dir "org-config")))
 
 (use-package! org-menu
   :after org
