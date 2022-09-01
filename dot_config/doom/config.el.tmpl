@@ -125,58 +125,6 @@
    org-download-heading-lvl nil            ;; don't create nested folders
    org-download-timestamp ""))             ;; don't add a timestamp
 
-(use-package! org-roam
-  :commands (org-roam-node-find)
-  :custom (org-roam-directory (concat org-directory "roam"))
-  :init
-  (map! :leader :prefix ("r" . "roam")
-        "c" #'org-roam-capture
-        "f" #'org-roam-node-find
-        "i" #'org-roam-node-insert
-
-        "b" #'org-roam-buffer-toggle
-        "g" #'org-roam-graph
-
-        "t" #'org-roam-tag-add
-        "T" #'org-roam-tag-remove
-
-        (:prefix ("r" . "refs")
-         :desc "add ref"    "a" #'org-roam-ref-add
-         :desc "remove ref" "r" #'org-roam-ref-remove
-         :desc "find ref"   "f" #'org-roam-ref-find)
-
-        (:prefix ("a" . "aliases")
-         :desc "add alias"    "a" #'org-roam-alias-add
-         :desc "remove alias" "r" #'org-roam-alias-remove)
-
-        (:prefix ("d" . "dailies")
-         :desc "Find previous note" "b" #'org-roam-dailies-find-previous-note
-         :desc "Find date"          "d" #'org-roam-dailies-find-date
-         :desc "Find next note"     "f" #'org-roam-dailies-find-next-note
-         :desc "Find tomorrow"      "m" #'org-roam-dailies-find-tomorrow
-         :desc "Capture today"      "n" #'org-roam-dailies-capture-today
-         :desc "Find today"         "t" #'org-roam-dailies-find-today
-         :desc "Capture Date"       "v" #'org-roam-dailies-capture-date
-         :desc "Find yesterday"     "y" #'org-roam-dailies-find-yesterday
-         :desc "Find directory"     "." #'org-roam-dailies-find-directory))
-
-  (setq org-roam-v2-ack t
-        org-roam-graph-filetype "png")
-
-  :config
-  (org-roam-setup))
-
-(use-package! websocket
-  :after org-roam)
-
-(use-package! org-roam-ui
-  :after org-roam
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
-
 (use-package! org-appear
   :after org
   :init

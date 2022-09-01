@@ -8,13 +8,7 @@
 
 (package! org-menu           ; transient menu for org
   :recipe (:host github :repo "sheijk/org-menu" :files ("*.el")))
-(package! org-ql)            ; org-mode query language
-(package! org-roam)          ; rudimentary roam replica with org-mode
-(package! websocket)         ; org-roam-ui dependency
-(package! org-roam-ui)       ; a graphical frontend for exploring org-roam
-(package! org-mac-link       ; insert org-mode links to items selected in various mac apps
-  :recipe (:host github :repo "emacsmirror/org-mac-link" :files ("*.el")))
-(package! org-appear         ; a graphical frontend for exploring org-roam
+(package! org-appear         ; automatic visibility of various org elements depending on cursor position
   :recipe (:host github :repo "awth13/org-appear" :files ("*.el")))
 
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
