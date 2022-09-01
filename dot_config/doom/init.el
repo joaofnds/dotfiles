@@ -25,7 +25,7 @@
        word-wrap           ; soft wrapping with language-aware indent
 
        :emacs
-                           ;; dired ; making dired pretty [functional]
+       dired               ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
        (ibuffer            ; interactive buffer management
         +icons)            ; enables filetype icons for buffers
@@ -51,25 +51,40 @@
        :lang
        (clojure +lsp)      ; java with a lisp
        common-lisp         ; if you've seen one lisp, you've seen them all
-       (elixir +lsp)       ; erlang done right
+       (elixir             ; erlang done right
+        +lsp
+        +tree-sitter)
        emacs-lisp          ; drown in parentheses
-       (go +lsp)           ; the hipster dialect
+       (go                 ; the hipster dialect
+        +lsp
+        +tree-sitter)
        (haskell +dante)    ; a language that's lazier than I am
-       (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
-       json                ; At least it ain't XML
+       (javascript         ; all(hope(abandon(ye(who(enter(here))))))
+        +lsp
+        +tree-sitter)
+       (json               ; At least it ain't XML
+        +lsp
+        +tree-sitter)
        (lua                ; one-based indices? one-based indices
-        +fennel)           ; fennel language support
+        +fennel            ; fennel language support
+        +lsp)
        (org                ; organize your plain life in plain text
         +dragndrop
         +journal
         +pandoc)
-       (python +lsp)       ; beautiful is better than ugly
+       (python             ; beautiful is better than ugly
+        +lsp
+        +tree-sitter)
        (racket +lsp +xp)   ; a DSL for DSLs
-       (ruby +lsp +rails)  ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       (ruby               ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+        +lsp
+        +tree-sitter
+        +rails)
        (scheme             ; a fully conniving family of lisps
         +guile)
-       (sh +lsp)           ; she sells {ba,z,fi}sh shells on the C xor
-       web                 ; the tubes
+       (sh                 ; she sells {ba,z,fi}sh shells on the C xor
+        +lsp
+        +tree-sitter)
        (yaml +lsp)         ; JSON, but readable
 
        :os
