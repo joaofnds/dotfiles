@@ -94,14 +94,6 @@
   :defer t
   :config (load! (concat doom-user-dir "org-config")))
 
-(use-package! org-menu
-  :after org
-  :init
-  (map! :mode org
-        :leader
-        :desc "Org Menu"
-        "m m" #'org-menu))
-
 (use-package! org-journal
   :after (org)
   :init

@@ -6,8 +6,6 @@
 
 (package! vmd-mode)
 
-(package! org-menu           ; transient menu for org
-  :recipe (:host github :repo "sheijk/org-menu" :files ("*.el")))
 (package! org-appear         ; automatic visibility of various org elements depending on cursor position
   :recipe (:host github :repo "awth13/org-appear" :files ("*.el")))
 
