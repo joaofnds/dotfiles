@@ -1,7 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(add-hook 'org-mode-hook #'yas-minor-mode)
-
 (map! :map org-mode-map
       :n "M-j" #'org-metadown
       :n "M-k" #'org-metaup
