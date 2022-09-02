@@ -48,6 +48,11 @@
        taskrunner          ; taskrunner for all your projects
        tree-sitter         ; syntax and parsing, sitting in a tree...
 
+       :checkers
+       syntax              ; tasing you for every semicolon you forget
+       (spell              ; tasing you for misspelling mispelling
+        +aspell)           ; use aspell as a backend for correcting words
+
        :lang
        (clojure +lsp)      ; java with a lisp
        common-lisp         ; if you've seen one lisp, you've seen them all
