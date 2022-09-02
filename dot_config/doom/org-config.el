@@ -30,7 +30,6 @@
 
       org-agenda-files '("~/notes/home.org"
                          "~/notes/habits.org"
-                         "~/notes/ufpel/ufpel.org"
                          "~/notes/skillshare/skillshare.org"))
 
 (set-face-attribute 'org-block-begin-line nil :font jf/font/fixed-family :height 0.8 :background nil :inherit 'shadow)
