@@ -31,6 +31,7 @@
      ;; formatting
      (use "junegunn/vim-easy-align")         ;; ain't nobody got time to align things manually
      (use "nvim-treesitter/nvim-treesitter") ;; oh that's pretty - Kramer
+     (use "nvim-treesitter/nvim-treesitter-context")
 
      ;; shell integration
      (use {1 "junegunn/fzf" "run" (fn [] (vim.call "fzf#install"))})
