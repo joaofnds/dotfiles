@@ -6,6 +6,8 @@
 
 (package! vmd-mode)
 
+(package! org-mac-link       ; insert org-mode links to items selected in various mac apps
+  :recipe (:host github :repo "emacsmirror/org-mac-link" :files ("*.el")))
 (package! org-appear         ; automatic visibility of various org elements depending on cursor position
   :recipe (:host github :repo "awth13/org-appear" :files ("*.el")))
 
