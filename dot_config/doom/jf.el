@@ -1,3 +1,6 @@
+(when IS-MAC
+  (define-key special-event-map [sigusr1] 'jf/apply-theme))
+
 (defun jf/apply-theme ()
   (interactive)
   (pcase (string-trim (shell-command-to-string "osascript -l JavaScript -e \"Application('System Events').appearancePreferences.darkMode.get()\""))
@@ -41,3 +44,12 @@
          (command (s-concat "exercism download --exercise=" exercise " --track=" track))
          (should-run (y-or-n-p (s-concat "Should run '" command "'?"))))
     (when should-run (shell-command command))))
+
+
+(defun jf/notes/open-home ()
+  (interactive)
+  (let ((drop-in-line 25))
+    (find-file "~/notes/home.org")
+    (evil-goto-line drop-in-line)
+    (evil-scroll-line-to-bottom drop-in-line)
+    (org-set-startup-visibility)))

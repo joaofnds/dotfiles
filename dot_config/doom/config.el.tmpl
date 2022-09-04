@@ -49,13 +49,9 @@
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
-(defun jf/notes/open-home ()
-  (interactive)
-  (let ((drop-in-line 25))
-    (find-file "~/notes/home.org")
-    (evil-goto-line drop-in-line)
-    (evil-scroll-line-to-bottom drop-in-line)
-    (org-set-startup-visibility)))
+(add-hook
+ 'window-setup-hook
+ (lambda () (load! (concat doom-user-dir "jf"))))
 
 (map!
  "C-s" #'swiper
@@ -64,13 +60,6 @@
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file
  :desc "grab macOS link"   "o g" #'org-mac-link-get-link
  :desc "home.org" "n h" #'jf/notes/open-home)
-
-(with-eval-after-load "jf"
-  (when IS-MAC (define-key special-event-map [sigusr1] 'jf/apply-theme)))
-
-(add-hook
- 'window-setup-hook
- (lambda () (load! (concat doom-user-dir "jf"))))
 
 (use-package! format-all
   :commands format-all-buffer
