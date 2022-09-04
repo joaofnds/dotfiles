@@ -94,15 +94,6 @@
   :after (org)
   :commands (org-mac-link-get-link))
 
-(use-package! org-download
-  :after (org)
-  :init
-  (setq-default
-   org-download-method 'directory          ;; download to a directory...
-   org-download-image-dir "./attachments/" ;; ...based on the current one
-   org-download-heading-lvl nil            ;; don't create nested folders
-   org-download-timestamp ""))             ;; don't add a timestamp
-
 (use-package! org-appear
   :after org
   :init
