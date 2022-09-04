@@ -90,16 +90,6 @@
   :defer t
   :config (load! (concat doom-user-dir "org-config")))
 
-(use-package! org-journal
-  :after (org)
-  :init
-  (setq org-journal-enable-agenda-integration t
-        org-journal-file-type 'weekly
-        org-journal-file-format "%Y-w%V")
-  (map! :leader
-        :desc "Current Entry"
-        "n j ." #'org-journal-open-current-journal-file))
-
 (use-package! org-mac-link
   :after (org)
   :commands (org-mac-link-get-link))
