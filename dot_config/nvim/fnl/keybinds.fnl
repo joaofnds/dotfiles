@@ -6,6 +6,4 @@
   (nmap "Q" "q")
   (vnoremap "<c-j>" ":m '>+1<cr>gv=gv")
   (vnoremap "<c-k>" ":m '<-2<cr>gv=gv")
-  (vnoremap "<leader>ee" "c<c-r>=trim(system('base64', @\"))<cr><esc>")
-  (vnoremap "<leader>ed" "c<c-r>=system('base64 --decode', @\")<cr><esc>")
   (nnoremap "<esc>" "<esc>:nohl<CR><esc>"))
