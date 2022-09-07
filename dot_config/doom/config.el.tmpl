@@ -56,9 +56,9 @@
 (map!
  "C-s" #'swiper
 
- (:prefix-map ("g b" . "base64")
-  :desc "encode" "e" #'base64-encode-region
-  :desc "decode" "d" #'base64-decode-region)
+ (:prefix ("g b" . "base64")
+  :desc "encode" :v "e" #'base64-encode-region
+  :desc "decode" :v "d" #'base64-decode-region)
 
  :leader
  :desc "open elfeed" "o e" #'elfeed
