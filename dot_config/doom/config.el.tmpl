@@ -55,6 +55,11 @@
 
 (map!
  "C-s" #'swiper
+
+ (:prefix-map ("g b" . "base64")
+  :desc "encode" "e" #'base64-encode-region
+  :desc "decode" "d" #'base64-decode-region)
+
  :leader
  :desc "open elfeed" "o e" #'elfeed
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file
