@@ -15,4 +15,4 @@ ARS=$(jq -r '.rates.ARS' < "$RATESCACHE")
 
 bc -l <<< "1.0 / $EUR * $BRL" | awk '{ printf("R$%.2f", $0) }' > "$CACHEDIR/eur-brl-rate"
 bc -l <<< "1.0 / $USD * $BRL" | awk '{ printf("R$%.2f", $0) }' > "$CACHEDIR/usd-brl-rate"
-bc -l <<< "1.0 / $ARS * $BRL" | awk '{ printf("R$%.2f", $0) }' > "$CACHEDIR/ars-brl-rate"
+bc -l <<< "1.0 / $ARS * $BRL" | awk '{ printf("R$%.4f", $0) }' > "$CACHEDIR/ars-brl-rate"
