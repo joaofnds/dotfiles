@@ -119,10 +119,13 @@
   (push 'neotree-mode evil-snipe-disabled-modes)
 
   (map! :map neotree-mode-map
-        :n "m a" #'neotree-add-node
-        :n "m m" #'neotree-rename-node
-        :n "m d" #'neotree-delete-node
-        :n "m c" #'neotree-copy-node
+        (:prefix "m"
+         :desc "add"    :n "a" #'neotree-add-node
+         :desc "move"   :n "m" #'neotree-rename-node
+         :desc "delete" :n "d" #'neotree-delete-node
+         :desc "copy"   :n "c" #'neotree-copy-node
+         :desc "open"   :n "o" #'neotree-enter
+         :desc "yank"   :n "y" #'neotree-copy-filepath-to-yank-ring)
 
         :n "A" #'neotree-stretch-toggle
         :n "I" #'neotree-hidden-file-toggle
