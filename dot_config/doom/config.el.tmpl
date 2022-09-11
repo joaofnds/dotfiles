@@ -116,6 +116,8 @@
 
   (defalias 'neotree-add-node 'neotree-create-node)
 
+  (push 'neotree-mode evil-snipe-disabled-modes)
+
   (map! :map neotree-mode-map
         :n "m a" #'neotree-add-node
         :n "m m" #'neotree-rename-node
