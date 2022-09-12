@@ -13,5 +13,5 @@ ETH=$(cat "$CACHEDIR/eth-usd-rate")
 
 curl -s -X POST \
     -H "Content-Type: application/json" \
-    -d "{\"content\": \"USD: $USD\nEUR: $EUR\nARG: $ARS\nBTC: $BTC\nETH: $ETH\"}" \
+    -d "{\"content\": \"USD: $USD\nEUR: $EUR\nARS: $ARS\nBTC: $BTC\nETH: $ETH\"}" \
     "$PAI_RICO_WEBHOOK_URL"
