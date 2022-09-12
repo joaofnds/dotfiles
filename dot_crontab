@@ -3,6 +3,7 @@ HOME=$(eval echo "~$joaofnds")
 
 */30 9-19 * * 1-5 $HOME/.scripts/update-rates.sh >> $HOME/.log/cron.log 2>&1
 */10 * * * * $HOME/.scripts/update-cripto-rates.sh >> $HOME/.log/cron.log 2>&1
+1 10,18 * * 1-5 $HOME/.scripts/send-rates-to-discord.sh >> $HOME/.log/cron.log 2>&1
 
 # * * * * * command to be executed
 # ┯ ┯ ┯ ┯ ┯
