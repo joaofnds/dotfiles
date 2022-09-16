@@ -11,12 +11,9 @@
 
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! package-lint)      ; a linting library for elisp package authors
-(package! spongebob-case     ; YoU cAn’T wRiTe A pAcKaGe ThIs StUpId!
-  :recipe (:host github :repo "duckwork/spongebob-case.el" :files ("*.el")))
 
 (package! tmux-pane)         ; negivate seamlessly between tmux and emacs
-(package! emacs-tmux-runner ; my port of christoomey/vim-tmux-runner
+(package! emacs-tmux-runner  ; my port of christoomey/vim-tmux-runner
   :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
-
 
 (unpin! format-all)
