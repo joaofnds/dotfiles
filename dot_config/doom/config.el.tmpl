@@ -53,8 +53,24 @@
  'window-setup-hook
  (lambda () (load! (concat doom-user-dir "jf"))))
 
+(defun hex-decode-region (start end)
+  (interactive "r")
+  (let ((text (buffer-substring start end)))
+    (delete-region start end)
+    (insert (number-to-string (string-to-number text 16)))))
+
+(defun hex-encode-region (start end)
+  (interactive "r")
+  (let ((text (buffer-substring start end)))
+    (delete-region start end)
+    (insert (format "%x" (string-to-number text)))))
+
 (map!
  "C-s" #'swiper
+
+ (:prefix ("g x" . "hex")
+  :desc "encode" :v "e" #'hex-encode-region
+  :desc "decode" :v "d" #'hex-decode-region)
 
  (:prefix ("g b" . "base64")
   :desc "encode" :v "e" #'base64-encode-region
