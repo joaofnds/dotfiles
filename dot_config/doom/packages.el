@@ -14,6 +14,8 @@
 
 (package! tmux-pane)         ; negivate seamlessly between tmux and emacs
 (package! emacs-tmux-runner  ; my port of christoomey/vim-tmux-runner
-  :recipe (:host github :repo "joaofnds/emacs-tmux-runner"))
+  :recipe (:host github
+           :repo "joaofnds/emacs-tmux-runner"
+           :files ("emacs-tmux-runner.el")))
 
 (unpin! format-all)
