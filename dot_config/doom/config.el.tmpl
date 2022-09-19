@@ -22,7 +22,6 @@
       display-line-numbers-type 'relative
       display-line-numbers-current-absolute t
 
-
       jf/font/fixed-family    "{{.emacs.font.family}}"
       jf/font/cursive-family  "CMU Serif"
       jf/font/variable-family "Iosevka Aile"
@@ -37,15 +36,7 @@
       doom-variable-pitch-font (font-spec :family jf/font/variable-family)
       doom-big-font-increment 6
 
-      projectile-project-search-path '("~/code/")
-      projectile-enable-caching nil
-
-      +ivy-project-search-engines '(ag)
-
-      parinfer-rust-preferred-mode "indent"
-
-      dired-dwim-target t
-      emojify--refused-image-download-p t)
+      dired-dwim-target t)
 
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
@@ -81,6 +72,22 @@
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file
  :desc "grab macOS link"   "o g" #'org-mac-link-get-link
  :desc "home.org" "n h" #'jf/notes/open-home)
+
+(use-package! parinfer-rust-mode
+  :defer t
+  :init
+  (setq parinfer-rust-preferred-mode "indent"))
+
+(use-package! projectile
+  :defer t
+  :init
+  (setq projectile-project-search-path '("~/code/")
+        projectile-enable-caching nil))
+
+(use-package! ivy
+  :defer t
+  :init
+  (setq +ivy-project-search-engines '(ag)))
 
 (use-package! format-all
   :commands format-all-buffer
