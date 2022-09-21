@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-# name: ddx
-# --
-\frac{\mathrm d}{\mathrm d x} $0
