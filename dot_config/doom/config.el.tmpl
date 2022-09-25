@@ -39,6 +39,26 @@
  'window-setup-hook
  (lambda () (load! (concat doom-user-dir "jf"))))
 
+(map!
+ "C-s" #'swiper
+ :leader
+ :desc "open elfeed" "o e" #'elfeed
+ :desc "reveal in neotree" "o ." #'+neotree/find-this-file
+ :desc "grab macOS link"   "o g" #'org-mac-link-get-link
+ :desc "home.org" "n h" #'jf/notes/open-home)
+
+(use-package! evil
+  :config
+  (map!
+   :prefix "g"
+   (:prefix ("b" . "base64")
+    :desc "encode" :v "e" #'base64-encode-region
+    :desc "decode" :v "d" #'base64-decode-region)
+   :v "x" nil
+   (:prefix ("x" . "hex")
+    :desc "encode" :v "e" #'hex-encode-region
+    :desc "decode" :v "d" #'hex-decode-region)))
+
 (defun hex-decode-region (start end)
   (interactive "r")
   (let ((text (buffer-substring start end)))
@@ -50,23 +70,6 @@
   (let ((text (buffer-substring start end)))
     (delete-region start end)
     (insert (format "%x" (string-to-number text)))))
-
-(map!
- "C-s" #'swiper
-
- (:prefix ("g x" . "hex")
-  :desc "encode" :v "e" #'hex-encode-region
-  :desc "decode" :v "d" #'hex-decode-region)
-
- (:prefix ("g b" . "base64")
-  :desc "encode" :v "e" #'base64-encode-region
-  :desc "decode" :v "d" #'base64-decode-region)
-
- :leader
- :desc "open elfeed" "o e" #'elfeed
- :desc "reveal in neotree" "o ." #'+neotree/find-this-file
- :desc "grab macOS link"   "o g" #'org-mac-link-get-link
- :desc "home.org" "n h" #'jf/notes/open-home)
 
 (use-package! parinfer-rust-mode
   :defer t
