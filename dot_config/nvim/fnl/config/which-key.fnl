@@ -54,7 +54,28 @@
       :s {:name "search"
           :p [":Ag<cr>" "search project"]}
       :b {:name "buffers"
-          :b [":Buffers<cr>" "search buffers"]}
+          :b [":Buffers<cr>" "search buffers"]
+          :p [":BufferPrevious<cr>" "previous"]
+          :n [":BufferNext<cr>" "next"]
+          :s [":BufferPick<cr>" "search"]
+          :< [":BufferMovePrevious<cr>" "move previous"]
+          :> [":BufferMoveNext<cr>" "move next"]
+          :1 [":BufferGoto 1<CR>" "goto 1"]
+          :2 [":BufferGoto 2<CR>" "goto 2"]
+          :3 [":BufferGoto 3<CR>" "goto 3"]
+          :4 [":BufferGoto 4<CR>" "goto 4"]
+          :5 [":BufferGoto 5<CR>" "goto 5"]
+          :6 [":BufferGoto 6<CR>" "goto 6"]
+          :7 [":BufferGoto 7<CR>" "goto 7"]
+          :8 [":BufferGoto 8<CR>" "goto 8"]
+          :9 [":BufferLast<CR>" "goto last"]
+          :k [":BufferClose<cr>" "kill"]
+          :d {:name "delete"
+              :d [":BufferClose<cr>" "current"]
+              :a [":BufferWipeout<cr>" "all"]
+              :o [":BufferCloseAllButCurrent<cr>" "others"]
+              :l [":BufferCloseBuffersLeft<cr>" "left"]
+              :r [":BufferCloseBuffersRight<cr>" "right"]}}
       :o {:name "open"
           :- [":e .<cr>" "Open current folder"]
           :P [":MarkdownPreviewToggle<cr>" "Toggle markdown preview"]
