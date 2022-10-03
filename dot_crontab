@@ -7,7 +7,6 @@ LOGFILE="$HOME/.log/cron.log"
 */10 * * * * $HOME/.scripts/update-cripto-rates.sh 2>&1 >> $LOGFILE
 1 10,18 * * 1-5 $HOME/.scripts/send-rates-to-discord.sh 2>&1 >> $LOGFILE
 0 8 * * 0 $HOME/.scripts/domingobot.sh 2>&1 >> $LOGFILE
-*/5 * * * 0 $HOME/.scripts/election.sh 2>&1 >> $LOGFILE
 
 # * * * * * command to be executed
 # ┯ ┯ ┯ ┯ ┯
