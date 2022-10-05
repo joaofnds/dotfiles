@@ -40,6 +40,7 @@ brew "cue-lang/tap/cue"
 brew "curl"
 brew "dagger"
 brew "ddrescue"
+brew "delve"
 brew "diff-so-fancy"
 brew "direnv"
 brew "dnsmasq", restart_service: true
