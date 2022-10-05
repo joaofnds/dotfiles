@@ -86,7 +86,7 @@
           :a [vim.lsp.buf.code_action "action"]
           :r [vim.lsp.buf.rename "rename"]
           :s [vim.lsp.buf.signature_help "signature"]
-          :f [vim.lsp.buf.formatting "format"]
+          :f [vim.lsp.buf.format "format"]
           :o [organize-imports "organize imports"]
           :l {:name "lsp"
               :s [":LspStart<cr>" "start"]
