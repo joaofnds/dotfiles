@@ -1,12 +1,10 @@
 PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
 HOME=$(eval echo "~$joaofnds")
 
-LOGFILE="$HOME/.log/cron.log"
-
-*/30 9-19 * * 1-5 $HOME/.scripts/update-rates.sh 2>&1 >> $LOGFILE
-*/10 * * * * $HOME/.scripts/update-cripto-rates.sh 2>&1 >> $LOGFILE
-1 10,18 * * 1-5 $HOME/.scripts/send-rates-to-discord.sh 2>&1 >> $LOGFILE
-0 8 * * 0 $HOME/.scripts/domingobot.sh 2>&1 >> $LOGFILE
+*/30 9-19 * * 1-5 $HOME/.scripts/update-rates.sh 2>&1 >> $HOME/.log/cron.log
+*/10 * * * * $HOME/.scripts/update-cripto-rates.sh 2>&1 >> $HOME/.log/cron.log
+1 10,18 * * 1-5 $HOME/.scripts/send-rates-to-discord.sh 2>&1 >> $HOME/.log/cron.log
+0 8 * * 0 $HOME/.scripts/domingobot.sh 2>&1 >> $HOME/.log/cron.log
 
 # * * * * * command to be executed
 # ┯ ┯ ┯ ┯ ┯
