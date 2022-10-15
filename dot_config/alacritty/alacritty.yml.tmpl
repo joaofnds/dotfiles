@@ -32,10 +32,6 @@ font:
 
   size: {{ .alacritty.font.size }}
 
-  {{- if eq .chezmoi.os "darwin" }}
-  use_thin_strokes: true
-  {{- end }}
-
 live_config_reload: true
 
 schemes:
