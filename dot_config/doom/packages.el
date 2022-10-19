@@ -4,6 +4,8 @@
 (package! s)                 ; the long lost emacs string manipulation library
 (package! f)                 ; modern api for working with files and directories
 
+(package! restclient)        ; HTTP REST client tool for emacs
+
 (package! vmd-mode)
 
 (package! org-mac-link)      ; insert org-mode links to items selected in various mac apps
