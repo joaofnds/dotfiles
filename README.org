@@ -20,6 +20,7 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 
 * files
 ** terminal utils
+- [[https://github.com/ggreer/the_silver_searcher][ggreer/the_silver_searcher: A code-searching tool similar to ack, but faster.]]
 - [[https://github.com/sharkdp/fd][sharkdp/fd: A simple, fast and user-friendly alternative to 'find']]
 - [[https://github.com/eradman/entr][eradman/entr: Run arbitrary commands when files change]]
 - [[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
