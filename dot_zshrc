@@ -2,7 +2,7 @@
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
 [ -d $HOME/.asdf ] && source $HOME/.asdf/asdf.sh && source $HOME/.asdf/completions/asdf.bash
 [ -f $HOME/.aliases ] && source $HOME/.aliases
-[ -f $HOME/.hardware.env ] && source $HOME/.hardware.env
+[ -f $HOME/.private.env ] && source $HOME/.private.env
 [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ] && source $HOME/.nix-profile/etc/profile.d/nix.sh
 
 eval "$(direnv hook zsh)"

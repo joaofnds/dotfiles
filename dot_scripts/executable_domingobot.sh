@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 HOME=$(eval echo "~$joaofnds")
-source "$HOME/.hardware.env"
+source "$HOME/.private.env"
 
 WEEK=$(date +"%U")
 

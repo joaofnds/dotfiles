@@ -4,7 +4,7 @@ HOME=$(eval echo "~$joaofnds")
 CACHEDIR="$HOME/.cache"
 RATESCACHE="$CACHEDIR/rates.json"
 
-source "$HOME/.hardware.env"
+source "$HOME/.private.env"
 
 curl -s "http://api.exchangeratesapi.io/v1/latest?access_key=$EXCHANGERATESAPI_TOKEN" -o "$RATESCACHE"
 

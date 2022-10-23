@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 HOME=$(eval echo "~$joaofnds")
-source "$HOME/.hardware.env"
+source "$HOME/.private.env"
 
 JOKE=$(curl -s -H "X-Rapidapi-Key: $RAPIDAPI_KEY" -H "X-Rapidapi-Host: dad-jokes.p.rapidapi.com" https://dad-jokes.p.rapidapi.com/random/joke)
 

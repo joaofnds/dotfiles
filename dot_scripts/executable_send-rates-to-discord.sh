@@ -3,7 +3,7 @@
 HOME=$(eval echo "~$joaofnds")
 CACHEDIR="$HOME/.cache"
 
-source "$HOME/.hardware.env"
+source "$HOME/.private.env"
 
 USD=$(cat "$CACHEDIR/usd-brl-rate")
 EUR=$(cat "$CACHEDIR/eur-brl-rate")

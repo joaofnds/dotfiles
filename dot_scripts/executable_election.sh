@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 HOME=$(eval echo "~$joaofnds")
-source "$HOME/.hardware.env"
+source "$HOME/.private.env"
 
 url="https://resultados.tse.jus.br/oficial/ele2022/544/dados-simplificados/br/br-c0001-e000544-r.json"
 
