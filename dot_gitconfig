@@ -3,12 +3,6 @@
   name = João Fernandes
   signingkey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
 
-[alias]
-  pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
-  pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
-# for bitbucket/stash remotes
-  spr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull-requests/$1/from:pr/$1 && git checkout pr/$1; }; f"
-
 [format]
   signoff = true
 
