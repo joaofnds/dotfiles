@@ -1,13 +1,19 @@
 [user]
+{{- if eq .chezmoi.hostname "joaofnds-m1" }}
+  email = joao.fernandes@skillshare.com
+  name = João Fernandes
+  signingkey = 7100D487EC8FE848BD9F0F2D42EE6AA15504ACF2
+{{- else }}
   email = joaofnds@joaofnds.com
   name = João Fernandes
   signingkey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
+{{- end }}
 
 [format]
   signoff = true
 
 [commit]
-	gpgsign = true
+  gpgsign = true
 
 [color]
   ui = true
@@ -38,7 +44,11 @@
   defaultBranch = main
 
 [gpg]
+{{- if eq .chezmoi.hostname "joaofnds-m1" }}
+  program = /opt/homebrew/bin/gpg
+{{- else }}
   program = /usr/local/bin/gpg
+{{ end }}
 
 [delta]
   plus-style = "syntax #1a412b"
