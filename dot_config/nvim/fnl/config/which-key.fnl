@@ -115,5 +115,6 @@
                    :l [":VtrSendLinesToRunner<cr>" "send lines"]}}
     :g {:b {:name "base64"
             :e ["c<c-r>=trim(system('base64', @\"))<cr><esc>" "encode"]
-            :d ["c<c-r>=system('base64 --decode', @\")<cr><esc>" "decode"]}}}
+            :d ["c<c-r>=system('base64 --decode', @\")<cr><esc>" "decode"]}
+        :t ["c<c-r>=strftime(\"%Y-%m-%dT%H:%M:%S%z\", @\"/1000)<cr><esc>" "encode"]}}
    {:mode "v"}))
