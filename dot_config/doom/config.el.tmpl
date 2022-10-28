@@ -85,12 +85,12 @@
 
 (defun timestamp-decode-region (start end)
   (interactive "r")
-  (delete-region start end)
   (->> (buffer-substring start end)
        (s-left 10)
        (string-to-number)
        (format-time-string "%Y-%m-%dT%T%z")
-       (insert)))
+       (insert))
+  (delete-region start end))
 
 (use-package! parinfer-rust-mode
   :defer t
