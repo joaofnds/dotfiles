@@ -51,14 +51,25 @@
   :config
   (map!
    :prefix "g"
+   :desc "timestamp" :v "t" #'timestamp-decode-region
    (:prefix ("b" . "base64")
     :desc "encode" :v "e" #'base64-encode-region
     :desc "decode" :v "d" #'base64-decode-region)
    :v "x" nil
    (:prefix ("x" . "hex")
     :desc "encode" :v "e" #'hex-encode-region
-    :desc "decode" :v "d" #'hex-decode-region)
-   :desc "timestamp" :v "t" #'timestamp-decode-region))
+    :desc "decode" :v "d" #'hex-decode-region)))
+
+(defmacro ->> (&rest body)
+  (let ((result (pop body)))
+    (dolist (form body result)
+      (setq result (append form (list result))))))
+
+(defmacro -> (&rest body)
+  (let ((result (pop body)))
+    (dolist (form body result)
+      (setq result (append (list (car form) result)
+                           (cdr form))))))
 
 (defun hex-decode-region (start end)
   (interactive "r")
@@ -74,9 +85,12 @@
 
 (defun timestamp-decode-region (start end)
   (interactive "r")
-  (let ((text (buffer-substring start end)))
-    (delete-region start end)
-    (insert (format-time-string "%Y-%m-%dT%T%z" (string-to-number (substring text 0 10))))))
+  (delete-region start end)
+  (->> (buffer-substring start end)
+       (s-left 10)
+       (string-to-number)
+       (format-time-string "%Y-%m-%dT%T%z")
+       (insert)))
 
 (use-package! parinfer-rust-mode
   :defer t
