@@ -15,18 +15,26 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 * shoutouts
 - [[https://github.com/tmux/tmux][tmux/tmux: terminal multiplexer]]
 - [[https://github.com/junegunn/fzf][junegunn/fzf: A command-line fuzzy finder]]
-- [[https://github.com/sharkdp/fd][sharkdp/fd: A simple, fast and user-friendly alternative to 'find']]
 - [[https://github.com/eradman/entr][eradman/entr: Run arbitrary commands when files change]]
+- [[https://github.com/BurntSushi/ripgrep][BurntSushi/ripgrep: search directories for a pattern]]
 - [[https://github.com/ggreer/the_silver_searcher][ggreer/the_silver_searcher: A code-searching tool similar to ack, but faster.]]
-- [[https://github.com/stedolan/jq][stedolan/jq: Command-line JSON processor]]
 - [[https://github.com/chmln/sd][chmln/sd: Intuitive find & replace CLI (sed alternative)]]
 - [[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
 - [[https://github.com/theryangeary/choose][theryangeary/choose: A human-friendly and fast alternative to cut and (sometimes) awk]]
-- [[https://github.com/jhspetersson/fselect][jhspetersson/fselect: Find files with SQL-like queries]]
-- [[https://github.com/BurntSushi/xsv][BurntSushi/xsv: A fast CSV command line toolkit written in Rust.]]
-- [[https://github.com/mgdm/htmlq][mgdm/htmlq: Like jq, but for HTML]]
+- [[https://github.com/sharkdp/hyperfine][sharkdp/hyperfine: A command-line benchmarking tool]]
+- [[https://github.com/vifm/vifm][vifm/vifm: a file manager with curses interface, which provides Vim-like environment for managing objects within file systems]]
 
 ** files
+*** find
+- [[https://github.com/jhspetersson/fselect][jhspetersson/fselect: Find files with SQL-like queries]]
+- [[https://github.com/sharkdp/fd][sharkdp/fd: A simple, fast and user-friendly alternative to 'find']]
+
+*** view & query
+- [[https://github.com/stedolan/jq][stedolan/jq: Command-line JSON processor]]
+- [[https://github.com/mgdm/htmlq][mgdm/htmlq: Like jq, but for HTML]]
+- [[https://github.com/antonmedv/fx][antonmedv/fx: Terminal JSON viewer]]
+- [[https://github.com/BurntSushi/xsv][BurntSushi/xsv: A fast CSV command line toolkit written in Rust.]]
+
 *** sync
 - [[https://github.com/wayned/rsync][wayned/rsync: fast incremental file transfer]]
 - [[https://github.com/rclone/rclone][rclone/rclone: rsync for cloud storage]]
@@ -40,6 +48,9 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 **** internet
 - [[https://github.com/sniptt-official/ots][sniptt-official/ots: share end-to-end encrypted secrets with others via a one-time url]]
 - [[https://wormhole.app/][Wormhole - share files with e2e encryption and a link that automatically expires]]
+
+*** backup
+- [[https://github.com/restic/restic][restic/restic: Fast, secure, efficient backup program]]
 
 * Keyboard
 I use a [[https://www.zsa.io/moonlander][ZSA Moonlander]], you can find (and fork) [[https://configure.zsa.io/moonlander/layouts/ZQX76][my layout on Oryx]]
