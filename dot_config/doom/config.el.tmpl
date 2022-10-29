@@ -51,7 +51,9 @@
   :config
   (map!
    :prefix "g"
-   :desc "timestamp" :v "t" #'timestamp-decode-region
+   (:prefix ("t" . "time")
+    :desc "iso8601 to unix" :v "e" #'timestamp-encode-region
+    :desc "unix to iso8601" :v "d" #'timestamp-decode-region)
    (:prefix ("b" . "base64")
     :desc "encode" :v "e" #'base64-encode-region
     :desc "decode" :v "d" #'base64-decode-region)
@@ -89,6 +91,15 @@
        (s-left 10)
        (string-to-number)
        (format-time-string "%Y-%m-%dT%T%z")
+       (insert))
+  (delete-region start end))
+
+(defun timestamp-encode-region (start end)
+  (interactive "r")
+  (->> (buffer-substring start end)
+       (parse-time-string)
+       (encode-time)
+       (format-time-string "%s")
        (insert))
   (delete-region start end))
 
