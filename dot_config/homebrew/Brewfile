@@ -36,7 +36,6 @@ brew "cue-lang/tap/cue"
 brew "curl"
 brew "dagger"
 brew "delve"
-brew "diff-so-fancy"
 brew "direnv"
 brew "dnsmasq", restart_service: true
 brew "docker"
