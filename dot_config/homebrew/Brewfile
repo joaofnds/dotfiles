@@ -16,7 +16,6 @@ tap "sniptt-official/tap"
 tap "thoughtbot/formulae"
 tap "zackelia/formulae"
 
-brew "ack"
 brew "age"
 brew "aspell"
 brew "automake"
