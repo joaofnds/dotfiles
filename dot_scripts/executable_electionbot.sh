@@ -9,7 +9,7 @@ source "$HOME/.private.env"
 PRESIDENTCACHE="$CACHEDIR/president.json"
 GOVERNORCACHE="$CACHEDIR/governor.json"
 
-filter='"apurados: \(.pesi)%\\n"+ (.cand | map("\(.nm): \(.pvap)% (\(.vap) votos)") | join("\\n"))'
+filter='"apurados: \(.pesi)% (\(.c) votos)\\n"+ (.cand | map("\(.nm): \(.pvap)% (\(.vap) votos)") | join("\\n"))'
 president=$(jq -r "$filter" <"$PRESIDENTCACHE")
 governor=$(jq -r "$filter" <"$GOVERNORCACHE")
 

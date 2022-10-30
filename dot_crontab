@@ -8,8 +8,8 @@ HOME=$(eval echo "~$joaofnds")
 0 15 * * 1-5 $HOME/.scripts/dev_dad_joke.sh 2>&1 >> $HOME/.log/cron.log
 0 8 * * 0 $HOME/.scripts/domingobot.sh 2>&1 >> $HOME/.log/cron.log
 
-*/5 * * * 0 $HOME/.scripts/election_president.sh 2>&1 >> $HOME/.log/cron.log
-*/5 * * * 0 $HOME/.scripts/election_governor.sh 2>&1 >> $HOME/.log/cron.log
+* * * * 0 $HOME/.scripts/election_president.sh 2>&1 >> $HOME/.log/cron.log
+* * * * 0 $HOME/.scripts/election_governor.sh 2>&1 >> $HOME/.log/cron.log
 */5 * * * 0 $HOME/.scripts/electionbot.sh 2>&1 >> $HOME/.log/cron.log
 
 # * * * * * command to be executed
