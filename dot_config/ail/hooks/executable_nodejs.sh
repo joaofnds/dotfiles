@@ -7,5 +7,6 @@ npm i -g typescript \
          yaml-language-server \
          dockerfile-language-server-nodejs \
          prettier \
+         npm-check-updates \
          lua-fmt \
          vmd
