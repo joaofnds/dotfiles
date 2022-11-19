@@ -70,7 +70,8 @@
        (org                ; organize your plain life in plain text
         +dragndrop
         +journal
-        +pandoc)
+        +pandoc
+        +roam2)
        (python             ; beautiful is better than ugly
         +lsp
         +tree-sitter)
