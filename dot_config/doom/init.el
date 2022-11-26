@@ -33,6 +33,7 @@
        vterm               ; the best terminal emulation in Emacs
 
        :tools
+       (debugger +lsp)     ; stepping through code, to help you add bugs
        (docker +lsp)
        (eval +overlay)     ; run code, run (also, repls)
        (lookup             ; navigate your code and its documentation
