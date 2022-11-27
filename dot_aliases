@@ -33,6 +33,7 @@ alias subreposdiffs="fd --type directory --no-ignore --hidden --prune '^.git$' -
 alias be='bundle exec'
 
 # docker
+alias docker='lima nerdctl'
 alias dcp='docker compose'
 alias dcpe='docker compose exec'
 alias dcpp='docker compose ps'
