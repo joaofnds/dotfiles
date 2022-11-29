@@ -25,6 +25,8 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 - [[https://github.com/vifm/vifm][vifm/vifm: a file manager with curses interface, which provides Vim-like environment for managing objects within file systems]]
 
 ** files
+- [[https://github.com/XAMPPRocky/tokei][XAMPPRocky/tokei: Count your code, quickly.]]
+
 *** find
 - [[https://github.com/jhspetersson/fselect][jhspetersson/fselect: Find files with SQL-like queries]]
 - [[https://github.com/sharkdp/fd][sharkdp/fd: A simple, fast and user-friendly alternative to 'find']]
