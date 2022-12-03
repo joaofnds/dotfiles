@@ -20,15 +20,16 @@
 
 [core]
   excludesFile = ~/.gitignore
-
-[pager]
-  diff = delta
-  log = delta
-  reflog = delta
-  show = delta
+  pager = delta
 
 [interactive]
   diffFilter = delta --color-only
+
+[delta]
+  navigate = true
+
+[merge]
+  conflictstyle = diff3
 
 [github]
   user = joaofnds
@@ -36,6 +37,7 @@
 [diff]
   algorithm = histogram
   indentHeuristic = true
+  colorMoved = default
 
 [pull]
   rebase = false
