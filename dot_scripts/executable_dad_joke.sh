@@ -13,7 +13,7 @@ curl -s -X POST \
 	-d "{\"content\": \"$setup\"}" \
 	"$DADBOT_URL"
 
-sleep 5
+sleep 20
 
 curl -s -X POST \
 	-H "Content-Type: application/json" \

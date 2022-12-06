@@ -17,6 +17,6 @@ if [ "$type" == "single" ]; then
 	send "$(jq -r '.joke' <<<"$JOKE")"
 else
 	send "$(jq -r '.setup' <<<"$JOKE")"
-	sleep 5
+	sleep 20
 	send "$(jq -r '.delivery' <<<"$JOKE")"
 fi
