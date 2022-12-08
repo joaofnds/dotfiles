@@ -20,3 +20,5 @@
            :repo "joaofnds/emacs-tmux-runner"
            :files ("emacs-tmux-runner.el")
            :build (:not compile)))
+
+(package! nyan-mode)

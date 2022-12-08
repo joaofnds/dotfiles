@@ -103,6 +103,13 @@
        (insert))
   (delete-region start end))
 
+(use-package! nyan-mode
+  :after-call doom-setup-hook
+  :init
+  (setq nyan-animate-nyancat t
+        nyan-wavy-trail t)
+  (nyan-mode t))
+
 (use-package! parinfer-rust-mode
   :defer t
   :init
