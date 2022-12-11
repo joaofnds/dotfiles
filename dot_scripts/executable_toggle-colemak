@@ -3,17 +3,17 @@
 LOCKFILE="$HOME/.colemak"
 
 enable() {
-	touch $LOCKFILE
+	touch "$LOCKFILE"
 	echo "enabled"
 }
 
 disable() {
-	rm -f $LOCKFILE
+	rm -f "$LOCKFILE"
 	echo "disabled"
 }
 
 toggle() {
-	if [ -e $LOCKFILE ]; then
+	if [ -e "$LOCKFILE" ]; then
 		disable
 	else
 		enable
@@ -21,15 +21,15 @@ toggle() {
 }
 
 case $1 in
-up)
-	enable
-	;;
-down)
-	disable
-	;;
-*)
-	toggle
-	;;
+	on)
+		enable
+		;;
+	off)
+		disable
+		;;
+	*)
+		toggle
+		;;
 esac
 
 pgrep Emacs-x86_64-10_14 | xargs -n1 kill -SIGUSR1 &
