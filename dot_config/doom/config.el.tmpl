@@ -33,6 +33,10 @@
       doom-variable-pitch-font (font-spec :family jf/font/variable-family)
       doom-big-font-increment 6)
 
+(use-package! evil-colemak-basics
+  :after f
+  :init (setq evil-colemak-basics-layout-mod 'mod-dh))
+
 (defalias 'forward-evil-word 'forward-evil-symbol)
 
 (add-hook

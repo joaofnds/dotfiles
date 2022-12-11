@@ -4,6 +4,8 @@
 (package! s)                 ; the long lost emacs string manipulation library
 (package! f)                 ; modern api for working with files and directories
 
+(package! evil-colemak-basics)
+
 (package! restclient)        ; HTTP REST client tool for emacs
 
 (package! vmd-mode)
