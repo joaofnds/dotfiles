@@ -163,6 +163,9 @@
   :config
   (add-hook! 'org-mode-hook #'org-appear-mode))
 
+(use-package! org-roam-ui
+  :after org-roam)
+
 (use-package! neotree
   :defer t
   :config
