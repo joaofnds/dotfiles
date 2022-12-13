@@ -8,9 +8,9 @@
          :s [vim.lsp.buf.signature_help "signature help"]}
      :K [vim.lsp.buf.hover "hover"]
      "]" {:name "next"
-          :e [":lua vim.lsp.diagnostic.goto_next()<cr>" "error"]}
+          :e [":lua vim.diagnostic.goto_next()<cr>" "error"]}
      "[" {:name "previous"
-          :e [":lua vim.lsp.diagnostic.goto_prev()<cr>" "error"]}
+          :e [":lua vim.diagnostic.goto_prev()<cr>" "error"]}
      :<leader>
      {:<leader> [":FZF<cr>" "find files: searches whole project for a file"]
       :. [":FZF %:p:h<cr>" "search for a file in the current directory"]
