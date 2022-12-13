@@ -36,7 +36,7 @@
           :K [":wincmd K<cr>" "moves the buffer to the top"]
           :L [":wincmd L<cr>" "moves cursor buffer to the right"]}
       :f {:name "file"
-          :t [":vsplit ~/TODO.md<cr>" "file todo: opens TODO.md in a vertical split"]
+          :t [":vsplit ~/TODO.md<cr>" "opens TODO.md"]
           :s [":w<cr>" "writes the buffer"]}
       :g {:name "git"
           :P [":Gitsigns preview_hunk<cr>" "preview hunk"]
