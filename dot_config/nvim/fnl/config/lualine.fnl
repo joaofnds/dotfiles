@@ -2,15 +2,13 @@
   (let [lualine (require :lualine)]
    (lualine.setup
     {"options"
-     {"icons_enabled" false
-      "theme" theme
-      "component_separators" ["" ""]
-      "section_separators" ["" ""]}
+     {"theme" theme
+      "icons_enabled" false}
 
      "sections"
      {"lualine_a" ["mode"]
-      "lualine_b" ["branch" "diff" "diagnostics"]
-      "lualine_c" ["filename"]
+      "lualine_b" ["branch"]
+      "lualine_c" ["filename" "diff" "diagnostics"]
 
       "lualine_x" ["encoding" "fileformat" "filetype"]
       "lualine_y" ["progress"]
