@@ -55,7 +55,6 @@
        (go                 ; the hipster dialect
         +lsp
         +tree-sitter)
-       (haskell +dante)    ; a language that's lazier than I am
        (javascript         ; all(hope(abandon(ye(who(enter(here))))))
         +lsp
         +tree-sitter)
