@@ -75,8 +75,7 @@
        (racket +lsp +xp)   ; a DSL for DSLs
        (ruby               ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
         +lsp
-        +tree-sitter
-        +rails)
+        +tree-sitter)
        (scheme             ; a fully conniving family of lisps
         +guile)
        (sh                 ; she sells {ba,z,fi}sh shells on the C xor
