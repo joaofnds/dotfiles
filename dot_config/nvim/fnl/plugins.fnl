@@ -4,7 +4,7 @@
     (vim.fn.system ["git" "clone" "https://github.com/wbthomason/packer.nvim" install-path])
     (vim.api.nvim_command "packadd packer.nvim")))
 
-(vim.cmd "packadd packer.nvim")
+(vim.cmd.packadd "packer.nvim")
 
 (let [packer (require :packer)
       lsp (require :config.lsp)]

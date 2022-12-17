@@ -89,6 +89,6 @@
 (set vim.opt.background "dark")
 (set vim.opt.termguicolors true)
 
-(vim.cmd "filetype plugin on")
-(vim.cmd "syntax enable")
-(vim.cmd "colorscheme solarized")
+(vim.cmd.filetype "plugin on")
+(vim.cmd.syntax "enable")
+(vim.cmd.colorscheme "solarized")
