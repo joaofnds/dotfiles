@@ -16,13 +16,14 @@
   (lualine "solarized_light")
   (overrides.light))
 
-(global
- switch_theme
- (fn []
-   (if (or (not (is-macos)) (is-macos-dark))
-      (set-dark)
-      (set-light))))
+(fn switch-theme []
+  (if (or (not (is-macos)) (is-macos-dark))
+     (set-dark)
+     (set-light)))
 
-(vim.api.nvim_exec "autocmd Signal * call v:lua.switch_theme()" false)
+(vim.api.nvim_create_autocmd
+  ["Signal"]
+  {:pattern "*"
+   :callback switch-theme})
 
 switch_theme
