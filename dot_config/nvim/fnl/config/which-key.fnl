@@ -50,9 +50,17 @@
           :p [":Gitsigns prev_hunk<CR>" "previous hunk"]
           :s [":Gitsigns stage_hunk<cr>" "stage hunk"]
           :v [":Gitsigns select_hunk<cr>" "select hunk"]
-          :x [":Gitsigns reset_hunk<cr>" "discard hunk"]}
+          :x [":Gitsigns reset_hunk<cr>" "discard hunk"]
+          :f {:name "find"
+              :f [":GFiles<cr>" "git files"]
+              :s [":GFiles?<cr>" "status files"]
+              :c [":Commits<cr>" "commits"]
+              :C [":BCommits<cr>" "buffer commits"]}}
       :s {:name "search"
-          :p [":Ag<cr>" "search project"]}
+          :b [":Buffers<cr>" "buffers"]
+          :f [":Files<cr>" "files"]
+          :m [":Marks<cr>" "marks"]
+          :p [":Rg<cr>" "search project"]}
       :b {:name "buffers"
           :b [":Buffers<cr>" "search buffers"]
           :p [":BufferPrevious<cr>" "previous"]
