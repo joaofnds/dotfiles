@@ -3,7 +3,7 @@
         installer (require :nvim-lsp-installer)
         lspconfig (require :lspconfig)
         lsp_signature (require :lsp_signature)
-        servers ["tsserver" "gopls" "solargraph" "pyright"]]
+        servers ["tsserver" "gopls"]]
 
     (lsp_signature.setup {:hint_enable false :toggle_key "<C-k>"})
 
