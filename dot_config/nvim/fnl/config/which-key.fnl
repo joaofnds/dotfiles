@@ -100,7 +100,13 @@
           :o [organize-imports "organize imports"]
           :l {:name "lsp"
               :s [":LspStart<cr>" "start"]
-              :S [":LspStop<cr>" "stop"]}}
+              :S [":LspStop<cr>" "stop"]}
+          :x {:name "errors"
+              :x ["<cmd>TroubleToggle<cr>" "toggle"]
+              :w ["<cmd>TroubleToggle lsp_workspace_diagnostics<cr>" "workspace errors"]
+              :b ["<cmd>TroubleToggle lsp_document_diagnostics<cr>" "buffer errors"]
+              :q ["<cmd>TroubleToggle quickfix<cr>" "quickfix"]
+              :l ["<cmd>TroubleToggle loclist<cr>" "loclist"]}}
       :t {:name "toggle"
           :l [":set relativenumber!<cr>" "relative number"]
           :c [":TSContextToggle<cr>" "toggle context"]}
