@@ -28,7 +28,6 @@
      (use "preservim/nerdtree")      ;; does the job (pretty well tbh)
      (use "lewis6991/gitsigns.nvim") ;; in buffer git stuff
      (use "folke/which-key.nvim")    ;; because I can't remeber every keybind
-     (use "nat-418/boole.nvim")      ;; increment and decrement functionality
 
      ;; formatting
      (use "junegunn/vim-easy-align")         ;; ain't nobody got time to align things manually

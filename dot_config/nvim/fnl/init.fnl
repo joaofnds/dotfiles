@@ -11,7 +11,6 @@
 (require :config.treesitter)
 (require :config.neogit)
 (require :config.diffview)
-(require :config.boole)
 
 (require :config.null-ls)
 (require :config.trouble)
