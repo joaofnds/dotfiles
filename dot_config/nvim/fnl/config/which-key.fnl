@@ -9,9 +9,9 @@
      :Q ["<nop>" "nop"]
      :K [vim.lsp.buf.hover "hover"]
      "]" {:name "next"
-          :e [":lua vim.diagnostic.goto_next()<cr>" "error"]}
+          :e [vim.diagnostic.goto_next "error"]}
      "[" {:name "previous"
-          :e [":lua vim.diagnostic.goto_prev()<cr>" "error"]}
+          :e [vim.diagnostic.goto_prev "error"]}
      "<esc>" ["<esc>:nohl<CR><esc>" "esc"]
      :<leader>
      {:<leader> [":FZF<cr>" "find files: searches whole project for a file"]
