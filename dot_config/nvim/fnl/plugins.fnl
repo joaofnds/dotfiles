@@ -41,9 +41,8 @@
       (use "christoomey/vim-tmux-runner")    ;; run stuff on tmux, from vim
 
       ;; lsp
-      (use ["williamboman/nvim-lsp-installer"
-            "ray-x/lsp_signature.nvim"
-            {1 "neovim/nvim-lspconfig" :config lsp.config}])
+      (use "williamboman/mason.nvim")
+      (use "ray-x/lsp_signature.nvim")
       (use "jose-elias-alvarez/null-ls.nvim")
       (use "folke/trouble.nvim")
 

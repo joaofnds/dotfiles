@@ -1,13 +1,13 @@
 (fn config []
   (let [{: find} (require :lume)
-        installer (require :nvim-lsp-installer)
+        mason (require :mason)
         lspconfig (require :lspconfig)
         lsp_signature (require :lsp_signature)
         servers ["tsserver" "gopls"]]
 
     (lsp_signature.setup {:hint_enable false :toggle_key "<C-k>"})
 
-    (installer.setup {:ensure_installed servers})
+    (mason.setup {:ensure_installed servers})
 
     (fn on-attach [client buffer]
       (when (find servers client.name)

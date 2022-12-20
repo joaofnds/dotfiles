@@ -12,6 +12,7 @@
 (require :config.neogit)
 (require :config.diffview)
 
+(require :config.lsp)
 (require :config.null-ls)
 (require :config.trouble)
 (require :config.cmp)
