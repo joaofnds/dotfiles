@@ -62,5 +62,4 @@
       (use "hoob3rt/lualine.nvim")         ;; pretty line
 
       ;; languages
-      (use "bakpakin/fennel.vim")
       (use "nvim-orgmode/orgmode"))))
