@@ -12,5 +12,5 @@
   (vim.cmd.highlight "Search     gui=NONE guibg=#eee9d4 guifg=NONE gui=undercurl,italic")
   (vim.cmd.highlight "IncSearch  gui=NONE guibg=#eee9d4 guifg=NONE gui=undercurl,italic"))
 
-{"dark"  dark
- "light" light}
+{:dark  dark
+ :light light}

@@ -66,17 +66,17 @@
 
 ;; stuff to ignore when tab completing
 (vim.opt.wildignore:append
- ["*.o"
-  "*.obj"
-  "*~"
-  "*vim/backups*"
-  "*sass-cache*"
-  "*DS_Store*"
-  "vendor/rails/**"
-  "vendor/cache/**"
-  "*.gem"
-  "log/**"
-  "tmp/**"])
+  ["*.o"
+   "*.obj"
+   "*~"
+   "*vim/backups*"
+   "*sass-cache*"
+   "*DS_Store*"
+   "vendor/rails/**"
+   "vendor/cache/**"
+   "*.gem"
+   "log/**"
+   "tmp/**"])
 
 (vim.opt.rtp:append ["/usr/local/opt/fzf"])
 

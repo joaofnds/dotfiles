@@ -127,12 +127,12 @@
           :r [":VtrSendCommandToRunner<cr>" "send command"]}}})
 
   (wk.register
-   {:<leader> {:x {:name "tmux"
-                   :l [":VtrSendLinesToRunner<cr>" "send lines"]}}
-    :g {:b {:name "base64"
-            :e ["c<c-r>=trim(system('base64', @\"))<cr><esc>" "encode"]
-            :d ["c<c-r>=system('base64 --decode', @\")<cr><esc>" "decode"]}
-        :t ["c<c-r>=strftime(\"%Y-%m-%dT%H:%M:%S%z\", @\"[0:9])<cr><esc>" "encode"]}
-    :J [":m '>+1<cr>gv=gv" "move line up"]
-    :K [":m '<-2<cr>gv=gv" "move line down"]}
-   {:mode "v"}))
+    {:<leader> {:x {:name "tmux"
+                    :l [":VtrSendLinesToRunner<cr>" "send lines"]}}
+     :g {:b {:name "base64"
+             :e ["c<c-r>=trim(system('base64', @\"))<cr><esc>" "encode"]
+             :d ["c<c-r>=system('base64 --decode', @\")<cr><esc>" "decode"]}
+         :t ["c<c-r>=strftime(\"%Y-%m-%dT%H:%M:%S%z\", @\"[0:9])<cr><esc>" "encode"]}
+     :J [":m '>+1<cr>gv=gv" "move line up"]
+     :K [":m '<-2<cr>gv=gv" "move line down"]}
+    {:mode "v"}))

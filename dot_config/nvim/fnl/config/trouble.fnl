@@ -1,3 +1,2 @@
-(let [trouble (require :trouble)
-      {: nnoremap } (require :utils)]
-  (trouble.setup {"icons" false}))
+(let [trouble (require :trouble)]
+  (trouble.setup {:icons false}))

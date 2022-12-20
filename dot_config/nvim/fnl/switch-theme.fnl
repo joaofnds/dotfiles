@@ -18,8 +18,8 @@
 
 (fn switch-theme []
   (if (or (not (is-macos)) (is-macos-dark))
-     (set-dark)
-     (set-light)))
+    (set-dark)
+    (set-light)))
 
 (vim.api.nvim_create_autocmd
   ["Signal"]
