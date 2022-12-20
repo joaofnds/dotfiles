@@ -50,6 +50,7 @@
       (use "hrsh7th/cmp-nvim-lsp") ;; - lsp
       (use "hrsh7th/cmp-buffer")   ;; - buffer
       (use "hrsh7th/cmp-path")     ;; - paths
+      (use "hrsh7th/cmp-nvim-lua") ;; - neovim lua api
 
       (use "nvim-lua/plenary.nvim") ;; the world depends on this
 

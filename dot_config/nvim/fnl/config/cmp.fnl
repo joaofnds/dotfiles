@@ -18,7 +18,8 @@
                 [{:name "nvim_lsp"}
                  {:name "path"}
                  {:name "buffer"}
-                 {:name "treesitter"}])
+                 {:name "treesitter"}
+                 {:name "nvim_lua"}])
      :mapping
      (cmp.mapping.preset.insert
        {"<c-space>" (cmp.mapping.complete)
