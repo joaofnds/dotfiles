@@ -35,6 +35,7 @@
 
       ;; shell integration
       (use {1 "junegunn/fzf" :run (fn [] (vim.call "fzf#install"))})
+      (use "junegunn/fzf.vim")
 
       (use "christoomey/vim-tmux-navigator") ;; jumping between vim and tmux, seamlessly
       (use "christoomey/vim-tmux-runner")    ;; run stuff on tmux, from vim
