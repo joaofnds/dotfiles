@@ -6,7 +6,7 @@
 
 (vim.cmd.packadd "packer.nvim")
 
-(let [packer (require :packer) lsp (require :config.lsp)]
+(let [packer (require :packer)]
   (packer.startup
     (fn [use]
       (use "wbthomason/packer.nvim")
@@ -41,6 +41,7 @@
       (use "christoomey/vim-tmux-runner")    ;; run stuff on tmux, from vim
 
       ;; lsp
+      (use "neovim/nvim-lspconfig")
       (use "williamboman/mason.nvim")
       (use "ray-x/lsp_signature.nvim")
       (use "jose-elias-alvarez/null-ls.nvim")
