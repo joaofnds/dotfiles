@@ -34,6 +34,7 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 *** view & query
 - [[https://github.com/multiprocessio/dsq][multiprocessio/dsq: Commandline tool for running SQL queries against JSON, CSV, Excel, Parquet, and more.]]
 - [[https://github.com/stedolan/jq][stedolan/jq: Command-line JSON processor]]
+- [[https://github.com/PaulJuliusMartinez/jless][PaulJuliusMartinez/jless: command-line JSON [viewer, reader, explorer, searcher]​]]
 - [[https://github.com/mgdm/htmlq][mgdm/htmlq: Like jq, but for HTML]]
 - [[https://github.com/antonmedv/fx][antonmedv/fx: Terminal JSON viewer]]
 - [[https://github.com/BurntSushi/xsv][BurntSushi/xsv: A fast CSV command line toolkit written in Rust.]]
