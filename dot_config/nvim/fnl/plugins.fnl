@@ -20,7 +20,10 @@
       (use "TimUntersberger/neogit")  ;; git interface
       (use "sindrets/diffview.nvim")  ;; git diff interface
 
-      (use "jiangmiao/auto-pairs")
+      (use "nvim-lua/plenary.nvim") ;; the entire ecosystem uses this
+
+      (use "jiangmiao/auto-pairs") ;; [({})] I only wrote half of that
+
       (use {1 "eraserhd/parinfer-rust"  ;; the superior way of writing lisp
             :run "cargo build --release"})
 
@@ -42,10 +45,10 @@
 
       ;; lsp
       (use "neovim/nvim-lspconfig")
-      (use "williamboman/mason.nvim")
-      (use "ray-x/lsp_signature.nvim")
-      (use "jose-elias-alvarez/null-ls.nvim")
-      (use "folke/trouble.nvim")
+      (use "williamboman/mason.nvim")         ;; lsp tools management
+      (use "ray-x/lsp_signature.nvim")        ;; floating signature hint
+      (use "jose-elias-alvarez/null-ls.nvim") ;; hook tools into nvim lsp api
+      (use "folke/trouble.nvim")              ;; make it double.
 
       (use "hrsh7th/nvim-cmp")     ;; complete with:
       (use "hrsh7th/cmp-nvim-lsp") ;; - lsp
@@ -53,15 +56,11 @@
       (use "hrsh7th/cmp-path")     ;; - paths
       (use "hrsh7th/cmp-nvim-lua") ;; - neovim lua api
 
-      (use "nvim-lua/plenary.nvim") ;; the world depends on this
-
-      (use {1 "iamcco/markdown-preview.nvim"
-            :run (fn [] (vim.call "mkdp#util#install"))})
-
       ;; visual
       (use "ishan9299/nvim-solarized-lua") ;; works great with lua plugins
       (use "romgrk/barbar.nvim")           ;; pretty tabline
       (use "hoob3rt/lualine.nvim")         ;; pretty line
 
       ;; languages
-      (use "nvim-orgmode/orgmode"))))
+      (use {1 "iamcco/markdown-preview.nvim"
+            :run (fn [] (vim.call "mkdp#util#install"))}))))
