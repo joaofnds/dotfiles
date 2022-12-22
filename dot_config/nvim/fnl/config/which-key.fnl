@@ -109,7 +109,8 @@
               :l ["<cmd>TroubleToggle loclist<cr>" "loclist"]}}
       :t {:name "toggle"
           :l [":set relativenumber!<cr>" "relative number"]
-          :c [":TSContextToggle<cr>" "toggle context"]}
+          :c [":TSContextToggle<cr>" "toggle context"]
+          :u [":UndotreeToggle<cr>" "undo tree"]}
       :x {:name "tmux"
           :- [":VtrOpenRunner { \"orientation\": \"v\", \"percentage\": 50 }<cr>" "open vertical runner"]
           := [":VtrOpenRunner { \"orientation\": \"h\", \"percentage\": 50  }<cr>" "open horizontal runner"]
