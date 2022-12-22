@@ -44,8 +44,9 @@
       (use "christoomey/vim-tmux-runner")    ;; run stuff on tmux, from vim
 
       ;; lsp
-      (use "neovim/nvim-lspconfig")
-      (use "williamboman/mason.nvim")         ;; lsp tools management
+      (use ["williamboman/mason.nvim"         ;; lsp tools management
+            "williamboman/mason-lspconfig.nvim"
+            "neovim/nvim-lspconfig"])
       (use "ray-x/lsp_signature.nvim")        ;; floating signature hint
       (use "jose-elias-alvarez/null-ls.nvim") ;; hook tools into nvim lsp api
       (use "folke/trouble.nvim")              ;; make it double.

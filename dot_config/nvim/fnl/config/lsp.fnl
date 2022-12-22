@@ -1,19 +1,14 @@
-(let [{: find} (require :lume)
-      mason (require :mason)
+(let [mason (require :mason)
+      mason-lspconfig (require :mason-lspconfig)
       lspconfig (require :lspconfig)
-      lsp_signature (require :lsp_signature)
-      servers ["tsserver" "gopls"]]
+      lsp_signature (require :lsp_signature)]
 
-  (lsp_signature.setup {:hint_enable false :toggle_key "<C-k>"})
+  (mason.setup)
+  (mason-lspconfig.setup {})
+  (mason-lspconfig.setup_handlers
+    {1 (fn [server-name] ((. lspconfig server-name :setup) {}))})
 
-  (mason.setup {:ensure_installed servers})
-
-  (fn on-attach [client buffer]
-    (when (find servers client.name)
-      (set client.server_capabilities.document_formatting false)))
-
-  (each [_ server (ipairs servers)]
-    ((. lspconfig server "setup") {:on_attach on-attach})))
+  (lsp_signature.setup {:hint_enable false :toggle_key "<C-k>"}))
 
 (fn organize-imports [bufnr post]
   (let [buf (vim.api.nvim_buf_get_name (vim.api.nvim_get_current_buf))]
