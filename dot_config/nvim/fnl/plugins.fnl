@@ -48,7 +48,6 @@
       (use ["williamboman/mason.nvim"         ;; lsp tools management
             "williamboman/mason-lspconfig.nvim"
             "neovim/nvim-lspconfig"])
-      (use "ray-x/lsp_signature.nvim")        ;; floating signature hint
       (use "jose-elias-alvarez/null-ls.nvim") ;; hook tools into nvim lsp api
       (use "folke/trouble.nvim")              ;; make it double.
 
@@ -62,6 +61,9 @@
       (use "folke/tokyonight.nvim") ;; works great with lua plugins
       (use "romgrk/barbar.nvim")    ;; pretty tabline
       (use "hoob3rt/lualine.nvim")  ;; pretty line
+      (use {1 "folke/noice.nvim"    ;; pretty ui replacement
+            :requires
+            ["MunifTanjim/nui.nvim"]})
 
       ;; languages
       (use {1 "iamcco/markdown-preview.nvim"
