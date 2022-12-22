@@ -1,25 +1,22 @@
 (local lualine (require :config.lualine))
-(local overrides (require :theme-overrides))
 (local {: is-macos} (require :utils))
 
 (fn is-macos-dark []
   (let [preference (vim.fn.system "defaults read -g AppleInterfaceStyle")]
     (~= nil (string.find preference "Dark"))))
 
-(fn set-dark []
-  (set vim.opt.background "dark")
-  (lualine "solarized")
-  (overrides.dark))
+(fn dark []
+  (vim.cmd.colorscheme "tokyonight")
+  (lualine "tokyonight"))
 
-(fn set-light []
-  (set vim.opt.background "light")
-  (lualine "solarized_light")
-  (overrides.light))
+(fn light []
+  (vim.cmd.colorscheme "tokyonight-day")
+  (lualine "tokyonight-day"))
 
 (fn switch-theme []
   (if (or (not (is-macos)) (is-macos-dark))
-    (set-dark)
-    (set-light)))
+    (dark)
+    (light)))
 
 (vim.api.nvim_create_autocmd
   ["Signal"]
@@ -27,3 +24,8 @@
    :callback switch-theme})
 
 switch_theme
+
+
+
+
+

@@ -91,4 +91,3 @@
 
 (vim.cmd.filetype "plugin on")
 (vim.cmd.syntax "enable")
-(vim.cmd.colorscheme "solarized")
