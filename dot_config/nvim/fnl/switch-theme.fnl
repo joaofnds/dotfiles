@@ -6,12 +6,28 @@
     (~= nil (string.find preference "Dark"))))
 
 (fn dark []
-  (vim.cmd.colorscheme "tokyonight")
-  (lualine "tokyonight"))
+  (set vim.opt.background "dark")
+
+  (vim.cmd.colorscheme "solarized")
+  (lualine "solarized")
+
+  (vim.cmd.highlight "Visual     gui=NONE guibg=#073642 guifg=NONE")
+  (vim.cmd.highlight "VisualNOS  gui=NONE guibg=#073642 guifg=NONE")
+  (vim.cmd.highlight "VisualMode gui=NONE guibg=#073642 guifg=NONE")
+  (vim.cmd.highlight "Search     gui=NONE guibg=#073642 guifg=NONE gui=undercurl,italic")
+  (vim.cmd.highlight "IncSearch  gui=NONE guibg=#073642 guifg=NONE gui=undercurl,italic"))
 
 (fn light []
-  (vim.cmd.colorscheme "tokyonight-day")
-  (lualine "tokyonight-day"))
+  (set vim.opt.background "light")
+
+  (vim.cmd.colorscheme "solarized")
+  (lualine "solarized_light")
+
+  (vim.cmd.highlight "Visual     gui=NONE guibg=#eee9d4 guifg=NONE")
+  (vim.cmd.highlight "VisualNOS  gui=NONE guibg=#eee9d4 guifg=NONE")
+  (vim.cmd.highlight "VisualMode gui=NONE guibg=#eee9d4 guifg=NONE")
+  (vim.cmd.highlight "Search     gui=NONE guibg=#eee9d4 guifg=NONE gui=undercurl,italic")
+  (vim.cmd.highlight "IncSearch  gui=NONE guibg=#eee9d4 guifg=NONE gui=undercurl,italic"))
 
 (fn switch-theme []
   (if (or (not (is-macos)) (is-macos-dark))
@@ -24,8 +40,3 @@
    :callback switch-theme})
 
 switch_theme
-
-
-
-
-

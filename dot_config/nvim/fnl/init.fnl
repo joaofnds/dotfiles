@@ -15,7 +15,6 @@
 (require :config.neogit)
 (require :config.noice)
 (require :config.null-ls)
-(require :config.tokyonight)
 (require :config.treesitter)
 (require :config.trouble)
 (require :config.which-key)

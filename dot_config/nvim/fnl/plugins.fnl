@@ -58,10 +58,10 @@
       (use "hrsh7th/cmp-nvim-lua") ;; - neovim lua api
 
       ;; visual
-      (use "folke/tokyonight.nvim") ;; works great with lua plugins
-      (use "romgrk/barbar.nvim")    ;; pretty tabline
-      (use "hoob3rt/lualine.nvim")  ;; pretty line
-      (use {1 "folke/noice.nvim"    ;; pretty ui replacement
+      (use "ishan9299/nvim-solarized-lua") ;; works great with lua plugins
+      (use "romgrk/barbar.nvim")           ;; pretty tabline
+      (use "hoob3rt/lualine.nvim")         ;; pretty line
+      (use {1 "folke/noice.nvim"           ;; pretty ui replacement
             :requires
             ["MunifTanjim/nui.nvim"]})
 
