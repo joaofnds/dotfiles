@@ -13,7 +13,6 @@
 (require :config.lsp)
 (require :config.lualine)
 (require :config.neogit)
-(require :config.noice)
 (require :config.null-ls)
 (require :config.treesitter)
 (require :config.trouble)
