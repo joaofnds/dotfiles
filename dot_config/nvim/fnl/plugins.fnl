@@ -11,31 +11,23 @@
     (fn [use]
       (use "wbthomason/packer.nvim")
 
-      ;; General plugins
+      ;; general
       (use "tpope/vim-sensible")      ;; sensible vim defaults
       (use "tpope/vim-rsi")           ;; readline keybinds
       (use "tpope/vim-repeat")        ;; repeat commands even after a plugin map
       (use "tpope/vim-commentary")    ;; comment stuf out
       (use "tpope/vim-surround")      ;; mappings to {delete,change,add} surrounding pairs
+      (use "nvim-lua/plenary.nvim")   ;; the entire ecosystem uses this
+      (use "junegunn/vim-easy-align") ;; ain't nobody got time to align things manually
+
+      ;; git
       (use "TimUntersberger/neogit")  ;; git interface
       (use "sindrets/diffview.nvim")  ;; git diff interface
+      (use "lewis6991/gitsigns.nvim") ;; in-buffer git stuff
 
-      (use "nvim-lua/plenary.nvim") ;; the entire ecosystem uses this
-
-      (use "jiangmiao/auto-pairs") ;; [({})] I only wrote half of that
-
-      (use {1 "eraserhd/parinfer-rust"  ;; the superior way of writing lisp
-            :run "cargo build --release"})
-
-      (use "preservim/nerdtree")      ;; does the job (pretty well tbh)
-      (use "lewis6991/gitsigns.nvim") ;; in buffer git stuff
-      (use "folke/which-key.nvim")    ;; because I can't remeber every keybind
-      (use "mbbill/undotree")         ;; because history is not linear
-
-      ;; formatting
-      (use "junegunn/vim-easy-align")         ;; ain't nobody got time to align things manually
-      (use "nvim-treesitter/nvim-treesitter") ;; oh that's pretty - Kramer
-      (use "nvim-treesitter/nvim-treesitter-context") ;; I keep forgetting where I am
+      (use "preservim/nerdtree")   ;; does the job (pretty well tbh)
+      (use "folke/which-key.nvim") ;; because I can't remeber every keybind
+      (use "mbbill/undotree")      ;; because history is not linear
 
       ;; shell integration
       (use {1 "junegunn/fzf" :run (fn [] (vim.call "fzf#install"))})
@@ -60,9 +52,17 @@
 
       ;; visual
       (use "ishan9299/nvim-solarized-lua") ;; works great with lua plugins
-      (use "romgrk/barbar.nvim")           ;; pretty tabline
       (use "hoob3rt/lualine.nvim")         ;; pretty line
+      (use "romgrk/barbar.nvim")           ;; pretty tabline
 
       ;; languages
-      (use {1 "iamcco/markdown-preview.nvim"
-            :run (fn [] (vim.call "mkdp#util#install"))}))))
+      (use "nvim-treesitter/nvim-treesitter")         ;; oh that's pretty - Kramer
+      (use "nvim-treesitter/nvim-treesitter-context") ;; I keep forgetting where I am
+
+      (use {1 "iamcco/markdown-preview.nvim" ;; 'cause I can't render markdown mentally
+            :run (fn [] (vim.call "mkdp#util#install"))})
+
+      (use "jiangmiao/auto-pairs") ;; [({})] I only wrote half of it
+
+      (use {1 "eraserhd/parinfer-rust" ;; the superior way of writing lisp
+            :run "cargo build --release"}))))
