@@ -1,8 +1,7 @@
 (let [install-path (.. (vim.fn.stdpath "data") "/site/pack/packer/start/packer.nvim")]
   (when (= "" (vim.fn.glob install-path))
     (print "installing packer...")
-    (vim.fn.system ["git" "clone" "https://github.com/wbthomason/packer.nvim" install-path])
-    (vim.api.nvim_command "packadd packer.nvim")))
+    (vim.fn.system ["git" "clone" "https://github.com/wbthomason/packer.nvim" install-path])))
 
 (vim.cmd.packadd "packer.nvim")
 
