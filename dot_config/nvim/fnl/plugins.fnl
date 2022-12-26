@@ -53,6 +53,7 @@
       (use "ishan9299/nvim-solarized-lua") ;; works great with lua plugins
       (use "hoob3rt/lualine.nvim")         ;; pretty line
       (use "romgrk/barbar.nvim")           ;; pretty tabline
+      (use "vigoux/notifier.nvim")         ;; non-intrusive notification system
 
       ;; languages
       (use "nvim-treesitter/nvim-treesitter")         ;; oh that's pretty - Kramer
