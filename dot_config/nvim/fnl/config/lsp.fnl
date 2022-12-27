@@ -6,7 +6,7 @@
   (mason.setup)
   (mason-lspconfig.setup {})
   (mason-lspconfig.setup_handlers
-    {1 (fn [server-name] ((. lspconfig server-name :setup) {}))})
+    [(fn [server-name] ((. lspconfig server-name :setup) {}))])
 
   (lsp_signature.setup {:hint_enable false :toggle_key "<C-k>"}))
 
