@@ -43,11 +43,11 @@
       (use "jose-elias-alvarez/null-ls.nvim") ;; hook tools into nvim lsp api
       (use "folke/trouble.nvim")              ;; make it double.
 
-      (use "hrsh7th/nvim-cmp")     ;; complete with:
-      (use "hrsh7th/cmp-nvim-lsp") ;; - lsp
-      (use "hrsh7th/cmp-buffer")   ;; - buffer
-      (use "hrsh7th/cmp-path")     ;; - paths
-      (use "hrsh7th/cmp-nvim-lua") ;; - neovim lua api
+      (use ["hrsh7th/nvim-cmp"       ;; complete with:
+            "hrsh7th/cmp-nvim-lsp"   ;; - lsp
+            "hrsh7th/cmp-buffer"     ;; - buffer
+            "hrsh7th/cmp-path"       ;; - paths
+            "hrsh7th/cmp-nvim-lua"]) ;; - neovim lua api
 
       ;; visual
       (use "ishan9299/nvim-solarized-lua") ;; works great with lua plugins
