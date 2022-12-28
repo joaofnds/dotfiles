@@ -111,7 +111,8 @@
           :c [":TSContextToggle<cr>" "toggle context"]
           :l [":set relativenumber!<cr>" "relative number"]
           :u [":UndotreeToggle<cr>" "undo tree"]
-          :w [":set wrap!<cr>" "toggle wrap"]}
+          :w [":set wrap!<cr>" "toggle wrap"]
+          :j [":TSJToggle<cr>" "split join"]}
       :x {:name "tmux"
           :- [":VtrOpenRunner { \"orientation\": \"v\", \"percentage\": 50 }<cr>" "open vertical runner"]
           := [":VtrOpenRunner { \"orientation\": \"h\", \"percentage\": 50  }<cr>" "open horizontal runner"]

@@ -62,6 +62,8 @@
       (use {1 "iamcco/markdown-preview.nvim" ;; 'cause I can't render markdown mentally
             :run (fn [] (vim.call "mkdp#util#install"))})
 
+      (use "Wansmer/treesj")
+
       (use "jiangmiao/auto-pairs") ;; [({})] I only wrote half of it
 
       (use {1 "eraserhd/parinfer-rust" ;; the superior way of writing lisp

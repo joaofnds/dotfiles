@@ -16,6 +16,7 @@
 (require :config.notifier)
 (require :config.null-ls)
 (require :config.treesitter)
+(require :config.treesj)
 (require :config.trouble)
 (require :config.which-key)
 
