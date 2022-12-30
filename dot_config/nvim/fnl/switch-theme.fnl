@@ -1,14 +1,14 @@
 (local lualine (require :config.lualine))
 (local {: is-macos} (require :utils))
 
+(vim.cmd.colorscheme "solarized")
+
 (fn is-macos-dark []
   (let [preference (vim.fn.system "defaults read -g AppleInterfaceStyle")]
     (~= nil (string.find preference "Dark"))))
 
 (fn dark []
   (set vim.opt.background "dark")
-
-  (vim.cmd.colorscheme "solarized")
   (lualine "solarized")
 
   (vim.cmd.highlight "Visual     gui=NONE guibg=#073642 guifg=NONE")
@@ -19,8 +19,6 @@
 
 (fn light []
   (set vim.opt.background "light")
-
-  (vim.cmd.colorscheme "solarized")
   (lualine "solarized_light")
 
   (vim.cmd.highlight "Visual     gui=NONE guibg=#eee9d4 guifg=NONE")
