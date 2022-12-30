@@ -109,10 +109,11 @@
               :l ["<cmd>TroubleToggle loclist<cr>" "loclist"]}}
       :t {:name "toggle"
           :c [":TSContextToggle<cr>" "toggle context"]
+          :i [":set invlist<cr>" "invisible chars"]
+          :j [":TSJToggle<cr>" "split join"]
           :l [":set relativenumber!<cr>" "relative number"]
           :u [":UndotreeToggle<cr>" "undo tree"]
-          :w [":set wrap!<cr>" "toggle wrap"]
-          :j [":TSJToggle<cr>" "split join"]}
+          :w [":set wrap!<cr>" "toggle wrap"]}
       :x {:name "tmux"
           :- [":VtrOpenRunner { \"orientation\": \"v\", \"percentage\": 50 }<cr>" "open vertical runner"]
           := [":VtrOpenRunner { \"orientation\": \"h\", \"percentage\": 50  }<cr>" "open horizontal runner"]

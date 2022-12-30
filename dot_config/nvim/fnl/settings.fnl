@@ -30,9 +30,9 @@
 (set vim.opt.softtabstop 2)
 (set vim.opt.tabstop     2)
 (set vim.opt.expandtab   true)
-(set vim.opt.list        true)
-(vim.opt.listchars:append {"tab" "  "
-                           "trail" "·"})
+(set vim.opt.list        false)
+(set vim.opt.listchars {:tab "▸ " :trail "·" :eol "↴"})
+(set vim.opt.fillchars {:eob " "}) ;; remove ~ from end of buffer
 
 ;; turn off swap files
 (set vim.opt.swapfile false)
