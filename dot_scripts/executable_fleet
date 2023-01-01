@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+QWER="$HOME/.cache/fleet"
+
+function versions() {
+	curl -s "https://data.services.jetbrains.com/products?code=FL&latest=true" |
+		jq -r '.[].releases[] | .date+": "+.version'
+}
+
+function store() {
+	versions >"$QWER"
+}
+
+function diff() {
+	TEMP=$(mktemp)
+	versions >"$TEMP"
+	delta "$QWER" "$TEMP"
+	rm "$TEMP"
+}
+
+case $1 in
+store)
+	store
+	;;
+*)
+	diff
+	;;
+esac
