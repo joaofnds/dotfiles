@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-QWER="$HOME/.cache/fleet"
+CACHE="$HOME/.cache/fleet"
 
 function versions() {
 	curl -s "https://data.services.jetbrains.com/products?code=FL&latest=true" |
@@ -8,13 +8,13 @@ function versions() {
 }
 
 function store() {
-	versions >"$QWER"
+	versions >"$CACHE"
 }
 
 function diff() {
 	TEMP=$(mktemp)
 	versions >"$TEMP"
-	delta "$QWER" "$TEMP"
+	delta "$CACHE" "$TEMP"
 	rm "$TEMP"
 }
 
