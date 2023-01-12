@@ -39,7 +39,8 @@
           :L [":wincmd L<cr>" "moves cursor buffer to the right"]}
       :f {:name "file"
           :t [":vsplit ~/TODO.md<cr>" "opens TODO.md"]
-          :s [":w<cr>" "writes the buffer"]}
+          :s [":w<cr>" "writes the buffer"]
+          :r [":History<cr>" "recent"]}
       :g {:name "git"
           :P [":Gitsigns preview_hunk<cr>" "preview hunk"]
           :S [":Gitsigns stage_buffer<cr>" "stage buffer"]
