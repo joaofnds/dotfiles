@@ -7,8 +7,20 @@ function versions() {
 		jq -r '.[].releases[] | .date+": "+.version'
 }
 
+function latest_version() {
+	curl -s "https://data.services.jetbrains.com/products?code=FL&latest=true" | jq -r '.[].releases[0] | .version'
+}
+
 function store() {
 	versions >"$CACHE"
+}
+
+function download() {
+	version=$(latest_version)
+	echo "downloading fleet version $version"
+	out="fleet-$version.dmg"
+	curl "https://download-cdn.jetbrains.com/fleet/installers/macos_x64/Fleet-$version.dmg" -o "$out"
+	echo "fleet version $version downloaded to $PWD/$out"
 }
 
 function diff() {
@@ -19,10 +31,13 @@ function diff() {
 }
 
 case $1 in
-store)
-	store
-	;;
-*)
-	diff
-	;;
+	store)
+		store
+		;;
+	download)
+		download
+		;;
+	*)
+		diff
+		;;
 esac
