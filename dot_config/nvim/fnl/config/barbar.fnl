@@ -1,8 +1,11 @@
-(let [bl (require :bufferline)]
-  (bl.setup
+(let [b (require :barbar)]
+  (b.setup
     {:animation false
-     :icons "buffer_number"
-     :icon_separator_active "▎"
-     :icon_separator_inactive "▎"
-     :icon_close_tab "✗ "
-     :icon_close_tab_modified "● "}))
+     :icons
+     {:filetype {:enabled false} ;; requires nvim-web-devicons if enabled
+      :separator {:left "▎" :right ""}
+      :button "✗ "
+      :inactive {:button "×"}
+      :modified {:button "● "}
+      :current {:buffer_index true}
+      :visible {:modified {:buffer_number false}}}}))
