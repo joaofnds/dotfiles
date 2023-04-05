@@ -22,5 +22,5 @@ def source_for_lua(lua_file)
 end
 
 def ensure_dir(path)
-  mkdir_p path unless Dir.exists? path
+  mkdir_p path unless Dir.exist? path
 end
