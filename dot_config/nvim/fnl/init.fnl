@@ -19,6 +19,7 @@
 (require :config.treesj)
 (require :config.trouble)
 (require :config.which-key)
+(require :config.dap)
 
 (let [switch-theme (require :switch-theme)]
   (switch-theme))

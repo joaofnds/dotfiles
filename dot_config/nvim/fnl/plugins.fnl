@@ -59,6 +59,9 @@
       (use "nvim-treesitter/nvim-treesitter")         ;; oh that's pretty - Kramer
       (use "nvim-treesitter/nvim-treesitter-context") ;; I keep forgetting where I am
 
+      (use "mfussenegger/nvim-dap") ;; debugger
+      (use "rcarriga/nvim-dap-ui")  ;; debugger ui
+
       (use {1 "iamcco/markdown-preview.nvim" ;; 'cause I can't render markdown mentally
             :run (fn [] (vim.call "mkdp#util#install"))})
 
