@@ -2,8 +2,7 @@
 
 (doom! :completion
        company             ; the ultimate code completion backend
-       (ivy                ; a search engine for love and life
-        +icons)            ; enables file icons for counsel file searches
+       ivy                 ; a search engine for love and life
 
        :ui
        doom                ; what makes DOOM look the way it does
