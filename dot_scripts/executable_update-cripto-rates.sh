@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+HOME=$(eval echo "~$joaofnds")
+source "$HOME/.private.env"
+
 body=$(mktemp)
 
 curl --silent \
