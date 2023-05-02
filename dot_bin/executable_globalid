@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+help() {
+	cat <<EOF
+usage:
+	globalid encode User 123
+	globalid decode eyJ0eXBlIjoiVXNlciIsImlkIjoiMTIzIn0=
+EOF
+}
+
+encode() {
+	printf '{"type":"%s","id":"%s"}' "$1" "$2" | openssl base64 -A
+}
+
+decode() {
+	result=$(openssl enc -base64 -d <<<"$1")
+	[ -n "$result" ] && echo -n "$result" || exit 1
+}
+
+if [[ "$1" == "encode" ]] && [[ $# -eq 3 ]]; then
+	encode "$2" "$3"
+elif [[ "$1" == "decode" ]] && [[ $# -eq 2 ]]; then
+	decode "$2"
+else
+	help
+fi
