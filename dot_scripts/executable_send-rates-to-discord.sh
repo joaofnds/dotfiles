@@ -12,7 +12,7 @@ BTC=$(cat "$CACHEDIR/btc-usd-rate")
 ETH=$(cat "$CACHEDIR/eth-usd-rate")
 
 URL=$PAI_RICO_WEBHOOK_URL
-if (( $(bc <<<"${USD:2} < 5.20") )); then
+if (( $(bc <<<"${USD:2} < 5.00") )); then
   URL=$PAI_POBRE_WEBHOOK_URL
 fi
 
