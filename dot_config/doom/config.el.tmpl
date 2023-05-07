@@ -234,8 +234,7 @@
 
   (setq-hook! 'elfeed-search-mode-hook
     elfeed-feeds
-    '("http://blog.plataformatec.com.br/feed/"
-      "http://feeds.feedburner.com/codinghorror"
+    '("http://feeds.feedburner.com/codinghorror"
       "http://pragmaticemacs.com/feed/"
       "http://research.swtch.com/feed.atom"
       "https://betweentwoparens.com/rss.xml"
@@ -248,8 +247,6 @@
       "https://blogs.dropbox.com/tech/feed/"
       "https://cate.blog/feed/"
       "https://dassur.ma/index.xml"
-      "https://developers.google.com/web/updates/rss.xml"
-      "https://engineering.wework.com/feed"
       "https://evilmartians.com/chronicles.atom"
       "https://feeds.feedburner.com/2ality"
       "https://feeds.feedburner.com/GiantRobotsSmashingIntoOtherGiantRobots"
@@ -257,21 +254,10 @@
       "https://jvns.ca/atom.xml"
       "https://labs.spotify.com/feed/"
       "https://martinfowler.com/feed.atom"
-      "https://medium.com/feed/building-nubank"
-      "https://medium.com/feed/discord-engineering/tagged/engineering"
-      "https://medium.com/feed/netflix-techblog"
       "https://oremacs.com/atom.xml"
       "https://otavio.dev/feed/"
       "https://practicalli.github.io/blog/feed.xml"
       "https://www.intercom.com/blog/engineering/feed/"
       "https://www.ruby-lang.org/en/feeds/news.rss"
-      "https://www.rubytapas.com/feed/"
-      "https://www.with-emacs.com/rss.xml")))
-
-(customize-set-value
- 'sql-connection-alist
- '(("local"
-    (sql-product 'postgres)
-    (sql-user "postgres")
-    (sql-database "postgres")
-    (sql-server "localhost"))))
+      "https://www.with-emacs.com/rss.xml"
+      "https://herbertograca.com/feed/")))
