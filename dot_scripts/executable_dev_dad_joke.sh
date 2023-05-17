@@ -10,13 +10,13 @@ function send() {
 		"$DADBOT_URL"
 }
 
-JOKE=$(curl -s https://v2.jokeapi.dev/joke/Programming)
+joke=$(curl -s https://v2.jokeapi.dev/joke/Programming)
 
-type=$(jq -r '.type' <<<"$JOKE")
+type=$(jq -r '.type' <<<"$joke")
 if [ "$type" == "single" ]; then
-	send "$(jq -r '.joke' <<<"$JOKE")"
+	send "$(jq -r '.joke' <<<"$joke")"
 else
-	send "$(jq -r '.setup' <<<"$JOKE")"
+	send "$(jq -r '.setup' <<<"$joke")"
 	sleep 20
-	send "$(jq -r '.delivery' <<<"$JOKE")"
+	send "$(jq -r '.delivery' <<<"$joke")"
 fi
