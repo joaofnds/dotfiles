@@ -47,6 +47,7 @@
   (interactive)
   (let ((drop-in-line 25))
     (find-file "~/notes/home.org")
+    (spell-fu-mode -1)
     (evil-goto-line drop-in-line)
     (evil-scroll-line-to-bottom drop-in-line)
     (org-set-startup-visibility)))
