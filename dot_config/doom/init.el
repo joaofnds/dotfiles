@@ -48,7 +48,9 @@
         +aspell)           ; use aspell as a backend for correcting words
 
        :lang
-       (clojure +lsp)      ; java with a lisp
+       (clojure            ; java with a lisp
+        +lsp
+        +tree-sitter)
        common-lisp         ; if you've seen one lisp, you've seen them all
        emacs-lisp          ; drown in parentheses
        (go                 ; the hipster dialect
