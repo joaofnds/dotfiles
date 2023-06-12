@@ -52,6 +52,9 @@
         +lsp
         +tree-sitter)
        common-lisp         ; if you've seen one lisp, you've seen them all
+       (elixir             ; erlang done right
+        +lsp
+        +tree-sitter)
        emacs-lisp          ; drown in parentheses
        (go                 ; the hipster dialect
         +lsp
