@@ -20,7 +20,7 @@
       (use "junegunn/vim-easy-align") ;; ain't nobody got time to align things manually
 
       ;; git
-      (use "TimUntersberger/neogit")  ;; git interface
+      (use "NeogitOrg/neogit")        ;; git interface
       (use "sindrets/diffview.nvim")  ;; git diff interface
       (use "lewis6991/gitsigns.nvim") ;; in-buffer git stuff
 
