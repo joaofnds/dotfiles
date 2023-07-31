@@ -18,6 +18,7 @@
       (use "tpope/vim-surround")      ;; mappings to {delete,change,add} surrounding pairs
       (use "nvim-lua/plenary.nvim")   ;; the entire ecosystem uses this
       (use "junegunn/vim-easy-align") ;; ain't nobody got time to align things manually
+      (use "github/copilot.vim")      ;; tab completion on steroids
 
       ;; git
       (use "NeogitOrg/neogit")        ;; git interface
