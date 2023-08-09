@@ -5,7 +5,7 @@ docker ps >/dev/null || exit 1
 
 PREV_PWD=$(pwd)
 
-VERSION="9.0.1"
+VERSION="26.0.2"
 RELEASE_URL="https://github.com/be5invis/Iosevka/releases/download/v$VERSION/ttf-iosevka-ss08-$VERSION.zip"
 
 TEMPDIR=$(mktemp -d)
