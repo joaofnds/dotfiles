@@ -2,7 +2,7 @@ export TZ=America/Sao_Paulo
 export DO_NOT_TRACK=1
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_THEME="robbyrussell"
-plugins=(encode64 fzf git z)
+plugins=(encode64 fzf git z wakatime)
 
 export HISTSIZE=1000000000
 export HISTFILESIZE=$HISTSIZE
