@@ -4,7 +4,6 @@ HOME=$(eval echo "~$joaofnds")
 */30 9-19 * * 1-5 $HOME/.scripts/update-rates.sh 2>&1 >> $HOME/.log/cron.log
 */10 * * * * $HOME/.scripts/update-cripto-rates.sh 2>&1 >> $HOME/.log/cron.log
 1 10,14,18 * * 1-5 $HOME/.scripts/send-rates-to-discord.sh 2>&1 >> $HOME/.log/cron.log
-0 11 * * 1-5 $HOME/.scripts/dad_joke.sh 2>&1 >> $HOME/.log/cron.log
 0 15 * * 1-5 $HOME/.scripts/dev_dad_joke.sh 2>&1 >> $HOME/.log/cron.log
 0 8 * * 0 $HOME/.scripts/domingobot.sh 2>&1 >> $HOME/.log/cron.log
 
