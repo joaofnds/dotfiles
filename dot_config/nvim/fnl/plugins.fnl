@@ -70,5 +70,7 @@
 
       (use "Wansmer/treesj")
 
+      (use "echasnovski/mini.pairs")
+
       (use {1 "eraserhd/parinfer-rust" ;; the superior way of writing lisp
             :run "cargo build --release"}))))

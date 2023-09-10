@@ -20,6 +20,7 @@
 (require :config.trouble)
 (require :config.which-key)
 (require :config.dap)
+(require :config.pairs)
 
 (let [switch-theme (require :switch-theme)]
   (switch-theme))
