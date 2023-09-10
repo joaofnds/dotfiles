@@ -70,7 +70,5 @@
 
       (use "Wansmer/treesj")
 
-      (use "jiangmiao/auto-pairs") ;; [({})] I only wrote half of it
-
       (use {1 "eraserhd/parinfer-rust" ;; the superior way of writing lisp
             :run "cargo build --release"}))))
