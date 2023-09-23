@@ -1,12 +1,20 @@
 #!/usr/bin/env sh
 
-docker run \
-	-d \
-	--cgroupns host \
-	--pid host \
-	--name dd-agent \
+if [ -z "$1" ]; then
+	echo "No argument supplied"
+	exit 1
+fi
+
+docker run -d --name dd-agent \
+	-e DD_API_KEY="$1" \
+	-e DD_SITE="datadoghq.com" \
+	-e DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true \
+	-e DD_APM_ENABLED=true \
+	-e DD_APM_NON_LOCAL_TRAFFIC=true \
+	-e DD_SYSTEM_PROBE_ENABLED=true \
 	-v /var/run/docker.sock:/var/run/docker.sock:ro \
 	-v /proc/:/host/proc/:ro \
 	-v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro \
-	-e DD_API_KEY="$1" \
+	-p 8125:8125 \
+	-p 8126:8126 \
 	gcr.io/datadoghq/agent:7
