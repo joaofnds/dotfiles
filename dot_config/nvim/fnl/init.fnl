@@ -1,3 +1,5 @@
+(vim.loader.enable)
+
 (global dump (fn [...] (print (vim.inspect ...))))
 
 (require :plugins)
