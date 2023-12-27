@@ -26,7 +26,4 @@
            :files ("emacs-tmux-runner.el")
            :build (:not compile)))
 
-(package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
-
 (package! nyan-mode)
