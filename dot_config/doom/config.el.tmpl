@@ -45,8 +45,7 @@
  :desc "open elfeed" "o e" #'elfeed
  :desc "reveal in neotree" "o ." #'+neotree/find-this-file
  :desc "grab macOS link"   "o g" #'org-mac-link-get-link
- :desc "home.org" "n h" #'jf/notes/open-home
- :desc "nyan" "t n" #'nyan-mode)
+ :desc "home.org" "n h" #'jf/notes/open-home)
 
 (use-package! evil
   :config
@@ -103,13 +102,6 @@
        (format-time-string "%s")
        (insert))
   (delete-region start end))
-
-(use-package! nyan-mode
-  :after-call doom-setup-hook
-  :init
-  (setq nyan-animate-nyancat t
-        nyan-wavy-trail t)
-  (nyan-mode t))
 
 (use-package! parinfer-rust-mode
   :defer t
