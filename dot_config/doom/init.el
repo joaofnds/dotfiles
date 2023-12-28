@@ -83,7 +83,9 @@
        (sh                 ; she sells {ba,z,fi}sh shells on the C xor
         +lsp
         +tree-sitter)
-       (yaml +lsp)         ; JSON, but readable
+       (yaml               ; JSON, but readable
+        +lsp
+        +tree-sitter)
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
