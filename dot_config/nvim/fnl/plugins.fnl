@@ -63,8 +63,6 @@
       (use "mfussenegger/nvim-dap") ;; debugger
       (use "rcarriga/nvim-dap-ui")  ;; debugger ui
 
-      (use "wakatime/vim-wakatime") ;; time tracking
-
       (use {1 "iamcco/markdown-preview.nvim" ;; 'cause I can't render markdown mentally
             :run (fn [] (vim.call "mkdp#util#install"))})
 

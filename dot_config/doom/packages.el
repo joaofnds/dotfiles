@@ -11,7 +11,6 @@
 (package! org-mac-link)      ; insert org-mode links to items selected in various mac apps
 (package! org-appear)        ; automatic visibility of various org elements depending on cursor position
 (package! org-roam-ui)       ; graphical frontend for exploring org-roam Zettelkasten
-(package! wakatime-mode)     ; track time spent in emacs
 
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! package-lint)      ; a linting library for elisp package authors
