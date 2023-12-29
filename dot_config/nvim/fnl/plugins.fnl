@@ -41,7 +41,7 @@
             "williamboman/mason-lspconfig.nvim"
             "neovim/nvim-lspconfig"])
       (use "ray-x/lsp_signature.nvim")        ;; floating signature hint
-      (use "jose-elias-alvarez/null-ls.nvim") ;; hook tools into nvim lsp api
+      (use "nvimtools/none-ls.nvim")          ;; hook tools into nvim lsp api
       (use "folke/trouble.nvim")              ;; make it double.
 
       (use ["hrsh7th/nvim-cmp"       ;; complete with:
