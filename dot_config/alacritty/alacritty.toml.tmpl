@@ -32,7 +32,11 @@ foreground = "#839496"
 TERM = "alacritty"
 
 [font]
-size = 24
+size = {{ .alacritty.font.size }}
+
+[font.normal]
+family = "{{ .alacritty.font.family }}"
+style = "Light"
 
 [font.bold]
 style = "Bold"
@@ -42,10 +46,6 @@ style = "Bold Italic"
 
 [font.italic]
 style = "Light Italic"
-
-[font.normal]
-family = "Iosevka SS08"
-style = "Light"
 
 {{- if eq .chezmoi.os "darwin" }}
 [[keyboard.bindings]]
