@@ -47,21 +47,6 @@
  :desc "grab macOS link"   "o g" #'org-mac-link-get-link
  :desc "home.org" "n h" #'jf/notes/open-home)
 
-(use-package! evil
-  :config
-  (map!
-   :prefix "g"
-   (:prefix ("t" . "time")
-    :desc "iso8601 to unix" :v "e" #'timestamp-encode-region
-    :desc "unix to iso8601" :v "d" #'timestamp-decode-region)
-   (:prefix ("b" . "base64")
-    :desc "encode" :v "e" #'base64-encode-region
-    :desc "decode" :v "d" #'base64-decode-region)
-   :v "x" nil
-   (:prefix ("x" . "hex")
-    :desc "encode" :v "e" #'hex-encode-region
-    :desc "decode" :v "d" #'hex-decode-region)))
-
 (defmacro ->> (&rest body)
   (let ((result (pop body)))
     (dolist (form body result)
@@ -102,6 +87,21 @@
        (format-time-string "%s")
        (insert))
   (delete-region start end))
+
+(use-package! evil
+  :config
+  (map!
+   :prefix "g"
+   (:prefix ("t" . "time")
+    :desc "iso8601 to unix" :v "e" #'timestamp-encode-region
+    :desc "unix to iso8601" :v "d" #'timestamp-decode-region)
+   (:prefix ("b" . "base64")
+    :desc "encode" :v "e" #'base64-encode-region
+    :desc "decode" :v "d" #'base64-decode-region)
+   :v "x" nil
+   (:prefix ("x" . "hex")
+    :desc "encode" :v "e" #'hex-encode-region
+    :desc "decode" :v "d" #'hex-decode-region)))
 
 (use-package! parinfer-rust-mode
   :defer t
