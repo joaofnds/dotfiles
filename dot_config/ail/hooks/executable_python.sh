@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-pip install --user black pyright pylint grip poetry sqlfluff
+pip install --user black pyright pylint grip poetry
