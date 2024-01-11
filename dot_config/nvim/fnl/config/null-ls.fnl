@@ -8,4 +8,5 @@
       null-ls.builtins.formatting.prettier
       null-ls.builtins.formatting.goimports
       null-ls.builtins.formatting.shfmt
+      null-ls.builtins.formatting.sqlfluff
       (null-ls.builtins.formatting.sqlfluff.with {:extra_args ["--dialect" "postgres"]})]}))
