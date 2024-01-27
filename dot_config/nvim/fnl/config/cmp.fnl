@@ -1,9 +1,22 @@
 (set vim.opt.completeopt "menu,menuone,noselect")
 
+(fn insert [ctx str]
+  (vim.api.nvim_buf_set_text
+    ctx.bufnr
+    (- ctx.cursor.row 1)
+    (- ctx.cursor.col 1)
+    (- ctx.cursor.row 1)
+    (- ctx.cursor.col 1)
+    [str])
+  (vim.api.nvim_win_set_cursor 0 [ctx.cursor.row (+ ctx.cursor.col (length str) -1)]))
+
+(fn expand [str]
+  (vim.trim (vim.lsp.util.parse_snippet str)))
+
 (let [cmp (require :cmp)
       context (require :cmp.context)]
   (cmp.setup
-    {:snippet {:expand (fn [args] (insert (context.new) args.body))}
+    {:snippet {:expand (fn [args] (insert (context.new) (expand args.body)))}
      :sources (cmp.config.sources
                 [{:name "nvim_lsp"}
                  {:name "path"}
@@ -21,12 +34,3 @@
                  "<c-u>" (cmp.mapping.scroll_docs 4)
                  "<c-e>" (cmp.mapping.abort)})}))
 
-(fn insert [ctx str]
-  (vim.api.nvim_buf_set_text
-    ctx.bufnr
-    (- ctx.cursor.row 1)
-    (- ctx.cursor.col 1)
-    (- ctx.cursor.row 1)
-    (- ctx.cursor.col 1)
-    [str])
-  (vim.api.nvim_win_set_cursor 0 [ctx.cursor.row (+ ctx.cursor.col (length str) -1)]))
