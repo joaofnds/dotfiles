@@ -1,74 +1,73 @@
-(let [install-path (.. (vim.fn.stdpath "data") "/site/pack/packer/start/packer.nvim")]
-  (when (= "" (vim.fn.glob install-path))
-    (print "installing packer...")
-    (vim.fn.system ["git" "clone" "https://github.com/wbthomason/packer.nvim" install-path])))
+(let [lazypath (.. (vim.fn.stdpath "data") "/lazy/lazy.nvim")]
+  (when (not (vim.loop.fs_stat lazypath))
+    (vim.fn.system ["git" "clone" "--filter=blob:none" "--branch=stable" "https://github.com/folke/lazy.nvim.git" lazypath]))
+  (vim.opt.rtp:prepend lazypath))
 
-(vim.cmd.packadd "packer.nvim")
+(let [lazy (require :lazy)]
+  (lazy.setup
+    ["tpope/vim-sensible"      ;; sensible vim defaults
+     "tpope/vim-rsi"           ;; readline keybinds
+     "tpope/vim-repeat"        ;; repeat commands even after a plugin map
+     "tpope/vim-commentary"    ;; comment stuf out
+     "tpope/vim-surround"      ;; mappings to {delete,change,add} surrounding pairs
+     "nvim-lua/plenary.nvim"   ;; the entire ecosystem uses this
+     "junegunn/vim-easy-align" ;; ain't nobody got time to align things manually
+     "github/copilot.vim"      ;; tab completion on steroids
 
-(let [packer (require :packer)]
-  (packer.startup
-    (fn [use]
-      (use "wbthomason/packer.nvim")
+     ;; git
+     "NeogitOrg/neogit"        ;; git interface
+     "sindrets/diffview.nvim"  ;; git diff interface
+     "lewis6991/gitsigns.nvim" ;; in-buffer git stuff
 
-      ;; general
-      (use "tpope/vim-sensible")      ;; sensible vim defaults
-      (use "tpope/vim-rsi")           ;; readline keybinds
-      (use "tpope/vim-repeat")        ;; repeat commands even after a plugin map
-      (use "tpope/vim-commentary")    ;; comment stuf out
-      (use "tpope/vim-surround")      ;; mappings to {delete,change,add} surrounding pairs
-      (use "nvim-lua/plenary.nvim")   ;; the entire ecosystem uses this
-      (use "junegunn/vim-easy-align") ;; ain't nobody got time to align things manually
-      (use "github/copilot.vim")      ;; tab completion on steroids
+     "preservim/nerdtree"   ;; does the job (pretty well tbh)
+     "folke/which-key.nvim" ;; because I can't remeber every keybind
+     "mbbill/undotree"      ;; because history is not linear
 
-      ;; git
-      (use "NeogitOrg/neogit")        ;; git interface
-      (use "sindrets/diffview.nvim")  ;; git diff interface
-      (use "lewis6991/gitsigns.nvim") ;; in-buffer git stuff
+     ;; shell integration
+     {1 "junegunn/fzf"
+      :build (fn [] (vim.call "fzf#install"))}
+     "junegunn/fzf.vim"
 
-      (use "preservim/nerdtree")   ;; does the job (pretty well tbh)
-      (use "folke/which-key.nvim") ;; because I can't remeber every keybind
-      (use "mbbill/undotree")      ;; because history is not linear
+     "christoomey/vim-tmux-navigator" ;; jumping between vim and tmux, seamlessly
+     "christoomey/vim-tmux-runner"    ;; run stuff on tmux, from vim
 
-      ;; shell integration
-      (use {1 "junegunn/fzf" :run (fn [] (vim.call "fzf#install"))})
-      (use "junegunn/fzf.vim")
+     ;; lsp
+     "williamboman/mason.nvim" ;; lsp tools management
+     "williamboman/mason-lspconfig.nvim"
+     "neovim/nvim-lspconfig"
 
-      (use "christoomey/vim-tmux-navigator") ;; jumping between vim and tmux, seamlessly
-      (use "christoomey/vim-tmux-runner")    ;; run stuff on tmux, from vim
+     "ray-x/lsp_signature.nvim"        ;; floating signature hint
+     "nvimtools/none-ls.nvim"          ;; hook tools into nvim lsp api
+     "folke/trouble.nvim"              ;; make it double.
 
-      ;; lsp
-      (use ["williamboman/mason.nvim"         ;; lsp tools management
-            "williamboman/mason-lspconfig.nvim"
-            "neovim/nvim-lspconfig"])
-      (use "ray-x/lsp_signature.nvim")        ;; floating signature hint
-      (use "nvimtools/none-ls.nvim")          ;; hook tools into nvim lsp api
-      (use "folke/trouble.nvim")              ;; make it double.
+     "hrsh7th/nvim-cmp"       ;; complete with:
+     "hrsh7th/cmp-nvim-lsp"   ;; - lsp
+     "hrsh7th/cmp-buffer"     ;; - buffer
+     "hrsh7th/cmp-path"       ;; - paths
+     "hrsh7th/cmp-nvim-lua"   ;; - neovim lua api
 
-      (use ["hrsh7th/nvim-cmp"       ;; complete with:
-            "hrsh7th/cmp-nvim-lsp"   ;; - lsp
-            "hrsh7th/cmp-buffer"     ;; - buffer
-            "hrsh7th/cmp-path"       ;; - paths
-            "hrsh7th/cmp-nvim-lua"]) ;; - neovim lua api
+     ;; visual
+     "ishan9299/nvim-solarized-lua" ;; works great with lua plugins
+     "hoob3rt/lualine.nvim"         ;; pretty line
+     "romgrk/barbar.nvim"           ;; pretty tabline
+     "vigoux/notifier.nvim"         ;; non-intrusive notification system
 
-      ;; visual
-      (use "ishan9299/nvim-solarized-lua") ;; works great with lua plugins
-      (use "hoob3rt/lualine.nvim")         ;; pretty line
-      (use "romgrk/barbar.nvim")           ;; pretty tabline
-      (use "vigoux/notifier.nvim")         ;; non-intrusive notification system
+     ;; languages
+     "nvim-treesitter/nvim-treesitter"         ;; oh that's pretty - Kramer
+     "nvim-treesitter/nvim-treesitter-context" ;; I keep forgetting where I am
 
-      ;; languages
-      (use "nvim-treesitter/nvim-treesitter")         ;; oh that's pretty - Kramer
-      (use "nvim-treesitter/nvim-treesitter-context") ;; I keep forgetting where I am
+     "mfussenegger/nvim-dap" ;; debugger
+     "rcarriga/nvim-dap-ui"  ;; debugger ui
 
-      (use "mfussenegger/nvim-dap") ;; debugger
-      (use "rcarriga/nvim-dap-ui")  ;; debugger ui
+     {1 "iamcco/markdown-preview.nvim" ;; 'cause I can't render markdown mentally
+      :build (fn [] (vim.call "mkdp#util#install"))
+      :lazy true
+      :cmd ["MarkdownPreviewToggle" "MarkdownPreview" "MarkdownPreviewStop"]
+      :ft ["markdown"]}
 
-      (use {1 "iamcco/markdown-preview.nvim" ;; 'cause I can't render markdown mentally
-            :run (fn [] (vim.call "mkdp#util#install"))})
+     "Wansmer/treesj"
 
-      (use "Wansmer/treesj")
+     "echasnovski/mini.pairs"
 
-      (use "echasnovski/mini.pairs")
-
-      (use {1 "eraserhd/parinfer-rust" ;; the superior way of writing lisp
-            :run "cargo build --release"}))))
+     {1 "eraserhd/parinfer-rust" ;; the superior way of writing lisp
+      :build "cargo build --release"}]))
