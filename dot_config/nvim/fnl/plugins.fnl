@@ -49,7 +49,8 @@
      ;; visual
      "ishan9299/nvim-solarized-lua" ;; works great with lua plugins
      "hoob3rt/lualine.nvim"         ;; pretty line
-     "romgrk/barbar.nvim"           ;; pretty tabline
+     {1 "romgrk/barbar.nvim"        ;; pretty tabline
+      :init (fn [] (set vim.g.barbar_auto_setup false))}           
      "vigoux/notifier.nvim"         ;; non-intrusive notification system
 
      ;; languages
