@@ -11,7 +11,6 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
 tap "joaofnds/tap", "git@github.com:joaofnds/homebrew-tap"
-tap "rigellute/tap"
 tap "zackelia/formulae"
 
 brew "age"
