@@ -1,6 +1,5 @@
 tap "charmbracelet/tap"
 tap "clojure/tools"
-tap "cue-lang/tap"
 tap "d12frosted/emacs-plus"
 tap "dagger/tap"
 tap "github/gh"
