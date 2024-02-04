@@ -1,10 +1,7 @@
 [ -f $HOME/.env ] && source $HOME/.env
-[ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
-[ -d $HOME/.asdf ] && source $HOME/.asdf/asdf.sh && source $HOME/.asdf/completions/asdf.bash
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.private.env ] && source $HOME/.private.env
-[ -f $HOME/.nix-profile/etc/profile.d/nix.sh ] && source $HOME/.nix-profile/etc/profile.d/nix.sh
-
-eval "$(direnv hook zsh)"
+[ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
+[ -d $HOME/.config/mise ] && source <(mise activate zsh)
 
 ensure_tmux_is_running

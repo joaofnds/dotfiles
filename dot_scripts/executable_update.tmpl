@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 tmux split-window 'PATH=/usr/bin:$PATH doom upgrade --force'
-tmux split-window 'asdf-install-latest'
+tmux split-window 'mise upgrade; mise prune --yes'
 
 {{- if eq .chezmoi.os "linux" }}
 paru

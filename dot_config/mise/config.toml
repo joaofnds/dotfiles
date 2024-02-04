@@ -1,0 +1,23 @@
+[env]
+MISE_GO_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/go"
+MISE_NODE_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/node"
+MISE_PYTHON_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/python"
+MISE_RUBY_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/ruby"
+MISE_RUST_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/rust"
+
+[settings]
+experimental = true
+
+[tools]
+babashka = "latest"
+clojure = "latest"
+elixir = "latest"
+erlang = "latest"
+golang = "latest"
+java = "latest"
+lua = "latest"
+nodejs = "latest"
+python = "latest"
+ruby = "latest"
+rust = "latest"
+terraform = "latest"
