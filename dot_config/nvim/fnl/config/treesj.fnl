@@ -1,2 +1,1 @@
-(let [treesj (require :treesj)]
-  (treesj.setup {}))
+{1 "Wansmer/treesj" :lazy true}

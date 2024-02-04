@@ -1,2 +1,3 @@
-(let [notifier (require :notifier)]
-  (notifier.setup))
+{1 "vigoux/notifier.nvim"
+  :event "VeryLazy"
+  :config {}}

@@ -1,15 +1,13 @@
 (local lualine (require :config.lualine))
 (local {: is-macos} (require :utils))
 
-(vim.cmd.colorscheme "solarized")
-
 (fn is-macos-dark []
   (let [preference (vim.fn.system "defaults read -g AppleInterfaceStyle")]
     (~= nil (string.find preference "Dark"))))
 
 (fn dark []
   (set vim.opt.background "dark")
-  (lualine "solarized")
+  (lualine.setup "solarized")
 
   (vim.cmd.highlight "Visual     gui=NONE guibg=#073642 guifg=NONE")
   (vim.cmd.highlight "VisualNOS  gui=NONE guibg=#073642 guifg=NONE")
@@ -19,7 +17,7 @@
 
 (fn light []
   (set vim.opt.background "light")
-  (lualine "solarized_light")
+  (lualine.setup "solarized_light")
 
   (vim.cmd.highlight "Visual     gui=NONE guibg=#eee9d4 guifg=NONE")
   (vim.cmd.highlight "VisualNOS  gui=NONE guibg=#eee9d4 guifg=NONE")
@@ -32,9 +30,13 @@
     (dark)
     (light)))
 
-(vim.api.nvim_create_autocmd
-  ["Signal"]
-  {:pattern "*"
-   :callback switch-theme})
-
-switch_theme
+{1 "ishan9299/nvim-solarized-lua"
+ :event "VeryLazy"
+ :init
+  (fn []
+    (vim.cmd.colorscheme "solarized")
+    (vim.api.nvim_create_autocmd
+      ["Signal"]
+      {:pattern "*"
+       :callback switch-theme}))
+ :config switch-theme}

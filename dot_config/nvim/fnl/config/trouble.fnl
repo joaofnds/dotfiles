@@ -1,2 +1,3 @@
-(let [trouble (require :trouble)]
-  (trouble.setup {:icons false}))
+{1 "folke/trouble.nvim"
+  :lazy true
+  :config {:icons false}}

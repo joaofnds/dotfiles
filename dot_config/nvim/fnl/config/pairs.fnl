@@ -1,2 +1,3 @@
-(let [pairs (require :mini.pairs)]
-  (pairs.setup))
+{1 "echasnovski/mini.pairs"
+  :event "InsertEnter"
+  :config {}}

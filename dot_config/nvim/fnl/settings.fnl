@@ -43,7 +43,7 @@
 ;; keep undo history across sessions, by storing in file.
 (set vim.opt.backupdir  (.. (vim.fn.stdpath "data") "/backups"))
 (when (not (vim.fn.isdirectory vim.o.backupdir))
-  (os.execute (.. "mkdir " vim.o.backupdir)))
+  (os.execute (.. "mkdir -p " vim.o.backupdir)))
 
 (set vim.opt.swapfile   false)
 (set vim.opt.backup     false)
@@ -77,8 +77,6 @@
    "*.gem"
    "log/**"
    "tmp/**"])
-
-(vim.opt.rtp:append ["/usr/local/opt/fzf"])
 
 ;; search
 (set vim.opt.incsearch  true) ;; Find the next match as we type the search
