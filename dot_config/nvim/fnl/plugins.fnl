@@ -45,9 +45,6 @@
      (require :config.treesitter-context) ;; I keep forgetting where I am
      (require :config.treesj)             ;; join lines with treesitter
 
-     (require :config.dap)   ;; debugger
-     (require :config.dapui) ;; debugger ui
-
      (require :config.parinfer) ;; the superior way of writing lisp
 
      (require :config.markdown-preview) ;; 'cause I can't render markdown mentally

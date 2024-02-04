@@ -13,9 +13,7 @@
   :config
     (fn []
       (let [wk (require :which-key)
-            {: organize-imports} (require :config.lsp)
-            dap (require :dap)
-            dapui (require :dapui)]
+            {: organize-imports} (require :config.lsp)]
    
         (wk.register
           {:g {:D [vim.lsp.buf.declaration "declaration"]
@@ -29,14 +27,6 @@
                 :e [vim.diagnostic.goto_next "error"]}
            "[" {:name "previous"
                 :e [vim.diagnostic.goto_prev "error"]}
-   
-           :<F5> [dap.continue "dap continue"]
-           :<S-F5> [dap.restart "dap restart"]
-           :<F9> [dap.toggle_breakpoint "dap toggle breakpoint"]
-           :<F10> [dap.step_over "dap step over"]
-           :<F11> [dap.step_into "dap step into"]
-           :<S-F11> [dap.step_out "dap step out"]
-           :<F12> [dap.close "dap close"]
    
            :<esc> ["<esc>:nohl<CR><esc>" "esc"]
            :<leader>
@@ -121,8 +111,6 @@
                 :. [":NERDTreeFind<cr>" "NERDTree here"]}
             :c {:name "code"
                 :a [vim.lsp.buf.code_action "action"]
-                :d {:name "debugger"
-                    :t [dapui.toggle "toggle"]}
                 :r [vim.lsp.buf.rename "rename"]
                 :s [vim.lsp.buf.signature_help "signature"]
                 :f [vim.lsp.buf.format "format"]
