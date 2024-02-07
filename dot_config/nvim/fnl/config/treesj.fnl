@@ -1,1 +1,3 @@
-{1 "Wansmer/treesj" :lazy true}
+{1 "Wansmer/treesj"
+  :lazy true
+  :config {}}
