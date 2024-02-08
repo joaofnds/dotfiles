@@ -9,5 +9,5 @@ golang.org/x/tools/cmd/godoc@latest
 golang.org/x/tools/cmd/goimports@latest
 golang.org/x/tools/cmd/gorename@latest
 golang.org/x/tools/cmd/guru@latest
-github.com/cweill/gotests/...@latest
+github.com/cweill/gotests/gotests@latest
 github.com/fatih/gomodifytags@latest
