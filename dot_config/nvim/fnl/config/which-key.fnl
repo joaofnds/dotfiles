@@ -68,6 +68,7 @@
                 :n [":Gitsigns next_hunk<CR>" "next hunk"]
                 :p [":Gitsigns prev_hunk<CR>" "previous hunk"]
                 :s [":Gitsigns stage_hunk<cr>" "stage hunk"]
+                :t [":Tardis<CR>" "time machine"]
                 :v [":Gitsigns select_hunk<cr>" "select hunk"]
                 :x [":Gitsigns reset_hunk<cr>" "discard hunk"]
                 :f {:name "find"

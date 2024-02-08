@@ -17,6 +17,7 @@
      ;; git
      (require :config.neogit)   ;; git interface
      (require :config.diffview) ;; git diff interface
+     (require :config.tardis)   ;; git-timemachine, for vim
      (require :config.gitsigns) ;; in-buffer git stuff
 
      (require :config.nerdtree)  ;; does the job (pretty well tbh)
