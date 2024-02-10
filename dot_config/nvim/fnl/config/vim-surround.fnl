@@ -1,1 +1,1 @@
-{1 "tpope/vim-surround" :event "VeryLazy"}
+{1 "tpope/vim-surround" :event "InsertEnter"}

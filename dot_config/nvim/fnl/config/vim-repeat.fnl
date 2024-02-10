@@ -1,1 +1,1 @@
-{1 "tpope/vim-repeat" :event "VeryLazy"}
+{1 "tpope/vim-repeat" :event "InsertEnter"}

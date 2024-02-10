@@ -1,1 +1,1 @@
-{1 "tpope/vim-commentary" :event "VeryLazy"}
+{1 "tpope/vim-commentary" :event "InsertEnter"}

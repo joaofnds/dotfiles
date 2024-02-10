@@ -1,3 +1,3 @@
 {1 "vigoux/notifier.nvim"
-  :event "VeryLazy"
+  :event "UIEnter"
   :config {}}

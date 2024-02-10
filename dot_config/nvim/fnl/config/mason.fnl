@@ -7,7 +7,6 @@
      "ray-x/lsp_signature.nvim"
      "nvimtools/none-ls.nvim"
      "folke/trouble.nvim"]
-
   :config
     (fn []
       (let [mason (require :mason)
@@ -17,11 +16,9 @@
             cmp (require :cmp_nvim_lsp)
             capabilities (vim.lsp.protocol.make_client_capabilities)
             cmp-capabilities (cmp.default_capabilities capabilities)]
-
         (mason.setup)
         (mason-lspconfig.setup {})
         (mason-lspconfig.setup_handlers
          [(fn [server-name]
            ((. lspconfig server-name :setup) {:capabilities cmp-capabilities}))])
-
         (lsp_signature.setup {:hint_enable false :toggle_key "<C-k>"})))}

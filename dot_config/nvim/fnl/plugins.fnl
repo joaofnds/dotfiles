@@ -8,7 +8,7 @@
     [(require :config.vim-sensible)   ;; sensible vim defaults
      (require :config.vim-rsi)        ;; readline keybinds
      (require :config.vim-repeat)     ;; repeat commands even after a plugin map
-     (require :config.vim-commentary) ;; comment stuf out
+     (require :config.vim-commentary) ;; comment stuff out
      (require :config.vim-surround)   ;; mappings to {delete,change,add} surrounding pairs
      (require :config.plenary)        ;; the entire ecosystem uses this
      (require :config.easy-align)     ;; ain't nobody got time to align things manually
@@ -21,7 +21,7 @@
      (require :config.gitsigns) ;; in-buffer git stuff
 
      (require :config.nerdtree)  ;; does the job (pretty well tbh)
-     (require :config.which-key) ;; because I can't remeber every keybind
+     (require :config.which-key) ;; because I can't remember every keybind
      (require :config.undotree)  ;; because history is not linear
 
      ;; shell integration

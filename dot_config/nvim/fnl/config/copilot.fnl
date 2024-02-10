@@ -1,1 +1,1 @@
-{1 "github/copilot.vim" :event "VeryLazy"}
+{1 "github/copilot.vim" :event "InsertEnter"}

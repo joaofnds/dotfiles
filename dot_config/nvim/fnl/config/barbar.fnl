@@ -1,5 +1,5 @@
 {1 "romgrk/barbar.nvim"
-  :event "VeryLazy"
+  :event "UIEnter"
   :init (fn [] (set vim.g.barbar_auto_setup false))
   :config
     {:animation false

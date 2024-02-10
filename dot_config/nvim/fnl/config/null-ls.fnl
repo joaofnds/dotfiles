@@ -14,15 +14,15 @@
             (not (any files utils.root_has_file))))
 
         (null-ls.setup
-         {:sources
-          [null-ls.builtins.diagnostics.golangci_lint
-           null-ls.builtins.diagnostics.shellcheck
-           null-ls.builtins.diagnostics.typos
-           (null-ls.builtins.diagnostics.sqlfluff.with {:extra_args ["--dialect" "postgres"]})
+          {:sources
+            [null-ls.builtins.diagnostics.golangci_lint
+             null-ls.builtins.diagnostics.shellcheck
+             null-ls.builtins.diagnostics.typos
+             (null-ls.builtins.diagnostics.sqlfluff.with {:extra_args ["--dialect" "postgres"]})
 
-           null-ls.builtins.formatting.goimports
-           null-ls.builtins.formatting.shfmt
-           null-ls.builtins.formatting.black
-           (null-ls.builtins.formatting.prettier.with {:condition (root-has-not "biome.json")})
-           (null-ls.builtins.formatting.biome.with {:condition (root-has "biome.json")})
-           (null-ls.builtins.formatting.sqlfluff.with {:extra_args ["--dialect" "postgres"]})]})))}
+             null-ls.builtins.formatting.goimports
+             null-ls.builtins.formatting.shfmt
+             null-ls.builtins.formatting.black
+             (null-ls.builtins.formatting.prettier.with {:condition (root-has-not "biome.json")})
+             (null-ls.builtins.formatting.biome.with {:condition (root-has "biome.json")})
+             (null-ls.builtins.formatting.sqlfluff.with {:extra_args ["--dialect" "postgres"]})]})))}

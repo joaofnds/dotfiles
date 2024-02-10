@@ -1,5 +1,5 @@
 {1 "folke/which-key.nvim"
-  :event "VeryLazy"
+  :keys ["<leader>" "<c-r>" "<c-w>" "\"" "'" "`" "c" "v" "g"]
   :init 
     (fn []
       (set vim.opt.timeout true)

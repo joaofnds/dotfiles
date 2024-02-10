@@ -1,5 +1,5 @@
 {1 "junegunn/fzf.vim"
-  :event "VeryLazy"
+  :cmd ["FZF" "Buffers" "Files" "GFiles" "Ag" "Rg" "Lines" "BLines" "Tags" "BTags" "Marks" "Windows" "Locate" "History"]
   :dependencies [{1 "junegunn/fzf" :build ":call fzf#install()"}]
   :config
     (let [u (require :utils)]
