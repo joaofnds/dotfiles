@@ -30,13 +30,14 @@
     (dark)
     (light)))
 
-{1 "ishan9299/nvim-solarized-lua"
- :event "VeryLazy"
- :init
-  (fn []
-    (vim.cmd.colorscheme "solarized")
-    (vim.api.nvim_create_autocmd
-      ["Signal"]
-      {:pattern "*"
-       :callback switch-theme}))
- :config switch-theme}
+{:lazydef
+  {1 "ishan9299/nvim-solarized-lua"
+    :event "VeryLazy"
+    :config switch-theme
+    :init
+      (fn []
+        (vim.cmd.colorscheme "solarized")
+        (vim.api.nvim_create_autocmd
+          ["Signal"]
+          {:pattern "*"
+           :callback switch-theme}))}}

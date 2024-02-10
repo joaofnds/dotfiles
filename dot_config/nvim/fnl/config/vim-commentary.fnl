@@ -1,1 +1,3 @@
-{1 "tpope/vim-commentary" :event "InsertEnter"}
+{:lazydef
+  {1 "tpope/vim-commentary"
+    :event "InsertEnter"}}

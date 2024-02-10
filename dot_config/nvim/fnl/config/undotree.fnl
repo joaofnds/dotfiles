@@ -1,1 +1,1 @@
-{1 "mbbill/undotree" :cmd "UndotreeToggle"}
+{:lazydef {1 "mbbill/undotree" :cmd "UndotreeToggle"}}

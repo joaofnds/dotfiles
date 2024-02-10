@@ -1,3 +1,4 @@
-{1 "folke/trouble.nvim"
-  :lazy true
-  :config {:icons false}}
+{:lazydef
+  {1 "folke/trouble.nvim"
+    :lazy true
+    :config {:icons false}}}

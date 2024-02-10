@@ -1,1 +1,1 @@
-{1 "tpope/vim-surround" :event "InsertEnter"}
+{:lazydef {1 "tpope/vim-surround" :event "InsertEnter"}}

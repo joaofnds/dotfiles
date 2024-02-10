@@ -1,3 +1,4 @@
-{1 "echasnovski/mini.pairs"
-  :event "InsertEnter"
-  :config {}}
+{:lazydef
+  {1 "echasnovski/mini.pairs"
+    :event "InsertEnter"
+    :config {}}}

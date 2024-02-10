@@ -1,3 +1,4 @@
-{1 "vigoux/notifier.nvim"
-  :event "UIEnter"
-  :config {}}
+{:lazydef
+  {1 "vigoux/notifier.nvim"
+    :event "UIEnter"
+    :config {}}}

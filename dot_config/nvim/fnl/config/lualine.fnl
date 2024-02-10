@@ -13,7 +13,12 @@
      :lualine_z ["location"]}})
 
 (fn setup [theme]
- (let [lualine (require :lualine)]
-  (lualine.setup (config theme))))
+  (let [lualine (require :lualine)]
+    (lualine.setup (config theme))))
 
-{:config config :setup setup}
+{:config config
+  :setup setup
+  :lazydef
+    {1 "hoob3rt/lualine.nvim"
+      :event "UIEnter"
+      :options (config "solarized")}}
