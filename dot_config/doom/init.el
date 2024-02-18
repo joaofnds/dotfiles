@@ -88,7 +88,7 @@
         +tree-sitter)
 
        :os
-       (:if IS-MAC macos)  ; improve compatibility with macOS
+       (:if (featurep :system 'macos) macos) ; improve compatibility with macOS
 
        :app
        (rss +org)          ; emacs as an RSS reader
