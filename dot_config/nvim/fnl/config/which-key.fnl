@@ -13,9 +13,7 @@
 
     :config
       (fn []
-        (let [wk (require :which-key)
-              {: organize-imports} (require :config.lsp)]
-   
+        (let [wk (require :which-key)]
           (wk.register
             {:g {:D [vim.lsp.buf.declaration "declaration"]
                  :d [vim.lsp.buf.definition "definition"]
@@ -118,7 +116,7 @@
                   :r [vim.lsp.buf.rename "rename"]
                   :s [vim.lsp.buf.signature_help "signature"]
                   :f [vim.lsp.buf.format "format"]
-                  :o [organize-imports "organize imports"]
+                  :o [":lua require('config.lsp')['organize-imports']()<cr>" "organize imports"]
                   :l {:name "lsp"
                       :s [":LspStart<cr>" "start"]
                       :S [":LspStop<cr>" "stop"]}
