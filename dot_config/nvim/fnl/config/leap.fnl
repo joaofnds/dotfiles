@@ -1,0 +1,1 @@
+{:lazydef ["ggandor/leap.nvim"]}

@@ -50,6 +50,7 @@
      (load :config.treesj)             ;; join lines with treesitter
 
      (load :config.parinfer) ;; the superior way of writing lisp
+     (load :config.leap)     ;; the superior way of moving around
 
      (load :config.markdown-preview) ;; 'cause I can't mentally render markdown
 

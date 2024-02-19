@@ -24,6 +24,8 @@
                  :s [vim.lsp.buf.signature_help "signature help"]}
              :Q ["<nop>" "nop"]
              :K [vim.lsp.buf.hover "hover"]
+             :z {:j [":lua require('leap').leap({})<cr>" "leap forward"]
+                 :k [":lua require('leap').leap({backward = true})<cr>" "leap backward"]}
              "]" {:name "next"
                   :e [vim.diagnostic.goto_next "error"]}
              "[" {:name "previous"
