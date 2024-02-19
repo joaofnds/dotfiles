@@ -51,9 +51,6 @@
 
      (load :config.parinfer) ;; the superior way of writing lisp
 
-     (load :config.markdown-preview) ;; 'cause I can't render markdown mentally
+     (load :config.markdown-preview) ;; 'cause I can't mentally render markdown
 
-     (load :config.pairs)]
-
-    {:defaults {:lazy true}
-     :concurrency (vim.loop.available_parallelism)}))
+     (load :config.pairs)]))
