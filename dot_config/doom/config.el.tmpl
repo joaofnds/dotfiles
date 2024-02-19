@@ -119,18 +119,11 @@
   :init
   (setq +ivy-project-search-engines '(ag)))
 
-(use-package! format-all
-  :commands format-all-buffer
-  :init
-  (map! :leader :desc "format buffer" "c f" #'format-all-buffer)
+(use-package! apheleia
+  :commands +format/region-or-buffer
   :config
-  (setq-default
-   format-all-formatters
-   '(("Go" goimports)
-     ("JavaScript" prettier)
-     ("Python" black)
-     ("Ruby" rubocop)
-     ("TypeScript" prettier))))
+  (setf (alist-get 'goimports apheleia-formatters) '("goimports"))
+  (setf (alist-get 'go-mode apheleia-mode-alist) '(goimports)))
 
 (use-package! org
   :defer t
