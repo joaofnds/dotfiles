@@ -14,7 +14,8 @@
 
 (package! string-inflection) ; underscore_case -> UPCASE -> camelCase -> PascalCase conversion of names
 (package! package-lint)      ; a linting library for elisp package authors
-(package! tmux-pane         ; negivate seamlessly between tmux and emacs
+
+(package! tmux-pane          ; negivate seamlessly between tmux and emacs
   :recipe (:host github
            :repo "joaofnds/emacs-tmux-pane"
            :files ("tmux-pane.el")))
@@ -24,3 +25,6 @@
            :repo "joaofnds/emacs-tmux-runner"
            :files ("emacs-tmux-runner.el")
            :build (:not compile)))
+
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
