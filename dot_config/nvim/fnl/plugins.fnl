@@ -8,8 +8,7 @@
 
 (let [lazy (require :lazy)]
   (lazy.setup
-    [(load :config.vim-sensible)   ;; sensible vim defaults
-     (load :config.vim-rsi)        ;; readline keybinds
+    [(load :config.vim-rsi)        ;; readline keybinds
      (load :config.vim-repeat)     ;; repeat commands even after a plugin map
      (load :config.vim-commentary) ;; comment stuff out
      (load :config.vim-surround)   ;; mappings to {delete,change,add} surrounding pairs
