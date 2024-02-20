@@ -7,4 +7,4 @@
     :config
       (fn []
         (set vim.g.easy_align_delimiters
-             {";" {:pattern ";" :left_margin 0 :right_margin 1 :stick_to_left 1}}))}}
+             {";" {:pattern ";" :right_margin 0}}))}}
