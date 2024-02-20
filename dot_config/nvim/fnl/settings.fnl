@@ -1,6 +1,7 @@
 (set vim.g.mapleader " ")
 
 ;; General Config
+(set vim.opt.shortmess      "I")      ;; Don't show intro message
 (set vim.opt.encoding       "utf8")   ;; Set encoding
 (set vim.opt.laststatus     2)        ;; Always show status line
 (set vim.opt.number         true)     ;; Enable line Numbers
