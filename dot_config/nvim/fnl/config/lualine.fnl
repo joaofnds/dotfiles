@@ -21,4 +21,4 @@
   :lazydef
     {1 "hoob3rt/lualine.nvim"
       :event "UIEnter"
-      :options (config "solarized")}}
+      :opts (config "solarized")}}
