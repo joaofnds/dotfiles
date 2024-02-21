@@ -6,8 +6,7 @@
       ["williamboman/mason-lspconfig.nvim"
        "neovim/nvim-lspconfig"
        "ray-x/lsp_signature.nvim"
-       "nvimtools/none-ls.nvim"
-       "folke/trouble.nvim"]
+       "nvimtools/none-ls.nvim"]
     :config
       (fn []
         (let [mason (require :mason)
