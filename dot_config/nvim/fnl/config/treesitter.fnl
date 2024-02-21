@@ -1,6 +1,6 @@
 {:lazydef
   {1 "nvim-treesitter/nvim-treesitter"
-    :dependencies ["nvim-treesitter/nvim-treesitter-context" "Wansmer/treesj"]
+    :dependencies ["nvim-treesitter/nvim-treesitter-context"]
     :event "BufReadPost"
     :init
       (fn []

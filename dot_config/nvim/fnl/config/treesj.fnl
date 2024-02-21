@@ -1,4 +1,5 @@
 {:lazydef
   {1 "Wansmer/treesj"
-    :lazy true
-    :config {}}}
+    :dependencies ["nvim-treesitter/nvim-treesitter"]
+    :cmd :TSJToggle
+    :opts {}}}
