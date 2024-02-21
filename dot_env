@@ -15,7 +15,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=$LC_ALL
 export LANGUAGE=$LC_ALL
 
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
