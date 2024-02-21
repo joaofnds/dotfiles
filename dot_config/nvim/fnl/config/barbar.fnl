@@ -2,7 +2,7 @@
   {1 "romgrk/barbar.nvim"
     :event "UIEnter"
     :init (fn [] (set vim.g.barbar_auto_setup false))
-    :config
+    :opts
       {:animation false
        :icons
        {:filetype {:enabled false} ;; requires nvim-web-devicons if enabled
