@@ -123,7 +123,8 @@
   :commands +format/region-or-buffer
   :config
   (setf (alist-get 'goimports apheleia-formatters) '("goimports"))
-  (setf (alist-get 'go-mode apheleia-mode-alist) '(goimports)))
+  (setf (alist-get 'go-mode apheleia-mode-alist) '(goimports))
+  (setf (alist-get 'fennel-mode apheleia-mode-alist) '(lisp-indent)))
 
 (use-package! org
   :defer t
