@@ -48,6 +48,8 @@
      (load :config.treesitter-context) ;; I keep forgetting where I am
      (load :config.treesj)             ;; join lines with treesitter
 
+     (load :config.conjure)            ;; emacs all of a sudden
+
      (load :config.parinfer) ;; the superior way of writing lisp
      (load :config.leap)     ;; the superior way of moving around
 
