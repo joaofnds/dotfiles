@@ -1,7 +1,7 @@
 {:lazydef
  {1 "nvim-treesitter/nvim-treesitter"
   :dependencies ["nvim-treesitter/nvim-treesitter-context"]
-  :event "BufReadPost"
+  :event [:BufNewFile :BufReadPost]
   :init
   (fn []
     (set vim.opt.foldmethod "expr")
