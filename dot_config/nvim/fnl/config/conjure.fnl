@@ -1,3 +1,3 @@
 {:lazydef
-  {1 "Olical/conjure"
-    :ft [:lisp :scheme :clojure :fennel]}}
+ {1 "Olical/conjure"
+  :ft [:lisp :scheme :clojure :fennel]}}

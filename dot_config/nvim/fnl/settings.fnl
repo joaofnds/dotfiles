@@ -39,17 +39,17 @@
 
 ;; sources to ignore when tab completing
 (set vim.opt.wildignore
-  ["*.o"
-   "*.obj"
-   "*~"
-   "*vim/backups*"
-   "*sass-cache*"
-   "*DS_Store*"
-   "vendor/rails/**"
-   "vendor/cache/**"
-   "*.gem"
-   "log/**"
-   "tmp/**"])
+     ["*.o"
+      "*.obj"
+      "*~"
+      "*vim/backups*"
+      "*sass-cache*"
+      "*DS_Store*"
+      "vendor/rails/**"
+      "vendor/cache/**"
+      "*.gem"
+      "log/**"
+      "tmp/**"])
 
 ;; search
 (set vim.opt.incsearch true)  ;; find the next match as we type the search
