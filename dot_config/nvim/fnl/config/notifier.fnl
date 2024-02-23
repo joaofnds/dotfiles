@@ -1,4 +1,4 @@
 {:lazydef
  {1 "vigoux/notifier.nvim"
-  :event "UIEnter"
+  :event :UIEnter
   :opts {}}}

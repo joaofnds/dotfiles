@@ -3,10 +3,10 @@
   :dependencies ["nvim-treesitter/nvim-treesitter-context"]
   :event [:BufNewFile :BufReadPost]
   :init (fn []
-          (set vim.opt.foldmethod "expr")
+          (set vim.opt.foldmethod :expr)
           (set vim.opt.foldexpr "nvim_treesitter#foldexpr()")
           (set vim.opt.foldenable false))
-  :main "nvim-treesitter.configs"
+  :main :nvim-treesitter.configs
   :opts {:auto_install true
          :highlight {:enable true}
          :indent {:enable true}

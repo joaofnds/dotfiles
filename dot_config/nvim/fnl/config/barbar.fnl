@@ -1,7 +1,7 @@
 {:lazydef
  {1 "romgrk/barbar.nvim"
-  :event "UIEnter"
-  :init (fn [] (set vim.g.barbar_auto_setup false))
+  :event :UIEnter
+  :init #(set vim.g.barbar_auto_setup false)
   :opts
   {:animation false
    :icons

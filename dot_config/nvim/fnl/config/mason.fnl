@@ -1,7 +1,7 @@
 {:lazydef
  {1 "williamboman/mason.nvim"
-  :event "BufReadPost"
-  :cmd "Mason"
+  :event :BufReadPost
+  :cmd :Mason
   :dependencies
   ["williamboman/mason-lspconfig.nvim"
    "neovim/nvim-lspconfig"

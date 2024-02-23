@@ -1,6 +1,6 @@
 {:lazydef
  {1 "hoob3rt/lualine.nvim"
-  :event "UIEnter"
+  :event :UIEnter
   :opts
   { :options
     {:theme :solarized

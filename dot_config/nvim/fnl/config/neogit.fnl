@@ -1,5 +1,5 @@
 {:lazydef
  {1 "NeogitOrg/neogit"
   :dependencies ["sindrets/diffview.nvim"]
-  :cmd "Neogit"
+  :cmd :Neogit
   :opts {:integrations {:diffview true}}}}
