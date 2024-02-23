@@ -3,8 +3,8 @@
     (vim.fn.system ["git" "clone" "--filter=blob:none" "--branch=stable" "https://github.com/folke/lazy.nvim.git" lazypath]))
   (vim.opt.rtp:prepend lazypath))
 
-(fn load [config]
-  (. (require config) :lazydef))
+(macro load [config]
+  `(. (require ,config) :lazydef))
 
 (let [lazy (require :lazy)]
   (lazy.setup
@@ -39,7 +39,7 @@
 
     ;; visual
     (load :theme)           ;; works great with lua plugins
-    (load :config.lualine)     ;; pretty line
+    (load :config.lualine)  ;; pretty line
     (load :config.barbar)   ;; pretty tabline
     (load :config.notifier) ;; non-intrusive notification system
 
