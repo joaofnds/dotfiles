@@ -5,7 +5,6 @@ export ZSH_THEME="robbyrussell"
 plugins=(encode64 fzf git z)
 
 export HISTSIZE=1000000000
-export HISTFILESIZE=$HISTSIZE
 
 export EDITOR=nvim
 export TERM=alacritty
