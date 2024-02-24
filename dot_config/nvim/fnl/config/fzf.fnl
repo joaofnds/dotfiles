@@ -13,4 +13,5 @@
     (u.imap "<c-k>p" "<plug>(fzf-complete-path)")
     (u.imap "<c-k>f" "<plug>(fzf-complete-file)"))}
 
- :run #((. vim.fn "fzf#run") ((. vim.fn "fzf#wrap") $1))}
+ :run #(let [{: vimfn } (require :jf)]
+         (->> $1 (vimfn "fzf#wrap") (vimfn "fzf#run")))}
