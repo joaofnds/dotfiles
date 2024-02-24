@@ -10,4 +10,6 @@
 
     (u.imap "<c-k>w" "<plug>(fzf-complete-word)")
     (u.imap "<c-k>p" "<plug>(fzf-complete-path)")
-    (u.imap "<c-k>f" "<plug>(fzf-complete-file)"))}}
+    (u.imap "<c-k>f" "<plug>(fzf-complete-file)"))}
+
+ :run #((. vim.fn "fzf#run") ((. vim.fn "fzf#wrap") $1))}
