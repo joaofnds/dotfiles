@@ -1,6 +1,7 @@
 {:lazydef
  {1 "junegunn/fzf.vim"
   :cmd [:FZF :Buffers :Files :GFiles :Ag :Rg :Lines :BLines :Tags :BTags :Marks :Windows :Locate :History]
+  :keys [:<leader>pr]
   :dependencies [{1 "junegunn/fzf" :build ":call fzf#install()"}]
   :config
   (let [u (require :utils)]

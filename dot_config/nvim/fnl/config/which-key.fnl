@@ -111,6 +111,8 @@
              :p [":NERDTreeToggle<cr>" "NERDTree"]
              :f [":NERDTreeFocus<cr>" "Focus NERDTree"]
              :. [":NERDTreeFind<cr>" "NERDTree here"]}
+         :p {:name "project"
+             :r [":lua require('config.fzf').run({ sink = 'e', source = require('jf').oldfiles() })<cr>" "recent files"]}
          :c {:name "code"
              :a [vim.lsp.buf.code_action "action"]
              :r [vim.lsp.buf.rename "rename"]
