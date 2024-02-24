@@ -1,4 +1,5 @@
 (set vim.g.mapleader " ")
+(set vim.g.maplocalleader ",")
 
 ;; general config
 (set vim.opt.number true)
