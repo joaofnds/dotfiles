@@ -55,4 +55,35 @@
 
     (load :config.markdown-preview) ;; 'cause I can't mentally render markdown
 
-    (load :config.pairs)]))
+    (load :config.pairs)]
+   {:performance
+    {:rtp
+     {:disabled_plugins
+      [:gzip
+       :matchit
+       :matchparen
+       :rplugin
+       :spellfile
+       :tarPlugin
+       :tohtml
+       :tutor
+       :zipPlugin]}}
+    :ui
+    {:icons
+     {:cmd "[cmd]"
+      :config "[config]"
+      :event "[event]"
+      :ft "[ft]"
+      :init "[init]"
+      :import "[import]"
+      :keys "[keys]"
+      :lazy "💤"
+      :loaded "[+]"
+      :not_loaded "[-]"
+      :plugin "[plugin]"
+      :runtime "[runtime]"
+      :require "[require]"
+      :source "[source]"
+      :start "[start]"
+      :task "[task]"
+      :list ["*" "+" "-" "."]}}}))
