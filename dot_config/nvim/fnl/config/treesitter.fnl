@@ -2,6 +2,7 @@
  {1 "nvim-treesitter/nvim-treesitter"
   :dependencies ["nvim-treesitter/nvim-treesitter-context"]
   :event [:BufNewFile :BufReadPost]
+  :cmd :TSUpdate
   :init (fn []
           (set vim.opt.foldmethod :expr)
           (set vim.opt.foldexpr "nvim_treesitter#foldexpr()")
