@@ -45,7 +45,6 @@
 
     ;; languages
     (load :config.treesitter)         ;; oh that's pretty - Kramer
-    (load :config.treesitter-context) ;; I keep forgetting where I am
     (load :config.treesj)             ;; join lines with treesitter
 
     (load :config.conjure)            ;; emacs all of a sudden
