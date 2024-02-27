@@ -77,6 +77,8 @@
                  :s [":GFiles?<cr>" "status files"]
                  :c [":Commits<cr>" "commits"]
                  :C [":BCommits<cr>" "buffer commits"]}}
+         :h {:name "help"
+             :u [#(: (require :jf) :update) "update"]}
          :s {:name "search"
              :b [":Buffers<cr>" "buffers"]
              :f [":Files<cr>" "files"]
