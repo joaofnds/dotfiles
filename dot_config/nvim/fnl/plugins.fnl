@@ -8,13 +8,13 @@
 
 (let [lazy (require :lazy)]
   (lazy.setup
-   [(load :config.vim-rsi)        ;; readline keybinds
-    (load :config.vim-repeat)     ;; repeat commands even after a plugin map
-    (load :config.vim-commentary) ;; comment stuff out
-    (load :config.vim-surround)   ;; mappings to {delete,change,add} surrounding pairs
-    (load :config.plenary)        ;; the entire ecosystem uses this
-    (load :config.easy-align)     ;; ain't nobody got time to align things manually
-    (load :config.copilot)        ;; tab completion on steroids
+   [(load :config.vim-rsi)    ;; readline keybinds
+    (load :config.vim-repeat) ;; repeat commands even after a plugin map
+    (load :config.comment)    ;; comment stuff out
+    (load :config.surround)   ;; mappings to {delete,change,add} surrounding pairs
+    (load :config.plenary)    ;; the entire ecosystem uses this
+    (load :config.easy-align) ;; ain't nobody got time to align things manually
+    (load :config.copilot)    ;; tab completion on steroids
 
     ;; git
     (load :config.neogit)   ;; git interface
