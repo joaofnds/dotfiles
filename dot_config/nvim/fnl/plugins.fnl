@@ -60,7 +60,6 @@
      {:disabled_plugins
       [:gzip
        :matchit
-       :matchparen
        :rplugin
        :spellfile
        :tarPlugin
