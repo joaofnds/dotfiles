@@ -13,7 +13,7 @@
     (load :config.comment)    ;; comment stuff out
     (load :config.surround)   ;; mappings to {delete,change,add} surrounding pairs
     (load :config.plenary)    ;; the entire ecosystem uses this
-    (load :config.easy-align) ;; ain't nobody got time to align things manually
+    (load :config.align)      ;; ain't nobody got time to align things manually
     (load :config.copilot)    ;; tab completion on steroids
 
     ;; git
