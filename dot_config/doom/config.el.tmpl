@@ -114,11 +114,6 @@
   (setq projectile-project-search-path '("~/code/")
         projectile-enable-caching nil))
 
-(use-package! ivy
-  :defer t
-  :init
-  (setq +ivy-project-search-engines '(ag)))
-
 (use-package! apheleia
   :commands +format/region-or-buffer
   :config
