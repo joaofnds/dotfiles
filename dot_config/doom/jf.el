@@ -1,17 +1,6 @@
 (when (featurep :system 'macos)
   (define-key special-event-map [sigusr1] 'jf/apply-theme))
 
-(defmacro ->> (&rest body)
-  (let ((result (pop body)))
-    (dolist (form body result)
-      (setq result (append form (list result))))))
-
-(defmacro -> (&rest body)
-  (let ((result (pop body)))
-    (dolist (form body result)
-      (setq result (append (list (car form) result)
-                           (cdr form))))))
-
 (defun jf/apply-theme ()
   (interactive)
   (pcase (string-trim (shell-command-to-string "osascript -l JavaScript -e \"Application('System Events').appearancePreferences.darkMode.get()\""))
