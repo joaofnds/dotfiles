@@ -33,8 +33,6 @@
       doom-variable-pitch-font (font-spec :family jf/font/variable-family)
       doom-big-font-increment 6)
 
-(defalias 'forward-evil-word 'forward-evil-symbol)
-
 (add-hook
  'window-setup-hook
  (lambda () (load! (concat doom-user-dir "jf"))))
@@ -49,6 +47,7 @@
 
 (use-package! evil
   :config
+  (defalias 'forward-evil-word 'forward-evil-symbol)
   (map!
    :prefix "g"
    (:prefix ("t" . "time")
