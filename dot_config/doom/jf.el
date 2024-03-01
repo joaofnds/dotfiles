@@ -1,5 +1,16 @@
-(when IS-MAC
+(when (featurep :system 'macos)
   (define-key special-event-map [sigusr1] 'jf/apply-theme))
+
+(defmacro ->> (&rest body)
+  (let ((result (pop body)))
+    (dolist (form body result)
+      (setq result (append form (list result))))))
+
+(defmacro -> (&rest body)
+  (let ((result (pop body)))
+    (dolist (form body result)
+      (setq result (append (list (car form) result)
+                           (cdr form))))))
 
 (defun jf/apply-theme ()
   (interactive)
@@ -7,21 +18,21 @@
     ("true" (load-theme jf/dark-theme))
     ("false" (load-theme jf/light-theme))))
 
-(defun git-repo? (path)
+(defun jf/git-repo? (path)
   (f-dir? (f-join path ".git")))
 
-(defun repos-from-path (path)
+(defun jf/repos-from-path (path)
   (-filter 'git-repo? (f-directories path)))
 
-(defun remove-repos-in (path)
+(defun jf/remove-repos-in (path)
   (-each
       (--filter (s-starts-with? path it) projectile-known-projects)
     'projectile-remove-known-project))
 
-(defun add-repos-in (path)
+(defun jf/add-repos-in (path)
   (-each (repos-from-path path) 'projectile-add-known-project))
 
-(defun refresh-repos-in (path)
+(defun jf/refresh-repos-in (path)
   (remove-repos-in path)
   (add-repos-in path))
 
@@ -44,3 +55,33 @@
     (evil-goto-line drop-in-line)
     (evil-scroll-line-to-bottom drop-in-line)
     (org-set-startup-visibility)))
+
+(defun jf/hex-decode-region (start end)
+  (interactive "r")
+  (let ((text (buffer-substring start end)))
+    (delete-region start end)
+    (insert (number-to-string (string-to-number text 16)))))
+
+(defun jf/hex-encode-region (start end)
+  (interactive "r")
+  (let ((text (buffer-substring start end)))
+    (delete-region start end)
+    (insert (format "%x" (string-to-number text)))))
+
+(defun jf/timestamp-decode-region (start end)
+  (interactive "r")
+  (->> (buffer-substring start end)
+       (s-left 10)
+       (string-to-number)
+       (format-time-string "%Y-%m-%dT%T%z")
+       (insert))
+  (delete-region start end))
+
+(defun jf/timestamp-encode-region (start end)
+  (interactive "r")
+  (->> (buffer-substring start end)
+       (parse-time-string)
+       (encode-time)
+       (format-time-string "%s")
+       (insert))
+  (delete-region start end))

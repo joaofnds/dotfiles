@@ -47,61 +47,20 @@
  :desc "grab macOS link"   "o g" #'org-mac-link-get-link
  :desc "home.org" "n h" #'jf/notes/open-home)
 
-(defmacro ->> (&rest body)
-  (let ((result (pop body)))
-    (dolist (form body result)
-      (setq result (append form (list result))))))
-
-(defmacro -> (&rest body)
-  (let ((result (pop body)))
-    (dolist (form body result)
-      (setq result (append (list (car form) result)
-                           (cdr form))))))
-
-(defun hex-decode-region (start end)
-  (interactive "r")
-  (let ((text (buffer-substring start end)))
-    (delete-region start end)
-    (insert (number-to-string (string-to-number text 16)))))
-
-(defun hex-encode-region (start end)
-  (interactive "r")
-  (let ((text (buffer-substring start end)))
-    (delete-region start end)
-    (insert (format "%x" (string-to-number text)))))
-
-(defun timestamp-decode-region (start end)
-  (interactive "r")
-  (->> (buffer-substring start end)
-       (s-left 10)
-       (string-to-number)
-       (format-time-string "%Y-%m-%dT%T%z")
-       (insert))
-  (delete-region start end))
-
-(defun timestamp-encode-region (start end)
-  (interactive "r")
-  (->> (buffer-substring start end)
-       (parse-time-string)
-       (encode-time)
-       (format-time-string "%s")
-       (insert))
-  (delete-region start end))
-
 (use-package! evil
   :config
   (map!
    :prefix "g"
    (:prefix ("t" . "time")
-    :desc "iso8601 to unix" :v "e" #'timestamp-encode-region
-    :desc "unix to iso8601" :v "d" #'timestamp-decode-region)
+    :desc "iso8601 to unix" :v "e" #'jf/timestamp-encode-region
+    :desc "unix to iso8601" :v "d" #'jf/timestamp-decode-region)
    (:prefix ("b" . "base64")
     :desc "encode" :v "e" #'base64-encode-region
     :desc "decode" :v "d" #'base64-decode-region)
    :v "x" nil
    (:prefix ("x" . "hex")
-    :desc "encode" :v "e" #'hex-encode-region
-    :desc "decode" :v "d" #'hex-decode-region)))
+    :desc "encode" :v "e" #'jf/hex-encode-region
+    :desc "decode" :v "d" #'jf/hex-decode-region)))
 
 (use-package! projectile
   :defer t
