@@ -103,11 +103,6 @@
     :desc "encode" :v "e" #'hex-encode-region
     :desc "decode" :v "d" #'hex-decode-region)))
 
-(use-package! parinfer-rust-mode
-  :defer t
-  :init
-  (setq parinfer-rust-preferred-mode "indent"))
-
 (use-package! projectile
   :defer t
   :init
