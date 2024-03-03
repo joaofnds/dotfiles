@@ -6,10 +6,9 @@
     (set vim.opt.timeout true)
     (set vim.opt.timeoutlen 500)
 
-    (let [{: inoremap} (require :utils)]
-      ;; undo breakpoints
-      (each [_ c (ipairs ["," "." ";" "(" "[" "{"])]
-        (inoremap c (.. c "<c-g>u")))))
+    ;; undo breakpoints
+    (each [_ c (ipairs ["," "." ";" "(" "[" "{"])]
+      (vim.keymap.set :i c (.. c "<c-g>u"))))
 
   :config
   (fn []
