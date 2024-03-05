@@ -1,3 +1,4 @@
+depcheck
 dockerfile-language-server-nodejs
 lua-fmt
 npm-check-updates
