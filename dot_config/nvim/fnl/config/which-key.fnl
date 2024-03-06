@@ -113,12 +113,7 @@
              :f [":NERDTreeFocus<cr>" "Focus NERDTree"]
              :. [":NERDTreeFind<cr>" "NERDTree here"]}
          :p {:name "project"
-             :r [#(let [fzf (require :config.fzf)
-                        jf (require :jf)]
-                    (fzf.run {:sink :e
-                              :source (jf.oldfiles)
-                              :options ["--prompt" "Hist>" "--preview" "bat --color=always {}"]}))
-                 "recent files"]}
+             :r [":Recent<cr>" "recent files"]}
          :c {:name "code"
              :a [vim.lsp.buf.code_action "action"]
              :r [vim.lsp.buf.rename "rename"]
