@@ -1,3 +1,4 @@
 {:lazydef
- {1 "tpope/vim-surround"
-  :keys [:ds :da :di :cs :ca :ci :ys :yS {1 :S :mode :v}]}}
+ {1 "echasnovski/mini.surround"
+  :keys [{1 :s :mode [:n :v]}]
+  :config true}}
