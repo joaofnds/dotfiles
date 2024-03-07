@@ -12,6 +12,7 @@
     (load :config.vim-repeat) ;; repeat commands even after a plugin map
     (load :config.comment)    ;; comment stuff out
     (load :config.surround)   ;; mappings to {delete,change,add} surrounding pairs
+    (load :config.cursorword) ;; highlight word under cursor
     (load :config.align)      ;; ain't nobody got time to align things manually
     (load :config.copilot)    ;; tab completion on steroids
 
