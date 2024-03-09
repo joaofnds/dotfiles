@@ -20,6 +20,13 @@
 (set vim.opt.listchars {:tab "▸ " :trail "·" :eol "↴"})
 (set vim.opt.fillchars {:eob " "}) ;; remove ~ from end of buffer
 
+;; refresh buffer when file changes
+(set vim.opt.autoread true)
+(vim.api.nvim_create_autocmd
+  [:FocusGained :BufEnter]
+  {:group (vim.api.nvim_create_augroup "jf_checktime" {:clear true})
+   :command "checktime"})
+
 ;; persistent undo
 (set vim.opt.backupdir  (.. (vim.fn.stdpath "data") "/backups"))
 
