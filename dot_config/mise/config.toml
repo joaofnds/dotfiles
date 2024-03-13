@@ -11,11 +11,8 @@ experimental = true
 [tools]
 babashka = "latest"
 clojure = "latest"
-elixir = "latest"
-erlang = "latest"
 golang = "latest"
 java = "latest"
-lua = "latest"
 nodejs = "latest"
 python = "latest"
 ruby = "latest"
