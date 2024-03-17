@@ -22,6 +22,7 @@
          null-ls.builtins.formatting.goimports
          null-ls.builtins.formatting.shfmt
          null-ls.builtins.formatting.black
+         null-ls.builtins.formatting.gleam_format
          (null-ls.builtins.formatting.prettier.with {:condition (root-has-not "biome.json")})
          (null-ls.builtins.formatting.biome.with {:condition (root-has "biome.json")})
          (null-ls.builtins.formatting.sqlfluff.with {:extra_args ["--dialect" "postgres"]})]})))}}
