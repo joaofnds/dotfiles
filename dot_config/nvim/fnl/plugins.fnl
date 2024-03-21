@@ -34,6 +34,7 @@
 
     (load :config.mason)         ;; lsp package manager
     (load :config.lsp-signature) ;; floating signature hint
+    (load :config.conform)       ;; obey
     (load :config.trouble)       ;; make it double.
     (load :config.cmp)           ;; what was that method again?
 

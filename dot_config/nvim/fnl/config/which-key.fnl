@@ -118,7 +118,7 @@
              :a [vim.lsp.buf.code_action "action"]
              :r [vim.lsp.buf.rename "rename"]
              :s [vim.lsp.buf.signature_help "signature"]
-             :f [vim.lsp.buf.format "format"]
+             :f [":lua require('conform').format({ lsp_fallback = true })<cr>" "format"]
              :o [":lua require('config.lsp')['organize-imports']()<cr>" "organize imports"]
              :l {:name "lsp"
                  :s [":LspStart<cr>" "start"]
