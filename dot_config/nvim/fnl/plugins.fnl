@@ -34,7 +34,6 @@
 
     (load :config.mason)         ;; lsp package manager
     (load :config.lsp-signature) ;; floating signature hint
-    (load :config.null-ls)       ;; hook tools into nvim lsp api
     (load :config.trouble)       ;; make it double.
     (load :config.cmp)           ;; what was that method again?
 

@@ -5,8 +5,7 @@
   :dependencies
   ["williamboman/mason-lspconfig.nvim"
    "neovim/nvim-lspconfig"
-   "ray-x/lsp_signature.nvim"
-   "nvimtools/none-ls.nvim"]
+   "ray-x/lsp_signature.nvim"]
   :config
   (fn []
     (let [mason (require :mason)
