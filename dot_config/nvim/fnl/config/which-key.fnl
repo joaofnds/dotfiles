@@ -30,8 +30,8 @@
 
         :<esc> ["<esc>:nohl<CR><esc>" "esc"]
         :<leader>
-        {:<leader> [":FZF<cr>" "find files: searches whole project for a file"]
-         :. [":FZF %:p:h<cr>" "search for a file in the current directory"]
+        {:<leader> [":FzfLua files<cr>" "find files: searches whole project for a file"]
+         :. [":FzfLua files cwd=%:p:h<cr>" "search for a file in the current directory"]
          :w {:name "window"
              :- [ ":wincmd _<cr>:wincmd |<cr>" "zoom in"]
              := [":wincmd =<cr>" "re-balance windows"]
@@ -56,7 +56,7 @@
          :f {:name "file"
              :t [":vsplit ~/TODO.md<cr>" "opens TODO.md"]
              :s [":w<cr>" "writes the buffer"]
-             :r [":History<cr>" "recent"]}
+             :r [":FzfLua oldfiles<cr>" "recent"]}
          :g {:name "git"
              :P [":Gitsigns preview_hunk<cr>" "preview hunk"]
              :S [":Gitsigns stage_buffer<cr>" "stage buffer"]
@@ -72,19 +72,19 @@
              :v [":Gitsigns select_hunk<cr>" "select hunk"]
              :x [":Gitsigns reset_hunk<cr>" "discard hunk"]
              :f {:name "find"
-                 :f [":GFiles<cr>" "git files"]
-                 :s [":GFiles?<cr>" "status files"]
-                 :c [":Commits<cr>" "commits"]
-                 :C [":BCommits<cr>" "buffer commits"]}}
+                 :f [":FzfLua git_files<cr>" "git files"]
+                 :s [":FzfLua git_status<cr>" "status files"]
+                 :c [":FzfLua git_commits<cr>" "commits"]
+                 :C [":FzfLua git_bcommits<cr>" "buffer commits"]}}
          :h {:name "help"
              :u [#(: (require :jf) :update) "update"]}
          :s {:name "search"
-             :b [":Buffers<cr>" "buffers"]
-             :f [":Files<cr>" "files"]
-             :m [":Marks<cr>" "marks"]
-             :p [":Rg<cr>" "search project"]}
+             :b [":FzfLua buffers<cr>" "buffers"]
+             :f [":FzfLua files<cr>" "files"]
+             :m [":FzfLua marks<cr>" "marks"]
+             :p [":FzfLua live_grep<cr>" "search project"]}
          :b {:name "buffers"
-             :b [":Buffers<cr>" "search buffers"]
+             :b [":FzfLua buffers<cr>" "search buffers"]
              :p [":BufferPrevious<cr>" "previous"]
              :n [":BufferNext<cr>" "next"]
              :s [":BufferPick<cr>" "search"]
@@ -113,7 +113,7 @@
              :f [":NERDTreeFocus<cr>" "Focus NERDTree"]
              :. [":NERDTreeFind<cr>" "NERDTree here"]}
          :p {:name "project"
-             :r [":Recent<cr>" "recent files"]}
+             :r [":FzfLua oldfiles cwd=%:p:h<cr>" "recent files"]}
          :c {:name "code"
              :a [vim.lsp.buf.code_action "action"]
              :r [vim.lsp.buf.rename "rename"]
