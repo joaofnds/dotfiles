@@ -47,8 +47,6 @@ alias k=kubectl
 alias ka='kubectl apply -f'
 alias kd='kubectl delete -f'
 
-alias ddc='ddcctl -d 1 -b'
-
 _not_inside_tmux() { [[ -z "$TMUX" ]] }
 
 ensure_tmux_is_running() {
