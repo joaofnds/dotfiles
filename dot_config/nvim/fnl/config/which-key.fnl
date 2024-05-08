@@ -1,6 +1,6 @@
 {:lazydef
  {1 "folke/which-key.nvim"
-  :keys ["<leader>" "<c-r>" "<c-w>" "\"" "'" "`" "c" "v" "g" "z"]
+  :keys ["<leader>" "<c-r>" "<c-w>" "\"" "'" "`" "c" "v" "g" "z" "Z"]
   :init
   (fn []
     (set vim.opt.timeout true)
