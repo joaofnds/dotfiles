@@ -4,13 +4,12 @@
   (vim.opt.rtp:prepend lazypath))
 
 (macro load [config]
-  `(. (require ,config) :lazydef))
+ `(. (require ,config) :lazydef))
 
 (let [lazy (require :lazy)]
   (lazy.setup
    [(load :config.vim-rsi)    ;; readline keybinds
     (load :config.vim-repeat) ;; repeat commands even after a plugin map
-    (load :config.comment)    ;; comment stuff out
     (load :config.surround)   ;; mappings to {delete,change,add} surrounding pairs
     (load :config.txtobj)     ;; enhances builtin textobjects and motions
     (load :config.cursorword) ;; highlight word under cursor
