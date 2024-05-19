@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-
-cat ~/.cache/usd-brl-rate

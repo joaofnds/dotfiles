@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+CACHEDIR="$HOME/.cache"
+RATESCACHE="$CACHEDIR/rates.json"
+source "$HOME/.private.env"
+
+name=$(basename $0)
+
+help() {
+    cat <<EOF
+Usage: $name <command> [<args>]
+
+Commands:
+    update
+    get <from> <to> [-f|--format <format>]
+EOF
+}
+
+run_update() {
+    curl -s "http://api.exchangeratesapi.io/v1/latest?access_key=$EXCHANGERATESAPI_TOKEN" -o "$RATESCACHE"
+}
+
+run_get_rate() {
+    if [ $# -lt 2 ]; then
+        help
+        exit 1
+    fi
+
+    from=$1
+    to=$2
+    format="%.2f"
+
+    while [ $# -gt 0 ]; do
+        case $1 in
+            -f | --format)
+                format=$2
+                shift
+                ;;
+        esac
+        shift
+    done
+
+    printf $format $(get_rate $from $to)
+}
+
+get_rate() {
+    from=$(jq -r ".rates.$1:u" <"$RATESCACHE")
+    to=$(jq -r ".rates.$2:u" <"$RATESCACHE")
+
+    bc -l <<<"$to / $from"
+}
+
+case "$1" in
+    update)
+        run_update
+        ;;
+    get)
+        run_get_rate "${@:2}"
+        ;;
+    *)
+        help
+        ;;
+
+esac

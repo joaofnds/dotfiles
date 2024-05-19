@@ -1,8 +1,8 @@
 PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
 HOME=$(eval echo "~$joaofnds")
 
-0 9-19 * * 1-5 $HOME/.scripts/update-rates.sh 2>&1 >> $HOME/.log/cron.log
-*/10 * * * * $HOME/.scripts/update-cripto-rates.sh 2>&1 >> $HOME/.log/cron.log
+0 9-19 * * 1-5 $HOME/.bin/,rates update 2>&1 >> $HOME/.log/cron.log
+*/10 * * * * $HOME/.bin/,cryptorates update 2>&1 >> $HOME/.log/cron.log
 
 # * * * * * command to be executed
 # ┯ ┯ ┯ ┯ ┯

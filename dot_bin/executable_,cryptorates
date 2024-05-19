@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+CACHEDIR="$HOME/.cache"
+RATESCACHE="$CACHEDIR/cryptorates.json"
+source "$HOME/.private.env"
+
+name=$(basename $0)
+
+help() {
+    cat <<EOF
+Usage: $name <command> [<args>]
+
+Commands:
+    update
+    get <ticker> [-f|--format <format>]
+EOF
+}
+
+run_update() {
+    curl --silent \
+        --output $RATESCACHE \
+        --header "X-CMC_PRO_API_KEY: $COINMARKETCAP_KEY" \
+        "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,ETH,XLM"
+}
+
+run_get_rate() {
+    if [ $# -lt 1 ]; then
+        help
+        exit 1
+    fi
+
+    ticker=$1
+    format="%.2f"
+
+    while [ $# -gt 0 ]; do
+        case $1 in
+            -f | --format)
+                format=$2
+                shift
+                ;;
+        esac
+        shift
+    done
+
+    printf $format $(jq -r ".data.$ticker:u.quote.USD.price" <"$RATESCACHE")
+}
+
+if [ $# -eq 0 ]; then
+    help
+    exit 1
+fi
+
+case "$1" in
+    update)
+        run_update
+        ;;
+    get)
+        run_get_rate "${@:2}"
+        ;;
+    *)
+        help
+        ;;
+
+esac
