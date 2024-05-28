@@ -11,7 +11,7 @@ fd --hidden \
   --type directory \
   --fixed-strings \
   node_modules \
-  --exec du {} \
+  --exec du -d0 {} \
 | sort -rnk1 \
 | awk '{ print $2 }' \
 | xargs du -sh \
