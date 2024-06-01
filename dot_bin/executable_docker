@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-if lima nerdctl &>/dev/null; then
+if [ -S $HOME/.lima/default/ssh.sock ]; then
     lima nerdctl "$@"
 elif [ -S $HOME/Library/Containers/com.docker.docker/Data/docker-cli.sock ]; then
     DOCKER_EXEC=$(whereis -abq docker | cut -d' ' -f 2)
