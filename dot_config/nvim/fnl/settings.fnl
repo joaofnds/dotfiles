@@ -8,7 +8,9 @@
 (set vim.opt.visualbell true)
 (set vim.opt.colorcolumn "80")
 (set vim.opt.clipboard "unnamedplus")
-(set vim.opt.foldnestmax 3)
+(set vim.opt.foldlevel 99)
+(set vim.opt.foldlevelstart 99)
+(set vim.opt.foldenable true)
 (set vim.opt.wildmode ["full" "list:longest"])
 (vim.opt.diffopt:append ["algorithm:patience" "indent-heuristic"])
 

@@ -15,6 +15,7 @@
     (load :config.cursorword) ;; highlight word under cursor
     (load :config.align)      ;; ain't nobody got time to align things manually
     (load :config.copilot)    ;; tab completion on steroids
+    (load :config.ufo)        ;; fold like a pro
 
     ;; git
     (load :config.neogit)   ;; git interface
