@@ -24,6 +24,12 @@ export PATH="$HOME/.scripts:$PATH"
 export PATH="$HOME/.config/emacs/bin:$PATH"
 
 export FZF_DEFAULT_COMMAND='fd --type file --hidden'
-export FZF_FALLBACK_COMMAND='fd --type file --unrestricted --exclude .git --exclude node_modules'
-export FZF_DEFAULT_OPTS="--layout=reverse --inline-info --bind 'zero:reload($FZF_FALLBACK_COMMAND)'"
+export FZF_UNRESTRICTED_COMMAND='fd --type file --unrestricted --exclude .git --exclude node_modules'
+export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="${FZF_CTRL_T_OPTS} \
+    --prompt '> ' \
+    --bind 'ctrl-g:transform:[[ \$FZF_PROMPT =~ unrestricted ]] && \
+        echo \"change-prompt(> )+reload($FZF_CTRL_T_COMMAND)\" || \
+        echo \"change-prompt(unrestricted> )+reload($FZF_UNRESTRICTED_COMMAND)\"'"
