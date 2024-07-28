@@ -180,15 +180,14 @@
         {1 :<leader>xo 2 ":VtrReorientRunner<cr>" :desc "reorient"}
         {1 :<leader>xr 2 ":VtrSendCommandToRunner<cr>" :desc "send command"}
 
-        {:mode "v"}
-        {1 :<c-j> 2 ":m '>+1<cr>gv=gv" :desc "move line up"}
-        {1 :<c-k> 2 ":m '<-2<cr>gv=gv" :desc "move line down"}
+        {:mode :v 1 :<c-j> 2 ":m '>+1<cr>gv=gv" :desc "move line up"}
+        {:mode :v 1 :<c-k> 2 ":m '<-2<cr>gv=gv" :desc "move line down"}
 
-        {1 :gb :group "base64"}
-        {1 :gbe 2 "c<c-r>=trim(system('base64', @\"))<cr><esc>" :desc "encode"}
-        {1 :gbd 2 "c<c-r>=system('base64 --decode', @\")<cr><esc>" :desc "decode"}
+        {:mode :v 1 :gb :group "base64"}
+        {:mode :v 1 :gbe 2 "c<c-r>=trim(system('base64', @\"))<cr><esc>" :desc "encode"}
+        {:mode :v 1 :gbd 2 "c<c-r>=system('base64 --decode', @\")<cr><esc>" :desc "decode"}
 
-        {1 :gt 2 "c<c-r>=strftime(\"%Y-%m-%dT%H:%M:%S%z\", @\"[0:9])<cr><esc>" :desc "encode"}
+        {:mode :v 1 :gt 2 "c<c-r>=strftime(\"%Y-%m-%dT%H:%M:%S%z\", @\"[0:9])<cr><esc>" :desc "encode"}
 
-        {1 :<leader>x :group "tmux"}
-        {1 :<leader>xl 2 ":VtrSendLinesToRunner<cr>" :desc "send lines"}])))}}
+        {:mode :v 1 :<leader>x :group "tmux"}
+        {:mode :v 1 :<leader>xl 2 ":VtrSendLinesToRunner<cr>" :desc "send lines"}])))}}
