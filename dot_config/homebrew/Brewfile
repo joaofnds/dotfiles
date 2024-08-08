@@ -14,6 +14,7 @@ tap "ynqa/tap"
 tap "zackelia/formulae"
 
 brew "age"
+brew "archiver"
 brew "aspell"
 brew "automake"
 brew "bat"
