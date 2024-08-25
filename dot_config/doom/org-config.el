@@ -29,8 +29,7 @@
       org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
 
       org-agenda-files '("~/notes/home.org"
-                         "~/notes/habits.org"
-                         "~/notes/skillshare/skillshare.org"))
+                         "~/notes/habits.org"))
 
 (set-face-attribute 'org-block-begin-line nil :font jf/font/fixed-family :height 0.8 :background nil :inherit 'shadow)
 (set-face-attribute 'org-block-end-line nil :font jf/font/fixed-family :height 0.8 :background nil :inherit 'shadow)
