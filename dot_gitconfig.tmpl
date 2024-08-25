@@ -43,11 +43,7 @@
   defaultBranch = main
 
 [gpg]
-{{- if eq .chezmoi.hostname "joaofnds-m1" }}
   program = /opt/homebrew/bin/gpg
-{{- else }}
-  program = /usr/local/bin/gpg
-{{ end }}
 
 [delta]
   plus-style = "syntax #1a412b"
