@@ -43,7 +43,7 @@
   defaultBranch = main
 
 [gpg]
-  program = /opt/homebrew/bin/gpg
+  program = {{ output "brew" "--prefix" | trim }}/bin/gpg
 
 [delta]
   plus-style = "syntax #1a412b"
