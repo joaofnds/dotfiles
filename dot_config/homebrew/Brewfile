@@ -35,6 +35,7 @@ brew "croc"
 brew "curl"
 brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-native-comp"]
 brew "dagger"
+brew "dasel"
 brew "delve"
 brew "dsq"
 brew "duckdb"
