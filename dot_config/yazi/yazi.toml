@@ -1,0 +1,13 @@
+[manager]
+show_hidden = true
+
+[status]
+separator_open  = ""
+separator_close = ""
+
+[icon]
+globs = []
+dirs  = []
+files = []
+exts  = []
+conds = []
