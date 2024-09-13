@@ -136,6 +136,7 @@
         {1 :<leader>op 2 ":NERDTreeToggle<cr>" :desc "NERDTree"}
         {1 :<leader>of 2 ":NERDTreeFocus<cr>" :desc "Focus NERDTree"}
         {1 :<leader>o. 2 ":NERDTreeFind<cr>" :desc "NERDTree here"}
+        {1 :<leader>oy 2 ":Yazi cwd<cr>" :desc "Yazi"}
 
         {1 :<leader>p :group "project"}
         {1 :<leader>pr 2 ":FzfLua oldfiles cwd=%:p:h<cr>" :desc "recent files"}

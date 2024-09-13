@@ -52,6 +52,7 @@
 
     (load :config.parinfer) ;; the superior way of writing lisp
     (load :config.leap)     ;; the superior way of moving around
+    (load :config.yazi)
 
     (load :config.markdown-preview) ;; 'cause I can't mentally render markdown
 
