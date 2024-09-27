@@ -35,4 +35,4 @@ export FZF_CTRL_T_OPTS="${FZF_CTRL_T_OPTS} \
         echo \"change-prompt(unrestricted> )+reload($FZF_UNRESTRICTED_COMMAND)\"'"
 
 export OPENEMU_SOURCE="$HOME/Library/Application Support/OpenEmu"
-export OPENEMU_DESTINATION="$HOME/iCloud/OpenEmu"
+export OPENEMU_DESTINATION="drive:/OpenEmu"
