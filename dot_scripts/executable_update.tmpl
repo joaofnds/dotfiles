@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-tmux split-window 'doom upgrade --force'
+tmux split-window 'doom upgrade --force; doom sync --gc'
 tmux split-window 'mise upgrade; mise prune --yes'
 
 {{- if eq .chezmoi.os "linux" }}
