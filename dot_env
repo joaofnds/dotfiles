@@ -33,3 +33,6 @@ export FZF_CTRL_T_OPTS="${FZF_CTRL_T_OPTS} \
     --bind 'ctrl-g:transform:[[ \$FZF_PROMPT =~ unrestricted ]] && \
         echo \"change-prompt(> )+reload($FZF_CTRL_T_COMMAND)\" || \
         echo \"change-prompt(unrestricted> )+reload($FZF_UNRESTRICTED_COMMAND)\"'"
+
+export OPENEMU_SOURCE="$HOME/Library/Application Support/OpenEmu"
+export OPENEMU_DESTINATION="$HOME/iCloud/OpenEmu"
