@@ -2,7 +2,10 @@
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.private.env ] && source $HOME/.private.env
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
-[ -d $HOME/.config/mise ] && source <(mise activate zsh)
+[ -d $HOME/.config/mise ] \
+  && source <(mise activate zsh) \
+  && source <(mise completion zsh) \
+  && source <(mise env)
 
 source <(fzf --zsh)
 
