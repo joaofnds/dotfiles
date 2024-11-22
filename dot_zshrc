@@ -9,4 +9,6 @@
 
 source <(fzf --zsh)
 
-ensure_tmux_is_running
+if [[ "$TERM_PROGRAM" != "vscode" && -z "$EMACS_VTERM_PATH" ]]; then
+  ensure_tmux_is_running
+fi
