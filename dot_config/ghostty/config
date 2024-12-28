@@ -1,0 +1,12 @@
+font-family = Iosevka SS08
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
+font-size = 18
+macos-titlebar-style = hidden
+quit-after-last-window-closed = true
+theme = Builtin Solarized Dark
+window-height = 60
+window-padding-x = 0
+window-padding-y = 0
+window-width = 170
