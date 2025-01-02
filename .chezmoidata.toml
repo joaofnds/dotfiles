@@ -9,3 +9,7 @@
 [alacritty.font]
   family = "Iosevka SS08"
   size = 18
+
+[ghostty.font]
+  family = "Iosevka SS08"
+  size = 18
