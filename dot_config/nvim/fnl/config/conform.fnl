@@ -10,4 +10,6 @@
     :sql [:sqlfluff]
     :json [[:biome :prettier]]
     :javascript [[:biome :prettier]]
-    :typescript [[:biome :prettier]]}}}}
+    :typescript [[:biome :prettier]]}
+   :default_format_opts
+   {:timeout_ms 2_000}}}}
