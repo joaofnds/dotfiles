@@ -11,6 +11,7 @@ experimental = true
 [tools]
 babashka = "latest"
 clojure = "latest"
+deno = "latest"
 go = "latest"
 java = "latest"
 nodejs = "latest"
@@ -19,4 +20,4 @@ ruby = "latest"
 rust = "latest"
 terraform = "latest"
 usage = "latest"
-deno = "latest"
+zig = "latest"
