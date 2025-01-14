@@ -19,7 +19,7 @@ EOF
 }
 
 run_update() {
-    curl -s "http://api.exchangeratesapi.io/v1/latest?access_key=$EXCHANGERATESAPI_TOKEN" -o "$RATESCACHE"
+    curl -s "https://openexchangerates.org/api/latest.json?app_id=$OPENEXCHANGERATES_APPID" -o "$RATESCACHE"
 }
 
 run_get_rate() {
