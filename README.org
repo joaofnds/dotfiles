@@ -19,12 +19,12 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 - [[https://github.com/BurntSushi/ripgrep][BurntSushi/ripgrep: search directories for a pattern]]
 - [[https://github.com/ggreer/the_silver_searcher][ggreer/the_silver_searcher: A code-searching tool similar to ack, but faster.]]
 - [[https://github.com/chmln/sd][chmln/sd: Intuitive find & replace CLI (sed alternative)]]
-- [[https://github.com/ast-grep/ast-grep][A CLI tool for code structural search, lint and rewriting]]
+- [[https://github.com/ast-grep/ast-grep][ast-grep/ast-grep: A CLI tool for code structural search, lint and rewriting]]
 - [[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
 - [[https://github.com/theryangeary/choose][theryangeary/choose: A human-friendly and fast alternative to cut and (sometimes) awk]]
 - [[https://github.com/sharkdp/hyperfine][sharkdp/hyperfine: A command-line benchmarking tool]]
 - [[https://github.com/vifm/vifm][vifm/vifm: a file manager with curses interface, which provides Vim-like environment for managing objects within file systems]]
-- [[https://github.com/sxyazi/yazi][terminal file manager]]
+- [[https://github.com/sxyazi/yazi][sxyazi/yazi: terminal file manager]]
 
 ** files
 - [[https://github.com/XAMPPRocky/tokei][XAMPPRocky/tokei: Count your code, quickly.]]
