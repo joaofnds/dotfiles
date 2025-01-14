@@ -40,14 +40,6 @@ alias dstop='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs
 alias drm='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs docker rm'
 alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs docker rmi -f'
 
-_not_inside_tmux() { [[ -z "$TMUX" ]] }
-
-ensure_tmux_is_running() {
-  if _not_inside_tmux; then
-    tat
-  fi
-}
-
 basepwd() {
   basename $PWD
 }
