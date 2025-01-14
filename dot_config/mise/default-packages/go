@@ -2,6 +2,7 @@
 golang.org/x/lint/golint@latest
 golang.org/x/tools/gopls@latest
 github.com/onsi/ginkgo/v2/ginkgo@latest
+github.com/google/yamlfmt/cmd/yamlfmt@latest
 
 # doom go module dependencies
 github.com/x-motemen/gore/cmd/gore@latest
