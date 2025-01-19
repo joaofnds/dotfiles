@@ -15,9 +15,14 @@
           cmp (require :cmp_nvim_lsp)
           capabilities (vim.lsp.protocol.make_client_capabilities)
           cmp-capabilities (cmp.default_capabilities capabilities)]
+
+      (fn setup-server [name]
+        ((. lspconfig name :setup) {:capabilities cmp-capabilities}))
+
       (mason.setup)
       (mason-lspconfig.setup {})
-      (mason-lspconfig.setup_handlers
-       [(fn [server-name]
-          ((. lspconfig server-name :setup) {:capabilities cmp-capabilities}))])
+      (mason-lspconfig.setup_handlers [setup-server])
+
+      (setup-server :gleam)
+
       (lsp_signature.setup {:hint_enable false :toggle_key "<C-k>"})))}}
