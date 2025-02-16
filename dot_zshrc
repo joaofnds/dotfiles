@@ -2,8 +2,8 @@
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.private.env ] && source $HOME/.private.env
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
-[ -f $HOME/.config/fzf.sh ] && source <(fzf --zsh)
-[ -d $HOME/.config/mise ] && source <(mise activate zsh)
+[ -x "$(command -v fzf)" ] && source <(fzf --zsh)
+[ -x "$(command -v mise)" ] && source <(mise activate zsh)
 
 if [[ -z "$TMUX" && "$TERM_PROGRAM" != "vscode" && -z "$EMACS_VTERM_PATH" ]]; then
   tat
