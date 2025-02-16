@@ -36,5 +36,9 @@ export FZF_CTRL_T_OPTS="${FZF_CTRL_T_OPTS} \
 
 export OPENEMU_SOURCE="$HOME/Library/Application Support/OpenEmu"
 export OPENEMU_DESTINATION="drive:/OpenEmu"
+
 export PICTURES_SOURCE="$HOME/Pictures"
 export PICTURES_DESTINATION="drive:/pictures"
+
+export BOOKS_SOURCE="$HOME/content/books"
+export BOOKS_DESTINATION="drive:/books"
