@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+docker run \
+  --publish 3000:3000 \
+  --publish 4317:4317 \
+  --publish 4318:4318 \
+  --rm \
+  --detach \
+  grafana/otel-lgtm
