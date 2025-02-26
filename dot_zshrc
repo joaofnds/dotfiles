@@ -5,6 +5,6 @@
 [ -x "$(command -v fzf)" ] && source <(fzf --zsh)
 [ -x "$(command -v mise)" ] && source <(mise activate zsh)
 
-if [[ -z "$TMUX" && "$TERM_PROGRAM" != "vscode" && -z "$EMACS_VTERM_PATH" ]]; then
+if [[ -z "$TMUX" && "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "zed" && -z "$EMACS_VTERM_PATH" ]]; then
   tat
 fi
