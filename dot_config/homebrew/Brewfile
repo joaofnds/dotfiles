@@ -134,7 +134,6 @@ brew "zackelia/formulae/bclm"
 brew "zeromq"
 brew "zsh"
 
-cask "alacritty"
 cask "android-platform-tools"
 cask "appcleaner"
 cask "audacity"

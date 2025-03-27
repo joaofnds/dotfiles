@@ -41,5 +41,5 @@ alt - right : yabai -m window --ratio rel:0.1
 alt - left : yabai -m window --ratio rel:-0.1
 
 alt + shift - c : skhd --reload
-alt - return : alacritty
+alt - return : ghostty
 alt - n : open ~

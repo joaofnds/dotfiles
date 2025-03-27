@@ -16,8 +16,8 @@ else
     other_theme="dark"
 fi;
 
-# update alacritty
-sed -i "" "s/colors: \*${other_theme}/colors: *${theme}/" ~/.config/alacritty/alacritty.yml &
+# update ghostty
+sed -i "" "s/${other_theme}/${theme}/" ~/.config/ghostty/config &
 
 # update tmux
 sed -i "" "s/${other_theme}.conf/${theme}.conf/" ~/.config/tmux/tmux.conf &&
