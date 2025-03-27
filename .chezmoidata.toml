@@ -1,11 +1,11 @@
 [code.font]
-  family = "Iosevka SS08"
+  family = "PragmataPro"
   size = 18
 
 [emacs.font]
-  family = "Iosevka SS08"
+  family = "PragmataPro"
   size = 18
 
 [ghostty.font]
-  family = "Iosevka SS08"
+  family = "PragmataPro"
   size = 18
