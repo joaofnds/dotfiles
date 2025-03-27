@@ -23,7 +23,6 @@ I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything
 - [[https://github.com/sachaos/viddy][sachaos/viddy: Modern watch command]]
 - [[https://github.com/theryangeary/choose][theryangeary/choose: A human-friendly and fast alternative to cut and (sometimes) awk]]
 - [[https://github.com/sharkdp/hyperfine][sharkdp/hyperfine: A command-line benchmarking tool]]
-- [[https://github.com/vifm/vifm][vifm/vifm: a file manager with curses interface, which provides Vim-like environment for managing objects within file systems]]
 - [[https://github.com/sxyazi/yazi][sxyazi/yazi: terminal file manager]]
 
 ** files
