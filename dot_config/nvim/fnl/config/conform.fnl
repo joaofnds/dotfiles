@@ -8,8 +8,8 @@
     :gleam [:gleam]
     :python [:black]
     :sql [:sqlfluff]
-    :json [[:biome :prettier]]
-    :javascript [[:biome :prettier]]
-    :typescript [[:biome :prettier]]}
+    :json {0 :biome 1 :prettier :stop_after_first true}
+    :javascript {0 :biome 1 :prettier :stop_after_first true}
+    :typescript {0 :biome 1 :prettier :stop_after_first true}}
    :default_format_opts
    {:timeout_ms 2_000}}}}
