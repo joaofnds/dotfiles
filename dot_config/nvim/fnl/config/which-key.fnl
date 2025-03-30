@@ -150,12 +150,6 @@
         {1 :<leader>cl :group "lsp"}
         {1 :<leader>cls 2 ":LspStart<cr>" :desc "start"}
         {1 :<leader>clS 2 ":LspStop<cr>" :desc "stop"}
-        {1 :<leader>cx :group "errors"}
-        {1 :<leader>cxx 2 ":TroubleToggle<cr>" :desc "toggle"}
-        {1 :<leader>cw 2 ":TroubleToggle lsp_workspace_diagnostics<cr>" :desc "workspace errors"}
-        {1 :<leader>cb 2 ":TroubleToggle lsp_document_diagnostics<cr>" :desc "buffer errors"}
-        {1 :<leader>cq 2 ":TroubleToggle quickfix<cr>" :desc "quickfix"}
-        {1 :<leader>cl 2 ":TroubleToggle loclist<cr>" :desc "loclist"}
 
         {1 :<leader>t :group "toggle"}
         {1 :<leader>tc 2 ":TSContextToggle<cr>" :desc "toggle context"}

@@ -33,9 +33,7 @@
     (load :config.tmux-runner)    ;; run stuff on tmux, from vim
 
     (load :config.mason)         ;; lsp package manager
-    (load :config.lsp-signature) ;; floating signature hint
     (load :config.conform)       ;; obey
-    (load :config.trouble)       ;; make it double.
     (load :config.cmp)           ;; what was that method again?
 
     ;; visual
@@ -52,7 +50,7 @@
 
     (load :config.parinfer) ;; the superior way of writing lisp
     (load :config.leap)     ;; the superior way of moving around
-    (load :config.yazi)
+    (load :config.yazi)     ;; the superior way of moving around — for files
 
     (load :config.markdown-preview) ;; 'cause I can't mentally render markdown
 
