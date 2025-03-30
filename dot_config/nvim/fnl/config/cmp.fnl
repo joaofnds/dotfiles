@@ -8,24 +8,8 @@
     (let [cmp (require :cmp)
           context (require :cmp.context)]
 
-      (fn insert [ctx str]
-        (vim.api.nvim_buf_set_text
-         ctx.bufnr
-         (- ctx.cursor.row 1)
-         (- ctx.cursor.col 1)
-         (- ctx.cursor.row 1)
-         (- ctx.cursor.col 1)
-         [str])
-        (vim.api.nvim_win_set_cursor 0 [ctx.cursor.row (+ ctx.cursor.col (length str) -1)]))
-
-      (fn parse [str]
-        (vim.trim (vim.lsp.util.parse_snippet str)))
-
-      (fn expand [args]
-        (insert (context.new) (parse args.body)))
-
       (cmp.setup
-       {:snippet {:expand expand}
+       {:snippet {:expand #(vim.snippet.expand $1.body)}
         :sources (cmp.config.sources
                   [{:name "nvim_lsp"}
                    {:name "path"} ;; maybe remove this bc fzf has better path completion?
