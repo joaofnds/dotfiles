@@ -24,3 +24,5 @@ terraform = "latest"
 usage = "latest"
 yamlfmt = "latest"
 zig = "latest"
+
+"aqua:quarylabs/sqruff" = "latest"
