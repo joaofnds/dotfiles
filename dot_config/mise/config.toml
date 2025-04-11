@@ -12,6 +12,7 @@ experimental = true
 babashka = "latest"
 clojure = "latest"
 deno = "latest"
+gleam = "latest"
 go = "latest"
 java = "latest"
 nodejs = "latest"
