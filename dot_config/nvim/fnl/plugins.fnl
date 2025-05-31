@@ -32,10 +32,6 @@
     (load :config.tmux-navigator) ;; jumping between vim and tmux, seamlessly
     (load :config.tmux-runner)    ;; run stuff on tmux, from vim
 
-    (load :config.mason)         ;; lsp package manager
-    (load :config.conform)       ;; obey
-    (load :config.cmp)           ;; what was that method again?
-
     ;; visual
     (load :theme)           ;; works great with lua plugins
     (load :config.lualine)  ;; pretty line
@@ -43,10 +39,16 @@
     (load :config.notifier) ;; non-intrusive notification system
 
     ;; languages
-    (load :config.treesitter)         ;; oh that's pretty - Kramer
-    (load :config.treesj)             ;; join lines with treesitter
+    (load :config.mason)   ;; lsp package manager
+    (load :config.conform) ;; obey
+    (load :config.cmp)     ;; what was that method again?
 
-    (load :config.conjure)            ;; emacs all of a sudden
+    (load :config.avante)  ;; AI pair programming: because even my code needs a wingman
+
+    (load :config.treesitter) ;; oh that's pretty - Kramer
+    (load :config.treesj)     ;; join lines with treesitter
+
+    (load :config.conjure) ;; emacs all of a sudden
 
     (load :config.parinfer) ;; the superior way of writing lisp
     (load :config.leap)     ;; the superior way of moving around
