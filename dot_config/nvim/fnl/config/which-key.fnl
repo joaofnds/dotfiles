@@ -146,7 +146,7 @@
         {1 :<leader>cr 2 vim.lsp.buf.rename :desc "rename"}
         {1 :<leader>cs 2 vim.lsp.buf.signature_help :desc "signature"}
         {1 :<leader>cf 2 ":lua require('conform').format({ lsp_fallback = true })<cr>" :desc "format"}
-        {1 :<leader>co 2 ":lua require('config.lsp')['organize-imports']()<cr>" :desc "organize imports"}
+        {1 :<leader>co 2 ":lua require('util.lsp')['organize-imports']()<cr>" :desc "organize imports"}
         {1 :<leader>cl :group "lsp"}
         {1 :<leader>cls 2 ":LspStart<cr>" :desc "start"}
         {1 :<leader>clS 2 ":LspStop<cr>" :desc "stop"}
