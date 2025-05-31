@@ -44,7 +44,12 @@ run_get_rate() {
         shift
     done
 
-    printf $format $(jq -r ".data.$ticker:u.quote.USD.price" <"$RATESCACHE")
+    if [ "$format" = "k" ]; then
+      local price=$(jq -r ".data.$ticker:u.quote.USD.price" <"$RATESCACHE")
+      printf "$%dk" $((price / 1000))
+    else
+      printf $format $(jq -r ".data.$ticker:u.quote.USD.price" <"$RATESCACHE")
+    fi
 }
 
 if [ $# -eq 0 ]; then
