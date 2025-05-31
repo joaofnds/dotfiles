@@ -39,6 +39,7 @@ alias dcpr='docker compose restart'
 alias dstop='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs docker stop'
 alias drm='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs docker rm'
 alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs docker rmi -f'
+alias dctx='docker context use $(docker context ls --format {{.Name}} | fzf)'
 
 basepwd() {
   basename $PWD
