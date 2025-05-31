@@ -19,9 +19,6 @@
 [interactive]
   diffFilter = delta --color-only
 
-[delta]
-  navigate = true
-
 [merge]
   conflictStyle = diff3
 
@@ -46,6 +43,7 @@
   program = {{ output "brew" "--prefix" | trim }}/bin/gpg
 
 [delta]
+  navigate = true
   plus-style = "syntax #1a412b"
   minus-style = "syntax #3b3639"
   syntax-theme = "Solarized (dark)"
