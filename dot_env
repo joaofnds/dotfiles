@@ -7,7 +7,7 @@ plugins=(git z)
 export HISTSIZE=1000000000
 
 export EDITOR=nvim
-export MANPAGER="bat --plain"
+export MANPAGER="col -b | bat --language=man --plain "
 
 export LC_ALL=en_US.UTF-8
 export LANG=$LC_ALL
