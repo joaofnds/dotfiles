@@ -41,6 +41,8 @@ alias drm='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs d
 alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs docker rmi -f'
 alias dctx='docker context use $(docker context ls --format {{.Name}} | fzf)'
 
+alias m4b-tool='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/mnt sandreas/m4b-tool:latest'
+
 basepwd() {
   basename $PWD
 }
