@@ -5,9 +5,6 @@ MISE_PYTHON_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/
 MISE_RUBY_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/ruby"
 MISE_RUST_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/rust"
 
-[settings]
-experimental = true
-
 [tools]
 babashka = "latest"
 clojure = "latest"
