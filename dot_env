@@ -41,3 +41,6 @@ export PICTURES_DESTINATION="drive:/pictures"
 
 export BOOKS_SOURCE="$HOME/content/books"
 export BOOKS_DESTINATION="drive:/books"
+
+export MUSIC_SOURCE="$HOME/Music"
+export MUSIC_DESTINATION="drive:/music"
