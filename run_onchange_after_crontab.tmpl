@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-# {{ output "sha256sum" (joinPath .chezmoi.sourceDir "dot_crontab")  }}
+# {{ output "sha256sum" (joinPath .chezmoi.sourceDir "dot_crontab.tmpl")  }}
 
 crontab < ~/.crontab

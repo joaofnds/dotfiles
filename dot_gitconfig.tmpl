@@ -1,7 +1,12 @@
 [user]
-  email = joaofnds@joaofnds.com
   name = João Fernandes
+{{- if .isWorkComputer }}
+  email = joao.fernandes@engine.com
+  signingkey = 50647D5D6C1D1E0FA6AE5E1017BD783DE9222477
+{{- else }}
+  email = joaofnds@joaofnds.com
   signingkey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
+{{- end }}
 
 [format]
   signoff = true

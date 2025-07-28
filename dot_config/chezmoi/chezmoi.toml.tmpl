@@ -1,5 +1,8 @@
 sourceDir = "{{.chezmoi.homeDir}}/code/dotfiles"
 encryption = "gpg"
 
+[data]
+isWorkComputer = {{ hasPrefix "HE-" .chezmoi.hostname }}
+
 [gpg]
 recipient = "joaofnds@joaofnds.com"
