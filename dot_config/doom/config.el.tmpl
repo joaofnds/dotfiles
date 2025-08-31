@@ -67,14 +67,6 @@
   (setq projectile-project-search-path '("~/code/")
         projectile-enable-caching nil))
 
-(use-package! apheleia
-  :commands +format/region-or-buffer
-  :config
-  (setf (alist-get 'goimports apheleia-formatters) '("goimports"))
-  (setf (alist-get 'go-mode apheleia-mode-alist) '(goimports))
-  (setf (alist-get 'fennel-mode apheleia-mode-alist) '(lisp-indent))
-  (setf (alist-get 'sh-mode apheleia-mode-alist) '(shfmt)))
-
 (use-package! org
   :defer t
   :config (load! (concat doom-user-dir "org-config")))
@@ -93,9 +85,6 @@
         org-appear-autosubmarkers t)
   :config
   (add-hook! 'org-mode-hook #'org-appear-mode))
-
-(use-package! org-roam-ui
-  :after org-roam)
 
 (use-package! neotree
   :defer t
@@ -153,12 +142,6 @@
      :desc "run"            "r" #'etr:run-user-command
      :desc "attach"         "a" #'etr:reset-target-pane
      :desc "forget command" "f" #'etr:forget-user-command))))
-
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 (use-package! elfeed
   :commands elfeed

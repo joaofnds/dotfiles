@@ -1,12 +1,3 @@
-(when (featurep :system 'macos)
-  (define-key special-event-map [sigusr1] 'jf/apply-theme))
-
-(defun jf/apply-theme ()
-  (interactive)
-  (pcase (string-trim (shell-command-to-string "osascript -l JavaScript -e \"Application('System Events').appearancePreferences.darkMode.get()\""))
-    ("true" (load-theme jf/dark-theme))
-    ("false" (load-theme jf/light-theme))))
-
 (defun jf/git-repo? (path)
   (f-dir? (f-join path ".git")))
 
