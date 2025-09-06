@@ -35,7 +35,7 @@
     ;; visual
     (load :theme)           ;; works great with lua plugins
     (load :config.lualine)  ;; pretty line
-    (load :config.barbar)   ;; pretty tabline
+    (load :config.tabline)  ;; pretty tabline
     (load :config.notifier) ;; non-intrusive notification system
 
     ;; languages
