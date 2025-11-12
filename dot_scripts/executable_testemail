@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+TIMESTAMP=$(date +%s)
+ISO8601=$(date -Iseconds -r "$TIMESTAMP")
+
+EMAIL="joao.fernandes+${TIMESTAMP}@hotelengine.com"
+
+echo "$ISO8601 $EMAIL" >> ~/.testemails
+
+pbcopy <<<"$EMAIL"
+echo $EMAIL
