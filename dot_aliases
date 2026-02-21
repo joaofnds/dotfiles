@@ -13,7 +13,7 @@ alias cm='chezmoi'
 alias n='nvim'
 
 alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --merge-output-format=mkv"
-alias musicdl="yt-dlp --extract-audio --audio-format flac --audio-quality 0"
+alias musicdl="yt-dlp --extract-audio --audio-format flac --audio-quality 0 --embed-thumbnail"
 
 # file listing
 alias lsnotes='rg -e "(TODO|FIXME|OPTIMIZE|REVIEW)"'
