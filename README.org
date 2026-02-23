@@ -7,9 +7,6 @@ bling just in case I need to pop up an editor for a quick edit in the terminal.
 Speaking of the terminal, I use [[https://github.com/ghostty-org/ghostty][ghostty]]. It's fast. In it, I live at all times
 inside [[https://github.com/tmux/tmux][tmux]].
 
-To configure neovim I use [[https://fennel-lang.org/][fennel]]. In order to compile fennel whenever a source
-changes, I use a little [[https://www.chezmoi.io/docs/reference/#source-state-attributes][chezmoi hook]] [[https://github.com/joaofnds/dotfiles/blob/e37fdc37ed2da3f5f1c4c5972da135e4b83824dd/dot_config/nvim/run_once_after_compile_fennel.tmpl#L3][hack]] to run a [[https://github.com/joaofnds/dotfiles/blob/e37fdc37ed2da3f5f1c4c5972da135e4b83824dd/dot_config/nvim/Rakefile][Rakefile]].
-
 I use [[https://ethanschoonover.com/solarized/][solarized]] on almost everything.
 
 * shoutouts
