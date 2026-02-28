@@ -1,19 +1,17 @@
 return {
-	"romgrk/barbar.nvim",
+	"akinsho/bufferline.nvim",
 	event = "UIEnter",
-	init = function()
-		vim.g.barbar_auto_setup = false
-	end,
 	opts = {
-		animation = false,
-		icons = {
-			filetype = { enabled = false },
-			separator = { left = "▎", right = "" },
-			button = "✗ ",
-			inactive = { button = "×" },
-			modified = { button = "● " },
-			current = { buffer_index = true },
-			visible = { modified = { buffer_number = false } },
+		options = {
+			numbers = "ordinal",
+			show_buffer_icons = false,
+			show_buffer_close_icons = true,
+			show_close_icon = false,
+			close_icon = "✗",
+			buffer_close_icon = "✗",
+			modified_icon = "●",
+			separator_style = { "▎", "" },
+			indicator = { style = "none" },
 		},
 	},
 }
