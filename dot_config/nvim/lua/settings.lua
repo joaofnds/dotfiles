@@ -13,6 +13,12 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
 vim.opt.wildmode = { "full", "list:longest" }
+vim.opt.signcolumn = "yes"
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.cursorline = true
 vim.opt.diffopt:append({ "algorithm:patience", "indent-heuristic" })
 
 -- indentation
@@ -46,11 +52,6 @@ vim.opt.undodir = vim.o.backupdir
 vim.opt.undofile = true
 vim.opt.wb = false
 
--- don't create root-owned files
-if os.getenv("SUDO_USER") then
-	vim.opt.writebackup = false
-end
-
 -- sources to ignore when tab completing
 vim.opt.wildignore = {
 	"*.o",
@@ -83,7 +84,5 @@ vim.opt.smartcase = true
 vim.opt.timeout = true
 vim.opt.timeoutlen = 500
 
-vim.opt.background = "dark"
-vim.opt.termguicolors = true
-
 vim.cmd.filetype("plugin indent on")
+
