@@ -2,6 +2,10 @@ return {
 	"williamboman/mason.nvim",
 	event = "BufReadPost",
 	cmd = { "Mason", "MasonUpdate" },
+	keys = {
+		{ "<leader>cls", "<cmd>LspStart<cr>", desc = "start" },
+		{ "<leader>clS", "<cmd>LspStop<cr>", desc = "stop" },
+	},
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",

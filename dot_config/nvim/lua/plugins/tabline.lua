@@ -1,6 +1,27 @@
 return {
 	"akinsho/bufferline.nvim",
 	event = "UIEnter",
+	keys = {
+		{ "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", desc = "previous" },
+		{ "<leader>bn", "<cmd>BufferLineCycleNext<cr>", desc = "next" },
+		{ "<leader>bs", "<cmd>BufferLinePick<cr>", desc = "search" },
+		{ "<leader>b<", "<cmd>BufferLineMovePrev<cr>", desc = "move previous" },
+		{ "<leader>b>", "<cmd>BufferLineMoveNext<cr>", desc = "move next" },
+		{ "<leader>b1", "<cmd>BufferLineGoToBuffer 1<cr>", desc = "goto 1" },
+		{ "<leader>b2", "<cmd>BufferLineGoToBuffer 2<cr>", desc = "goto 2" },
+		{ "<leader>b3", "<cmd>BufferLineGoToBuffer 3<cr>", desc = "goto 3" },
+		{ "<leader>b4", "<cmd>BufferLineGoToBuffer 4<cr>", desc = "goto 4" },
+		{ "<leader>b5", "<cmd>BufferLineGoToBuffer 5<cr>", desc = "goto 5" },
+		{ "<leader>b6", "<cmd>BufferLineGoToBuffer 6<cr>", desc = "goto 6" },
+		{ "<leader>b7", "<cmd>BufferLineGoToBuffer 7<cr>", desc = "goto 7" },
+		{ "<leader>b8", "<cmd>BufferLineGoToBuffer 8<cr>", desc = "goto 8" },
+		{ "<leader>b9", "<cmd>BufferLineGoToBuffer -1<cr>", desc = "goto last" },
+		{ "<leader>bk", "<cmd>bd<cr>", desc = "kill" },
+		{ "<leader>bda", ":%bdelete!<cr>", desc = "all" },
+		{ "<leader>bdo", "<cmd>BufferLineCloseOthers<cr>", desc = "others" },
+		{ "<leader>bdl", "<cmd>BufferLineCloseLeft<cr>", desc = "left" },
+		{ "<leader>bdr", "<cmd>BufferLineCloseRight<cr>", desc = "right" },
+	},
 	opts = {
 		options = {
 			numbers = "ordinal",
