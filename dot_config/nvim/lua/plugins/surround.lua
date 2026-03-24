@@ -1,12 +1,12 @@
 return {
 	"kylechui/nvim-surround",
 	keys = {
-		{ "y", mode = { "n" } },
-		{ "d", mode = { "n" } },
-		{ "c", mode = { "n" } },
-		{ "d", mode = { "n" } },
-		{ "S", mode = { "v" } },
-		{ "g", mode = { "x" } },
+		{ "ys", mode = "n" },
+		{ "yS", mode = "n" },
+		{ "cs", mode = "n" },
+		{ "ds", mode = "n" },
+		{ "S", mode = "v" },
+		{ "gS", mode = "v" },
 	},
 	opts = {},
 }

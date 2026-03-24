@@ -1,5 +1,5 @@
 return {
-	"hoob3rt/lualine.nvim",
+	"nvim-lualine/lualine.nvim",
 	event = "UIEnter",
 	opts = {
 		options = {
