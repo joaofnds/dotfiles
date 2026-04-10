@@ -1,9 +1,10 @@
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.private.env ] && source $HOME/.private.env
-[ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
 [ -x "$(command -v fzf)" ] && source <(fzf --zsh)
 [ -x "$(command -v mise)" ] && source <(mise activate zsh)
+[ -x "$(command -v zoxide)" ] && eval "$(zoxide init zsh)"
+[ -x "$(command -v starship)" ] && eval "$(starship init zsh)"
 
 if [[ -z "$TMUX" && "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "zed" && -z "$EMACS_VTERM_PATH" ]]; then
   tat

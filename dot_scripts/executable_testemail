@@ -3,7 +3,7 @@
 TIMESTAMP=$(date +%s)
 ISO8601=$(date -Iseconds -r "$TIMESTAMP")
 
-EMAIL="joao.fernandes+${TIMESTAMP}@hotelengine.com"
+EMAIL="joaofnds+${TIMESTAMP}@joaofnds.com"
 
 echo "$ISO8601 $EMAIL" >> ~/.testemails
 

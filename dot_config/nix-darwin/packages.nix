@@ -1,0 +1,44 @@
+{ pkgs, ... }:
+{
+  environment.systemPackages = [
+    pkgs.aspell
+    pkgs.bat
+    pkgs.btop
+    pkgs.chezmoi
+    pkgs.cowsay
+    pkgs.curl
+    pkgs.delta
+    pkgs.dust
+    pkgs.entr
+    pkgs.fd
+    pkgs.ffmpeg
+    pkgs.flyctl
+    pkgs.fzf
+    pkgs.git
+    pkgs.gnupg
+    pkgs.go-task
+    pkgs.hexyl
+    pkgs.hyperfine
+    pkgs.imagemagick
+    pkgs.jq
+    pkgs.lua
+    pkgs.mise
+    pkgs.neovim
+    pkgs.nixfmt
+    pkgs.ripgrep
+    pkgs.rtk
+    pkgs.ruby
+    pkgs.sd
+    pkgs.silver-searcher
+    pkgs.sqlite
+    pkgs.starship
+    pkgs.tmux
+    pkgs.tokei
+    pkgs.tree
+    pkgs.tree-sitter
+    pkgs.typos
+    pkgs.viddy
+    pkgs.yazi
+    pkgs.zoxide
+  ];
+}
