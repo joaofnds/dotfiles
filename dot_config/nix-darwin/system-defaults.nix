@@ -83,6 +83,30 @@
               type = "standard";
             };
           };
+          # Move left a space (Ctrl+Left)
+          "79" = {
+            enabled = 1;
+            value = {
+              parameters = [
+                65535
+                123
+                262144
+              ];
+              type = "standard";
+            };
+          };
+          # Move right a space (Ctrl+Right)
+          "81" = {
+            enabled = 1;
+            value = {
+              parameters = [
+                65535
+                124
+                262144
+              ];
+              type = "standard";
+            };
+          };
         };
       };
     };
