@@ -22,6 +22,8 @@
       AppleMetricUnits = 1;
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
+      AppleInterfaceStyle = "Dark";
+      AppleIconAppearanceTheme = "RegularDark";
     };
 
     dock = {
