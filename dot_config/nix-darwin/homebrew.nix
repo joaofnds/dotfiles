@@ -32,6 +32,7 @@
       "shottr"
       "soundsource"
       "spotify"
+      "tailscale"
       "the-unarchiver"
       "visual-studio-code"
       "vlc"
