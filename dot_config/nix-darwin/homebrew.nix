@@ -4,14 +4,7 @@
     enable = true;
     enableZshIntegration = true;
 
-    taps = [
-      "d12frosted/emacs-plus"
-      "joaofnds/tap"
-    ];
-
-    brews = [
-      "d12frosted/emacs-plus/emacs-plus@30"
-    ];
+    taps = [ "joaofnds/tap" ];
 
     casks = [
       "appcleaner"

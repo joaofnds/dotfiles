@@ -9,6 +9,7 @@
     pkgs.curl
     pkgs.delta
     pkgs.dust
+    pkgs.emacs
     pkgs.entr
     pkgs.fd
     pkgs.ffmpeg
