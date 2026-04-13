@@ -42,6 +42,8 @@ Regardless of the framework or language, prefer strictly decoupled layers follow
   - Implement a production-ready concrete version and inject the interface into your classes/structs.
   - Provide a stateful Fake for tests (e.g., `FakeClock` with a frozen timestamp).
 - **Probe / Instrumentation Pattern**: Define an observability interface (Probe) in the domain that declares business-relevant events (e.g., `HabitCreated()`, `TokenDecryptFailed()`). Implement it with real metrics/logging for production and a no-op for tests. This keeps observability decoupled from business logic.
+- **Domain Logic in Classes, Not Loose Functions**: If a computation is part of domain processing, it belongs as a method on a class — not an exported standalone function. Loose functions are acceptable only for truly generic utilities (e.g., `clamp`, `slugify`). A class signals intent, groups related behavior, and is consistent with hexagonal layering.
+- **Inject Dependencies, Don't Instantiate Inline**: Domain classes should receive their collaborators via constructor injection, not instantiate them with `new` internally. Inline instantiation hides dependencies, couples to concrete implementations, and makes testing harder. Even stateless collaborators should be injected — the cost is trivial and the design stays honest.
 
 ## 4. Testing Approach (GOOS Inspired)
 - **Harnesses & Drivers**: Inspired by "Growing Object-Oriented Software, Guided by Tests" (GOOS), build and use Test Harnesses and Drivers to interact with the application in tests. These abstractions decouple the tests from concrete implementation details, allowing tests to read like business requirements.
