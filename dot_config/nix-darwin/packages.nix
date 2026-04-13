@@ -25,6 +25,7 @@
     pkgs.mise
     pkgs.neovim
     pkgs.nixfmt
+    pkgs.pinentry_mac
     pkgs.ripgrep
     pkgs.rtk
     pkgs.ruby
