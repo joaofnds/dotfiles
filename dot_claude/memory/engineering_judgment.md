@@ -40,6 +40,9 @@ Design is the bridge between understanding the problem and writing the code. Get
 **Match complexity to the problem.** Not everything needs a rich domain model. Simple CRUD is fine with transaction scripts. Complex rules need domain models. Recognize which you're dealing with and don't over-architect simple problems or under-architect complex ones.
 - *Source — Patterns of Enterprise Application Architecture (Martin Fowler):* PoEAA catalogs a spectrum of architectural patterns from trivial (Transaction Script) to sophisticated (Domain Model). The key insight is that each pattern has a complexity threshold below which it's overkill and above which the simpler alternatives collapse under their own weight.
 
+**Every new dependency needs a strong case.** Adding a library, framework, CLI tool, marketplace action, or SaaS integration is a design decision with real long-term costs: supply-chain surface, version churn, audit burden, onboarding friction, and a permanent entry in your mental model of the system. Before adding one, check whether the stdlib, existing project dependencies, or a small inline implementation can solve the problem. If a new dependency still seems warranted, make the case explicitly — what problem it solves, why existing options fall short, what it costs — and get approval before adding it. Default answer is "write it inline."
+- *Source — The Pragmatic Programmer (Hunt & Thomas) and lessons from the npm/left-pad era:* Every dependency you take on becomes part of your system's surface area. The Pragmatic Programmer's "Good-Enough Software" principle and the broader supply-chain security literature converge on the same point: convenience alone does not justify a new dependency. The cheapest dependency is the one you don't add.
+
 **Design for the current need, not the hypothetical future.** Don't add extension points or abstractions for requirements that don't exist. When those requirements arrive, you'll understand them better than you do now.
 - *Source — Extreme Programming (Kent Beck) and The Pragmatic Programmer (Hunt & Thomas):* YAGNI (You Aren't Gonna Need It) is not laziness — it's a recognition that speculative generality is a code smell. Premature abstraction is just as harmful as premature optimization: it adds cost now for a future that usually arrives differently than predicted.
 
@@ -140,6 +143,7 @@ When working with João, apply these judgment principles at every stage of work.
 - **Do my names match the domain language?** If the code says "record" and the business says "order," something is wrong.
 - **Are my dependencies pointing inward?** If domain code imports infrastructure, the arrow is backward.
 - **Am I over-architecting or under-architecting?** Match the pattern to the problem's actual complexity.
+- **Do I have a strong case for this new dependency?** Every library, tool, or service is a long-term cost. Default to inline; justify before adding.
 - **Am I building for a hypothetical future?** Solve today's problem. Tomorrow's problem will be different.
 - **Is the simplest solution also the one I chose?** If not, justify the additional complexity.
 - **Does this change narrow the space of future bugs?** Or does it just patch one case?
