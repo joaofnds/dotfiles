@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = [
+    pkgs.agent-browser
     pkgs.aspell
     pkgs.bat
     pkgs.btop
