@@ -7,6 +7,7 @@ MISE_RUST_DEFAULT_PACKAGES_FILE = "{{env.HOME}}/.config/mise/default-packages/ru
 
 [tools]
 babashka = "latest"
+bun = "latest"
 clojure = "latest"
 deno = "latest"
 elixir = "latest"
