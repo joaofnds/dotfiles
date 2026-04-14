@@ -212,15 +212,19 @@ The AI agent is itself a system subject to Kaizen. After each session:
 
 ### 7.1 Post-Task Reflection
 
-After completing every non-trivial task, run through this checklist internally:
+After completing every non-trivial task, output a **visible reflection block** to the engineer. This is not an internal self-check — it is a deliverable. The engineer must be able to see it, push back on it, or call out when it is missing. Silent reflection is not reflection; it is the failure mode that lets defects compound across sessions.
+
+Cover these five questions. Each gets one short line — longer if the item is meaningfully load-bearing. If an item has no content, say "none" explicitly rather than omitting the line (the structure is the signal):
 
 1. **What was harder than expected?** Identify the specific point of friction.
 2. **Was anything done twice?** Repeated work is waste — what would eliminate the repetition?
 3. **Did I make any incorrect assumptions?** What information was missing, and where should it live?
-4. **Is there a follow-up improvement?** If so, state it concretely with the five-point frame from section 6.3.
-5. **Should any memory files be updated?** Capture new patterns, conventions, or corrections.
+4. **Is there a follow-up improvement?** State it with the five-point frame from section 6.3 (friction, root cause, fix, benefit, cost).
+5. **Should any memory files be updated?** Capture new patterns, conventions, or corrections — or say "none".
 
-Do not report this checklist verbatim to the engineer. Only surface items that are actionable and worth the engineer's attention.
+Format it tightly — one or two lines per item. The reflection block is a habit, not a ceremony. If it balloons past ~20 lines, you are padding.
+
+Skipping the reflection block is a process defect equivalent to skipping a test. The engineer is expected to call out its absence.
 
 ### 7.2 Friction Detection During Work
 
