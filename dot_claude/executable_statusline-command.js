@@ -65,7 +65,7 @@ function buildContextBar({ usedTokens, totalTokens }) {
 
 function buildMetaLine({ costUsd, durationMs, modelName }) {
   const parts = [];
-  if (costUsd != null) parts.push(`💰 ${formatCost(costUsd)}`);
+  if (costUsd != null) parts.push(`💸 ${formatCost(costUsd)}`);
   if (durationMs != null) parts.push(`⏱️ ${formatDuration(durationMs)}`);
   if (modelName) parts.push(`🤖 ${modelName}`);
   if (parts.length === 0) return "";
