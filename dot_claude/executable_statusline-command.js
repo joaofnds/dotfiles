@@ -63,29 +63,68 @@ function buildContextBar({ usedTokens, totalTokens }) {
   return `${prefix}${color}${filled}${colors.muted}${empty} ${color}${label}${colors.reset}`;
 }
 
-function buildMetaLine({ costUsd, durationMs, modelName }) {
+function buildMetaLine({
+  costUsd,
+  durationMs,
+  modelName,
+  tokensIn,
+  tokensOut,
+  tokensCached,
+  tokensTotal,
+}) {
   const parts = [];
   if (costUsd != null) parts.push(`💸 ${formatCost(costUsd)}`);
   if (durationMs != null) parts.push(`⏱️ ${formatDuration(durationMs)}`);
   if (modelName) parts.push(`🤖 ${modelName}`);
+  if (tokensIn != null) parts.push(`📥 ${formatTokens(tokensIn)}`);
+  if (tokensOut != null) parts.push(`📤 ${formatTokens(tokensOut)}`);
+  if (tokensCached != null) parts.push(`♻️ ${formatTokens(tokensCached)}`);
+  if (tokensTotal != null) parts.push(`∑ ${formatTokens(tokensTotal)}`);
   if (parts.length === 0) return "";
 
   return `${colors.muted}${parts.join(" ")}${colors.reset}`;
 }
 
+function nonNegative(value) {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0
+    ? value
+    : null;
+}
+
 function parseSession(rawJson) {
   const input = JSON.parse(rawJson);
-  const usage = input.context_window?.current_usage ?? {};
+  const contextWindow = input.context_window ?? {};
+  const usage = contextWindow.current_usage ?? {};
+
+  const inputTokens = nonNegative(usage.input_tokens) ?? 0;
+  const outputTokens = nonNegative(usage.output_tokens) ?? 0;
+  const cacheCreation = nonNegative(usage.cache_creation_input_tokens) ?? 0;
+  const cacheRead = nonNegative(usage.cache_read_input_tokens) ?? 0;
+
+  const tokensCached = cacheCreation + cacheRead;
+  const currentUsageTotal =
+    inputTokens + outputTokens + cacheCreation + cacheRead;
+
+  const tokensIn = nonNegative(contextWindow.total_input_tokens);
+  const tokensOut = nonNegative(contextWindow.total_output_tokens);
+
+  const tokensTotal =
+    currentUsageTotal > 0
+      ? currentUsageTotal
+      : tokensIn != null && tokensOut != null
+        ? tokensIn + tokensOut
+        : null;
 
   return {
-    usedTokens:
-      (usage.input_tokens ?? 0) +
-      (usage.cache_creation_input_tokens ?? 0) +
-      (usage.cache_read_input_tokens ?? 0),
-    totalTokens: input.context_window?.context_window_size ?? 0,
+    usedTokens: inputTokens + cacheCreation + cacheRead,
+    totalTokens: contextWindow.context_window_size ?? 0,
     costUsd: input.cost?.total_cost_usd,
     durationMs: input.cost?.total_duration_ms,
     modelName: input.model?.display_name ?? "",
+    tokensIn,
+    tokensOut,
+    tokensCached: tokensCached > 0 ? tokensCached : null,
+    tokensTotal,
   };
 }
 
