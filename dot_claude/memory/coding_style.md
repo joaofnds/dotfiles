@@ -4,17 +4,20 @@ This document synthesizes coding style, preferences, abstractions, and philosoph
 
 ## 1. Core Philosophy & Mindset
 - **Simplicity First**: Write the minimum amount of code to solve the problem. Avoid "forward-thinking" configuration or complex abstractions for one-off use cases. If you write 200 lines and it could be 50, rewrite it.
+- **Boring Control Flow**: Prefer plain `if`/`else`, loops, and early returns over clever expression-level tricks or point-free abstractions. Clear names beat clever constructs. If a piece of code needs a comment to explain *what* it is, it's too clever — rewrite it simpler. Reserve comments for *why*, never *what*.
 - **Surgical Execution**: Only touch what is directly relevant to the user's intent. Do not randomly "fix" adjacent code, refactor things purely for aesthetic reasons, or leave abandoned imports/dead code behind if your changes made them dead.
 - **Goal-Driven TDD**: Test-driven development is non-negotiable. Behavior is always defined by tests *before* writing the implementation logic. Transform tasks into verifiable goals (e.g., write failing test -> make it pass).
-- **Leverage the Type System**: Use the language's type system to its fullest. Avoid escape hatches that bypass compile-time checks (e.g., type casts to `any`, unchecked conversions, raw `interface{}`/`Object`). Take the time to write actual, correct type definitions.
+- **Leverage the Type System**: Use the language's type system to its fullest. Avoid escape hatches that bypass compile-time checks (e.g., type casts to `any`, unchecked conversions, raw `interface{}`/`Object`). Take the time to write actual, correct type definitions. Don't sniff fields on opaque values to guess what type they are — structural runtime detection is the same anti-pattern as a cast, dressed up as caution. Use real classes with `instanceof` (or the language's equivalent), or parse the value with a schema validator at the boundary. If the compiler is unhappy, the upstream type is wrong — fix it there.
+- **Don't Defend Against Your Own Code**: When you control both the producer and the consumer of a contract, enforce it at the type/schema level — don't add fallback branches that "handle the case where X is missing" when *you* decide whether X is provided. Iterative design often leaves these branches behind ("the schema is optional for now"); they become the silent path where bugs hide as the code evolves around them. The fix is to make the contract mandatory and delete the fallback, not to add another guard around it.
 
 ## 2. Architectural Principles & Layering
 Regardless of the framework or language, prefer strictly decoupled layers following **Domain-Driven Design** and **Hexagonal Architecture** (Ports & Adapters / Clean Architecture). Do not merge concerns across these boundaries:
 
 ### a. Domain Models / Entities
 - **What they are**: Pure structural types encapsulating business logic or core data models.
-- **Rules**: They should hold standard attributes and mapping logic. Avoid leaking infrastructure concerns (raw database schemas, framework specifics) into the domain. Lightweight framework annotations are acceptable if they don't introduce heavy coupling.
+- **Rules**: They should hold standard attributes and business logic. Avoid leaking infrastructure concerns (raw database schemas, framework specifics) into the domain. Lightweight framework annotations are acceptable if they don't introduce heavy coupling.
 - **Explicit Construction**: Entities must explicitly map properties rather than using bulk merges or reflection-based assignment. This prevents unexpected payload parameters or persistence-layer fields from leaking into the domain.
+- **Construction from canonical props only**: An entity's constructor takes the canonical domain shape — never a DB row, HTTP body, or wire-format payload directly. Translation from external shapes to canonical props lives in mapper classes (§d). An entity can construct itself given canonical props, but it doesn't know about Mongo, Postgres, or any external producer. When a single entity has multiple sources (DB + HTTP + webhook), each source gets its own mapper, all funneling into the one canonical constructor.
 
 ### b. Application / Business Logic (Services / Use Cases)
 - **What they are**: The orchestrators of business rules, transforming inputs into outcomes.
@@ -28,8 +31,8 @@ Regardless of the framework or language, prefer strictly decoupled layers follow
   - **Safe Parsing at Boundaries**: Treat the edges of the application as strictly untrusted. Use schema validation to define strict contracts for environment configuration, incoming request payloads, and outgoing external responses. Never let raw, unvalidated external data cross into the domain.
 
 ### d. Data Transformation (Mappers / DTOs)
-- **What they are**: Pure functions or types responsible for translating data between boundaries.
-- **Rules**: Prevent database schemas or raw API responses from contaminating the internal application state. Always map raw data into strict Domain Models through explicit DTOs.
+- **What they are**: Classes that translate data between boundaries. Their methods are stateless and non-mutating — same inputs yield same outputs, and input objects are never modified in place. "Pure" in the functional sense, but housed in a class to keep dependency wiring and domain semantics consistent with the rest of the codebase.
+- **Rules**: Prevent database schemas or raw API responses from contaminating the internal application state. Always map raw data into strict Domain Models through explicit mapper classes. External-source translation (DB rows, HTTP payloads, wire formats) lives in mappers — not on entities, not in services, not inline at call sites.
 
 ### e. Error Translation at Boundaries
 - **What it is**: A thin translation layer between infrastructure errors and domain errors.
@@ -68,3 +71,5 @@ When working on any project:
 - **Did we leak raw database/API shapes into the core logic?** Stop. Use strict safe parsing at the edges and DTOs at the boundaries.
 - **Are infrastructure errors leaking into business logic?** Translate them at the adapter boundary.
 - **Are side-effects hidden behind globals?** Extract an interface, inject it, fake it in tests.
+- **Are we sniffing fields on an opaque value to guess its shape?** Stop. Use a real class with `instanceof`, or parse with a schema validator. Fix the upstream type instead of guessing at runtime.
+- **Are we keeping a fallback branch for a case we control?** Delete it. Make the contract mandatory and let the compiler enforce it.
