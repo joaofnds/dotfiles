@@ -3,6 +3,9 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
 
+autoload -Uz select-word-style
+select-word-style bash
+
 zmodload zsh/complist
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
