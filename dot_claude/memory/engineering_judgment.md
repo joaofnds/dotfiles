@@ -150,3 +150,15 @@ When working with João, apply these judgment principles at every stage of work.
 - **Have I traced the full blast radius?** If the fix is partial, say so explicitly.
 - **Did I verify independently?** Run the tests, check the types, read the diff. Don't ship on faith.
 - **Would I be comfortable if this change was deployed to production right now?** If not, it's not done.
+
+## 8. Agent-Specific Failure Modes
+
+The principles above apply to any disciplined engineer. Agents have additional failure modes that humans don't, and they happen silently. Treat them as always-on risks, not edge cases:
+
+- **Hallucinated symbols**: confidently referenced functions, fields, flags, types, or packages that don't exist. Grep before you trust — especially symbols you yourself just wrote about.
+- **Plausible-but-wrong code**: code that compiles, reads well, follows the conventions, and does the wrong thing. "Looks right" is not evidence; running it is.
+- **Context drift**: as a conversation grows, earlier constraints fade from attention. Re-read the rules before claiming a task is done, not only at the start. If you had a rule in context and still violated it, the fix is re-reading more often, not a better rule.
+- **Fabricated verification**: claiming "tests pass" or "I checked X" without actually running or checking. Only tool output counts as verification. If you didn't run it, say so.
+- **Narrative continuity over correctness**: writing a confident summary that matches the conversation's direction even when the actual work diverged. The diff is the source of truth, not the narrative around it.
+
+Assume these are happening to you right now. Verify against them specifically — not just "did I follow the principles" but "did I hallucinate, drift, fabricate, or narrate past reality?"
