@@ -16,6 +16,7 @@
     pkgs.ffmpeg
     pkgs.flyctl
     pkgs.fzf
+    pkgs.gemini-cli
     pkgs.git
     pkgs.gnupg
     pkgs.go-task
