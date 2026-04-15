@@ -41,7 +41,7 @@ return {
 				map("n", "]e", function() vim.diagnostic.jump({ count = 1 }) end, "next diagnostic")
 				map("n", "[e", function() vim.diagnostic.jump({ count = -1 }) end, "prev diagnostic")
 
-				map("n", "<leader>ca", ":FzfLua lsp_code_actions<cr>", "action")
+				map("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", "action")
 				map("n", "<leader>cr", vim.lsp.buf.rename, "rename")
 				map("n", "<leader>cf", function()
 					require("conform").format({ lsp_fallback = true })
@@ -61,7 +61,7 @@ return {
 			ensure_installed = {
 				"biome",
 				"lua_ls",
-				"tsgo",
+				"vtsls",
 				"gopls",
 				"bashls",
 				"jsonls",

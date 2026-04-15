@@ -18,8 +18,12 @@ return {
 		{ "<leader>gfC", "<cmd>FzfLua git_bcommits<cr>", desc = "buffer commits" },
 	},
 	opts = {
+		ui_select = true,
 		lsp = {
 			jump1 = true,
+			code_actions = {
+				previewer = false,
+			},
 		},
 	},
 }
