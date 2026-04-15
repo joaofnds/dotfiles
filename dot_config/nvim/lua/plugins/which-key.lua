@@ -79,8 +79,8 @@ return {
 			{ "<c-k>", ":m '<-2<cr>gv=gv", desc = "move line up", mode = "v" },
 			{ "gb", group = "base64", mode = "v" },
 			{ "gbe", 'c<c-r>=trim(system("base64", @"))<cr><esc>', desc = "encode", mode = "v" },
-			{ "gbd", 'c<c-r>=system("base64 --decode", @"))<cr><esc>', desc = "decode", mode = "v" },
-			{ "gt", 'c<c-r>=strftime("%Y-%m-%dT%H:%M:%S%z", @")[0:9])<cr><esc>', desc = "encode", mode = "v" },
+			{ "gbd", 'c<c-r>=trim(system("base64 --decode", @"))<cr><esc>', desc = "decode", mode = "v" },
+			{ "gt", 'c<c-r>=strftime("%Y-%m-%dT%H:%M:%S%z", @")[0:9]<cr><esc>', desc = "epoch → date", mode = "v" },
 		})
 	end,
 }
