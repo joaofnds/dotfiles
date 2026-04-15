@@ -33,8 +33,11 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
 				end
 
-				map("n", "gd", vim.lsp.buf.definition, "definition")
-				map("n", "gD", vim.lsp.buf.declaration, "declaration")
+				map("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", "definition")
+				map("n", "gD", "<cmd>FzfLua lsp_declarations<cr>", "declaration")
+				map("n", "gr", "<cmd>FzfLua lsp_references<cr>", "references")
+				map("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", "implementations")
+				map("n", "gy", "<cmd>FzfLua lsp_typedefs<cr>", "type definition")
 				map("n", "]e", function() vim.diagnostic.jump({ count = 1 }) end, "next diagnostic")
 				map("n", "[e", function() vim.diagnostic.jump({ count = -1 }) end, "prev diagnostic")
 

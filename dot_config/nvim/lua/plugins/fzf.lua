@@ -14,5 +14,9 @@ return {
 		{ "<leader>gfc", "<cmd>FzfLua git_commits<cr>", desc = "commits" },
 		{ "<leader>gfC", "<cmd>FzfLua git_bcommits<cr>", desc = "buffer commits" },
 	},
-	opts = {},
+	opts = {
+		lsp = {
+			jump1 = true,
+		},
+	},
 }
