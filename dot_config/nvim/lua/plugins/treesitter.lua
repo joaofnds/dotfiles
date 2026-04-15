@@ -2,6 +2,7 @@ local buf = require("util.buf")
 
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "master",
 	dependencies = { "nvim-treesitter/nvim-treesitter-context" },
 	event = { "BufNewFile", "BufReadPost" },
 	cmd = "TSUpdate",
