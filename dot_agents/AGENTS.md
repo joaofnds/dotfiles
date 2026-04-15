@@ -15,7 +15,7 @@ A missing announcement is a process defect. Treat it the same way a failing test
 
 ## Memory files
 
-Reference files in `~/.claude/memory/`:
+Reference files in `~/.agents/rules/`:
 
 - `coding_style.md` — Language-agnostic coding style (TDD, strict typing, hexagonal architecture, fakes over mocks). Always read before writing or reviewing any code.
 - `coding_style_typescript.md` — TypeScript-specific: Zod, no `as any`, fakes over mocks, node:test. Also read when working on TypeScript.
