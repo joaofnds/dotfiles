@@ -1,18 +1,19 @@
 #!/Users/joaofnds/.local/share/mise/shims/bun
 
 const BAR_WIDTH = 10;
+const RATE_BAR_WIDTH = 6;
 
 const colors = {
   reset: "\x1b[0m",
-  muted: "\x1b[92m",   // solarized base01
-  safe: "\x1b[32m",    // green
-  notice: "\x1b[33m",  // yellow
-  warning: "\x1b[91m", // solarized orange
-  danger: "\x1b[31m",  // red
+  muted: "\x1b[92m",
+  safe: "\x1b[32m",
+  notice: "\x1b[33m",
+  warning: "\x1b[91m",
+  danger: "\x1b[31m",
 };
 
 const thresholds = [
-  { minPercent: 80, color: colors.danger, prefix: "💀 " },
+  { minPercent: 80, color: colors.danger, prefix: "💀" },
   { minPercent: 65, color: colors.warning, prefix: "" },
   { minPercent: 50, color: colors.notice, prefix: "" },
   { minPercent: 0, color: colors.safe, prefix: "" },
@@ -42,8 +43,28 @@ function formatDuration(milliseconds) {
   return `${hours}h${minutes % 60}m`;
 }
 
+function formatTimeUntil(epochSeconds) {
+  const now = Math.floor(Date.now() / 1000);
+  const diff = epochSeconds - now;
+  if (diff <= 0) return "now";
+
+  const minutes = Math.floor(diff / 60);
+  if (minutes < 60) return `${minutes}m`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h`;
+
+  const days = Math.floor(hours / 24);
+  return `${days}d`;
+}
+
 function pickThreshold(percentUsed) {
   return thresholds.find((t) => percentUsed >= t.minPercent);
+}
+
+function buildBar(filled, total, color) {
+  const filledCount = Math.min(total, Math.floor((filled * total) / 100));
+  return `${color}${"█".repeat(filledCount)}${colors.muted}${"░".repeat(total - filledCount)}${colors.reset}`;
 }
 
 function buildContextBar({ usedTokens, totalTokens }) {
@@ -52,15 +73,24 @@ function buildContextBar({ usedTokens, totalTokens }) {
   const percentUsed = (usedTokens * 100) / totalTokens;
   const { color, prefix } = pickThreshold(percentUsed);
 
-  const filledCount = Math.min(
-    BAR_WIDTH,
-    Math.floor((usedTokens * BAR_WIDTH) / totalTokens),
-  );
-  const filled = "█".repeat(filledCount);
-  const empty = "░".repeat(BAR_WIDTH - filledCount);
-  const label = `(${formatTokens(usedTokens)}/${formatTokens(totalTokens)})`;
+  const bar = buildBar(percentUsed, BAR_WIDTH, color);
+  const label = `${formatTokens(usedTokens)}/${formatTokens(totalTokens)}`;
 
-  return `${prefix}${color}${filled}${colors.muted}${empty} ${color}${label}${colors.reset}`;
+  return `${prefix}${bar} ${color}${label}${colors.reset}`;
+}
+
+const blockChars = [" ", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
+
+function buildRateLimit(label, bucket) {
+  if (!bucket || bucket.used_percentage == null) return "";
+
+  const pct = bucket.used_percentage;
+  const { color } = pickThreshold(pct);
+  const idx = Math.min(8, Math.round((pct / 100) * 8));
+  const block = blockChars[idx];
+  const reset = bucket.resets_at ? `${formatTimeUntil(bucket.resets_at)} ` : "";
+
+  return `${colors.muted}${reset}${color}${Math.round(pct)}% ${block}${colors.reset}`;
 }
 
 function buildMetaLine({
@@ -73,12 +103,12 @@ function buildMetaLine({
   tokensTotal,
 }) {
   const parts = [];
-  if (costUsd != null) parts.push(`💸 ${formatCost(costUsd)}`);
-  if (durationMs != null) parts.push(`⏱️ ${formatDuration(durationMs)}`);
-  if (modelName) parts.push(`🤖 ${modelName}`);
-  if (tokensIn != null) parts.push(`📥 ${formatTokens(tokensIn)}`);
-  if (tokensOut != null) parts.push(`📤 ${formatTokens(tokensOut)}`);
-  if (tokensCached != null) parts.push(`♻️ ${formatTokens(tokensCached)}`);
+  if (costUsd != null) parts.push(formatCost(costUsd));
+  if (durationMs != null) parts.push(formatDuration(durationMs));
+  if (modelName) parts.push(modelName);
+  if (tokensIn != null) parts.push(`↓ ${formatTokens(tokensIn)}`);
+  if (tokensOut != null) parts.push(`↑ ${formatTokens(tokensOut)}`);
+  if (tokensCached != null) parts.push(`↺ ${formatTokens(tokensCached)}`);
   if (tokensTotal != null) parts.push(`∑ ${formatTokens(tokensTotal)}`);
   if (parts.length === 0) return "";
 
@@ -125,12 +155,18 @@ function parseSession(rawJson) {
     tokensOut,
     tokensCached: tokensCached > 0 ? tokensCached : null,
     tokensTotal,
+    rateLimits: input.rate_limits ?? {},
   };
 }
 
 const session = parseSession(await Bun.stdin.text());
-const statusLine = [buildContextBar(session), buildMetaLine(session)]
+const statusLine = [
+  buildContextBar(session),
+  buildRateLimit("5h", session.rateLimits.five_hour),
+  buildRateLimit("7d", session.rateLimits.seven_day),
+  buildMetaLine(session),
+]
   .filter(Boolean)
-  .join(" ");
+  .join("  ");
 
 process.stdout.write(statusLine);
