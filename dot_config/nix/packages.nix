@@ -17,6 +17,7 @@
     pkgs.flyctl
     pkgs.fzf
     pkgs.gemini-cli
+    pkgs.gh
     pkgs.git
     pkgs.gnupg
     pkgs.go-task
