@@ -41,6 +41,9 @@
             user = "joaofnds";
           };
         }
+        {{- if .installBloat }}
+        ./bloat.nix
+        {{- end }}
       ];
     in
     {

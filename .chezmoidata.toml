@@ -1,3 +1,5 @@
+installBloat = false
+
 [code.font]
   family = "PragmataPro"
   size = 18
