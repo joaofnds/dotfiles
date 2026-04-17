@@ -68,6 +68,10 @@
     };
 
     CustomUserPreferences = {
+      "com.apple.BezelServices" = {
+        kDim = true;
+        kDimTime = 5;
+      };
       "com.apple.symbolichotkeys" = {
         AppleSymbolicHotKeys = {
           # Spotlight Search (Cmd+Space)
