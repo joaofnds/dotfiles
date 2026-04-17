@@ -10,9 +10,6 @@
     "Thunderbolt Bridge"
   ];
 
-  system.keyboard.enableKeyMapping = true;
-  system.keyboard.remapCapsLockToEscape = true;
-
   system.defaults = {
     NSGlobalDomain = {
       ApplePressAndHoldEnabled = false;
