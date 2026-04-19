@@ -72,6 +72,14 @@
         kDim = true;
         kDimTime = 5;
       };
+      NSGlobalDomain = {
+        NSUserKeyEquivalents = {
+          "Show Writing Tools" = "@$.";
+        };
+      };
+      "com.apple.universalaccess" = {
+        "com.apple.custommenu.apps" = [ "NSGlobalDomain" ];
+      };
       "com.apple.symbolichotkeys" = {
         AppleSymbolicHotKeys = {
           # Spotlight Search (Cmd+Space)
