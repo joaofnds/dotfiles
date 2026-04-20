@@ -67,6 +67,10 @@
       "first day of week" = "Monday";
     };
 
+    menuExtraClock = {
+      ShowSeconds = true;
+    };
+
     CustomUserPreferences = {
       "com.apple.BezelServices" = {
         kDim = true;
