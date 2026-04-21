@@ -29,6 +29,7 @@
     pkgs.mise
     pkgs.neovim
     pkgs.nixfmt
+    pkgs.opencode
     pkgs.pinentry_mac
     pkgs.ripgrep
     pkgs.rtk
