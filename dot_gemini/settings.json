@@ -1,0 +1,36 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "context": {
+    "fileName": [
+      "AGENTS.md",
+      ".agents/AGENTS.md",
+      "GEMINI.md",
+      ".gemini/GEMINI.md"
+    ]
+  },
+  "ui": {
+    "footer": {
+      "showLabels": true,
+      "items": [
+        "workspace",
+        "git-branch",
+        "sandbox",
+        "model-name",
+        "quota",
+        "context-used",
+        "memory-usage",
+        "session-id",
+        "code-changes",
+        "token-count"
+      ]
+    }
+  },
+  "ide": {
+    "hasSeenNudge": true,
+    "enabled": true
+  }
+}
