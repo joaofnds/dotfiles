@@ -1,7 +1,25 @@
 #!/usr/bin/env zsh
 
-tmux split-window 'doom upgrade --force; doom sync --gc'
-tmux split-window 'mise upgrade; mise prune --yes'
+UUID="$$"
+CHAN_DOOM="sync_doom_${UUID}"
+CHAN_MISE="sync_mise_${UUID}"
+CHAN_NIX="sync_nix_${UUID}"
+CHAN_LAZY="sync_lazy_${UUID}"
+
+cleanup() {
+  tmux set-hook -uw after-split-window
+  tmux set-hook -uw pane-exited
+}
+trap cleanup EXIT INT TERM
+
+tmux set-hook -w after-split-window 'select-layout even-vertical'
+tmux set-hook -w pane-exited 'select-layout even-vertical'
+
+tmux split-window -v -d "zsh -c '{ git -C \$(brew --repository joaofnds/tap) pull; doom upgrade --force; doom sync --gc } ; tmux wait-for -S $CHAN_DOOM'"
+tmux split-window -v -d "zsh -c '{ mise upgrade; mise prune --yes } ; tmux wait-for -S $CHAN_MISE'"
+tmux split-window -v -d "zsh -c '{ cd ~/.config/nix; nix flake update } ; tmux wait-for -S $CHAN_NIX'"
+tmux split-window -v -d "zsh -c '{ nvim -c \"lua require(\\\"lazy\\\").update({ wait = true })\" -c \"qa\" } ; tmux wait-for -S $CHAN_LAZY'"
+
 
 {{- if eq .chezmoi.os "linux" }}
 paru
@@ -10,3 +28,8 @@ paru
 {{- if eq .chezmoi.os "darwin" }}
 update-brew
 {{- end }}
+
+tmux wait-for "$CHAN_DOOM"
+tmux wait-for "$CHAN_MISE"
+tmux wait-for "$CHAN_NIX"
+tmux wait-for "$CHAN_LAZY"
