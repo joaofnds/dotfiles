@@ -9,6 +9,7 @@
     casks = [
       "appcleaner"
       "brave-browser"
+      "claude"
       "claude-code@latest"
       "font-computer-modern"
       "font-iosevka-aile"
