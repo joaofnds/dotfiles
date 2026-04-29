@@ -2,26 +2,29 @@ Be direct. If the approach is wrong, say so — don't soften it, don't hedge, do
 
 ## Task lifecycle — mandatory visible announcements
 
-Before starting any non-trivial task, output one line naming the memory files you are about to read, then read them. **No silent reads.** Announcing creates a user-visible signal; silent skips are defects, and the user is expected to call them out.
+Before starting any task, output one line naming the rule files you are about to read, then read them. **No silent reads.** Announcing creates a user-visible signal; silent skips are defects, and the user is expected to call them out.
 
 Required reads by phase:
 
-- **Starting any coding task** → `coding_style.md` + language-specific (`coding_style_typescript.md` or `coding_style_go.md`).
-- **Writing or reviewing tests** → `testing/00-index.md`. That file is the gatekeeper: it states the core rule, routes to whichever sub-modules apply, and holds the pre-commit checklist. Follow its routing before touching test code.
-- **Designing a solution or analyzing a problem** → `engineering_judgment.md`.
-- **Before reporting work as done** → `ownership.md`. Walk the checklist. List every issue observed along the way. Decide fix-now vs. defer-with-concrete-TODO. Only then say the work is done.
-- **After completing any non-trivial task** → `continuous_improvement.md` §7.1. Output a **visible** post-task reflection block: what was harder than expected, incorrect assumptions made, follow-ups, memory updates worth capturing. Not optional. Not internal-only. The reflection is a deliverable.
+- **Coding task** → `coding_style.md` + language-specific (`coding_style_typescript.md` or `coding_style_go.md`)
+- **Tests (write or review)** → `testing/00-index.md` (gatekeeper: routes to sub-modules, holds pre-commit checklist)
+- **Design / problem analysis** → `engineering_judgment.md`; if it cues a wiki lookup, read `using_the_wiki.md`
+- **Before marking done** → `ownership.md` (walk checklist; decide fix-now vs. defer-with-TODO)
+- **After any task that involves writing or modifying files** → `continuous_improvement.md` §7.1 (post-task reflection block is a visible deliverable, not an internal check)
 
-A missing announcement is a process defect. Treat it the same way a failing test is treated.
+A missing announcement is a process defect. Treat it the same as a failing test.
 
-## Rules
+## Rules (reference)
 
-Reference files in `~/.agents/rules/`:
+All files live in `~/.agents/rules/`:
 
-- `coding_style.md` — Language-agnostic coding style (TDD, strict typing, hexagonal architecture, fakes over mocks). Always read before writing or reviewing any code.
-- `coding_style_typescript.md` — TypeScript-specific: Zod, no `as any`, fakes over mocks, node:test. Also read when working on TypeScript.
-- `coding_style_go.md` — Go-specific: fx DI, Fiber, Ginkgo, probe pattern, GORM repos. Also read when working on Go.
-- `testing/00-index.md` — Testing gatekeeper: core rule (GOOS-style TDD), foundational vocabulary (TDD loop, F.I.R.S.T., four pillars, unit-as-behavior), routing to the sub-modules under `testing/`, and the final pre-commit checklist. Read first whenever writing or reviewing tests; the gatekeeper at `testing/00-index.md` will route you to the architecture, mocking, or aesthetics sub-module as needed.
-- `engineering_judgment.md` — Engineering decision heuristics (DDIA, DDD, GOOS, SRE, etc.). Read before analyzing problems or designing solutions.
-- `ownership.md` — We own the codebase; never dismiss a problem as "pre-existing" or "not mine". Read before reporting work as done, and any time you're tempted to walk past a failing test, lint error, or broken state.
-- `continuous_improvement.md` — Kaizen: always improve the process, not just the output. Read after completing non-trivial tasks. §7.1 post-task reflection is a mandatory visible deliverable, not an internal check.
+| File | What it governs |
+|---|---|
+| `coding_style.md` | Language-agnostic style: TDD, strict typing, hexagonal architecture, fakes over mocks |
+| `coding_style_typescript.md` | TypeScript: Zod, no `as any`, fakes over mocks, node:test |
+| `coding_style_go.md` | Go: fx DI, Fiber, Ginkgo, probe pattern, GORM repos |
+| `testing/00-index.md` | GOOS-style TDD: gatekeeper, vocabulary, sub-module routing, pre-commit checklist |
+| `engineering_judgment.md` | Decision heuristics: DDIA, DDD, GOOS, SRE |
+| `ownership.md` | We own the codebase; no "pre-existing" excuses |
+| `continuous_improvement.md` | Kaizen; §7.1 post-task reflection is mandatory |
+| `using_the_wiki.md` | How to query the personal wiki via qmd |
