@@ -6,7 +6,6 @@
     pkgs.bat
     pkgs.btop
     pkgs.chezmoi
-    pkgs.cowsay
     pkgs.curl
     pkgs.delta
     pkgs.dust
