@@ -19,6 +19,7 @@
       "joaofnds/tap/astro"
       "joaofnds/tap/trunk"
       "logi-options+"
+      "mongodb-compass"
       "obsidian"
       "orbstack"
       "raycast"
