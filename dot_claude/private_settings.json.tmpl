@@ -1,0 +1,43 @@
+{
+  "model": "sonnet",
+  "effortLevel": "high",
+
+  "agentPushNotifEnabled": true,
+  "autoDreamEnabled": true,
+  "autoMemoryEnabled": true,
+  "remoteControlAtStartup": true,
+  "skipDangerousModePermissionPrompt": true,
+
+  "statusLine": {
+    "command": "{{ .chezmoi.homeDir }}/.claude/statusline-command.js",
+    "type": "command"
+  },
+
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  },
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "{{ .chezmoi.homeDir }}/.claude/hooks/rtk-rewrite.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ]
+  },
+
+  "permissions": {
+    "allow": [
+      "Bash(pnpm run:*)",
+      "Bash(npx biome:*)",
+      "Bash(rtk:*)",
+      "Bash(task:*)"
+    ],
+    "defaultMode": "bypassPermissions"
+  }
+}

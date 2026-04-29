@@ -1,4 +1,4 @@
-#!/Users/joaofnds/.local/share/mise/shims/bun
+#!/usr/bin/env bun
 
 const BAR_WIDTH = 10;
 const RATE_BAR_WIDTH = 6;
