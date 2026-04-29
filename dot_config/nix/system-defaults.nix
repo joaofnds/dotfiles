@@ -78,7 +78,7 @@
       };
       NSGlobalDomain = {
         NSUserKeyEquivalents = {
-          "Show Writing Tools" = "@$.";
+          "Show Writing Tools" = "@^.";
         };
       };
       "com.apple.universalaccess" = {
