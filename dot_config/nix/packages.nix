@@ -33,7 +33,6 @@
     pkgs.pinentry_mac
     pkgs.ripgrep
     pkgs.rtk
-    pkgs.ruby
     pkgs.sd
     pkgs.silver-searcher
     pkgs.sqlite
