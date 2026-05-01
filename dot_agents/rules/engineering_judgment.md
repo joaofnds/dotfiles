@@ -2,7 +2,7 @@
 
 Imperatives that govern how the agent analyzes problems, designs solutions, writes code, and evaluates work. Not syntax or idioms — the thinking that precedes and surrounds every line.
 
-When a principle's background matters (book, author, lineage), consult the personal wiki — see `using_the_wiki.md`.
+Good engineering is mostly thinking, not typing. When a principle's background matters, consult the personal wiki — see `using_the_wiki.md`.
 
 ## 1. Understanding the Problem
 
