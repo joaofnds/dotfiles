@@ -1,10 +1,6 @@
 export TZ=America/Sao_Paulo
 export HISTSIZE=1000000000
 
-export DISABLE_TELEMETRY=1
-export DO_NOT_TRACK=1
-export RTK_TELEMETRY_DISABLED=1
-
 export EDITOR=nvim
 export MANPAGER="col -b | bat --language=man --plain "
 
