@@ -1,16 +1,18 @@
 {
   "model": "sonnet",
   "effortLevel": "high",
-
   "agentPushNotifEnabled": true,
   "autoDreamEnabled": true,
   "autoMemoryEnabled": true,
   "remoteControlAtStartup": true,
   "skipDangerousModePermissionPrompt": true,
+  "tui": "fullscreen",
+
+  "permissions": { "defaultMode": "bypassPermissions" },
 
   "statusLine": {
-    "command": "{{ .chezmoi.homeDir }}/.claude/statusline-command.js",
-    "type": "command"
+    "type": "command",
+    "command": "$HOME/.claude/statusline-command.js"
   },
 
   "enabledPlugins": {
@@ -22,7 +24,7 @@
       {
         "hooks": [
           {
-            "command": "{{ .chezmoi.homeDir }}/.claude/hooks/rtk-rewrite.sh",
+            "command": "$HOME/.claude/hooks/rtk-rewrite.sh",
             "type": "command"
           }
         ],
@@ -31,13 +33,10 @@
     ]
   },
 
-  "permissions": {
-    "allow": [
-      "Bash(pnpm run:*)",
-      "Bash(npx biome:*)",
-      "Bash(rtk:*)",
-      "Bash(task:*)"
-    ],
-    "defaultMode": "bypassPermissions"
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": 1,
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL": "1"
   }
 }
