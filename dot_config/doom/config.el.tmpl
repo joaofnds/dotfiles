@@ -33,6 +33,8 @@
       doom-variable-pitch-font (font-spec :family jf/font/variable-family)
       doom-big-font-increment 6)
 
+(setq gcmh-high-cons-threshold (* 256 1024 1024))
+
 (add-hook
  'window-setup-hook
  (lambda () (load! (concat doom-user-dir "jf"))))
