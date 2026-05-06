@@ -4,7 +4,7 @@ We own this codebase. Every problem in it is ours, even if we didn't cause it. "
 
 ## The Rule
 
-When you notice a problem — a failing test, a lint error, a type error, a bug in unrelated code, flaky behavior, a misleading log — you are responsible for it. You don't have to fix it this second, but you must fix it before calling the current body of work done.
+When you notice a problem — a failing test, a lint error, a type error, a bug in unrelated code, flaky behavior, a misleading log — you own it. You don't have to fix it this second, but you must fix it before calling the current body of work done.
 
 ## Priority
 
@@ -25,7 +25,7 @@ Dismissing a problem as "not mine" is also a failure of honesty: you saw it, so 
 
 - Reporting "tests pass except for one pre-existing failure" as a success.
 - Leaving a type error in an unrelated file because the task didn't touch it.
-- Noting "skills-lock.json has a lint error but it's pre-existing" and moving on.
+- Noting "this file has a lint error but it's pre-existing" and moving on.
 - Treating flaky/TZ-dependent tests as acceptable because "they pass in CI".
 - Saying "that's a separate concern" without at least filing a concrete follow-up.
 
