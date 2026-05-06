@@ -41,7 +41,7 @@ Implementation should feel mechanical. If it's hard, go back to §2.
 
 ## 4. Making It Work in Production
 
-Code that works on your machine is a prototype. These principles bridge to software.
+Code that works on your machine is a prototype. These principles bridge it to production software.
 
 - **Design for failure — every integration point will eventually fail.** Circuit breakers. Timeouts on every external call (no timeout = infinite timeout). Bulkheads. Retry with backoff. *(See: Release It! / Nygard)*
 - **Cascading failures are the default.** Without explicit protection, one failing dependency takes down everything. Assume propagation; design barriers.
@@ -59,14 +59,12 @@ Code that works on your machine is a prototype. These principles bridge to softw
 - **A good change narrows the space of future bugs.** A symptom patch leaves the class exposed; a structural fix eliminates it. Ask: "What about the cases I haven't seen?"
 - **Don't fight your tools.** Working around a library at every turn = wrong tool or wrong usage. Investigate before adding another workaround.
 - **Trace the full blast radius.** List every place the change affects. Flag incomplete fixes explicitly — don't ship silently.
-- **Read skeptically.** Agent-generated analysis can contradict itself. Verify independently. "Tests pass" ≠ "approach is right."
+- **"Tests pass" ≠ "approach is right."** Verification confirms behavior, not design. (For agent-specific verification failure modes, see §8.)
 - **Feedback speed is everything.** Every speedup compounds. TDD, CI, trunk-based, fast monitoring all exist to shorten the loop. *(See: test-driven-development, continuous-integration, trunk-based-development)*
 - **Measure what matters.** Deploy frequency, lead time, MTTR, change failure rate. Speed and stability are complementary, not trade-offs. *(See: dora-accelerate-metrics)*
 - **Blameless postmortems.** Ask "how did the system allow this?" not "who did this?" Blame drives hiding; learning drives improvement.
 
 ## 6. Workflows for Agents
-
-Not a checklist — a mode of thinking.
 
 1. **Diagnose before prescribing.** Read the code. Trace the data flow. State the root cause explicitly before writing a fix.
 2. **Propose the approach, not just the code.** Justify the design in terms of these principles. If you can't, reconsider.
