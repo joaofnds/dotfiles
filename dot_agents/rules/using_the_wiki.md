@@ -1,6 +1,6 @@
 # Using the Personal Wiki
 
-The personal wiki at `Wiki/pages/` (qmd collection `wiki`) is João's curated, LLM-maintained knowledge base — the reasoned substrate behind the engineering judgment principles. Case studies, book lineage, the Deming / Ohno / Spear / Farley / Fowler tradition, synthesis across hundreds of sources. Query it to ground design decisions in specific, cited knowledge rather than generic best-practice bromide.
+The personal wiki (qmd collection `wiki`) is João's curated, LLM-maintained knowledge base — the reasoned substrate behind the engineering judgment principles. Case studies, book lineage, the Deming / Ohno / Spear / Farley / Fowler tradition, synthesis across hundreds of sources. Query it to ground design decisions in specific, cited knowledge rather than generic best-practice bromide.
 
 ## When to query
 
@@ -21,20 +21,20 @@ Also query when the user cites a topic in passing ("like Deming says..."), when 
 qmd query "<topic or question>" -c wiki
 ```
 
-Hybrid BM25 + vector retrieval with LLM reranking. Defaults to 5 results; add `-n 10` for more, `--full` for whole documents instead of snippets.
+Defaults to 5 results; `-n 10` for more, `--full` for whole documents instead of snippets.
 
 Variants:
 - `qmd search "<exact term>" -c wiki` — when you know the phrase
-- `qmd get Wiki/pages/<page>.md` — when you know the page
-- `qmd multi-get "Wiki/pages/*.md" -c wiki` — when you want to survey
+- `qmd get <path>` — when you know the page (resolve the path with `qmd collections list` if unsure)
+- `qmd multi-get "*.md" -c wiki` — when you want to survey
 
-Cite the returned pages in your reasoning. Follow wikilinks into `Wiki/raw/` when you need the primary source (podcast transcripts, talks, articles that the wiki page distills).
+Cite the returned pages in your reasoning. Follow wikilinks into the raw source tree when you need the primary source (podcast transcripts, talks, articles that the wiki page distills) — `qmd collections list` shows the tree layout.
 
 ## When to skip
 
 - Quick bug fixes, syntax-level work, mechanical refactors
 - Topics clearly outside the wiki's scope (will return weak / hallucinated relevance)
-- Environments without qmd installed — soft-fail, don't block the task
+- Soft-fail conditions: `command not found: qmd` (tool not installed), or `qmd query "test" -c wiki` returns no results (collection not registered). Don't block the task — proceed without the wiki.
 
 The wiki is optional enrichment, not a required gate.
 
@@ -42,5 +42,5 @@ The wiki is optional enrichment, not a required gate.
 
 - Don't paste wiki content wholesale into responses — cite page titles and summarize in your own words
 - Don't treat a wiki page as more authoritative than the user's stated preference or the codebase's actual conventions
-- Don't modify the wiki during unrelated tasks; wiki maintenance is its own workflow (see the vault's `CLAUDE.md`)
+- Don't modify the wiki during a task that isn't explicitly about the wiki. If wiki content needs updating, flag it as a follow-up rather than doing it inline.
 - Don't query for every decision — reserve it for design-level choices where lineage and reasoning matter
