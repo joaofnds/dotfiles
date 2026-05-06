@@ -8,23 +8,11 @@ Required reads by phase:
 
 - **Coding task** → `coding_style.md` + language-specific (`coding_style_typescript.md` or `coding_style_go.md`)
 - **Tests (write or review)** → `testing/00-index.md` (gatekeeper: routes to sub-modules, holds pre-commit checklist)
+- **TDD (coding + tests simultaneously)** → all three: `coding_style.md`, the language-specific file, and `testing/00-index.md`, before starting
 - **Design / problem analysis** → `engineering_judgment.md`; if it cues a wiki lookup, read `using_the_wiki.md`
 - **Before marking done** → `ownership.md` (walk checklist; decide fix-now vs. defer-with-TODO)
-- **After any task that involves writing or modifying files** → `continuous_improvement.md` §7.1 (post-task reflection block is a visible deliverable, not an internal check)
+- **After any task that involves writing or modifying files** → `continuous_improvement.md` §1 (post-task reflection block is a visible deliverable, not an internal check)
 
-A missing announcement is a process defect. Treat it the same as a failing test.
+A missing announcement is a process defect — the user should call it out, and you should re-read before continuing.
 
-## Rules (reference)
-
-All files live in `~/.agents/rules/`:
-
-| File | What it governs |
-|---|---|
-| `coding_style.md` | Language-agnostic style: TDD, strict typing, hexagonal architecture, fakes over mocks |
-| `coding_style_typescript.md` | TypeScript: Zod, no `as any`, fakes over mocks, node:test |
-| `coding_style_go.md` | Go: fx DI, Fiber, Ginkgo, probe pattern, GORM repos |
-| `testing/00-index.md` | GOOS-style TDD: gatekeeper, vocabulary, sub-module routing, pre-commit checklist |
-| `engineering_judgment.md` | Decision heuristics: DDIA, DDD, GOOS, SRE |
-| `ownership.md` | We own the codebase; no "pre-existing" excuses |
-| `continuous_improvement.md` | Kaizen; §7.1 post-task reflection is mandatory |
-| `using_the_wiki.md` | How to query the personal wiki via qmd |
+Files live at `~/.agents/rules/` (installed by chezmoi from `dot_agents/rules/` in the dotfiles repo). If a file appears missing, verify with `ls ~/.agents/rules/`.
