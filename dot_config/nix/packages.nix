@@ -30,6 +30,8 @@
     pkgs.nixfmt
     pkgs.opencode
     pkgs.pinentry_mac
+    pkgs.rclone
+    pkgs.restic
     pkgs.ripgrep
     pkgs.rtk
     pkgs.sd
