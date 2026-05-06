@@ -97,6 +97,7 @@ function buildMetaLine({
   costUsd,
   durationMs,
   modelName,
+  effort,
   tokensIn,
   tokensOut,
   tokensCached,
@@ -106,6 +107,7 @@ function buildMetaLine({
   if (costUsd != null) parts.push(formatCost(costUsd));
   if (durationMs != null) parts.push(formatDuration(durationMs));
   if (modelName) parts.push(modelName);
+  if (effort) parts.push(effort);
   if (tokensIn != null) parts.push(`↓ ${formatTokens(tokensIn)}`);
   if (tokensOut != null) parts.push(`↑ ${formatTokens(tokensOut)}`);
   if (tokensCached != null) parts.push(`↺ ${formatTokens(tokensCached)}`);
@@ -151,6 +153,7 @@ function parseSession(rawJson) {
     costUsd: input.cost?.total_cost_usd,
     durationMs: input.cost?.total_duration_ms,
     modelName: input.model?.display_name ?? "",
+    effort: input.effort?.level ?? null,
     tokensIn,
     tokensOut,
     tokensCached: tokensCached > 0 ? tokensCached : null,
