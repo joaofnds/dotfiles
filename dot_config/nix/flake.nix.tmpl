@@ -23,6 +23,7 @@
           nix.settings.experimental-features = "nix-command flakes";
           programs.zsh.enable = true;
           security.pam.services.sudo_local.touchIdAuth = true;
+          security.pam.services.sudo_local.reattach = true;
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.primaryUser = "joaofnds";
           system.stateVersion = 6;
