@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+# dot_crontab.tmpl hash: {{ include "dot_crontab.tmpl" | sha256sum }}
+
+crontab < ~/.crontab
