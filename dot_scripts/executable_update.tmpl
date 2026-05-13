@@ -17,7 +17,7 @@ tmux set-hook -w pane-exited 'select-layout even-vertical'
 
 tmux split-window -v -d "zsh -c '{ git -C \$(brew --repository joaofnds/tap) pull; doom upgrade --force; doom sync --gc } ; tmux wait-for -S $CHAN_DOOM'"
 tmux split-window -v -d "zsh -c '{ mise upgrade; mise prune --yes } ; tmux wait-for -S $CHAN_MISE'"
-tmux split-window -v -d "zsh -c '{ cd ~/.config/nix; nix flake update } ; tmux wait-for -S $CHAN_NIX'"
+tmux split-window -v -d "zsh -c '{ cd ~/.config/nix; nix flake update; chezmoi add ~/.config/nix/flake.lock } ; tmux wait-for -S $CHAN_NIX'"
 tmux split-window -v -d "zsh -c '{ nvim -c \"lua require(\\\"lazy\\\").update({ wait = true })\" -c \"qa\" } ; tmux wait-for -S $CHAN_LAZY'"
 
 
