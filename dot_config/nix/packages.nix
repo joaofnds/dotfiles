@@ -33,7 +33,6 @@
     pkgs.rclone
     pkgs.restic
     pkgs.ripgrep
-    pkgs.rtk
     pkgs.sd
     pkgs.silver-searcher
     pkgs.sqlite

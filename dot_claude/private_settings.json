@@ -20,20 +20,6 @@
     "typescript-lsp@claude-plugins-official": true
   },
 
-  "hooks": {
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.claude/hooks/rtk-rewrite.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": "Bash"
-      }
-    ]
-  },
-
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": 1,
     "DISABLE_FEEDBACK_COMMAND": "1",
