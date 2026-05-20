@@ -1,5 +1,6 @@
 {
-  "model": "sonnet",
+  "model": "opus",
+  "advisorModel": "opus",
   "effortLevel": "high",
   "agentPushNotifEnabled": true,
   "autoDreamEnabled": true,
@@ -16,14 +17,35 @@
     "command": "$HOME/.claude/statusline-command.js"
   },
 
-  "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true
-  },
+  "enabledPlugins": {},
 
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "DISABLE_FEEDBACK_COMMAND": "1",
     "DISABLE_ERROR_REPORTING": "1",
     "CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL": "1"
+  },
+
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/announce-rules-reminder.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/announce-rules-verify.py"
+          }
+        ]
+      }
+    ]
   }
 }
