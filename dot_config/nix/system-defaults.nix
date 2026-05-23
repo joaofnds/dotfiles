@@ -30,6 +30,7 @@
       largesize = 72;
       magnification = true;
       mineffect = "genie";
+      mru-spaces = false;
       orientation = "left";
       tilesize = 36;
       wvous-bl-corner = 1;
