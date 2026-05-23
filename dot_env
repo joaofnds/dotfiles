@@ -1,4 +1,4 @@
-export TZ=America/Sao_Paulo
+export TZ=Europe/Madrid
 export HISTSIZE=1000000000
 
 export EDITOR=nvim
