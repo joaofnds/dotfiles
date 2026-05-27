@@ -2,12 +2,12 @@ installBloat = false
 
 [code.font]
   family = "PragmataPro"
-  size = 18
+  size = 14
 
 [emacs.font]
   family = "PragmataPro"
-  size = 18
+  size = 14
 
 [ghostty.font]
   family = "PragmataPro"
-  size = 18
+  size = 14
