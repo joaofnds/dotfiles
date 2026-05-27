@@ -1,0 +1,435 @@
+#!/usr/bin/env bash
+# Claude Desktop multi-instance launcher.
+#
+# Each instance is fully isolated by combining three mechanisms:
+#   * CLAUDE_CONFIG_DIR=~/.claude-<name>              — Claude Code's config root
+#   * --user-data-dir=~/.claude-<name>/electron-data  — Electron/Chromium storage
+#   * .app wrapper with CFBundleIdentifier=com.anthropic.claudefordesktop.<name>
+#     — gives macOS-keyed storage (Keychain, Prefs, Caches, SavedState) its own
+#     bucket, so accounts and tokens cannot leak across instances.
+#
+# Instances are auto-discovered from ~/.claude-*/. ~/.claude/ is the unmanaged
+# default install and is never treated as an instance.
+
+set -euo pipefail
+
+CLAUDE_APP="/Applications/Claude.app"
+CLAUDE_BIN="$CLAUDE_APP/Contents/MacOS/Claude"
+WRAPPER_BUNDLE_PREFIX="com.anthropic.claudefordesktop"
+
+# Files in ~/.claude/ that get symlinked into each instance.
+# Mirrors the chezmoi pattern in dot_claude-livefire/ and dot_claude-runsmith/.
+SHARED_LINKS=(
+	agents
+	CLAUDE.md
+	hooks
+	plugins
+	settings.json
+	skills
+	statusline-command.js
+)
+
+instance_dir() { echo "$HOME/.claude-$1"; }
+instance_user_data() { echo "$HOME/.claude-$1/electron-data"; }
+instance_bundle_id() { echo "$WRAPPER_BUNDLE_PREFIX.$1"; }
+
+list_instance_names() {
+	local d
+	for d in "$HOME"/.claude-*/; do
+		[ -d "$d" ] || continue
+		basename "$d" | sed 's/^\.claude-//'
+	done
+}
+
+find_wrapper_for_instance() {
+	local target_id
+	target_id=$(instance_bundle_id "$1")
+	local app plist id
+	for app in /Applications/*.app; do
+		plist="$app/Contents/Info.plist"
+		[ -f "$plist" ] || continue
+		id=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$plist" 2>/dev/null || true)
+		if [ "$id" = "$target_id" ]; then
+			echo "$app"
+			return 0
+		fi
+	done
+	return 1
+}
+
+ensure_symlinks() {
+	local name="$1"
+	local dir
+	dir=$(instance_dir "$name")
+	mkdir -p "$dir"
+	local link target current
+	for link in "${SHARED_LINKS[@]}"; do
+		target="$HOME/.claude/$link"
+		if [ ! -e "$target" ]; then
+			echo "  ⚠️  source missing: $target (skipping $link)"
+			continue
+		fi
+		if [ -L "$dir/$link" ]; then
+			current=$(readlink "$dir/$link")
+			[ "$current" = "$target" ] && continue
+			echo "  ↻ updating $link"
+			rm "$dir/$link"
+		elif [ -e "$dir/$link" ]; then
+			echo "  ⚠️  $dir/$link exists and is not a symlink (skipping)"
+			continue
+		fi
+		ln -s "$target" "$dir/$link"
+		echo "  + linked $link → $target"
+	done
+}
+
+launch_default() {
+	echo "🚀 Launching default Claude (unmanaged ~/.claude/)"
+	open -n "$CLAUDE_APP"
+}
+
+new_instance() {
+	local name="${1:-}"
+	[ -n "$name" ] || {
+		echo "usage: cdl new <name>" >&2
+		exit 1
+	}
+	[ "$name" = "default" ] && {
+		echo "❌ 'default' is reserved for the unmanaged ~/.claude/ instance (run: cdl default)" >&2
+		exit 1
+	}
+	local dir
+	dir=$(instance_dir "$name")
+	if [ -d "$dir" ]; then
+		echo "ℹ️  Instance '$name' already exists at $dir"
+	else
+		echo "📁 Creating instance '$name' at $dir"
+		mkdir -p "$dir"
+		ensure_symlinks "$name"
+	fi
+	launch_instance "$name"
+}
+
+launch_instance() {
+	local name="${1:-}"
+	[ -n "$name" ] || {
+		echo "usage: cdl launch <name>" >&2
+		exit 1
+	}
+	local dir
+	dir=$(instance_dir "$name")
+	[ -d "$dir" ] || {
+		echo "❌ Instance '$name' does not exist (run: cdl new $name)" >&2
+		exit 1
+	}
+
+	local wrapper
+	if wrapper=$(find_wrapper_for_instance "$name"); then
+		echo "🚀 Launching via wrapper: $wrapper"
+		open -n "$wrapper"
+	else
+		local user_data
+		user_data=$(instance_user_data "$name")
+		mkdir -p "$user_data"
+		echo "🚀 Launching '$name' (no wrapper — run: cdl wrapper $name)"
+		CLAUDE_CONFIG_DIR="$dir" "$CLAUDE_BIN" --user-data-dir="$user_data" >/dev/null 2>&1 &
+		disown
+	fi
+}
+
+delete_instance() {
+	local name="${1:-}"
+	[ -n "$name" ] || {
+		echo "usage: cdl delete <name>" >&2
+		exit 1
+	}
+	local dir
+	dir=$(instance_dir "$name")
+	[ -d "$dir" ] || {
+		echo "❌ Instance '$name' does not exist" >&2
+		exit 1
+	}
+
+	local wrapper=""
+	wrapper=$(find_wrapper_for_instance "$name" || true)
+
+	echo "⚠️  About to delete:"
+	echo "   - $dir"
+	[ -n "$wrapper" ] && echo "   - $wrapper"
+	read -r -p "Type 'yes' to confirm: " confirm
+	[ "$confirm" = "yes" ] || {
+		echo "Cancelled."
+		return 1
+	}
+
+	rm -rf "$dir"
+	[ -n "$wrapper" ] && rm -rf "$wrapper"
+	echo "✅ Deleted"
+}
+
+# Move ~/Library/Application Support/Claude-<X>/ into the instance's electron-data/.
+# Match is case-insensitive on the suffix after "Claude-".
+migrate_instance() {
+	local name="${1:-}"
+	[ -n "$name" ] || {
+		echo "usage: cdl migrate <name>" >&2
+		exit 1
+	}
+	local dir
+	dir=$(instance_dir "$name")
+	[ -d "$dir" ] || {
+		echo "❌ Instance '$name' does not exist" >&2
+		exit 1
+	}
+
+	local target
+	target=$(instance_user_data "$name")
+	if [ -d "$target" ] && [ -n "$(ls -A "$target" 2>/dev/null)" ]; then
+		echo "❌ $target already exists and is non-empty — refusing to overwrite" >&2
+		return 1
+	fi
+
+	local appsupp="$HOME/Library/Application Support"
+	local lower
+	lower=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+	local match="" candidate base suffix suffix_lower
+	for candidate in "$appsupp"/Claude-*/; do
+		[ -d "$candidate" ] || continue
+		base=$(basename "$candidate")
+		suffix="${base#Claude-}"
+		suffix_lower=$(echo "$suffix" | tr '[:upper:]' '[:lower:]')
+		if [ "$suffix_lower" = "$lower" ]; then
+			match="${candidate%/}"
+			break
+		fi
+	done
+
+	if [ -z "$match" ]; then
+		echo "ℹ️  No external user-data dir found for '$name' — nothing to migrate."
+		return 0
+	fi
+
+	echo "📦 Migrating $match → $target"
+	rmdir "$target" 2>/dev/null || true
+	mv "$match" "$target"
+	echo "✅ Migration complete"
+}
+
+write_wrapper() {
+	local name="$1"
+	local display="$2"
+	local wrapper="/Applications/Claude $display.app"
+
+	# Preserve any custom icon across rebuilds.
+	local saved_icon=""
+	if [ -d "$wrapper" ]; then
+		read -r -p "⚠️  $wrapper exists. Overwrite? (y/N): " yn
+		case "$yn" in [yY] | [yY][eE][sS]) ;; *) return 1 ;; esac
+		if [ -f "$wrapper/Contents/Resources/claude-icon.icns" ]; then
+			saved_icon=$(mktemp -t cdl-icon.XXXXXX)
+			cp "$wrapper/Contents/Resources/claude-icon.icns" "$saved_icon"
+		fi
+		rm -rf "$wrapper"
+	fi
+
+	mkdir -p "$wrapper/Contents/MacOS" "$wrapper/Contents/Resources"
+
+	local bundle_id
+	bundle_id=$(instance_bundle_id "$name")
+	local instance_dir_path
+	instance_dir_path=$(instance_dir "$name")
+	local user_data_path
+	user_data_path=$(instance_user_data "$name")
+
+	cat >"$wrapper/Contents/Info.plist" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key><string>claude-launcher</string>
+    <key>CFBundleIdentifier</key><string>$bundle_id</string>
+    <key>CFBundleName</key><string>Claude $display</string>
+    <key>CFBundleDisplayName</key><string>Claude $display</string>
+    <key>CFBundleVersion</key><string>1.0</string>
+    <key>CFBundleShortVersionString</key><string>1.0</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>LSMinimumSystemVersion</key><string>11.0</string>
+    <key>CFBundleIconFile</key><string>claude-icon</string>
+    <key>NSHighResolutionCapable</key><true/>
+</dict>
+</plist>
+PLIST
+
+	# Compile a native arm64 Mach-O launcher. A shell-script executable inside
+	# an .app has no architecture slice, so LaunchServices flags the bundle as
+	# Intel-only — first showing the "Intel app" deprecation banner, then
+	# eventually refusing to launch at all. A real Mach-O removes the ambiguity.
+	local src
+	src=$(mktemp -t cdl-launcher.XXXXXX).c
+	cat >"$src" <<C_SRC
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
+int main(void) {
+    mkdir("$user_data_path", 0755);
+    setenv("CLAUDE_CONFIG_DIR", "$instance_dir_path", 1);
+    char *args[] = { "Claude", "--user-data-dir=$user_data_path", NULL };
+    execv("$CLAUDE_BIN", args);
+    return 1;
+}
+C_SRC
+	if ! cc -arch arm64 -O2 -o "$wrapper/Contents/MacOS/claude-launcher" "$src" 2>&1; then
+		rm -f "$src"
+		echo "❌ Failed to compile launcher (need Xcode Command Line Tools: xcode-select --install)" >&2
+		return 1
+	fi
+	rm -f "$src"
+
+	if [ -n "$saved_icon" ]; then
+		mv "$saved_icon" "$wrapper/Contents/Resources/claude-icon.icns"
+	else
+		local icon
+		icon=$(find "$CLAUDE_APP/Contents/Resources" -maxdepth 1 -name "*.icns" 2>/dev/null | head -1 || true)
+		[ -n "$icon" ] && cp "$icon" "$wrapper/Contents/Resources/claude-icon.icns"
+	fi
+
+	# Force Launch Services to register the new bundle ID; otherwise macOS may
+	# cache the old identifier and route launches to the wrong app.
+	/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$wrapper" 2>/dev/null || true
+
+	echo "✅ Wrapper: $wrapper (bundle: $bundle_id)"
+}
+
+create_wrapper_cmd() {
+	local name="${1:-}"
+	[ -n "$name" ] || {
+		echo "usage: cdl wrapper <name>" >&2
+		exit 1
+	}
+	[ -d "$(instance_dir "$name")" ] || {
+		echo "❌ Instance '$name' does not exist (run: cdl new $name)" >&2
+		exit 1
+	}
+
+	local default_display
+	default_display=$(echo "$name" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
+	read -r -p "Display name suffix (shown as 'Claude <suffix>') [$default_display]: " display
+	display="${display:-$default_display}"
+	write_wrapper "$name" "$display"
+}
+
+repair() {
+	local name="${1:-}"
+	[ -n "$name" ] || {
+		echo "usage: cdl repair <name>" >&2
+		exit 1
+	}
+	[ -d "$(instance_dir "$name")" ] || {
+		echo "❌ Instance '$name' does not exist" >&2
+		exit 1
+	}
+	echo "🔧 Repairing symlinks for '$name'"
+	ensure_symlinks "$name"
+}
+
+list_cmd() {
+	echo "Claude Desktop instances"
+	echo "========================"
+	local found=0 name app wrapper
+	while IFS= read -r name; do
+		found=1
+		wrapper="(no wrapper)"
+		if app=$(find_wrapper_for_instance "$name"); then
+			wrapper="$(basename "$app")"
+		fi
+		printf "  %-20s  %s\n" "$name" "$wrapper"
+	done < <(list_instance_names)
+	[ "$found" -eq 1 ] || echo "  (none — create one with: cdl new <name>)"
+}
+
+diagnose() {
+	echo "🔍 Diagnostics"
+	echo "=============="
+	if [ -d "$CLAUDE_APP" ]; then echo "✅ Claude.app present"; else
+		echo "❌ Claude.app missing"
+		return
+	fi
+	if [ -x "$CLAUDE_BIN" ]; then echo "✅ Claude binary executable"; else echo "❌ Claude binary not executable"; fi
+	echo
+	echo "Instances:"
+	local name dir user_data wrapper link
+	while IFS= read -r name; do
+		dir=$(instance_dir "$name")
+		user_data=$(instance_user_data "$name")
+		echo "  📂 $name"
+		echo "     dir:        $dir"
+		if [ -d "$user_data" ]; then
+			echo "     user-data:  $user_data (exists)"
+		else
+			echo "     user-data:  $user_data (created on launch)"
+		fi
+		wrapper=$(find_wrapper_for_instance "$name" || true)
+		if [ -n "$wrapper" ]; then echo "     wrapper:    $wrapper"; else echo "     wrapper:    (none)"; fi
+		for link in "${SHARED_LINKS[@]}"; do
+			if [ -L "$dir/$link" ]; then
+				:
+			elif [ -e "$dir/$link" ]; then
+				echo "     ⚠️  $link is not a symlink"
+			else
+				echo "     ⚠️  $link missing"
+			fi
+		done
+	done < <(list_instance_names)
+	echo
+	echo "External user-data dirs (candidates for migration):"
+	local appsupp="$HOME/Library/Application Support" d base suffix
+	local stray=0
+	for d in "$appsupp"/Claude-*/; do
+		[ -d "$d" ] || continue
+		stray=1
+		base=$(basename "$d")
+		suffix="${base#Claude-}"
+		echo "  - $d  (cdl migrate $(echo "$suffix" | tr '[:upper:]' '[:lower:]'))"
+	done
+	[ "$stray" -eq 1 ] || echo "  (none)"
+}
+
+usage() {
+	cat <<USAGE
+cdl — Claude Desktop multi-instance launcher
+
+Usage:
+  cdl list                  List all instances
+  cdl default               Launch the default unmanaged ~/.claude/ instance
+  cdl new <name>            Create instance (with shared symlinks) and launch
+  cdl <name>                Launch existing instance (shorthand for: cdl launch <name>)
+  cdl launch <name>         Launch existing instance
+  cdl wrapper <name>        Build /Applications/Claude <Name>.app wrapper
+  cdl repair <name>         Re-sync shared symlinks from ~/.claude/
+  cdl migrate <name>        Move ~/Library/Application Support/Claude-<X>/ into the instance
+  cdl delete <name>         Delete instance dir (and wrapper if present)
+  cdl diagnose              Show instance state and migration candidates
+USAGE
+}
+
+if [ ! -d "$CLAUDE_APP" ]; then
+	echo "❌ Claude.app not found in /Applications. Install from https://claude.ai/download" >&2
+	exit 1
+fi
+
+cmd="${1:-}"
+shift || true
+case "$cmd" in
+"" | help | -h | --help) usage ;;
+list) list_cmd ;;
+default) launch_default ;;
+new) new_instance "${1:-}" ;;
+launch) if [ "${1:-}" = "default" ]; then launch_default; else launch_instance "${1:-}"; fi ;;
+delete | rm) delete_instance "${1:-}" ;;
+wrapper) create_wrapper_cmd "${1:-}" ;;
+repair) repair "${1:-}" ;;
+migrate) migrate_instance "${1:-}" ;;
+diagnose) diagnose ;;
+*) launch_instance "$cmd" ;;
+esac
