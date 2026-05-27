@@ -3,6 +3,7 @@
   "advisorModel": "opus",
   "effortLevel": "high",
   "agentPushNotifEnabled": true,
+  "inputNeededNotifEnabled": true,
   "autoDreamEnabled": true,
   "autoMemoryEnabled": true,
   "remoteControlAtStartup": true,
