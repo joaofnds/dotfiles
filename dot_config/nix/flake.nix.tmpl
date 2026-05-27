@@ -48,6 +48,11 @@
       ];
     in
     {
+      darwinConfigurations."joaofnds-m5p" = nix-darwin.lib.darwinSystem {
+        modules = common ++ [
+          { nixpkgs.hostPlatform = "aarch64-darwin"; }
+        ];
+      };
       darwinConfigurations."joaofnds-m1p" = nix-darwin.lib.darwinSystem {
         modules = common ++ [
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
