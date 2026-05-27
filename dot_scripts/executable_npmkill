@@ -9,12 +9,10 @@ fd --hidden \
   --exclude '.npm' \
   --exclude '.nodenv' \
   --type directory \
-  --fixed-strings \
   node_modules \
-  --exec du -d0 {} \
-| sort -rnk1 \
-| awk '{ print $2 }' \
-| xargs du -sh \
-| fzf -m \
-| awk '{ print $2 }' \
-| xargs -p -n1 rm -rf
+  --exec-batch du -sh \
+| sort --reverse --human-numeric-sort \
+| fzf --multi \
+| awk -F'\t' '{ print $2 }' \
+| tr '\n' '\0' \
+| xargs -0 -p -n1 rm -rf
