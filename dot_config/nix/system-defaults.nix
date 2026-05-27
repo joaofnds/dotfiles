@@ -73,6 +73,9 @@
     };
 
     CustomUserPreferences = {
+      "com.apple.WindowManager" = {
+        EnableStandardClickToShowDesktop = false;
+      };
       "com.apple.BezelServices" = {
         kDim = true;
         kDimTime = 5;
