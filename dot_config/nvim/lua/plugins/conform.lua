@@ -12,6 +12,7 @@ return {
 			json = { "biome", "prettier", stop_after_first = true },
 			javascript = { "biome", "prettier", stop_after_first = true },
 			typescript = { "biome", "prettier", stop_after_first = true },
+			yaml = { "prettier" },
 		},
 		default_format_opts = {
 			timeout_ms = 2000,

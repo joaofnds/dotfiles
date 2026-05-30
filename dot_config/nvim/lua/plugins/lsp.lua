@@ -33,6 +33,14 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
 				end
 
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				if client and client:supports_method("textDocument/inlayHint") then
+					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+					map("n", "<leader>th", function()
+						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+					end, "inlay hints")
+				end
+
 				map("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", "definition")
 				map("n", "gD", "<cmd>FzfLua lsp_declarations<cr>", "declaration")
 				map("n", "gr", "<cmd>FzfLua lsp_references<cr>", "references")
@@ -42,6 +50,8 @@ return {
 				map("n", "[e", function() vim.diagnostic.jump({ count = -1 }) end, "prev diagnostic")
 
 				map("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", "action")
+				map("n", "<leader>cs", "<cmd>FzfLua lsp_document_symbols<cr>", "document symbols")
+				map("n", "<leader>cS", "<cmd>FzfLua lsp_workspace_symbols<cr>", "workspace symbols")
 				map("n", "<leader>cr", vim.lsp.buf.rename, "rename")
 				map("n", "<leader>cf", function()
 					require("conform").format({ lsp_fallback = true })
@@ -54,6 +64,42 @@ return {
 					vim.lsp.buf_request(bufnr, "workspace/executeCommand", params)
 				end, "organize imports")
 			end,
+		})
+
+		vim.lsp.config("lua_ls", {
+			settings = { Lua = { hint = { enable = true } } },
+		})
+
+		vim.lsp.config("gopls", {
+			settings = {
+				gopls = {
+					hints = {
+						assignVariableTypes = true,
+						compositeLiteralFields = true,
+						compositeLiteralTypes = true,
+						constantValues = true,
+						functionTypeParameters = true,
+						parameterNames = true,
+						rangeVariableTypes = true,
+					},
+				},
+			},
+		})
+
+		local ts_inlay_hints = {
+			parameterNames = { enabled = "all" },
+			parameterTypes = { enabled = true },
+			variableTypes = { enabled = true },
+			propertyDeclarationTypes = { enabled = true },
+			functionLikeReturnTypes = { enabled = true },
+			enumMemberValues = { enabled = true },
+		}
+
+		vim.lsp.config("vtsls", {
+			settings = {
+				typescript = { inlayHints = ts_inlay_hints },
+				javascript = { inlayHints = ts_inlay_hints },
+			},
 		})
 
 		require("mason").setup()
