@@ -5,5 +5,4 @@ pandas
 black
 pyright
 pylint
-grip
 poetry
