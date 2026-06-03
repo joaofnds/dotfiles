@@ -72,10 +72,11 @@
       ShowSeconds = true;
     };
 
+    WindowManager = {
+      EnableStandardClickToShowDesktop = false;
+    };
+
     CustomUserPreferences = {
-      "com.apple.WindowManager" = {
-        EnableStandardClickToShowDesktop = false;
-      };
       "com.apple.BezelServices" = {
         kDim = true;
         kDimTime = 5;
@@ -87,6 +88,21 @@
       };
       "com.apple.universalaccess" = {
         "com.apple.custommenu.apps" = [ "NSGlobalDomain" ];
+      };
+      "com.apple.Accessibility" = {
+        AccessibilityEnabled = true;
+        ApplicationAccessibilityEnabled = true;
+        SpeakThisEnabled = true;
+        # System voice: Siri Voice 3 (Damon).
+        SpokenContentDefaultVoiceSelectionsByLanguage = [
+          "en"
+          {
+            _type = "Speech.VoiceSelection";
+            _version = 0;
+            boundLanguage = "en";
+            voiceId = "com.apple.siri.natural.Damon";
+          }
+        ];
       };
       "com.apple.symbolichotkeys" = {
         AppleSymbolicHotKeys = {
