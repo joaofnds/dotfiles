@@ -34,7 +34,6 @@
     pkgs.restic
     pkgs.ripgrep
     pkgs.sd
-    pkgs.silver-searcher
     pkgs.sqlite
     pkgs.starship
     pkgs.tmux
