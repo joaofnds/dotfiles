@@ -1,0 +1,5 @@
+{{- $base := include "dot_claude/private_settings.json" | fromJson -}}
+{{- $overrides := dict
+      "remoteControlAtStartup" false
+-}}
+{{- mergeOverwrite $base $overrides | toPrettyJson -}}
