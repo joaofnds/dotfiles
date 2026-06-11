@@ -1,4 +1,5 @@
 dockerfile-language-server-nodejs
+oxfmt
 prettier
 typescript
 typescript-language-server
