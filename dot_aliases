@@ -4,13 +4,11 @@ alias screensaver='open /System/Library/CoreServices/ScreenSaverEngine.app'
 
 alias wakedesk='wakeonlan -i $HOME_IP -p 7 $DESK_MAC'
 
+alias n='nvim'
+alias y='yazi'
 alias t='tmux'
-alias tx='tmuxinator'
-alias txstart='tmuxinator start $(tmuxinator list -n | tail -n +2 | fzf)'
-alias txstop='tmuxinator stop $(tmuxinator list -n | tail -n +2 | fzf)'
 alias tatt='tmux attach -t "$(tmux list-sessions -F "#S" | fzf -1 --preview "tmux capture-pane -e -p -t {}" --preview-window right:70%)"'
 alias cm='chezmoi'
-alias n='nvim'
 
 alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --merge-output-format=mkv"
 alias musicdl="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail"
@@ -87,7 +85,6 @@ alias drm='docker ps -a | sed "1d" | fzf -m | awk '\''{ print $1 }'\'' | xargs d
 alias drmi='docker images | sed "1d" | fzf -m | awk '\''{ print $3 }'\'' | xargs docker rmi -f'
 alias dctx='docker context use $(docker context ls --format {{.Name}} | fzf)'
 
-alias y='yazi'
 alias m4b-tool='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/mnt sandreas/m4b-tool:latest'
 
 basepwd() {
