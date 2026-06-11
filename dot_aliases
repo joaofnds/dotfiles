@@ -8,7 +8,7 @@ alias t='tmux'
 alias tx='tmuxinator'
 alias txstart='tmuxinator start $(tmuxinator list -n | tail -n +2 | fzf)'
 alias txstop='tmuxinator stop $(tmuxinator list -n | tail -n +2 | fzf)'
-alias tatt='tmux attach -t "$(tmux ls | fzf -1 | cut -d: -f1)"'
+alias tatt='tmux attach -t "$(tmux list-sessions -F "#S" | fzf -1 --preview "tmux capture-pane -e -p -t {}" --preview-window right:70%)"'
 alias cm='chezmoi'
 alias n='nvim'
 
