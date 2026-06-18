@@ -5,7 +5,8 @@ Cross-language coding style. Language-specific preferences live in `coding_style
 ## 1. Core Philosophy & Mindset
 
 - **Simplicity, by Beck's four criteria.** Passes the tests, reveals intent, no duplication, fewest elements — *in that order*. Minimality is the **fourth** criterion, not the first; a system that is minimal but unreadable is not simple. *(See: beck-s-four-rules-of-simple-design, simplicity-vs-ease, incremental-design)*
-- **Boring control flow.** Plain `if`/`else`, loops, early returns over clever expression-level tricks. If a piece of code needs a comment to explain *what* it is, it's too clever — rewrite it simpler. Reserve comments for *why*, never *what*. *(See: code-comments)*
+- **Boring control flow.** Plain `if`/`else`, loops, early returns over clever expression-level tricks. If a piece of code needs a comment to explain *what* it is, it's too clever — rewrite it simpler.
+- **Comments default to zero.** The test is *not* "is this a *why* or a *what*" — a *why* comment is usually still noise. The test is: **will this code be misread or silently broken without it?** Before writing any `//`, exhaust three moves: (1) a clearer name, (2) a smaller/extracted function, (3) move the rationale to the design doc (README / CLAUDE.md / PRD). A comment survives only when all three fail *and* the code reads as removable-but-isn't — then it states the consequence of removal, nothing else. When unsure, omit; assume the reader wants no comment. *(See: code-comments)*
 - **Move understanding from your head into the code.** Renaming and extracting are how the persistence happens — your head is volatile storage. *(See: refactoring-fowler-2018)*
 - **Surgical execution.** Only touch what is directly relevant to the user's intent. Do not "fix" adjacent code, refactor for aesthetic reasons, or leave dead imports behind from your changes.
 - **Goal-driven TDD.** Tests are written *before* the implementation. Red → simplest green → refactor. Beck's three green-step tactics: **fake it** (return a literal, let the next test force generalization), **triangulate** (a second test forces the abstraction), **obvious implementation** (just write it when the answer is clear) — picked by confidence. *(See: canon-tdd, growing-object-oriented-software-guided-by-tests, test-driven-development)*
@@ -67,6 +68,7 @@ One reminder relevant outside test files: treat any auto-generated files (Swagge
 - **Are we modifying auto-generated files manually?** No. Run the generator script instead.
 - **Did we bypass the type system?** Remove it. Figure out the real type.
 - **Did we touch adjacent files because "they could be cleaner"?** Revert. Surgical precision only.
+- **Did I add an inline comment?** Default is no. Delete it, fix the name, or move the *why* to the design doc. Keep it only if the code is genuinely misread-or-broken without it.
 - **Did we write the logic before the behavior test?** Wrong order. TDD always.
 - **Did we leak raw database/API shapes into the core logic?** Stop. Safe parsing at the edges, mappers at the boundaries.
 - **Are infrastructure errors leaking into business logic?** Translate them at the adapter boundary.
