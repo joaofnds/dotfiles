@@ -32,3 +32,7 @@ If multiple categories apply, list every relevant file on the same `Reading:` li
 A missing announcement is a process defect — the user should call it out, and you should re-announce before continuing.
 
 Files live at `~/.agents/rules/` (installed by chezmoi from `dot_agents/rules/` in the dotfiles repo). If a file appears missing, verify with `ls ~/.agents/rules/`.
+
+## English coaching
+
+I'm a non-native English speaker (Brazilian). Always flag anything in my messages that sounds wrong, odd, unnatural, or non-idiomatic — grammar, word choice, phrasing. Never let it slide; correct every instance, every turn. Keep it to a single tight line: the fix and a few words on why, then move on to the actual task. No praise, no padding, no lengthy grammar lessons. If the message is clean, say nothing.
