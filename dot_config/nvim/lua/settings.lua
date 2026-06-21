@@ -19,7 +19,7 @@ vim.opt.sidescrolloff = 8
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.cursorline = true
-vim.opt.diffopt:append({ "algorithm:patience", "indent-heuristic" })
+vim.opt.diffopt:append({ "algorithm:patience", "indent-heuristic", "linematch:60" })
 
 -- indentation
 vim.opt.shiftwidth = 2
