@@ -1,5 +1,9 @@
 { ... }:
 {
+  networking.applicationFirewall.enable = true;
+  networking.applicationFirewall.enableStealthMode = true;
+  networking.applicationFirewall.blockAllIncoming = true;
+
   networking.dns = [
     "1.1.1.1"
     "1.0.0.1"
