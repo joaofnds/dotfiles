@@ -21,6 +21,7 @@ No greeting, no preamble, no thinking-aloud may precede it. "I already read thos
 Required reads by phase:
 
 - **Coding task** → `coding_style.md` + language-specific (`coding_style_typescript.md` or `coding_style_go.md`)
+- **Frontend / UI task** (building or modifying UI components, styling, layout) → `coding_style.md` + the language-specific file (`coding_style_typescript.md`) + `coding_style_frontend.md`
 - **Tests (write or review)** → `testing/00-index.md` (gatekeeper: routes to sub-modules, holds pre-commit checklist)
 - **TDD (coding + tests simultaneously)** → all three: `coding_style.md`, the language-specific file, and `testing/00-index.md`, before starting
 - **Design / problem analysis** → `engineering_judgment.md`; if it cues a wiki lookup, read `using_the_wiki.md`
