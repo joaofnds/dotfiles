@@ -79,7 +79,7 @@
     CustomUserPreferences = {
       "com.apple.BezelServices" = {
         kDim = true;
-        kDimTime = 5;
+        kDimTime = 10;
       };
       NSGlobalDomain = {
         NSUserKeyEquivalents = {
