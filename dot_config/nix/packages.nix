@@ -3,6 +3,7 @@
   environment.systemPackages = [
     pkgs.agent-browser
     pkgs.aspell
+    pkgs.ast-grep
     pkgs.bat
     pkgs.btop
     pkgs.chezmoi
