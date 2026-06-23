@@ -20,7 +20,7 @@ The goal, scope, and chosen approach are already settled in this conversation. P
 
 **Before writing:** read or grep the files the conversation referenced to confirm they exist and that the described state still matches. If a path or `file:line` from the discussion is stale or wrong, correct it in the plan — never copy a bad citation forward.
 
-Save the plan as `docs/plans/YYYY-MM-DD-<slug>.md`, where `<slug>` is a 2–5 word kebab-case description of the goal (e.g. `2026-06-23-add-oauth-login.md`). Use the repo's existing plans directory if it has one; otherwise create `docs/plans/`. Tell the user the exact path.
+Name the file `YYYY-MM-DD-<slug>.md` (`<slug>` is a 2–5 word kebab-case goal, e.g. `2026-06-23-add-oauth-login.md`). Save it where the repo already keeps planning/design docs; only create a directory if there's no obvious home. Tell the user the exact path.
 
 ## Structure
 
