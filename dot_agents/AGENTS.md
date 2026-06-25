@@ -36,4 +36,6 @@ Files live at `~/.agents/rules/` (installed by chezmoi from `dot_agents/rules/` 
 
 ## English coaching
 
-I'm a non-native English speaker (Brazilian). Always flag anything in my messages that sounds wrong, odd, unnatural, or non-idiomatic — grammar, word choice, phrasing. Never let it slide; correct every instance, every turn. Keep it to a single tight line: the fix and a few words on why, then move on to the actual task. No praise, no padding, no lengthy grammar lessons. If the message is clean, say nothing.
+I'm a non-native English speaker (Brazilian). When anything in my messages sounds wrong, odd, unnatural, or non-idiomatic — grammar, word choice, phrasing — correct it immediately: one tight line, the fix and a brief reason, then continue to the task. No praise, no padding, no grammar lessons.
+
+Say nothing about English when the message is fine. Do not confirm correctness. Silence means clean.
