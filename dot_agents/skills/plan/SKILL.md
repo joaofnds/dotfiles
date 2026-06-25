@@ -1,20 +1,21 @@
 ---
-name: handoff
+name: plan
 description: >
   Stop building and write the agreed approach as a self-contained implementation
   plan saved to a file, so a fresh session with zero memory of this conversation
-  can execute it. Invoke when the user says to stop and write a plan, or signals
-  the approach is settled and they want to continue in a new session ("let's write
-  this up", "start a fresh session", "I'm happy with this"). Do NOT invoke
-  mid-debate, while trade-offs are still open, or when the user is still asking
-  "what do you think about X" — that's exploration, not handoff.
+  can execute it (via /build). Invoke when the user says to stop and write a plan,
+  or signals the approach is settled and they want to continue in a new session
+  ("let's write this up", "start a fresh session", "I'm happy with this"). Do NOT
+  invoke mid-debate, while trade-offs are still open, or when the user is still
+  asking "what do you think about X" — that's exploration. For dumping in-flight
+  context with no settled approach, that's /handoff, not /plan.
 metadata:
   trigger: Goal/scope/approach settled this session; need a cold-readable plan file before context runs out
 ---
 
-# Handoff
+# Plan
 
-Stop building. Write an implementation plan as a self-contained handoff document — assume a fresh session with zero memory of this conversation will execute it. Don't write or modify any code now.
+Stop building. Write an implementation plan as a self-contained document — assume a fresh session with zero memory of this conversation will execute it (via `/build`). Don't write or modify any code now.
 
 The goal, scope, and chosen approach are already settled in this conversation. Pull those from the discussion — don't ask the user to restate them.
 

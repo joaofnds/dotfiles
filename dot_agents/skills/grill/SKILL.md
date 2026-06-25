@@ -1,16 +1,16 @@
 ---
-name: socrates
+name: grill
 description: >
   Interview the user relentlessly to stress-test a plan or design before building.
   Use after an approach is on the table but before writing it up — to resolve open
   decisions, surface edge cases, and harden the design. Invoke on "grill me",
-  "socrates", "poke holes in this", "stress-test this plan", or when the user wants
-  the design interrogated before a /handoff. This runs BEFORE /handoff, not after.
+  "poke holes in this", "stress-test this plan", or when the user wants the design
+  interrogated before a /plan. This runs BEFORE /plan, not after.
 metadata:
-  trigger: An approach exists but isn't hardened; interrogate it before writing the handoff plan
+  trigger: An approach exists but isn't hardened; interrogate it before writing the plan
 ---
 
-# Socrates
+# Grill
 
 Interview the user relentlessly about every aspect of this plan until you reach a shared, hardened understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. The goal is to expose every open decision, edge case, and hidden assumption now — while context is full — so the plan that follows captures a design that's already been interrogated.
 
@@ -24,4 +24,4 @@ Interview the user relentlessly about every aspect of this plan until you reach 
 
 ## Close-out
 
-When the design is hardened and there are no open branches left, stop interviewing and **summarize the resolved decisions**: each decision made, the edge cases and risks surfaced, and anything explicitly deferred. This summary is the input to `/handoff` — write it so it can be pasted or pulled straight into the plan.
+When the design is hardened and there are no open branches left, stop interviewing and **summarize the resolved decisions**: each decision made, the edge cases and risks surfaced, and anything explicitly deferred. This summary is the input to `/plan` — write it so it can be pasted or pulled straight into the plan.

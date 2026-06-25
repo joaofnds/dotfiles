@@ -1,18 +1,18 @@
 ---
-name: resume
+name: build
 description: >
-  Pick up a handoff plan written by /handoff (or any docs/plans/*.md implementation
-  plan) and execute it faithfully in a fresh session. Invoke when the user points at
-  a plan file and wants it built — "resume @docs/plans/...", "implement this plan",
-  "pick up where we left off". Takes the plan path as an argument; if none is given,
-  list docs/plans/ and ask which one.
+  Pick up an implementation plan written by /plan (or any docs/plans/*.md plan)
+  and execute it faithfully in a fresh session. Invoke when the user points at a
+  plan file and wants it built — "build @docs/plans/...", "implement this plan",
+  "resume", "pick up where we left off". Takes the plan path as an argument; if
+  none is given, list docs/plans/ and ask which one.
 metadata:
-  trigger: A handoff/implementation plan file exists and the user wants it executed in this session
+  trigger: A /plan implementation plan file exists and the user wants it executed in this session
 ---
 
-# Resume
+# Build
 
-Execute a handoff plan written in a previous session. The plan is the source of truth — you have no memory of the conversation that produced it, so trust the file, not assumptions.
+Execute an implementation plan written by `/plan` in a previous session. The plan is the source of truth — you have no memory of the conversation that produced it, so trust the file, not assumptions.
 
 ## Steps
 
