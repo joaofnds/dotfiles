@@ -78,7 +78,8 @@ Acknowledge what works. The "Strengths" section is required — either find what
 - **Caller-context leakage** — sub-agent prompt assumes CWD, prior turns, or env from the parent; sub-agent runs in a fresh window and confabulates.
 - **Premature completion** — long-running agent declares success after partial work, with no verification gate (Anthropic, *Effective Harnesses*).
 - **Linter laundering** — a rule a deterministic tool would catch is parked in the prompt instead of CI; burns instruction budget for free.
-- **Self-reference** — rules about how to follow rules ("think carefully") with no observable failure case; pure decoration.
+- **No-op / self-reference** — an instruction the model already obeys by default; burns context budget for zero behavior change.
+- **Restatement-over-leading-word** — a concept spelled out in many words where one term already in the model's pretraining would anchor it with greater precision and lower token cost. The word pays off twice: in the body it anchors execution; in the description, dispatch (mattpocock, *Writing Great Skills*).
 - **Instruction laundering** — re-stating a rule under a new heading to launder the appearance of compliance.
 - **Decay** — references artifacts (paths, versions, tools) that have changed, or lacks dating that would let it be re-evaluated.
 
@@ -95,7 +96,7 @@ Walk in order. Complete every section unless the document is catastrophic (size 
   - **Just-in-time rule files**: length is fine *if* loaded on demand, never if always-on.
 - **Whole-context budget.** Sum the always-loaded surface (CLAUDE.md + AGENTS.md + MEMORY.md + harness system prompt + every `@import`). Past ~150–200 discrete instructions, compliance drops.
 - **Right tier.** Project-specific rules in `~/.claude/CLAUDE.md` is leakage; global preferences in a per-project file is bloat.
-- **Progressive disclosure.** Files > 500 lines must split into tier-1 frontmatter / tier-2 body / tier-3 linked references. Verify the split is real, not nominal.
+- **Progressive disclosure.** Files > 500 lines must split into tier-1 frontmatter / tier-2 body / tier-3 linked references. Verify the split is real, not nominal. Branching is the disclosure test: inline what *every* path through the doc needs; push behind a pointer what only *some* paths reach. A pointer's **wording**, not its mere presence, decides whether the agent loads the target — vague link text ("see the other file") leaves tier-3 content unreached.
 - **Primacy and recency.** First and last 20 lines do the most work; mid-file is the dead zone. Verify the most load-bearing rule isn't buried under "Background" or "Overview."
 
 ### 2. Dispatch and discoverability
@@ -104,8 +105,8 @@ Frontmatter — verify field names against the live Claude Code docs (sub-agents
 
 Checklist:
 
-- **Description** is action-oriented and names **both** "use when X" *and* "skip when Y". Without the negative, the orchestrator over-invokes.
-- Tier-1 dispatch criteria are self-sufficient — another agent decides whether to invoke without reading the body.
+- **Invocation mode sets what the description is for.** Model-invoked (no `disable-model-invocation`): the description sits in context every turn and feeds dispatch — it must be action-oriented, name **both** "use when X" *and* "skip when Y" (without the negative, the orchestrator over-invokes), and front-load the **leading word** that triggers it. User-invoked (`disable-model-invocation: true`): the description is *human-facing* and costs zero dispatch context — it should be a one-line summary with trigger phrasing stripped. Flag trigger lists in a user-invoked description as wasted words; flag a missing "skip when" only for model-invoked skills (mattpocock, *Writing Great Skills*).
+- **Model-invoked only:** tier-1 dispatch criteria are self-sufficient — another agent decides whether to invoke without reading the body.
 - **Tool allowlist.** Claude Code enforces the `tools` field on sub-agents, but treat it as a *secondary* boundary: scope to least privilege regardless, and never use frontmatter as your only safety control. Reviewers must not have `Edit` / `Write`. Formatters: `Read` plus the formatter binary. `Bash(*)` is a smell — prefer `Bash(git *, npm *)`.
 - Allowlist + denylist together: denylist applies first; verify the intersection matches intent.
 - Side-effect commands (deploy, send-message): `disable-model-invocation: true` to prevent accidental auto-trigger.
@@ -139,7 +140,8 @@ Anthropic prompt cache prefix order: `tools → system → messages`. A change a
 - **Hierarchy violations.** Project rule contradicting a managed/global rule without explicit "this overrides X" language.
 - **Restatement of defaults.** "Be helpful," "write correct code," "follow conventions" — decoration. Cut.
 - **Linter laundering.** Rules a deterministic tool would catch (formatting, type rules, lint rules, import order) belong in CI, not in the prompt.
-- **Self-referential meta-rules.** "Think carefully," "be thorough," "follow best practices." No observable failure case → can't be enforced → drifts. Delete.
+- **No-op / self-referential meta-rules.** "Think carefully," "be thorough," "follow best practices" — no observable failure case → can't be enforced → drifts. Test each sentence in isolation: does it change behavior vs. the default? If not, delete the whole sentence; don't trim words from it.
+- **Restatement-over-leading-word.** A multi-word phrase or triad a single pretraining-vocabulary term would anchor more precisely. "Fast, deterministic, low-overhead" → *tight*. Test: can you replace the phrase with one word without losing meaning? If yes, collapse it.
 - **Instruction laundering.** Same rule re-stated under "Strengths," "Summary," "Important Notes." A rule may appear once. If it needs reinforcement, the rule itself is unclear — fix the rule, don't restate.
 
 ### 6. Specification rigor (apply per rule)
@@ -160,7 +162,7 @@ Anthropic prompt cache prefix order: `tools → system → messages`. A change a
 - **Output contract.** Specify the exact shape of what the agent returns: absolute vs relative paths, markdown vs plain text, max length, required sections. "Return a bulleted list of issues with absolute file paths and one-sentence descriptions" beats letting the agent improvise format.
 - **File-based handoffs.** For multi-stage pipelines, prefer writing to a defined artifact (`docs/spec.md`, `.claude/findings.json`) over prose returns — auditable and survives context resets.
 - **Caller-context leakage.** Sub-agents run in fresh windows and inherit *no* parent context (no CWD, no prior turns, no env). Flag any rule that assumes "the file we just discussed," "the user's repo," or "your earlier analysis."
-- **Completion gate.** Long-running sub-agents declare success too early. The prompt should specify a verification step (test pass, file existence, end-to-end probe) before "done." Missing gate = Major for any sub-agent that mutates state.
+- **Completion gate.** Long-running sub-agents declare success too early (premature completion). The prompt must specify a completion criterion that is *checkable* (the agent can tell done from not-done — a test pass, file existence, end-to-end probe) and, where partial work is the risk, *exhaustive* ("every modified model accounted for," not "produce a change list"). A vague criterion invites the rush. Missing gate = Major for any sub-agent that mutates state.
 
 ### 9. AGENTS.md / CLAUDE.md specifics
 
