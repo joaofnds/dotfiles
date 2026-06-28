@@ -30,7 +30,7 @@ Structure it strictly as follows, readable cold:
 1. **Goal** — what we're building and why, in a few sentences.
 2. **Scope boundary** — what's explicitly in, and what's out/deferred.
 3. **Approach & rationale** — the option we picked and why it's not just workable but correct (trade-offs owned, not avoided). One-line note on each rejected alternative so the fresh session doesn't reopen settled debates.
-4. **Current state** — every file the work will touch or depend on, with paths, and how they fit together. If we're fixing a defect, include the root cause. Cite `file:line` for anything load-bearing so the next session doesn't re-investigate. If unsure whether a file is in scope, include it — omitting a relevant one forces re-investigation.
+4. **Current state** — every file the work will touch or depend on, with paths, and how they fit together. If we're fixing a defect, include the root cause (or cite the `/diagnose` report if one exists, instead of restating it). Cite `file:line` for anything load-bearing so the next session doesn't re-investigate. If unsure whether a file is in scope, include it — omitting a relevant one forces re-investigation.
 5. **Contracts** — schema/API/type/interface changes, with before/after.
 6. **Edge cases & risks** — what could go wrong, side effects on other parts of the system, rollback/migration concerns.
 7. **Testing strategy** — the exact command to run the tests (e.g. `pnpm test --run`, `go test ./...`), what to verify manually if tests aren't enough, and which existing tests are likely to break and why.
