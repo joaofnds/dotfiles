@@ -27,7 +27,6 @@ Taste and aesthetic direction live in the `frontend-design` skill — it fires o
 
 - **One icon set per project.** Consistent size and stroke weight across the whole UI. Mixing sets (or sizes, or stroke weights) reads as unfinished immediately.
 - **`lucide-react` for Next, `@lucide/svelte` for Svelte.** Same icon language across both stacks; framework-correct binding for each. The old `lucide-svelte` package is deprecated — `@lucide/svelte` is the Svelte 5 successor.
-- **Never mix sets.** If the chosen set lacks an icon, find the closest within it or commission one in the same visual language — don't drop in a foreign set's glyph.
 
 ## 5. Component Primitives
 
@@ -36,8 +35,6 @@ Taste and aesthetic direction live in the `frontend-design` skill — it fires o
 - **Own the copied components, then extend.** shadcn/ui and shadcn-svelte copy code into the repo — that copy is ours to edit (the headless layers underneath are installed packages, left as-is). Adjust the copied component to fit the token system once; don't override it ad-hoc at each call site.
 
 ## 6. Accessibility Floor (Non-Negotiable)
-
-This is the floor, not a feature. Same standing as type safety — not optional, not deferred.
 
 - **Semantic HTML first.** A `<button>` is a button, a `<nav>` is a nav, a heading hierarchy is real. `<div onClick>` is a defect — it loses focus, keyboard, and assistive-tech behavior you'd then re-implement worse.
 - **Every control has an accessible name.** A visible `<label>` for form controls; an `aria-label` for icon-only buttons. Semantics aren't enough — a `<button>` whose only child is an icon has an empty accessible name and is invisible to screen readers.
@@ -54,20 +51,5 @@ This is the floor, not a feature. Same standing as type safety — not optional,
 
 ## 8. Framework-Specific
 
-Kept brief — the principles above carry the weight; these are the per-stack adjustments.
-
 - **Next — be deliberate about server vs client components.** Default to server components; reach for `'use client'` only where interactivity or browser APIs demand it. Keep client boundaries small and pushed to the leaves — a `'use client'` boundary pulls everything it *imports* into the client bundle, though server components passed in via `children`/props still render on the server.
 - **Svelte / Tauri — favor lightweight, native-feeling UI.** Mind bundle size; prefer Svelte's built-in reactivity and transitions over heavy dependencies. Account for webview platform quirks (font rendering, scroll behavior, drag regions, safe areas) — it's a real browser engine with per-OS differences, not a fixed target.
-
-## 9. Summary Cheat Sheet
-
-- **Did I inline a hex or an `[13px]` arbitrary value?** Stop. It belongs in the token scale — add it there, reference the name.
-- **Are margins/padding between sections from the spacing scale?** They must be. No arbitrary section spacing; prefer container `gap-*`.
-- **Do any utilities cancel each other out?** Resolve at one layer; don't stack overrides that depend on source order.
-- **Are sizes/weights/line-heights from the type scale, with display and body distinguished?** If not, fix the scale, don't inline.
-- **One icon set, one size, one stroke weight?** Mixed sets are a defect. `lucide-react` (Next) / `@lucide/svelte` (Svelte).
-- **Did I hand-roll a button/input/dialog that the primitives layer already solves?** Compose from `shadcn/ui` (Next) / `shadcn-svelte` (Svelte) instead.
-- **Semantic HTML, accessible names, visible focus, reduced-motion, color-not-alone, touch targets?** All present, or it's not done.
-- **Does it hold mobile-first down to ~320px on the defined breakpoints?** Test narrow before calling it done.
-- **Next: is this component client-side only where it has to be?** Default server; keep `'use client'` boundaries small and at the leaves.
-- **Svelte/Tauri: bundle lean, webview quirks accounted for?** Native-feeling and lightweight, not a ported desktop layout.

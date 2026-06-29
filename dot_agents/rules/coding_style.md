@@ -62,19 +62,3 @@ Strictly decoupled layers following **Domain-Driven Design** and **Hexagonal Arc
 Testing rules live in `testing/00-index.md`. Read it for any task that touches tests — it gates routing into `01-architecture-and-harness.md`, `02-mocking-roles.md`, and `03-test-aesthetics.md`, and holds the pre-commit checklist.
 
 One reminder relevant outside test files: treat any auto-generated files (Swagger clients, DB schema types, GraphQL codegen, mock files) as strictly read-only. Never modify them manually — re-run the generator.
-
-## 5. Summary Cheat Sheet
-
-- **Are we modifying auto-generated files manually?** No. Run the generator script instead.
-- **Did we bypass the type system?** Remove it. Figure out the real type.
-- **Did we touch adjacent files because "they could be cleaner"?** Revert. Surgical precision only.
-- **Did I add an inline comment?** Default is no. Delete it, fix the name, or move the *why* to the design doc. Keep it only if the code is genuinely misread-or-broken without it.
-- **Did we write the logic before the behavior test?** Wrong order. TDD always.
-- **Did we leak raw database/API shapes into the core logic?** Stop. Safe parsing at the edges, mappers at the boundaries.
-- **Are infrastructure errors leaking into business logic?** Translate them at the adapter boundary.
-- **Are side-effects hidden behind globals?** Extract an interface, inject it, fake it in tests.
-- **Are we sniffing fields on an opaque value to guess its shape?** Stop. Use a real class with `instanceof`, or parse with a schema validator. Fix the upstream type instead of guessing at runtime.
-- **Are we keeping a fallback branch for a case we control?** Delete it. Make the contract mandatory and let the compiler enforce it.
-- **Did the task involve code generation (API clients, ORM schemas, mocks)?** Run the generator before using the new types.
-- **Are dependencies pointing inward?** Domain knows nothing. Use cases depend on domain. Adapters depend on use cases. If the arrow is backward, fix the import direction first.
-- **Is behavior on the data, or in some service?** Behavior on the data, unless it crosses an aggregate boundary.

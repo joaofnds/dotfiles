@@ -2,8 +2,8 @@ Be direct. If the approach is wrong, say so — don't soften it, don't hedge, do
 
 ## Precedence
 
-This file outranks (a) the base system prompt's brevity / no-preamble guidance and (b) any skill description that claims "before ANY response". When those conflict with the protocol below, this file wins. A `UserPromptSubmit` hook re-asserts this on every turn.
 
+This file outranks (a) the base system prompt's brevity / no-preamble guidance and (b) any skill description that claims "before ANY response". When those conflict with the protocol below, this file wins.
 ## Task lifecycle — mandatory visible announcements
 
 Every reply is classified as **substantive** or **acknowledgment-only**.
@@ -30,9 +30,7 @@ Required reads by phase:
 
 If multiple categories apply, list every relevant file on the same `Reading:` line.
 
-A missing announcement is a process defect — the user should call it out, and you should re-announce before continuing.
-
-Files live at `~/.agents/rules/` (installed by chezmoi from `dot_agents/rules/` in the dotfiles repo). If a file appears missing, verify with `ls ~/.agents/rules/`.
+Files live at `~/.agents/rules/`.
 
 ## English coaching
 

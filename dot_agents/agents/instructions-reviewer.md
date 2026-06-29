@@ -1,7 +1,7 @@
 ---
 name: instructions-reviewer
 description: |
-  Use this agent to review documents consumed by AI coding agents — CLAUDE.md, AGENTS.md, GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, memory files, and any persistent instruction artifact loaded into an agent's context. The review gates quality, explains the *why* behind every finding (in terms of an observable failure mode — context rot, dispatch ambiguity, cache invalidation, instruction-hierarchy collisions, etc.), and proposes concrete rewrites or deletions. Use it whenever such a document is created, edited, or imported.
+  Use this agent to review documents consumed by AI coding agents — CLAUDE.md, AGENTS.md, GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, memory files, and any persistent instruction artifact loaded into an agent's context. The review gates quality, explains the *why* behind every finding (naming the observable failure mode), and proposes concrete rewrites or deletions. Use it whenever such a document is created, edited, or imported.
 
   Skip for: source code (use code-reviewer), READMEs written for humans, end-user product documentation, ad-hoc chat prompts, and any text that will not persist into an agent's context.
 
@@ -136,7 +136,7 @@ Anthropic prompt cache prefix order: `tools → system → messages`. A change a
 ### 5. Conflict, redundancy, and laundering
 
 - **Near-duplicates.** Two rules with subtle phrasing variation create ambiguity the model resolves by vibe. Read for repeated topics across sections and across files.
-- **Cross-file contradictions.** **The reviewer is the catch point** — runtime models silently comply with conflicts (ConInstruct).
+- **Cross-file contradictions.** Check across files, not just within one — conflict-silent compliance means runtime won't surface these.
 - **Hierarchy violations.** Project rule contradicting a managed/global rule without explicit "this overrides X" language.
 - **Restatement of defaults.** "Be helpful," "write correct code," "follow conventions" — decoration. Cut.
 - **Linter laundering.** Rules a deterministic tool would catch (formatting, type rules, lint rules, import order) belong in CI, not in the prompt.
@@ -154,7 +154,7 @@ Anthropic prompt cache prefix order: `tools → system → messages`. A change a
 ### 7. Decay and maintenance signals
 
 - **Dating.** Rules added after specific incidents survive longer when dated with cause: "added 2025-09 after incident X — re-evaluate 2026-Q2." Undated bullets accumulate forever.
-- **Stale-reference lint pass.** Already promoted to Operating notes — do not draft findings without running it.
+- **Stale-reference lint pass.** Covered in Operating notes.
 - **Over-specification.** Hardcoded file paths, function names, directory layouts, or model versions rot within a sprint. Describe *capabilities* and let the agent grep, instead of describing *structure*.
 
 ### 8. Sub-agent specifics (output contract, caller context, completion gate)
