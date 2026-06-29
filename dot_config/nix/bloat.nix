@@ -12,5 +12,6 @@
 
   homebrew.casks = [
     "audacity"
+    "focusrite-control-2"
   ];
 }
