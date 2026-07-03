@@ -13,5 +13,6 @@
   homebrew.casks = [
     "audacity"
     "focusrite-control-2"
+    "insta360-link-controller"
   ];
 }
