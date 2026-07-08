@@ -1,5 +1,12 @@
 ;; -*- lexical-binding: t; mode: emacs-lisp -*-
 
+(require 'f)
+
+(defun jf/state-theme ()
+  (if (equal "light" (ignore-errors (string-trim (f-read-text "~/.local/state/theme"))))
+      jf/light-theme
+    jf/dark-theme))
+
 (setq user-full-name "João Fernandes"
       user-mail-address "joaofnds@joaofnds.com"
 
@@ -26,12 +33,19 @@
       jf/dark-theme 'doom-solarized-dark
       jf/light-theme 'doom-solarized-light
 
-      doom-theme jf/dark-theme
+      doom-theme (jf/state-theme)
       doom-themes-enable-bold t
       doom-themes-enable-italic t
       doom-font (font-spec :family jf/font/fixed-family :size jf/font/size)
       doom-variable-pitch-font (font-spec :family jf/font/variable-family)
       doom-big-font-increment 6)
+
+(defun jf/apply-theme ()
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme (jf/state-theme) t))
+
+(define-key special-event-map [sigusr1] #'jf/apply-theme)
 
 (after! gcmh
   (setq gcmh-high-cons-threshold (* 1024 1024 1024)))

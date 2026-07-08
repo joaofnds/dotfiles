@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# canonical source of truth; apps that can read an arbitrary file (nvim, emacs) read this
+state_file="${XDG_STATE_HOME:-$HOME/.local/state}/theme"
+
+current="dark"
+[[ -r "$state_file" ]] && current="$(cat "$state_file")"
+
+if [[ "$current" == "light" ]]; then
+  theme="dark"; ghostty_variant="Dark"
+else
+  theme="light"; ghostty_variant="Light"
+fi
+
+mkdir -p "$(dirname "$state_file")"
+printf '%s\n' "$theme" > "$state_file"
+
+# ghostty: rewrite the theme line, then reload (always SIGUSR2; any other signal crashes it)
+sed -i "" -E "s/Solarized (Dark|Light)/Solarized ${ghostty_variant}/" ~/.config/ghostty/config
+pkill -SIGUSR2 -x ghostty || true
+
+# tmux: swap the sourced theme file, then reload
+sed -i "" -E "s/(dark|light)\.conf/${theme}.conf/" ~/.config/tmux/tmux.conf
+tmux source-file ~/.config/tmux/tmux.conf 2>/dev/null || true
+
+# nvim / emacs: SIGUSR1 tells them to re-read the state file
+# (nvim's Signal event only handles SIGUSR1, so a second signal for direction is not an option)
+pkill -SIGUSR1 -x nvim || true
+pkill -SIGUSR1 Emacs || true
