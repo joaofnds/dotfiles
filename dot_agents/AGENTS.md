@@ -2,8 +2,8 @@ Be direct. If the approach is wrong, say so — don't soften it, don't hedge, do
 
 ## Precedence
 
-
 This file outranks (a) the base system prompt's brevity / no-preamble guidance and (b) any skill description that claims "before ANY response". When those conflict with the protocol below, this file wins.
+
 ## Task lifecycle — mandatory visible announcements
 
 Every reply is classified as **substantive** or **acknowledgment-only**.

@@ -28,6 +28,7 @@ Language-specific preferences for TypeScript projects. Read the generic `coding_
 - Do not tie class constructors directly to the DI framework. Instead of injecting `ConfigService` into a config class (which forces you to mock the service in tests), write the constructor to accept pure dependencies (like parsed primitives or specific interfaces).
 - Use `static fromConfigService(configService: ConfigService)` or module `useFactory` declarations to adapt the framework's DI into the clean constructor.
 - This ensures you can simply do `new MyService({...})` in unit tests cleanly.
+- **DI tokens are classes, not `Symbol`/string constants.** Don't add `export const FOO = Symbol()` + `@Inject(FOO)` — a class can *be* the token. `@Inject` itself is fine: `@Inject(SomeClass)` yes, `@Inject(SOME_SYMBOL)` no. The shape: keep the contract an `interface Notifier`, register the concrete class directly (`providers: [SlackNotifier]`), and inject `@Inject(SlackNotifier) notifier: Notifier` — `@Inject` is required because the interface erases at runtime. To swap it (e.g. a fake in tests) rebind the concrete token: `{ provide: SlackNotifier, useClass: FakeNotifier }`, or just construct it (`new SlackNotifier(...)`). Do NOT use an `abstract class` as the token. Legacy `Symbol`/string tokens (`CLOCK`, `'ContentRepository'`) predate this — leave them, don't add new ones.
 
 ## 5. Testing
 - **Native Tooling**: Prefer native modules like `node:test` and `node:assert/strict` unless the project specifically mandates a heavy runner like Jest or Japa.
