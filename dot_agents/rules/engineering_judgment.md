@@ -25,6 +25,7 @@ Get boundaries and dependency directions right at this stage and the implementat
 - **Match complexity to the problem.** Simple CRUD = transaction script. Complex rules = domain model. Don't over- or under-architect. *(See: PoEAA / martin-fowler)*
 - **Every new dependency needs a strong case.** Supply-chain surface, version churn, audit burden, onboarding cost. Default: write it inline. Justify before adding.
 - **Design for the current need, not the hypothetical future.** YAGNI. Speculative generality is a code smell.
+- **Complexity carries the burden of proof.** The default is the simplest thing that works; any added element — a layer, a dependency, a workaround — must trace to a *demonstrated* requirement, not an assumed one. Wrong solution spaces are entered through untested assumptions, usually negative ("the platform can't do this", "I must handle this myself"); the first familiar recipe then fills the vacuum. (Example: a proxy that decoded and re-encoded multipart because "raw forwarding isn't possible" — it was, one grep away.)
 
 ## 3. Writing the Code
 

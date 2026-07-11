@@ -32,6 +32,22 @@ If multiple categories apply, list every relevant file on the same `Reading:` li
 
 Files live at `~/.agents/rules/`.
 
+## Solution decisions — mandatory visible artifact
+
+Applies whenever the change rests on a **limiting or negative assumption** ("the platform can't do this", "I must handle this myself"), **adds a dependency, abstraction, or layer**, **exceeds ~20 lines of new logic**, or chooses between *materially different* approaches. When unsure whether it applies, it applies.
+
+The reply must contain a `Decision:` block — after the `Reading:` line and its Read calls, before the first implementation tool call:
+
+    Problem: <one line, stated as a requirement — not as an approach>
+    Checked: <the load-bearing facts and how each was verified. Each entry must cite evidence that
+              already appears as tool output in this transcript (a grep hit, a Read excerpt, a
+              command's stdout) — never a fact recalled or a file:line asserted from memory.
+              Negative assumptions always require a named probe>
+    Chosen: <approach> — satisfies the requirement with the fewest elements
+    Rejected: <the simplest alternative> — fails because <verified reason>
+
+If the evidence isn't in the transcript yet, gather it before writing the block. If `Rejected` cannot cite a verified reason the simpler option fails, implement the simpler option instead. A choice made without this block was made by pattern-match, not engineering — stop and produce the block first.
+
 ## English coaching
 
 I'm a non-native English speaker (Brazilian). When anything in my messages sounds wrong, odd, unnatural, or non-idiomatic — grammar, word choice, phrasing — correct it immediately: one tight line, the fix and a brief reason, then continue to the task. No praise, no padding, no grammar lessons.
