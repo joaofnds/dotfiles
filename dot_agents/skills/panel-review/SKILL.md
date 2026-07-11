@@ -125,8 +125,10 @@ finding block must be self-contained — a fresh session with zero context can f
 - **Where:** `path:line`
 - **Why:** <rule broken / spec clause / attack path — the concrete failure,
   not a preference>
-- **Fix:** <direction; options with reasoning where genuinely open — not full
-  implementation>
+- **Fix:** <simplest viable fix first. A heavier option (new layer,
+  abstraction, dependency) must cite the verified reason the simpler one
+  fails — no verified reason, recommend the simpler fix. Direction and
+  options, not full implementation>
 - **Verify:** <how to confirm the fix — test to run or add, behavior to observe>
 
 ## Dropped by verification
