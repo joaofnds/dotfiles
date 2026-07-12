@@ -20,14 +20,20 @@ repair — probe and instrument freely, but don't land the fix here; that's
 /plan → /build, off the cause you find. Your instinct will be to jump to a
 plausible fix. Resist it.
 
-**Reproduce before theorizing.** Get a reliable failing observation first — the
-exact command, input, and output. If you can't reproduce it, that's finding #1,
-not a license to guess.
+**Build the loop before theorizing.** Get a tight, red-capable repro first: one
+command you've already run that goes red on *this* bug and green once it's fixed —
+the exact command, input, and output. That loop is the skill; hypotheses just
+consume it, so spend your effort here. When a repro is hard to get, reach for a
+failing test, a curl against a running server, a replay of a captured trace, a
+bisection, or a differential run of two configs. Then *minimise* — cut to the
+smallest scenario that still goes red, one element at a time. If you can't
+reproduce it at all, that's finding #1, not a license to guess.
 
 **Hold competing hypotheses.** Name more than one cause the evidence could
 support; don't latch onto the first. Then go find the observation that tells them
 apart — read the code, trace the data flow, add instrumentation, bisect. Change
-one thing at a time.
+one thing at a time. Tag any probe you add with a unique prefix (`[DEBUG-a4f2]`)
+so cleanup is a single grep.
 
 **Confirm by prediction, not plausibility.** You've found it only when you can
 switch the symptom on and off at will and account for every observation. "It
