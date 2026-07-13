@@ -14,5 +14,6 @@
     "audacity"
     "focusrite-control-2"
     "insta360-link-controller"
+    "pop-app"
   ];
 }
