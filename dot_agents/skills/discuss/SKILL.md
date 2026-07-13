@@ -2,8 +2,7 @@
 name: discuss
 description: >
   Interview a rough goal into a tidy spec/PRD. Ask relentlessly to pin down the need,
-  scope, constraints, and what "done" means — this is the phase that asks the most
-  questions — then write a durable spec doc. Invoke at the very start of a feature,
+  scope, constraints, and what "done" means, then write a durable spec doc. Invoke at the very start of a feature,
   when the goal is still vague: "spec out X", "discuss adding X", "help me scope X",
   "what do we actually need for X". Produces a spec only — it does NOT research
   implementation options or read the codebase for alternatives (that's /research, run
@@ -29,12 +28,17 @@ spend your effort here.
 - **One question at a time.** Wait for the answer before the next — batching produces
   shallow answers.
 - **Recommend an answer for every question.** Say what you'd choose and why, so the
-  user reacts to a concrete position instead of a blank.
+  user reacts to a concrete position instead of a blank. The recommendation is a
+  proposal — don't build on it as settled until the user confirms.
 - **Explore before asking.** If reading the codebase answers a scoping question, read
   it instead of asking. (You read only to ask better questions — surveying *how to
   build it* is `/research`'s job, not yours.)
-- **Follow dependencies.** Resolve upstream questions first; let each answer narrow
-  what's left.
+- **Map the space before diving in.** Do a breadth-first pass across the whole
+  problem first — enumerate every open question before going deep on any one (a map for
+  yourself; still ask them one at a time). Going deep early tunnels into a branch a
+  later answer may prune.
+- **Follow dependencies.** Once the space is mapped, resolve upstream questions first;
+  let each answer narrow what's left.
 - **Be direct.** If an answer contradicts an earlier one, or the goal itself looks
   ill-scoped, say so — don't smooth it over.
 
@@ -48,10 +52,15 @@ spend your effort here.
 
 ## Output
 
-When the problem is sharp and no scoping questions are open, write a durable spec a
+When the problem is sharp and no blocking question is left open, write a durable spec a
 fresh session (or `/research`) can pick up cold. Name it `YYYY-MM-DD-<slug>-spec.md`
 (`<slug>` = 2–5 word kebab-case goal). Save it where the repo keeps planning/design
 docs; only create a directory if there's no obvious home. Tell the user the exact path.
+
+The test for whether an open question blocks the spec: is it a *what*-question you can
+state precisely now? Sharp what-questions block — resolve them before writing.
+How-questions (however sharp) and questions still too fuzzy to phrase aren't blockers;
+they go downstream as open questions.
 
 ### Structure
 
@@ -61,8 +70,11 @@ docs; only create a directory if there's no obvious home. Tell the user the exac
    what it must not break.
 4. **Acceptance criteria** — what must be true for this to be done, each concrete
    enough to check. Behavior, not implementation.
-5. **Open questions** — anything still unresolved that `/research` or `/grill` must
-   settle. Don't paper over them as decided.
+5. **Open questions** — what `/research` or `/grill` must settle: how-questions, plus
+   what-questions still too fuzzy to state sharply (per the test above). A sharply
+   statable what-question should have been resolved in the interview, not deferred —
+   unless its resolution is blocked on something outside this conversation, in which
+   case record it as open with what unblocks it. Don't paper over them as decided.
 6. **Next step** — this spec feeds `/research` to survey implementation options (or
    `/grill` directly if the approach is already obvious and there's nothing to survey).
 

@@ -10,9 +10,14 @@ Adding or changing a feature. Each front-half stage writes a durable doc the nex
 one consumes.
 
 ```
-(chat) → /discuss → /research → /grill → /plan → /build → review
-          spec.md    options.md   pick+harden  plan.md   execute
+(chat) → /discuss → /research → /grill → /plan → /build ⇄ /verify → review → learn
+          spec.md    options.md   pick+harden  plan.md   execute  red/green          rules·tests·lint
 ```
+
+Human judgment is heaviest at the two ends — *what to build* (`/discuss`, `/grill`)
+and *did it actually work* (`/verify`, `review`) — and lightest in the mechanical
+middle. The arrows also run backward: a broken plan assumption or a review finding
+re-enters an earlier stage rather than pushing through.
 
 - **chat** — optional plain conversation to shake out a rough goal. No skill, no
   artifact. Skip straight to `/discuss` when the goal is already stated.
@@ -24,9 +29,19 @@ one consumes.
   approach is *picked*), then interrogate that design until it's hardened.
 - **/plan** — write the hardened approach to a self-contained plan file, citing the
   spec/options docs by path.
-- **/build** — execute that plan, in a fresh session if the plan is large.
+- **/build** — execute that plan, in a fresh session if the plan is large. If a plan
+  assumption fails against reality, **stop** — record the discrepancy and route back to
+  `/grill` (re-pick) or `/plan` (re-sequence). Never improvise past a broken plan; a
+  plan the human ratified must not silently drift into something they never saw.
+- **/verify** — drive the change end-to-end and watch it behave, turning the spec's
+  success criteria into a red/green gate. `/build` isn't done until this is green.
+  Prose review is the weakest verifier available; a running check is the strongest.
 - **review** — `/adversarial-review` for work done this session (cheap);
   `/panel-review` for a substantial unit pre-merge (all four axes).
+- **learn** — before closing, ask what recurs: a fix that could be a regression test, a
+  mistake that could be a lint or a rule, friction worth a memory entry. Feed it back so
+  loop N+1 is cheaper than loop N (`continuous_improvement.md` §1). A loop that only
+  ships features is linear; one that also hardens the system compounds.
 
 Skip points — the front half scales to the feature:
 
@@ -49,6 +64,8 @@ Decision points:
   Approach settled → straight to `/plan`.
 - **Same session or handing off?** Handing off after the plan → the plan file is the
   handoff. Pausing mid-work with no settled approach → `/handoff`.
+- **Plan assumption broke mid-build?** Don't push through — back to `/grill` (re-pick)
+  or `/plan` (re-sequence), then re-enter `/build`.
 - **Review depth?** Your own session's work → `/adversarial-review`. Whole feature
   pre-merge → `/panel-review`.
 
