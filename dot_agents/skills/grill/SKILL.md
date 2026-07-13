@@ -21,6 +21,8 @@ Interview the user relentlessly about every aspect of this plan until you reach 
 
 If you're handed a path — an options doc from `/research`, or a spec — read it first and interrogate *that*. Its recommendation is a lean, not a decision, so your **first move is to confirm or overturn the pick** with the user; picking the winning approach is grill's job, not research's. Treat the doc's per-option rejections as settled unless new evidence surfaces — don't reopen ground research already walked. With no doc handed in, grill the approach on the table in this conversation.
 
+Before you confirm the pick, independently verify the one or two claims the recommendation actually hinges on — the tiebreaker facts, not every rejection. Options docs lean on assertions ("X can't compose with Y", "reuse isn't possible", "the platform can't do this") that may be stale or wrong; read the code and confirm before you ratify. A pick hardened on a false premise is the exact failure this step exists to prevent. Per-option *rejections* stay settled — this targets only the load-bearing claims under the lean itself.
+
 ## How to run it
 
 - **One question at a time.** Wait for the answer before asking the next. Asking several at once is bewildering and produces shallow answers.
@@ -31,4 +33,4 @@ If you're handed a path — an options doc from `/research`, or a spec — read 
 
 ## Close-out
 
-When the design is hardened and there are no open branches left, stop interviewing and **summarize the resolved decisions**: each decision made, the edge cases and risks surfaced, and anything explicitly deferred. This summary is the input to `/plan` — write it so it can be pasted or pulled straight into the plan.
+When the design is hardened and there are no open branches left, stop interviewing and **summarize the resolved decisions**, then **persist the summary to a durable doc** — don't leave it only in chat. Reuse the source doc's `YYYY-MM-DD-<slug>` prefix and name it `<prefix>-grilled.md` (mint a fresh `YYYY-MM-DD-<slug>` if you were handed no doc); save it where the repo keeps planning/design docs, beside the source, and tell the user the exact path. It's the hand-off `/plan` consumes, and a fresh planning session has none of this conversation's context. Cover: each decision made; where grilling overturned or sharpened the source doc; edge cases and risks surfaced; explicit deferrals; and the invariants that must not break.

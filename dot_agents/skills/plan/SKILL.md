@@ -17,7 +17,7 @@ metadata:
 
 Stop building. Write an implementation plan as a self-contained document — assume a fresh session with zero memory of this conversation will execute it (via `/build`). Don't write or modify any code now.
 
-The goal, scope, and chosen approach are already settled in this conversation. Pull those from the discussion — don't ask the user to restate them. If a `/discuss` spec or `/research` options doc exists, cite it by path and don't restate what it already holds (Goal, Scope, the rejected options) — capture only the plan.
+The goal, scope, and chosen approach are already settled in this conversation. Pull those from the discussion — don't ask the user to restate them. If a `/discuss` spec, `/research` options doc, or `/grill` hardened-design doc (`*-grilled.md`) exists, cite it by path and don't restate what it already holds (Goal, Scope, rejected options, the resolved decisions) — capture only the plan. The grill doc is where the approach was converged and hardened: read it before writing the Approach and Edge cases sections, since a fresh session holds none of that interrogation.
 
 **Before writing:** read or grep the files the conversation referenced to confirm they exist and that the described state still matches. If a path or `file:line` from the discussion is stale or wrong, correct it in the plan — never copy a bad citation forward.
 
