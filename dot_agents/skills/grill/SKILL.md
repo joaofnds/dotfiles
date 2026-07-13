@@ -1,18 +1,25 @@
 ---
 name: grill
 description: >
-  Interview the user relentlessly to stress-test a plan or design before building.
-  Use after an approach is on the table but before writing it up — to resolve open
-  decisions, surface edge cases, and harden the design. Invoke on "grill me",
-  "poke holes in this", "stress-test this plan", or when the user wants the design
-  interrogated before a /plan. This runs BEFORE /plan, not after.
+  Interview the user relentlessly to stress-test a design before building — and,
+  handed an options doc from /research, pick the winning approach off its lean, then
+  harden it. Use after an approach is on the table (or once /research has surveyed
+  options) but before writing it up — to resolve open decisions, surface edge cases,
+  and harden the design. Invoke on "grill me", "poke holes in this", "stress-test
+  this plan", or when the user wants the design interrogated before a /plan. This runs
+  BEFORE /plan, not after.
+argument-hint: "Path to the options/spec doc to grill (optional)"
 metadata:
-  trigger: An approach exists but isn't hardened; interrogate it before writing the plan
+  trigger: An approach or /research options doc exists but isn't hardened; pick and interrogate it before the plan
 ---
 
 # Grill
 
 Interview the user relentlessly about every aspect of this plan until you reach a shared, hardened understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. The goal is to expose every open decision, edge case, and hidden assumption now — while context is full — so the plan that follows captures a design that's already been interrogated.
+
+## Start from the options doc, if there is one
+
+If you're handed a path — an options doc from `/research`, or a spec — read it first and interrogate *that*. Its recommendation is a lean, not a decision, so your **first move is to confirm or overturn the pick** with the user; picking the winning approach is grill's job, not research's. Treat the doc's per-option rejections as settled unless new evidence surfaces — don't reopen ground research already walked. With no doc handed in, grill the approach on the table in this conversation.
 
 ## How to run it
 
