@@ -29,6 +29,13 @@ Follow these steps in order:
 3. After a "Reading:" line, call the Read tool for each named file
    BEFORE any other tool call.
 
+4. If this turn rests on a limiting/negative assumption, adds a
+   dependency/abstraction/layer, exceeds ~20 lines of new logic, or
+   chooses between materially different approaches, emit the Decision:
+   block (Problem / Checked / Chosen / Rejected) before the first
+   implementation tool call — full spec in ~/.agents/AGENTS.md
+   "Solution decisions". Negative assumptions require transcript evidence.
+
 Required mapping (authoritative copy lives in ~/.agents/AGENTS.md):
   Coding              -> coding_style.md + coding_style_{typescript,go}.md
   Tests               -> testing/00-index.md
