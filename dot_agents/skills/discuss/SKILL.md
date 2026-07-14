@@ -54,8 +54,9 @@ spend your effort here.
 
 When the problem is sharp and no blocking question is left open, write a durable spec a
 fresh session (or `/research`) can pick up cold. Name it `YYYY-MM-DD-<slug>-spec.md`
-(`<slug>` = 2–5 word kebab-case goal). Save it where the repo keeps planning/design
-docs; only create a directory if there's no obvious home. Tell the user the exact path.
+(`<slug>` = 2–5 word kebab-case goal). Save it under `.boris/plans/` at the repo root
+(create the dir if absent) — the git-ignored home the rest of the chain reads from. Tell
+the user the exact path.
 
 The test for whether an open question blocks the spec: is it a *what*-question you can
 state precisely now? Sharp what-questions block — resolve them before writing.

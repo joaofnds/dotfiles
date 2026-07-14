@@ -4,7 +4,7 @@ description: >
   Run a four-axis panel review of a completed change — code style,
   architecture, spec conformance, security — with parallel specialist
   reviewers, adversarial verification of major findings, and a self-contained
-  fix report written to docs/reviews/. Invoke on "panel review", "full
+  fix report written to .boris/reviews/. Invoke on "panel review", "full
   review", "review this across all axes", or when a substantial unit of work
   needs a thorough pre-merge check. Skip for small plan-step reviews — spawn
   the code-reviewer agent directly. Skip for a single-axis check — the
@@ -106,7 +106,7 @@ findings skip verification; spot-check any you doubt yourself.
 
 ## 5. Report
 
-Write to `docs/reviews/YYYY-MM-DD-<topic>.md` **in the repo under review**
+Write to `.boris/reviews/YYYY-MM-DD-<topic>.md` **in the repo under review**
 (the repo the diff belongs to); create the directory if absent. Every
 finding block must be self-contained — a fresh session with zero context can fix from it, or run
 /plan off it when a fix is large.

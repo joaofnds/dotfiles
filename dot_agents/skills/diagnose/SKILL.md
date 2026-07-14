@@ -38,7 +38,7 @@ hypothesis plus what would confirm it. Tag each finding `confirmed` or `hypothes
 **Write it cold-readable.** The next session has zero memory of this one — the
 file alone must suffice. Inline the evidence; no "as we discussed."
 
-Save it durably where the repo keeps planning docs, as
+Save it durably under `.boris/plans/` at the repo root (create the dir if absent), as
 `YYYY-MM-DD-<slug>-diagnosis.md`. Tell the user the path.
 
 ## Structure

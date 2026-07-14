@@ -7,7 +7,9 @@ after it close the loop.
 ## Feature loop
 
 Adding or changing a feature. Each front-half stage writes a durable doc the next
-one consumes.
+one consumes. These docs live under `.boris/plans/` at the repo root (reviews under
+`.boris/reviews/`) — a personal, git-ignored home (via `core.excludesFile`), so
+workflow artifacts never land in a repo's history.
 
 ```
 (chat) → /discuss → /research → /grill → /plan → /build ⇄ /verify → review → learn
@@ -99,11 +101,11 @@ A heavy review doesn't just report — it produces a durable fix artifact that
 feeds back into the build loop.
 
 ```
-/panel-review → docs/reviews/*.md → /plan → /build
+/panel-review → .boris/reviews/*.md → /plan → /build
 ```
 
 - **/panel-review** — four specialist reviewers, one adversarial kill step, one
-  self-contained report under `docs/reviews/`. Explicitly hand a large fix to
+  self-contained report under `.boris/reviews/`. Explicitly hand a large fix to
   `/plan` off that report; small fixes go straight in.
 - Same shape as the debug loop: a durable diagnosis artifact drives the fix.
 

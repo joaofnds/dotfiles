@@ -1,11 +1,11 @@
 ---
 name: build
 description: >
-  Pick up an implementation plan written by /plan (or any docs/plans/*.md plan)
+  Pick up an implementation plan written by /plan (or any .boris/plans/*.md plan)
   and execute it faithfully in a fresh session. Invoke when the user points at a
-  plan file and wants it built — "build @docs/plans/...", "implement this plan",
+  plan file and wants it built — "build @.boris/plans/...", "implement this plan",
   "resume", "pick up where we left off". Takes the plan path as an argument; if
-  none is given, list docs/plans/ and ask which one.
+  none is given, list .boris/plans/ and ask which one.
 metadata:
   trigger: A /plan implementation plan file exists and the user wants it executed in this session
 ---

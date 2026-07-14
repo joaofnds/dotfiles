@@ -1,1 +1,4 @@
 .DS_Store
+
+# Agent workflow artifacts — personal, never committed to any repo
+.boris/

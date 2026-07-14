@@ -56,8 +56,8 @@ inventing requirements.
 
 Write a durable options doc a fresh session (or `/grill`) can pick up cold. Reuse the
 spec's full `YYYY-MM-DD-<slug>` prefix and name it `<prefix>-options.md`, so it sorts
-adjacent to the spec even when researched on a later day. Save it beside the spec in the
-repo's planning/design docs. Tell the user the exact path.
+adjacent to the spec even when researched on a later day. Save it beside the spec under
+`.boris/plans/` at the repo root. Tell the user the exact path.
 
 ### Structure
 
