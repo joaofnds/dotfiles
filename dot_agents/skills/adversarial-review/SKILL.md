@@ -20,6 +20,12 @@ brief so it reaches its own verdict instead of ratifying yours. The value is in
 what you withhold: the moment you hand the reviewer your conclusions, you've
 taught it the answer you want to hear.
 
+This applies to any artifact you produced this session — code, but also reasoning
+docs (a spec, an options survey, a plan). For a doc there's nothing to run, so the
+"how to verify" mandate below becomes: red-team the reasoning — unstated assumptions,
+scope gaps, an unquestioned premise, a conclusion that doesn't follow from what's
+stated. (`/discuss` and `/research` call this gate automatically before they finish.)
+
 ## Send the reviewer
 
 - **The goal / requirements** — what the work was meant to achieve, in the user's

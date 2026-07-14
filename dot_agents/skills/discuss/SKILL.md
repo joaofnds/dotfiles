@@ -79,6 +79,28 @@ they go downstream as open questions.
 6. **Next step** — this spec feeds `/research` to survey implementation options (or
    `/grill` directly if the approach is already obvious and there's nothing to survey).
 
+## Before done: red-team the draft
+
+You ran the whole interview — you're the last person who can see the spec's gaps.
+Before declaring it done, have an independent agent try to break it.
+
+- **When it fires.** Any spec with contested scope, load-bearing assumptions, or
+  acceptance criteria whose checkability isn't self-evident. Skip only a genuinely
+  trivial spec — and say you skipped it.
+- **How.** Spawn one independent agent with a *withholding* brief — task stated
+  neutrally, none of your conclusions, no "I think this is right." Build it per the
+  `adversarial-review` skill's "Send the reviewer" and "Withhold" discipline. A spec
+  has nothing to run, so aim the mandate at the reasoning: unstated assumptions,
+  scope gaps, a premise never questioned, criteria that can't actually be checked,
+  internal contradictions.
+- **What to do with findings.** Relay them to the user in the reviewer's words, then
+  fold the material ones into the spec before calling it done. A finding that only
+  restates what's already written isn't material — don't pad the doc with it. If one
+  guts the goal, say so plainly instead of editing around it.
+- **Feed the pattern back.** If the gate keeps catching the same class of gap across
+  specs, that's a defect in this skill, not just this doc — flag it so the interview
+  stops producing the miss.
+
 ## Rules
 
 - **Spec, not solution.** Describe what's needed and why — never how to build it. No

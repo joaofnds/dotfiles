@@ -76,6 +76,26 @@ adjacent to the spec even when researched on a later day. Save it beside the spe
 5. **Open questions** — the decisions `/grill` must resolve before `/plan`.
 6. **Next step** — this doc plus the spec feed `/grill` to harden the chosen approach.
 
+## Before done: red-team the options
+
+You surveyed the options and leaned toward one — that lean is where your bias hides.
+Before calling the doc done, have an independent agent try to break it.
+
+- **When it fires.** Any doc with a real option space and a leaned recommendation.
+  Skip only when there was genuinely one sane option (in which case the skill header
+  says to skip `/research` entirely) — and say you skipped it.
+- **How.** Spawn one independent agent with a *withholding* brief — task stated
+  neutrally, your recommendation withheld. Build it per the `adversarial-review`
+  skill's "Send the reviewer" and "Withhold" discipline. Aim the mandate at the
+  reasoning: an option dismissed too fast, the platform-native premise under-examined,
+  a recommendation that doesn't actually follow from the stated trade-offs, and any
+  `file:line` citation that doesn't hold.
+- **What to do with findings.** Relay them to the user in the reviewer's words, then
+  fold the material ones in before calling it done. If one invalidates the lean,
+  re-survey rather than defending it.
+- **Feed the pattern back.** If the gate keeps catching the same class of miss across
+  research docs, that's a defect in this skill — flag it so the survey stops making it.
+
 ## Rules
 
 - **Ground every claim.** Re-check each cited `file:line` against the actual code before
