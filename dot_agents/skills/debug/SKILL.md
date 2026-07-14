@@ -26,7 +26,14 @@ the exact command, input, and output. That loop is the skill; hypotheses just
 consume it, so spend your effort here. When a repro is hard to get, reach for a
 failing test, a curl against a running server, a replay of a captured trace, a
 bisection, or a differential run of two configs. Then *minimise* — cut to the
-smallest scenario that still goes red, one element at a time. If you can't
+smallest scenario that still goes red, one element at a time, re-checking the
+minimised case still reproduces the *reported magnitude*; if the cost drops, you
+minimised away the cause, not the noise. For a latency or intermittency symptom
+("sometimes slow", "occasional hang"), "red" is a measured cost on
+**representative real input through the real caller** — the user's own files, not
+a unit test that bypasses the path and not a synthetic fixture; reproduce the
+reported magnitude before you trust any number, and a result far smaller than
+what the user perceives means you are measuring something else. If you can't
 reproduce it at all, that's finding #1, not a license to guess.
 
 **Hold competing hypotheses.** Name more than one cause the evidence could
