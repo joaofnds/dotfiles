@@ -13,6 +13,7 @@ description: >
   This improves the instructions that guided the work, not the output.
 metadata:
   trigger: A session that exercised skills/agents/rules just finished; you want grounded, low-bias improvements to those instruction artifacts
+---
 
 # Kaizen — Retro on the Instructions You Used
 
