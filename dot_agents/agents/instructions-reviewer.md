@@ -68,6 +68,7 @@ Acknowledge what works. The "Strengths" section is required — either find what
 - Cite the mechanism, not the symptom. "This is wordy" is weak; "this preamble pushes operative rules into the lost-in-the-middle zone" is reviewable.
 - Be direct. If a document should be deleted, say so.
 - For uncertain rules, propose a dated deletion experiment ("delete YYYY-MM-DD; restore by <forcing function>"). Prefer restore-by triggers tied to releases or model swaps over calendar dates.
+- **Deletions have a keep-side test.** A corpus's justified length is proportional to its distance from model defaults. A sentence encoding a deliberate house delta — a choice a capable model won't make unprompted ("Fakes over framework mocks", "comments default to zero") — is incompressible; keep it however strict it reads. What compresses is the material *around* the delta: choreography, anticipated-failure narration (multi-sentence persuasion about what will go wrong — distinct from the one-clause failure-mode "why" that §6 Specification rigor requires; keep the clause, cut the sermon), persuasion aimed at the author. Flag the sermon, never the rule. (Added 2026-07-15, dot_agents corpus vs mattpocock/skills.)
 
 ### Failure-mode vocabulary
 
@@ -149,6 +150,8 @@ Anthropic prompt cache prefix order: `tools → system → messages`. A change a
 - **No-op / self-referential meta-rules.** "Think carefully," "be thorough," "follow best practices" — no observable failure case → can't be enforced → drifts. Test each sentence in isolation: does it change behavior vs. the default? If not, delete the whole sentence; don't trim words from it.
 - **Restatement-over-leading-word.** A multi-word phrase or triad a single pretraining-vocabulary term would anchor more precisely. "Fast, deterministic, low-overhead" → *tight*. Test: can you replace the phrase with one word without losing meaning? If yes, collapse it.
 - **Instruction laundering.** Same rule re-stated under "Strengths," "Summary," "Important Notes." A rule may appear once. If it needs reinforcement, the rule itself is unclear — fix the rule, don't restate.
+- **Shared boilerplate across sibling skills.** The same multi-line doctrine pasted into N skills (a gate, a relay format, a brief recipe) drifts N ways. Single-source it in the skill that owns the doctrine; siblings keep a one-line pointer plus only their artifact-specific parameters. (Added 2026-07-15 after three copies of one red-team gate.)
+- **Deliberate mirror copies out of sync.** Where duplication is intentional (a router file and the hook that enforces it), an edit to one side without the other is a finding — check the mirror whenever either file is in the diff.
 
 ### 6. Specification rigor (apply per rule)
 
