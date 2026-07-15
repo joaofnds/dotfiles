@@ -30,8 +30,10 @@ re-enters an earlier stage rather than pushing through.
 - **/grill** — read the options doc, confirm or overturn its lean (this is where the
   approach is *picked*), then interrogate that design until it's hardened.
 - **/plan** — write the hardened approach to a self-contained plan file, citing the
-  spec/options docs by path.
-- **/build** — execute that plan, in a fresh session if the plan is large. If a plan
+  spec/options docs by path; work too big for one build session becomes sequential
+  milestone plans, not one monolith.
+- **/build** — execute that plan plus every artifact it cites (the acceptance
+  criteria live in the spec), in a fresh session if the plan is large. If a plan
   assumption fails against reality, **stop** — record the discrepancy and route back to
   `/grill` (re-pick) or `/plan` (re-sequence). Never improvise past a broken plan; a
   plan the human ratified must not silently drift into something they never saw.
@@ -52,9 +54,9 @@ Skip points — the front half scales to the feature:
 - **Small, well-understood change?** Skip all of them — edit directly, then review
   the diff. The spec/research/grill apparatus earns its keep on large or vague work.
 
-For UI work, `/frontend-design` slots in at the build step and carries its own
-inner loop — brainstorm → plan → critique → build → critique again — before
-`/plan` writes the implementation up:
+For UI work, `/frontend-design` runs after `/grill` and before `/plan`: it
+carries its own inner loop — brainstorm → plan → critique → build → critique
+again — to converge a visual direction, which `/plan` then writes up:
 
 ```
 /grill → /frontend-design → /plan → /build → /panel-review
@@ -68,8 +70,8 @@ Decision points:
   handoff. Pausing mid-work with no settled approach → `/handoff`.
 - **Plan assumption broke mid-build?** Don't push through — back to `/grill` (re-pick)
   or `/plan` (re-sequence), then re-enter `/build`.
-- **Review depth?** Your own session's work → `/adversarial-review`. Whole feature
-  pre-merge → `/panel-review`.
+- **Review depth?** Quick check of this session's work → `/adversarial-review`.
+  Substantial unit pre-merge → `/panel-review`, same session or not.
 
 ## Debug loop
 

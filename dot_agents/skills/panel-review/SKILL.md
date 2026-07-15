@@ -9,8 +9,9 @@ description: >
   needs a thorough pre-merge check. Skip for small plan-step reviews — spawn
   the code-reviewer agent directly. Skip for a single-axis check — the
   narrower built-in (/security-review, /code-review) is cheaper; panel-review
-  is for all four axes plus the kill step and a durable report. Skip for
-  checking work you produced THIS session — that's /adversarial-review.
+  is for all four axes plus the kill step and a durable report. Work built
+  THIS session is fine to panel-review; /adversarial-review is the lighter
+  single-reviewer check for work that doesn't warrant four axes.
 metadata:
   trigger: A substantial completed change needs a thorough multi-axis review producing a durable fix report
 ---
@@ -29,7 +30,9 @@ missing — never invent it:
 
 1. **Diff range** — an explicit ref range or file list (e.g. `git diff main...HEAD`).
 2. **Spec** — the PRD, plan file, or stated requirements the work implements.
-   The spec axis is meaningless without it.
+   The spec axis is meaningless without it. When a `/grill` hardened-design
+   doc exists, collect it too — scope legitimately moves at grill, and a
+   reviewer holding only the original spec flags ratified deferrals as misses.
 3. **Test command** — grep the project (`Makefile`, `package.json`,
    `justfile`, `mise`). Run the full suite once yourself and keep the output
    for the report header. Don't share the result with the reviewers — "tests
@@ -54,7 +57,9 @@ Axis mandates — pass one per reviewer:
 - **Style** — "Review mandate: code style only. Load
   `~/.agents/rules/coding_style.md` plus the language file(s) matching the
   diff. Function/class level: naming, parameter counts, structure,
-  duplication, house-style adherence — including its what-NOT-to-flag list.
+  duplication, house-style adherence. Honor your own "What NOT to flag" list —
+  missing comments, self-defense validation, and speculative hooks are
+  deliberate house style, not findings.
   Architecture, spec, and security findings belong to other reviewers — drop
   them."
 - **Architecture** — "Review mandate: architecture only. Load
@@ -64,7 +69,9 @@ Axis mandates — pass one per reviewer:
   over-engineering as a structural question; simplicity relative to the spec
   belongs to the spec reviewer."
 - **Spec** — "Review mandate: spec conformance only. Read the spec at
-  `<path>` with the eyes of a product owner and a staff engineer. Requirement
+  `<path>` — and the grilled design doc at `<path>`, when one exists; a
+  deferral or scope change ratified there is not a spec miss, cite it instead
+  — with the eyes of a product owner and a staff engineer. Requirement
   by requirement: is it actually implemented — behavior present, not merely
   code existing? Is anything built that no requirement asks for? Is this the
   simplest thing that satisfies the spec? Cite the spec clause in every

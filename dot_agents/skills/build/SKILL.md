@@ -5,7 +5,8 @@ description: >
   and execute it faithfully in a fresh session. Invoke when the user points at a
   plan file and wants it built — "build @.boris/plans/...", "implement this plan",
   "resume", "pick up where we left off". Takes the plan path as an argument; if
-  none is given, list .boris/plans/ and ask which one.
+  none is given, list the plan files in .boris/plans/ (those without a
+  -spec/-options/-grilled/-diagnosis suffix) and ask which one.
 metadata:
   trigger: A /plan implementation plan file exists and the user wants it executed in this session
 ---
@@ -16,7 +17,7 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
 
 ## Steps
 
-1. **Read the whole plan first.** Don't start on task 1 until you've read every section — Scope, Approach, Current state, Gotchas, and the task tracker all constrain how you implement.
+1. **Read the whole plan first — and every artifact it cites.** Don't start on task 1 until you've read every section — Scope, Approach, Current state, Gotchas, and the task tracker all constrain how you implement. Then follow the plan's citations (spec, grilled doc, options, diagnosis) and read those too: the acceptance criteria live in the spec, not the plan, and you can't honor a scope boundary you've never read.
 2. **Reality-check before touching anything.** Confirm the files and `file:line` references in "Current state" still exist and match what the plan describes. If reality has drifted, STOP and surface it — don't silently adapt. (The plan's "For the executing session" section says the same; honor it.)
 3. **Work the task tracker top to bottom, in order.** Do one item at a time, executing it via the loop in step 4, then flip it to `- [x]` in the plan file before moving on — so progress survives if this session also dies.
 4. **Execute each task as an outside-in TDD loop.** The full discipline lives in `~/.agents/rules/testing/00-index.md`; read it before the first task. For the behavior this task adds:
@@ -27,12 +28,12 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
    Every iteration produces visible evidence: the red output before the change, the green (or deeper-red) output after. Writing the task's code first and backfilling tests is the exact failure this loop exists to prevent — if you catch yourself doing it, stop and restart the task from the failing test. A task with no runtime-observable behavior (config, docs, tooling) skips the loop; its own confirmation step is the verification.
 5. **Run the testing strategy once every task is checked.** Use the exact test command the plan names. Steps 5–7 run once, at the end — not per task.
 6. **Refactor pass on green.** With every task checked and the suite passing, reread the full diff and ask what would make the *next* feature cheaper to build: a concept that deserves a clearer name, a dependency to decouple, duplication to extract into shared functionality, an abstraction that isn't earning its keep. Apply the small, safe improvements now, rerunning the tests after each. List larger ones in the wrap-up as proposals. If nothing warrants changing, say "refactor pass: nothing to change" — a silent skip is indistinguishable from a forgotten step.
-7. **Verify end-to-end before declaring done.** Once the refactor pass is done and the plan's tests pass, run `/verify` to drive the affected flow and observe real behavior — tests and typecheck aren't enough. If `/verify` isn't green, the build isn't done.
+7. **Verify end-to-end before declaring done.** Once the refactor pass is done and the plan's tests pass, run `/verify`, handing it the spec's path when one exists — the acceptance criteria define which flows to drive and what "behaves correctly" means, not just the diff. Observe real behavior; tests and typecheck aren't enough. If `/verify` isn't green, the build isn't done.
 
 ## Rules
 
 - Follow the project's normal coding and testing standards while implementing (the usual rule files still apply — this skill doesn't override them).
 - Stay inside the plan's Scope boundary the whole way through. If you spot necessary follow-up work, add it as a new unchecked task or a note — don't expand silently.
-- If the plan is wrong, ambiguous, or contradicts the codebase, stop and ask rather than guessing.
+- If the plan is wrong, ambiguous, or contradicts the codebase, stop and ask rather than guessing. Under-specification is divergence too: when a task forces you to design something the plan never settled — a new type, an API surface, a dependency — surface the design and get it ratified before building it. A `DESIGN:` note on the task records the decision; it doesn't authorize it.
 - Keep the plan file updated as you go: checked boxes, plus a short note on any task you had to deviate on and why.
 - When every task is checked, tests pass, the refactor pass has run, and `/verify` is green, summarize what was done and flag anything left deferred.
