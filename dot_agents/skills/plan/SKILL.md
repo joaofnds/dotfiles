@@ -43,12 +43,7 @@ Structure it strictly as follows, readable cold:
 
 ## Before done: red-team the plan
 
-The plan is the last artifact a human ratifies and the first thing a cold session obeys — an error here gets executed verbatim. Before telling the user the path, have an independent agent try to break it.
-
-- **When it fires.** Any plan a fresh `/build` session will execute. Skip only a genuinely trivial plan — and say you skipped it.
-- **How.** Spawn one independent agent with a *withholding* brief — task stated neutrally, none of your confidence — per the `adversarial-review` skill's "Send the reviewer" and "Withhold" discipline. Aim the mandate at executability: does every spec acceptance criterion map to a task and a check; does each `file:line` citation hold against the actual code; does any tracker item exceed the Scope boundary; could a session with zero context execute each task without inventing a design decision.
-- **What to do with findings.** Relay them to the user in the reviewer's words, then fold the material ones in before calling the plan done. A finding that breaks the approach itself goes back to `/grill` — don't patch the plan around a broken design.
-- **Feed the pattern back.** If the gate keeps catching the same class of gap across plans, that's a defect in this skill — flag it.
+The plan is the last artifact a human ratifies and the first thing a cold session obeys — an error here gets executed verbatim. Run the producer gate from the `adversarial-review` skill ("As a producer gate") on the plan. Aim the mandate at executability: every spec acceptance criterion maps to a task and a check; each `file:line` citation holds against the actual code; no tracker item exceeds the Scope boundary; a session with zero context can execute each task without inventing a design decision. A finding that breaks the approach itself goes back to `/grill` — don't patch the plan around a broken design.
 
 ## Rules
 

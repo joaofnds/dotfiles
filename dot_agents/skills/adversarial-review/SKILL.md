@@ -1,14 +1,11 @@
 ---
 name: adversarial-review
 description: >
-  Get an independent agent to adversarially review work done this session, with a
-  brief built so it reaches its own verdict instead of ratifying yours — then relay
-  the findings honestly. Invoke on "adversarial review", "red-team this", "get an
-  unbiased second opinion on what I just did", or whenever you want your own
-  just-finished work checked without priming the reviewer. Skip this skill for code
-  you did NOT write (PR review, external audit) — use /review or /code-review for
-  that. This is specifically for work you produced this session, where your own
-  bias is the risk being controlled for.
+  Independent, unprimed review of work you produced THIS session — the brief withholds
+  your conclusions so the reviewer reaches its own verdict; findings are relayed in its
+  words. Invoke on "adversarial review", "red-team this", "unbiased second opinion on
+  what I just did". For code you did NOT write (PR review, external audit) → /review
+  or /code-review instead.
 metadata:
   trigger: Work was just produced this session; you want an independent, unbiased check before trusting it
 ---
@@ -24,7 +21,7 @@ This applies to any artifact you produced this session — code, but also reason
 docs (a spec, an options survey, a plan). For a doc there's nothing to run, so the
 "how to verify" mandate below becomes: red-team the reasoning — unstated assumptions,
 scope gaps, an unquestioned premise, a conclusion that doesn't follow from what's
-stated. (`/discuss`, `/research`, and `/plan` call this gate automatically before they finish.)
+stated. (Producer skills call this gate automatically — see "As a producer gate".)
 
 ## Send the reviewer
 
@@ -59,6 +56,20 @@ three **independently** — same neutral brief, none sees the others — and uni
 their findings; a single reviewer has its own blind spots. Route to a specialized
 reviewer when one fits (`code-reviewer` for code, `instructions-reviewer` for
 instruction files); otherwise a general agent carrying this brief.
+
+## As a producer gate
+
+`/discuss`, `/research`, and `/plan` end by running this skill on their own draft doc —
+each names its artifact-specific mandate aims; everything else about the gate lives
+here, once:
+
+- It fires on any non-trivial artifact. Skipping (genuinely trivial doc) must be said
+  out loud, never done silently.
+- Fold material findings into the artifact before calling it done — a finding that only
+  restates what's already written isn't material. One that invalidates the artifact's
+  core (the lean, the approach) reopens the producing stage; don't edit around it.
+- If the gate catches the same class of gap across artifacts, the producing skill is
+  defective — flag it, don't just fix the doc.
 
 ## Relay honestly
 

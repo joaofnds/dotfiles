@@ -1,16 +1,12 @@
 ---
 name: kaizen
 description: >
-  After a work session, run a retrospective on the instruction artifacts you actually
-  exercised — the skills, agents, and rules/CLAUDE.md/AGENTS.md (personal or project)
-  that guided the work — and extract trustworthy, grounded improvements to them. A fresh
-  critic reads the session transcript and the real instruction files cold, so the
-  feedback isn't the biased self-congratulation an agent produces when asked "what would
-  you change?". Invoke at the END of a session: "kaizen", "reflect on the skills/agents
-  we used", "how could this skill/agent/rule be better", "retro on this process", "what
-  would you improve about the instructions". Skip mid-task (no evidence yet). Skip for
-  improving the code or work product itself — that's /adversarial-review or /code-review.
-  This improves the instructions that guided the work, not the output.
+  End-of-session retrospective on the instruction artifacts actually exercised —
+  skills, agents, rules, CLAUDE.md/AGENTS.md — where a fresh critic reads the
+  transcript cold and proposes grounded improvement diffs. Invoke at the END of a
+  session: "kaizen", "retro on this process", "how could this skill/agent/rule be
+  better". Skip mid-task (no evidence yet). Improving the work product itself →
+  /adversarial-review or /code-review, not this.
 metadata:
   trigger: A session that exercised skills/agents/rules just finished; you want grounded, low-bias improvements to those instruction artifacts
 ---

@@ -1,14 +1,11 @@
 ---
 name: discuss
 description: >
-  Interview a rough goal into a tidy spec/PRD. Ask relentlessly to pin down the need,
-  scope, constraints, and what "done" means, then write a durable spec doc. Invoke at the very start of a feature,
-  when the goal is still vague: "spec out X", "discuss adding X", "help me scope X",
-  "what do we actually need for X". Produces a spec only — it does NOT research
-  implementation options or read the codebase for alternatives (that's /research, run
-  next off this spec), converge on an approach (/grill), write a plan (/plan), or write
-  code. For a small, well-understood goal this is overkill — skip it and go straight to
-  /grill or /plan.
+  Interview a rough goal into a durable spec/PRD — need, scope, constraints, and what
+  "done" means. Invoke at the very start of a feature, while the goal is still vague:
+  "spec out X", "discuss adding X", "help me scope X". Spec only: no implementation
+  options (/research, run next), no approach pick (/grill), no plan, no code. Skip for
+  a small, well-understood goal — go straight to /grill or /plan.
 argument-hint: "The rough goal to spec out"
 metadata:
   trigger: A rough feature goal exists but no spec; interview to pin down the problem and write a PRD
@@ -81,30 +78,19 @@ they go downstream as open questions.
 
 ## Before done: red-team the draft
 
-You ran the whole interview — you're the last person who can see the spec's gaps.
-Before declaring it done, have an independent agent try to break it.
-
-- **When it fires.** Any spec with contested scope, load-bearing assumptions, or
-  acceptance criteria whose checkability isn't self-evident. Skip only a genuinely
-  trivial spec — and say you skipped it.
-- **How.** Spawn one independent agent with a *withholding* brief — task stated
-  neutrally, none of your conclusions, no "I think this is right." Build it per the
-  `adversarial-review` skill's "Send the reviewer" and "Withhold" discipline. A spec
-  has nothing to run, so aim the mandate at the reasoning: unstated assumptions,
-  scope gaps, a premise never questioned, criteria that can't actually be checked,
-  internal contradictions.
-- **What to do with findings.** Relay them to the user in the reviewer's words, then
-  fold the material ones into the spec before calling it done. A finding that only
-  restates what's already written isn't material — don't pad the doc with it. If one
-  guts the goal, say so plainly instead of editing around it.
-- **Feed the pattern back.** If the gate keeps catching the same class of gap across
-  specs, that's a defect in this skill, not just this doc — flag it so the interview
-  stops producing the miss.
+You ran the whole interview — you're the last person who can see the spec's gaps. Run
+the producer gate from the `adversarial-review` skill ("As a producer gate") on the
+draft. Aim the mandate at: unstated assumptions, scope gaps, a premise never
+questioned, acceptance criteria that can't actually be checked, and internal
+contradictions.
 
 ## Rules
 
 - **Spec, not solution.** Describe what's needed and why — never how to build it. No
   options, no approach, no code.
+- **Maintain the project glossary.** When the interview pins down domain terms, add
+  them to `.boris/CONTEXT.md` at the repo root (create if absent) — one line per term,
+  in the project's own language. Use its terms in the spec instead of redefining them.
 - Reference existing artifacts (issues, PRDs, prior plans, commits) by path or URL —
   don't restate them.
 - Redact secrets and PII.

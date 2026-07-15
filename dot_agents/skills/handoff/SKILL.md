@@ -1,13 +1,8 @@
 ---
 name: handoff
 description: >
-  Compact the current conversation into a self-contained briefing so a fresh
-  session can continue this same work without losing context. Invoke mid-flight
-  when context is running low or the user wants to move to a new session and keep
-  going — "hand this off", "dump the context", "write a handoff", "continue in a
-  new chat". This preserves in-flight state; it does NOT design or decide. If the
-  approach is settled and you want a structured implementation plan to build from,
-  that's /plan, not /handoff.
+  Compact the in-flight conversation into a briefing a fresh session can pick up
+  cold — preserves undecided state; for a settled approach that's /plan.
 argument-hint: "What will the next session focus on?"
 disable-model-invocation: true
 metadata:

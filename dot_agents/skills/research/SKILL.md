@@ -1,17 +1,12 @@
 ---
 name: research
 description: >
-  Take a spec/PRD and research how to implement it — explore the codebase, question the
-  premise, and survey genuinely different implementation options with pros and cons.
-  Produces a durable options doc that leans toward one approach but does NOT decide.
-  Invoke once a spec exists (from /discuss or any PRD) and before /grill: "research
-  options for this spec", "survey implementation approaches for this spec". Takes the
-  spec path as its argument; with no spec yet, run /discuss first. This is codebase-grounded IMPLEMENTATION research
-  — for a web-only literature/product report with no codebase grounding, that's the
-  built-in deep-research instead. It does NOT converge on the approach (/grill), write
-  the plan (/plan), or write code. If the spec has only one sane implementation and no
-  real option space, skip this — go straight to /plan (or /grill if that single approach
-  still needs hardening).
+  Take a spec/PRD and survey genuinely different implementation options in this
+  codebase, with pros/cons — leans toward one but does NOT decide (/grill converges,
+  /plan writes it up). Invoke once a spec exists, before /grill: "research options for
+  this spec". Takes the spec path as argument; no spec yet → /discuss first.
+  Codebase-grounded only — a web-only report is the built-in deep-research. Skip when
+  there's one sane implementation — go to /plan (or /grill if it needs hardening).
 argument-hint: "Path to the spec/PRD to research options for"
 metadata:
   trigger: A spec/PRD exists; research the codebase and survey implementation options before grilling
@@ -78,23 +73,12 @@ adjacent to the spec even when researched on a later day. Save it beside the spe
 
 ## Before done: red-team the options
 
-You surveyed the options and leaned toward one — that lean is where your bias hides.
-Before calling the doc done, have an independent agent try to break it.
-
-- **When it fires.** Any doc with a real option space and a leaned recommendation.
-  Skip only when there was genuinely one sane option (in which case the skill header
-  says to skip `/research` entirely) — and say you skipped it.
-- **How.** Spawn one independent agent with a *withholding* brief — task stated
-  neutrally, your recommendation withheld. Build it per the `adversarial-review`
-  skill's "Send the reviewer" and "Withhold" discipline. Aim the mandate at the
-  reasoning: an option dismissed too fast, the platform-native premise under-examined,
-  a recommendation that doesn't actually follow from the stated trade-offs, and any
-  `file:line` citation that doesn't hold.
-- **What to do with findings.** Relay them to the user in the reviewer's words, then
-  fold the material ones in before calling it done. If one invalidates the lean,
-  re-survey rather than defending it.
-- **Feed the pattern back.** If the gate keeps catching the same class of miss across
-  research docs, that's a defect in this skill — flag it so the survey stops making it.
+Your lean is where your bias hides. Run the producer gate from the `adversarial-review`
+skill ("As a producer gate") on the doc, withholding the recommendation from the brief.
+Aim the mandate at: an option dismissed too fast, the platform-native premise
+under-examined, a recommendation that doesn't follow from the stated trade-offs, and
+any `file:line` citation that doesn't hold. If a finding invalidates the lean,
+re-survey rather than defending it.
 
 ## Rules
 

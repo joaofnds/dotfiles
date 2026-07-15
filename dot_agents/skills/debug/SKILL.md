@@ -1,14 +1,11 @@
 ---
 name: debug
 description: >
-  Drive a disciplined investigation of a bug or unexpected behavior — reproduce,
-  hold competing hypotheses, discriminate with evidence, confirm the root cause
-  by prediction — instead of guessing at fixes. Invoke at the START of looking
-  into a failure, before the cause is known: "debug this", "why is this failing",
-  "figure out what's breaking", "investigate this bug". This finds and confirms
-  the cause; it does not land the fix (that's /plan → /build) or write the durable
-  report (that's /diagnose, run after to record what this found). For dumping
-  in-flight state to a fresh session, that's /handoff.
+  Investigate a bug or unexpected behavior down to a confirmed root cause. Invoke at
+  the START of looking into a failure, before the cause is known: "debug this", "why
+  is this failing", "investigate this bug". Confirms the cause but lands no fix
+  (/plan → /build) and writes no durable report (/diagnose, run after). Dumping
+  in-flight state to a fresh session → /handoff.
 metadata:
   trigger: Starting to investigate a failure this session, before the root cause is known
 ---

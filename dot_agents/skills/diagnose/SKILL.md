@@ -1,17 +1,12 @@
 ---
 name: diagnose
 description: >
-  After debugging a problem this session, write a read-only diagnosis report —
-  the bug, the engineering/coding rules it broke, five-whys, and root cause —
-  saved to a durable file for a later session to turn into a fix plan. Invoke on
-  "diagnose this", "root-cause report", "document what went wrong", once the
-  investigation has concluded — a root cause confirmed, or this session's leads
-  exhausted and the best hypothesis recorded. This is diagnosis only: it states
-  what is broken and why, and proposes NO fixes, remedies, or implementation
-  suggestions — that is /plan's job, run later off this report. Reach for it
-  before /plan when the root cause is established but no fix approach has been
-  chosen yet. For an already-settled fix approach, that's /plan; for in-flight
-  state with no cause yet, that's /handoff.
+  Write a read-only diagnosis report — root cause, rules broken, five-whys — to a
+  durable file once this session's investigation has concluded (cause confirmed, or
+  leads exhausted and best hypothesis recorded). Invoke on "diagnose this",
+  "root-cause report", "document what went wrong". Proposes NO fixes — that's /plan,
+  run later off the report. Fix approach already settled → /plan directly; no cause
+  yet → /handoff.
 metadata:
   trigger: A bug/problem was investigated this session; capture its root cause for a later /plan, no remedy
 ---

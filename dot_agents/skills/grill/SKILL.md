@@ -7,7 +7,8 @@ description: >
   options) but before writing it up — to resolve open decisions, surface edge cases,
   and harden the design. Invoke on "grill me", "poke holes in this", "stress-test
   this plan", or when the user wants the design interrogated before a /plan. This runs
-  BEFORE /plan, not after.
+  BEFORE /plan, not after. Skip when the design is already hardened and nothing is
+  contested — go straight to /plan.
 argument-hint: "Path to the options/spec doc to grill (optional)"
 metadata:
   trigger: An approach or /research options doc exists but isn't hardened; pick and interrogate it before the plan

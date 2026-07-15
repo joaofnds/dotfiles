@@ -16,6 +16,9 @@ workflow artifacts never land in a repo's history.
           spec.md    options.md   pick+harden  plan.md   execute  red/green          rules·tests·lint
 ```
 
+If `.boris/CONTEXT.md` exists, read it before producing any loop artifact — it holds
+the project's domain language (`/discuss` maintains it).
+
 Human judgment is heaviest at the two ends — *what to build* (`/discuss`, `/grill`)
 and *did it actually work* (`/verify`, `review`) — and lightest in the mechanical
 middle. The arrows also run backward: a broken plan assumption or a review finding
