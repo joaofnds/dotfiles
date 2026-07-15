@@ -43,6 +43,8 @@ Required mapping (authoritative copy lives in ~/.agents/AGENTS.md):
   Design / analysis   -> engineering_judgment.md (+ using_the_wiki.md if cued)
   Before marking done -> ownership.md
   After writing files -> continuous_improvement.md (section 1)
+  Edited instruction artifacts (skills/agents/rules/AGENTS.md)
+                      -> instructions-reviewer pass before done
 
 If multiple categories apply, list every relevant file on one "Reading:" line.
 </rule-enforcement>

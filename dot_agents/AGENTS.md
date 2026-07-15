@@ -26,6 +26,7 @@ Required reads by phase:
 - **TDD (coding + tests simultaneously)** → all three: `coding_style.md`, the language-specific file, and `testing/00-index.md`, before starting
 - **Design / problem analysis** → `engineering_judgment.md`; if it cues a wiki lookup, read `using_the_wiki.md`
 - **Before marking done** → `ownership.md` (walk checklist; decide fix-now vs. defer-with-TODO)
+- **After editing instruction artifacts** (skills, agents, rules, AGENTS.md/CLAUDE.md — anything loaded into an agent's context) → run the `instructions-reviewer` agent over the edited files before marking done; relay its findings and fix or explicitly defer each
 - **After any task that involves writing or modifying files** → `continuous_improvement.md` §1 (post-task reflection block is a visible deliverable, not an internal check)
 
 If multiple categories apply, list every relevant file on the same `Reading:` line.
