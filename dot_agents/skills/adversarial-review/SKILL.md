@@ -12,6 +12,8 @@ metadata:
 
 # Adversarial Review
 
+**Wrong skill if:** reviewing code you did NOT write this session (PR review, external audit) → `/review` or `/code-review`.
+
 Spawn an independent agent to review work done this session — and construct the
 brief so it reaches its own verdict instead of ratifying yours. The value is in
 what you withhold: the moment you hand the reviewer your conclusions, you've

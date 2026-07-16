@@ -13,6 +13,8 @@ metadata:
 
 # Discuss
 
+**Wrong skill if:** the goal is small and well-understood → `/grill` or `/plan` directly.
+
 Interview a rough goal until the problem is sharp enough to write down. The output is
 a spec/PRD — *what* must be true for this to be done, independent of *how* it's built.
 The how comes later (`/research` → `/grill` → `/plan`).

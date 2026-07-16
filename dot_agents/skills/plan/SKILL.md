@@ -15,6 +15,8 @@ metadata:
 
 # Plan
 
+**Wrong skill if:** trade-offs are still open or the user is still exploring → keep discussing or `/grill`; dumping in-flight context with no settled approach → suggest `/handoff` to the user.
+
 Stop building. Write an implementation plan as a self-contained document — assume a fresh session with zero memory of this conversation will execute it (via `/build`). Don't write or modify any code now.
 
 The goal, scope, and chosen approach are already settled in this conversation. Pull those from the discussion — don't ask the user to restate them. If a `/discuss` spec, `/research` options doc, or `/grill` hardened-design doc (`*-grilled.md`) exists, cite it by path and don't restate what it already holds (Goal, Scope, rejected options, the resolved decisions) — capture only the plan. The grill doc is where the approach was converged and hardened: read it before writing the Approach and Edge cases sections, since a fresh session holds none of that interrogation.
@@ -23,7 +25,7 @@ The goal, scope, and chosen approach are already settled in this conversation. P
 
 Name the file `YYYY-MM-DD-<slug>.md` (`<slug>` is a 2–5 word kebab-case goal, e.g. `2026-06-23-add-oauth-login.md`). Save it under `.boris/plans/` at the repo root (create the dir if absent) — the git-ignored home `/build` reads from. Tell the user the exact path.
 
-**Slice big work into milestone plans.** If the tracker won't fit one build session — a rough tell: more than about a dozen vertical tasks, or several independently shippable surfaces — write two or three sequential milestone plans off the same grilled doc instead of one monolith: `YYYY-MM-DD-<slug>-1-<milestone>.md`, `-2-…`. Each milestone is independently buildable, verifiable, and reviewable, and states what the previous one delivered as its starting state. Slice by shippable behavior, never by layer. Sizing is the goal, not parallelism — milestones run in order.
+**Slice big work into milestone plans.** If the tracker won't fit one build — a rough tell: more than about a dozen vertical tasks, or several independently shippable surfaces — write two or three sequential milestone plans off the same grilled doc instead of one monolith: `YYYY-MM-DD-<slug>-1-<milestone>.md`, `-2-…`. Each milestone is independently buildable, verifiable, and reviewable, and states what the previous one delivered as its starting state. Slice by shippable behavior, never by layer. Sizing is the goal, not parallelism — milestones run in order.
 
 ## Structure
 

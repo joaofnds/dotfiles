@@ -16,6 +16,8 @@ metadata:
 
 # Grill
 
+**Wrong skill if:** the design is already hardened and nothing is contested → `/plan`.
+
 Interview the user relentlessly about every aspect of this plan until you reach a shared, hardened understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. The goal is to expose every open decision, edge case, and hidden assumption now — while context is full — so the plan that follows captures a design that's already been interrogated.
 
 ## Start from the options doc, if there is one

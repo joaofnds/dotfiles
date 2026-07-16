@@ -14,6 +14,8 @@ metadata:
 
 # Research
 
+**Wrong skill if:** only one sane implementation exists → `/plan` (or `/grill` if it needs hardening); no spec yet → `/discuss` first; web-only survey → the built-in `deep-research`.
+
 Take a spec and figure out the genuinely different ways to build it in *this* codebase.
 The job is to widen the option space and ground it in reality — then lean, but don't
 pick the winner. `/grill` converges off the doc you produce; `/plan` writes the

@@ -12,6 +12,8 @@ metadata:
 
 # Debug
 
+**Wrong skill if:** dumping in-flight state to a fresh session → `/handoff`; investigation already concluded and you want the durable report → `/diagnose`.
+
 Investigate a bug down to a confirmed root cause. The job is understanding, not
 repair — probe and instrument freely, but don't land the fix here; that's
 /plan → /build, off the cause you find. Your instinct will be to jump to a

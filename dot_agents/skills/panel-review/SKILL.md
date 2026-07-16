@@ -18,6 +18,8 @@ metadata:
 
 # Panel Review
 
+**Wrong skill if:** reviewing a small plan step → spawn the `code-reviewer` agent directly; a single axis → `/code-review` or `/security-review`; a lighter one-reviewer check of this session's work → `/adversarial-review`.
+
 Four specialist reviewers in parallel, one adversarial kill step, one report a
 fresh session can fix from. You are the orchestrator: you build the briefs,
 arbitrate the findings, and write the report — you don't review the code

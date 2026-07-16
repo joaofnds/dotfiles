@@ -9,9 +9,14 @@ description: >
   -spec/-options/-grilled/-diagnosis suffix) and ask which one.
 metadata:
   trigger: A /plan implementation plan file exists and the user wants it executed in this session
+argument-hint: "Path to the .boris/plans/ plan file"
 ---
 
 # Build
+
+**Wrong skill if:** no plan file exists yet → `/plan`; only in-flight context with no plan → read the `.boris/handoffs/` briefing instead.
+
+Given no plan path as argument, list the plan files in `.boris/plans/` (those without a `-spec`/`-options`/`-grilled`/`-diagnosis` suffix) and ask which one to build.
 
 Execute an implementation plan written by `/plan` in a previous session. The plan is the source of truth — you have no memory of the conversation that produced it, so trust the file, not assumptions. Implementation is test-driven: each task runs as an outside-in red→green loop (step 4), never as code-first-tests-later.
 

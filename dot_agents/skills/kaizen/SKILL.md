@@ -13,6 +13,8 @@ metadata:
 
 # Kaizen — Retro on the Instructions You Used
 
+**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; improving the work product itself rather than the process → `/adversarial-review` or `/code-review`.
+
 **You are a neutral witness; a fresh critic is the judge.** The move you're tempted to
 make — ask the agent that just ran the session "what would you change?" — is the least
 trustworthy one available: it defends its own choices, wants to please you, and

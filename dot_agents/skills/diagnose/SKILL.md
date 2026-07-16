@@ -13,6 +13,8 @@ metadata:
 
 # Diagnose
 
+**Wrong skill if:** the fix approach is already settled → `/plan` directly; no confirmed cause and leads remain → keep debugging (`/debug`) or `/handoff`.
+
 Write a durable root-cause report on the bug investigated this session, for a
 fresh session to act on later (usually via `/plan`). Diagnosis only — describe
 the defect and why it exists; don't write code or propose fixes.
