@@ -20,3 +20,6 @@ separate concern (personal/per-machine, not this repo).
   hatch.** For macOS settings, use `system.defaults.<domain>.<key>` when
   nix-darwin models it (see `modules/system/defaults/` upstream); fall back to
   `CustomUserPreferences` only for unmodeled keys, with a comment noting why.
+- **`CLAUDE.md` (and `GEMINI.md`) are always symlinks to `AGENTS.md`** — one
+  instruction source per scope, never per-tool forks (a fork is a mirror that
+  will drift; reverted one 2026-07-16).
