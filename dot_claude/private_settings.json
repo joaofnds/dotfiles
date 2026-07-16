@@ -14,6 +14,15 @@
 
   "permissions": { "defaultMode": "bypassPermissions" },
 
+  "skillOverrides": {
+    "schedule": "user-invocable-only",
+    "loop": "user-invocable-only",
+    "keybindings-help": "user-invocable-only",
+    "fewer-permission-prompts": "user-invocable-only",
+    "deep-research": "name-only",
+    "claude-api": "name-only"
+  },
+
   "statusLine": {
     "type": "command",
     "command": "$HOME/.claude/statusline-command.js"
