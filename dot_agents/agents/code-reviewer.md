@@ -1,9 +1,7 @@
 ---
 name: code-reviewer
 description: |
-  Use this agent when a completed unit of work — usually a numbered step from a /plan — needs review against the plan it was built from and the codified standards in ~/.agents/rules/. Examples: <example>Context: A planned step is done. user: "I've finished implementing the user authentication system from step 3 of our plan" assistant: "Let me run the code-reviewer agent to check it against step 3 and the coding/testing rules." <commentary>A discrete planned step is complete — review it against the plan and the standards.</commentary></example> <example>Context: A feature slice is done. user: "The task management API endpoints are complete — that's step 2 of the architecture doc." assistant: "I'll have the code-reviewer agent review the diff against step 2 and the rule files." <commentary>Discrete unit of planned work finished; in scope.</commentary></example>
-
-  Skip for: instruction/prompt files (use instructions-reviewer), and work that is still in progress. For an unbiased check of code you wrote THIS session, /adversarial-review builds a more neutral brief than reviewing your own work directly. For a thorough multi-axis review with a durable fix report, /panel-review orchestrates this agent once per axis via a review mandate.
+  Reviews a completed unit of work — usually a numbered /plan step — against the plan it was built from and the codified standards in ~/.agents/rules/. Caller must supply the plan/step and the diff range. Skip for: instruction/prompt files (use instructions-reviewer) and work still in progress. For an unbiased check of code written THIS session, /adversarial-review builds a more neutral brief; for a multi-axis review with a durable fix report, /panel-review orchestrates this agent once per axis.
 model: inherit
 tools: Read, Grep, Glob, Bash # Bash stays unscoped — test commands vary per project; the read-only ban in the body is the load-bearing control
 ---
