@@ -15,7 +15,7 @@ Compact this conversation into a briefing the next session can pick up cold. You
 
 If the user passed an argument, treat it as what the next session will focus on and tailor the briefing to it — lead with the state and files that matter for that goal, trim what doesn't.
 
-Save it to a scratch location outside the workspace — `$TMPDIR/handoff-<slug>.md` (`<slug>` = 2–5 word kebab-case topic). This is ephemeral continuity, not a committed artifact; if the user wants a durable, structured plan instead, use `/plan`. Tell the user the exact path.
+Name the file `YYYY-MM-DD-<slug>.md` (`<slug>` = 2–5 word kebab-case topic). Save it under `.boris/handoffs/` at the repo root (create the dir if absent) — git-ignored like the rest of `.boris/`. Outside a git repo, fall back to `$TMPDIR/handoff-YYYY-MM-DD-<slug>.md`. Tell the user the exact path.
 
 ## What goes in
 

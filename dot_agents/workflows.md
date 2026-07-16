@@ -8,8 +8,8 @@ after it close the loop.
 
 Adding or changing a feature. Each front-half stage writes a durable doc the next
 one consumes. These docs live under `.boris/plans/` at the repo root (reviews under
-`.boris/reviews/`) — a personal, git-ignored home (via `core.excludesFile`), so
-workflow artifacts never land in a repo's history.
+`.boris/reviews/`, handoffs under `.boris/handoffs/`) — a personal, git-ignored home
+(via `core.excludesFile`), so workflow artifacts never land in a repo's history.
 
 ```
 (chat) → /discuss → /research → /grill → /plan → /build ⇄ /verify → review → learn
@@ -126,8 +126,9 @@ state rather than forcing a premature plan.
 work in flight → /handoff → [new session] resume → (→ /grill → /plan once settled)
 ```
 
-- **/handoff** — compacts in-flight, still-undecided state to an ephemeral
-  `$TMPDIR/handoff-*.md`; names the next skill to reach for.
-- The tell for handoff vs plan: `/handoff` preserves *undecided* state (ephemeral
-  scratch file); `/plan` and `/diagnose` serialize *settled* conclusions (durable
-  repo files). Undecided → handoff; settled → plan.
+- **/handoff** — compacts in-flight, still-undecided state to
+  `.boris/handoffs/YYYY-MM-DD-<slug>.md`; names the next skill to reach for.
+  Resume by opening the new session with that file (`@.boris/handoffs/...`).
+- The tell for handoff vs plan: `/handoff` preserves *undecided* state;
+  `/plan` and `/diagnose` serialize *settled* conclusions. Undecided → handoff;
+  settled → plan.
