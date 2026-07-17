@@ -2,11 +2,16 @@
 
 Cross-language coding style. Language-specific preferences live in `coding_style_typescript.md` / `coding_style_go.md`. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki — see `using_the_wiki.md`.
 
+Apply these patterns in proportion to demonstrated domain and integration complexity.
+Preserve established project structure, dependencies, and idioms unless they conflict
+with an explicit house rule below or the task changes them. Do not introduce classes,
+ports, mappers, DI, or messaging solely to satisfy this document.
+
 ## 1. Core Philosophy & Mindset
 
 - **Simplicity, by Beck's four criteria.** Passes the tests, reveals intent, no duplication, fewest elements — *in that order*. Minimality is the **fourth** criterion, not the first; a system that is minimal but unreadable is not simple. *(See: beck-s-four-rules-of-simple-design, simplicity-vs-ease, incremental-design)*
 - **Boring control flow.** Plain `if`/`else`, loops, early returns over clever expression-level tricks. If a piece of code needs a comment to explain *what* it is, it's too clever — rewrite it simpler.
-- **Comments default to zero.** The test is *not* "is this a *why* or a *what*" — a *why* comment is usually still noise. The test is: **will this code be misread or silently broken without it?** Before writing any `//`, exhaust three moves: (1) a clearer name, (2) a smaller/extracted function, (3) move the rationale to the design doc (README / CLAUDE.md / PRD). A comment survives only when all three fail *and* the code reads as removable-but-isn't — then it states the consequence of removal, nothing else. When unsure, omit; assume the reader wants no comment. *(See: code-comments)*
+- **Comments default to zero.** The test is *not* "is this a *why* or a *what*" — a *why* comment is usually still noise. The test is: **will this code be misread or silently broken without it?** Before writing any `//`, exhaust three moves: (1) a clearer name, (2) a smaller/extracted function, (3) move the rationale to the design record (README / ADR / PRD). A comment survives only when all three fail *and* the code reads as removable-but-isn't — then it states the consequence of removal, nothing else. When unsure, omit; assume the reader wants no comment. *(See: code-comments)*
 - **Move understanding from your head into the code.** Renaming and extracting are how the persistence happens — your head is volatile storage. *(See: refactoring-fowler-2018)*
 - **Never the `Impl` suffix.** `FooImpl` is forbidden — a non-name that says nothing. Name a class for what it *is*: the technology, strategy, or source (`SlackNotifier`, `OtelProbe`, `PostgresUserRepository`). If the only thing distinguishing the class from its interface is "the implementation," you haven't yet understood what makes it distinct.
 - **Surgical execution.** Only touch what is directly relevant to the user's intent. Do not "fix" adjacent code, refactor for aesthetic reasons, or leave dead imports behind from your changes.
@@ -16,14 +21,18 @@ Cross-language coding style. Language-specific preferences live in `coding_style
 
 ## 2. Architectural Principles & Layering
 
-Strictly decoupled layers following **Domain-Driven Design** and **Hexagonal Architecture** (Ports & Adapters / Clean Architecture). Same pattern under three names; the modern descendant adds an explicit Dependency Rule: **dependencies point inward** — domain depends on nothing; use cases depend on domain; adapters depend on use cases. *(See: hexagonal-architecture, clean-architecture, layered-architecture-ddd, domain-driven-design)*
+For applications with meaningful domain or integration complexity, use **Domain-Driven
+Design** and **Hexagonal Architecture** to keep boundaries explicit and dependencies
+pointing inward: domain depends on nothing; use cases depend on domain; adapters depend
+on use cases. Simpler programs may use simpler structures when contracts and testability
+remain clear. *(See: hexagonal-architecture, clean-architecture, layered-architecture-ddd, domain-driven-design)*
 
 ### a. Domain Models / Entities
 
 - **Pure structural types** encapsulating business logic and core data. Standard attributes + behavior. No raw database schemas, framework specifics, or wire formats leak in. Lightweight framework annotations are acceptable if they don't introduce heavy coupling. *(See: entity-ddd, domain-model)*
 - **Behavior lives with data.** An entity that holds attributes but no behavior is the **anemic domain model** — getters and setters with the real logic in services. Per-aggregate behavior belongs on the aggregate; the repository persists, the service orchestrates. *(See: anemic-domain-model)*
 - **Explicit construction.** Entities map properties explicitly — never bulk merges or reflection-based assignment. Prevents unexpected payload parameters or persistence-layer fields from leaking into the domain.
-- **Construction from canonical props only.** An entity's constructor takes the canonical domain shape — never a DB row, HTTP body, or wire payload directly. Translation lives in mappers (§d). When a single entity has multiple sources (DB + HTTP + webhook), each source gets its own mapper, all funneling into the one canonical constructor. (Active Record's failure mode is precisely this coupling collapse — refactoring either the object or the schema means the other has to follow.) *(See: active-record, anemic-domain-model)*
+- **Construction from canonical props only.** An entity's constructor takes the canonical domain shape — never a DB row, HTTP body, or wire payload directly. Each source translates into canonical properties at its boundary. Extract a source-specific mapper only under §d's criteria. (Active Record's failure mode is precisely this coupling collapse — refactoring either the object or the schema means the other has to follow.) *(See: active-record, anemic-domain-model)*
 
 ### b. Application / Business Logic (Services / Use Cases)
 
@@ -32,31 +41,32 @@ Strictly decoupled layers following **Domain-Driven Design** and **Hexagonal Arc
 ### c. Infrastructure & Adapters (Repositories / External APIs)
 
 - **Framework-agnostic constructors.** Don't tie constructors to the DI framework. Constructors accept pure dependencies (parsed primitives or specific interfaces). Use factory methods or DI module declarations to adapt the framework's container into the clean constructor. You should be able to construct objects in tests without the full DI container. *(See: dependency-inversion-principle)*
-- **Defensive networking.** Every integration point will eventually fail. Timeouts on every external call (no timeout = infinite timeout). Catch native exceptions and map them to domain-specific errors (e.g., `ErrTimeout`, `ErrNotFound`). *(See: release-it-nygard-2018)*
+- **Defensive networking.** Bound external calls with deadlines or cancellation. Translate native failures into stable application or port errors; use domain errors only for domain outcomes. *(See: release-it-nygard-2018)*
 - **Safe parsing at boundaries.** Treat the edges as strictly untrusted. Use schema validation for environment configuration, incoming request payloads, and outgoing external responses. Never let raw, unvalidated external data cross into the domain. *(See: clean-boundaries)*
 
 ### d. Data Transformation (Mappers / DTOs)
 
-- **Stateless, non-mutating translators between boundaries.** Same inputs yield same outputs; input objects are never modified in place. "Pure" in the functional sense, but housed in a class to keep dependency wiring and domain semantics consistent.
-- **Anti-Corruption Layer at integration boundaries.** Don't let external models contaminate yours. Repository / API responses go through explicit mapper classes — never inline at call sites, never on entities, never in services. *(See: anti-corruption-layer, data-object-anti-symmetry)*
+- **Stateless, non-mutating translators between boundaries.** Same inputs yield same outputs; input objects are never modified in place.
+- **Anti-Corruption Layer at integration boundaries.** Don't let external models contaminate yours. Extract a mapper when translation is non-trivial, reused, independently tested, or protects the domain from an external model; a small local pure conversion is fine otherwise. *(See: anti-corruption-layer, data-object-anti-symmetry)*
 
 ### e. Error Translation at Boundaries
 
-- **A thin translation layer between infrastructure and domain errors.** Repositories and adapters catch infrastructure-specific errors (ORM errors, HTTP status codes, driver errors) and translate them into domain error types. Business logic never handles infrastructure error types directly. *(See: clean-boundaries)*
+- **A thin translation layer between infrastructure and application errors.** Repositories and adapters translate ORM, HTTP, and driver failures into stable port errors. Business logic never handles infrastructure-specific types directly. Domain errors remain reserved for domain outcomes. *(See: clean-boundaries)*
 
 ## 3. Code Construction & Decoupling Patterns
 
 - **Tell, Don't Ask.** Tell objects what you want done in terms of the *role* the neighbor plays; don't ask for their internals and decide for them. The corollary to the Law of Demeter and the antidote to feature envy. *(See: coupling, growing-object-oriented-software-guided-by-tests)*
-- **Event-driven integration across domains.** If a service action causes side effects across disparate domains, use event emitters or message passing — don't hard-couple cross-domain imports. The domain emits a state change; background listeners perform the downstream reaction. *(See: event-sourcing, responsibility-layers)*
-- **No globals for side-effects.** Calling time/date functions, HTTP clients, or random generators directly couples code to uncontrollable, non-deterministic system state.
-  - Define explicit interfaces for side-effects (`Clock`, `HTTPClient`, `IDGenerator`).
-  - Inject the interface; production wiring uses the real implementation.
-  - Provide a stateful Fake for tests (e.g., `FakeClock` with a frozen timestamp).
-- **Probe / instrumentation pattern.** Define an observability interface (`Probe`) in the domain that declares business-relevant events (`HabitCreated()`, `TokenDecryptFailed()`). Implement with real metrics/logging in production, no-op in tests. Keeps observability decoupled from business logic.
-- **Domain logic in classes, not loose functions.** Domain computations are methods on domain classes, not standalone exported functions. A class signals intent, groups related behavior, and keeps the design honest under hexagonal layering. *(See: anemic-domain-model)*
-- **Generic utilities carve-out.** Truly generic utilities (`clamp`, `slugify`, pure math) may be loose functions. Test: would a second unrelated domain want to import this? If not, it's domain logic — promote it to a class.
-- **Inject dependencies, don't instantiate inline.** Constructor injection over `new X()` inside a class. Inline instantiation hides dependencies, couples to concrete implementations, and makes testing harder. Even stateless collaborators get injected — the cost is trivial and the design stays honest. *(See: dependency-inversion-principle)*
-- **YAGNI and orthogonality.** Design for the current need, not the hypothetical future. Speculative generality is a code smell. Count the files touched per logical change — that's the measurable definition of good modularity. *(See: separation-of-concerns)*
+- **Event-driven integration across domains when the requirement calls for it.** Use events or messaging for asynchronous delivery, independent ownership, or decoupled evolution. Prefer direct orchestration when immediate consistency and one owner make it simpler. *(See: event-sourcing, responsibility-layers)*
+- **Control non-deterministic side effects.** Pass clocks, network clients, and random or
+  ID generators explicitly when tests, lifecycle, or replacement require control.
+  Production wiring uses the real collaborator; tests use a deterministic Fake.
+- **Probe / instrumentation pattern when needed.** Introduce a `Probe` port only when
+  business-level observability must remain independent of an adapter. Keep generic
+  infrastructure telemetry at the adapter boundary.
+- **Put domain behavior with the model it governs.** Use a class, value object, module, or pure function according to the language and required state; avoid service objects that manipulate anemic records. *(See: anemic-domain-model)*
+- **Generic utilities carve-out.** Truly generic utilities (`clamp`, `slugify`, pure math) may be shared. Domain-specific computations stay with their domain even when implemented as pure functions.
+- **Inject side-effecting or replaceable dependencies.** Constructor injection exposes I/O and runtime collaborators. Pure stateless helpers may be called directly; wrapping them adds a seam without adding control. *(See: dependency-inversion-principle)*
+- **YAGNI and orthogonality.** Design for the current need, not the hypothetical future. Speculative generality is a code smell. Treat scattered edits for one logical change as a coupling signal, not an automatic defect. *(See: separation-of-concerns)*
 
 ## 4. Testing
 

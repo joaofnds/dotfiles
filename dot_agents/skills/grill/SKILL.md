@@ -18,13 +18,20 @@ metadata:
 
 **Wrong skill if:** the design is already hardened and nothing is contested → `/plan`.
 
-Interview the user relentlessly about every aspect of this plan until you reach a shared, hardened understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. The goal is to expose every open decision, edge case, and hidden assumption now — while context is full — so the plan that follows captures a design that's already been interrogated.
+Interrogate the decisions required by the spec and demonstrated current risks until the
+approach is hardened. Do not design hypothetical future branches. `/grill` chooses how
+to satisfy the spec; it does not change scope or acceptance criteria. Route requirement
+changes back to `/discuss` and amend the spec first.
 
 ## Start from the options doc, if there is one
 
-If you're handed a path — an options doc from `/research`, or a spec — read it first and interrogate *that*. Its recommendation is a lean, not a decision, so your **first move is to confirm or overturn the pick** with the user; picking the winning approach is grill's job, not research's. Treat the doc's per-option rejections as settled unless new evidence surfaces — don't reopen ground research already walked. With no doc handed in, grill the approach on the table in this conversation.
+If handed an options doc, spec, or diagnosis, read it first. An options recommendation
+is a lean, not a decision; confirm or overturn it with the user after checking the facts
+that decide among viable options. A diagnosis supplies causal facts, not a remedy.
 
-Before you confirm the pick, independently verify the one or two claims the recommendation actually hinges on — the tiebreaker facts, not every rejection. Options docs lean on assertions ("X can't compose with Y", "reuse isn't possible", "the platform can't do this") that may be stale or wrong; read the code and confirm before you ratify. A pick hardened on a false premise is the exact failure this step exists to prevent. Per-option *rejections* stay settled — this targets only the load-bearing claims under the lean itself.
+Before confirming the pick, independently verify every load-bearing claim that chooses
+the winner or eliminates a simpler, existing, or platform-native option. Name the probe
+and evidence. Cosmetic rejections may remain settled; negative assumptions may not.
 
 ## How to run it
 
@@ -36,4 +43,13 @@ Before you confirm the pick, independently verify the one or two claims the reco
 
 ## Close-out
 
-When the design is hardened and there are no open branches left, stop interviewing and **summarize the resolved decisions**, then **persist the summary to a durable doc** — don't leave it only in chat. Reuse the source doc's `YYYY-MM-DD-<slug>` prefix and name it `<prefix>-grilled.md` (mint a fresh `YYYY-MM-DD-<slug>` if you were handed no doc); save it under `.boris/plans/` at the repo root, beside the source, and tell the user the exact path. It's the hand-off `/plan` consumes, and a fresh planning session has none of this conversation's context. Cover: each decision made; where grilling overturned or sharpened the source doc; edge cases and risks surfaced; explicit deferrals; and the invariants that must not break.
+When the required decisions are hardened, use the source artifact's
+`YYYY-MM-DD-<slug>` prefix; if none exists, mint one. Persist `<prefix>-grilled.md` under
+`.boris/plans/` and tell the user the path. If one exists, version the prefix while
+preserving the terminal suffix, for example `<prefix>-v2-grilled.md`. Cite the source artifacts, commit/branch,
+verified load-bearing claims with evidence, each decision, risks, deferrals, and
+invariants. State that scope and acceptance criteria still match the spec; otherwise
+return to `/discuss`. Never overwrite an existing artifact implicitly.
+
+Before done, run the producer gate from `adversarial-review` against the decision
+evidence, especially simpler rejected options and unverified negative assumptions.

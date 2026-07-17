@@ -6,7 +6,7 @@
 > "Here's the thing: building products is hard. Not because the technology is complex. Because people are complex. Let that sink in."
 
 **After:**
-> "Building products is hard. Technology is manageable. People aren't."
+> "People make product development harder than the technology does."
 
 **Changes:** Removed opener, binary contrast structure, and emphasis crutch. Direct statements.
 
@@ -18,9 +18,9 @@
 > "It turns out that most teams struggle with alignment. The uncomfortable truth is that nobody wants to admit they're confused. And that's okay."
 
 **After:**
-> "Teams struggle with alignment. Nobody admits confusion."
+> "Most teams struggle with alignment. Few admit confusion."
 
-**Changes:** Cut hedging ("most"), removed throat-clearing phrases, deleted permission-granting ending.
+**Changes:** Preserved the qualifying scope, removed throat-clearing phrases, and deleted the permission-granting ending.
 
 ---
 
@@ -30,7 +30,7 @@
 > "In today's fast-paced landscape, we need to lean into discomfort and navigate uncertainty with clarity. This matters because your competition isn't waiting."
 
 **After:**
-> "Move faster. Your competition is."
+> "Competitors are already shipping, so reduce delivery time."
 
 **Changes:** Eliminated jargon entirely. Core message in six words.
 

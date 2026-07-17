@@ -11,15 +11,17 @@ Review AI instruction documents (Markdown, Markdown+YAML) against the checklist 
 ## Scope
 
 In scope:
-- Root-level instruction files: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, and analogues
-- Sub-agent definitions (Markdown + YAML frontmatter)
-- Skills / `SKILL.md` (frontmatter + body + linked resources)
-- Slash commands — `commands/<name>.md` and `skills/<name>/SKILL.md` are equivalent layouts
-- Rules / style files (`coding_style.md`, `engineering_judgment.md`, etc.)
-- Memory files (`MEMORY.md`, individual entries)
-- System prompts and any persistent context loaded into an agent
+- Root and project instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`)
+- Sub-agent definitions, skills and linked resources, and slash commands
+- Rules, style guides, memory files, system prompts, and other persistent agent context
 
 Out of scope: source code (defer to code-reviewer), READMEs, end-user product docs, ad-hoc chat prompts, and any text that will not persist into an agent's context (the persistence test is the canonical filter).
+
+## Inputs
+
+Require the complete patch or a readable diff-file path, plus the changed, added,
+untracked, and deleted path list. Stop if either is absent. Read every listed artifact
+and every transitively linked source-local reference before issuing a verdict.
 
 ## How you review
 
@@ -39,32 +41,22 @@ Acknowledge what works. The "Strengths" section is required — either find what
 ## Operating notes (apply before drafting any finding)
 
 - **Read the entire file.** Snippets miss conflicts and miss high-priority rules buried in the middle.
-- **Run the stale-reference lint pass.** Extract every file path, function name, tool name, model ID, frontmatter field, and CLI flag the document references; verify each with Read / Glob / Grep against the live repo and live Claude Code docs. Every harness-behavior claim in this checklist (frontmatter fields, loading paths, cache mechanics, deprecated mechanics) is review-time-verifiable, not gospel — check live docs before flagging. Batch these lookups as parallel tool calls — they're independent, so read them in one turn rather than one at a time.
+- **Run the stale-reference lint pass.** Extract every file path, function name, tool name, model ID, frontmatter field, and CLI flag the document references. Verify repo-local claims with Read / Glob / Grep. Verify harness claims against current documentation only when an available tool can access it; otherwise label the claim unverified and name the source required. Batch independent lookups.
 - **Never flag from memory.** A false-positive finding — asserting a reference is stale, a rule contradicts another, or a mechanism is deprecated, without confirming it by a tool call this session — is this reviewer's worst failure: it erodes trust in every other finding. If you can't verify a claim, label it "unverified" and say what would settle it; don't assert it.
 - When a phrase is vague, *try* to write the concrete replacement. If you can't, the rule is too vague to keep — say so.
 - Cite the mechanism, not the symptom. "This is wordy" is weak; "this preamble pushes operative rules into the lost-in-the-middle zone" is reviewable.
 - Be direct. If a document should be deleted, say so.
 - For uncertain rules, propose a dated deletion experiment ("delete YYYY-MM-DD; restore by <forcing function>"). Prefer restore-by triggers tied to releases or model swaps over calendar dates.
 - **Deletions have a keep-side test.** A corpus's justified length is proportional to its distance from model defaults. A sentence encoding a deliberate house delta — a choice a capable model won't make unprompted ("Fakes over framework mocks", "comments default to zero") — is incompressible; keep it however strict it reads. What compresses is the material *around* the delta: choreography, anticipated-failure narration (multi-sentence persuasion about what will go wrong — distinct from the one-clause failure-mode "why" that §6 Specification rigor requires; keep the clause, cut the sermon), persuasion aimed at the author. Flag the sermon, never the rule. (Added 2026-07-15, dot_agents corpus vs mattpocock/skills.)
+- When an artifact governs coding or code review, load `engineering_judgment.md` and the
+  coding/testing rules it routes to. Check the artifact against those sources; do not
+  apply source-code style mechanically to instruction prose.
 
 ### Failure-mode vocabulary
 
-- **Context rot** — recall degrades as token count grows, before the window fills (Anthropic, *Effective Context Engineering*).
-- **Lost-in-the-middle** — middle of long prompts recalled worse than start/end; primacy dominates recency in LLMs (Liu et al. 2023).
-- **Instruction-saturation** — frontier models follow ~150–200 instructions reliably; past that, compliance drops measurably (IFScale, 2025). Budget the *entire* loaded surface.
-- **Instruction-hierarchy collision** — system / project / user rules conflict; model picks by vibe (OpenAI, *Instruction Hierarchy*, 2024).
-- **Conflict-silent compliance** — when two rules contradict, models detect the conflict but rarely announce it (ConInstruct, 2025). The reviewer is the catch point; runtime won't be.
-- **Dispatch ambiguity** — frontmatter description doesn't say when to invoke vs. skip.
-- **Over-triggering** — forceful imperatives ("CRITICAL: You MUST call X") make current models *over*-invoke a tool/skill rather than comply more reliably; plain conditional phrasing ("Use X when …") triggers correctly (Anthropic, *Prompting best practices*, Opus 4.6+).
-- **Cache invalidation** — content above a cache breakpoint changes per request; entire downstream prefix re-bills.
-- **Pink-elephant negation** — negative-only rules underperform; the prohibited concept gets attended to anyway.
-- **Caller-context leakage** — sub-agent prompt assumes CWD, prior turns, or env from the parent; sub-agent runs in a fresh window and confabulates.
-- **Premature completion** — long-running agent declares success after partial work, with no verification gate (Anthropic, *Effective Harnesses*).
-- **Linter laundering** — a rule a deterministic tool would catch is parked in the prompt instead of CI; burns instruction budget for free.
-- **No-op / self-reference** — an instruction the model already obeys by default; burns context budget for zero behavior change.
-- **Restatement-over-leading-word** — a concept spelled out in many words where one term already in the model's pretraining would anchor it with greater precision and lower token cost. The word pays off twice: in the body it anchors execution; in the description, dispatch (mattpocock, *Writing Great Skills*).
-- **Instruction laundering** — re-stating a rule under a new heading to launder the appearance of compliance.
-- **Decay** — references artifacts (paths, versions, tools) that have changed, or lacks dating that would let it be re-evaluated.
+Before reviewing, read `instructions-reviewer-failure-modes.md` beside this file. Use its
+named mechanisms in findings; do not invent a label when a concrete failure description
+is clearer.
 
 ## Review checklist
 
@@ -120,7 +112,7 @@ Anthropic prompt cache prefix order: `tools → system → messages`. A change a
 
 - **Near-duplicates.** Two rules with subtle phrasing variation create ambiguity the model resolves by vibe. Read for repeated topics across sections and across files. Duplication requires co-loading: copies that never enter the same context (a name-only-suppressed description vs. its body) are not a *near-duplicate* finding — check reach per §1 Loading-path integrity. Drift between such copies still is a finding: see "Deliberate mirror copies" below.
 - **Cross-file contradictions.** Check across files, not just within one — conflict-silent compliance means runtime won't surface these.
-- **Hierarchy violations.** Project rule contradicting a managed/global rule without explicit "this overrides X" language.
+- **Hierarchy violations.** Flag any lower-priority instruction that contradicts a higher-priority instruction. Declaring an override does not change harness hierarchy.
 - **Restatement of defaults.** "Be helpful," "write correct code," "follow conventions" — decoration. Cut.
 - **Linter laundering.** Rules a deterministic tool would catch (formatting, type rules, lint rules, import order) belong in CI, not in the prompt.
 - **No-op / self-referential meta-rules.** "Think carefully," "be thorough," "follow best practices" — no observable failure case → can't be enforced → drifts. Test each sentence in isolation: does it change behavior vs. the default? If not, delete the whole sentence; don't trim words from it.
@@ -195,7 +187,13 @@ Produce one review document, in this order:
 2. …
 ```
 
-If reviewing multiple files, produce one section per file under a single top-level heading, plus a final cross-file findings section for conflicts and duplications.
+If reviewing multiple files, group findings globally by severity and include the path in
+every finding. Add a cross-file section for interactions and duplication; do not bury a
+Blocker under per-file ordering.
+
+**Files examined:** list every supplied and transitively linked artifact as `examined` or
+`not examined`. The verdict is invalid while any is unexamined. For a multi-file review,
+report tier and size per file or in a corpus table.
 
 **Self-check before emitting.** Walk each finding once more: the quoted text appears verbatim at the cited line, the named failure mode actually fits, and every "stale," "conflicting," or "deprecated" claim was confirmed by a tool call this session. Cut or downgrade to "unverified" anything you can't stand behind.
 

@@ -7,8 +7,8 @@
 **Non-negotiables.**
 - TDD is the default workflow, not a preference.
 - Framework mocks on our own code are banned. We write Fakes.
-- Tests never wire the application by hand. They go through a Harness and a Driver.
-- A test without clear Arrange / Act / Assert structure, or without an imperative behavior-name, is not done.
+- Application-level integration and end-to-end tests reach a running application through a Harness and Driver. Focused adapter integration tests may exercise the adapter directly. Unit tests may construct behavior with real collaborators and boundary Fakes.
+- A test without readable Arrange / Act / Assert structure, or without a declarative behavior name, is not done.
 
 This file is the gatekeeper. It routes you to the module that applies to what you're doing, and it holds the checklist for the end.
 
@@ -34,7 +34,11 @@ If you're doing more than one of these, read more than one module. These are not
 Four concepts every sub-file assumes. Internalize them here; the sub-files will not reintroduce them.
 
 **The TDD loop: Red → Green → Refactor** (Beck, *Test-Driven Development: By Example*).
-Every new behavior starts as a failing test whose message reads. Then the *simplest* change to go green — a literal, a hard-coded branch, a single new method. Then refactor on green with the test as safety net. Only then move to the next red. Pick one of Beck's three tactics for the green step by confidence level:
+State a short scenario list in the active task note or progress update, then turn exactly
+one item into a runnable test. Before running it, predict how and why it will fail. An
+unexpected failure means the model, test, or setup is wrong; reconcile it before
+production code. Make the *simplest* change to green, then refactor with the test as
+safety net. Only then choose the next scenario. Pick the green tactic by confidence:
 - **Fake it** — return a literal. The next test forces generalization.
 - **Triangulate** — a second test with different inputs forces the real abstraction.
 - **Obvious implementation** — when the answer is clear, just write it. Don't perform TDD kabuki.
@@ -62,31 +66,33 @@ You can max three at once; one always gives. A test with low protection *and* lo
 
 ## Pre-commit checklist
 
-Walk this before calling any testing work done. Every bullet that doesn't apply must be consciously ruled out, not silently skipped.
+Walk the applicable sections before calling testing work done. Test-type-specific items do not apply to every test.
 
 ### Structure and naming
 - Did I start red, go green with the simplest change, and refactor on green?
+- Did I state and maintain the scenario list, with one scenario converted into a runnable test at a time?
+- For each TDD experiment, did I predict the next observable red or green result and reconcile any surprise before the next edit?
 - Does the test satisfy F.I.R.S.T.?
 - Is the top-level describe the symbol under test (for a class or function) or the route path (for an HTTP endpoint)?
-- Are my test names imperative, lowercase, third-person present tense? No "should". No method-name echoes.
+- Are my test names lowercase, declarative third-person-present clauses? No "should". No method-name echoes.
 - Are Arrange / Act / Assert visible as three phases separated by blank lines — or is the test trivial enough to collapse to one line?
 - One behavior per test? Multiple unrelated behaviors → split.
 - If the same behavior runs against many inputs, am I using the framework's parameterized primitive (one generated test per row), not a loop of asserts inside one test body?
 - Happy path first, edge cases in nested "when …" blocks at the bottom?
-- Did I declare test variables at the top of the describe and populate them inside the setup hook?
+- Are values local to each test unless setup is genuinely shared? If hooks share mutable state, is it reset before each test?
 
 ### Architecture and harness
-- Does the test talk to the application only through a Harness and a Driver?
-- Does my Driver expose both a high-level method (parses the response, asserts a successful status, returns a domain entity) and a low-level method (returns the raw response) for every operation?
-- Do I reset Fake state and begin/rollback a transaction in `beforeEach`?
+- Do application-level integration and end-to-end tests use a Harness and Driver rather than wiring the application in the test body?
+- Does each Driver expose a raw or error-returning operation, with a success convenience only where it removes repeated boilerplate?
+- Do I reset shared Fake state and apply an isolation mechanism appropriate to each managed dependency?
 - Did I tear down the Harness in `afterAll`? Resource leakage across suites is a defect.
 - For external dependencies: did I use the real thing for a **managed** dependency (my own DB, my own cache namespace) under isolation, and a **Fake** for an **unmanaged** dependency (third-party API, payment, email)?
-- Did I start outside-in from a failing end-to-end test, or did I backfill tests after the code?
+- For a user-visible vertical slice that crosses application boundaries, did I start outside-in? For local behavior, did I start at the narrowest observable layer?
 - Is this test earning its place on the pyramid, or could it run one layer down?
 
 ### Doubles and verification
 - Am I using a framework mock (generated or inline) for a dependency I own? If yes, replace with a Fake.
-- Am I mocking a type I don't own directly? Wrap it in an interface I own, and fake that.
+- Am I mocking a third-party type outside a focused adapter contract test? Wrap it in an owned interface and fake that port.
 - Does my Fake implement the real interface and expose explicit seed + reset methods?
 - Did I inject the Fake through DI rather than import-time module patching?
 - Am I using the right name for what I built — Dummy, Stub, Fake, Spy, or Mock?

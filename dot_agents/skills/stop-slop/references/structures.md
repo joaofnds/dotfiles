@@ -1,8 +1,9 @@
-# Structures to Avoid
+# Structural Patterns to Inspect
 
 ## Binary Contrasts
 
-These create false drama. State the point directly.
+Repeated formulaic contrasts create false drama. Keep a contrast when the distinction is
+logically necessary; otherwise state the point directly.
 
 | Pattern | Problem |
 |---------|---------|
@@ -18,7 +19,8 @@ These create false drama. State the point directly.
 | "is about X but not Y" | False distinction |
 | "not just X but also Y" | Additive hedge |
 
-**Instead:** State Y directly. "The problem is Y." "Y matters here." Drop the negation entirely.
+**Instead when the distinction adds no information:** State Y directly. "The problem is
+Y." "Y matters here."
 
 ## Negative Listing
 
@@ -65,7 +67,8 @@ These announce insight rather than deliver it.
 
 ## False Agency
 
-Giving inanimate things human verbs. Complaints don't "become" fixes. Bets don't "live or die." Decisions don't "emerge." A person does something to make those things happen. AI loves this because it avoids naming the actor.
+False agency can hide who acted. Name the actor when responsibility matters; keep ordinary
+technical metaphors when they are precise and no actor is relevant.
 
 | Pattern | Problem |
 |---------|---------|
@@ -94,7 +97,8 @@ Floating above the scene instead of putting the reader in it.
 
 ## Passive Voice
 
-Every sentence needs a subject doing something. Passive voice hides the actor and drains energy.
+Passive voice weakens prose when it hides a relevant actor. It is useful when the actor
+is unknown, irrelevant, or deliberately de-emphasized.
 
 | Pattern | Fix |
 |---------|-----|
@@ -105,24 +109,25 @@ Every sentence needs a subject doing something. Passive voice hides the actor an
 
 **Instead:** Find the actor. Put them at the front of the sentence.
 
-## Sentence Starters to Avoid
+## Repeated Sentence Starters
 
 | Pattern | Fix |
 |---------|-----|
-| Sentences starting with What, When, Where, Which, Who, Why, How | Restructure. Lead with the subject or the verb. |
+| Repeated sentences starting with What, When, Where, Which, Who, Why, How | Vary the structure when it becomes a mannerism. |
 | Paragraphs starting with "So" | Start with content |
 | Sentences starting with "Look," | Remove |
 
-Wh- openers become a crutch. "What makes this hard is..." becomes "The constraint is..." or better, name the specific constraint.
+Wh- openers become a crutch when repeated. "What makes this hard is..." often becomes
+"The constraint is..." or, better, the specific constraint.
 
 ## Rhythm Patterns
 
 | Pattern | Fix |
 |---------|-----|
-| Three-item lists | Use two items or one |
+| Habitual three-item lists | Keep complete taxonomies; cut padded third items |
 | Questions answered immediately | Let questions breathe or cut them |
 | Every paragraph ends punchily | Vary endings |
-| Em-dashes | Remove. Use commas or periods. No em dashes at all. |
+| Repeated em-dashes | Use commas or periods when the dash is only a rhythm crutch |
 | Staccato fragmentation | Don't stack short punchy sentences |
 | "Not always. Not perfectly." | Hedging disguised as reassurance |
 
@@ -130,5 +135,5 @@ Wh- openers become a crutch. "What makes this hard is..." becomes "The constrain
 
 | Pattern | Problem |
 |---------|---------|
-| Lazy extremes (every, always, never, everyone, everybody, nobody) | False authority. Use specifics instead of sweeping claims. |
-| All adverbs (-ly words, "really," "just," "literally," "genuinely," "honestly," "simply," "actually") | Empty emphasis. See phrases.md for full list. |
+| Lazy extremes (every, always, never, everyone, everybody, nobody) | False authority when the claim is not universal. Use specifics. |
+| Empty emphasis adverbs ("really," "just," "literally," "genuinely," "honestly," "simply," "actually") | Remove when they add no degree, timing, frequency, or uncertainty. |

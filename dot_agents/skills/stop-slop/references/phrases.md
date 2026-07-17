@@ -1,4 +1,4 @@
-# Phrases to Remove
+# Phrase Patterns to Inspect
 
 ## Throat-Clearing Openers
 
@@ -24,7 +24,7 @@ Any "here's what/this/that" construction is throat-clearing before the point. Cu
 
 ## Emphasis Crutches
 
-These add no meaning. Delete them.
+These often add no meaning. Delete them only when the causal or qualifying content survives.
 
 - "Full stop." / "Period."
 - "Let that sink in."
@@ -50,9 +50,10 @@ Replace with plain language.
 | Circle back | Return to, revisit |
 | On the same page | Aligned, agreed |
 
-## Adverbs
+## Empty Adverbs
 
-Kill all adverbs. No -ly words. No softeners, no intensifiers, no hedges.
+Cut adverbs that add emphasis without information. Keep words that carry necessary
+degree, timing, frequency, or uncertainty.
 
 Specific offenders:
 
@@ -117,7 +118,8 @@ Announcing difficulty or significance rather than demonstrating it:
 
 ## Vague Declaratives
 
-Sentences that announce importance without naming the specific thing. Kill these.
+Sentences that announce importance without naming the specific thing. Replace these
+with the evidence or implication.
 
 - "The reasons are structural"
 - "The implications are significant"

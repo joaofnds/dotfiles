@@ -61,7 +61,7 @@ instruction files); otherwise a general agent carrying this brief.
 
 ## As a producer gate
 
-`/discuss`, `/research`, and `/plan` end by running this skill on their own draft doc —
+`/discuss`, `/research`, `/grill`, `/diagnose`, and `/plan` end by running this skill on their own draft doc —
 each names its artifact-specific mandate aims; everything else about the gate lives
 here, once:
 

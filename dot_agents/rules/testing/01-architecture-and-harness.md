@@ -2,7 +2,7 @@
 
 How tests reach the system, what they treat as real, what they isolate, and how they are wired. Read the gatekeeper (`00-index.md`) first.
 
-The rules here answer one question: **how does a test get a running subject to exercise, without knowing how the subject is wired internally?** The answer is: through a Harness and a Driver, both of which exist so the test body can read like a domain specification, not like a transport log.
+The rules here answer one question: **how does an application-level integration or end-to-end test get a running subject without knowing its internal wiring?** Use a Harness and Driver so the test body reads like a domain specification, not a transport log. Unit tests may construct cohesive behavior directly.
 
 ---
 
@@ -10,10 +10,10 @@ The rules here answer one question: **how does a test get a running subject to e
 
 Tests exercise the system through its public interface. For an HTTP service that's the HTTP boundary; for a library that's the public API. The test does not know about the internal graph — which classes collaborate, which container is used, which ORM is in place. If the test knows, the test is coupled to implementation (§02, observable-behavior rule) and every refactor breaks it.
 
-Two consequences fall out of this:
+For application-level tests, two consequences follow:
 
-1. **Tests never construct the subject by hand.** They ask a Harness for a running system and receive back a Driver — a domain-shaped client that speaks the subject's public language.
-2. **Tests never import infrastructure adapters directly.** No `HTTPClient.get(...)` calls in test bodies, no direct database handles, no raw transport layers. Infrastructure lives behind the Driver.
+1. **Do not hand-wire the application.** Ask a Harness for a running system and receive a Driver that speaks its public language.
+2. **Do not bypass the public boundary in end-to-end test bodies.** Raw transport and database handles live behind the Harness or Driver. Focused adapter integration tests may exercise the adapter directly because it is their subject.
 
 ```
 [BAD] — test wires everything by hand; couples to framework details
@@ -64,7 +64,7 @@ The mix is a portfolio, not a ranking. Each layer buys different properties (Kho
 
 ```
                 ┌─────────┐
-                │   E2E   │   few — full stack through HTTP, real everything
+                │   E2E   │   few — full stack, real managed deps, controlled external seams
                 ├─────────┤
                 │  Integ  │   more — real managed deps (DB, cache) under isolation
                 ├─────────┤
@@ -84,11 +84,14 @@ Inverted pyramids (mostly end-to-end) give slow, fragile feedback. Hourglass sui
 
 ## 3. Outside-in TDD and the walking skeleton
 
-Outside-in is how GOOS starts a feature:
+Outside-in is how GOOS starts a user-visible vertical slice that crosses application boundaries:
 
 1. Write a failing **end-to-end test** that describes the user-visible behavior. It fails because the feature doesn't exist yet.
-2. Drop down one layer at a time — controller, service, repository — writing unit tests that force each collaborator into existence.
-3. When all the unit tests go green in sequence, the end-to-end test goes green.
+2. Drop to the narrowest layer that explains the current failure and add only the tests needed to drive its behavior.
+3. Move the failure inward until the end-to-end test goes green.
+
+For domain-local behavior, fixes, and refactors, start at the narrowest test layer that
+can observe the requirement. Do not add an end-to-end test merely to perform the ritual.
 
 Before any feature is tested this way, the project must have a **walking skeleton**: the thinnest possible end-to-end path that exercises the full stack — wiring, DI, transport, harness, CI — returning a canned value through one route. The walking skeleton verifies the plumbing before any real behavior exists. Once it walks, every feature grafts onto a known-working spine instead of pioneering infrastructure alongside logic.
 
@@ -108,7 +111,7 @@ Before any feature is tested this way, the project must have a **walking skeleto
     2. route doesn't exist → add controller stub returning a canned user → e2e still fails on persistence
     3. persistence missing → write UserService with unit tests → wire into controller
     4. repository missing → write UserRepository with unit tests → wire into service
-    5. e2e now green; every intermediate layer is covered by its own unit tests
+    5. e2e now green; focused inner tests cover behavior that needed separate feedback
 ```
 
 The outside test is the compass: it tells you what "done" means in user-visible terms. The inner tests are the map: they force each collaborator to exist with the right shape.
@@ -143,11 +146,11 @@ For integration tests, distinguish two categories of out-of-process dependency (
 
 ## 5. The Test Harness
 
-A Harness is a class whose responsibility is:
+A Harness for application-level tests is responsible for:
 
 1. Boot the full DI graph using the *real* module — the same wiring production uses. Tests do not hand-register dependencies.
 2. Expose a Driver (see §7) for talking to the system.
-3. Expose a transaction-isolation handle (`db.begin()` / `db.rollback()`) for per-test database isolation.
+3. Expose the managed-dependency isolation controls the suite uses.
 4. Accept overrides for swapping Fakes or decorating specific dependencies at setup time.
 5. Provide a static `setup()` constructor and an instance `teardown()` method.
 
@@ -180,9 +183,13 @@ Harness rules:
 
 ---
 
-## 6. Transaction isolation per test
+## 6. Managed-dependency isolation
 
-Integration and end-to-end tests that touch a real managed database must run each test inside a transaction that rolls back on completion. This is the cheapest way to satisfy F.I.R.S.T.'s Independent and Repeatable properties.
+Use the cheapest isolation mechanism that preserves production semantics. Prefer rollback
+when application operations share the transaction and commit behavior is not under test.
+Otherwise use isolated schemas or databases, unique namespaces, disposable containers,
+or verified cleanup. A test that crosses processes or exercises commit behavior cannot
+be isolated by a transaction visible only to the test runner.
 
 ```
 [BAD] — relies on manual cleanup; flakes the first time a test crashes mid-run
@@ -202,7 +209,7 @@ Integration and end-to-end tests that touch a real managed database must run eac
         assert user.name == "joao"
 ```
 
-Apply the same isolation primitive to any managed stateful resource the harness can roll back — cache namespaces via flush, in-memory auth stores via `clear()`. For resources that can't roll back, the Fake's `reset()` method (see `02-mocking-roles.md`) takes the same role.
+Apply an equivalent isolation primitive to every managed stateful resource: unique cache namespaces, disposable topics, or explicit reset where production semantics allow it.
 
 Resource leakage — connection pools, ports, goroutines left dangling across tests — is a test smell (Meszaros). The harness's `teardown()` is mandatory and must close everything it opened.
 
@@ -228,12 +235,11 @@ class ApplicationDriver extends Driver:
         return new ApplicationDriver(app.transport)
 ```
 
-### 7.2 Two levels of method per operation
+### 7.2 Operation shape
 
-For every operation, a Driver exposes **two** methods:
-
-1. **High-level.** Sends the request, asserts a successful status code, parses the response into a domain entity, returns the entity. Used by happy-path tests so the body reads as domain code.
-2. **Low-level.** Returns the raw response. Used by error-path tests that need to inspect status codes and error bodies.
+Each operation exposes a raw or error-returning method. Add a success-asserting convenience
+only when it removes repeated happy-path boilerplate. Do not require both shapes when the
+base operation already reads clearly.
 
 ```
 class UserDriver:
@@ -274,9 +280,11 @@ test "rejects an invalid id":
     assert response.status == 400
 ```
 
-### 7.3 Drivers parse to domain types
+### 7.3 Drivers parse to public types
 
-A Driver's high-level method returns a real domain entity — not a raw response body. It parses the transport payload into the domain class. This gives test assertions a strongly-typed domain object to compare against.
+A high-level Driver method returns a typed public contract or client model, not an
+unvalidated response body. Return the internal domain entity only when it genuinely is
+the public contract.
 
 ### 7.4 Drivers assert transport contracts, not domain content
 
@@ -284,7 +292,9 @@ A Driver may assert on transport-level contracts — "create returns 201 and a u
 
 ### 7.5 Must-variants for error-free flows
 
-Where the Driver's error-returning form would force the test body to carry error-checking scaffolding just to unwrap a happy-path value, provide a `mustX(...)` wrapper that asserts-no-error and returns the value directly. Happy-path tests read as a sequence of domain actions; error-path tests still have the raw, error-returning form when the error itself is the subject.
+Where an error-returning operation forces repeated happy-path scaffolding, provide a
+`mustX(...)` convenience. Choose either `mustX` or another success convenience; do not
+grow three forms of every operation.
 
 ```
 driver.users.create(name)       -> returns the user, or an error the test can inspect

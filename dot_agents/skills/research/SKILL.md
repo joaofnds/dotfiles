@@ -63,10 +63,12 @@ adjacent to the spec even when researched on a later day. Save it beside the spe
 2. **Current state** — how the relevant code fits together today and where the feature
    hooks in, with `file:line` for anything load-bearing. Include what's *absent* if it
    shapes the options.
-3. **Options** — two or three genuinely different approaches. Per option: what it is,
+3. **Options** — every genuinely viable approach; one is a valid result when the evidence
+   eliminates the rest. Per option: what it is,
    how it works against §2, its dependency/complexity cost, and an explicit
    **Pros / Cons** list, judged against the spec's constraints. Include the
-   question-the-premise (platform- or library-native) option, even if rejected.
+   premise check for platform, framework, and existing-dependency support. Include native
+   support as an option when it is viable; otherwise record the verified reason it is not.
 4. **Recommendation** — the option you lean toward and why — a lean, not a decision —
    with one line on why each other option loses, so `/grill` doesn't reopen settled
    ground without reason.

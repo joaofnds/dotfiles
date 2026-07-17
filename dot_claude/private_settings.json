@@ -49,16 +49,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/announce-rules-verify.py"
-          }
-        ]
-      }
     ]
   }
 }

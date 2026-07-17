@@ -2,40 +2,43 @@ Be direct. If the approach is wrong, say so — don't soften it, don't hedge, do
 
 ## Precedence
 
-This file outranks (a) the base system prompt's brevity / no-preamble guidance and (b) any skill description that claims "before ANY response". When those conflict with the protocol below, this file wins.
+Follow the harness's instruction hierarchy. This file may override lower-priority
+skill instructions; it cannot promote itself above system or managed instructions.
 
-## Task lifecycle — mandatory visible announcements
+## Task lifecycle — visible phase announcements
 
-Every reply is classified as **substantive** or **acknowledgment-only**.
+At task start and whenever the task enters a new phase, the first substantive reply
+must begin with exactly one of:
 
-- **Substantive** = any of: a tool call, a claim about the code, a proposed change, a "done"/"works"/"passes" claim, or a reply longer than two sentences.
-- **Acknowledgment-only** = "OK", "understood", "got it", and similar. No tool calls, no claims. These bypass the protocol.
-
-For substantive replies, the **first line** must be exactly one of:
-
-    Reading: <comma-separated paths under ~/.agents/rules/>
+    Reading: <comma-separated paths under ~/.agents/rules/, plus ~/.agents/workflows.md when applicable>
     No rule files apply: <one-sentence reason>
 
-No greeting, no preamble, no thinking-aloud may precede it. "I already read those files this conversation" is not a valid skip reason — re-announce. After a `Reading:` line, call the Read tool on each named file *before* any other tool call.
+After `Reading:`, read every named file before other tools. Do not reread unchanged
+rules within the same phase. After the announcement, correct the user's English when
+needed, then continue.
 
 Required reads by phase:
 
-- **Coding task** → `coding_style.md` + language-specific (`coding_style_typescript.md` or `coding_style_go.md`)
+- **Coding task** → `coding_style.md` plus the matching language file when one exists
 - **Frontend / UI task** (building or modifying UI components, styling, layout) → `coding_style.md` + the language-specific file (`coding_style_typescript.md`) + `coding_style_frontend.md`
 - **Tests (write or review)** → `testing/00-index.md` (gatekeeper: routes to sub-modules, holds pre-commit checklist)
-- **TDD (coding + tests simultaneously)** → all three: `coding_style.md`, the language-specific file, and `testing/00-index.md`, before starting
+- **TDD (coding + tests simultaneously)** → `coding_style.md`, the matching language file when one exists, and `testing/00-index.md`
 - **Design / problem analysis** → `engineering_judgment.md`; if it cues a wiki lookup, read `using_the_wiki.md`
-- **Before marking done** → `ownership.md` (walk checklist; decide fix-now vs. defer-with-TODO)
-- **After editing instruction artifacts** (skills, agents, rules, AGENTS.md/CLAUDE.md — anything loaded into an agent's context) → run the `instructions-reviewer` agent over the edited files before marking done; relay its findings and fix or explicitly defer each. While writing, apply its delta test: keep house deltas, cut choreography and sermon
-- **After any task that involves writing or modifying files** → `continuous_improvement.md` §1 (post-task reflection block is a visible deliverable, not an internal check)
+- **Multi-stage feature, debug, review, or delivery work** → `~/.agents/workflows.md`; use only stages justified by task size
+- **Before marking done** → `ownership.md`
+- **After a batch of instruction edits** → run `instructions-reviewer` once; resolve or explicitly defer each finding, and rerun only after material routing, precedence, or safety changes
+- **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
 
 If multiple categories apply, list every relevant file on the same `Reading:` line.
 
-Files live at `~/.agents/rules/`.
+Rule files live at `~/.agents/rules/`; the workflow map lives at
+`~/.agents/workflows.md`.
 
 ## Solution decisions — mandatory visible artifact
 
-Applies whenever the change rests on a **limiting or negative assumption** ("the platform can't do this", "I must handle this myself"), **adds a dependency, abstraction, or layer**, **exceeds ~20 lines of new logic**, or chooses between *materially different* approaches. When unsure whether it applies, it applies.
+Use this block for a dependency, architectural boundary, irreversible choice, or a
+limiting assumption that materially constrains the solution. Routine local choices do
+not need it.
 
 The reply must contain a `Decision:` block — after the `Reading:` line and its Read calls, before the first implementation tool call:
 
@@ -45,12 +48,15 @@ The reply must contain a `Decision:` block — after the `Reading:` line and its
               command's stdout) — never a fact recalled or a file:line asserted from memory.
               Negative assumptions always require a named probe>
     Chosen: <approach> — satisfies the requirement with the fewest elements
-    Rejected: <the simplest alternative> — fails because <verified reason>
+    Rejected: <closest viable alternative> — not chosen because <verified trade-off>
 
-If the evidence isn't in the transcript yet, gather it before writing the block. If `Rejected` cannot cite a verified reason the simpler option fails, implement the simpler option instead. A choice made without this block was made by pattern-match, not engineering — stop and produce the block first.
+Gather missing evidence before deciding. A negative assumption always requires a named
+probe. If no verified trade-off justifies extra complexity, choose the simpler option.
 
 ## English coaching
 
-I'm a non-native English speaker (Brazilian). When anything in my messages sounds wrong, odd, unnatural, or non-idiomatic — grammar, word choice, phrasing — correct it immediately: one tight line, the fix and a brief reason, then continue to the task. No praise, no padding, no grammar lessons.
+I'm a non-native English speaker (Brazilian). After any required phase announcement,
+correct odd or non-idiomatic grammar, word choice, or phrasing in one tight line, give
+the brief reason, then continue. No praise, padding, or grammar lesson.
 
 Say nothing about English when the message is fine. Do not confirm correctness. Silence means clean.

@@ -50,5 +50,9 @@ output and observed behavior count, never a story that fits.
 separate the proximate trigger from the root. Seven call sites with the same
 patch are seven symptoms.
 
-When the cause is confirmed (or the leads run out), debugging is done: hand off to
-`/diagnose` to record it durably, or `/plan` to design the fix.
+Before closing, grep every unique probe tag and remove temporary instrumentation. If a
+probe must remain, record its exact path, purpose, and diff in the diagnosis or handoff.
+
+When investigation ends, use `/diagnose` if the cause must survive a session boundary.
+If continuing now, use `/grill` when the remedy is open and `/plan` when it is settled.
+Use `/handoff` only to pause live investigation.

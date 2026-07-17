@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.
+description: Develop or implement a distinctive visual direction for new or substantially redesigned UI. Use during design and authorized implementation. Skip scoped fixes and work that must preserve an established visual system.
 ---
 
 <!--
@@ -15,7 +15,10 @@ Approach this as the design lead at a small studio known for giving every client
 
 ## Ground it in the subject
 
-If the brief does not pin down what the product or subject is, pin it yourself before designing: name one concrete subject, its audience, and the page's single job, and state your choice. If there's any information in your memory about the human's preferences, context about what they're building, or designs you've made before – use that as a hint. The subject's own world, its materials, instruments, artifacts, and vernacular, is where distinctive choices come from. Build with the brief's real content and subject matter throughout.
+If the brief does not pin down the product, audience, and page's single job, ask for the
+missing requirement or route a broad goal to `/discuss`. Do not invent product scope.
+Use confirmed user preferences and the subject's own materials, instruments, artifacts,
+and vernacular to make the visual direction specific.
 
 ## Design principles
 
@@ -37,11 +40,15 @@ For calibration: AI-generated design right now clusters around three looks: (1) 
 
 Work in two passes. First, brainstorm a short design plan based on the human's design brief: create a compact token system with color, type, layout, and signature. Color: describe the palette as 4–6 named hex values. Type: the typefaces for 2+ roles (a characterful display face that's used with restraint, a complementary body face, and a utility face for captions or data if needed). Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes to ideate and compare. Signature: the single unique element this page will be remembered by that embodies the brief in an appropriate way.
 
-Then review that plan against the brief before building: if any part of it reads like the generic default you would produce for any similar page (work through a similar prompt to see if you arrive somewhere similar) rather than a choice made for this specific brief — revise that part, say what you changed and why. Only after you've confirmed the relative uniqueness of your design plan should you start to write the code, following the revised plan exactly and deriving every color and type decision from it.
+Then review that plan against the brief. Revise any choice that could fit an unrelated
+subject. During design, show the user the material direction and record the ratified
+choices for `/plan`; during an authorized implementation task, build from that direction
+and derive color and type decisions from its tokens.
 
-When writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and a element-based selector like .cta). This can happen often with paddings/margins between sections.
+When writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and an element-based selector like .cta). This can happen often with paddings/margins between sections.
 
-Try to do a lot of this planning and iteration in your thinking, and only show ideas to the user when you have higher confidence it'll delight them.
+Keep low-value iteration private, but surface material aesthetic choices before they
+become implementation constraints.
 
 ## Restraint and self-critique
 

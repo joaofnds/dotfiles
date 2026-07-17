@@ -1,8 +1,9 @@
 ---
 name: handoff
 description: >
-  Compact the in-flight conversation into a briefing a fresh session can pick up
-  cold — preserves undecided state; for a settled approach that's /plan.
+  Compact in-flight work into a briefing a fresh session can pick up cold. Use it for
+  live investigation or partially executed plans; use /plan for a settled design that
+  has not started.
 argument-hint: "What will the next session focus on?"
 disable-model-invocation: true
 metadata:
@@ -27,6 +28,11 @@ Write it so the file alone is enough — no "as we discussed" pointers at lost c
 - **Key files & findings** — paths and `file:line` for anything load-bearing, plus non-obvious things learned this session (failed approaches, surprising constraints).
 - **Next step** — the single most useful thing to do first in the new session.
 - **Suggested skills** — if a skill fits the next move (e.g. `/plan` once the approach settles, `/grill` to stress-test it), name it.
+
+For an active debug session, also include the exact reproduction command/input/output,
+reported magnitude, hypotheses with evidence, ruled-out causes, retained probes, and the
+next discriminating observation. For an active build, cite the plan and record completed
+tasks, working-tree state, current verification, and the next unchecked task.
 
 ## Rules
 

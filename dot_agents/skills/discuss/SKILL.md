@@ -59,8 +59,9 @@ the user the exact path.
 
 The test for whether an open question blocks the spec: is it a *what*-question you can
 state precisely now? Sharp what-questions block — resolve them before writing.
-How-questions (however sharp) and questions still too fuzzy to phrase aren't blockers;
-they go downstream as open questions.
+How-questions (however sharp) are not blockers; they go downstream. A what-question too
+fuzzy to state is still unresolved and remains in `/discuss`, unless an external fact
+blocks it and the spec names that fact and who can resolve it.
 
 ### Structure
 
@@ -70,11 +71,9 @@ they go downstream as open questions.
    what it must not break.
 4. **Acceptance criteria** — what must be true for this to be done, each concrete
    enough to check. Behavior, not implementation.
-5. **Open questions** — what `/research` or `/grill` must settle: how-questions, plus
-   what-questions still too fuzzy to state sharply (per the test above). A sharply
-   statable what-question should have been resolved in the interview, not deferred —
-   unless its resolution is blocked on something outside this conversation, in which
-   case record it as open with what unblocks it. Don't paper over them as decided.
+5. **Open questions** — implementation questions for `/research` or `/grill`, plus any
+   externally blocked requirement question with its owner and unblock condition. Do not
+   hand downstream an ambiguity that prevents the acceptance criteria from being read.
 6. **Next step** — this spec feeds `/research` to survey implementation options (or
    `/grill` directly if the approach is already obvious and there's nothing to survey).
 
@@ -91,8 +90,9 @@ contradictions.
 - **Spec, not solution.** Describe what's needed and why — never how to build it. No
   options, no approach, no code.
 - **Maintain the project glossary.** When the interview pins down domain terms, add
-  them to `.boris/CONTEXT.md` at the repo root (create if absent) — one line per term,
-  in the project's own language. Use its terms in the spec instead of redefining them.
+  them to `.boris/CONTEXT.md` at the repo root (create if absent). Inline any definition
+  required to understand an acceptance criterion; the glossary is shared vocabulary,
+  not hidden required context.
 - Reference existing artifacts (issues, PRDs, prior plans, commits) by path or URL —
   don't restate them.
 - Redact secrets and PII.

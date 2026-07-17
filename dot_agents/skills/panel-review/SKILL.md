@@ -30,14 +30,16 @@ yourself.
 Collect all three before spawning anyone; stop and ask for whatever is
 missing — never invent it:
 
-1. **Diff range** — an explicit ref range or file list (e.g. `git diff main...HEAD`).
+1. **Changeset** — materialize the complete patch at a readable temporary path and list
+   every changed file. The read-only reviewers cannot resolve a bare ref range.
 2. **Spec** — the PRD, plan file, or stated requirements the work implements.
    The spec axis is meaningless without it. When a `/grill` hardened-design
-   doc exists, collect it too — scope legitimately moves at grill, and a
-   reviewer holding only the original spec flags ratified deferrals as misses.
+   doc exists, collect it too. Grill may clarify implementation and record
+   deferrals already allowed by the spec; it cannot change scope or acceptance criteria.
 3. **Test command** — grep the project (`Makefile`, `package.json`,
    `justfile`, `mise`). Run the full suite once yourself and keep the output
-   for the report header. Don't share the result with the reviewers — "tests
+   for the report header. A failed required suite is a Blocker until diagnosed. Don't
+   share the result with the reviewers — "tests
    pass" in a brief steers them (adversarial-review's withhold rule).
 
 ## 2. Fan out — one parallel batch
@@ -47,9 +49,10 @@ concurrently. Each gets the same shared context plus one axis mandate.
 
 Shared context, identical for all four:
 
-> Diff: `<range>`. Spec: `<path>`. Project test command: `<cmd>` — the
-> orchestrator runs the full suite; run only the targeted tests a finding
-> needs. Correctness is every reviewer's floor: keep a concrete wrong-output
+> Patch: `<readable patch path>`. Changed files: `<paths>`. Spec: `<path>`.
+> Verification is orchestrator-owned; this mandate waives code-reviewer input 3.
+> Do not run tests or block on withheld suite output. Return a static axis verdict.
+> Correctness is every reviewer's floor: keep a concrete wrong-output
 > defect even when it's outside your lens, tagged `[correctness]`. This brief
 > deliberately contains no assessment of the work — form your own from the
 > code.
@@ -65,14 +68,15 @@ Axis mandates — pass one per reviewer:
   Architecture, spec, and security findings belong to other reviewers — drop
   them."
 - **Architecture** — "Review mandate: architecture only. Load
-  `~/.agents/rules/engineering_judgment.md` (§2–3). Module level: boundaries,
+  `~/.agents/rules/engineering_judgment.md` (§2–3) and the applicable baseline
+  coding rules. Module level: boundaries,
   dependency direction, interfaces at the seams, coupling to other modules,
   orthogonality (one change, one place), structural over-abstraction. You own
   over-engineering as a structural question; simplicity relative to the spec
   belongs to the spec reviewer."
 - **Spec** — "Review mandate: spec conformance only. Read the spec at
-  `<path>` — and the grilled design doc at `<path>`, when one exists; a
-  deferral or scope change ratified there is not a spec miss, cite it instead
+   `<path>` — and the grilled design doc at `<path>`, when one exists; an
+   implementation decision or spec-authorized deferral recorded there is not a miss
   — with the eyes of a product owner and a staff engineer. Requirement
   by requirement: is it actually implemented — behavior present, not merely
   code existing? Is anything built that no requirement asks for? Is this the
@@ -123,8 +127,8 @@ finding block must be self-contained — a fresh session with zero context can f
 ```markdown
 # Panel review — <topic>
 
-- **Diff:** <range> · **Spec:** <path>
-- **Test run:** `<cmd>` → <final output line>
+- **Patch:** <readable path> · **Spec:** <path>
+- **Test run:** `<cmd>` → <result plus the relevant failing output when red>
 - **Verdict:** Pass / Pass with revisions / Fail
 - **Files examined:** <every file in the diff; flag any a reviewer skipped —
   the verdict is invalid while one is unexamined>
@@ -145,10 +149,17 @@ finding block must be self-contained — a fresh session with zero context can f
 - [<Severity>] `path:line` — <finding> — refuted: <one-line reason>
 ```
 
-Order findings worst first. The verdict follows the surviving findings: any
-Blocker → Fail; Majors → Pass with revisions.
+Order findings worst first. The verdict follows the surviving findings: any Blocker or
+failed required suite → Fail; Majors → Pass with revisions.
 
-## 6. Relay
+## 6. Recommend the next route
+
+Record a proposed disposition for every finding. Recommend `/plan` and `/build` for
+large fixes and a direct test-first fix for small ones. Do not modify source as part of
+panel review; return the report before remediation begins. After remediation, the owning
+session reruns the full suite and targeted review for each affected axis.
+
+## 7. Relay
 
 Report to the user in the reviewers' words — worst first, verbatim or
 near-verbatim, including findings that invalidate the work. Link the report

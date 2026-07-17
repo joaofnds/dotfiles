@@ -31,7 +31,8 @@ Name your double after its role. A double that returns one canned user is a **St
 
 ## 2. Three styles of verification (Khorikov)
 
-Three ways a test can know the code worked. Prefer them in this order, always:
+Three ways a test can know the code worked. Prefer the earliest one that expresses the
+observable contract without hiding a boundary interaction that is itself the contract:
 
 1. **Output-based** — the function returns a value; assert on the value. Purest. Survives any refactor except changing the return type.
 2. **State-based** — the system mutates state; assert on the state afterward (read it back through the real repository, inspect a Fake's captured state).
@@ -75,9 +76,12 @@ If you're reaching for `toHaveBeenCalledWith` on code you own, you've coupled th
 
 ---
 
-## 3. Only mock types you own (GOOS)
+## 3. Own the seam (GOOS)
 
-**Never stand up a Stub, Spy, Mock, or Fake directly for a third-party class.** Wrap the third-party in an interface *you* own, then fake your interface.
+Application and domain tests do not double third-party classes directly. Wrap the
+third-party in an interface you own, then fake that port. A focused adapter contract test
+may use a thin third-party Spy when the outbound call itself is the observable contract;
+§6 defines that exception.
 
 This is the single most load-bearing rule in this document. It's why we have `HTTPClient` (our interface), with `RealHTTPClient` (adapter wrapping the library) and `FakeHTTPClient` (deterministic in-memory double) — instead of patching the library's `fetch` function. Same for `Clock`, `IDGenerator`, `UserProvider`, `TokenProvider`, `KVStore`, `Queue`. The third-party library sits behind *our* interface; tests only ever see our interface.
 
@@ -132,15 +136,18 @@ Every library upgrade becomes a test-rewrite project. Every API shape change cas
 
 The consequence: when the third-party API changes, one adapter class changes and every test keeps working. When the domain needs grow, we extend *our* interface. The test suite knows nothing about the library.
 
-Corollary: if you find yourself writing a "light" mock of someone else's class, stop. That's the signal that an interface wants to be extracted. Extract it, adapter-wrap the library, fake the adapter.
+Corollary: if application tests repeatedly mock someone else's class, the seam wants an
+owned port. Extract it, adapter-wrap the library, and fake the port.
 
 ---
 
 ## 4. Fakes are first-class production-style code
 
-A Fake is not a one-line lambda scribbled inside a `beforeEach`. It is a class. It lives under a shared test directory and is imported by every test that touches the seam it covers.
+A reusable, stateful Fake is production-style test code: give it a named type and share
+it where several tests use the seam. A one-test constant Stub may remain local; do not
+promote every canned value into a class.
 
-A Fake must satisfy all of:
+A shared stateful Fake satisfies all of:
 
 - **Implement the real interface.** The interface is the contract; the Fake is a second valid implementation of it, same as the production adapter. Compile-time check required.
 - **Stateful when the role is stateful.** `FakeClock` holds a moment. `InMemoryUserRepository` holds users. `FakeHTTPClient` holds a queue of canned responses and a captured list of received requests.
@@ -209,9 +216,10 @@ Module patching is invisible at the test's call site. It violates encapsulation,
 
 Framework mocks — generated or inline, any form of anonymous record-and-return spy produced by a mocking library — are allowed under **strict** conditions:
 
-1. The interface is owned by a third-party library we don't control.
-2. The test is asserting that **a call happened with specific arguments** — not that a value was transformed, not that a sequence of calls produced an outcome.
-3. The mock has zero state beyond what the interaction assertion reads.
+1. The adapter itself is the subject of a focused contract test.
+2. The interface is owned by a third-party library we don't control.
+3. The test asserts that a call happened with specific arguments because that call is the boundary contract.
+4. The mock has zero state beyond what the interaction assertion reads.
 
 Typical legal uses: verifying that a queue client's `.add()` method was called with a job payload we constructed, or that a logger received a structured event. The call itself is the contract — the library is the unmanaged outside world, and we're verifying the boundary we hand data across.
 
@@ -285,7 +293,7 @@ Two Fakes, two state assertions, real hasher and real validator. The test breaks
 
 ## 8. Smells that show up at this layer
 
-- **Mocking a type you don't own.** Wrap it, own the interface, fake that.
+- **Mocking a third-party type in an application or domain test.** Wrap it, own the interface, and fake that port. Keep direct Spies inside the narrow adapter-contract exception.
 - **Mocking a type you do own.** Write a Fake.
 - **A mock with state or branching logic inside it.** It's outgrown its role. Replace with a Fake.
 - **Assertions of the form `mock.methodName.wasCalledWith(...)` on your own code.** Rewrite the verification around return value or state.

@@ -6,9 +6,9 @@ Taste and aesthetic direction live in the `frontend-design` skill — it fires o
 
 ## 1. Tokens Are the Single Source of Truth
 
-- **Every visual value comes from the scale.** Color, spacing, type, radius, shadow, z-index — all from the Tailwind theme config (or CSS custom properties when Tailwind isn't the renderer). Never a one-off hex, never an arbitrary `[13px]`, `[#3a3a3a]`, `mt-[7px]`.
-- **If a value isn't in the scale, add it to the scale.** A new brand color or a one-off radius is a token-system change — make it in `tailwind.config` / `:root`, name it, then reference the name. Inlining it is the bug; the missing token is the root cause.
-- **Arbitrary values are a smell, not a tool.** `[...]` syntax is an escape hatch on par with `as any`: it bypasses the system that keeps the UI coherent. The rare legitimate use (a computed transform, a one-time `grid-template`) gets a reason; everything else is a missing token.
+- **Reusable visual values come from the scale.** Color, spacing, type, radius, shadow, and z-index use Tailwind theme tokens or CSS custom properties.
+- **Add semantic tokens for reusable roles.** A brand color or repeated radius belongs in `tailwind.config` / `:root`; do not add a global token for local geometry with no reusable meaning.
+- **Arbitrary values need a local reason.** Computed transforms and one-off grid geometry may use `[...]`. Repetition is evidence that the value should become a token.
 - **Semantic tokens over raw ones at the call site.** Reference `bg-surface` / `text-muted` / `border-default`, not `bg-zinc-900`. The raw scale defines values once; semantic tokens map them to roles so a theme change is one edit, not a find-and-replace.
 
 ## 2. Spacing
@@ -26,12 +26,12 @@ Taste and aesthetic direction live in the `frontend-design` skill — it fires o
 ## 4. Icons
 
 - **One icon set per project.** Consistent size and stroke weight across the whole UI. Mixing sets (or sizes, or stroke weights) reads as unfinished immediately.
-- **`lucide-react` for Next, `@lucide/svelte` for Svelte.** Same icon language across both stacks; framework-correct binding for each. The old `lucide-svelte` package is deprecated — `@lucide/svelte` is the Svelte 5 successor.
+- **Preserve the project's icon set.** For a greenfield Next or Svelte UI with no established icon system, prefer `lucide-react` or `@lucide/svelte`. The old `lucide-svelte` package is deprecated; `@lucide/svelte` is the Svelte 5 successor.
 
 ## 5. Component Primitives
 
 - **Compose from a real component layer; don't hand-roll every element.** Buttons, inputs, dialogs, menus, tooltips come from a primitives layer with accessibility and keyboard behavior already solved. Re-implementing them per feature is where bugs and inconsistency breed.
-- **`shadcn/ui` for Next; `shadcn-svelte` for Svelte.** Both are styled, copy-in components built on a headless layer (Radix under shadcn/ui; Bits UI → Melt UI under shadcn-svelte). Drop down a layer to those primitives only when you need behavior the styled set doesn't cover. Anchoring every feature to the same primitives is where most layout and spacing consistency actually comes from — more than any style rule.
+- **Use the project's accessible component layer.** For a greenfield Next or Svelte UI without one, prefer `shadcn/ui` or `shadcn-svelte`. Drop to their headless primitives only for behavior the styled layer does not cover.
 - **Own the copied components, then extend.** shadcn/ui and shadcn-svelte copy code into the repo — that copy is ours to edit (the headless layers underneath are installed packages, left as-is). Adjust the copied component to fit the token system once; don't override it ad-hoc at each call site.
 
 ## 6. Accessibility Floor (Non-Negotiable)

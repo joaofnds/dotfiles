@@ -5,8 +5,8 @@ description: >
   durable file once this session's investigation has concluded (cause confirmed, or
   leads exhausted and best hypothesis recorded). Invoke on "diagnose this",
   "root-cause report", "document what went wrong". Proposes NO fixes — that's /plan,
-  run later off the report. Fix approach already settled → /plan directly; no cause
-  yet → /handoff.
+  run later off the report. Fix approach already settled → /plan; cause still under
+  investigation → /debug; pausing that investigation → /handoff.
 metadata:
   trigger: A bug/problem was investigated this session; capture its root cause for a later /plan, no remedy
 ---
@@ -44,6 +44,12 @@ Save it durably under `.boris/plans/` at the repo root (create the dir if absent
 2. **Findings** — per bug: symptom and evidence (`file:line`, command output, failing test); the causal chain from symptom to root cause (five-whys); the principle it broke, citing `~/.agents/rules/` when one maps; what was tried and ruled out; confidence.
 3. **Open questions** — what's still unknown that `/plan` must resolve.
 4. **Next step** — this report feeds `/plan` (or `/grill` first if the remedy space is wide).
+
+## Before done: challenge the diagnosis
+
+Run the producer gate from `adversarial-review` against the reproduction, causal chain,
+ruled-out causes, and every `confirmed` versus `hypothesis` label. A finding that breaks
+the cause reopens `/debug`; do not write around it.
 
 ## Rules
 
