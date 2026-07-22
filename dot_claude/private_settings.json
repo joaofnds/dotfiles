@@ -12,7 +12,28 @@
   "tui": "fullscreen",
   "theme": "auto",
 
-  "permissions": { "defaultMode": "bypassPermissions" },
+  "disableBundledSkills": true,
+  "disableWorkflows": true,
+  "disableClaudeAiConnectors": true,
+  "disableArtifact": true,
+
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "deny": [
+      "EnterPlanMode",
+      "ExitPlanMode",
+      "DesignSync",
+      "NotebookEdit",
+      "PushNotification",
+      "RemoteTrigger",
+      "ReportFindings",
+      "ScheduleWakeup",
+      "AskUserQuestion",
+      "CronCreate",
+      "CronDelete",
+      "CronList"
+    ]
+  },
 
   "skillOverrides": {
     "schedule": "user-invocable-only",
