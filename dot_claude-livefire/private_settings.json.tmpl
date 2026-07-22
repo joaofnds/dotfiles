@@ -1,6 +1,7 @@
 {{- $base := include "dot_claude/private_settings.json" | fromJson -}}
 {{- $overrides := dict
       "remoteControlAtStartup" false
+      "disableRemoteControl" true
       "env" (dict "DO_NOT_TRACK" "1")
 -}}
 {{- mergeOverwrite $base $overrides | toPrettyJson -}}
