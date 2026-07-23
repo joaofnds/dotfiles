@@ -18,7 +18,7 @@ return {
 		{ "<leader>gfC", "<cmd>FzfLua git_bcommits<cr>", desc = "buffer commits" },
 	},
 	opts = {
-		ui_select = true,
+		ui_select = {},
 		lsp = {
 			jump1 = true,
 			code_actions = {
