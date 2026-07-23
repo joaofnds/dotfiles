@@ -350,9 +350,9 @@ Skip any level that doesn't apply — a pure query endpoint has no state change;
 
 ## 6. Hide irrelevant test data
 
-When fixture setup obscures the behavior, read
-`references/test-data-builders.md`. Keep simple fixtures inline; add a Builder or Object
-Mother only after repeated setup demonstrates the need.
+When fixture setup obscures the behavior, or when extracting or reusing shared fixture
+setup, read `references/test-data-builders.md`. Keep simple fixtures inline; add a Builder
+or Object Mother only after repeated setup demonstrates the need.
 
 ---
 
