@@ -1,0 +1,293 @@
+#!/usr/bin/env bash
+# Structural verification of dot_agents/rules/refactoring/ — the seven checks in
+# .boris/plans/2026-07-24-refactoring-specialist-agent-1-catalog-corpus.md §7.
+#
+# Usage: verify-refactoring-catalog.sh [--partial]
+#   --partial  during corpus build-out: missing documents and unresolved index
+#              links are reported, not failed; structural violations in files
+#              that exist still fail.
+set -u
+
+partial=false
+[ "${1:-}" = "--partial" ] && partial=true
+
+root="$(cd "$(dirname "$0")/.." && pwd)"
+tree="$root/dot_agents/rules/refactoring"
+catalog="$tree/catalog"
+index="$tree/00-index.md"
+
+canonical="Extract Function
+Inline Function
+Extract Variable
+Inline Variable
+Change Function Declaration
+Combine Functions into Class
+Combine Functions into Transform
+Split Phase
+Move Function
+Move Field
+Move Statements into Function
+Move Statements to Callers
+Slide Statements
+Split Loop
+Replace Loop with Pipeline
+Remove Dead Code
+Split Variable
+Rename Field
+Rename Variable
+Replace Derived Variable with Query
+Change Reference to Value
+Change Value to Reference
+Replace Magic Literal
+Encapsulate Variable
+Encapsulate Record
+Encapsulate Collection
+Replace Primitive with Object
+Replace Temp with Query
+Extract Class
+Inline Class
+Hide Delegate
+Remove Middle Man
+Decompose Conditional
+Consolidate Conditional Expression
+Replace Nested Conditional with Guard Clauses
+Replace Conditional with Polymorphism
+Introduce Special Case
+Introduce Assertion
+Replace Control Flag with Break
+Replace Error Code with Exception
+Replace Exception with Precheck
+Replace Inline Code with Function Call
+Substitute Algorithm
+Separate Query from Modifier
+Parameterize Function
+Remove Flag Argument
+Preserve Whole Object
+Replace Parameter with Query
+Replace Query with Parameter
+Remove Setting Method
+Replace Constructor with Factory Function
+Replace Function with Command
+Replace Command with Function
+Return Modified Value
+Introduce Parameter Object
+Pull Up Method
+Pull Up Field
+Pull Up Constructor Body
+Push Down Method
+Push Down Field
+Extract Superclass
+Collapse Hierarchy
+Remove Subclass
+Replace Subclass with Delegate
+Replace Superclass with Delegate
+Replace Type Code with Subclasses"
+
+smells="Mysterious Name
+Duplicated Code
+Long Function
+Long Parameter List
+Global Data
+Mutable Data
+Divergent Change
+Shotgun Surgery
+Feature Envy
+Data Clumps
+Primitive Obsession
+Repeated Switches
+Loops
+Lazy Element
+Speculative Generality
+Temporary Field
+Message Chains
+Middle Man
+Insider Trading
+Large Class
+Alternative Classes with Different Interfaces
+Data Class
+Refused Bequest
+Comments"
+
+failures=0
+fail() { echo "FAIL: $*"; failures=$((failures + 1)); }
+note() { echo "$*"; }
+kebab() { printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr ' ' '-'; }
+
+[ -d "$catalog" ] || { fail "catalog directory $catalog does not exist"; exit 1; }
+[ -f "$index" ] || { fail "index $index does not exist"; exit 1; }
+
+# 1 — exactly 66 documents
+count=$(find "$catalog" -name '*.md' | wc -l | tr -d ' ')
+if [ "$count" -eq 66 ]; then
+  note "check 1: 66 documents present"
+elif $partial; then
+  note "check 1: $count/66 documents present (partial)"
+else
+  fail "check 1: expected 66 documents, found $count"
+fi
+
+# 2 — filenames are exactly the kebab-cased canonical names
+missing=0
+while IFS= read -r name; do
+  if [ ! -f "$catalog/$(kebab "$name").md" ]; then
+    missing=$((missing + 1))
+    $partial || fail "check 2: missing $(kebab "$name").md"
+  fi
+done <<EOF
+$canonical
+EOF
+expected_files=$(while IFS= read -r name; do printf '%s\n' "$(kebab "$name")"; done <<EOF
+$canonical
+EOF
+)
+for f in "$catalog"/*.md; do
+  [ -e "$f" ] || continue
+  base=$(basename "$f" .md)
+  printf '%s\n' "$expected_files" | grep -Fxq "$base" \
+    || fail "check 2: $base.md is not a canonical catalog entry"
+done
+$partial && note "check 2: $missing canonical documents not yet written"
+
+# 3–6 — per-document structure
+for f in "$catalog"/*.md; do
+  [ -e "$f" ] || continue
+  base=$(basename "$f")
+
+  for field in '**Smells:**' '**Inverse:**' '**Improves:**'; do
+    grep -Fq "$field" "$f" || fail "check 3: $base missing $field"
+  done
+  for heading in '## When to apply' '## When not to apply' '## Mechanics' '## Example' '## House-rule interactions'; do
+    grep -Fxq "$heading" "$f" || fail "check 3: $base missing '$heading'"
+  done
+
+  lines=$(wc -l < "$f" | tr -d ' ')
+  { [ "$lines" -ge 40 ] && [ "$lines" -le 80 ]; } \
+    || fail "check 4: $base is $lines lines (must be 40-80)"
+
+  inverse=$(sed -n 's/^\*\*Inverse:\*\* //p' "$f" | head -1)
+  if [ -n "$inverse" ] && [ "$inverse" != "none" ]; then
+    if printf '%s\n' "$canonical" | grep -Fxq "$inverse"; then
+      counterpart="$catalog/$(kebab "$inverse").md"
+      if [ -f "$counterpart" ]; then
+        back=$(sed -n 's/^\*\*Inverse:\*\* //p' "$counterpart" | head -1)
+        name=$(sed -n 's/^# //p' "$f" | head -1)
+        [ "$back" = "$name" ] || fail "check 5: $base names Inverse '$inverse' but $(basename "$counterpart") names Inverse '$back'"
+      else
+        $partial && note "check 5: $base Inverse '$inverse' not yet written; symmetry unchecked" \
+          || fail "check 5: $base Inverse '$inverse' document missing"
+      fi
+    else
+      fail "check 5: $base Inverse '$inverse' is not a catalog entry"
+    fi
+  fi
+
+  smell_line=$(sed -n 's/^\*\*Smells:\*\* //p' "$f" | head -1)
+  if [ -n "$smell_line" ]; then
+    bad=$(printf '%s\n' "$smell_line" | tr ',' '\n' | sed 's/^ *//; s/ *$//' \
+      | grep -Fxv -f <(printf '%s\n' "$smells") || true)
+    if [ -n "$bad" ]; then
+      while IFS= read -r s; do
+        fail "check 6: $base names unknown smell '$s'"
+      done <<EOF
+$bad
+EOF
+    fi
+  fi
+done
+
+# 7 — index links resolve and cover all 66
+links=$(grep -o 'catalog/[a-z0-9-]*\.md' "$index" | sort -u)
+unresolved=0
+while IFS= read -r link; do
+  [ -z "$link" ] && continue
+  if [ ! -f "$tree/$link" ]; then
+    unresolved=$((unresolved + 1))
+    $partial || fail "check 7: index link $link does not resolve"
+  fi
+done <<EOF
+$links
+EOF
+unlinked=0
+while IFS= read -r name; do
+  file="catalog/$(kebab "$name").md"
+  if ! printf '%s\n' "$links" | grep -Fxq "$file"; then
+    unlinked=$((unlinked + 1))
+    $partial || fail "check 7: $file not linked from index"
+  fi
+done <<EOF
+$canonical
+EOF
+note "check 7: $unresolved unresolved index links, $unlinked catalog entries unlinked"
+
+# 8 — house-rule citations still point at lines holding the cited rule.
+# Table: <file>:<line>|<substring that line must contain>. A citation not in the
+# table fails (add it here); a table line that no longer matches fails (the
+# manifesto moved — re-anchor the citing documents and this table together).
+citation_guard='coding_style.md:6|Preserve established project structure
+coding_style.md:7|Do not introduce classes
+coding_style.md:8|solely to satisfy this document
+coding_style.md:12|Simplicity, by Beck'"'"'s four criteria
+coding_style.md:13|Boring control flow
+coding_style.md:14|Comments default to zero
+coding_style.md:15|Move understanding from your head into the code
+coding_style.md:16|Never the `Impl` suffix
+coding_style.md:17|Surgical execution
+coding_style.md:19|Leverage the type system
+coding_style.md:20|Don'"'"'t defend against your own code
+coding_style.md:32|Pure structural types
+coding_style.md:33|Behavior lives with data
+coding_style.md:34|Explicit construction
+coding_style.md:43|Framework-agnostic constructors
+coding_style.md:44|Defensive networking
+coding_style.md:45|Safe parsing at boundaries
+coding_style.md:49|Stateless, non-mutating translators
+coding_style.md:54|thin translation layer
+coding_style.md:58|Tell, Don'"'"'t Ask
+coding_style.md:60|Control non-deterministic side effects
+coding_style.md:66|Put domain behavior with the model it governs
+coding_style.md:67|Generic utilities carve-out
+coding_style.md:68|Inject side-effecting or replaceable dependencies
+engineering_judgment.md:12|Facts before theories
+engineering_judgment.md:14|Name things in the domain'"'"'s language
+engineering_judgment.md:16|Never program by coincidence
+engineering_judgment.md:22|Draw boundaries at the demonstrated cost inflection
+engineering_judgment.md:23|Dependencies point inward
+engineering_judgment.md:25|Program to interfaces, encapsulate what varies
+engineering_judgment.md:26|Match complexity to the problem
+engineering_judgment.md:28|Design for the current need
+engineering_judgment.md:29|Complexity carries the burden of proof
+engineering_judgment.md:36|Work in the smallest coherent steps
+engineering_judgment.md:37|Code is a liability
+engineering_judgment.md:38|Make the change easy
+engineering_judgment.md:41|DRY is about knowledge, not code
+engineering_judgment.md:42|Orthogonality: one change, one place
+engineering_judgment.md:43|Listen to the tests
+engineering_judgment.md:61|Prefer removing the cause
+engineering_judgment.md:62|narrows the space of future bugs
+engineering_judgment.md:63|Don'"'"'t fight your tools'
+
+cited=$(grep -rho '\(coding_style\|engineering_judgment\)\.md:[0-9]*' "$catalog" | sort -u)
+while IFS= read -r citation; do
+  [ -z "$citation" ] && continue
+  printf '%s\n' "$citation_guard" | grep -q "^$citation|" \
+    || fail "check 8: citation $citation is not in the guard table"
+done <<EOF
+$cited
+EOF
+while IFS='|' read -r target token; do
+  [ -z "$target" ] && continue
+  rule_file="$root/dot_agents/rules/${target%%:*}"
+  rule_line="${target##*:}"
+  sed -n "${rule_line}p" "$rule_file" | grep -Fq "$token" \
+    || fail "check 8: $target no longer contains '$token' — manifesto drifted; re-anchor citations"
+done <<EOF
+$citation_guard
+EOF
+
+if [ "$failures" -eq 0 ]; then
+  note "OK"
+  exit 0
+else
+  note "$failures failure(s)"
+  exit 1
+fi
