@@ -70,17 +70,6 @@
           }
         ]
       }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/deny-branch-creation.sh"
-          }
-        ]
-      }
     ]
   }
 }
