@@ -122,10 +122,12 @@ feeds back into the build loop.
 /panel-review → .boris/reviews/*.md → fix or /plan → /build → /verify → targeted re-review → learn
 ```
 
-- **/panel-review** — four specialist reviewers, one adversarial kill step, one
-  self-contained report under `.boris/reviews/`. Explicitly hand a large fix to
-  `/plan` off that report; small fixes go straight in test-first. Record each finding's
-  resolution, rerun verification, and re-review the affected axis before closing.
+- **/panel-review** — four verdict axes plus a refactoring track (five reviewers), one
+  adversarial kill step, one self-contained report under `.boris/reviews/`. Explicitly
+  hand a large fix to `/plan` off that report; small fixes go straight in test-first.
+  Record each finding's resolution, rerun verification, and re-review the affected axis
+  before closing. The report's advisory refactoring items are a separate follow-up, not
+  a merge condition.
 - Same shape as the debug loop: a durable diagnosis artifact drives the fix.
 
 `/adversarial-review` is the lighter in-session variant — findings relayed live,
