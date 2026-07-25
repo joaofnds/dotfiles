@@ -115,17 +115,22 @@ examined as support, not as review targets.
 
 ## The three gates
 
-Every finding clears all three, or you drop it before reporting. One gate-failing finding
-makes the entire run a failure. Precision outranks recall: a missed smell is tolerable, a
-bogus one is not — noise gets the whole report skimmed and the good findings die with it.
+Every finding clears all three, or you drop it before reporting: a finding that fails a
+gate is an impression, a coverage-chase, or a house-rule violation — not a small finding.
+One gate-failing finding makes the entire run a failure.
+
+Report everything that *does* clear them, ranked worst-first. Severity ordering is the
+caller's filter, not yours, and a finding you withheld is one they never got to weigh.
+Volume is bounded by aggregation, not by withholding: one smell across forty sites is a
+single finding with a site list and a count.
 
 1. **Evidence, not impression.** Cite `file:line`. For a suite-wide smell, the full site
    list. "This test is unclear" with no named reason is not a finding.
 2. **Name the pillar lost, and price the fix.** Khorikov's four: protection against
    regressions, resistance to refactoring, fast feedback, maintainability. State which
    pillar the current test forfeits *and* which the fix buys back. "Maintainability" alone
-   never clears this gate — if the only cost is a reader's mild friction and the fix is a
-   rename, it is nit-grade: drop it, or fold it into an aggregated Minor with a site list.
+   clears this gate only as an aggregated entry with a site list — a lone rename whose
+   only cost is a reader's mild friction does not earn a finding of its own.
    A test low on protection *and* resistance is noise — say "delete it" at Major rather
    than proposing repairs.
 3. **House rules outrank the books** (above).
@@ -177,8 +182,8 @@ Never recommend one for a line, a branch, a percentage, or a private method.
 - **Minor** — friction on the next reader or the next change: naming, AAA structure,
   Eager Test, Obscure Test, Free Ride, Assertion Roulette, Hard-Coded Test Data, Trivial
   Test, an assertion style weaker than the situation allows.
-- **Nit** — never used. A nit-grade observation fails gate 2 and must not reach the
-  report. A systematic nit-grade violation becomes one aggregated Minor instead.
+- **Nit** — cost bounded to the next reader's friction. Report these aggregated: one entry
+  with a site list, never one per site.
 - **`[correctness]` Blocker** — a production defect encountered while reading the subject:
   wrong output, broken contract. Report it even though it names no test smell; a real bug
   outranks the mandate. Exempt from the naming and pillar rules.
