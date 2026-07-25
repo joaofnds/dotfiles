@@ -6,14 +6,14 @@ description: >
   transcript cold and proposes grounded improvement diffs. Invoke at the END of a
   session: "kaizen", "retro on this process", "how could this skill/agent/rule be
   better". Skip mid-task (no evidence yet). Improving the work product itself →
-  /adversarial-review or /code-review, not this.
+  /adversarial-review, or the code-reviewer agent, not this.
 metadata:
   trigger: A session that exercised skills/agents/rules just finished; you want grounded, low-bias improvements to those instruction artifacts
 ---
 
 # Kaizen — Retro on the Instructions You Used
 
-**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; improving the work product itself rather than the process → `/adversarial-review` or `/code-review`.
+**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; improving the work product itself rather than the process → `/adversarial-review`, or spawn the `code-reviewer` agent.
 
 **You are a neutral witness; a fresh critic is the judge.** The move you're tempted to
 make — ask the agent that just ran the session "what would you change?" — is the least
@@ -32,8 +32,10 @@ The instruction artifacts *actually exercised* this session:
 - **Rule files** — include only when the session actually routed or loaded them and
   concrete friction traces to them. Critiquing every standing rule is busywork.
 
-Collect their real paths (`~/.agents/skills/*/SKILL.md`, `~/.agents/agents/*.md`,
-`~/.agents/rules/*.md`, `~/.agents/AGENTS.md`, and project instruction files). No target
+Collect their real paths **in the chezmoi source tree** — `~/code/dotfiles/dot_agents/`
+(`skills/*/SKILL.md`, `agents/*.md`, `rules/*.md`, `AGENTS.md`) plus project instruction
+files. That tree is what the critic reads, quotes, and proposes against; the
+`~/.agents`→`~/.claude` copies are rendered output, named only to report drift. No target
 means nothing to reflect on; say so and stop.
 
 ## Assemble the evidence — the critic reads it, you don't pre-digest it
@@ -65,7 +67,8 @@ One independent agent — `instructions-reviewer` if available (built for instru
 files), else a general agent carrying this brief. Send:
 
 - The transcript path (primary) and the friction-log index (supplementary).
-- The artifact paths plus `~/.agents/rules/continuous_improvement.md`, with: "Read each
+- The artifact paths plus `~/code/dotfiles/dot_agents/rules/continuous_improvement.md`
+  (source tree, same as the artifacts), with: "Read each
   file before making any claim about it."
 - The session goal in the user's terms, so it can judge whether an instruction helped or
   hindered reaching it.
@@ -101,10 +104,8 @@ Relay the critic's findings in its own words, worst first — including any that
 skill you like. Present each as a **proposed diff**; do not write the change. Leave
 applying to the user.
 
-Target the **source of truth**: instructions are chezmoi-managed in
-`~/code/dotfiles/dot_agents/` (`skills/`, `rules/`, `agents/`, `AGENTS.md`), not the
-`~/.agents`→`~/.claude` symlinked copies — a fix applied to the live copy is untracked
-and gets overwritten on the next `chezmoi apply`.
+Target the source tree the critic already read: a fix applied to the live `~/.agents` copy
+is untracked and gets overwritten on the next `chezmoi apply`.
 
 If you have a response, keep it in a separate section marked as yours, *after* the
 findings — never pre-argue a finding away.
