@@ -99,7 +99,8 @@ Always-on risks, not edge cases:
 - **Hallucinated symbols.** Confidently referenced functions, fields, flags, packages that don't exist. Grep before you trust.
 - **Plausible-but-wrong code.** Compiles, reads well, does the wrong thing. Runtime behavior needs execution evidence; types, static analysis, and review supply different evidence.
 - **Context drift.** Earlier constraints fade as the conversation grows. Re-read rules when claiming done, not only at the start.
-- **Fabricated verification.** "Tests pass" without running. Only tool output counts — and another agent's prose is not tool output. A sub-agent's report is a *claim* to verify, not evidence; its statements about its own prompt or the harness are unobservable from inside and carry no weight without a probe you ran.
+- **Fabricated verification.** "Tests pass" without running. Only tool output counts.
+- **Borrowed authority.** Another agent's prose is not tool output. A sub-agent's report is a *claim* to verify, not evidence; its statements about its own prompt or the harness are unobservable from inside and carry no weight without a probe you ran.
 - **Narrative continuity over correctness.** Confident summary that matches the conversation's direction even when the work diverged. The diff is truth.
 
 Assume these are happening right now. Verify against them specifically.
