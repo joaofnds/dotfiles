@@ -81,8 +81,10 @@ var (
   been drawn yet.
 - **Type assertions use the comma-ok form.** `v, ok := x.(T)`, never bare `v := x.(T)` — the
   bare form panics at runtime on the wrong dynamic type. A type switch is the multi-case
-  spelling. This is the escape hatch `coding_style.md` §1 means in Go; `any` is not one — it is
-  the current spelling of `interface{}`, mandatory in constraints, and governed by §5.
+  spelling. **The bare form is the escape hatch** `coding_style.md` §1 means in Go; the checked
+  forms are this language's `instanceof` and are the sanctioned move. `any` is not an escape
+  hatch at all — it is the current spelling of `interface{}`, required only for a genuinely
+  unconstrained type parameter, and governed by §5.
 
 ## 7. Naming Conventions
 

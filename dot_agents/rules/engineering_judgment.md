@@ -48,7 +48,7 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 
 - **Design for failure.** Bound remote and blocking operations with deadlines or cancellation. Retry only operations proven safe to repeat, within an explicit attempt or time budget. Add circuit breakers and bulkheads for demonstrated propagation risks. *(See: Release It! / Nygard)*
 - **Cascading failures are the default.** Trace how dependency failure propagates and place barriers where the service's failure modes justify them.
-- **Define what "reliable enough" means for production services.** SLOs and error budgets make the velocity-versus-stability decision explicit. *(See: SRE book, golden-signals)*
+- **Define what "reliable enough" means for production services.** SLOs and error budgets make the velocity-versus-stability decision explicit. *(See: SRE book, the-four-golden-signals-lets)*
 - **Optimize for recovery, not prevention.** Use rollback, canaries, or feature flags when the deployment context benefits from them. MTTR usually matters more than MTBF. *(See: dora-accelerate-metrics)*
 - **Eliminate toil.** Manual repetitive work doesn't scale; treat it as a bug to file, track, and remove. *(See: SRE book)*
 - **Deployability is a design constraint.** Every accepted change should remain safe to deploy through the project's one documented route. Deployable means the pipeline has no work left; releasing or exposing the feature is a separate product decision. Scary deploys create bigger batches and higher risk. *(See: continuous-delivery, small-steps-fast-feedback)*

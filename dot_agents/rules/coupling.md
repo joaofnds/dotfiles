@@ -100,18 +100,18 @@ Coarser than a refactoring catalog; they change shape, not just structure.
 Design is only one of the two tools; the other is **speed of feedback**. Strong
 coupling plus slow feedback is the one combination that never works — teams
 drift into it by deploying pieces independently that still share state, schemas,
-and concepts. *(See: continuous-integration.)*
+and concepts. *(See: continuous-integration)*
 
 ## Resolutions below the module boundary
 
 The same axis at a finer grain. A loosely coupled service diagram doesn't help
 if the objects inside ask each other questions instead of telling each other
 what to do — Tell, Don't Ask and the Law of Demeter, `coding_style.md` §3.
-*(See: law-of-demeter, simplicity-vs-ease.)*
+*(See: law-of-demeter, simplicity-vs-ease)*
 
 Ordering and concurrency assumptions are not in Nygard's spatial taxonomy: name
 them **temporal coupling** when the assumption is "do this, then always that."
-*(See: temporal-coupling.)*
+*(See: temporal-coupling)*
 
 ## Boundaries with other reviewers
 

@@ -18,7 +18,7 @@ default branch; this overrides that — commit where you are, or ask.
 
 **The announcements here are main-conversation output.** A sub-agent inherits this file but
 answers to its own system prompt: it emits no announcement, no `Decision:` block, and no
-English coaching. From the table below it takes only the rows its own mandate names — a
+English coaching. From the phase list below it takes only the entries its own mandate names — a
 sub-agent writing code still reads `coding_style.md`; a reviewer with its own doctrine reads
 what its prompt names and nothing else.
 

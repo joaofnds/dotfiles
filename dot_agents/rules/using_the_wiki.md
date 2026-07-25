@@ -25,7 +25,7 @@ qmd query "<topic or question>" -c wiki
 Defaults to 5 results; `-n 10` for more, `--full` for whole documents instead of snippets.
 
 Variants:
-- `qmd search "<exact term>" -c wiki` — when you know the phrase, and to resolve a `(See: some-slug)` citation to its path. The slugs those citations use are kebab-cased titles, not paths: `anemic-domain-model` → `pages/Anemic-Domain-Model.md`.
+- `qmd search "<exact term>" -c wiki` — when you know the phrase, and to resolve a `(See: some-slug)` citation to its path. The slugs those citations use are kebab-cased titles, not paths: `anemic-domain-model` → `pages/Anemic-Domain-Model.md`. Some citations name a book instead (`(See: DDIA / Kleppmann)`) and have no filename to derive — use `qmd query` and pick the page from the results. A citation names a topic; it does not promise a path.
 - `qmd get pages/<Title-Case-Name>.md` — the whole page, once you have the path
 - `qmd ls wiki` — the file listing, optionally scoped (`qmd ls wiki/raw`). `qmd collection list` prints collection names and a file count, not files.
 
