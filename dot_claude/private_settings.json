@@ -42,15 +42,9 @@
     "fewer-permission-prompts": "user-invocable-only",
     "deep-research": "name-only",
     "claude-api": "name-only",
-
-    // Bundled skills re-enabled 2026-07-25 to get /code-review back
-    // (disableBundledSkills is all-or-nothing). Suppressed per skill here.
-    // The three review commands stay typable but cost zero dispatch context:
-    // the corpus recommends them to the user and never routes to them.
     "code-review": "user-invocable-only",
     "review": "user-invocable-only",
     "security-review": "user-invocable-only",
-
     "dataviz": "off",
     "update-config": "off",
     "simplify": "off",
