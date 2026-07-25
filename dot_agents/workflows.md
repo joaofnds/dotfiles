@@ -122,7 +122,7 @@ feeds back into the build loop.
 /panel-review → .boris/reviews/*.md → fix or /plan → /build → /verify → targeted re-review → learn
 ```
 
-- **/panel-review** — four verdict axes plus a refactoring track (five reviewers), one
+- **/panel-review** — five verdict axes plus a refactoring track (six reviewers), one
   adversarial kill step, one self-contained report under `.boris/reviews/`. Explicitly
   hand a large fix to `/plan` off that report; small fixes go straight in test-first.
   Record each finding's resolution, rerun verification, and re-review the affected axis

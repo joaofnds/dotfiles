@@ -1,18 +1,18 @@
 ---
 name: panel-review
 description: >
-  Run a four-axis panel review of a completed change — code style,
-  architecture, spec conformance, security — with parallel specialist
+  Run a five-axis panel review of a completed change — code style,
+  architecture, spec conformance, security, testing — with parallel specialist
   reviewers, adversarial verification of major findings, and a
   self-contained fix report written to .boris/reviews/. Invoke on "panel
   review", "full review", "review this across all axes", or when a substantial
   unit of work needs a thorough pre-merge check. Skip for small plan-step
   reviews — spawn the code-reviewer agent directly. Skip for a single-axis
   check — the narrower built-in (/security-review, /code-review) is cheaper;
-  panel-review is for all four axes plus the refactoring track, the kill step,
+  panel-review is for all five axes plus the refactoring track, the kill step,
   and a durable report. Work built THIS session is fine to panel-review;
   /adversarial-review is the lighter single-reviewer check for work that
-  doesn't warrant four axes.
+  doesn't warrant five axes.
 metadata:
   trigger: A substantial completed change needs a thorough multi-axis review producing a durable fix report
 ---
@@ -21,7 +21,7 @@ metadata:
 
 **Wrong skill if:** reviewing a small plan step → spawn the `code-reviewer` agent directly; a single axis → `/code-review` or `/security-review`; a lighter one-reviewer check of this session's work → `/adversarial-review`.
 
-Four verdict axes plus a refactoring track — five reviewers in parallel — one
+Five verdict axes plus a refactoring track — six reviewers in parallel — one
 adversarial kill step, one report a fresh session can fix from. You are the
 orchestrator: you build the briefs, arbitrate the findings, and write the
 report — you don't review the code yourself.
@@ -45,15 +45,20 @@ missing — never invent it:
 
 ## 2. Fan out — one parallel batch
 
-Spawn five agents **in a single message** so they run concurrently: four
-`code-reviewer` agents, one per axis, and one `refactoring-reviewer`. Each
-code-reviewer gets the same shared context plus one axis mandate.
+Spawn six agents **in a single message** so they run concurrently — five when
+the diff touches no test file: four `code-reviewer` agents, one per axis; one
+`testing-reviewer`, the fifth verdict axis; and one `refactoring-reviewer`, the
+advisory track. Each code-reviewer gets the same shared context plus one axis
+mandate.
 
 Shared context, identical for the four code-reviewers:
 
 > Patch: `<readable patch path>`. Changed files: `<paths>`. Spec: `<path>`.
 > Verification is orchestrator-owned; this mandate waives code-reviewer input 3.
 > Do not run tests or block on withheld suite output. Return a static axis verdict.
+> Test files belong to the testing reviewer: review production code only, and
+> skip loading `~/.agents/rules/testing/` — that axis owns it. A `[correctness]`
+> defect you spot in a test file is still yours to report, tagged.
 > Correctness is every reviewer's floor: keep a concrete wrong-output
 > defect even when it's outside your lens, tagged `[correctness]`. This brief
 > deliberately contains no assessment of the work — form your own from the
@@ -96,23 +101,37 @@ Axis mandates — pass one per reviewer:
   by requirement: is it actually implemented — behavior present, not merely
   code existing? Is anything built that no requirement asks for? Is this the
   simplest thing that satisfies the spec? Cite the spec clause in every
-  finding."
+  finding. When the diff adds or changes behavior with no test movement, say so
+  and name the requirement left unpinned — a Minor unless a spec clause requires
+  the coverage."
 - **Security** — "Review mandate: security only. Vulnerabilities and
   exploitable defects: injection, authn/authz gaps, unsafe handling of
   external input, secrets exposure, plausible-but-wrong logic an attacker can
   reach. Every finding needs a concrete attack path — input → effect. No
   'consider hardening X' without one."
 
-The fifth agent is `refactoring-reviewer` — a track, not an axis. It takes no
-mandate and no spec; its brief is its own diff-seed input shape:
+Both specialists take a diff-seed brief and no mandate or spec; each follows its
+own input rules for scope. One block, passed to each:
 
 > Diff seed: patch at `<readable patch path>`. Changed files: `<paths>`. Review
-> those files and one hop out, per your input rules. This brief deliberately
+> per your input rules. Structure inside test files belongs to the testing axis
+> — refactoring findings are production code only. This brief deliberately
 > contains no assessment of the work.
+
+`testing-reviewer` is the fifth **verdict axis** — a defective test in the patch
+is a defect, not debt. Skip it entirely when the diff touches no test file, and
+record that in the report header.
+
+`refactoring-reviewer` is a track, not an axis.
+
+You apply the revert test to both agents' findings yourself (§3) — neither is
+told to self-classify, because both describe themselves as advisory in their own
+sense and would read the instruction as vacuous.
 
 ## 3. Arbitrate
 
-Union the four axis result sets, then:
+Union the axis result sets — five, or four when the testing axis was skipped —
+then:
 
 - **Dedup** findings hitting the same `file:line`; keep the strongest
   framing, note both axes.
@@ -131,9 +150,10 @@ Union the four axis result sets, then:
 
 ### Verdict-bearing or advisory
 
-The refactoring track produces both, and its severity measures friction cost,
-not defect severity — so provenance, not severity, decides what can block a
-merge. Apply the revert test to each of its findings, with the patch in hand:
+The refactoring track and the testing axis both produce findings of either kind.
+Refactoring severity measures friction cost, not defect severity — so
+provenance, not severity, decides what can block a merge. Apply the revert test
+to each such finding, with the patch in hand:
 
 - **Verdict-bearing** — the finding's evidence would not stand with the patch
   reverted: the diff created the duplicated block, added a site to a cross-file
@@ -147,9 +167,16 @@ merge. Apply the revert test to each of its findings, with the patch in hand:
   read, or cross-file site lists rooted outside the diff. These go to the
   report's Structural opportunities section and never move the verdict.
 
-Coupling findings from the Architecture axis split the same way, by the same
-revert test — its mandate applies it, and advisory ones land in that section
-alongside the refactoring items.
+A test smell the patch introduced is verdict-bearing; one it merely read past is
+advisory and lands in that section alongside the refactoring items. Two
+exemptions from the revert test, both taking the third-class route below: a
+`[correctness]` Blocker from either specialist, and a testing **Blocker**, which
+claims false safety rather than friction — a test whose outcome is independent
+of the subject is reported at Blocker severity wherever it was found.
+
+A verdict-bearing testing Major moves the verdict to Pass with revisions. Unlike
+refactoring friction, a test the patch *introduced* that hides defects is a
+defect in the patch.
 
 A `[correctness]` Blocker is neither verdict-bearing nor advisory — a third
 class. Report it at Blocker severity wherever it was found; when it sits
@@ -169,19 +196,25 @@ one parallel batch, mandated to refute it:
 > handles it. If you can neither reproduce the failure nor positively
 > disprove it, return inconclusive — do not call it refuted.
 
-A verdict-bearing **refactoring** finding claims friction, not wrong output —
-that mandate has no purchase on it, so refute its evidence instead:
+A verdict-bearing **refactoring or test-smell** finding claims friction, not
+wrong output — that mandate has no purchase on it, so refute its evidence
+instead:
 
-> Try to refute this refactoring finding against the actual code — read the
-> code yourself, don't trust the claim: `<finding, with file:line, the smell,
-> and the claimed friction>`. Refuted means positive disproof of the smell
-> itself: the cited sites don't contain the pattern, or the blocks named as
-> duplicated encode different knowledge. An under-inclusive site list is not a
-> refutation — it understates the finding; return the missing sites. A wrong
-> test path, or a document under `~/.agents/rules/refactoring/catalog/` that
-> doesn't prescribe those mechanics, is a correction and not a refutation:
-> return the correct mechanics and keep the finding. If you can neither confirm
-> the evidence nor positively disprove it, return inconclusive.
+> Try to refute this finding against the actual code — read the code yourself,
+> don't trust the claim: `<finding, with file:line, the smell, and the claimed
+> friction>`. Refuted means positive disproof of the smell itself: the cited
+> sites don't contain the pattern, or the blocks named as duplicated encode
+> different knowledge. An under-inclusive site list is not a refutation — it
+> understates the finding; return the missing sites. A wrong test path, or a
+> cited document under `~/.agents/rules/refactoring/catalog/` or
+> `~/.agents/rules/testing/` that doesn't say what the finding claims, is a
+> correction and not a refutation: return the correct citation and keep the
+> finding. If you can neither confirm the evidence nor positively disprove it,
+> return inconclusive.
+
+Testing **Blockers** go to the standard mandate above, not this one — "the
+assertion's outcome is independent of the subject" is a claim about wrong
+output and is statically provable or disprovable.
 
 A coupling finding that turns on whether the coupled target is stable is yours
 to settle — one probe run once by you beats N skeptics re-deriving the same
@@ -220,13 +253,16 @@ finding block must be self-contained — a fresh session with zero context can f
 
 - **Patch:** <readable path> · **Spec:** <path>
 - **Test run:** `<cmd>` → <result plus the relevant failing output when red>
+- **Testing axis:** <ran | skipped — no test file in the diff>
 - **Verdict:** Pass / Pass with revisions / Fail
 - **Files examined:** <every file in the diff; flag any a reviewer skipped —
   the verdict is invalid while one is unexamined. List the refactoring
-  reviewer's one-hop and coverage-probe files separately under the advisory
-  section — they don't gate the verdict>
+  reviewer's one-hop and coverage-probe files, and the testing reviewer's
+  support files (harness, drivers, Fakes, production code read for
+  observability), separately under the advisory section — they don't gate the
+  verdict>
 
-## 1. [<Severity>] <one-line defect> — <axis, or "refactoring">
+## 1. [<Severity>] <one-line defect> — <axis, or "refactoring" for the track>
 
 - **Where:** `path:line`
 - **Why:** <rule broken / spec clause / attack path — the concrete failure,
@@ -244,6 +280,8 @@ finding block must be self-contained — a fresh session with zero context can f
   or the catalog document to open>
 - [<Severity>] <coupling type> — `path:line` — <why it isn't worth accepting,
   the stability evidence, and the coarse cure>
+- [<Severity>] <test smell> — `path:line` — <the rule broken, the pillar lost,
+  and the fix in the target's framework idiom>
 
 ## Dropped by verification
 
