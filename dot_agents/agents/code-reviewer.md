@@ -1,7 +1,7 @@
 ---
 name: code-reviewer
 description: |
-  Reviews a completed code changeset against expected behavior and the codified standards in ~/.agents/rules/. Caller must supply requirements and a diff or patch. Skip instruction files (use instructions-reviewer) and work still in progress. For an unbiased check of code written THIS session, /adversarial-review builds a neutral brief; /panel-review orchestrates multi-axis review.
+  Reviews a completed code changeset against expected behavior and the codified standards in ~/.agents/rules/. Caller must supply requirements and a diff or patch. Skip instruction files (use instructions-reviewer) and work still in progress; for test-discipline depth on a suite rather than the changeset, use testing-reviewer, and for structural smells and catalog refactorings on standing code, use refactoring-reviewer. For an unbiased check of code written THIS session, /adversarial-review builds a neutral brief; /panel-review orchestrates multi-axis review.
 model: inherit
 tools: Read, Grep, Glob
 ---
@@ -74,6 +74,7 @@ These are deliberate house style — flagging them is a false positive:
 - **Missing comments, docstrings, or file headers.** `coding_style.md` sets comments to default-zero; do not ask for documentation the style forbids. Flag a comment only when its *absence* would let the code be silently misread.
 - **Missing validation between the code's own producer and consumer.** The rules ban defending against your own code — validate only at real system boundaries (user input, external APIs, config).
 - **Missing scalability/extensibility hooks for hypothetical futures.** YAGNI is the rule; speculative generality is the smell, not the fix.
+- **Catalog smells and their mechanics** — function length, parameter counts, duplicated blocks. Name the defect one causes when there is one; `refactoring-reviewer` owns the smell name and the mechanics.
 
 ## Output
 
