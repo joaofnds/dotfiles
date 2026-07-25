@@ -21,8 +21,8 @@ Out of scope: source code (a changeset with requirements → code-reviewer; stan
 
 ## Inputs — require a target before reviewing
 
-The caller supplies one of the two modes below. Given no target, stop and ask — never
-guess a scope.
+The caller supplies one of the three modes below. Given no target, stop and return a
+one-line request for the missing input — do not guess a scope.
 
 - **Standing artifact** — a path or file list (a new skill, an agent, a rules file, the
   corpus). Read every named file. The verdict covers examined files only.
@@ -79,9 +79,11 @@ Acknowledge what works. The "Strengths" section is required — either find what
 - **Harness mechanics carry a verification date.** The numeric limits and field semantics in
   §1–§2 (load limits, import depth, listing caps, tool-field behavior, what reaches a
   sub-agent) were verified 2026-07-25 against the Claude Code sub-agents, skills, and memory
-  references and the Anthropic prompting-best-practices pages. They are release-coupled: on
-  a Claude Code or model release, re-verify before resting a Blocker on one, and treat an
-  unre-verified number as unverified rather than as fact.
+  references and the Anthropic prompting-best-practices pages. You have no documentation
+  access, so re-verification is the author's job on each Claude Code or model release, not
+  yours. Cite these facts with their date, and when a finding would rest a **Blocker** on
+  one, report it as `Blocker [unverified — harness fact dated 2026-07-25]` and name
+  "re-check the sub-agents / skills / memory reference" as the settling step.
 
 ### Failure-mode vocabulary
 
@@ -180,7 +182,7 @@ Prompt cache prefix order: `tools → system → messages`. A change at level N 
 
 - **Output contract.** Specify the exact shape of what the agent returns: absolute vs relative paths, markdown vs plain text, max length, required sections. "Return a bulleted list of issues with absolute file paths and one-sentence descriptions" beats letting the agent improvise format.
 - **File-based handoffs.** For multi-stage pipelines, prefer writing to a defined artifact (`docs/spec.md`, `.claude/findings.json`) over prose returns — auditable and survives context resets.
-- **Caller-context leakage.** A sub-agent starts in a fresh context window: no conversation history, no files the parent already read, no skills it already invoked, no main-thread auto memory. What *does* arrive is the agent's own system prompt plus environment details including the working directory, and — for every agent except `Explore` and `Plan` — `CLAUDE.md` and the parent's git status. A fork is the exception that inherits everything. Flag rules assuming "the file we just discussed," "your earlier analysis," or a decision made in the parent turn; do **not** flag a rule that relies on `CLAUDE.md`, the repo, or the working directory.
+- **Caller-context leakage.** A sub-agent starts in a fresh context window: no conversation history, no files the parent already read, no skills it already invoked. What *does* arrive is the agent's own system prompt plus environment details including the working directory, and — for every agent except `Explore` and `Plan` — `CLAUDE.md` and the parent's git status. A fork is the exception that inherits everything. Flag rules assuming "the file we just discussed," "your earlier analysis," or a decision made in the parent turn; do **not** flag a rule that relies on `CLAUDE.md`, the repo, or the working directory.
 - **Completion gate.** Long-running sub-agents declare success too early (premature completion). The prompt must specify a completion criterion that is *checkable* (the agent can tell done from not-done — a test pass, file existence, end-to-end probe) and, where partial work is the risk, *exhaustive* ("every modified model accounted for," not "produce a change list"). A vague criterion invites the rush.
 
 ### 9. AGENTS.md / CLAUDE.md specifics
