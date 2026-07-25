@@ -13,15 +13,15 @@ one consumes. These docs live under `.boris/plans/` at the repo root (reviews un
 (via `core.excludesFile`), so workflow artifacts are intended to remain untracked.
 
 ```
-(chat) → /discuss → /research → /grill → /plan → /build → /verify → review → deploy → release → observe → learn
-          spec.md    options.md   pick+harden  plan.md   execute    red/green                                 feedback
+(chat) → /discuss → /research → /grill → /plan → /build → verify → review → deploy → release → observe → learn
+          spec.md    options.md   pick+harden  plan.md   execute   red/green                                 feedback
 ```
 
 If `.boris/CONTEXT.md` exists, read it before producing any loop artifact — it holds
 the project's domain language (`/discuss` maintains it).
 
 Human judgment is heaviest at the two ends — *what to build* (`/discuss`, `/grill`)
-and *did it actually work* (`/verify`, `review`) — and lightest in the mechanical
+and *did it actually work* (`verify`, `review`) — and lightest in the mechanical
 middle. The arrows also run backward: a broken plan assumption or a review finding
 re-enters an earlier stage rather than pushing through.
 
@@ -42,13 +42,16 @@ re-enters an earlier stage rather than pushing through.
   assumption fails, record the discrepancy and route back to `/grill` (re-pick) or
   `/plan` (re-sequence). Minor path or sequencing corrections may continue when they do
   not change scope, behavior, or approach; record them in the plan.
-- **/verify** — when available, drive the change end-to-end and watch it behave. Otherwise
-  execute the plan's acceptance-criterion checks directly. `/build` is not done until
-  every criterion has execution evidence. Prose review is not runtime verification.
+- **verify** — execute the plan's acceptance-criterion checks and capture the raw output.
+  `/build` is not done until every criterion has execution evidence; prose review is not
+  runtime verification. The bundled `/verify` drives the running app end-to-end but is
+  user-invoked only — when runtime behavior is what settles a criterion, stop and ask for it.
 - **review** — name its purpose: correctness, architecture, security, or knowledge
   sharing. Review is a feedback channel, not a late quality phase: keep changes small and
   use `/adversarial-review` for this session's work; reserve `/panel-review` for a
-  substantial unit. Runtime evidence remains the first line of defense.
+  substantial unit. Runtime evidence remains the first line of defense. The narrower
+  built-ins — `/code-review`, `/security-review`, `/review` — are user-invoked only:
+  recommend one, never route to it.
 - **deploy** — use the project's one documented pipeline, rollback path, and change
   controls. A verified change should be deployable with no hidden testing or sign-off
   work remaining. Never invent or execute a production command without authorization.
@@ -73,7 +76,7 @@ visual direction. `/plan` records that direction and `/build` implements it with
 skill's design guidance active:
 
 ```
-/grill → /frontend-design → /plan → /build → /verify → /panel-review → learn
+/grill → /frontend-design → /plan → /build → verify → /panel-review → learn
 ```
 
 Decision points:
@@ -92,7 +95,7 @@ Decision points:
 Investigating a failure.
 
 ```
-/debug → [/diagnose for cross-session work] → (/grill when remedy is open) → /plan → /build → /verify → review → learn
+/debug → [/diagnose for cross-session work] → (/grill when remedy is open) → /plan → /build → verify → review → learn
 ```
 
 - **/debug** — live investigation: build a red-capable repro, hold competing
@@ -119,7 +122,7 @@ A heavy review doesn't just report — it produces a durable fix artifact that
 feeds back into the build loop.
 
 ```
-/panel-review → .boris/reviews/*.md → fix or /plan → /build → /verify → targeted re-review → learn
+/panel-review → .boris/reviews/*.md → fix or /plan → /build → verify → targeted re-review → learn
 ```
 
 - **/panel-review** — five verdict axes plus a refactoring track (six reviewers), one

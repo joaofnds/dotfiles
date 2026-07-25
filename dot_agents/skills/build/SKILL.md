@@ -7,8 +7,6 @@ description: >
   "resume", "pick up where we left off". Takes the plan path as an argument; if
   none is given, list the plan files in .boris/plans/ (those without a
   -spec/-options/-grilled/-diagnosis suffix) and ask which one.
-metadata:
-  trigger: A /plan implementation plan file exists and the user wants it executed in this session
 argument-hint: "Path to the .boris/plans/ plan file"
 ---
 
@@ -30,7 +28,7 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
    Every iteration produces visible evidence: the red output before the change, the green (or deeper-red) output after. Writing the task's code first and backfilling tests is the exact failure this loop exists to prevent — if you catch yourself doing it, stop and restart the task from the failing test. A task with no runtime-observable behavior (config, docs, tooling) skips the loop; its own confirmation step is the verification.
 5. **Run the testing strategy once every task is checked.** Use the exact test command the plan names. Steps 5–7 run once, at the end — not per task.
 6. **Refactor pass on green.** Reread the diff and remove complexity, duplication, or poor naming introduced or exposed by this change when the present benefit is demonstrated. Do not add future-facing abstractions. Rerun affected tests.
-7. **Verify before declaring done.** Use `/verify` when available, handing it the spec. Otherwise execute every acceptance-criterion check from the plan and capture observed output. If any criterion lacks evidence or fails, the build is not done.
+7. **Verify before declaring done.** Execute every acceptance-criterion check from the plan and capture the observed output. If any criterion lacks evidence or fails, the build is not done. When runtime behavior is what settles a criterion and no check reaches it, stop and ask the user to run `/verify` against the spec — it is user-invoked only.
 
 ## Rules
 
