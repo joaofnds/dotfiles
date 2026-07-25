@@ -20,11 +20,6 @@ separate concern (personal/per-machine, not this repo).
   hatch.** For macOS settings, use `system.defaults.<domain>.<key>` when
   nix-darwin models it (see `modules/system/defaults/` upstream); fall back to
   `CustomUserPreferences` only for unmodeled keys, with a comment noting why.
-- **`settings.json` is strict JSON — no comments.** Claude Code skips a malformed
-  settings file *entirely*, so one `//` line disables every setting in it, not just the
-  commented block. Validate with a parser that does not pre-strip anything
-  (`python3 -c "import json; json.load(open(f))"`), never with one you wrote alongside
-  the change.
 - **`CLAUDE.md` (and `GEMINI.md`) are always symlinks to `AGENTS.md`** — one
   instruction source per scope, never per-tool forks (a fork is a mirror that
   will drift; reverted one 2026-07-16).

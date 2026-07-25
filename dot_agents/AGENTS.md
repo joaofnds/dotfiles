@@ -34,7 +34,7 @@ advance. Then correct the user's English when needed and continue.
 
 Required reads by phase:
 
-- **Editing any file** — code, config, data, or instruction artifacts → `coding_style.md` (§1 governs every edit, not only source) plus the matching language file when one exists
+- **Coding** → `coding_style.md` plus the matching language file when one exists
 - **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md` (gatekeeper: routes to sub-modules, holds the pre-commit checklist)
 - **Design / problem analysis** → `engineering_judgment.md`; if it cues a wiki lookup, read `using_the_wiki.md`
