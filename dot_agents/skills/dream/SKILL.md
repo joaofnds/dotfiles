@@ -7,8 +7,6 @@ description: >
   MEMORY.md index. Invoke when the store has grown noisy or repetitive, or for
   periodic cleanup: "dream", "consolidate memory", "clean up project memory".
   Not for authoring new memories or improving skills/rules — that's kaizen.
-metadata:
-  trigger: The per-project memory/ store has accumulated duplicates, contradictions, or stale notes and you want a reviewed cleanup
 argument-hint: "[--auto]"
 ---
 
@@ -16,8 +14,8 @@ argument-hint: "[--auto]"
 
 **Wrong skill if:** you want to *create* memories from a session (that's the memory
 tool doing its normal job); you want to improve skills/agents/rules → `/kaizen`; you
-want to review a code change → `/adversarial-review` or `/code-review`. Dream only
-reorganizes an *existing* store.
+want to review a code change → `/adversarial-review`, or the `code-reviewer` agent.
+Dream only reorganizes an *existing* store.
 
 The store you consolidate is Claude Code's native memory: per-project markdown notes
 under `$CLAUDE_CONFIG_DIR/projects/<slug>/memory/` (default `~/.claude/projects/…` when the
@@ -42,7 +40,7 @@ It is a pointer list, not a content store.
 
 **Model:** consolidation is dedup-and-contradiction *judgment*, not a speed task. If you
 spawn this as a background/subagent pass, run that subagent on the most capable reasoning
-model available at high reasoning effort — currently **Opus 4.8, high effort**.
+model available, at `high` effort or above.
 
 **IMPORTANT: Execute the phases strictly in order (1 → 2 → 3 → 4 → 5). Each depends on the
 previous. Do not modify or delete any note before Phase 4** (the Phase 1 backup is the only
