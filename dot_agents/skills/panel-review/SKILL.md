@@ -74,12 +74,21 @@ Axis mandates — pass one per reviewer:
   Architecture, spec, and security findings belong to other reviewers — drop
   them."
 - **Architecture** — "Review mandate: architecture only. Load
-  `~/.agents/rules/engineering_judgment.md` (§2–3) and the applicable baseline
-  coding rules. Module level: boundaries,
+  `~/.agents/rules/engineering_judgment.md` (§2–3), `~/.agents/rules/coupling.md`,
+  and the applicable baseline coding rules. Module level: boundaries,
   dependency direction, interfaces at the seams, coupling to other modules,
   orthogonality (one change, one place), structural over-abstraction. You own
   over-engineering as a structural question; simplicity relative to the spec
-  belongs to the spec reviewer."
+  belongs to the spec reviewer. Sweep all five of Nygard's coupling types
+  against the change, then report only those that are defects under
+  `coupling.md`'s stability test and its Boundaries section — a type that isn't
+  present goes unmentioned; do not enumerate absences. Name each by its type
+  verbatim. Apply the revert test to every coupling finding: if the evidence
+  stands with the patch reverted, mark it advisory — it does not move the
+  verdict. Only coupling the patch introduced or measurably worsened is
+  verdict-bearing. When a finding turns on
+  whether a dependency is stable, say so and ask for the change-history probe
+  rather than assuming — you have no command execution."
 - **Spec** — "Review mandate: spec conformance only. Read the spec at
    `<path>` — and the grilled design doc at `<path>`, when one exists; an
    implementation decision or spec-authorized deferral recorded there is not a miss
@@ -136,7 +145,11 @@ merge. Apply the revert test to each of its findings, with the patch in hand:
 - **Advisory** — the finding survives reverting the patch, even when the cited
   lines sit inside it: pre-existing debt reached through the one-hop outward
   read, or cross-file site lists rooted outside the diff. These go to the
-  report's Refactoring opportunities section and never move the verdict.
+  report's Structural opportunities section and never move the verdict.
+
+Coupling findings from the Architecture axis split the same way, by the same
+revert test — its mandate applies it, and advisory ones land in that section
+alongside the refactoring items.
 
 A `[correctness]` Blocker is neither verdict-bearing nor advisory — a third
 class. Report it at Blocker severity wherever it was found; when it sits
@@ -170,12 +183,30 @@ that mandate has no purchase on it, so refute its evidence instead:
 > return the correct mechanics and keep the finding. If you can neither confirm
 > the evidence nor positively disprove it, return inconclusive.
 
+A coupling finding that turns on whether the coupled target is stable is yours
+to settle — one probe run once by you beats N skeptics re-deriving the same
+history. Run it regardless of severity; it is the only thing separating a Minor
+coupling note from noise. In the repo the diff belongs to, run
+`git log --since='1 year ago' --oneline -- <path>` plus
+`git log --diff-filter=A --format=%ad -1 -- <path>` for the path's age. Three
+outcomes:
+
+- **Stable** — the path predates the window and changed in ≤2 commits within it:
+  the coupling is a design choice. Drop the finding, recording the commit count.
+- **Unstable** — more than that, or the path is younger than the window: keep
+  the finding at its stated severity and cite the count as evidence.
+- **Unprobeable** — the target is external (a protocol, a vendor API, another
+  repo) or the path resolves to no history: keep the finding with `[unverified]`
+  and state the stability assumption it rests on. An empty log is not evidence
+  of stability.
+
 A refuted finding is dropped from the findings list and recorded in the
 report footer — dropped, never silently vanished. An inconclusive finding
 stays in the report with `[unverified]` appended to its severity — silently
 dropping a real Blocker costs more than carrying a doubtful one. Minor/Nit
-findings and the whole advisory section skip verification; spot-check any you
-doubt yourself.
+findings and the whole advisory section skip verification — the stability probe
+above excepted, which runs on every coupling finding regardless of severity or
+provenance; spot-check any others you doubt yourself.
 
 ## 5. Report
 
@@ -206,25 +237,28 @@ finding block must be self-contained — a fresh session with zero context can f
   options, not full implementation>
 - **Verify:** <how to confirm the fix — test to run or add, behavior to observe>
 
-## Refactoring opportunities — advisory, outside the verdict
+## Structural opportunities — advisory, outside the verdict
 
 - [<Severity>] <smell> → <refactoring> — `path:line` (full site list for a
   cross-file smell) — <what improves and along which axis, plus the mechanics
   or the catalog document to open>
+- [<Severity>] <coupling type> — `path:line` — <why it isn't worth accepting,
+  the stability evidence, and the coarse cure>
 
 ## Dropped by verification
 
-- [<Severity>] `path:line` — <finding> — refuted: <one-line reason>
+- [<Severity>] `path:line` — <finding> — dropped (<refuted | stable target>):
+  <one-line reason, with the commit count when it's a stability drop>
 ```
 
 Order findings worst first. The verdict follows the surviving verdict-bearing findings:
 any untagged Blocker or failed required suite → Fail; Majors → Pass with revisions.
-Advisory refactoring items and `[pre-existing]`-tagged Blockers never move it.
+Advisory structural items and `[pre-existing]`-tagged Blockers never move it.
 
 ## 6. Recommend the next route
 
 Record a proposed disposition for every finding. Recommend `/plan` and `/build` for
-large fixes and a direct test-first fix for small ones. Advisory refactoring items are a
+large fixes and a direct test-first fix for small ones. Advisory structural items are a
 follow-up `/plan` candidate, never a merge condition — propose one only if the user wants
 the debt addressed. Do not modify source as part of panel review; return the report
 before remediation begins. After remediation, the owning session reruns the full suite
