@@ -55,7 +55,9 @@
     "update-config": "off",
     "simplify": "off",
     "run": "off",
-    "init": "off"
+    "init": "off",
+    "artifact-design": "off",
+    "artifact-capabilities": "off"
   },
 
   "statusLine": {
