@@ -49,9 +49,9 @@ re-enters an earlier stage rather than pushing through.
 - **review** — name its purpose: correctness, architecture, security, or knowledge
   sharing. Review is a feedback channel, not a late quality phase: keep changes small and
   use `/adversarial-review` for this session's work; reserve `/panel-review` for a
-  substantial unit. Runtime evidence remains the first line of defense. The narrower
-  built-ins — `/code-review`, `/security-review`, `/review` — are user-invoked only:
-  recommend one, never route to it.
+  substantial unit. Runtime evidence remains the first line of defense. `/code-review`
+  is user-invoked only — recommend it, never route to it; `/review` and
+  `/security-review` are reachable and may be invoked directly.
 - **deploy** — use the project's one documented pipeline, rollback path, and change
   controls. A verified change should be deployable with no hidden testing or sign-off
   work remaining. Never invent or execute a production command without authorization.
