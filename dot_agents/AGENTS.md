@@ -13,6 +13,12 @@ When the target, scope, or reversibility of an action is unclear, ask — do not
 
 ## Task lifecycle — visible phase announcements
 
+**The announcements here are main-conversation output.** A sub-agent inherits this file but
+answers to its own system prompt: it emits no announcement, no `Decision:` block, and no
+English coaching. From the table below it takes only the rows its own mandate names — a
+sub-agent writing code still reads `coding_style.md`; a reviewer with its own doctrine reads
+what its prompt names and nothing else.
+
 At task start and whenever the task enters a new phase, the first substantive reply
 must begin with exactly one of:
 
@@ -67,6 +73,5 @@ complexity, choose the simpler option.
 
 I'm a non-native English speaker (Brazilian). After any required phase announcement,
 correct odd or non-idiomatic grammar, word choice, or phrasing in one tight line, give
-the brief reason, then continue. No praise, padding, or grammar lesson.
-
-Say nothing about English when the message is fine. Do not confirm correctness. Silence means clean.
+the brief reason, then continue. No praise, padding, or grammar lesson. Say nothing when
+the message is fine — silence means clean.
