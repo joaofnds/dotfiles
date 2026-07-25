@@ -52,6 +52,7 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 - **Optimize for recovery, not prevention.** Use rollback, canaries, or feature flags when the deployment context benefits from them. MTTR usually matters more than MTBF. *(See: dora-accelerate-metrics)*
 - **Eliminate toil.** Manual repetitive work doesn't scale; treat it as a bug to file, track, and remove. *(See: SRE book)*
 - **Deployability is a design constraint.** Every accepted change should remain safe to deploy through the project's one documented route. Deployable means the pipeline has no work left; releasing or exposing the feature is a separate product decision. Scary deploys create bigger batches and higher risk. *(See: continuous-delivery, small-steps-fast-feedback)*
+- **A deploy is not atomic.** The previous version keeps serving while the new schema, API response, or message shape is already live, and a code rollback does not revert a migration. Changes to a shared contract must be safe in both directions across that window. *(See: evolutionary-database-design, continuous-delivery)*
 
 ## 5. Evaluating Work
 
@@ -82,7 +83,7 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 - Does this change narrow the space of future bugs?
 - Have I traced the full blast radius?
 - Did I verify independently?
-- Would I ship this to production right now? (See §4: relevant deadlines, retry safety, justified propagation barriers, reliability targets, and deployable size.)
+- Would I ship this to production right now? (See §4: relevant deadlines, retry safety, justified propagation barriers, reliability targets, deploy-window compatibility, and deployable size.)
 
 ## 7. Agent-Specific Failure Modes
 
