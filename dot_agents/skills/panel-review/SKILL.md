@@ -8,7 +8,8 @@ description: >
   review", "full review", "review this across all axes", or when a substantial
   unit of work needs a thorough pre-merge check. Skip for small plan-step
   reviews — spawn the code-reviewer agent directly. Skip for a single-axis
-  check — the narrower built-in (/security-review, /code-review) is cheaper;
+  check — recommend /security-review to the user (cheaper, and user-invoked
+  only), or spawn the code-reviewer agent yourself;
   panel-review is for all five axes plus the refactoring track, the kill step,
   and a durable report. Work built THIS session is fine to panel-review;
   /adversarial-review is the lighter single-reviewer check for work that
@@ -19,7 +20,7 @@ metadata:
 
 # Panel Review
 
-**Wrong skill if:** reviewing a small plan step → spawn the `code-reviewer` agent directly; a single axis → `/code-review` or `/security-review`; a lighter one-reviewer check of this session's work → `/adversarial-review`.
+**Wrong skill if:** reviewing a small plan step → spawn the `code-reviewer` agent directly; a single axis → recommend `/security-review` to the user (user-invoked only), or spawn `code-reviewer` yourself; a lighter one-reviewer check of this session's work → `/adversarial-review`.
 
 Five verdict axes plus a refactoring track — six reviewers in parallel — one
 adversarial kill step, one report a fresh session can fix from. You are the
