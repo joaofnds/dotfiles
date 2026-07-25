@@ -12,7 +12,7 @@
   "tui": "fullscreen",
   "theme": "auto",
 
-  "disableBundledSkills": true,
+  "disableBundledSkills": false,
   "disableWorkflows": true,
   "disableClaudeAiConnectors": true,
   "disableArtifact": true,
