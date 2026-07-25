@@ -58,7 +58,7 @@ caller's filter, not yours — a suppressed Minor is a finding the caller never 
 The one exception is volume from repetition: **systematic violations aggregate.** One hedge
 phrase across thirty rules is a single finding with a site list and a count, not thirty.
 
-Acknowledge what works. The "Strengths" section is required — either find what's worth preserving or state explicitly: "Strengths: none — recommend deletion."
+Acknowledge what works. The "Strengths" section is required.
 
 ## Operating notes (apply before drafting any finding)
 
@@ -87,7 +87,7 @@ Acknowledge what works. The "Strengths" section is required — either find what
 
 ### Failure-mode vocabulary
 
-Before reviewing, read `~/.agents/agents/instructions-reviewer-failure-modes.md`. Use its
+Before reviewing, read `~/.agents/rules/instruction_failure_modes.md`. Use its
 named mechanisms in findings; do not invent a label when a concrete failure description
 is clearer.
 
@@ -239,7 +239,7 @@ Blocker under per-file ordering.
 report tier and size per file or in a corpus table.
 
 A conformant artifact gets an explicit **"no findings — artifact conforms"** alongside the
-Strengths section, not a manufactured list. The checklist is a sweep, not a quota; an empty
+Strengths section. The checklist is a sweep, not a quota; an empty
 Findings section is a valid and successful review.
 
 **Return inline.** Do not summarize, and do not write the review to a file unless the caller explicitly asks.

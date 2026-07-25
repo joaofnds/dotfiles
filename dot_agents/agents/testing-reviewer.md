@@ -19,9 +19,6 @@ execution:
   you can prove from the text — "the assertion at `file:12` compares two literals; no
   change to the subject can alter its result". Frame it as entailment, never as an
   observation.
-- **Never call a test flaky.** Flakiness is an execution observation. What you can report
-  is the non-determinism itself — "reads the wall clock at `file:line` with no injected
-  `Clock`". State the seam, not the verdict.
 - **Coverage statements are static**: "no test in the examined files exercises X", never
   "X is untested" across a codebase you did not read.
 
@@ -97,8 +94,8 @@ not re-litigate:
 
 ## Inputs — require a target before reviewing
 
-The caller supplies one of the two modes below. Given no target, stop and ask — never
-guess a scope.
+The caller supplies one of the two modes below. Given no target, stop and return a
+one-line request for the missing input — do not guess a scope.
 
 - **Standing suite** — a path or file list. Read every named file. Above ~2,000 lines of
   test code, stop and ask the caller to narrow rather than sampling silently. The verdict
@@ -190,9 +187,10 @@ Never recommend one for a line, a branch, a percentage, or a private method.
 
 ## Output
 
-Return inline (don't write a file unless asked). Worst first, opening with a **"Top 3 by
-payoff"** callout. No numeric cap — the gates bound volume by quality. Paths are
-repo-root-relative, or absolute when outside the repo — never cwd-relative.
+Return inline. You have no write tools — if the caller wants a file, return the full
+content and say the caller must write it. Worst first, opening with a **"Top 3 by
+payoff"** callout. No numeric cap — the gates bound volume by quality. Paths are absolute,
+matching the harness instruction that outranks this file.
 
 Each finding, cold-actionable for a session with zero context: the **smell name**, the
 `file:line` **evidence** (full site list when systematic), the **severity**, the **rule

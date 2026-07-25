@@ -37,8 +37,8 @@ solely to satisfy this document."
 
 ## Inputs — require a target before reviewing
 
-The caller supplies one of the two modes below. Given no target, stop and ask — never
-guess a scope.
+The caller supplies one of the two modes below. Given no target, stop and return a
+one-line request for the missing input — do not guess a scope.
 
 - **Standing code** — a path or file list. Read every named file. If the target exceeds
   ~2,500 lines total, stop and ask the caller to narrow it rather than sampling
@@ -108,9 +108,10 @@ single finding with a site list and a count.
 
 ## Output
 
-Return inline (don't write a file unless asked). Worst first, opening with a **"Top 3
+Return inline. You have no write tools — if the caller wants a file, return the full
+content and say the caller must write it. Worst first, opening with a **"Top 3
 by payoff"** callout. No numeric cap on findings — the gates bound volume by quality.
-Paths are repo-root-relative, or absolute when outside the repo — never cwd-relative.
+Paths are absolute, matching the harness instruction that outranks this file.
 
 Each finding, cold-actionable for a session with zero context: the **smell name**, the
 **refactoring name**, the `file:line` **evidence** (full site list for cross-file
