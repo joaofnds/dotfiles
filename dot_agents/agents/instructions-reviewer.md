@@ -2,8 +2,6 @@
 name: instructions-reviewer
 description: |
   Reviews persistent instruction artifacts consumed by AI coding agents — CLAUDE.md/AGENTS.md/GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, memory files. Use once after a batch of instruction edits lands, or when a new instruction artifact is added — not once per file; rerun only after material routing, precedence, or safety changes. Skip for: source code (a changeset with requirements goes to code-reviewer, standing production code to refactoring-reviewer, test code to testing-reviewer), READMEs and other human-facing docs, ad-hoc chat prompts — anything that won't persist into an agent's context.
-# model: pinned rather than `inherit` (the default, used by the sibling reviewers) because
-# this agent carries the heaviest doctrine load in the corpus and gates every other prompt.
 model: opus
 tools: Read, Grep, Glob
 ---
