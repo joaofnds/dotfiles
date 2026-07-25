@@ -14,8 +14,6 @@ description: >
   and a durable report. Work built THIS session is fine to panel-review;
   /adversarial-review is the lighter single-reviewer check for work that
   doesn't warrant five axes.
-metadata:
-  trigger: A substantial completed change needs a thorough multi-axis review producing a durable fix report
 ---
 
 # Panel Review

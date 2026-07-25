@@ -6,8 +6,6 @@ description: >
   words. Invoke on "adversarial review", "red-team this", "unbiased second opinion on
   what I just did". For code you did NOT write (PR review, external audit), recommend
   /review or /code-review to the user instead — both are user-invoked only.
-metadata:
-  trigger: Work was just produced this session; you want an independent, unbiased check before trusting it
 ---
 
 # Adversarial Review

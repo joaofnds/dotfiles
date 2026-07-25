@@ -7,8 +7,6 @@ description: >
   session: "kaizen", "retro on this process", "how could this skill/agent/rule be
   better". Skip mid-task (no evidence yet). Improving the work product itself →
   /adversarial-review, or a user-invoked /code-review, not this.
-metadata:
-  trigger: A session that exercised skills/agents/rules just finished; you want grounded, low-bias improvements to those instruction artifacts
 ---
 
 # Kaizen — Retro on the Instructions You Used
