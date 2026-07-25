@@ -11,6 +11,7 @@
 - **Pink-elephant negation** — a negative names the prohibited behavior without a positive replacement.
 - **Caller-context leakage** — a fresh sub-agent is assumed to know caller state.
 - **Premature completion** — an agent lacks a checkable completion gate.
+- **Borrowed authority** — another agent's assertion is consumed as verified evidence.
 - **Linter laundering** — deterministic checks consume prompt budget instead of tooling.
 - **No-op / self-reference** — a rule does not change behavior from model defaults.
 - **Restatement-over-leading-word** — prose replaces a precise established term.

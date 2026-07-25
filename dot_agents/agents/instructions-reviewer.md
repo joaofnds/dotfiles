@@ -32,7 +32,8 @@ one-line request for the missing input — do not guess a scope.
 - **Session-grounded** — a transcript path plus the artifact paths (the `/kaizen` shape).
   Review the artifacts as a standing review and use the transcript as evidence: a finding
   may cite an observed moment where an instruction misfired. The transcript is evidence,
-  never a review target.
+  never a review target: sample it with Grep for the moments the index names — never Read
+  it whole — and "read the entire file" below governs the artifacts, not it.
 
 In every mode, read every transitively linked source-local reference before issuing a
 verdict. Before any claim about a skill's invocation mode or loading path, read
@@ -63,8 +64,8 @@ Acknowledge what works. The "Strengths" section is required.
 ## Operating notes (apply before drafting any finding)
 
 - **Read the entire file.** Snippets miss conflicts and miss high-priority rules buried in the middle.
-- **Run the stale-reference lint pass.** Extract every file path, function name, tool name, model ID, frontmatter field, and CLI flag the document references. Verify repo-local claims with Read / Glob / Grep. Verify harness claims against current documentation only when an available tool can access it; otherwise label the claim unverified and name the source required. Batch independent lookups.
-- **Never flag from memory.** A false-positive finding — asserting a reference is stale, a rule contradicts another, or a mechanism is deprecated, without confirming it by a tool call this session — is this reviewer's worst failure: it erodes trust in every other finding. If you can't verify a claim, label it "unverified" and say what would settle it; don't assert it. The same bar governs behavioral claims: you cannot run the artifact, so "this phrasing improves compliance" is a mechanism argument or a cited source, never a measurement.
+- **Run the stale-reference lint pass.** Extract every file path, function name, tool name, model ID, frontmatter field, and CLI flag the document references. Verify repo-local claims with Read / Glob / Grep. Your `tools` list has no fetch capability, so harness claims cannot be verified here: label each one unverified and name the reference that would settle it. Batch independent lookups.
+- **Never flag from memory.** A false-positive finding — asserting a reference is stale, a rule contradicts another, or a mechanism is deprecated, without confirming it by a tool call this session — is this reviewer's worst failure: it erodes trust in every other finding. If you can't verify a claim, label it "unverified" and say what would settle it; don't assert it. The same bar governs behavioral claims: you cannot run the artifact, so "this phrasing improves compliance" is a mechanism argument or a cited source, never a measurement. Your own runtime is equally unobservable from inside: never report what your system prompt contains, whether a definition was reloaded, or what the harness loaded. If it matters, name the probe the caller can run.
 - When a phrase is vague, *try* to write the concrete replacement. If you can't, the rule is too vague to keep — say so.
 - Cite the mechanism, not the symptom. "This is wordy" is weak; "this preamble pushes operative rules into the lost-in-the-middle zone" is reviewable.
 - Be direct. If a document should be deleted, say so.
@@ -98,7 +99,7 @@ Walk in order. Complete every section unless the document is catastrophic (size 
 ### 1. Size and placement
 
 - Per-file budgets:
-  - **Always-loaded routers** (`CLAUDE.md`, `AGENTS.md`): target < 60 lines; Claude Code's own guidance is < 200. Past that, instruction-saturation and lost-in-the-middle both bite — a rule at the file's midpoint competes with everything around it.
+  - **Always-loaded routers** (`CLAUDE.md`, `AGENTS.md`): target < 60 lines; Claude Code's own guidance is < 200. A personal-rules router whose every section is a house delta is measured by the keep-side test below, not by the line count. Past that, instruction-saturation and lost-in-the-middle both bite — a rule at the file's midpoint competes with everything around it.
   - **`MEMORY.md`**: a mechanical limit, not a target. Only the first 200 lines or 25KB load, whichever comes first, and everything past it is silently dropped; frontmatter and block-level HTML comments are stripped before measuring. Over the limit is a Blocker — the content does not exist at runtime.
   - **SKILL.md body**: < 500 lines; longer goes to linked tier-3 files.
   - **Sub-agent system prompts**: 30–150 lines. A single-mandate specialist that must resolve a body of doctrine — which authority wins, which findings are false positives on conformant work — earns up to 250, and the keep-side test below governs every line of the extra. Past 250, split the release-coupled facts and the vocabulary into tier-3 references.
@@ -116,7 +117,7 @@ Frontmatter — field sets evolve (sub-agents, skills, commands pages). Core fie
 
 Checklist:
 
-- **Invocation mode sets what the description is for.** Model-invoked (no `disable-model-invocation`): the description sits in context every turn and feeds dispatch — it must be action-oriented, name **both** "use when X" *and* "skip when Y" (without the negative, the orchestrator over-invokes), and front-load the **leading word** that triggers it. User-invoked (`disable-model-invocation: true`): the description is *human-facing* and costs zero dispatch context — it should be a one-line summary with trigger phrasing stripped. Flag trigger lists in a user-invoked description as wasted words; flag a missing "skip when" only for model-invoked skills (mattpocock, *Writing Great Skills*). Classify only after reading live settings (Inputs) — a `skillOverrides` entry forces the mode regardless of frontmatter (modes: §1 Loading-path integrity). The inverse field is `user-invocable: false` — Claude-only, description *always* in context, so its wording is pure dispatch surface and never human-facing. Each listing entry is capped at 1,536 characters and truncated past it: the key use case goes first.
+- **Invocation mode sets what the description is for.** Model-invoked (no `disable-model-invocation`): the description sits in context every turn and feeds dispatch — it must be action-oriented, name **both** "use when X" *and* "skip when Y" (without the negative, the orchestrator over-invokes), and front-load the **leading word** that triggers it. User-invoked (`disable-model-invocation: true`): the description is *human-facing* and costs zero dispatch context — it should be a one-line summary with trigger phrasing stripped. Flag trigger lists in a user-invoked description as wasted words; flag a missing "skip when" only for model-invoked skills (mattpocock, *Writing Great Skills*). Classify only after reading live settings (Inputs) — a `skillOverrides` entry forces the mode regardless of frontmatter (modes: §1 Loading-path integrity). The inverse field is `user-invocable: false` — Claude-only, description *always* in context, so its wording is pure dispatch surface and never human-facing. Each listing entry is capped at 1,536 characters and truncated past it: the key use case goes first. You cannot count characters with Read/Grep/Glob — report a description that looks long as "needs measurement (`wc -c` on the description block)" rather than asserting it exceeds the cap.
 - **Model-invoked only:** tier-1 dispatch criteria are self-sufficient — another agent decides whether to invoke without reading the body.
 - **Aggressive imperatives overtrigger** (see vocabulary: Over-triggering). Flag; rewrite to plain conditional "Use this tool when …". Blanket defaults ("Default to using X") and doubt-clauses ("if in doubt, use X") overtrigger the same way on current models — rewrite to a condition that names the situation ("Use X when it would sharpen your understanding of the problem"). Anti-laziness prompting written for older models is the usual source; dial it back rather than restating it. Pairs with the missing-"skip when" check above.
 - **Tool fields are not one mechanism — check which one you're reading.** A sub-agent's `tools` restricts, with `disallowedTools` subtracting from it. A skill's `allowed-tools` does **not**: it pre-approves permission prompts for the invoking turn while every tool stays callable, and the grant clears on the next user message. The restrictive field on a skill is `disallowed-tools`. Treating a skill's `allowed-tools` as a safety boundary is a Blocker — it is a false boundary, in the field an author is most likely to trust.
@@ -235,7 +236,9 @@ every finding. Add a cross-file section for interactions and duplication; do not
 Blocker under per-file ordering.
 
 **Files examined:** list every supplied and transitively linked artifact as `examined` or
-`not examined`. The verdict is invalid while any is unexamined. For a multi-file review,
+`not examined`. The verdict is invalid while any is unexamined. A session transcript is
+listed as `sampled` with the grep patterns used — evidence, not a target, and it does not
+gate the verdict. For a multi-file review,
 report tier and size per file or in a corpus table.
 
 A conformant artifact gets an explicit **"no findings — artifact conforms"** alongside the
