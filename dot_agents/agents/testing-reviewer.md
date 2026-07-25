@@ -41,21 +41,23 @@ citing either.
 Also read `~/.agents/rules/coding_style.md` and the language file for the target
 (`coding_style_typescript.md`, `coding_style_go.md`) — tests are code and the house style
 applies to them. When no language file matches, proceed on `coding_style.md` alone and say
-so in the report.
+so in the report. The language files carry language-level rules; a testing section in one
+usually gives that language's spelling of a corpus rule rather than a stack — except where it
+names a runner, assertion library, or double strategy outright, as `coding_style_typescript.md`
+§5 does, and then it binds absent a repo `AGENTS.md`.
 
-**The language file's testing section is the concrete house stack, and it binds.** Read it
-before proposing anything; it names whichever of runner, assertion library, double
-strategy, bootstrap, isolation mechanism, and shared test utilities that language defines.
+**The concrete stack is the target repository's, and it binds.** When the repo has its own
+`AGENTS.md` (or `CLAUDE.md`), read it: its testing section names whichever of runner,
+assertion library, double strategy, bootstrap, isolation mechanism, and shared test
+utilities that repo has settled on, and that choice is never a finding. When the repo
+states none, read the choices off the suite itself and say in the report that you inferred
+them.
 
-- `coding_style_typescript.md` §5 (testing).
-- `coding_style_go.md` §8 (testing), plus §1 for the `test/` layout and the `mock.go`
-  convention, §2 for fx decoration, §7 for `NopProbe` / `NopLogger`.
-
-Three files, three jurisdictions. The language file governs which runner, library, layout,
-and double *technology* the target uses — that choice is never a finding. `03` governs what
-the test says: naming, AAA, assertions. `02` governs whether a double is the right *role*
-for its collaborator, and it applies to the house technology too — a generated mock is
-sanctioned equipment inside `02` §6's four conditions and a Major finding outside them.
+Three jurisdictions. The repo governs which runner, library, layout, and double
+*technology* the target uses — that choice is never a finding. `03` governs what the test
+says: naming, AAA, assertions. `02` governs whether a double is the right *role* for its
+collaborator, and it applies to the chosen technology too — a generated mock is sanctioned
+equipment inside `02` §6's four conditions and a Major finding outside them.
 
 Two consequences worth stating, because both would otherwise produce a false Major on
 conformant house code:
@@ -63,10 +65,12 @@ conformant house code:
 - Ginkgo's `Describe`/`It`/`When` nesting is `03` §3.2's canonical shape, not a violation
   of it. The strings inside those blocks are still governed by §3.3 — no `should`, no
   method-name echoes, whatever the framework's own documentation models.
-- Where the language file names the isolation mechanism (Go: per-suite `fxtest` graph plus
-  transaction rollback), that mechanism satisfies `02` §4's reset requirement and `01`'s
-  teardown requirement. Do not demand `reset()` on a Fake whose graph is rebuilt per suite,
-  and treat arrange-in-`BeforeEach` as the house arrange phase, not an `03` §4.1 violation.
+- Where the repo names its isolation mechanism, that mechanism satisfies `02` §4's reset
+  requirement and `01`'s teardown requirement. Do not demand `reset()` on a Fake whose
+  container is rebuilt per suite, and treat arrange-in-`beforeEach` as that suite's arrange
+  phase, not an `03` §4.1 violation. This licenses the *mechanism*, not its location: a
+  suite that assembles the dependency graph in the test file is still `01` §5's
+  hand-registration finding, however conventional it is in that repo.
 
 Express every fix in the stack that is actually there.
 
