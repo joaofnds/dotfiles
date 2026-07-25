@@ -8,8 +8,6 @@ description: >
   Codebase-grounded only — a web-only report is the built-in deep-research. Skip when
   there's one sane implementation — go to /plan (or /grill if it needs hardening).
 argument-hint: "Path to the spec/PRD to research options for"
-metadata:
-  trigger: A spec/PRD exists; research the codebase and survey implementation options before grilling
 ---
 
 # Research

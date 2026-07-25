@@ -6,8 +6,6 @@ description: >
   is this failing", "investigate this bug". Confirms the cause but lands no fix
   (/plan → /build) and writes no durable report (/diagnose, run after). Dumping
   in-flight state to a fresh session → /handoff.
-metadata:
-  trigger: Starting to investigate a failure this session, before the root cause is known
 ---
 
 # Debug

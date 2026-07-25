@@ -10,8 +10,6 @@ description: >
   BEFORE /plan, not after. Skip when the design is already hardened and nothing is
   contested — go straight to /plan.
 argument-hint: "Path to the options/spec doc to grill (optional)"
-metadata:
-  trigger: An approach or /research options doc exists but isn't hardened; pick and interrogate it before the plan
 ---
 
 # Grill

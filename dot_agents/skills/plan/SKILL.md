@@ -9,8 +9,6 @@ description: >
   invoke mid-debate, while trade-offs are still open, or when the user is still
   asking "what do you think about X" — that's exploration. For dumping in-flight
   context with no settled approach, that's /handoff, not /plan.
-metadata:
-  trigger: Goal/scope/approach settled this session; need a cold-readable plan file before context runs out
 ---
 
 # Plan

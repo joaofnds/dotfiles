@@ -6,14 +6,12 @@ description: >
   transcript cold and proposes grounded improvement diffs. Invoke at the END of a
   session: "kaizen", "retro on this process", "how could this skill/agent/rule be
   better". Skip mid-task (no evidence yet). Improving the work product itself →
-  /adversarial-review, or the code-reviewer agent, not this.
-metadata:
-  trigger: A session that exercised skills/agents/rules just finished; you want grounded, low-bias improvements to those instruction artifacts
+  /adversarial-review, or a user-invoked /code-review, not this.
 ---
 
 # Kaizen — Retro on the Instructions You Used
 
-**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; improving the work product itself rather than the process → `/adversarial-review`, or spawn the `code-reviewer` agent.
+**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; improving the work product itself rather than the process → `/adversarial-review`, or recommend a user-invoked `/code-review`.
 
 **You are a neutral witness; a fresh critic is the judge.** The move you're tempted to
 make — ask the agent that just ran the session "what would you change?" — is the least

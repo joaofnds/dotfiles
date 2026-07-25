@@ -6,8 +6,6 @@ description: >
   has not started.
 argument-hint: "What will the next session focus on?"
 disable-model-invocation: true
-metadata:
-  trigger: Work is in flight and needs to continue in a fresh session; preserve state, no formal plan
 ---
 
 # Handoff

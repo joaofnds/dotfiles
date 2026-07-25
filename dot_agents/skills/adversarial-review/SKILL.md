@@ -5,14 +5,12 @@ description: >
   your conclusions so the reviewer reaches its own verdict; findings are relayed in its
   words. Invoke on "adversarial review", "red-team this", "unbiased second opinion on
   what I just did". For code you did NOT write (PR review, external audit), recommend
-  /review to the user, or spawn the code-reviewer agent yourself.
-metadata:
-  trigger: Work was just produced this session; you want an independent, unbiased check before trusting it
+  /review or /code-review to the user instead — both are user-invoked only.
 ---
 
 # Adversarial Review
 
-**Wrong skill if:** reviewing code you did NOT write this session (PR review, external audit) → recommend `/review` to the user (it cannot be invoked by an agent), or spawn `code-reviewer` yourself.
+**Wrong skill if:** reviewing code you did NOT write this session (PR review, external audit) → recommend `/review` or `/code-review` to the user; neither can be invoked by an agent.
 
 Spawn an independent agent to review work done this session — and construct the
 brief so it reaches its own verdict instead of ratifying yours. The value is in

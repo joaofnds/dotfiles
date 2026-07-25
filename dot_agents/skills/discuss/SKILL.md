@@ -7,8 +7,6 @@ description: >
   options (/research, run next), no approach pick (/grill), no plan, no code. Skip for
   a small, well-understood goal — go straight to /grill or /plan.
 argument-hint: "The rough goal to spec out"
-metadata:
-  trigger: A rough feature goal exists but no spec; interview to pin down the problem and write a PRD
 ---
 
 # Discuss

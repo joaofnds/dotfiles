@@ -7,8 +7,6 @@ description: >
   "root-cause report", "document what went wrong". Proposes NO fixes — that's /plan,
   run later off the report. Fix approach already settled → /plan; cause still under
   investigation → /debug; pausing that investigation → /handoff.
-metadata:
-  trigger: A bug/problem was investigated this session; capture its root cause for a later /plan, no remedy
 ---
 
 # Diagnose
