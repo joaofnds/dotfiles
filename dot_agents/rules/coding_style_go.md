@@ -79,6 +79,10 @@ var (
   single implementation is usually that implementation's shape, not a port.
 - Interfaces stay small — one to three methods. A large one is a package boundary that has not
   been drawn yet.
+- **Type assertions use the comma-ok form.** `v, ok := x.(T)`, never bare `v := x.(T)` — the
+  bare form panics at runtime on the wrong dynamic type. A type switch is the multi-case
+  spelling. This is the escape hatch `coding_style.md` §1 means in Go; `any` is not one — it is
+  the current spelling of `interface{}`, mandatory in constraints, and governed by §5.
 
 ## 7. Naming Conventions
 

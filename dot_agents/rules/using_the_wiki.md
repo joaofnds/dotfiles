@@ -25,11 +25,11 @@ qmd query "<topic or question>" -c wiki
 Defaults to 5 results; `-n 10` for more, `--full` for whole documents instead of snippets.
 
 Variants:
-- `qmd search "<exact term>" -c wiki` — when you know the phrase
-- `qmd get <path>` — when you know the page (resolve the path with `qmd collection list` if unsure)
-- `qmd multi-get "*.md" -c wiki` — when you want to survey
+- `qmd search "<exact term>" -c wiki` — when you know the phrase, and to resolve a `(See: some-slug)` citation to its path. The slugs those citations use are kebab-cased titles, not paths: `anemic-domain-model` → `pages/Anemic-Domain-Model.md`.
+- `qmd get pages/<Title-Case-Name>.md` — the whole page, once you have the path
+- `qmd ls wiki` — the file listing, optionally scoped (`qmd ls wiki/raw`). `qmd collection list` prints collection names and a file count, not files.
 
-Cite the returned pages in your reasoning. Follow wikilinks into the raw source tree when you need the primary source (podcast transcripts, talks, articles that the wiki page distills) — `qmd collection list` shows the tree layout.
+Cite the returned pages in your reasoning. Follow wikilinks into `raw/` when you need the primary source (podcast transcripts, talks, articles that the wiki page distills).
 
 ## When to skip
 

@@ -17,7 +17,7 @@ description: >
 make — ask the agent that just ran the session "what would you change?" — is the least
 trustworthy one available: it defends its own choices, wants to please you, and
 critiques a *remembered* version of the instruction rather than its actual text
-(`engineering_judgment.md` §8: narrative-continuity-over-correctness, fabricated
+(`engineering_judgment.md` §7: narrative-continuity-over-correctness, fabricated
 verification). So the biased party only observes; judgment is delegated.
 
 ## What counts as a target

@@ -10,7 +10,7 @@ Before writing a single line, make sure you are solving the right problem. Every
 
 - **Understand the problem, not the symptom.** Ask "why?" until you reach the structural cause. Seven call sites with the same workaround = seven symptoms, not a root cause.
 - **Facts before theories.** List observations before explaining them. Separate evidence from inference, form a falsifiable hypothesis, and name the result that would disprove it. An experiment that does not represent the real caller, workload, or environment cannot support a claim about them. *(See: empiricism-in-software-engineering)*
-- **Question the premise.** Before fixing mechanism X, ask whether to use X at all. Often the platform solves this natively.
+- **Question the premise.** Before fixing mechanism X, ask whether to use X at all. Often the platform solves this natively, and the best fix is the one that makes the problem irrelevant.
 - **Name things in the domain's language.** If the business says "order," don't say "transaction record." Misaligned language causes misaligned models. *(See: domain-driven-design)*
 - **Know your data access patterns before choosing the model.** Read vs. write-heavy, consistency needs, cross-entity queries — these determine the model. Don't pick storage first. *(See: DDIA / Kleppmann)*
 - **Never program by coincidence.** Working code you don't understand is a time bomb. *(See: Pragmatic Programmer)*
@@ -62,21 +62,13 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 - **A good change narrows the space of future bugs.** A symptom patch leaves the class exposed; a structural fix eliminates it. Ask: "What about the cases I haven't seen?"
 - **Don't fight your tools.** Working around a library at every turn = wrong tool or wrong usage. Investigate before adding another workaround.
 - **Trace the full blast radius.** List every place the change affects. Flag incomplete fixes explicitly — don't ship silently.
-- **"Tests pass" ≠ "approach is right."** Verification confirms behavior, not design. (For agent-specific verification failure modes, see §8.)
+- **"Tests pass" ≠ "approach is right."** Verification confirms behavior, not design. (For agent-specific verification failure modes, see §7.)
 - **Feedback speed is everything.** Every speedup compounds. TDD, CI, trunk-based, fast monitoring all exist to shorten the loop. *(See: test-driven-development, continuous-integration, trunk-based-development)*
 - **Control the variables.** Fast feedback is noise when the test, environment, workload, or artifact changes underneath it. Make experiments deterministic enough that the observed delta can be attributed to the change. *(See: tools-of-software-engineering)*
 - **Measure what matters.** Deploy frequency, lead time, MTTR, change failure rate. Speed and stability are complementary, not trade-offs. *(See: dora-accelerate-metrics)*
 - **Blameless postmortems.** Ask "how did the system allow this?" not "who did this?" Blame drives hiding; learning drives improvement.
 
-## 6. Workflows for Agents
-
-1. **Diagnose before prescribing.** Read the code, trace the data flow, list facts, then state a falsifiable root-cause hypothesis.
-2. **Propose the approach, not just the code.** Justify the design in terms of these principles. If you can't, reconsider.
-3. **Challenge your own premises.** Predict what evidence would contradict your read, run the discriminating probe, and reconcile the result. The best fix often makes the problem irrelevant.
-4. **Match solution weight to problem weight.** One-liner bugs don't need new abstractions. Systemic flaws don't deserve point fixes.
-5. **Verify independently.** Run the tests. Check the types. Read the diff. "I believe this works" is not evidence.
-
-## 7. Summary Cheat Sheet
+## 6. Summary Cheat Sheet
 
 - Am I fixing the symptom or the root cause?
 - Did I question whether the mechanism itself is right?
@@ -92,7 +84,7 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 - Did I verify independently?
 - Would I ship this to production right now? (See §4: relevant deadlines, retry safety, justified propagation barriers, reliability targets, and deployable size.)
 
-## 8. Agent-Specific Failure Modes
+## 7. Agent-Specific Failure Modes
 
 Always-on risks, not edge cases:
 

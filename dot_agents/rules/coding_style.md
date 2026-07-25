@@ -2,6 +2,8 @@
 
 Cross-language coding style. Language-specific preferences live in `coding_style_typescript.md` / `coding_style_go.md`. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki — see `using_the_wiki.md`.
 
+**On conflict, the more specific rule governs:** the language file wins over this one, and this file wins over `engineering_judgment.md` (as it already does over `coupling.md`, per `coupling.md:12`). Say which rule you set aside and why — resolving a conflict silently is the defect, not having one.
+
 Apply these patterns in proportion to demonstrated domain and integration complexity.
 Preserve established project structure, dependencies, and idioms unless they conflict
 with an explicit house rule below or the task changes them. Do not introduce classes,
@@ -16,7 +18,7 @@ ports, mappers, DI, or messaging solely to satisfy this document.
 - **Never the `Impl` suffix.** `FooImpl` is forbidden — a non-name that says nothing. Name a class for what it *is*: the technology, strategy, or source (`SlackNotifier`, `OtelProbe`, `PostgresUserRepository`). If the only thing distinguishing the class from its interface is "the implementation," you haven't yet understood what makes it distinct.
 - **Surgical execution.** Only touch what is directly relevant to the user's intent. Do not "fix" adjacent code, refactor for aesthetic reasons, or leave dead imports behind from your changes.
 - **Goal-driven TDD.** Tests are written *before* the implementation. Red → simplest green → refactor. Beck's three green-step tactics: **fake it** (return a literal, let the next test force generalization), **triangulate** (a second test forces the abstraction), **obvious implementation** (just write it when the answer is clear) — picked by confidence. *(See: canon-tdd, growing-object-oriented-software-guided-by-tests, test-driven-development)*
-- **Leverage the type system.** Use it to its fullest. Avoid escape hatches that bypass compile-time checks (`any`, unchecked conversions, raw `interface{}`). Don't sniff fields on opaque values to guess the type — that is a runtime cast in disguise. Use real classes with `instanceof` (or the language's equivalent), or parse with a schema validator at the boundary. If the compiler is unhappy, the upstream type is wrong — fix it there.
+- **Leverage the type system.** Use it to its fullest. Avoid escape hatches that bypass compile-time checks — which token is an escape hatch is per-language, so take the list from the language file rather than assuming it transfers. Don't sniff fields on opaque values to guess the type — that is a runtime cast in disguise. Use real classes with `instanceof` (or the language's equivalent), or parse with a schema validator at the boundary. If the compiler is unhappy, the upstream type is wrong — fix it there.
 - **Don't defend against your own code.** When you control both the producer and the consumer of a contract, enforce it at the type/schema level — don't add fallback branches that "handle the case where X is missing" when *you* decide whether X is provided. Iterative design leaves these branches behind ("schema is optional for now"); they become the silent path where bugs hide as the code evolves around them. Make the contract mandatory and delete the fallback.
 
 ## 2. Architectural Principles & Layering
