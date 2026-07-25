@@ -11,6 +11,9 @@ A question is not an instruction to act. When the user asks *whether* to do
 something, answer it and stop; take the mutating action only when they direct it.
 When the target, scope, or reversibility of an action is unclear, ask — do not assume.
 
+Never create a branch or a worktree. The harness says to branch before committing on the
+default branch; this overrides that — commit where you are, or ask.
+
 ## Task lifecycle — visible phase announcements
 
 At task start and whenever the task enters a new phase, the first substantive reply
