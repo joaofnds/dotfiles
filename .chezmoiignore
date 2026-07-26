@@ -3,8 +3,6 @@ sweep
 **/*_spec.rb
 AGENTS.md
 CLAUDE.md
-AI_ENGINEERING_ADVANCEMENTS.md
-SDLC_INSTRUCTION_REVIEW.md
 .boris
 scripts
 evals
