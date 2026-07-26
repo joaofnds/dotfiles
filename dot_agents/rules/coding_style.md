@@ -40,12 +40,13 @@ remain clear. *(See: hexagonal-architecture, clean-architecture, layered-archite
 ### b. Application / Business Logic (Services / Use Cases)
 
 - **Orchestrators of business rules.** Consume parsed and validated inputs (see §c "Safe Parsing at Boundaries"), execute the core logic, delegate I/O or side-effects to abstracted dependencies (Repositories, External API clients). The Application layer coordinates; it does *not* contain domain logic. *(See: application-services, domain-layer)*
+- **Authorization is a boundary concern.** Whether this caller may perform this operation is resolved before the use case runs, in one place per route group — not re-derived inside domain logic and never left to the view. A use case that checks permissions has taken a second responsibility, and it will drift from the edge that checks them too.
 
 ### c. Infrastructure & Adapters (Repositories / External APIs)
 
 - **Framework-agnostic constructors.** Don't tie constructors to the DI framework. Constructors accept pure dependencies (parsed primitives or specific interfaces). Use factory methods or DI module declarations to adapt the framework's container into the clean constructor. You should be able to construct objects in tests without the full DI container. *(See: dependency-inversion-principle)*
 - **Defensive networking.** Bound external calls with deadlines or cancellation. Translate native failures into stable application or port errors; use domain errors only for domain outcomes. *(See: release-it-nygard-2018)*
-- **Safe parsing at boundaries.** Treat the edges as strictly untrusted. Use schema validation for environment configuration, incoming request payloads, and outgoing external responses. Never let raw, unvalidated external data cross into the domain. *(See: clean-boundaries)*
+- **Safe parsing at boundaries.** Treat the edges as strictly untrusted. Use schema validation for environment configuration, incoming request payloads, and outgoing external responses. Never let raw, unvalidated external data cross into the domain. A value can satisfy its schema and still be hostile — a well-formed URL that resolves to link-local or internal address space, a valid relative path that escapes its root. Shape is not destination; validate both. *(See: clean-boundaries)*
 
 ### d. Data Transformation (Mappers / DTOs)
 
