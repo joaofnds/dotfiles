@@ -15,5 +15,8 @@
 - **Linter laundering** — deterministic checks consume prompt budget instead of tooling.
 - **No-op / self-reference** — a rule does not change behavior from model defaults.
 - **Restatement-over-leading-word** — prose replaces a precise established term.
-- **Instruction laundering** — the same rule appears under several headings.
+- **Instruction laundering** — the same rule appears under several headings *that load
+  together*. The corpus loads progressively, so restatement across paths the router never
+  combines is not laundering — it is the only copy on that path, and cutting it deletes the
+  rule from that phase. Establish which case it is before cutting.
 - **Decay** — a path, version, tool, or mechanism has gone stale.
