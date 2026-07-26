@@ -15,7 +15,9 @@ Language-specific preferences for Go projects. Read the generic `coding_style.md
 - Separate from entities -- they represent operation inputs, not persisted state.
 
 ### Repository Interfaces
-- Defined in the domain package alongside entities.
+- Defined in the package that owns the contract, which `coding_style.md` §2c picks by where the
+  consumers live: beside the entity when the domain service is the only client, in the
+  capability's own interface-only package when several domains share it.
 - Methods accept `context.Context` as first parameter.
 - Return domain types plus stable port errors. Reserve domain errors for business outcomes.
 
@@ -75,8 +77,12 @@ var (
 ## 6. Interface Ownership
 
 - **Accept interfaces, return structs.** A constructor returns its concrete type; the consumer
-  declares the narrow interface it needs, in its own package. An interface sitting next to its
-  single implementation is usually that implementation's shape, not a port.
+  declares the narrow interface it needs. Go packages are small enough that the consumer is
+  usually a single package, so this lands where `coding_style.md` §2c does — the same principle
+  at finer grain, not a competing one. It still decides something: once several packages consume
+  one contract, a narrow per-consumer interface and one shared port differ in width and owner,
+  and §2c's count-and-locality test is what picks. An interface sitting next to its single
+  implementation is usually that implementation's shape, not a port.
 - Interfaces stay small — one to three methods. A large one is a package boundary that has not
   been drawn yet.
 - **Type assertions use the comma-ok form.** `v, ok := x.(T)`, never bare `v := x.(T)` — the

@@ -56,5 +56,4 @@ Prefer changes that improve the whole feedback loop over local optimizations tha
 cost elsewhere. Faster tests with weaker behavior coverage, a helper used once, or a
 cache with unclear invalidation may optimize one part while degrading the system.
 
-Reject perfectionism, speculative automation, and future-facing abstractions. Sometimes
-the correct improvement is no change.
+Sometimes the correct improvement is no change.

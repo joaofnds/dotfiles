@@ -44,7 +44,9 @@ applies to them. When no language file matches, proceed on `coding_style.md` alo
 so in the report. The language files carry language-level rules; a testing section in one
 usually gives that language's spelling of a corpus rule rather than a stack — except where it
 names a runner, assertion library, or double strategy outright, as `coding_style_typescript.md`
-§5 does, and then it binds absent a repo `AGENTS.md`.
+§5 does. Its double-strategy rule binds everywhere; its runner preference is tiered — repo
+`AGENTS.md` first, then the runner the suite already uses, then `node:test` for a new suite —
+so an existing suite's runner is never a finding.
 
 **The concrete stack is the target repository's, and it binds.** When the repo has its own
 `AGENTS.md` (or `CLAUDE.md`), read it: its testing section names whichever of runner,

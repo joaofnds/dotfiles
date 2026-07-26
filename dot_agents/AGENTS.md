@@ -46,7 +46,7 @@ Required reads by phase:
 - **Coding** → `coding_style.md` plus the matching language file when one exists
 - **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md` (gatekeeper: routes to sub-modules, holds the pre-commit checklist)
-- **Design / problem analysis** → `engineering_judgment.md`; if it cues a wiki lookup, read `using_the_wiki.md`
+- **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the design draws or moves a module or service boundary; if it cues a wiki lookup, read `using_the_wiki.md`
 - **Multi-stage feature, debug, review, or delivery work** → `~/.agents/workflows.md`; use only stages justified by task size
 - **Before marking done** → `ownership.md`
 - **After a batch of instruction edits** → run `instructions-reviewer` once; resolve or explicitly defer each finding, and rerun only after material routing, precedence, or safety changes

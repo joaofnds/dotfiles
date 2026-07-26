@@ -5,8 +5,9 @@ the `panel-review` Architecture mandate; read directly when a design draws or
 moves a module or service boundary. *(See: coupling, release-it-nygard-2018)*
 
 Added 2026-07-25 from Farley's coupling talk and Nygard's five-type taxonomy.
-Re-evaluate after ~10 panel runs: if the Architecture axis has produced no
-coupling finding, delete this file and fold the stability test into
+Re-evaluate after ~10 panel runs or design-phase loads, whichever comes first: if
+neither the Architecture axis nor a design session has produced a coupling
+finding, delete this file and fold the stability test into
 `engineering_judgment.md` §2.
 
 **Where these cures conflict with `coding_style.md`, `coding_style.md` wins.**
@@ -54,8 +55,10 @@ coupling strength, and the difference is not in the code.
 
 So the necessary/unnecessary judgment is a claim about the *dependency's rate of
 change*, not about the coupling's shape. Never assert it from the code alone:
-either cite an observed change history — the orchestrator owns that probe, see
-`panel-review` §4 — or state the stability assumption *as* an assumption.
+either cite an observed change history — in a panel review the orchestrator owns that
+probe (`panel-review` §4); reading this directly during design, run it yourself
+(`git log --since='1 year ago' --oneline -- <path>`) — or state the stability
+assumption *as* an assumption.
 
 Golden rule: **tighten what's stable, loosen what's uncertain.** Couple tightly
 to things you understand and that change slowly; couple loosely to what you're
@@ -113,9 +116,11 @@ Ordering and concurrency assumptions are not in Nygard's spatial taxonomy: name
 them **temporal coupling** when the assumption is "do this, then always that."
 *(See: temporal-coupling)*
 
-## Boundaries with other reviewers
+## Before reporting this as a finding (panel-review)
 
-Naming a type is not automatically a finding. Before reporting:
+This applies when you are reporting into a review; during design, skip to the
+stability question at the end. Naming a type is not automatically a finding.
+Before reporting:
 
 - **Does it reduce to a catalog smell?** Developmental coupling is usually
   Shotgun Surgery or Divergent Change; functional coupling is usually Duplicated

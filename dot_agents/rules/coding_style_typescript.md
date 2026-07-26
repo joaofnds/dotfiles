@@ -30,7 +30,7 @@ Language-specific preferences for TypeScript projects. Read the generic `coding_
 - **DI tokens represent ports, not adapters.** Use the repository's established token form: symbol, string, abstract class, or framework-native token. A consumer must not depend on a concrete adapter merely to obtain a runtime token.
 
 ## 5. Testing
-- **Native Tooling**: Prefer native modules like `node:test` and `node:assert/strict` unless the project specifically mandates a heavy runner like Jest or Japa.
+- **Native Tooling**: When choosing, prefer native modules like `node:test` and `node:assert/strict` over a heavy runner. This is the default for a new suite, not a mandate to fight an existing one — a repo `AGENTS.md` naming a runner wins outright, and where none says otherwise the runner the suite already uses wins for new tests in it. A second runner alongside the first is worse than either choice. Jest or Japa when the project mandates them.
 - **No spy/mock frameworks**: Strictly avoid `jest.fn()` or `vi.fn()` for domain logic dependencies. Author explicit, custom Fake implementations instead (e.g., a `FakeHTTPService` that captures an array of requests and pops predefined responses).
 - Reset shared Fakes in lifecycle hooks; keep one-test state local.
 
