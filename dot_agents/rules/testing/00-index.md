@@ -68,10 +68,21 @@ You can max three at once; one always gives. A test with low protection *and* lo
 
 Walk the applicable sections before calling testing work done. Test-type-specific items do not apply to every test.
 
+### Did the loop actually run
+
+Skip this section when reviewing a suite you did not write — it asks about a transcript you
+do not have.
+
+- Did I see the test fail before writing the code? Name the test and quote the failing
+  assertion line — not the whole run.
+- Where does the scenario list live? Give the path or the message holding it.
+- Did a run surprise me? Point at the prediction and at what actually happened.
+
+Point at these; don't assert them. Each one already exists as output above — cite it rather
+than recall it. If it didn't go that way, say so plainly here; an admitted skip is worth more
+than a false claim. The per-iteration form of this loop is `/build` step 4.
+
 ### Structure and naming
-- Did I start red, go green with the simplest change, and refactor on green?
-- Did I state and maintain the scenario list, with one scenario converted into a runnable test at a time?
-- For each TDD experiment, did I predict the next observable red or green result and reconcile any surprise before the next edit?
 - Does the test satisfy F.I.R.S.T.?
 - Is the top-level describe the symbol under test (for a class or function) or the route path (for an HTTP endpoint)?
 - Are my test names lowercase, declarative third-person-present clauses? No "should". No method-name echoes.
@@ -108,4 +119,5 @@ Walk the applicable sections before calling testing work done. Test-type-specifi
 - Am I reading the test at the domain level, or at the framework level? Grow the DSL.
 - Am I falling into an anti-pattern — testing a private method, chasing coverage percentages, rebuilding the DI container in every `beforeEach`, sleep-based waits, branching on environment inside the test, asserting on log output?
 
-If any answer is wrong or unknown, the work is not done.
+If any applicable answer is wrong, the work is not done. "Unknown" is also not done — name
+the evidence that would settle it. An item that doesn't apply is neither; say which and why.
