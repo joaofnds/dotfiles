@@ -61,6 +61,10 @@ your reading.
 
 ## Spawn the fresh critic
 
+Spawn it un-named — a named spawn returns a receipt only, not the report. Use
+`run_in_background: false` when you have nothing to do but wait for it, `true` when the
+session continues meanwhile (observed on `claude-code` 2.1.220, 2026-07-27).
+
 One independent agent — `instructions-reviewer` if available (built for instruction
 files), else a general agent carrying this brief. Send:
 

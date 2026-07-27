@@ -40,7 +40,9 @@ It is a pointer list, not a content store.
 
 **Model:** consolidation is dedup-and-contradiction *judgment*, not a speed task. If you
 spawn this as a background/subagent pass, run that subagent on the most capable reasoning
-model available, at `high` effort or above.
+model available, at `high` effort or above. Spawn it un-named — a named spawn returns a
+receipt only, not the report — with `run_in_background: true` when other work continues,
+`false` when you are waiting on it (observed on `claude-code` 2.1.220, 2026-07-27).
 
 **IMPORTANT: Execute the phases strictly in order (1 → 2 → 3 → 4 → 5). Each depends on the
 previous. Do not modify or delete any note before Phase 4** (the Phase 1 backup is the only

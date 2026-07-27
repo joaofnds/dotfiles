@@ -42,10 +42,12 @@ missing — never invent it:
    share the result with the reviewers — "tests
    pass" in a brief steers them (adversarial-review's withhold rule).
 
-## 2. Fan out — one parallel batch
+## 2. Fan out — concurrent reviewers
 
-Spawn six agents **in a single message** so they run concurrently — five when
-the diff touches no test file: four `code-reviewer` agents, one per axis; one
+Spawn six agents, each un-named with `run_in_background: true` — five when the
+diff touches no test file — so they run concurrently and each report arrives on
+its own notification (see `workflows.md` §Spawn shapes; observed on `claude-code` 2.1.220,
+2026-07-27). The six: four `code-reviewer` agents, one per axis; one
 `testing-reviewer`, the fifth verdict axis; and one `refactoring-reviewer`, the
 advisory track. Each code-reviewer gets the same shared context plus one axis
 mandate.
@@ -185,8 +187,8 @@ or `/plan` for the owning code rather than becoming a merge condition here.
 
 ## 4. Verify — the kill step
 
-For every **Blocker and Major** finding, spawn a skeptic (general agent) in
-one parallel batch, mandated to refute it:
+For every **Blocker and Major** finding, spawn a skeptic (general agent) —
+un-named, `run_in_background: true` — mandated to refute it:
 
 > Try to refute this review finding against the actual code — read the code
 > yourself, don't trust the claim: `<finding, with file:line and the claimed
