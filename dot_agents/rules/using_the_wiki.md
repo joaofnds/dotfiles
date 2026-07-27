@@ -37,8 +37,8 @@ Cite the returned pages in your reasoning. Follow wikilinks into `raw/` when you
 - Topics clearly outside the wiki's scope (will return weak / hallucinated relevance)
 - Any unavailable or failed `qmd` invocation is a soft failure. Report it briefly and continue without the wiki.
 
-The wiki is optional enrichment, not a required gate. Repository evidence and user
-requirements remain authoritative.
+The wiki is optional enrichment, not a required gate. Repository evidence and the user's
+stated preferences and requirements remain authoritative.
 
 ## What not to do
 

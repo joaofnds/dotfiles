@@ -13,9 +13,8 @@ argument-hint: "The rough goal to spec out"
 
 **Wrong skill if:** the goal is small and well-understood → `/grill` or `/plan` directly.
 
-Interview a rough goal until the problem is sharp enough to write down. The output is
-a spec/PRD — *what* must be true for this to be done, independent of *how* it's built.
-The how comes later (`/research` → `/grill` → `/plan`).
+Interview a rough goal until the problem is sharp enough to write down. The how comes
+later (`/research` → `/grill` → `/plan`).
 
 ## Interview discipline
 
@@ -35,14 +34,6 @@ The how comes later (`/research` → `/grill` → `/plan`).
   let each answer narrow what's left.
 - **Be direct.** If an answer contradicts an earlier one, or the goal itself looks
   ill-scoped, say so — don't smooth it over.
-
-## What to pin down
-
-- **Need** — what problem this solves, for whom, and why it matters now.
-- **Scope** — what's explicitly in, what's out, what's deferred.
-- **Constraints** — technical, product, time; systems it must fit; things it must not
-  break.
-- **Success** — what "done" looks like, concrete enough to check.
 
 ## Output
 
