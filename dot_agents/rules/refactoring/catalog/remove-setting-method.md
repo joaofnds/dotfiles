@@ -54,11 +54,11 @@ const account = new Account("acc-42");
 
 ## House-rule interactions
 
-- `coding_style.md:34` — explicit construction: entities map properties explicitly at
+- `coding_style.md` — explicit construction: entities map properties explicitly at
   creation; a post-construction setter phase is the bulk-assignment pattern this rule
   exists to prevent, one field at a time.
-- `coding_style.md:33` — behavior lives with data: getter/setter pairs with logic
+- `coding_style.md` — behavior lives with data: getter/setter pairs with logic
   elsewhere define the anemic model; every deleted setter moves the design away from
   it.
-- `engineering_judgment.md:62` — narrows future bugs: the whole class of
+- `engineering_judgment.md` — narrows future bugs: the whole class of
   "mutated after creation" defects for this field becomes unrepresentable.

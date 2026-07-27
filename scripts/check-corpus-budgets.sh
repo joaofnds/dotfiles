@@ -53,6 +53,23 @@ for f in "$corpus"/skills/*/SKILL.md; do
   check "$f" - 500 skill
 done
 
+# Cross-file citations name a rule, never a line. A line-anchored citation keeps
+# resolving after the target is edited — to a different rule — and no reader can tell.
+# (Added 2026-07-27: every catalog citation into coding_style.md had drifted 2-5 lines,
+# and coding_style.md's own pointer at coupling.md:12 resolved to a blank line.)
+printf '\nCitation hygiene\n'
+cites=$(grep -rnoE '`[A-Za-z0-9_/-]+\.md:[0-9]+`' "$corpus" || true)
+if [ -n "$cites" ]; then
+  while IFS= read -r c; do
+    [ -z "$c" ] && continue
+    fail "line-anchored citation — cite the rule by name: ${c#"$corpus"/}"
+  done <<EOF
+$cites
+EOF
+else
+  note "no line-anchored citations"
+fi
+
 printf '\nTotals\n'
 total=$(find "$corpus" -name '*.md' -exec cat {} + | wc -l | tr -d ' ')
 always=$(lines "$corpus/AGENTS.md")

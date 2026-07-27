@@ -2,7 +2,7 @@
 
 Cross-language coding style. Language-specific preferences live in `coding_style_typescript.md` / `coding_style_go.md`. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki — see `using_the_wiki.md`.
 
-**On conflict, the more specific rule governs:** the language file wins over this one, and this file wins over `engineering_judgment.md` (as it already does over `coupling.md`, per `coupling.md:12`). On anything about tests, `testing/00-index.md` and its modules win over all of them — including `coupling.md`'s test-shaped symptoms. Say which rule you set aside and why — resolving a conflict silently is the defect, not having one.
+**On conflict, the more specific rule governs:** the language file wins over this one, and this file wins over `engineering_judgment.md` (as it already does over `coupling.md`, which says so itself). On anything about tests, `testing/00-index.md` and its modules win over all of them — including `coupling.md`'s test-shaped symptoms. Say which rule you set aside and why — resolving a conflict silently is the defect, not having one.
 
 Apply these patterns in proportion to demonstrated domain and integration complexity.
 Preserve established project structure, dependencies, and idioms unless they conflict

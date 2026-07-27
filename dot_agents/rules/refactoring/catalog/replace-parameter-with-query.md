@@ -60,8 +60,8 @@ function discountedPrice(order) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md:37` — code is a liability: a parameter is caller-facing
+- `engineering_judgment.md` — code is a liability: a parameter is caller-facing
   code at every call site; removable ones should be removed.
-- `coding_style.md:60` — control non-deterministic side effects: clocks, random
+- `coding_style.md` — control non-deterministic side effects: clocks, random
   sources, and network reads are the parameters this refactoring must *not* absorb —
   their explicitness is what keeps tests deterministic, per "When not to apply."

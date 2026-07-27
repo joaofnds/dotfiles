@@ -57,11 +57,11 @@ function loyaltyDiscountFor(customer) {
 
 ## House-rule interactions
 
-- `coding_style.md:58` — Tell, Don't Ask: a function interrogating a neighbor's
+- `coding_style.md` — Tell, Don't Ask: a function interrogating a neighbor's
   internals is the asking this rule forbids; moving it inside the neighbor turns the
   interrogation into behavior offered by the role.
-- `coding_style.md:66` — put domain behavior with the model it governs; Move Function
+- `coding_style.md` — put domain behavior with the model it governs; Move Function
   is the mechanical step that enforces it.
-- `engineering_judgment.md:23` — dependencies point inward: verify the move does not
+- `engineering_judgment.md` — dependencies point inward: verify the move does not
   make a domain module import an adapter. A move that fixes envy but reverses an arrow
   is a worse trade.

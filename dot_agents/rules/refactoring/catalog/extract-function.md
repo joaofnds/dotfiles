@@ -70,11 +70,11 @@ function orderTotal(order) {
 
 ## House-rule interactions
 
-- `coding_style.md:14` — comments default to zero, and extraction is move 2 of the three
+- `coding_style.md` — comments default to zero, and extraction is move 2 of the three
   moves that must be exhausted before writing one. A block you were about to comment is
   this refactoring's primary trigger.
-- `coding_style.md:12` — Beck's ordering ranks fewest-elements fourth. Extraction adds
+- `coding_style.md` — Beck's ordering ranks fewest-elements fourth. Extraction adds
   an element, so it is admissible only when it buys intent-revelation or removes
   duplication; extraction for length alone does not clear the bar.
-- `coding_style.md:17` — surgical execution: extract within the code the task touches;
+- `coding_style.md` — surgical execution: extract within the code the task touches;
   do not sweep through adjacent functions extracting opportunistically.

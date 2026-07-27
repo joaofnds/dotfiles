@@ -53,9 +53,9 @@ export function updateConfig(patch) {
 
 ## House-rule interactions
 
-- `coding_style.md:68` — inject side-effecting or replaceable dependencies:
+- `coding_style.md` — inject side-effecting or replaceable dependencies:
   encapsulation is the way station, not the destination. Once access runs through
   functions, prefer passing the value or an interface into the consumers that need it
   over leaving them to reach for the module.
-- `engineering_judgment.md:62` — narrows future bugs: unmediated global writes are the
+- `engineering_judgment.md` — narrows future bugs: unmediated global writes are the
   widest bug surface there is; each access point removed shrinks it.

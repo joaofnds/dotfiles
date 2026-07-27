@@ -55,8 +55,8 @@ function discountedTotal(order) {
 
 ## House-rule interactions
 
-- `coding_style.md:45` — safe parsing at boundaries: external data gets schema
+- `coding_style.md` — safe parsing at boundaries: external data gets schema
   validation there, never assertions; this refactoring is for invariants *inside* the
   trusted zone.
-- `coding_style.md:14` — comments default to zero: an assumption comment is the weak
+- `coding_style.md` — comments default to zero: an assumption comment is the weak
   form of this refactoring — the assertion both documents and enforces.

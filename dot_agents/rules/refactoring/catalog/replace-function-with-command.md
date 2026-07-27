@@ -17,7 +17,7 @@
 
 ## When not to apply
 
-- **The default is a function** — `coding_style.md:8` bars introducing a class to
+- **The default is a function** — `coding_style.md`'s "solely to satisfy this document" bars introducing a class to
   house what a function can express; most long functions yield to ordinary extraction
   well before a command is warranted.
 - Undo, queueing, or scheduling are *anticipated* rather than required — building
@@ -64,9 +64,9 @@ class Scorer {
 
 ## House-rule interactions
 
-- `coding_style.md:8` — do not introduce classes solely to satisfy structure: the
+- `coding_style.md` — do not introduce classes solely to satisfy structure: the
   command must be evidenced by failed extraction attempts or a required lifecycle,
   never by a preference for objects.
-- `engineering_judgment.md:26` — match complexity to the problem: the command sits at
+- `engineering_judgment.md` — match complexity to the problem: the command sits at
   the top of a gradient (inline → extracted functions → command); pick the lowest
   rung that works.

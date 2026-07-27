@@ -55,8 +55,8 @@ function payout(sale) {
 
 ## House-rule interactions
 
-- `coding_style.md:14` — comments default to zero: `0.35 // commission rate` is this
+- `coding_style.md` — comments default to zero: `0.35 // commission rate` is this
   refactoring left half-done; the name replaces the comment.
-- `engineering_judgment.md:41` — DRY is about knowledge, not code: one constant per
+- `engineering_judgment.md` — DRY is about knowledge, not code: one constant per
   fact, even when two facts share a value — the occurrence check in the mechanics
   exists to honor this rule.

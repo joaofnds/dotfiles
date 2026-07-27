@@ -16,7 +16,7 @@
 
 ## When not to apply
 
-- **`coding_style.md:8` outranks the book**: the split must be demonstrated by
+- **`coding_style.md`'s "solely to satisfy this document" outranks the book**: the split must be demonstrated by
   divergent change reasons or a cohesive clump, not by line count alone. A large class
   with one responsibility and one reason to change may simply be a large
   responsibility.
@@ -64,10 +64,10 @@ class PaymentAccount {
 
 ## House-rule interactions
 
-- `coding_style.md:8` — the new class is an introduced element; it is admissible only
+- `coding_style.md` — the new class is an introduced element; it is admissible only
   on demonstrated divergent change or clumping, per "When not to apply."
-- `engineering_judgment.md:42` — orthogonality, one change one place: divergent change
+- `engineering_judgment.md` — orthogonality, one change one place: divergent change
   inside one class is that rule failing at class granularity, and this refactoring is
   the repair.
-- `coding_style.md:33` — behavior lives with data: fields and their governing methods
+- `coding_style.md` — behavior lives with data: fields and their governing methods
   move together, or the extraction manufactures an anemic satellite.

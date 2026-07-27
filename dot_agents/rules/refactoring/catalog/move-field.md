@@ -56,9 +56,9 @@ const price = base * (1 - customer.plan.discountRate);
 
 ## House-rule interactions
 
-- `engineering_judgment.md:42` — orthogonality, one change one place: the trigger for
+- `engineering_judgment.md` — orthogonality, one change one place: the trigger for
   this refactoring is exactly the scattered-edit signal that rule names, and the move
   is its structural cure.
-- `coding_style.md:32` — domain models keep raw database schemas and wire formats out;
+- `coding_style.md` — domain models keep raw database schemas and wire formats out;
   a field move whose target is a persisted or serialized shape needs the corresponding
   migration treated as part of the change, not discovered after it.

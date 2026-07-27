@@ -219,70 +219,79 @@ $canonical
 EOF
 note "check 7: $unresolved unresolved index links, $unlinked catalog entries unlinked"
 
-# 8 — house-rule citations still point at lines holding the cited rule.
-# Table: <file>:<line>|<substring that line must contain>. A citation not in the
-# table fails (add it here); a table line that no longer matches fails (the
-# manifesto moved — re-anchor the citing documents and this table together).
-citation_guard='coding_style.md:6|Preserve established project structure
-coding_style.md:7|Do not introduce classes
-coding_style.md:8|solely to satisfy this document
-coding_style.md:12|Simplicity, by Beck'"'"'s four criteria
-coding_style.md:13|Boring control flow
-coding_style.md:14|Comments default to zero
-coding_style.md:15|Move understanding from your head into the code
-coding_style.md:16|Never the `Impl` suffix
-coding_style.md:17|Surgical execution
-coding_style.md:19|Leverage the type system
-coding_style.md:20|Don'"'"'t defend against your own code
-coding_style.md:32|Pure structural types
-coding_style.md:33|Behavior lives with data
-coding_style.md:34|Explicit construction
-coding_style.md:43|Framework-agnostic constructors
-coding_style.md:44|Defensive networking
-coding_style.md:45|Safe parsing at boundaries
-coding_style.md:49|Stateless, non-mutating translators
-coding_style.md:54|thin translation layer
-coding_style.md:58|Tell, Don'"'"'t Ask
-coding_style.md:60|Control non-deterministic side effects
-coding_style.md:66|Put domain behavior with the model it governs
-coding_style.md:67|Generic utilities carve-out
-coding_style.md:68|Inject side-effecting or replaceable dependencies
-engineering_judgment.md:12|Facts before theories
-engineering_judgment.md:14|Name things in the domain'"'"'s language
-engineering_judgment.md:16|Never program by coincidence
-engineering_judgment.md:22|Draw boundaries at the demonstrated cost inflection
-engineering_judgment.md:23|Dependencies point inward
-engineering_judgment.md:25|Program to interfaces, encapsulate what varies
-engineering_judgment.md:26|Match complexity to the problem
-engineering_judgment.md:28|Design for the current need
-engineering_judgment.md:29|Complexity carries the burden of proof
-engineering_judgment.md:36|Work in the smallest coherent steps
-engineering_judgment.md:37|Code is a liability
-engineering_judgment.md:38|Make the change easy
-engineering_judgment.md:41|DRY is about knowledge, not code
-engineering_judgment.md:42|Orthogonality: one change, one place
-engineering_judgment.md:43|Listen to the tests
-engineering_judgment.md:61|Prefer removing the cause
-engineering_judgment.md:62|narrows the space of future bugs
-engineering_judgment.md:63|Don'"'"'t fight your tools'
-
-cited=$(grep -rho '\(coding_style\|engineering_judgment\)\.md:[0-9]*' "$catalog" | sort -u)
+# 8a — catalog citations name a rule, never a line. A line-anchored citation cannot
+# survive an edit to the target: it keeps resolving, but to a different rule, and no
+# reader can tell. (Enforced 2026-07-27, after every coding_style.md:N citation in the
+# catalog had drifted 2-5 lines and the 8 engineering_judgment.md tail citations 1.)
+lineno_cited=$(grep -rhoE '`(coding_style|engineering_judgment)\.md:[0-9]+`' "$catalog" | sort -u)
+lineno_count=0
 while IFS= read -r citation; do
   [ -z "$citation" ] && continue
-  printf '%s\n' "$citation_guard" | grep -q "^$citation|" \
-    || fail "check 8: citation $citation is not in the guard table"
+  lineno_count=$((lineno_count + 1))
+  fail "check 8a: line-anchored citation $citation — cite the rule by name instead"
 done <<EOF
-$cited
+$lineno_cited
 EOF
+
+# 8b — every house rule the catalog cites still exists in its manifesto. Presence, not
+# position: moving a rule is free, renaming or deleting one fails here and the citing
+# documents need re-wording. Table: <file>|<substring the file must still contain>.
+rule_anchors=$(cat <<'ANCHORS'
+coding_style.md|Preserve established project structure
+coding_style.md|Do not introduce classes
+coding_style.md|solely to satisfy this document
+coding_style.md|Simplicity, by Beck's four criteria
+coding_style.md|Boring control flow
+coding_style.md|Comments default to zero
+coding_style.md|Move understanding from your head into the code
+coding_style.md|Never the `Impl` suffix
+coding_style.md|Surgical execution
+coding_style.md|Leverage the type system
+coding_style.md|Don't defend against your own code
+coding_style.md|Pure structural types
+coding_style.md|Behavior lives with data
+coding_style.md|Explicit construction
+coding_style.md|Framework-agnostic constructors
+coding_style.md|Defensive networking
+coding_style.md|Safe parsing at boundaries
+coding_style.md|Stateless, non-mutating translators
+coding_style.md|thin translation layer
+coding_style.md|Tell, Don't Ask
+coding_style.md|Control non-deterministic side effects
+coding_style.md|Put domain behavior with the model it governs
+coding_style.md|Generic utilities carve-out
+coding_style.md|Inject side-effecting or replaceable dependencies
+engineering_judgment.md|Facts before theories
+engineering_judgment.md|Name things in the domain's language
+engineering_judgment.md|Never program by coincidence
+engineering_judgment.md|Draw boundaries at the demonstrated cost inflection
+engineering_judgment.md|Dependencies point inward
+engineering_judgment.md|Program to interfaces, encapsulate what varies
+engineering_judgment.md|Match complexity to the problem
+engineering_judgment.md|Design for the current need
+engineering_judgment.md|Complexity carries the burden of proof
+engineering_judgment.md|Work in the smallest coherent steps
+engineering_judgment.md|Code is a liability
+engineering_judgment.md|Make the change easy
+engineering_judgment.md|DRY is about knowledge, not code
+engineering_judgment.md|Orthogonality: one change, one place
+engineering_judgment.md|Listen to the tests
+engineering_judgment.md|Prefer removing the cause
+engineering_judgment.md|narrows the space of future bugs
+engineering_judgment.md|Don't fight your tools
+ANCHORS
+)
+
+anchors_checked=0
 while IFS='|' read -r target token; do
   [ -z "$target" ] && continue
-  rule_file="$root/dot_agents/rules/${target%%:*}"
-  rule_line="${target##*:}"
-  sed -n "${rule_line}p" "$rule_file" | grep -Fq "$token" \
-    || fail "check 8: $target no longer contains '$token' — manifesto drifted; re-anchor citations"
+  anchors_checked=$((anchors_checked + 1))
+  grep -Fq "$token" "$root/dot_agents/rules/$target" \
+    || fail "check 8b: $target no longer contains '$token' — a cited house rule was renamed or deleted; re-word the citing catalog documents"
 done <<EOF
-$citation_guard
+$rule_anchors
 EOF
+note "check 8: $anchors_checked cited house rules checked, $lineno_count line-anchored citations"
 
 if [ "$failures" -eq 0 ]; then
   note "OK"

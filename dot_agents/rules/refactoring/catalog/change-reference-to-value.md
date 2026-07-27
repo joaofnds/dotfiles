@@ -54,8 +54,8 @@ const billing = { address };
 
 ## House-rule interactions
 
-- `coding_style.md:49` — stateless, non-mutating translators: value semantics extend
+- `coding_style.md` — stateless, non-mutating translators: value semantics extend
   the same never-modify-in-place discipline from boundary mappers to domain data.
-- `engineering_judgment.md:62` — narrows the space of future bugs: every
+- `engineering_judgment.md` — narrows the space of future bugs: every
   action-at-a-distance mutation through a shared reference becomes unrepresentable,
   not merely unlikely.

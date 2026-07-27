@@ -52,11 +52,11 @@ function makeOrder(data, customers) {
 
 ## House-rule interactions
 
-- `coding_style.md:68` — inject side-effecting or replaceable dependencies: the
+- `coding_style.md` — inject side-effecting or replaceable dependencies: the
   repository is a constructor-injected collaborator, never a module-level singleton;
   reaching it globally would trade the Duplicated Code smell for Global Data.
-- `engineering_judgment.md:41` — DRY is about knowledge: N copies of one entity are N
+- `engineering_judgment.md` — DRY is about knowledge: N copies of one entity are N
   encodings of the same fact, and this refactoring is the unification.
-- `coding_style.md:12` — Beck's ordering: the repository is an added element, bought
+- `coding_style.md` — Beck's ordering: the repository is an added element, bought
   by removing the copy-drift class of bugs — only justified where updates genuinely
   must be shared.

@@ -58,9 +58,9 @@ function sendReceipt(order) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md:37` — code is a liability: dead code is the pure case, all
+- `engineering_judgment.md` — code is a liability: dead code is the pure case, all
   maintenance cost and no behavior. When in doubt, delete.
-- `engineering_judgment.md:12` — facts before theories: deadness is an empirical claim;
+- `engineering_judgment.md` — facts before theories: deadness is an empirical claim;
   the deletion is justified by the probe's result, never by memory of the call graph.
-- `coding_style.md:17` — surgical execution names leaving no dead imports behind from
+- `coding_style.md` — surgical execution names leaving no dead imports behind from
   your own changes — this refactoring is that duty applied to code others left behind.

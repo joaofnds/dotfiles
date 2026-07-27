@@ -57,9 +57,9 @@ const createFemale = () => new Person("F");
 
 ## House-rule interactions
 
-- `coding_style.md:8` — the house presumption against class machinery makes this
+- `coding_style.md` — the house presumption against class machinery makes this
   refactoring's bar *low*: a subclass must actively justify itself, and "it stores a
   constant" is not justification.
-- `engineering_judgment.md:26` — match complexity to the problem: data-only variation
+- `engineering_judgment.md` — match complexity to the problem: data-only variation
   is the simple end of the spectrum; keeping hierarchy there is over-architecting by
   inertia.

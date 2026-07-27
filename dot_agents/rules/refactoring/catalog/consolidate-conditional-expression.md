@@ -54,9 +54,9 @@ function isIneligibleForBonus(e) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md:41` — DRY is about knowledge: consolidate only when the
+- `engineering_judgment.md` — DRY is about knowledge: consolidate only when the
   clauses encode one rule; identical results serving different rules stay separate,
   exactly as the rule prescribes for look-alike code.
-- `coding_style.md:13` — boring control flow: the combined expression must stay
+- `coding_style.md` — boring control flow: the combined expression must stay
   readable — a three-line `&&`/`||` pile-up that needs parsing is worse than the
   original ifs, and the fix is extracting the name, not stacking clauses.

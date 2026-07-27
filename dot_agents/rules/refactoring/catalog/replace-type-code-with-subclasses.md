@@ -20,7 +20,8 @@
 
 - The type code only labels — it is displayed, stored, compared, but never branches
   behavior. A validated value (Replace Primitive with Object) suffices; a hierarchy
-  for a label is `coding_style.md:8` bait.
+  for a label is the class `coding_style.md` bars introducing "solely to satisfy this
+  document".
 - The kind must change at runtime — objects cannot re-class. Use Replace Subclass
   with Delegate's shape instead: a swappable kind-delegate.
 - In Go or class-light TypeScript, the rendering is one implementation of a common
@@ -61,11 +62,11 @@ class Commissioned extends Employee {
 
 ## House-rule interactions
 
-- `coding_style.md:8` — subclasses are introduced elements: the demonstrated need is
+- `coding_style.md` — subclasses are introduced elements: the demonstrated need is
   behavior branching on the code in multiple places; a single label field never
   qualifies.
-- `coding_style.md:19` — leverage the type system: the refactored form lets the
+- `coding_style.md` — leverage the type system: the refactored form lets the
   compiler own kind-dispatch (exhaustive unions, sealed interfaces) instead of
   string comparison at runtime.
-- `engineering_judgment.md:25` — encapsulate what varies: the kinds are the varying
+- `engineering_judgment.md` — encapsulate what varies: the kinds are the varying
   thing; this refactoring builds the enclosure around them.

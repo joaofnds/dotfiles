@@ -59,10 +59,10 @@ function unreadCount(user, messages) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md:14` — name things in the domain's language: the declaration
+- `engineering_judgment.md` — name things in the domain's language: the declaration
   is where domain vocabulary either lands in the code or does not.
-- `coding_style.md:16` — the `Impl`-suffix ban is this refactoring's naming bar stated
+- `coding_style.md` — the `Impl`-suffix ban is this refactoring's naming bar stated
   for classes: a name must say what a thing *is*, and a non-name fails even when it
   compiles.
-- `coding_style.md:17` — surgical execution: rename what the task touches; a repo-wide
+- `coding_style.md` — surgical execution: rename what the task touches; a repo-wide
   vocabulary sweep is its own task, agreed to explicitly.

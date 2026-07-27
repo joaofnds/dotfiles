@@ -53,10 +53,10 @@ const boss = employee.manager;
 
 ## House-rule interactions
 
-- `coding_style.md:58` — Tell, Don't Ask, "the corollary to the Law of Demeter":
+- `coding_style.md` — Tell, Don't Ask, "the corollary to the Law of Demeter":
   chain-walking is asking for internals and deciding for them; this refactoring is the
   named cure the rule points at.
-- `coding_style.md:12` — Beck's ordering: each forwarding method is an added element,
+- `coding_style.md` — Beck's ordering: each forwarding method is an added element,
   bought by decoupling clients from structure — which is why the count matters, and
   why the balance point with Remove Middle Man is judged per relationship, not by
   doctrine.

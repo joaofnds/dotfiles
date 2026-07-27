@@ -57,9 +57,9 @@ raise(employee, 0.1);
 
 ## House-rule interactions
 
-- `engineering_judgment.md:41` — DRY is about knowledge: the variants encode one rule
+- `engineering_judgment.md` — DRY is about knowledge: the variants encode one rule
   ("a raise scales salary"), so unification is mandated; if they had encoded two
   rules that merely rhymed, it would be forbidden.
-- `engineering_judgment.md:28` — YAGNI: parameterize to remove existing duplicates,
+- `engineering_judgment.md` — YAGNI: parameterize to remove existing duplicates,
   not to speculate — adding a parameter "for flexibility" with one caller is the
   smell, not the cure.
