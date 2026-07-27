@@ -63,29 +63,13 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 - **A good change narrows the space of future bugs.** A symptom patch leaves the class exposed; a structural fix eliminates it. Ask: "What about the cases I haven't seen?"
 - **Don't fight your tools.** Working around a library at every turn = wrong tool or wrong usage. Investigate before adding another workaround.
 - **Trace the full blast radius.** List every place the change affects. Flag incomplete fixes explicitly — don't ship silently.
-- **"Tests pass" ≠ "approach is right."** Verification confirms behavior, not design. (For agent-specific verification failure modes, see §7.)
+- **"Tests pass" ≠ "approach is right."** Verification confirms behavior, not design. (For agent-specific verification failure modes, see §6.)
 - **Feedback speed is everything.** Every speedup compounds. TDD, CI, trunk-based, fast monitoring all exist to shorten the loop. *(See: test-driven-development, continuous-integration, trunk-based-development)*
 - **Control the variables.** Fast feedback is noise when the test, environment, workload, or artifact changes underneath it. Make experiments deterministic enough that the observed delta can be attributed to the change. *(See: tools-of-software-engineering)*
 - **Measure what matters.** Deploy frequency, lead time, MTTR, change failure rate. Speed and stability are complementary, not trade-offs. *(See: dora-accelerate-metrics)*
 - **Blameless postmortems.** Ask "how did the system allow this?" not "who did this?" Blame drives hiding; learning drives improvement.
 
-## 6. Summary Cheat Sheet
-
-- Am I fixing the symptom or the root cause?
-- Did I question whether the mechanism itself is right?
-- What did I predict, and did the observation match?
-- Do my names match the domain language?
-- Are my dependencies pointing inward?
-- Am I over- or under-architecting?
-- Strong case for this new dependency? (Default: inline.)
-- Am I building for a hypothetical future?
-- Is the simplest solution the one I chose?
-- Does this change narrow the space of future bugs?
-- Have I traced the full blast radius?
-- Did I verify independently?
-- Would I ship this to production right now? (See §4: relevant deadlines, retry safety, justified propagation barriers, reliability targets, deploy-window compatibility, and deployable size.)
-
-## 7. Agent-Specific Failure Modes
+## 6. Agent-Specific Failure Modes
 
 Always-on risks, not edge cases:
 
