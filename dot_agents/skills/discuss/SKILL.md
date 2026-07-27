@@ -17,9 +17,6 @@ Interview a rough goal until the problem is sharp enough to write down. The outp
 a spec/PRD — *what* must be true for this to be done, independent of *how* it's built.
 The how comes later (`/research` → `/grill` → `/plan`).
 
-This is the question-heavy phase. A fuzzy problem poisons everything downstream, so
-spend your effort here.
-
 ## Interview discipline
 
 - **One question at a time.** Wait for the answer before the next — batching produces

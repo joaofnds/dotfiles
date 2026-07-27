@@ -14,8 +14,7 @@ description: >
 
 Investigate a bug down to a confirmed root cause. The job is understanding, not
 repair — probe and instrument freely, but don't land the fix here; that's
-/plan → /build, off the cause you find. Your instinct will be to jump to a
-plausible fix. Resist it.
+/plan → /build, off the cause you find.
 
 **Build the loop before theorizing.** Get a tight, red-capable repro first: one
 command you've already run that goes red on *this* bug and green once it's fixed —
