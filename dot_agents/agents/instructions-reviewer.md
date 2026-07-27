@@ -81,14 +81,7 @@ Acknowledge what works. The "Strengths" section is required.
   `~/.agents/rules/testing/00-index.md`. Do not apply source-code style mechanically to
   instruction prose.
 
-- **Harness mechanics carry a verification date.** The numeric limits and field semantics in
-  §1–§2 (load limits, import depth, listing caps, tool-field behavior, what reaches a
-  sub-agent) were verified 2026-07-25 against the Claude Code sub-agents, skills, and memory
-  references and the Anthropic prompting-best-practices pages. You have no documentation
-  access, so re-verification is the author's job on each Claude Code or model release, not
-  yours. Cite these facts with their date, and when a finding would rest a **Blocker** on
-  one, report it as `Blocker [unverified — harness fact dated 2026-07-25]` and name
-  "re-check the sub-agents / skills / memory reference" as the settling step.
+- **Release-coupled and cited facts carry a verification date, and live in a reference.** `~/.agents/rules/instruction_external_facts.md` records — each with its date — the §1–§2 numeric limits and field semantics, §7's deprecated-mechanics list, and what every external source this checklist cites actually measured. Read it before resting a finding on any of them. You have no documentation access, so re-verification is the author's job on each Claude Code or model release, not yours. Cite such a fact with its date; when a finding would rest a **Blocker** on one, report it as `Blocker [unverified — dated YYYY-MM-DD]` and name that entry's settling step.
 
 ### Failure-mode vocabulary
 
@@ -180,7 +173,7 @@ Prompt cache prefix order: `tools → system → messages`. A change at level N 
 
 - **Dating.** Rules added after specific incidents survive longer when dated with cause: "added 2025-09 after incident X — re-evaluate 2026-Q2." Undated bullets accumulate forever.
 - **Stale-reference lint pass.** Covered in Operating notes.
-- **Deprecated model mechanics.** Flag instruction or harness content that leans on mechanisms removed on current models: prefilled last-assistant-turn responses (400 on Claude 4.6+ — migrate to direct instruction, XML output tags, or Structured Outputs) and `budget_tokens` thinking caps (400 on Opus 4.7+ / Fable / Mythos — use `effort`, or `max_tokens` as a hard ceiling). Also flag a rule instructing the model *not* to think or reason: with thinking disabled it increases internal-XML-tag leakage into visible output, and the general form ("do not include internal or system XML tags in your response") outperforms naming the tags. This set grows.
+- **Deprecated model mechanics.** Flag instruction or harness content leaning on a mechanism removed on current models — prefilled last-assistant-turn responses, `budget_tokens` thinking caps, or a rule telling the model *not* to think. When you hit one, read `~/.agents/rules/instruction_external_facts.md` §2 for the error it now produces and the migration. This set grows.
 - **Over-specification.** Hardcoded file paths, function names, directory layouts, or model versions rot within a sprint. Describe *capabilities* and let the agent grep, instead of describing *structure*.
 
 ### 8. Sub-agent specifics (output contract, caller context, completion gate)
