@@ -11,6 +11,7 @@
   "skipWorkflowUsageWarning": true,
   "tui": "fullscreen",
   "theme": "auto",
+  "outputStyle": "answer-first",
 
   "disableBundledSkills": false,
   "disableWorkflows": true,
