@@ -26,7 +26,6 @@ Language-specific preferences for TypeScript projects. Read the generic `coding_
 ## 4. Framework-Agnostic Constructors
 - Do not tie class constructors directly to the DI framework. Instead of injecting `ConfigService` into a config class (which forces you to mock the service in tests), write the constructor to accept pure dependencies (like parsed primitives or specific interfaces).
 - Use `static fromConfigService(configService: ConfigService)` or module `useFactory` declarations to adapt the framework's DI into the clean constructor.
-- This ensures you can simply do `new MyService({...})` in unit tests cleanly.
 - **DI tokens represent ports, not adapters.** Use the repository's established token form: symbol, string, abstract class, or framework-native token. A consumer must not depend on a concrete adapter merely to obtain a runtime token.
 
 ## 5. Testing
