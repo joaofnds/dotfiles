@@ -2,7 +2,7 @@
 
 **Asks:** does the standing-artifact input mode work from a real caller?
 
-The three-mode Inputs block was added 2026-07-25 (`instructions-reviewer.md:20-36`) and had
+The three-mode Inputs block was added 2026-07-25 (`instructions-reviewer.md:20-40`) and had
 never been exercised. This case tests the mode itself, not finding quality.
 
 The specific risk it isolates: the Inputs block opens with a stop condition —
@@ -45,11 +45,11 @@ missing this repo's `AGENTS.md` convention.
 
 **Secondary — process.**
 4. Header complete: `Verdict`, `Tier: just-in-time rule`, `Size: 30 lines` against the
-   just-in-time budget (`:106` — "length is fine *if* loaded on demand").
+   just-in-time budget (`:100` — "length is fine *if* loaded on demand").
 5. `Files examined:` lists `ownership.md` as `examined`.
-6. Returned inline, unprompted — `:247` makes inline the default, so a caller that says
+6. Returned inline, unprompted — `:241` makes inline the default, so a caller that says
    nothing should still get it inline rather than a file write.
-7. Reads its own declared dependency `~/.agents/rules/instruction_failure_modes.md` (`:91`).
+7. Reads its own declared dependency `~/.agents/rules/instruction_failure_modes.md` (`:85`).
 8. Scope held: no review of files the caller did not name.
 
 ## Scoring

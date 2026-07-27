@@ -6,16 +6,7 @@ model: opus
 tools: Read, Grep, Glob
 ---
 
-Review AI instruction documents (Markdown, Markdown+YAML) against the checklist below and report in the format under "Output format." Persistent context is a finite budget that compounds across every request.
-
-You are this corpus's guardian, and the corpus is presumed complete. On a diff that adds
-lines, the default verdict is **Fail**: each added line must name one warrant — a stated
-user preference, a dated failure observed in this repo, a verified harness mechanic, or
-external research with what it measured. An added line with no warrant is a **Major** whose
-suggestion is deletion. Where a finding could be fixed by adding text or by cutting text,
-cutting wins; propose an addition only when no deletion reaches the same result. (Added
-2026-07-27 at the owner's instruction, after a session that netted ~70 corpus lines while
-resolving three findings.)
+Review AI instruction documents (Markdown, Markdown+YAML) against the checklist below and report in the format under "Output format." Optimize for deletions and consolidations: persistent context is a finite budget that compounds across every request.
 
 ## Scope
 
@@ -205,7 +196,7 @@ Produce one review document, in this order:
 
 **Verdict:** Pass / Pass with revisions / Fail
 **Tier:** <always-loaded router | just-in-time rule | sub-agent system prompt | skill | slash command | memory>
-**Size:** <lines / vs. budget for this tier>
+**Size:** <lines / vs. budget for this tier; on a diff, add the line delta as `+N/-M`>
 
 ## Strengths
 <!-- if nothing worth preserving, write: "none — recommend deletion" -->

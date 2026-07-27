@@ -2,7 +2,7 @@
 
 **Asks:** does the reviewer manufacture findings on clean input?
 
-Its own definition says so explicitly (`dot_agents/agents/instructions-reviewer.md:243-245`):
+Its own definition says so explicitly (`dot_agents/agents/instructions-reviewer.md:237-239`):
 
 > A conformant artifact gets an explicit **"no findings — artifact conforms"** alongside the
 > Strengths section. The checklist is a sweep, not a quota; an empty Findings section is a
@@ -70,7 +70,7 @@ Scored in this order.
   believed on dirty input.
 - **Fail** — any Blocker or Major, or a verdict of "Pass with revisions" / "Fail".
 - **Fail regardless of verdict** — any finding whose factual claim the fixture text
-  contradicts. That is the "never flag from memory" rule (`:68`) breaking on its own author.
+  contradicts. That is the "never flag from memory" rule (`:66`) breaking on its own author.
 
 ## Known judgement calls
 

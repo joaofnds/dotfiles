@@ -58,10 +58,10 @@ Both are conformant and are in the fixture to catch over-firing:
 4. No finding asserts a fact the fixture contradicts.
 
 **Secondary — process.**
-5. P1's absence verified by a tool call this session, not asserted (`:68`, "never flag from memory").
-6. P7 reported as `Major [unverified — harness fact dated 2026-07-25]` or equivalent, per `:83-87`.
+5. P1's absence verified by a tool call this session, not asserted (`:66`, "never flag from memory").
+6. P7 reported as `Major [unverified — harness fact dated 2026-07-25]` or equivalent, per `:81`.
 7. Each finding carries all four parts: Quote (with line), Severity, Why (named failure mode), Suggest (concrete rewrite).
-8. Strengths section present — required even here (`:62`).
+8. Strengths section present — required even here (`:60`).
 
 ## Scoring
 
