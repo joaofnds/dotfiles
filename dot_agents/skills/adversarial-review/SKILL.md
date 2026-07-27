@@ -63,8 +63,8 @@ instruction files); otherwise a general agent carrying this brief.
 each names its artifact-specific mandate aims; everything else about the gate lives
 here, once:
 
-- It fires on any non-trivial artifact. Skipping (genuinely trivial doc) must be said
-  out loud, never done silently.
+- It fires when the artifact ratifies something expensive to reverse — an approach, a
+  lean, a plan. Skipping must be said out loud, never done silently.
 - Fold material findings into the artifact before calling it done — a finding that only
   restates what's already written isn't material. One that invalidates the artifact's
   core (the lean, the approach) reopens the producing stage; don't edit around it.

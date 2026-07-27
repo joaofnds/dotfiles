@@ -38,14 +38,11 @@ This set grows.
 
 ## 3. Cited sources, and what each measured
 
-The checklist's rule: name what a source measured before resting a claim on it. A source
-that measured nothing supports a **mechanism argument**, never an **outcome claim**.
-
-| Source | Cited at | What it is | What it supports |
-|---|---|---|---|
-| mattpocock, *Writing Great Skills* | §1 keep-side test, §2 invocation mode | Practitioner guide. No measurement. | Mechanism argument only. |
-| Anthropic prompting-best-practices pages | §1–§2 limits, §4 XML tags | Vendor documentation. Normative, not a study. | Mechanism argument; re-check per release. |
-| agents.md community convention | §9 project-root expectations | A convention. Nothing measured. | A default section list, not evidence. |
+None of them measured anything. mattpocock's *Writing Great Skills* (§1 keep-side test,
+§2 invocation mode) is a practitioner guide; the Anthropic prompting-best-practices pages
+(§1–§2 limits, §4 XML tags) are vendor documentation, so re-check them per release; the
+agents.md convention (§9) is a convention. All three support a **mechanism argument**,
+never an **outcome claim**.
 
 ## 4. Rejected citations — do not restore
 
