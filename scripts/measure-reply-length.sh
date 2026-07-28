@@ -4,10 +4,19 @@
 # output contract in .boris/plans/2026-07-27-reply-length-and-ste-prose.md §5.
 #
 # Usage: measure-reply-length.sh [--since ISO8601] [transcript-dir]
-#   --since  drop turns whose opening user record is older than this timestamp. Compared as
-#            a string, so any ISO 8601 UTC prefix works (2026-07-25, 2026-07-25T12:00:00Z).
-#            Required to isolate turns produced after an output style became active: no
-#            transcript record names the active style.
+#   --since  keep only sessions that STARTED at or after this timestamp, and keep all of
+#            their turns. A session whose first record predates the cutoff is dropped whole,
+#            even for turns it produced after the cutoff. Compared as a string, so any
+#            ISO 8601 UTC prefix works (2026-07-25, 2026-07-25T12:00:00Z).
+#
+#            Whole sessions, not turns, because that is how the thing being measured
+#            switches on: an output style is read at session start, so a session already
+#            running when the style was installed never had it, and every turn it produces
+#            afterwards is pre-style output wearing a post-style timestamp. Filtering per
+#            turn silently mixes the two. No transcript record names the active style, so
+#            the session's own start time is the only available proxy.
+#            A session with no timestamped record at all is dropped: it cannot be shown
+#            to be post-cutoff.
 #   transcript-dir  defaults to ~/.claude/projects/-Users-joaofnds-code-dotfiles. Read
 #            non-recursively: subagent transcripts live one level down and are not read.
 #
@@ -85,30 +94,35 @@ def boundary:
 def text_block_words: [.message.content[]? | select(type == "object" and .type == "text") | .text // "" | wordcount];
 
 reduce inputs as $record (
-  {turns: [], current: null};
-  if $record.isSidechain == true then
-    .
-  elif ($record | boundary) then
-    (if .current then .turns += [.current] else . end)
-    | .current = {words: 0, emissions: 0, start: ($record.timestamp // "")}
-  elif $record.type == "assistant" and .current != null then
-    ($record | text_block_words) as $counts
-    | .current.words += ($counts | add // 0)
-    | .current.emissions += ($counts | length)
-  else
-    .
-  end
+  {turns: [], current: null, session_start: null};
+  (if .session_start == null and $record.timestamp != null
+     then .session_start = $record.timestamp
+     else . end)
+  | if $record.isSidechain == true then
+      .
+    elif ($record | boundary) then
+      (if .current then .turns += [.current] else . end)
+      | .current = {words: 0, emissions: 0}
+    elif $record.type == "assistant" and .current != null then
+      ($record | text_block_words) as $counts
+      | .current.words += ($counts | add // 0)
+      | .current.emissions += ($counts | length)
+    else
+      .
+    end
 )
 | (if .current then .turns += [.current] else . end)
-| .turns[]
+| if $since != "" and ((.session_start == null) or (.session_start < $since))
+  then empty
+  else .turns[]
+  end
 '
 
 statistics='
 def fmt1: (. * 10 | round) as $tenths | "\(($tenths / 10) | floor).\($tenths % 10)";
 def nearest_rank($sorted; $n; $p): $sorted[((($p * $n) / 100) | ceil) - 1];
 
-(if $since == "" then . else map(select(.start >= $since)) end)
-| map(select(.words > 0))
+map(select(.words > 0))
 | (map(.words) | sort) as $words
 | ($words | length) as $n
 | (map(.emissions) | add // 0) as $emissions
@@ -137,11 +151,11 @@ def nearest_rank($sorted; $n; $p): $sorted[((($p * $n) / 100) | ceil) - 1];
 if ! segmented="$(
   for file in "$dir"/*.jsonl; do
     [ -e "$file" ] || continue
-    jq -c -n "$segment" "$file" || exit 1
+    jq -c -n --arg since "$since" "$segment" "$file" || exit 1
   done
 )"; then
   printf 'measure-reply-length.sh: failed to parse transcripts in %s\n' "$dir" >&2
   exit 1
 fi
 
-printf '%s\n' "$segmented" | jq -s -r --arg since "$since" "$statistics"
+printf '%s\n' "$segmented" | jq -s -r "$statistics"

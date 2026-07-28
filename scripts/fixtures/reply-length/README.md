@@ -49,6 +49,21 @@ Sorted: 51, 60, 140. Sum 251. Percentiles are nearest-rank, index `ceil(p/100 * 
 | over_125_pct | 33.3 | 1 of 3 |
 | over_125_prose_share_pct | 55.8 | 140 / 251 = 55.776… |
 
+## `--since` is session-scoped
+
+The fixture's session opens at `2026-07-20T10:00:00Z`, and its four turns run through
+`2026-07-23`. `--since` keeps or drops the **whole session**, never individual turns:
+
+    --since 2026-07-19   ->  turns: 3   (session starts after the cutoff, all turns kept)
+    --since 2026-07-21   ->  turns: 0   (session starts before it, dropped whole)
+
+The second line is the one that matters. Two of the fixture's turns are dated after
+`2026-07-21`, so a per-turn filter would report `turns: 2`. It reports 0 instead, because an
+output style is read at session start: a session already running when the style was installed
+never had it, and its later turns are pre-style output with post-style timestamps.
+
+`scripts/check-all.sh` asserts both lines.
+
 ## What a wrong implementation prints
 
 A script that splits on **every** `type == "user"` record — the failure spec §1 rule 2 and
