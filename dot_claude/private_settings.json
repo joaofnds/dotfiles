@@ -43,22 +43,23 @@
   },
 
   "skillOverrides": {
-    "schedule": "user-invocable-only",
-    "loop": "user-invocable-only",
-    "keybindings-help": "user-invocable-only",
-    "fewer-permission-prompts": "user-invocable-only",
-    "deep-research": "name-only",
+    "artifact-capabilities": "off",
+    "artifact-design": "off",
     "claude-api": "name-only",
     "code-review": "user-invocable-only",
-    "review": "user-invocable-only",
-    "security-review": "user-invocable-only",
     "dataviz": "off",
-    "update-config": "off",
-    "simplify": "off",
-    "run": "off",
+    "deep-research": "name-only",
+    "fewer-permission-prompts": "user-invocable-only",
+    "frontend-design": "off",
     "init": "off",
-    "artifact-design": "off",
-    "artifact-capabilities": "off"
+    "keybindings-help": "user-invocable-only",
+    "loop": "user-invocable-only",
+    "review": "user-invocable-only",
+    "run": "off",
+    "schedule": "user-invocable-only",
+    "security-review": "user-invocable-only",
+    "simplify": "off",
+    "update-config": "off"
   },
 
   "statusLine": {
