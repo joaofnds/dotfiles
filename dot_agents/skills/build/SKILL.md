@@ -33,7 +33,21 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
 ## Rules
 
 - Follow the project's normal coding and testing standards while implementing (the usual rule files still apply — this skill doesn't override them).
-- Stay inside the plan's Scope boundary the whole way through. If you spot necessary follow-up work, add it as a new unchecked task or a note — don't expand silently.
+- Stay inside the plan's Scope boundary the whole way through. If you spot necessary follow-up work, add it as a new task marked `- [ ] DEFERRED —` so it reads as out of scope rather than as unbuilt work — don't expand silently.
 - If the plan is wrong, ambiguous, or contradicts the codebase, stop and ask rather than guessing. Under-specification is divergence too: when a task forces you to design something the plan never settled — a new type, an API surface, a dependency — surface the design and get it ratified before building it. A `DESIGN:` note on the task records the decision; it doesn't authorize it.
 - Keep the plan file updated as you go: checked boxes, plus a short note on any task you had to deviate on and why.
-- When every task is checked, tests pass, the refactor pass has run, and every acceptance criterion has execution evidence, summarize what was done and flag anything left deferred.
+- When every task is checked, tests pass, the refactor pass has run, and every acceptance criterion has execution evidence, **close the plan out before you summarize.** Write a closeout at the top of the plan file, directly under the title:
+
+      **Status:** built | partial | abandoned — YYYY-MM-DD
+
+      ## Closeout
+      - **Landed:** what shipped, in one line per milestone.
+      - **Not landed:** each unbuilt task, and the reason — descoped, superseded, blocked.
+      - **Left over:** work still wanted. Each item names where it went — a new plan under
+        `.boris/plans/`, an issue, or a line in the user's daily note. Nothing is left
+        pointing only at this file; the archive is not a queue.
+
+  Then archive the whole chain of documents that led to the plan, not just the plan: every artifact sharing its stem — `-spec`, `-options`, `-grilled`, `-diagnosis`, `-findings`, and the numbered milestone plans — plus that stem's entries under `.boris/reviews/` and `.boris/handoffs/`. Each moves to the mirrored `.boris/archive/<subdir>/` (`git mv` when tracked, `mv` otherwise). A plan stopped mid-flight archives the same way — `partial` or `abandoned`, with the reason in the closeout. Only in-flight work stays outside `.boris/archive/`.
+
+  When a stem carries several milestone plans, archive the chain only once the last one is closed out — the shared spec and grilled docs are still live for the milestones that remain.
+- A citation to `.boris/<subdir>/<name>.md` that doesn't resolve is looked up at `.boris/archive/<subdir>/<name>.md` before being treated as missing. Never repoint an existing citation on archive.
