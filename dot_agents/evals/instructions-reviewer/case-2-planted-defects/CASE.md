@@ -13,7 +13,7 @@ Invoke the `instructions-reviewer` agent with exactly this prompt:
 ```
 Standing artifact review. Read and review this file:
 
-/Users/joaofnds/code/dotfiles/evals/instructions-reviewer/case-2-planted-defects/fixture/dependency-audit-reviewer.md
+/Users/joaofnds/code/dotfiles/dot_agents/evals/instructions-reviewer/case-2-planted-defects/fixture/dependency-audit-reviewer.md
 
 It is a sub-agent definition. Return the review inline.
 ```
@@ -58,10 +58,10 @@ Both are conformant and are in the fixture to catch over-firing:
 4. No finding asserts a fact the fixture contradicts.
 
 **Secondary — process.**
-5. P1's absence verified by a tool call this session, not asserted (`:66`, "never flag from memory").
-6. P7 reported as `Major [unverified — harness fact dated 2026-07-25]` or equivalent, per `:81`.
+5. P1's absence verified by a tool call this session, not asserted (the "Never flag from memory" Operating note).
+6. P7 reported as `Major [unverified — harness fact dated 2026-07-25]` or equivalent, per the "Release-coupled and cited facts" Operating note.
 7. Each finding carries all four parts: Quote (with line), Severity, Why (named failure mode), Suggest (concrete rewrite).
-8. Strengths section present — required even here (`:60`).
+8. Strengths section present — required even here (§How you review, "the \"Strengths\" section is required").
 
 ## Scoring
 

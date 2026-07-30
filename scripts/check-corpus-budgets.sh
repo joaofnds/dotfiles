@@ -57,8 +57,18 @@ done
 # resolving after the target is edited — to a different rule — and no reader can tell.
 # (Added 2026-07-27: every catalog citation into coding_style.md had drifted 2-5 lines,
 # and coding_style.md's own pointer at coupling.md:12 resolved to a blank line.)
+#
+# Scope covers the eval rubrics too: they cite the agent definition they grade, so an edit to
+# that definition silently re-points them. Three forms, because the first pass matched only
+# the first: `file.md:12`, a range `file.md:12-14`, and a bare `(`:85`)` anchor.
+# `evals/*/results/` is excluded on purpose — those are dated records of past runs, and a
+# citation there is evidence of what a line said then, not a pointer to maintain now.
+# (Widened 2026-07-30: two insertions into instructions-reviewer.md re-pointed seven rubric
+# anchors — one to a blank line — and the narrow regex plus the dot_agents-only root saw none.)
 printf '\nCitation hygiene\n'
-cites=$(grep -rnoE '`[A-Za-z0-9_/-]+\.md:[0-9]+`' "$corpus" || true)
+cites=$(grep -rnoE --exclude-dir=results \
+  '`[A-Za-z0-9_/-]+\.md:[0-9]+(-[0-9]+)?`|\(`:[0-9]+(-[0-9]+)?`' \
+  "$corpus" 2>/dev/null || true)
 if [ -n "$cites" ]; then
   while IFS= read -r c; do
     [ -z "$c" ] && continue
@@ -70,10 +80,12 @@ else
   note "no line-anchored citations"
 fi
 
+# `evals/` lives under dot_agents/ but is not loaded into any context, so it is not corpus.
 printf '\nTotals\n'
-total=$(find "$corpus" -name '*.md' -exec cat {} + | wc -l | tr -d ' ')
+corpus_files() { find "$corpus" -name '*.md' -not -path "$corpus/evals/*"; }
+total=$(corpus_files | tr '\n' '\0' | xargs -0 cat | wc -l | tr -d ' ')
 always=$(lines "$corpus/AGENTS.md")
-note "corpus $total lines across $(find "$corpus" -name '*.md' | wc -l | tr -d ' ') files"
+note "corpus $total lines across $(corpus_files | wc -l | tr -d ' ') files"
 note "always-loaded surface $always lines"
 
 printf '\n'

@@ -2,16 +2,16 @@
 
 **Asks:** does the standing-artifact input mode work from a real caller?
 
-The three-mode Inputs block was added 2026-07-25 (`instructions-reviewer.md:20-40`) and had
+The three-mode Inputs block was added 2026-07-25 (`instructions-reviewer.md` §Inputs) and had
 never been exercised. This case tests the mode itself, not finding quality.
 
 The specific risk it isolates: the Inputs block opens with a stop condition —
 
 > Given no target, stop and return a one-line request for the missing input — do not guess
-> a scope. (`:22-23`)
+> a scope. (§Inputs, the stop condition)
 
 — immediately above the standing-artifact mode that *is* satisfied by a bare path
-(`:25-27`). A reviewer that reads the stop condition as governing all three modes will
+(§Inputs, the **Standing artifact** bullet). A reviewer that reads the stop condition as governing all three modes will
 refuse a legally-formed standing-artifact call. Cases 1 and 2 would not catch this: both
 name the artifact type and say "return the review inline", so they carry more scaffolding
 than the mode requires. This case supplies the minimum the definition permits.
@@ -45,11 +45,11 @@ missing this repo's `AGENTS.md` convention.
 
 **Secondary — process.**
 4. Header complete: `Verdict`, `Tier: just-in-time rule`, `Size: 30 lines` against the
-   just-in-time budget (`:100` — "length is fine *if* loaded on demand").
+   just-in-time budget (§1 "Just-in-time rule files" — "length is fine *if* loaded on demand").
 5. `Files examined:` lists `ownership.md` as `examined`.
-6. Returned inline, unprompted — `:241` makes inline the default, so a caller that says
+6. Returned inline, unprompted — §Output format's "**Return inline.**" makes inline the default, so a caller that says
    nothing should still get it inline rather than a file write.
-7. Reads its own declared dependency `~/.agents/rules/instruction_failure_modes.md` (`:85`).
+7. Reads its own declared dependency `~/.agents/rules/instruction_failure_modes.md` (§Failure-mode vocabulary).
 8. Scope held: no review of files the caller did not name.
 
 ## Scoring

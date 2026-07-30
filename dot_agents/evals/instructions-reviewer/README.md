@@ -28,9 +28,13 @@ results/                 one file per run: YYYY-MM-DD-case-N.md
 Each `CASE.md` holds the exact invocation prompt, the expected behaviour, and the scoring
 rule. Cases 1 and 2 carry a fixture; case 3 targets a real corpus file on purpose.
 
-The directory is listed in `.chezmoiignore`. It must stay there — the case-2 fixture is a
-deliberately defective agent definition, and rendering it into `~/.agents/` would install it
-as a live agent.
+This directory sits under `dot_agents/` to stay beside what it grades, but it is not corpus.
+`scripts/check-corpus-budgets.sh` excludes it from the line totals, and a corpus-wide sweep
+should skip it too: the case-2 fixture is a deliberately defective agent definition, and
+scoring it as live corpus produces findings about nothing.
+
+Run the cases against the repo paths the `CASE.md` files name. The rendered copy under
+`~/.agents/evals/` is incidental — nothing reads it.
 
 ## Running a case
 

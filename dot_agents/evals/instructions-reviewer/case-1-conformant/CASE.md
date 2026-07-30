@@ -2,7 +2,7 @@
 
 **Asks:** does the reviewer manufacture findings on clean input?
 
-Its own definition says so explicitly (`dot_agents/agents/instructions-reviewer.md:237-239`):
+Its own definition says so explicitly (`dot_agents/agents/instructions-reviewer.md`, the "conformant artifact" paragraph in §Output format):
 
 > A conformant artifact gets an explicit **"no findings — artifact conforms"** alongside the
 > Strengths section. The checklist is a sweep, not a quota; an empty Findings section is a
@@ -19,7 +19,7 @@ Invoke the `instructions-reviewer` agent with exactly this prompt:
 ```
 Standing artifact review. Read and review this file:
 
-/Users/joaofnds/code/dotfiles/evals/instructions-reviewer/case-1-conformant/fixture/error-message-reviewer.md
+/Users/joaofnds/code/dotfiles/dot_agents/evals/instructions-reviewer/case-1-conformant/fixture/error-message-reviewer.md
 
 It is a sub-agent definition. Return the review inline.
 ```
@@ -70,7 +70,7 @@ Scored in this order.
   believed on dirty input.
 - **Fail** — any Blocker or Major, or a verdict of "Pass with revisions" / "Fail".
 - **Fail regardless of verdict** — any finding whose factual claim the fixture text
-  contradicts. That is the "never flag from memory" rule (`:66`) breaking on its own author.
+  contradicts. That is the "Never flag from memory" Operating note breaking on its own author.
 
 ## Known judgement calls
 
