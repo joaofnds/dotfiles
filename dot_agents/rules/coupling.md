@@ -54,7 +54,9 @@ this week's version of your own schema is a different risk entirely — same
 coupling strength, and the difference is not in the code.
 
 So the necessary/unnecessary judgment is a claim about the *dependency's rate of
-change*, not about the coupling's shape. Never assert it from the code alone:
+change*, not about the coupling's shape. It governs the five spatial types only;
+temporal coupling is judged on whether the assumption can be violated — see
+§Before reporting. Never assert it from the code alone:
 either cite an observed change history — in a panel review the orchestrator owns that
 probe (`panel-review` §4); reading this directly during design, run it yourself
 (`git log --since='1 year ago' --oneline -- <path>`) — or state the stability
@@ -95,6 +97,10 @@ Coarser than a refactoring catalog; they change shape, not just structure.
   schema. Not a free win, and `coding_style.md` §3 makes direct orchestration
   the default: name event-driven integration as a cure only where the
   requirement (async delivery, independent ownership) already justifies it.
+- **Make the order or the interleaving explicit.** The cure for temporal
+  coupling. Encode a required ordering in the type or the API so the steps
+  cannot be called out of order; make concurrent entry safe at one owner — a
+  single writer, a lock, an idempotent operation — rather than by convention.
 - **Parsimonious in what you consume, generous in what you produce.** Every
   field you read from another system is a coupling you accepted. Take only what
   you need; when you publish, tell the whole story. Adding a field to a message
@@ -107,13 +113,15 @@ and concepts. *(See: continuous-integration)*
 
 ## Resolutions below the module boundary
 
-The same axis at a finer grain. A loosely coupled service diagram doesn't help
+The same concern at a finer grain. A loosely coupled service diagram doesn't help
 if the objects inside ask each other questions instead of telling each other
 what to do — Tell, Don't Ask and the Law of Demeter, `coding_style.md` §3.
 *(See: law-of-demeter, simplicity-vs-ease)*
 
-Ordering and concurrency assumptions are not in Nygard's spatial taxonomy: name
-them **temporal coupling** when the assumption is "do this, then always that."
+Ordering and concurrency assumptions are not in Nygard's spatial taxonomy. Name
+them **temporal coupling**, in either of two forms: **ordering** — "do this,
+then always that"; **concurrency** — "can two callers do this at once and stay
+safe."
 *(See: temporal-coupling)*
 
 ## Before reporting this as a finding (panel-review)
@@ -124,7 +132,8 @@ Before reporting:
 
 - **Does it reduce to a catalog smell?** Developmental coupling is usually
   Shotgun Surgery or Divergent Change; functional coupling is usually Duplicated
-  Code; incidental is often Insider Trading, Message Chains, or Feature Envy.
+  Code; incidental is often Insider Trading, Message Chains, or Feature Envy;
+  temporal reduces to no catalog smell — report it directly.
   Use these names to decide what to withhold, not to report — never put a
   catalog smell name in your finding; name the coupling type. Keep the boundary
   claim: which types, and why this one is or isn't worth accepting. If the
@@ -132,5 +141,11 @@ Before reporting:
   is dropped in arbitration; if it doesn't, state the coarse cure from §Cures
   and say the site-level mechanics are unenumerated.
 - **Semantic coupling is yours.** No other lens covers it.
-- **Is the target stable?** If yes, the coupling is a design choice, not a
-  defect. Say so and move on rather than reporting it.
+- **Is the target stable?** Spatial types only — the stability test says nothing
+  about temporal coupling, which is judged on whether the ordering or
+  concurrency assumption can be violated, not on how often the target changes.
+  Never answer this from the code: in a panel review the orchestrator runs the
+  probe (`panel-review` §4), so report the finding and state the stability
+  assumption *as* an assumption. Reading this during design, run the `git log`
+  yourself; if the target is stable, the coupling is a design choice, not a
+  defect — say so and move on rather than reporting it.
