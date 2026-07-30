@@ -42,19 +42,30 @@ is a failed turn. The same turn carries the Read calls, or the first real work a
 
 Name only files you will open, and open every one in that turn before any other tool —
 except a file already open this session, which you name `(loaded)` and do not reopen.
-Announce a conditional route (`using_the_wiki.md`) when its condition fires, not in
-advance.
+Announce a conditional route — `using_the_wiki.md`, `coupling.md`, `testing/02-mocking-roles.md` —
+when its condition fires, not in advance. Name it in the turn you open it, and leave it unnamed
+until then.
 
 Required reads by phase:
 
-- **Coding** → `coding_style.md` plus the matching language file when one exists
+- **Coding** → `coding_style.md`, plus the language file when the task has one:
+  `coding_style_go.md`, `coding_style_typescript.md`
 - **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md` (gatekeeper: routes to sub-modules, holds the pre-commit checklist)
 - **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the design draws or moves a module or service boundary; if it cues a wiki lookup, read `using_the_wiki.md`
+- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to `AGENTS.md`, `CLAUDE.md`, rules, skills, and agent definitions; the landed claim must name its `instruction_external_facts.md` §3 entry. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
 - **Multi-stage feature, debug, review, or delivery work** → `~/.agents/workflows.md`; use only stages justified by task size
 - **Before marking done** → `ownership.md`
-- **After a batch of instruction edits** → run `instructions-reviewer` once; resolve or explicitly defer each finding, and rerun only after material routing, precedence, or safety changes
 - **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
+
+One phase requires an action rather than a read. Announce it in place of `Reading:`, on its own
+prefix line, so its absence is visible:
+
+    Gate: instructions-reviewer — <the files edited>
+
+Emit it after any batch of edits to instruction files (`AGENTS.md`, `CLAUDE.md`, rules, skills,
+agents), run the reviewer once in that turn, and resolve or explicitly defer each finding. Rerun
+only after material routing, precedence, or safety changes.
 
 ## Solution decisions — mandatory visible artifact
 

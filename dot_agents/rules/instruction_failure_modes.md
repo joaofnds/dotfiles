@@ -7,14 +7,12 @@
 - **Conflict-silent compliance** — conflicting rules are resolved without surfacing the conflict.
 - **Dispatch ambiguity** — invocation and skip conditions do not identify one clear route.
 - **Over-triggering** — aggressive trigger language invokes a skill outside its scope.
-- **Cache invalidation** — volatile prefix content defeats prompt caching.
 - **Pink-elephant negation** — a negative names the prohibited behavior without a positive replacement.
 - **Caller-context leakage** — a fresh sub-agent is assumed to know caller state.
 - **Premature completion** — an agent lacks a checkable completion gate.
 - **Borrowed authority** — another agent's assertion is consumed as verified evidence.
 - **Linter laundering** — deterministic checks consume prompt budget instead of tooling.
-- **No-op / self-reference** — a rule does not change behavior from model defaults.
-- **Restatement-over-leading-word** — prose replaces a precise established term.
+- **No-op / self-reference** — a rule imposes no identifiable condition, action, output, evidence requirement, or deliberate house choice.
 - **Instruction laundering** — the same rule appears under several headings *that load
   together*. The corpus loads progressively, so restatement across paths the router never
   combines is not laundering — it is the only copy on that path, and cutting it deletes the

@@ -46,10 +46,25 @@ collection `wiki`), with the page title named inline. It overrides the section's
 provenance: a `‡` line is neither transcribed from nor derived from that section's
 authority file.
 
-**A `‡` line has no rules file behind it.** Nothing under `~/.agents/rules/` says this, so
-no reviewer is instructed to check it and a finding cannot cite a house rule for it. The
-wiki page is the whole of its backing. Promotion works the same way as for the "Candidates"
-tail: write the rule into the authority file first, then the line stops needing the marker.
+**A `‡` line's specific formulation has no rules file behind it.** No reviewer is instructed
+to check it as written, and a finding cannot cite a house rule for that wording. The
+wiki page is the whole of its backing. The underlying *concept* occasionally does have house
+backing — where it does, the line says so inline. Promotion works the same way as for the
+"Candidates" tail: write the rule into the authority file first, then the line stops needing
+the marker.
+
+**The obstacle is adoption, not access.** A 2026-07-30 audit confirmed what this section
+already claimed: **no mandate names the wiki or these lines**, so no `‡` line is enumerated
+to any reviewer as written. `coding_style.md` and `engineering_judgment.md` each carry a
+conditional pointer to `using_the_wiki.md`, so a reviewer that loads either *sees* the
+pointer — and cannot follow it, per the next paragraph. Either way nothing enumerates these
+lines. Treat them as a promotion backlog, not a live checklist.
+
+Reaching a page needs Bash, since `using_the_wiki.md` prescribes `qmd`, and every reviewer's
+`tools:` is `Read, Grep, Glob`. That is downstream of adoption and not worth fixing on its
+own: a reviewer with Bash still checks nothing here, and read-only is load-bearing in all
+three reviewer definitions. Promote a line and the access question resolves with it — the
+rule lands in a file the reviewer already loads.
 
 The citation is always the wiki page, never the book behind it — where a page attributes a
 claim to Fowler, Beck, Evans, Nygard, or Kleppmann, the attribution is the page's, and the
@@ -93,7 +108,9 @@ undoing.
 
 ## §A Style — `code-reviewer`, Style mandate
 
-Authority: `coding_style.md`, plus the language file matching the diff. The Style reviewer
+Authority: `coding_style.md`, plus the language file matching the diff. The domain-language
+naming rule is the one exception: it lives in `engineering_judgment.md` §1, which this axis
+does not load, so the Style mandate quotes it inline instead. The Style reviewer
 names nothing from the Fowler catalog — §F owns those.
 
 **Provenance: mixed.** The subsection headings are transcribed — the `panel-review` Style
@@ -110,7 +127,7 @@ line".
 - Is any class named `<Something>Impl`? *(`coding_style.md` §1)*
 - Does an interface's name state a capability or agent noun rather than restate its single implementation? *(`coding_style_go.md` §6, §7)*
 - Do variable names scale with scope — short inside a few lines, descriptive across a function or package? *(`coding_style_go.md` §7)*
-- ‡ Does a new service class name something in the domain, or is it a `Manager`-shaped "doer"? Evans warns against names that "have no state of their own nor any meaning in the domain beyond the operation they host." Naming only — whether behavior belongs on an entity instead is §B's, and the structural shape is §F's Data Class. *(wiki: Anemic Domain Model)*
+- ‡ Does a new service class name something in the domain, or is it a `Manager`-shaped "doer"? Evans warns against names that "have no state of their own nor any meaning in the domain beyond the operation they host." Naming only. §A owns whether the entity holds behavior at all (`coding_style.md` §2a); §B owns whether a *service* is the wrong home for it (§3, Object level); §F owns the structural shape as Data Class. *(wiki: Anemic Domain Model)*
 
 ### Comments
 
@@ -131,7 +148,7 @@ line".
 ### Contracts the code owns both sides of
 
 - Is there a fallback branch handling a case the code's own producer decides — "if X is missing"? Make the contract mandatory and delete it. *(`coding_style.md` §1)*
-- Does the change touch a shared contract — schema, API response, event payload, queue message? Then the deploy-compatibility constraint applies in both directions across the rollout window. *(`coding_style.md` §1 → `engineering_judgment.md` §4)*
+- Does the change touch a shared contract — schema, API response, event payload, queue message? The Style reviewer sees the contract touch from `coding_style.md` §1; the deploy-compatibility constraint that follows is **§B's**, since `engineering_judgment.md` §4 loads under the Architecture mandate and not this one. *(`coding_style.md` §1 → §B Production readiness)*
 
 ### Entities and construction
 
@@ -155,7 +172,7 @@ or DI "solely to satisfy this document."
 - Is *destination* validated as well as shape — a well-formed URL resolving to link-local space, a valid relative path escaping its root? *(`coding_style.md` §2c)*
 - ‡ † Is parsing finished before anything is acted on, or are checks sprinkled through the processing code? "Shotgun parsing" leaves the program having partly acted on input it later rejects, with state it may not be able to roll back. One named exception, in §G: authorisation may legitimately run ahead of the parse. *(wiki: Parse, Don't Validate (King 2019))*
 - Do adapters translate driver, ORM, and HTTP failures into stable port errors, keeping domain errors for domain outcomes? *(`coding_style.md` §2e; Go: `coding_style_go.md` §2)*
-- Are external calls bounded by a deadline or cancellation? *(`coding_style.md` §2c)*
+- Does the change add an external call? The Style reviewer reads the deadline rule in `coding_style.md` §2c — it is stated there outright, not routed elsewhere — but does not own it: the finding is **§B's**, under Production readiness. *(`coding_style.md` §2c → §B)*
 - Do constructors accept pure dependencies, constructible in a test without the DI container? *(`coding_style.md` §2c; TS: `coding_style_typescript.md` §4)*
 - Does a DI token name a port rather than force a consumer to depend on a concrete adapter? *(`coding_style_typescript.md` §4)*
 
@@ -219,12 +236,16 @@ The six accessibility lines below are the one unconditional block in this sectio
 
 ## §B Architecture — `code-reviewer`, Architecture mandate
 
-Authority: `engineering_judgment.md` §2–3, `coupling.md`, plus the baseline coding rules.
-Module level only. Simplicity relative to the spec is §C's; catalog smells are §F's.
+Authority: `engineering_judgment.md` §2–4, `coupling.md`, plus the baseline coding rules.
+Module and production level — and object-level structure below the module boundary, which
+`coupling.md` §Resolutions puts here too. Simplicity relative to the spec is §C's; catalog
+smells are §F's.
 
 **Provenance: mixed.** The coupling block is *transcribed* — `coupling.md` enumerates the
 five types, the stability test, and a before-reporting gate, and the Architecture mandate
-tells the reviewer to sweep all five. Everything unmarked is *derived* from
+tells the reviewer to sweep all five. **Temporal is the exception:** it is not one of the
+five, it lives in §Resolutions below the module boundary, and the mandate names it
+separately for exactly that reason. Everything unmarked is *derived* from
 `engineering_judgment.md` and `coding_style.md` prose; `‡` lines are neither, and this
 section carries the most of them. The first three subsections are also
 gated by `coding_style.md` lines 7–10: layering, ports, and mappers apply in proportion to
@@ -277,9 +298,9 @@ demonstrated complexity, and none of them is introduced to satisfy a document.
 - **Semantic** — is one domain concept modeled twice with nothing that breaks when they drift? **No other axis covers this.** *(`coupling.md` §3)*
 - **Functional** — do two implementations answer the same question differently? *(`coupling.md` §4)*
 - **Incidental** — do two things change together for no reason, sharing a fate only because they share a host? *(`coupling.md` §5)*
-- **Temporal** — does correctness rest on "do this, then always that"? *(`coupling.md` §Resolutions)*
+- **Temporal** — does correctness rest on ordering ("do this, then always that"), or on two callers *not* arriving at once? Outside Nygard's five, so the Architecture mandate names it separately; without that it goes unswept. *(`coupling.md` §Resolutions)*
 - ‡ Does the change introduce one of the three object-grain failure modes the page names — global or static state reachable under concurrent access, two-step initialization (constructor plus a separate `init()` before the object is usable), or an API carrying hidden state between calls (`strtok`'s shape)? *(wiki: Temporal Coupling)*
-- ‡ Is the *simultaneity* axis asked, not only the ordering one? The page splits time into two questions — "Must method A run before method B?" and "**Can two clients call this method at once and remain safe?**" `coupling.md` §Resolutions defines temporal coupling as ordering alone, so the concurrency half has no other home in this list. *(wiki: Temporal Coupling)*
+- ‡ Is the *simultaneity* axis asked, not only the ordering one? House-backed since 2026-07-30 — `coupling.md` §Resolutions now names both axes, and the Architecture mandate sweeps both. The page's contribution is the question pair: "Must method A run before method B?" and "**Can two clients call this method at once and remain safe?**" *(wiki: Temporal Coupling)*
 - Is the coupled target stable? Cite an observed change history or state the assumption *as* an assumption — never assert it from the code. *(`coupling.md` §Stability test)*
 - Does the finding reduce to a catalog smell? Use that to decide what to withhold, never what to name — §F owns the smell name. *(`coupling.md` §Before reporting)*
 - Does the patch's evidence survive reverting the patch? Then it is advisory and does not move the verdict. *(`panel-review` §3)*
@@ -542,6 +563,7 @@ and `coupling.md` §Before reporting is an explicit gate. These are the corpus's
 - **Coupling to a stable target.** That is a design choice. Say so and move on. *(`coupling.md` §Before reporting)*
 - **A "prefer X" resting on neither a rule nor a concrete failure.** Drop it. *(`code-reviewer.md`)*
 - **A structural smell reported by an axis that does not own it.** §A names nothing from the Fowler catalog; §B names the coupling type, not the smell. *(`panel-review` §2, `coupling.md` §Before reporting)*
+- **A deploy-compatibility or call-deadline finding reported by the Style axis.** `coding_style.md` §1 routes a shared contract to `engineering_judgment.md` §4; §2c states the deadline rule itself. Both are the Architecture mandate's. Reading a rule in a file you loaded is not owning the check. *(`panel-review` §2)*
 
 Four more, all `‡` — every page that yields a rule also names where the rule does not fire,
 and these were harvested with the rules above them:
@@ -595,12 +617,15 @@ correspondingly less weight.
 | `pages/Trunk-Based-Development.md` | `#b2034d` | whole | 2026-07-29 |
 | `raw/Release-It-16-Chapter-11-Security.md` | `#fbf668` | whole | 2026-07-29 |
 
-Two traps:
+Traps:
 
 - **`qmd get` with a bare path fuzzy-matches.** `pages/Stability-Patterns.md` returns
   `pages/Design-for-Testability-Patterns.md` — no error, plausible-looking content. Pass the
   full `qmd://` URI and check the header names what you asked for; that header is where the
-  hash above comes from.
+  hash above comes from. Since 2026-07-30 there is a second collection (`prompts`,
+  `~/code/prompt-wiki`), so a bare path can now land in a different *subject*, not just a
+  different page — and a bare `qmd query` searches both regardless of working directory.
+  Every `‡` line in this checklist means collection `wiki`; see `using_the_wiki.md`.
 - **A hash proves retrieval, not truth.** A page can be unchanged, faithfully cited, and
   built on a source that has since been superseded — §D is the live case. This table answers
   provenance only; currency is a separate question and each line owns it.

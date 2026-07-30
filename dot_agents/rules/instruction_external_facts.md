@@ -1,8 +1,15 @@
 # External Facts Behind the Instruction Review Checklist
 
-Every fact `instructions-reviewer.md` takes from outside this repo, with its verification
-date and what the source actually established. The reviewer has no documentation or web
+Every external fact `instructions-reviewer.md` cites **and this file has audited**, with its
+verification date and what the source actually established. A numeric or outcome claim in the
+checklist that is not listed here is unaudited — treat it as a mechanism argument and never
+cite it as measured. The reviewer has no documentation or web
 access, so re-verification is the author's job. Cite a fact from here **with its date**.
+
+1. Harness mechanics — numeric limits and field semantics, dated
+2. Deprecated model mechanics
+3. Cited sources, and what each measured — measured nothing / measured something
+4. Rejected citations — do not restore
 
 ## 1. Harness mechanics — verified 2026-07-25
 
@@ -23,7 +30,7 @@ mechanics with none verified, and four were wrong. That is why these carry dates
 
 ## 2. Deprecated model mechanics — date unknown, carried forward
 
-Moved here 2026-07-27 from the inline §7 bullet, where it arrived undated. Treat the whole
+Moved here 2026-07-27 from the inline "Deprecated model mechanics" rule, where it arrived undated. Treat the whole
 list as due for re-verification on the next release.
 
 - **Prefilled last-assistant-turn responses** — 400 on Claude 4.6+. Migrate to direct
@@ -38,15 +45,80 @@ This set grows.
 
 ## 3. Cited sources, and what each measured
 
-None of them measured anything. mattpocock's *Writing Great Skills* (§1 keep-side test,
-§2 invocation mode) is a practitioner guide; the Anthropic prompting-best-practices pages
-(§1–§2 limits, §4 XML tags) are vendor documentation, so re-check them per release; the
-agents.md convention (§9) is a convention. All three support a **mechanism argument**,
-never an **outcome claim**.
+**Measured nothing.** All three now have `type: source` pages in the `prompts` vault,
+`provenance: primary`, `retrieved: 2026-07-30`, each carrying `Claim type: mechanism` — which
+is where the never-an-outcome-claim rule below is now recorded formally, per source.
+
+- mattpocock's *Writing Great Skills* ("Deletions have a keep-side test," "Invocation mode
+  sets what the description is for") is a practitioner guide. Page: *Writing Great Skills
+  (Pocock)*. Pinned to a commit, so it moves only when the pin does.
+- The Anthropic prompting-best-practices pages (size and dispatch limits, "XML tags as
+  delimiters") are vendor documentation, so re-check them per release. Pages: *Anthropic
+  Prompting Best Practices* and *Claude Code Instruction-Artifact Mechanics*.
+- The agents.md convention ("AGENTS.md / CLAUDE.md specifics") is a convention, and carries
+  adoption only. Page: *AGENTS.md as a Cross-Agent Convention*.
+
+All three support a **mechanism argument**, never an **outcome claim**. Cite one **with its
+`retrieved:` date**; the vault's Lint 2(b) sweeps those dates because "the current release"
+is not observable from inside the vault.
+
+**Measured something — added 2026-07-30, backing "Complement stated?".** All three
+primary full texts were fetched and read 2026-07-30 and now have pages in the `prompts`
+vault; each entry below names its page. Only the first is load-bearing for that rule; the
+second earns its place as an honesty guard (it records a null result) and the third names
+the mechanism. These license a claim about *underspecification's cost*; none tests the
+remedy the rule prescribes, so read the split in each entry before resting a finding on it.
+**Where an entry and its page disagree, the page wins** — re-derive the entry from the page,
+not the reverse.
+
+- **arXiv 2505.13360, *What Prompts Don't Say*.** Page: *What Prompts Don't Say (Yang et al.
+  2025)*. Llama-3.3-70B-Instruct, gpt-4o (05-13 / 08-06 / 11-20), o3-mini, Llama-3,
+  Llama-3.1, Llama-3.3; Commitpackft, an UltraChat travel subset, and Amazon ESCI, 200
+  examples each, against 60 curated requirements. A requirement omitted from the prompt was
+  inferred to >98% accuracy in **41.1%** of cases; omission cost **22.6%** accuracy on
+  average, up to 93.1%. Across six model versions, unspecified requirements took a >20%
+  accuracy drop at **5.9%**, which the paper calls "almost 2x" the specified rate (the ~3%
+  specified figure is derived from that ratio, not printed). Its own remedy, two automated
+  requirement-aware prompt optimizers, gained **4.8%** on average.
+  **The fourth result, and the one that bears on "Complement stated?":** requirements followed at **98.7%**
+  accuracy when specified individually fell to **85.0%** (gpt-4o) and **79.7%**
+  (Llama-3.3-70B) when 19 were specified together, with 37.5% of requirements dropping >5%
+  including pairs with no apparent conflict. *Licenses:* leaving a requirement to inference is
+  unreliable and decays across model swaps — the durability argument; and adherence is a
+  budget, so each added requirement taxes the others. *Does not license:* that prose stating a
+  complement improves compliance. The paper inserted requirements mechanically and never
+  tested authored scope statements, so the remedy is untested *in this form*; the +4.8% is
+  weak positive evidence for specifying a requirement at all.
+- **arXiv 2607.02294, *Coding Agents Are Guessing* (UnderSpecBench).** Page: *Coding Agents
+  Are Guessing (Ji et al. 2026)*. Five agent×model configurations over OpenCode, Claude Code,
+  and Codex — claude-haiku-4.5, Codex-5.1-mini, DeepSeek-v4, all small/fast tier, no frontier
+  model; 69 task families, 2,208 prompt variants, autonomous mode with confirmation disabled.
+  **55.8–67.8% of *acted* runs** violated at least one boundary — **quote the denominator**:
+  over all scored runs the Overstep rate is **27.0–46.3%**, because many runs never act. (The
+  paper's abstract states the range without the qualifier; its introduction supplies it.)
+  Under target underspecification, acted-run Safe Success fell **67.9% → 8.6%** while Wrong
+  Target rose **9.6% → 75.1%**. *The nearest tested intervention was null:* moving an
+  operation to a shared or production surface left Action Rate at **65.5% vs 64.0%** and
+  refusals at 0.5% vs 1.0%, so agents do not self-restrain on stated consequence severity. It
+  does **not** test an explicit out-of-scope declaration, which is the intervention our rule
+  prescribes — so that remains untested rather than refuted.
+- **arXiv 2607.01953, *Underspecification does not imply Incoherence*.** Page: *Semantic
+  Collapse (Richter and Papadakis 2026)*. Settling step **completed 2026-07-30** — full text
+  read, models and ranges recorded, this entry re-derived from the page. Claude Sonnet 4.5,
+  GPT-4.1-mini, Qwen3-32B; MBPP+, HumanEval+, LiveCodeBench, temperature 0.8, Python only.
+  Detrimental collapse affects **10–16% of MBPP**, **over 3% of HumanEval**, and **18–32% of
+  LiveCodeBench** on the *original* benchmark prompts — ranges, not point values — rising by a
+  factor of **1.45× to 5.53×** on MBPP when underspecification is injected deliberately. Names
+  the mechanism the rule assumes: models "collapse onto a single incorrect interpretation …
+  coherent but behaviorally misaligned" instead of surfacing the ambiguity — a *gap* resolved
+  silently, which is adjacent to but not the same as "Cross-file contradictions," and is
+  not the analogue of the checklist's self-contradiction Blocker. *Also licenses one
+  asymmetry worth quoting exactly:* inconsistency when present is a real signal of model
+  uncertainty; its absence is **not** evidence of correctness.
 
 ## 4. Rejected citations — do not restore
 
-Recorded 2026-07-27 after a §6 rule ("a schema, vocabulary, or language restriction on the
+Recorded 2026-07-27 after a rule ("a schema, vocabulary, or language restriction on the
 reasoning step costs accuracy") was written from a spec's paper summaries, shipped, and
 reverted the same day. The rule had zero true positives in this corpus and one costly
 false positive: it flagged the `Decision:` block in `AGENTS.md`, a pre-commitment gate
@@ -65,12 +137,21 @@ whose entire function is to land before the work.
 - **Barez et al. 2025, *CoT Is Not Explainability*** (aigi.ox.ac.uk, not on arXiv) — an
   interpretability position paper. Its 25% figure is the share of surveyed papers misusing
   CoT, not an unfaithfulness rate. Its own recommendation is to corroborate CoT, not to
-  discard it. Contested by arXiv 2512.23032.
+  discard it. Contested by arXiv 2512.23032. **Still cited in the Operating notes, only for
+  what it is *not*** (a transcript measurement) — that use stands as a mechanism argument.
+  Do not restore the 25% figure or any unfaithfulness rate.
 - **arXiv 2505.19716, *Concise Reasoning, Big Gains*** — a CoT-distillation paper. Makes
   no correct-vs-incorrect length claim. The length finding belongs to **arXiv 2504.05185,
   *Concise Reasoning via RL***, where the mechanism is a PPO/GRPO training artifact and so
   licenses no claim about prose style.
 
-Verification status: 2505.19716 and 2504.05185 were fetched from arXiv directly on
-2026-07-27. The other four entries come from an adversarial reviewer's report with
-quotations, and were not independently re-fetched.
+Verification status, updated 2026-07-30: **the seven sources named in this section are
+covered by six primary-source pages in the `prompts` vault** — *Let Me Speak Freely (Tam et al.
+2024)*, *Multilingual Chain-of-Thought Evaluation (Zhao et al. 2025)*, *CoT Is Not
+Explainability (Barez et al. 2025)*, *Is CoT Really Not Explainability (Zaman and Srivastava
+2025)*, *Concise Reasoning Big Gains (Wu et al. 2025)*, *Concise Reasoning via Reinforcement
+Learning (Fatemi et al. 2025)*. The four entries that previously rested on an adversarial
+reviewer's quotations no longer do. Re-derive from the page, not from this summary. Two
+corrections the full texts produced: the first author of 2505.19716 is Yifan **Wu** (not Xu),
+and Barez et al. is a **position paper** whose only original measurement is the 244/1,000
+paper survey.
