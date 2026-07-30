@@ -1,5 +1,8 @@
 # Before/After Examples
 
+These show own-draft cleaning, where no original needs preserving. Editing text you did
+not draft is bounded by the Guardrails in `SKILL.md`.
+
 ## Example 1: Throat-Clearing + Binary Contrast
 
 **Before:**
@@ -18,9 +21,9 @@
 > "It turns out that most teams struggle with alignment. The uncomfortable truth is that nobody wants to admit they're confused. And that's okay."
 
 **After:**
-> "Most teams struggle with alignment. Few admit confusion."
+> "Most teams struggle with alignment. Nobody wants to admit they're confused."
 
-**Changes:** Preserved the qualifying scope, removed throat-clearing phrases, and deleted the permission-granting ending.
+**Changes:** Removed the throat-clearing openers and the permission-granting ending. "Nobody" reads as a lazy extreme, but the source gives no real scope to name — per the Guardrails, that's left alone and flagged for the author, not invented.
 
 ---
 
@@ -30,9 +33,9 @@
 > "In today's fast-paced landscape, we need to lean into discomfort and navigate uncertainty with clarity. This matters because your competition isn't waiting."
 
 **After:**
-> "Competitors are already shipping, so reduce delivery time."
+> "Accept the discomfort and act under uncertainty. Your competitors aren't waiting."
 
-**Changes:** Eliminated jargon entirely. Core message in six words.
+**Changes:** Jargon replaced with plain verbs; both claims kept.
 
 ---
 
