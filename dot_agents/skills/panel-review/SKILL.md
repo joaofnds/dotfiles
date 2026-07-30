@@ -135,11 +135,25 @@ Axis mandates — pass one per reviewer:
   deadlines or cancellation on remote and blocking work, retry safety within an
   explicit budget, propagation barriers where the failure modes justify them,
   deployability through the project's one documented route, deployable-vs-released,
-  rollback, canary, or flag mechanics, and a shared-contract change's safety in
-  both directions across the window. Skip the SLO and error-budget claim and
+  rollback, canary, or flag mechanics, a shared-contract change's safety in
+  both directions across the window, and whether a related-writes sequence
+  can fail into observable half-applied state — the write-sequence check. Skip
+  the SLO and error-budget claim and
   MTTR-over-MTBF — a patch cannot violate a priority. *Eliminate toil* is
   skippable only as a standing goal: report it when the patch itself adds a
   manual, repeatable step to operating the system.
+  The write-sequence check owns one defect: a failure *between* the writes
+  leaves state a caller or a later read can observe. Three neighboring
+  defects at the same site are coupling findings and take the coupling route
+  below instead, never this one — the consumer cannot run at all without the
+  provider (Operational); correctness rests on the writes happening in a
+  fixed order (temporal, ordering form); two callers may interleave unsafely
+  (temporal, concurrency form). A site may genuinely carry both a
+  write-sequence defect and a coupling defect: report each under its own
+  name, never one defect under two — and don't let §3's same-`file:line`
+  dedup collapse them, since a write-sequence finding and a coupling finding
+  carry different dispositions (§3's revert test applies to the coupling
+  finding, never to this one).
   Sweep all five of Nygard's coupling types
   (`coupling.md` §Nygard's five types) plus **temporal coupling** in both of its
   forms, ordering and concurrency — it is outside that enumeration, in
@@ -223,7 +237,10 @@ Union the axis result sets — five, or four when the testing axis was skipped �
 then:
 
 - **Dedup** findings hitting the same `file:line`; keep the strongest
-  framing, note both axes.
+  framing, note both axes. Exception: the Architecture axis's write-sequence
+  finding and a coupling finding at the same `file:line` are never one of
+  these — they carry different dispositions (§4's stability probe reaches
+  one, never the other), so both stay, distinctly labeled.
 - **Reconcile severity** when axes disagree — the concrete failure decides,
   not the louder reviewer.
 - A reviewer that strayed outside its mandate: fold the finding into the
@@ -321,7 +338,12 @@ finding on a stability outcome. In the repo the diff belongs to, run
 outcomes:
 
 - **Stable** — the path predates the window and changed in ≤2 commits within it:
-  the coupling is a design choice. Drop the finding, recording the commit count.
+  the coupling is a design choice. Drop the finding, recording the commit
+  count — only when the finding's evidence is the target's rate of change. A
+  spatial-coupling label attached to a write-sequence defect (see the
+  Architecture mandate's Production paragraph) rests on different evidence
+  and this probe has no purchase on it; keep it and route it back to the
+  write-sequence check.
 - **Unstable** — more than that, or the path is younger than the window: keep
   the finding at its stated severity and cite the count as evidence.
 - **Unprobeable** — the target is external (a protocol, a vendor API, another
@@ -334,8 +356,9 @@ report footer — dropped, never silently vanished. An inconclusive finding
 stays in the report with `[unverified]` appended to its severity — silently
 dropping a real Blocker costs more than carrying a doubtful one. Minor/Nit
 findings and the whole advisory section skip verification — the stability probe
-above excepted, which runs on every spatial coupling finding regardless of
-severity or provenance; spot-check any others you doubt yourself.
+above excepted, which runs on every spatial coupling finding whose evidence is
+the target's rate of change, regardless of severity or provenance; spot-check
+any others you doubt yourself.
 
 ## 5. Report
 
