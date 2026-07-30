@@ -44,8 +44,10 @@ re-enters an earlier stage rather than pushing through.
   not change scope, behavior, or approach; record them in the plan.
 - **verify** — execute the plan's acceptance-criterion checks and capture the raw output.
   `/build` is not done until every criterion has execution evidence; prose review is not
-  runtime verification. The bundled `/verify` drives the running app end-to-end but is
-  user-invoked only — when runtime behavior is what settles a criterion, stop and ask for it.
+  runtime verification. Use `/verify-this` for a criterion the plan mapped to a runnable
+  check — it turns the claim into a falsifiable baseline/treatment verdict. `/verify`
+  drives the running app end-to-end but is user-invoked only: for a criterion that needs
+  the deployed app, stop and ask for it. A `/verify-this` verdict does not stand in for it.
 - **review** — name its purpose: correctness, architecture, security, or knowledge
   sharing. Review is a feedback channel, not a late quality phase: keep changes small and
   use `/adversarial-review` for this session's work; reserve `/panel-review` for a
