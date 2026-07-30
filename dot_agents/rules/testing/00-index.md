@@ -73,8 +73,11 @@ Walk the applicable sections before calling testing work done. Test-type-specifi
 Skip this section when reviewing a suite you did not write — it asks about a transcript you
 do not have.
 
-- Did I see the test fail before writing the code? Name the test and quote the failing
-  assertion line — not the whole run.
+- Did I see the test fail before writing the code? Name the test and quote the line that
+  failed. When the step only creates a symbol the test names and the code does not have yet, the
+  compiler error is the red it earns. When the step changes behavior, the red is a failing
+  assertion from a run where the test compiled and the assertion fired. A refactoring step earns
+  no red at all — it stays green.
 - Where does the scenario list live? Give the path or the message holding it.
 - Did a run surprise me? Point at the prediction and at what actually happened.
 

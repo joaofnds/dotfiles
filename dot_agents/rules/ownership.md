@@ -9,7 +9,9 @@ work, create commits, or file issues without authorization.
 1. Verify the requested scope and report the exact commands and outcomes.
 2. Inspect the diff and working tree; do not attribute unrelated changes to yourself.
 3. List every failure or defect observed, including evidence and whether it affects the
-   requested result.
+   requested result. A claim that something is **missing** — no coverage, no guard, no caller —
+   is an unprobed negative until you name the probe: the grep, the suite you read, the run you
+   did. Report the probe beside the claim, or narrow the claim to what you actually checked.
 4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects
    or creating a tracked follow-up.
 5. Distinguish scoped verification from repository health. "The targeted tests pass;

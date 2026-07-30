@@ -117,10 +117,22 @@ makes a project-wide order real; absent that config, there is no order to enforc
 
 ## 8. Testing
 
-`testing/00-index.md` governs test discipline; these are the Go spellings of two of its rules.
+`testing/00-index.md` governs test discipline. The last two bullets are the Go spellings of its
+rules; the first is Go-specific and lives only here.
 
-- **Table-driven tests use `t.Run`, one subtest per row** — the Go primitive `03-test-aesthetics.md`
-  §4.7 names. The row's name is the test's name, and the failure line identifies the input.
+- **The framework is a project fact, not a language default.** Take it from the project's
+  `AGENTS.md` when it names one, otherwise from the test entry point in the same directory,
+  otherwise from the nearest sibling suite in the repo — and write every new test in that
+  framework. A directory whose `func TestX(t *testing.T)` calls `RunSpecs` is a Ginkgo suite, and
+  a spec there belongs in the spec tree, where the suite's hooks and the Ginkgo reporter reach it.
+  One entry point covers a whole directory — an internal `foo` and an external `foo_test` compile
+  into one binary and share Ginkgo's global registry, so the single `RunSpecs` runs the specs of
+  both. A directory with no `RunSpecs` and no project statement is a plain `testing` package; when
+  the project statement and the directory disagree, the project's `AGENTS.md` wins and the
+  directory is debt — say which you followed.
+- **One row, one named test.** In a Ginkgo suite that is `DescribeTable` plus one `Entry` per row;
+  in a plain `testing` package it is `t.Run`. Either way the row's name is the test's name and the
+  failure line identifies the input (`03-test-aesthetics.md` §4.7).
 - **Fakes of owned ports are the default double**, hand-written, with explicit seed and reset
   per `02-mocking-roles.md` §4. `mock.go` for mockgen output is permitted only in an adapter
   package whose subject is a third-party contract (`02-mocking-roles.md` §6).
