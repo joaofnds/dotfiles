@@ -26,10 +26,38 @@ Language-specific preferences for TypeScript projects. Read the generic `coding_
 ## 4. Framework-Agnostic Constructors
 - Do not tie class constructors directly to the DI framework. Instead of injecting `ConfigService` into a config class (which forces you to mock the service in tests), write the constructor to accept pure dependencies (like parsed primitives or specific interfaces).
 - Use `static fromConfigService(configService: ConfigService)` or module `useFactory` declarations to adapt the framework's DI into the clean constructor.
-- **DI tokens represent ports, not adapters.** Use the repository's established token form: symbol, string, abstract class, or framework-native token. A consumer must not depend on a concrete adapter merely to obtain a runtime token.
+- **A port's DI token is the adapter class the module wires; the declared type is the port.** Write
+  `@Inject(MongoUserRepository) private readonly users: UserRepository` — the concrete class supplies the
+  runtime token, the interface supplies the compile-time contract, and the consumer names the
+  implementation it wants. **Never introduce a standalone token constant** — no
+  `export const USERS = Symbol("Users")`, no string token, no abstract-class-as-token, and no
+  `{ provide: TOKEN, useClass: Adapter }` in the module. A token constant is a third name for a thing
+  that already has two, and it hides the wiring: the module says which adapter satisfies the port, so
+  reading the consumer no longer tells you what runs. Swapping the adapter is a one-line edit at the
+  `@Inject` site and the module; that is the trade this rule accepts, in exchange for one form per
+  constructor instead of two.
+  **Decorator metadata is not a dependency.** `@Inject(Adapter)` hands the container a lookup key —
+  not a construction, a call, or a declared type. The consumer touches no member of the adapter, so
+  the coupling is to the adapter's *identity*, not its API: nothing the compiler checks points at the
+  concretion, and the interface stays the only contract. The load-time module edge is real and
+  accounted for below. Requiring the concrete implementation is the *other* thing —
+  `private readonly x: OrganizationKindsRepository` types the field to the adapter and lets the
+  consumer reach past the port. That is the violation; forbid it, and do not raise `@Inject(Adapter)`
+  as an architecture or dependency-direction finding.
+  Besides that second edit site, the rule costs one module-graph edge: the consumer `require`s the
+  adapter's module at load time, so a cycle between two features becomes possible where a token
+  constant in a third file would have broken it. Make the cycle survivable with `forwardRef` — at the
+  `@Inject` site, and in both modules' `imports` when the cycle is module-level; both forms are already
+  in use here. Never with a new token constant.
+  (Verified 2026-07-31 against `tsc` 6.0.3 emit for `RosterImportService`: `design:paramtypes` is `Object`
+  at exactly the two positions carrying an `@Inject`, and the adapter appears only as the `Inject()`
+  argument plus a module-level `require` — which is why an interface-typed parameter needs a token at all.
+  Recorded after `Symbol("OrganizationKinds")` shipped in `c9aeffe5` and cleared a full panel review — a
+  clean panel run is not evidence this rule is unneeded. Re-check on a TypeScript major or a move to
+  standard decorators, which emit no such metadata.)
 
 ## 5. Testing
-- **Native Tooling**: When choosing, prefer native modules like `node:test` and `node:assert/strict` over a heavy runner. This is the default for a new suite, not a mandate to fight an existing one — a repo `AGENTS.md` naming a runner wins outright, and where none says otherwise the runner the suite already uses wins for new tests in it. A second runner alongside the first is worse than either choice. Jest or Japa when the project mandates them.
+- **Native Tooling**: When choosing, prefer native modules like `node:test` and `node:assert/strict` over a heavy runner. This is the default for a new suite, not a mandate to fight an existing one — where no repo `AGENTS.md` names a runner, the runner the suite already uses wins for new tests in it. A second runner alongside the first is worse than either choice. Jest or Japa when the project mandates them.
 - **No spy/mock frameworks**: Strictly avoid `jest.fn()` or `vi.fn()` for domain logic dependencies. Author explicit, custom Fake implementations instead (e.g., a `FakeHTTPService` that captures an array of requests and pops predefined responses).
 - Reset shared Fakes in lifecycle hooks; keep one-test state local.
 

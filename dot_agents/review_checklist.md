@@ -185,6 +185,7 @@ line".
 ### Control flow and types
 
 - Is control flow plain `if`/`else`, loops, and early returns rather than expression-level cleverness? *(`coding_style.md` §1)*
+- Does a method body written or restructured here break after a guard clause or early return — and, past two statements, at its other step boundaries? *(`coding_style.md` §1)*
 - Does any code use the language's type escape hatch — the token list is per-language, not transferable? *(`coding_style.md` §1; Go: bare type assertion, `coding_style_go.md` §6; TS: `as any` and casts to silence the compiler, `coding_style_typescript.md` §1)*
 - Is a type guessed by sniffing fields on an opaque value instead of `instanceof`, a discriminant, or a schema parse? *(`coding_style.md` §1, `coding_style_typescript.md` §1)*
 - When the compiler complains, was the upstream type fixed rather than the call site patched? *(`coding_style.md` §1)*
@@ -218,7 +219,9 @@ or DI "solely to satisfy this document."
 - Do adapters translate driver, ORM, and HTTP failures into stable port errors, keeping domain errors for domain outcomes? *(`coding_style.md` §2e; Go: `coding_style_go.md` §2)*
 - Does the change add an external call? The Style reviewer reads the deadline rule in `coding_style.md` §2c — it is stated there outright, not routed elsewhere — but does not own it: the finding is **§B's**, under Production readiness. *(`coding_style.md` §2c → §B)*
 - Do constructors accept pure dependencies, constructible in a test without the DI container? *(`coding_style.md` §2c; TS: `coding_style_typescript.md` §4)*
-- Does a DI token name a port rather than force a consumer to depend on a concrete adapter? *(`coding_style_typescript.md` §4)*
+- Does a port's `@Inject` name the adapter class the module wires, with the field typed to
+  the port interface — and is there any standalone token constant (symbol, string,
+  abstract-class-as-token, `{ provide: TOKEN, useClass: Adapter }`)? *(`coding_style_typescript.md` §4)*
 
 ### Generated code
 
