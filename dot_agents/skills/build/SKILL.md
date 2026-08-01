@@ -29,7 +29,7 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
 5. **Run the testing strategy once every task is checked.** Use the exact test command the plan names. Steps 5–7 run once, at the end — not per task.
 6. **Refactor pass on green.** Reread the diff and remove complexity, duplication, or poor naming introduced or exposed by this change when the present benefit is demonstrated. Do not add future-facing abstractions. Rerun affected tests.
 7. **Verify before declaring done.** Execute every acceptance-criterion check from the plan and capture the observed output. Route each criterion by what its check is:
-    - **A runnable check** → `/verify-this`: it turns the capture into a falsifiable claim with a baseline/treatment comparison instead of a loose "ran it, looked fine." When that check is the project's own suite, the baseline is the suite run with this criterion's behavior absent — the plan's boundary says what that means. A suite green in both directions has not verified anything, whatever made it green: a deleted test, a loosened assertion, a narrowed case.
+    - **A runnable check** → `/verify-this`: it turns the capture into a falsifiable claim with a baseline/treatment comparison instead of a loose "ran it, looked fine."
     - **A named manual verification** — the deployed app behaving correctly end-to-end → stop and ask the user to run `/verify` against the spec; it is user-invoked only, and a `/verify-this` verdict does not stand in for it.
     - **A visual criterion against a `.boris/design/` file** → run that file's **Verify** checks and report what the screenshots showed. Rereading your own code and concluding it matches the tokens is not evidence. If you cannot render, the criterion is NOT VERIFIED.
 
