@@ -278,6 +278,7 @@ The six accessibility lines below are the one unconditional block in this sectio
 - Are base styles mobile-first, layered up with the theme's breakpoints rather than one-off widths? *(`coding_style_frontend.md` §7)*
 - Does the layout hold at ~320px? *(`coding_style_frontend.md` §7)*
 - † Is `'use client'` pushed to the leaves, with the bundle cost of its import graph accounted for? The rule is "be deliberate", not a threshold. *(`coding_style_frontend.md` §8)*
+- † When `.boris/design/` (or its archive) holds a ratified direction for this surface, do the palette, type roles, and signature element in the diff derive from its **Tokens** section? *(`art-direction` skill)*
 
 ---
 

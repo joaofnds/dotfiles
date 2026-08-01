@@ -43,6 +43,7 @@
   },
 
   "skillOverrides": {
+    "art-direction": "user-invocable-only",
     "artifact-capabilities": "off",
     "artifact-design": "off",
     "claude-api": "name-only",

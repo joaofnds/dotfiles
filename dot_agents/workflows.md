@@ -9,7 +9,8 @@ are not.
 
 Adding or changing a feature. Each front-half stage writes a durable doc the next
 one consumes. These docs live under `.boris/plans/` at the repo root (reviews under
-`.boris/reviews/`, handoffs under `.boris/handoffs/`) — a personal, git-ignored home
+`.boris/reviews/`, handoffs under `.boris/handoffs/`, ratified visual directions under
+`.boris/design/`) — a personal, git-ignored home
 (via `core.excludesFile`), so workflow artifacts are intended to remain untracked.
 
 ```
@@ -75,15 +76,16 @@ Skip points — the front half scales to the feature:
 - **Small, well-understood change?** Skip all of them — edit directly, then review
   the diff. The spec/research/grill apparatus earns its keep on large or vague work.
 
-For design-heavy UI work, `/frontend-design` converges and ratifies the visual direction
-during design. You cannot invoke it: check your available-skills context, and when it is
-absent, recommend it and say why. Don't stall on the answer — if the user declines, build
-on `coding_style_frontend.md`'s convention floor and record in the plan that no visual
-direction was ratified. `/plan` records the ratified direction and `/build` implements it
-with the skill's design guidance active:
+For design-heavy UI work, `/art-direction` converges and ratifies the visual direction
+during design, and writes it to `.boris/design/<prefix>-design.md`. It is governed by
+`skillOverrides` and is currently user-invoked only: check your available-skills context
+before routing to it, and when it isn't listed, recommend it to the user and say why rather
+than stalling. If the user declines, build on `coding_style_frontend.md`'s convention floor
+and record in the plan that no visual direction was ratified. `/plan` cites that design file
+and `/build` implements from it:
 
 ```
-/grill → /frontend-design → /plan → /build → verify → /panel-review → learn
+/grill → /art-direction → /plan → /build → verify → /panel-review → learn
 ```
 
 Decision points:

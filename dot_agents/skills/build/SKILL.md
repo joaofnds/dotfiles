@@ -20,7 +20,7 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
 
 ## Steps
 
-1. **Read the whole plan first — and every artifact it cites.** Don't start on task 1 until you've read every section — Scope, Approach, Current state, Gotchas, and the task tracker all constrain how you implement. Then follow the plan's citations (spec, grilled doc, options, diagnosis) and read those too: the acceptance criteria live in the spec, not the plan, and you can't honor a scope boundary you've never read.
+1. **Read the whole plan first — and every artifact it cites.** Don't start on task 1 until you've read every section — Scope, Approach, Current state, Gotchas, and the task tracker all constrain how you implement. Then follow the plan's citations (spec, grilled doc, options, diagnosis, design file) and read those too: the acceptance criteria live in the spec, not the plan, and you can't honor a scope boundary you've never read. For UI work, the ratified palette and type live in `.boris/design/`, not the plan — derive every color and type decision from that file rather than choosing one. If the plan records that no direction was ratified, build on `coding_style_frontend.md`'s floor and invent no palette; if the plan says neither, stop and ask.
 2. **Reality-check before touching anything.** Confirm the files and `file:line` references in "Current state". Stop for drift that changes scope, behavior, or approach. Record harmless path or sequencing corrections in the plan and continue.
 3. **Work the task tracker top to bottom, in order.** Do one item at a time, executing it via the loop in step 4, then flip it to `- [x]` in the plan file before moving on — so progress survives if this session also dies.
 4. **Execute each task test-first.** Read `~/.agents/rules/testing/00-index.md` and the modules it routes to. Start a cross-boundary vertical slice outside-in; start local behavior at the narrowest observable layer. Follow the gatekeeper's scenario-list and prediction/reconciliation loop, capturing predicted and observed results for each red/green step. Use intermediate deeper-red steps only when they reduce uncertainty.
@@ -31,6 +31,8 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
 7. **Verify before declaring done.** Execute every acceptance-criterion check from the plan and capture the observed output. Route each criterion by what its check is:
     - **A runnable check** → `/verify-this`: it turns the capture into a falsifiable claim with a baseline/treatment comparison instead of a loose "ran it, looked fine." When that check is the project's own suite, the baseline is the suite run with this criterion's behavior absent — the plan's boundary says what that means. A suite green in both directions has not verified anything, whatever made it green: a deleted test, a loosened assertion, a narrowed case.
     - **A named manual verification** — the deployed app behaving correctly end-to-end → stop and ask the user to run `/verify` against the spec; it is user-invoked only, and a `/verify-this` verdict does not stand in for it.
+    - **A visual criterion against a `.boris/design/` file** → run that file's **Verify** checks and report what the screenshots showed. Rereading your own code and concluding it matches the tokens is not evidence. If you cannot render, the criterion is NOT VERIFIED.
+
     If any criterion lacks evidence, fails, or comes back NOT VERIFIED or INCONCLUSIVE, the build is not done.
 
 ## Rules
@@ -50,7 +52,7 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
         `.boris/plans/`, an issue, or a line in the user's daily note. Nothing is left
         pointing only at this file; the archive is not a queue.
 
-  Then archive the whole chain of documents that led to the plan, not just the plan: every artifact sharing its stem — `-spec`, `-options`, `-grilled`, `-diagnosis`, `-findings`, and the numbered milestone plans — plus that stem's entries under `.boris/reviews/` and `.boris/handoffs/`. Each moves to the mirrored `.boris/archive/<subdir>/` (`git mv` when tracked, `mv` otherwise). A plan stopped mid-flight archives the same way — `partial` or `abandoned`, with the reason in the closeout. Only in-flight work stays outside `.boris/archive/`.
+  Then archive the whole chain of documents that led to the plan, not just the plan: every artifact sharing its stem — `-spec`, `-options`, `-grilled`, `-design`, `-diagnosis`, `-findings`, and the numbered milestone plans — plus that stem's entries under `.boris/reviews/`, `.boris/handoffs/`, and `.boris/design/`. Each moves to the mirrored `.boris/archive/<subdir>/` (`git mv` when tracked, `mv` otherwise). A plan stopped mid-flight archives the same way — `partial` or `abandoned`, with the reason in the closeout. Only in-flight work stays outside `.boris/archive/`.
 
   When a stem carries several milestone plans, archive the chain only once the last one is closed out — the shared spec and grilled docs are still live for the milestones that remain.
 - A citation to `.boris/<subdir>/<name>.md` that doesn't resolve is looked up at `.boris/archive/<subdir>/<name>.md` before being treated as missing. Never repoint an existing citation on archive.
