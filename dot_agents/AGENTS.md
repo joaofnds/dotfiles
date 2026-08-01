@@ -58,6 +58,10 @@ Required reads by phase:
 - **Before marking done** → `ownership.md`
 - **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
 
+Every sub-agent spawn passes no `name` — a named spawn returns a receipt and the report never
+arrives with it (`workflows.md` §Spawn shapes; observed on `claude-code` 2.1.220, 2026-07-27 —
+re-verify after a CLI bump).
+
 One phase requires an action rather than a read. Announce it in place of `Reading:`, on its own
 prefix line, so its absence is visible:
 
@@ -79,7 +83,8 @@ before the first implementation tool call:
     Checked: <load-bearing facts, each citing evidence already in this transcript as tool
               output — a grep hit, a Read excerpt, stdout. Never a sub-agent's assertion,
               a recalled fact, or a file:line from memory. Negative assumptions always
-              require a named probe>
+              require a named probe, and so does any claim that behavior is preserved —
+              "same accept set": run both paths over the inputs the claim covers>
     Chosen: <approach> — satisfies the requirement with the fewest elements
     Rejected: <closest viable alternative> — not chosen because <verified trade-off>
 

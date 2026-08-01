@@ -245,6 +245,11 @@ then:
   not the louder reviewer.
 - A reviewer that strayed outside its mandate: fold the finding into the
   owning axis's set if it stands; never double-count.
+- **An arbitration resting on the repo's `AGENTS.md` / `CLAUDE.md` is a precedence
+  claim**, and `coding_style.md` §Precedence governs it whether or not you loaded that
+  file: quote the sentence you are ranking above the reviewer's rule, with its path. No
+  quotable sentence means the repo does not state it — relay the disagreement to the
+  user unresolved, and leave the finding at the severity its reviewer gave it.
 - **A refactoring finding whose evidence overlaps an axis finding** merges into
   one entry — overlapping site lists count, not just an identical `file:line`,
   and so does a site list falling inside the module or seam the axis finding
@@ -420,7 +425,10 @@ large fixes and a direct test-first fix for small ones. Advisory structural item
 follow-up `/plan` candidate, never a merge condition — propose one only if the user wants
 the debt addressed. Do not modify source as part of panel review; return the report
 before remediation begins. After remediation, the owning session reruns the full suite
-and targeted review for each affected axis.
+and targeted review for each affected axis. When remediation **added or relocated a
+production file**, no reviewer has read that file — send the new paths to
+`refactoring-reviewer` (§2 makes it a track, so "affected axis" never reaches it). Not
+on every remediation: a fix inside a file an axis already read is already covered.
 
 ## 7. Relay
 
