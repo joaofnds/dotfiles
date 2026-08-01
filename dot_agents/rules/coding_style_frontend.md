@@ -2,7 +2,7 @@
 
 Stack-specific conventions for building UI. Read the generic `coding_style.md` and `coding_style_typescript.md` first; this file is the UI layer on top of them. Framework-agnostic by default — primary stack is **Next.js + Tailwind**, secondary is **Tauri + Svelte**. When a rule is framework-specific it says so.
 
-Taste and aesthetic direction live in the `frontend-design` skill — it fires on its own. This file is the always-on convention floor underneath it.
+Taste and aesthetic direction live in the `frontend-design` skill, which you cannot invoke — recommend it and say why (`workflows.md` §Feature loop). This file's conventions are the floor under all UI work, ratified direction or not.
 
 ## 1. Tokens Are the Single Source of Truth
 

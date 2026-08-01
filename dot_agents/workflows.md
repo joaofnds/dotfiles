@@ -75,9 +75,12 @@ Skip points — the front half scales to the feature:
 - **Small, well-understood change?** Skip all of them — edit directly, then review
   the diff. The spec/research/grill apparatus earns its keep on large or vague work.
 
-For design-heavy UI work, use `/frontend-design` during design to converge and ratify the
-visual direction. `/plan` records that direction and `/build` implements it with the
-skill's design guidance active:
+For design-heavy UI work, `/frontend-design` converges and ratifies the visual direction
+during design. You cannot invoke it: check your available-skills context, and when it is
+absent, recommend it and say why. Don't stall on the answer — if the user declines, build
+on `coding_style_frontend.md`'s convention floor and record in the plan that no visual
+direction was ratified. `/plan` records the ratified direction and `/build` implements it
+with the skill's design guidance active:
 
 ```
 /grill → /frontend-design → /plan → /build → verify → /panel-review → learn
