@@ -53,7 +53,7 @@ Required reads by phase:
 - **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md` (gatekeeper: routes to sub-modules, holds the pre-commit checklist)
 - **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the design draws or moves a module or service boundary; if it cues a wiki lookup, read `using_the_wiki.md`
-- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to `AGENTS.md`, `CLAUDE.md`, rules, skills, and agent definitions; the landed claim must name its `instruction_external_facts.md` §3 entry. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
+- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to `AGENTS.md`, `CLAUDE.md`, rules, `workflows.md`, skills, slash commands, agent definitions, output styles, and hooks — the same set the `Gate:` line names; the landed claim must name its `instruction_external_facts.md` §3 entry. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
 - **Multi-stage feature, debug, review, or delivery work** → `~/.agents/workflows.md`; use only stages justified by task size
 - **Before marking done** → `ownership.md`
 - **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
@@ -67,9 +67,18 @@ prefix line, so its absence is visible:
 
     Gate: instructions-reviewer — <the files edited>
 
-Emit it after any batch of edits to instruction files (`AGENTS.md`, `CLAUDE.md`, rules, skills,
-agents), run the reviewer once in that turn, and resolve or explicitly defer each finding. Rerun
-only after material routing, precedence, or safety changes.
+Emit it after any batch of edits to instruction files (`AGENTS.md`, `CLAUDE.md`, rules,
+`workflows.md`, skills, slash commands, agent definitions under `agents/`, output styles, hooks
+that inject instruction text),
+run the reviewer once in that turn, and resolve or explicitly defer each finding. Never fire it on
+a fixture under `evals/`: those defects are planted, and "resolve each finding" would repair the
+answer key. Rerun only after material routing, precedence, or safety changes.
+
+That list is the set an agent *obeys*. The set an agent merely *reads* is wider: it adds eval
+cases and their fixtures, `review_checklist.md`, `.boris/**`, memory files, the ad-hoc prompt text
+you write when spawning a sub-agent, the text a sub-agent returns, and thinking traces.
+`answer-first.md` §"Where these rules stop" exempts **both** sets from the prose rules. Editing a
+file that is only in the read set does not fire this gate.
 
 ## Solution decisions — mandatory visible artifact
 

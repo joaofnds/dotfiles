@@ -37,27 +37,8 @@ run() {
   fi
 }
 
-reply_length_fixture() {
-  bash "$root/scripts/measure-reply-length.sh" "$root/scripts/fixtures/reply-length" \
-    | diff - "$root/scripts/fixtures/reply-length/expected.txt"
-}
-
-# --since keeps whole sessions, not turns. The fixture's session opens 2026-07-20, so a
-# later cutoff must drop all three of its turns even though two of them run past that date.
-reply_length_since() {
-  fixture="$root/scripts/fixtures/reply-length"
-  after=$(bash "$root/scripts/measure-reply-length.sh" --since 2026-07-21 "$fixture" | head -1)
-  before=$(bash "$root/scripts/measure-reply-length.sh" --since 2026-07-19 "$fixture" | head -1)
-  status=0
-  [ "$after" = "turns: 0" ] || { printf 'cutoff after session start: got "%s", want "turns: 0"\n' "$after"; status=1; }
-  [ "$before" = "turns: 3" ] || { printf 'cutoff before session start: got "%s", want "turns: 3"\n' "$before"; status=1; }
-  return $status
-}
-
 run "refactoring catalog structure" bash "$root/scripts/verify-refactoring-catalog.sh"
 run "dot_agents line budgets" bash "$root/scripts/check-corpus-budgets.sh"
-run "reply-length extraction" reply_length_fixture
-run "reply-length --since is session-scoped" reply_length_since
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1

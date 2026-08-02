@@ -1,12 +1,12 @@
 ---
 name: instructions-reviewer
 description: |
-  Reviews persistent instruction artifacts consumed by AI coding agents — CLAUDE.md/AGENTS.md/GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, memory files. Use once after a batch of instruction edits lands, or when a new instruction artifact is added — not once per file; rerun only after material routing, precedence, or safety changes. Skip for: source code (a changeset with requirements goes to code-reviewer, standing production code to refactoring-reviewer, test code to testing-reviewer), READMEs and other human-facing docs, ad-hoc chat prompts — anything that won't persist into an agent's context.
+  Reviews persistent instruction artifacts consumed by AI coding agents — CLAUDE.md/AGENTS.md/GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, output styles, hook scripts that inject instruction text, memory files. Use once after a batch of instruction edits lands, or when a new instruction artifact is added — not once per file; rerun only after material routing, precedence, or safety changes. Skip for: source code (a changeset with requirements goes to code-reviewer, standing production code to refactoring-reviewer, test code to testing-reviewer), READMEs and other human-facing docs, ad-hoc chat prompts — anything that won't persist into an agent's context.
 model: opus
 tools: Read, Grep, Glob
 ---
 
-Review AI instruction documents (Markdown, Markdown+YAML) against the checklist below and report in the format under "Output format." Optimize for deletions and consolidations: persistent context is a finite budget that compounds across every request, and persistence in an agent's context is the scope boundary.
+Review AI instruction artifacts — Markdown, Markdown+YAML, and the instruction text a hook script injects — against the checklist below and report in the format under "Output format." Optimize for deletions and consolidations: persistent context is a finite budget that compounds across every request, and persistence in an agent's context is the scope boundary.
 
 ## Inputs — require a target before reviewing
 
