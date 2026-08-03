@@ -38,7 +38,7 @@ Name the file `YYYY-MM-DD-<slug>.md` (`<slug>` is a 2–5 word kebab-case goal, 
     ## Needs your attention
     - <nothing yet>
 
-Markers: `[ ]` not started, `[~]` partial (name what is missing on the line), `[x]` built. **Needs your attention** holds the open **Decide** items from finished milestones (`~/.agents/rules/ownership.md` §Dispositions), each naming the milestone it came from. Blocking items never rest here — they hold their milestone at `[~]`. Noted items never appear at all; that is the point of the bucket.
+Markers: `[ ]` not started, `[~]` partial (name what is missing on the line), `[x]` built. **Needs your attention** holds the open **Decide** items from finished milestones (`~/.agents/rules/reporting_findings.md`), each naming the milestone it came from. Blocking items never rest here — they hold their milestone at `[~]`. Noted items never appear at all; that is the point of the bucket.
 
 Each milestone plan cites the status file by path in its Goal section, so `/build` finds it without guessing at filenames.
 

@@ -43,7 +43,7 @@ is a failed turn. The same turn carries the Read calls, or the first real work a
 Name only files you will open, and open every one in that turn before any other tool —
 except a file already open this session, which you name `(loaded)` and do not reopen.
 Announce a conditional route — `using_the_wiki.md`, `coupling.md`, `testing/02-mocking-roles.md`,
-`ownership.md` — when its condition fires, not in advance. Name it in the turn you open it, and
+`ownership.md`, `reporting_findings.md` — when its condition fires, not in advance. Name it in the turn you open it, and
 leave it unnamed until then. A conditional route fires on its own condition, inside a continuing
 phase, and is announced in that turn even though the phase itself needs no announcement.
 
@@ -56,7 +56,7 @@ Required reads by phase:
 - **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the design draws or moves a module or service boundary; if it cues a wiki lookup, read `using_the_wiki.md`
 - **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to `AGENTS.md`, `CLAUDE.md`, rules, `workflows.md`, skills, slash commands, agent definitions, output styles, and hooks — the same set the `Gate:` line names; the landed claim must name its `instruction_external_facts.md` §3 entry. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
 - **Multi-stage feature, debug, review, or delivery work** → `~/.agents/workflows.md`; use only stages justified by task size
-- **Before marking done** → `ownership.md`. **Also a conditional route:** surfacing a defect or follow-up mid-task fires it, announced in that turn even inside a continuing phase (§Dispositions governs every finding you report, not only the closing list)
+- **Before marking done** → `ownership.md`, plus `reporting_findings.md` when the report carries any finding. **Also a conditional route:** surfacing a defect or follow-up mid-task fires both, announced in that turn even inside a continuing phase (`reporting_findings.md` governs every finding you report, not only the closing list)
 - **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
 
 Every sub-agent spawn passes no `name` — a named spawn returns a receipt and the report never

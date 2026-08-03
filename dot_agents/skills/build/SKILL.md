@@ -50,7 +50,7 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
       ## Closeout
       - **Landed:** what shipped, in one line per milestone.
       - **Not landed:** each unbuilt task, and the reason — descoped, superseded, blocked.
-      - **Left over:** work still wanted, each item carrying its `ownership.md` disposition
+      - **Left over:** work still wanted, each item carrying its `reporting_findings.md` disposition
         and the trigger Blocking and Decide require. **Blocking** and **Decide** items name
         where they went — a new plan under `.boris/plans/`, or an issue — and creating either
         needs the user's go-ahead first, so ask for it in the summary. **Noted** items stay

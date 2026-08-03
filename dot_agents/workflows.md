@@ -59,8 +59,7 @@ re-enters an earlier stage rather than pushing through.
   your available-skills context cannot be called. Check there before routing to one, and
   when it isn't listed, recommend it to the user and say why rather than stalling on it.
   A reviewer's severity is not a disposition: relaying its findings to the user means giving
-  each one a disposition (`~/.agents/rules/ownership.md` §Dispositions). Reviewers rank, the
-  caller classifies and routes, and nothing is dropped in the handover.
+  each one a disposition (`~/.agents/rules/reporting_findings.md`).
 - **deploy** — use the project's one documented pipeline, rollback path, and change
   controls. A verified change should be deployable with no hidden testing or sign-off
   work remaining. Never invent or execute a production command without authorization.
