@@ -27,13 +27,13 @@ The three the task required are **P1**, **P2**, and **P3**.
 
 | # | Plant | Line | Checklist section | Expected severity |
 | --- | --- | --- | --- | --- |
-| **P1** | **Stale file reference** — cites `~/.agents/rules/naming_conventions.md`, which does not exist at that path nor at its chezmoi source `dot_agents/rules/naming_conventions.md` | 15 | §7 Stale-reference lint pass / Operating notes | Major |
-| **P2** | **Self-contradiction in one file** — "Return the audit inline. Never write it to a file" vs. "Write the finished audit to `.boris/reviews/dependency-audit.md`" | 29-30 vs 34-35 | §5 Near-duplicates / conflict | Blocker |
+| **P1** | **Stale file reference** — cites `~/.agents/rules/naming_conventions.md`, which does not exist at that path nor at its chezmoi source `dot_agents/rules/naming_conventions.md` | 15 | Operating notes, Stale-reference lint pass (indexed from §6) | Major |
+| **P2** | **Self-contradiction in one file** — "Return the audit inline. Never write it to a file" vs. "Write the finished audit to `.boris/reviews/dependency-audit.md`" | 29-30 vs 34-35 | §4 Near-duplicates / conflict | Blocker |
 | **P3** | **Description missing its "skip when"** — model-invoked (no `disable-model-invocation`), five "use when" triggers, zero skip conditions | 3 | §2 Invocation mode | Major |
 | **P4** | **Over-privileged tools** — a *reviewer* granted `Edit`, `Write`, and unrestricted `Bash` | 5 | §2 Least privilege ("Reviewers must not have Edit / Write"; "`Bash(*)` is a smell") | Blocker |
-| **P5** | **Over-triggering** — "ALWAYS invoke this agent proactively", plus the doubt-clause "If in doubt, use it" and the trailing "or whenever you are unsure" in the description | 8-9, 3 | §2 Aggressive imperatives; §6 All-caps without reasoning | Major |
-| **P6** | **Unobservable hedge rule** — "Try to be thorough and consider the security implications where appropriate", and the file has no completion gate at all | 16, file-wide | §4 Vague hedges; §6 Observable; §8 Completion gate (premature completion) | Major |
-| **P7** | **Deprecated harness mechanic** — instructs the agent to set `budget_tokens`, which 400s on Opus 4.7+ / Fable / Mythos | 24-25 | §7 Deprecated model mechanics | Major |
+| **P5** | **Over-triggering** — "ALWAYS invoke this agent proactively", plus the doubt-clause "If in doubt, use it" and the trailing "or whenever you are unsure" in the description | 8-9, 3 | §2 Aggressive imperatives; §5 All-caps without reasoning | Major |
+| **P6** | **Unobservable hedge rule** — "Try to be thorough and consider the security implications where appropriate", and the file has no completion gate at all | 16, file-wide | §3 Vague hedges; §5 Observable; §7 Completion gate (premature completion) | Major |
+| **P7** | **Deprecated harness mechanic** — instructs the agent to set `budget_tokens`, which 400s on Opus 4.7+ / Fable / Mythos | 24-25 | §6 Deprecated model mechanics | Major |
 
 Severities are the expected rank, not a pass condition on their own — see scoring.
 
@@ -45,7 +45,7 @@ Both are conformant and are in the fixture to catch over-firing:
   audit" is negative-only *and* correct: §4 permits negative-only framing for a hard,
   irreversible safety boundary, and it carries its reason in the next sentence.
 - **D2, line 19-20** — the exact-pin rule is dated with its cause ("Added 2026-03-04 after a
-  floating minor bump silently changed TLS defaults"), which is precisely what §7 Dating
+  floating minor bump silently changed TLS defaults"), which is precisely what §6 Dating
   asks for. A finding calling it undated or stale is manufactured.
 
 ## Expected behaviour
@@ -59,9 +59,8 @@ Both are conformant and are in the fixture to catch over-firing:
 
 **Secondary — process.**
 5. P1's absence verified by a tool call this session, not asserted (the "Never flag from memory" Operating note).
-6. P7 reported as `Major [unverified — harness fact dated 2026-07-25]` or equivalent, per the "Release-coupled and cited facts" Operating note.
+6. P7 reported with its recorded status per the "Release-coupled facts follow their recorded status" Operating note — `instruction_external_facts.md` §2 is undated, so an unverified dependency note or equivalent.
 7. Each finding carries all four parts: Quote (with line), Severity, Why (named failure mode), Suggest (concrete rewrite).
-8. Strengths section present — required even here (§How you review, "the \"Strengths\" section is required").
 
 ## Scoring
 

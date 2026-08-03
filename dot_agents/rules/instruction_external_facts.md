@@ -11,10 +11,10 @@ access, so re-verification is the author's job. Cite a fact from here **with its
 3. Cited sources, and what each measured — measured nothing / measured something
 4. Rejected citations — do not restore
 
-## 1. Harness mechanics — verified 2026-07-25
+## 1. Harness mechanics — verified 2026-07-25, re-verify due (pre-Claude-5)
 
-Covers the numeric limits and field semantics in §1–§2 of the checklist: load limits,
-import depth, listing caps, tool-field behavior, and what reaches a sub-agent.
+Covers the numeric limits and field semantics in §1–§2 and §8 of the checklist: load
+limits, import depth, listing caps, tool-field behavior, and what reaches a sub-agent.
 
 Checked against the Claude Code sub-agents, skills, and memory references, plus the
 Anthropic prompting-best-practices pages.
@@ -23,10 +23,25 @@ Anthropic prompting-best-practices pages.
 **Settling step for a disputed one:** re-check the sub-agents / skills / memory reference.
 
 A **Blocker** resting on any of these is reported as
-`Blocker [unverified — harness fact dated 2026-07-25]`.
+`Blocker [unverified — harness fact dated 2026-07-25, pre-Claude-5 baseline]`.
 
 Provenance note: a 2026-07-25 pass found the reviewer had been asserting six such
 mechanics with none verified, and four were wrong. That is why these carry dates at all.
+
+### Addendum 2026-08-03 — Claude 5 release facts; the baseline is due
+
+The 2026-07-25 baseline predates the Claude 5 family, so its re-verify trigger has fired —
+the heading and the Blocker label above carry that status. Added 2026-08-03 from primary
+fetches (the §3 Claude-5 set):
+
+- Auto-memory is now the vendor's primary memory path, presented as replacing the `#`
+  quick-add workflow. Whether `#` still works is unverified — settle against the Claude
+  Code memory reference on the next §1 pass; §8 of the checklist marks it at the point of
+  use.
+- Workflow-spawned subagents always run in `acceptEdits` mode and inherit the session's
+  tool allowlist regardless of the session's permission mode; file edits are auto-approved
+  (Claude Code workflows reference, feature gated v2.1.154+, fetched 2026-08-03). Carried
+  by §2's least-privilege bullet.
 
 ## 2. Deprecated model mechanics — date unknown, carried forward
 
@@ -61,6 +76,52 @@ is where the never-an-outcome-claim rule below is now recorded formally, per sou
 All three support a **mechanism argument**, never an **outcome claim**. Cite one **with its
 `retrieved:` date**; the vault's Lint 2(b) sweeps those dates because "the current release"
 is not observable from inside the vault.
+
+**The Claude-5 set — added 2026-08-03, all `type: source`, `provenance: primary`,
+`Claim type: mechanism`, `retrieved: 2026-08-03`.** These back the checklist's
+Claude-5-era checks (judgment displacement, examples-vs-interfaces, cross-carrier tool
+guidance, reference over restatement, the embedded-verification probe) and the two
+failure modes added to `instruction_failure_modes.md` the same day. Mechanism arguments
+only; none reports a methodology.
+
+- Anthropic's *The New Rules of Context Engineering for Claude 5 Generation Models*
+  (blog, 2026-07-24). Page: *The New Rules of Context Engineering (Anthropic 2026)*.
+  Six "then vs now" reversals. Its one number — over 80% of Claude Code's system prompt
+  removed for Opus 5 / Fable 5 "with no measurable loss on our coding evaluations" —
+  names no eval, method, or per-rule breakdown: it licenses "old-model guardrails whose
+  content the model now gets right by judgment are removable", never "cut your corpus".
+  The post itself exempts house-specific opinion ("except in highly important areas").
+  Three reversals are stated outright and are the load-bearing ones here: tool-usage
+  examples "actually constrain [models] to a certain exploration space" — design
+  expressive interfaces instead (backs §3 *Examples*); "put instructions on how to use
+  tools in the tool descriptions rather than the system prompt", deleting the repeats
+  (backs §4 *Tool guidance duplicated across carriers*); and rich references — "prefer
+  files that are in code", "a HTML mockup of a design will generally produce better
+  results than a description of the design or a screenshot" (backs §3 *Reference over
+  restatement*).
+- Anthropic's *A Field Guide to Claude Fable 5* (blog, 2026-07-06). Page: *A Field Guide
+  to Claude Fable 5 (Anthropic 2026)*. Carries the judgment-displacement mechanism
+  sentence: too specific → faithful compliance even when a pivot would be right; too
+  vague → generic industry defaults that may not fit. Single-author practitioner
+  experience, zero measurement; stated about prompts, extended to persistent artifacts
+  by argument only. Also states the reference preference from the prompt side: "the
+  absolute best reference is *source code*", richer than a screenshot (seconds §3
+  *Reference over restatement*).
+- Anthropic's *Effective Context Engineering for AI Agents* (engineering post,
+  2025-09-29). Page: *Effective Context Engineering for AI Agents (Anthropic 2025)*.
+  Backs "right altitude" (brittle hardcoded logic and vague shared-context assumptions
+  as twin defects), "minimal does not mean short", canonical-examples-over-edge-case
+  lists, and the decay clause ("smarter models require less prescriptive engineering").
+  Its context-rot numbers belong to Chroma's research, not this post.
+- Anthropic's *Building Verification Loops in Claude Code with Skills* (blog,
+  2026-07-22). Page: *Building Verification Loops in Claude Code with Skills (Anthropic
+  2026)*. Backs the embedded-verification fired-probe check ("invoke the skill on a
+  fresh task and confirm the new step runs"). Never mentions hooks.
+- Anthropic's *Dynamic Workflows in Claude Code* (blog 2026-06-02 plus the workflows
+  docs reference, both fetched 2026-08-03). Page: *Dynamic Workflows in Claude Code
+  (Anthropic 2026)*. Source of §1's workflow-subagent `acceptEdits` fact; the docs page
+  supersedes the blog where they disagree (resume semantics), and is version-annotated
+  v2.1.154–v2.1.219 — the most volatile source in the vault.
 
 **Measured something — added 2026-07-30, backing "Complement stated?".** All three
 primary full texts were fetched and read 2026-07-30 and now have pages in the `prompts`

@@ -7,6 +7,15 @@
 - **Conflict-silent compliance** — conflicting rules are resolved without surfacing the conflict.
 - **Dispatch ambiguity** — invocation and skip conditions do not identify one clear route.
 - **Over-triggering** — aggressive trigger language invokes a skill outside its scope.
+- **Judgment displacement** — a rule pins a context-dependent judgment call to a constant
+  ("always 3 retries", "cap files at 200 lines") and current models comply faithfully even
+  where context makes the constant wrong. Remedy and the house-delta exception: checklist
+  §5 "Freedom level matched to fragility?". (Vendor-asserted, Claude-5 era —
+  `instruction_external_facts.md` §3.)
+- **Assumed shared context** — guidance vague enough to presume project knowledge the
+  model lacks; the gap fills silently with plausible generic defaults, not with a
+  question. (Silent gap-filling is measured — `instruction_external_facts.md` §3,
+  *Semantic Collapse*; the vague-side framing is the vendor's "right altitude".)
 - **Pink-elephant negation** — a negative names the prohibited behavior without a positive replacement.
 - **Caller-context leakage** — a fresh sub-agent is assumed to know caller state.
 - **Premature completion** — an agent lacks a checkable completion gate.
