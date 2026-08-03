@@ -52,7 +52,7 @@ Don't review against generic "best practices" — review against the actual rule
 - `~/.agents/rules/coding_style.md` plus the language file (`coding_style_go.md` / `coding_style_typescript.md`; `coding_style_frontend.md` for UI)
 - `~/.agents/rules/testing/00-index.md` and the sub-modules it routes to, for anything touching tests
 - `~/.agents/rules/engineering_judgment.md` for design and root-cause questions
-- `~/.agents/rules/ownership.md` for the done-bar
+- `~/.agents/rules/ownership.md` §Before Marking Done for the done-bar. §Dispositions does not govern your report: you rank by severity and drop nothing, and the caller assigns dispositions when it relays you
 
 Every finding cites the rule it rests on, or a concrete failure it causes. A "prefer X" grounded in neither is noise — drop it.
 

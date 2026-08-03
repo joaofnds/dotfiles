@@ -26,8 +26,8 @@ Classify friction without derailing the task:
 - **One-time:** ignore it unless it reveals a defect.
 - **Recurring:** fix it now only when it is in scope, low risk, and cheaper than carrying
   it; otherwise record it for the reflection.
-- **Blocking:** resolve it as first-class work with its own verification, or surface the
-  blocker and ask.
+- **Blocks the task** (not the `ownership.md` disposition): resolve it as first-class work
+  with its own verification, or surface the blocker and ask.
 
 Signals worth investigating include repeated manual steps, the same knowledge copied
 across files, slow feedback, recurring uncertainty about placement, and workarounds for

@@ -37,7 +37,8 @@ re-enters an earlier stage rather than pushing through.
   approach is *picked*), then interrogate that design until it's hardened.
 - **/plan** — write the hardened approach to a self-contained plan file, citing the
   spec/options docs by path; work too big for one build session becomes sequential
-  milestone plans, not one monolith.
+  milestone plans, not one monolith; a chain also gets a `-status.md` roll-up that `/build`
+  keeps current.
 - **/build** — execute that plan plus every artifact it cites (the acceptance
   criteria live in the spec), in a fresh session if the plan is large. If a material
   assumption fails, record the discrepancy and route back to `/grill` (re-pick) or
@@ -57,6 +58,9 @@ re-enters an earlier stage rather than pushing through.
   `skillOverrides` in settings and are frequently user-invoked only: a skill absent from
   your available-skills context cannot be called. Check there before routing to one, and
   when it isn't listed, recommend it to the user and say why rather than stalling on it.
+  A reviewer's severity is not a disposition: relaying its findings to the user means giving
+  each one a disposition (`~/.agents/rules/ownership.md` §Dispositions). Reviewers rank, the
+  caller classifies and routes, and nothing is dropped in the handover.
 - **deploy** — use the project's one documented pipeline, rollback path, and change
   controls. A verified change should be deployable with no hidden testing or sign-off
   work remaining. Never invent or execute a production command without authorization.

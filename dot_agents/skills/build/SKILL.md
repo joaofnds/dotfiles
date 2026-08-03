@@ -6,7 +6,7 @@ description: >
   plan file and wants it built — "build @.boris/plans/...", "implement this plan",
   "resume", "pick up where we left off". Takes the plan path as an argument; if
   none is given, list the plan files in .boris/plans/ (those without a
-  -spec/-options/-grilled/-diagnosis suffix) and ask which one.
+  -spec/-options/-grilled/-diagnosis/-status suffix) and ask which one.
 argument-hint: "Path to the .boris/plans/ plan file"
 ---
 
@@ -14,7 +14,7 @@ argument-hint: "Path to the .boris/plans/ plan file"
 
 **Wrong skill if:** no plan file exists yet → `/plan`; only in-flight context with no plan → read the `.boris/handoffs/` briefing instead.
 
-Given no plan path as argument, list the plan files in `.boris/plans/` (those without a `-spec`/`-options`/`-grilled`/`-diagnosis` suffix) and ask which one to build.
+Given no plan path as argument, list the plan files in `.boris/plans/` (those without a `-spec`/`-options`/`-grilled`/`-diagnosis`/`-status` suffix) and ask which one to build. A `-status.md` file is the chain's roll-up view, not a plan: read it to see which milestone is next, then build that milestone's plan.
 
 Execute an implementation plan written by `/plan` in a previous session. The plan is the source of truth — you have no memory of the conversation that produced it, so trust the file, not assumptions. Implementation is test-driven: cross-boundary vertical slices start outside-in; local behavior starts at the narrowest observable layer.
 
@@ -48,11 +48,30 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
       ## Closeout
       - **Landed:** what shipped, in one line per milestone.
       - **Not landed:** each unbuilt task, and the reason — descoped, superseded, blocked.
-      - **Left over:** work still wanted. Each item names where it went — a new plan under
-        `.boris/plans/`, an issue, or a line in the user's daily note. Nothing is left
-        pointing only at this file; the archive is not a queue.
+      - **Left over:** work still wanted, each item carrying its `ownership.md` disposition
+        and the trigger Blocking and Decide require. **Blocking** and **Decide** items name
+        where they went — a new plan under `.boris/plans/`, or an issue — and creating either
+        needs the user's go-ahead first, so ask for it in the summary. **Noted** items stay
+        listed here under one heading and are routed nowhere. The archive is not a queue.
+      - **Next:** exactly one of —
+        - `fix <X> first` — a **Blocking** item survives, or Status is `partial`/`abandoned`.
+        - `your call on <Y>` — no Blocking item, but an open **Decide** item changes what the
+          next milestone builds.
+        - `proceed to <next milestone>` — neither of the above, and a milestone remains.
+        - `done — nothing follows` — neither of the above, and this was the last or only plan.
 
-  Then archive the whole chain of documents that led to the plan, not just the plan: every artifact sharing its stem — `-spec`, `-options`, `-grilled`, `-design`, `-diagnosis`, `-findings`, and the numbered milestone plans — plus that stem's entries under `.boris/reviews/`, `.boris/handoffs/`, and `.boris/design/`. Each moves to the mirrored `.boris/archive/<subdir>/` (`git mv` when tracked, `mv` otherwise). A plan stopped mid-flight archives the same way — `partial` or `abandoned`, with the reason in the closeout. Only in-flight work stays outside `.boris/archive/`.
+  The **Next:** line is also the first line of your summary to the user. Learning whether the
+  next milestone is safe to start must not require opening the plan file.
+
+  If the plan cites a status file, or a `<date>-<slug>-status.md` exists in `.boris/plans/` for
+  this plan's date-and-slug prefix (drop any `-<N>-<milestone>` suffix before matching), update
+  it in the same pass: flip this milestone to `[x]`, or to `[~]` with the missing piece named
+  when the closeout says `partial` or a **Blocking** item survives. Move the closeout's open
+  **Decide** items under **Needs your attention**, tagged with this milestone. Leave **Noted**
+  items out of it. A closed-out milestone whose status line still reads `[ ]` is the drift this
+  file exists to prevent.
+
+  Then archive the whole chain of documents that led to the plan, not just the plan: every artifact sharing its stem — `-spec`, `-options`, `-grilled`, `-design`, `-diagnosis`, `-findings`, `-status`, and the numbered milestone plans — plus that stem's entries under `.boris/reviews/`, `.boris/handoffs/`, and `.boris/design/`. Each moves to the mirrored `.boris/archive/<subdir>/` (`git mv` when tracked, `mv` otherwise). A plan stopped mid-flight archives the same way — `partial` or `abandoned`, with the reason in the closeout. Only in-flight work stays outside `.boris/archive/`.
 
   When a stem carries several milestone plans, archive the chain only once the last one is closed out — the shared spec and grilled docs are still live for the milestones that remain.
 - A citation to `.boris/<subdir>/<name>.md` that doesn't resolve is looked up at `.boris/archive/<subdir>/<name>.md` before being treated as missing. Never repoint an existing citation on archive.

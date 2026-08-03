@@ -152,7 +152,7 @@ Axis mandates — pass one per reviewer:
   write-sequence defect and a coupling defect: report each under its own
   name, never one defect under two — and don't let §3's same-`file:line`
   dedup collapse them, since a write-sequence finding and a coupling finding
-  carry different dispositions (§3's revert test applies to the coupling
+  carry different verification paths (§3's revert test applies to the coupling
   finding, never to this one).
   Sweep all five of Nygard's coupling types
   (`coupling.md` §Nygard's five types) plus **temporal coupling** in both of its
@@ -239,7 +239,7 @@ then:
 - **Dedup** findings hitting the same `file:line`; keep the strongest
   framing, note both axes. Exception: the Architecture axis's write-sequence
   finding and a coupling finding at the same `file:line` are never one of
-  these — they carry different dispositions (§4's stability probe reaches
+  these — they carry different verification paths (§4's stability probe reaches
   one, never the other), so both stay, distinctly labeled.
 - **Reconcile severity** when axes disagree — the concrete failure decides,
   not the louder reviewer.
@@ -420,7 +420,7 @@ Advisory structural items and `[pre-existing]`-tagged Blockers never move it.
 
 ## 6. Recommend the next route
 
-Record a proposed disposition for every finding. Recommend `/plan` and `/build` for
+Record a proposed **next route** for every finding. Recommend `/plan` and `/build` for
 large fixes and a direct test-first fix for small ones. Advisory structural items are a
 follow-up `/plan` candidate, never a merge condition — propose one only if the user wants
 the debt addressed. Do not modify source as part of panel review; return the report

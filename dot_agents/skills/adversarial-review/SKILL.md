@@ -79,7 +79,11 @@ finding that threatens your work. Quoting closes that channel.
 
 Format, worst first:
 
-> **[Severity]** `file:line` — <the reviewer's finding, verbatim or near-verbatim>
+> **[Severity] [Blocking | Decide | Noted]** `file:line` — <the reviewer's finding, verbatim or near-verbatim>
+
+The disposition is yours, not the reviewer's, and it never edits the reviewer's words
+(`~/.agents/rules/ownership.md` §Dispositions). A finding that names no defect takes that
+section's **Advisory** route instead of a disposition.
 
 Every finding gets listed, including the ones that invalidate what you just did —
 no pre-arguing them away, no burying them under defenses. If you have a response,
