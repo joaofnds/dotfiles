@@ -11,37 +11,52 @@ access, so re-verification is the author's job. Cite a fact from here **with its
 3. Cited sources, and what each measured — measured nothing / measured something
 4. Rejected citations — do not restore
 
-## 1. Harness mechanics — verified 2026-07-25, re-verify due (pre-Claude-5)
+## 1. Harness mechanics — verified 2026-08-03
 
 Covers the numeric limits and field semantics in §1–§2 and §8 of the checklist: load
 limits, import depth, listing caps, tool-field behavior, and what reaches a sub-agent.
+A checklist claim resting on Claude Code harness documentation cites **this section with
+its date**; §3 records the sources behind it (page *Claude Code Instruction-Artifact
+Mechanics*). The router's §3-entry requirement covers paper, benchmark, and non-harness
+vendor claims.
 
-Checked against the Claude Code sub-agents, skills, and memory references, plus the
-Anthropic prompting-best-practices pages.
+First verified 2026-07-25; re-verified 2026-08-03 against the live memory, skills,
+sub-agents, and settings references at code.claude.com/docs (all four vault raw notes
+carry `fetched: 2026-08-03`; page *Claude Code Instruction-Artifact Mechanics*).
+Every fact the checklist cites held, with one qualification: `CLAUDE.md`/`AGENTS.md`
+reach every subagent *except* the built-in Explore and Plan agents, which skip them —
+the checklist's §1 Loading-path bullet now carries it. The prompting-best-practices
+pages were last checked 2026-07-25.
 
 **Re-verify trigger:** each Claude Code or model release.
 **Settling step for a disputed one:** re-check the sub-agents / skills / memory reference.
 
 A **Blocker** resting on any of these is reported as
-`Blocker [unverified — harness fact dated 2026-07-25, pre-Claude-5 baseline]`.
+`Blocker [unverified — harness fact dated 2026-08-03]`.
 
 Provenance note: a 2026-07-25 pass found the reviewer had been asserting six such
 mechanics with none verified, and four were wrong. That is why these carry dates at all.
 
-### Addendum 2026-08-03 — Claude 5 release facts; the baseline is due
+### 2026-08-03 re-verification — corrections and additions
 
-The 2026-07-25 baseline predates the Claude 5 family, so its re-verify trigger has fired —
-the heading and the Blocker label above carry that status. Added 2026-08-03 from primary
-fetches (the §3 Claude-5 set):
+The Claude 5 release fired the re-verify trigger; the pass above closed it. Beyond
+confirming the standing facts, this pass produced two corrections (`skillOverrides`
+scope, memory load order), one withdrawal (`#` quick-add), and carries forward the
+workflow-subagent fact from the same-day workflows fetch:
 
-- Auto-memory is now the vendor's primary memory path, presented as replacing the `#`
-  quick-add workflow. Whether `#` still works is unverified — settle against the Claude
-  Code memory reference on the next §1 pass; §8 of the checklist marks it at the point of
-  use.
+- **`skillOverrides` does not apply to plugin skills** — those are managed through
+  `/plugin` (settings reference, field gated v2.1.129+). The checklist had stated the
+  override unconditionally; its Inputs paragraph and §1 now carry the exemption.
+- **`#` quick-add is no longer documented.** The memory reference now documents
+  auto-memory instead: on by default (`autoMemoryEnabled`), per-project directory
+  `~/.claude/projects/<project>/memory/`, machine-local, not loaded into subagents
+  except forks. §8 of the checklist dropped the `#` mention.
+- Memory load order is managed policy → user → project → local; project files in
+  subdirectories load on demand by directory. (§8 previously said "enterprise →
+  project → user → local".)
 - Workflow-spawned subagents always run in `acceptEdits` mode and inherit the session's
   tool allowlist regardless of the session's permission mode; file edits are auto-approved
-  (Claude Code workflows reference, feature gated v2.1.154+, fetched 2026-08-03). Carried
-  by §2's least-privilege bullet.
+  (workflows reference, feature gated v2.1.154+). Carried by §2's least-privilege bullet.
 
 ## 2. Deprecated model mechanics — date unknown, carried forward
 
