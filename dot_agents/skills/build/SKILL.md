@@ -4,9 +4,10 @@ description: >
   Pick up an implementation plan written by /plan (or any .boris/plans/*.md plan)
   and execute it faithfully in a fresh session. Invoke when the user points at a
   plan file and wants it built — "build @.boris/plans/...", "implement this plan",
-  "resume", "pick up where we left off". Takes the plan path as an argument; if
-  none is given, list the plan files in .boris/plans/ (those without a
-  -spec/-options/-grilled/-diagnosis/-status suffix) and ask which one.
+  "resume", "pick up where we left off". Takes the plan path as an argument, and
+  asks which plan when given none. Skip when no plan file exists yet (use /plan),
+  or when only in-flight context exists with no plan (read the .boris/handoffs/
+  briefing instead).
 argument-hint: "Path to the .boris/plans/ plan file"
 ---
 
