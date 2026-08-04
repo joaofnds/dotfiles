@@ -6,14 +6,16 @@ description: >
   contradictions, prunes stale entries, repairs [[wikilinks]], and rebuilds the
   MEMORY.md index. Invoke when the store has grown noisy or repetitive, or for
   periodic cleanup: "dream", "consolidate memory", "clean up project memory".
-  Not for authoring new memories or improving skills/rules — that's kaizen.
+  Not for authoring new memories or improving skills/rules — that's kaizen, or
+  /absorb when an external subject (a repo or file to learn from) drives it.
 argument-hint: "[--auto]"
 ---
 
 # Dream — Memory Consolidation
 
 **Wrong skill if:** you want to *create* memories from a session (that's the memory
-tool doing its normal job); you want to improve skills/agents/rules → `/kaizen`; you
+tool doing its normal job); you want to improve skills/agents/rules → `/kaizen`, or
+`/absorb` when an external subject drives it; you
 want to review a code change → `/adversarial-review`, or the `code-reviewer` agent.
 Dream only reorganizes an *existing* store.
 

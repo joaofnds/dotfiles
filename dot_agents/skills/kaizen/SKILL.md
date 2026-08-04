@@ -5,13 +5,15 @@ description: >
   skills, agents, rules, CLAUDE.md/AGENTS.md — where a fresh critic reads the
   transcript cold and proposes grounded improvement diffs. Invoke at the END of a
   session: "kaizen", "retro on this process", "how could this skill/agent/rule be
-  better". Skip mid-task (no evidence yet). Improving the work product itself →
+  better". Skip mid-task (no evidence yet). Skip when the improvement is grounded
+  in an external subject — a repo, file, or published guidance to learn from →
+  /absorb. Improving the work product itself →
   /adversarial-review, or a user-invoked /code-review, not this.
 ---
 
 # Kaizen — Retro on the Instructions You Used
 
-**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; improving the work product itself rather than the process → `/adversarial-review`, or recommend a user-invoked `/code-review`.
+**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; the improvement is grounded in an external subject to learn from rather than this session's transcript → `/absorb`; improving the work product itself rather than the process → `/adversarial-review`, or recommend a user-invoked `/code-review`.
 
 **You are a neutral witness; a fresh critic is the judge.** The move you're tempted to
 make — ask the agent that just ran the session "what would you change?" — is the least
