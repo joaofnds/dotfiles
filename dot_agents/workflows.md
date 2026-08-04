@@ -1,5 +1,10 @@
 # Workflows
 
+**Audience: you, not the agent.** This is a map of the development loop and why each stage
+sits where it does. It carries no agent obligations — every rule an agent is bound by lives
+in a skill under `~/.agents/skills/` or a rule under `~/.agents/rules/`. Where this file
+states something as a rule, it is describing one that lives there.
+
 Use-case loops that chain the custom skills under `~/.agents/skills/`. They cover
 development from problem framing through production feedback. Release and deployment
 commands are project-specific; the verification, review, observation, and learning gates
@@ -18,8 +23,8 @@ one consumes. These docs live under `.boris/plans/` at the repo root (reviews un
           spec.md    options.md   pick+harden  plan.md   execute   red/green                                 feedback
 ```
 
-If `.boris/CONTEXT.md` exists, read it before producing any loop artifact — it holds
-the project's domain language (`/discuss` maintains it).
+The domain glossary at `.boris/CONTEXT.md` gates every loop artifact; `~/.agents/AGENTS.md`
+§Task lifecycle owns that rule, `/discuss` maintains the file.
 
 Human judgment is heaviest at the two ends — *what to build* (`/discuss`, `/grill`)
 and *did it actually work* (`verify`, `review`) — and lightest in the mechanical
@@ -62,7 +67,8 @@ re-enters an earlier stage rather than pushing through.
   each one a disposition (`~/.agents/rules/reporting_findings.md`).
 - **deploy** — use the project's one documented pipeline, rollback path, and change
   controls. A verified change should be deployable with no hidden testing or sign-off
-  work remaining. Never invent or execute a production command without authorization.
+  work remaining. Never invent or execute a production command without authorization
+  (`~/.agents/AGENTS.md` §Autonomy).
 - **release** — expose the deployed behavior only when the authorized product decision
   says to. Deployment proves it can run safely; release decides whether users receive it.
 - **observe** — confirm the deployed behavior and relevant service signals; a green
@@ -166,34 +172,9 @@ work in flight → /handoff → [new session] resume → next applicable stage
 
 ## Spawn shapes
 
-Not a stage. This governs every subagent spawn in every loop above, and ad-hoc spawns
-outside them. Everything here — the shapes and the fallbacks both — is behavior observed
-on `claude-code` 2.1.220, 2026-07-27, not a documented mechanism: it reversed once between
-releases already, so re-verify after a CLI bump rather than trusting these lines.
+Several stages above fan work out to subagents. The mechanics of that — the three shapes, why a
+subagent spawn never carries a `name`, and what to do with a truncated report — are agent
+mechanics rather than workflow, and they live in `~/.agents/rules/subagent_spawning.md`.
 
-Two shapes, picked per spawn: one agent you are waiting on, or several launched at once.
-Neither carries a `name` — a named spawn returns a receipt, and the agent's report does
-not come back with it.
-
-- **You need the result before you can continue** — one agent, un-named,
-  `run_in_background: false`. The report arrives in the tool result on that turn. The
-  producer gate that `/discuss`, `/research`, `/grill`, `/diagnose` and `/plan` each run
-  (`adversarial-review/SKILL.md` §As a producer gate) is this shape.
-- **You are launching several at once** — a fan-out: every agent un-named, each with
-  `run_in_background: true`, which is what has been observed to produce concurrency here.
-  Each report arrives on its own notification. This is still the shape when you have
-  nothing to do but wait for all of them — a panel of reviewers is a fan-out even though
-  the next step needs every verdict.
-
-The selector is per spawn, not per skill: `/research` has both a fan-out and a producer
-gate, and takes a different shape for each. Picking `false` for a fan-out is not wrong,
-only serialized — accept it when you did not want the concurrency, not by default.
-
-If a report comes back truncated:
-
-- **Background** — the notification carries an `<output-file>` path. Extract the final
-  assistant text from it. Never `Read` or `tail` the file whole: it is the subagent's
-  full JSONL transcript and will overflow your context.
-- **Synchronous** — there is no notification. The result carries a trailing `agentId`
-  with a resume instruction; resume that agent and ask for the missing part. Untested —
-  no truncated synchronous Agent result has been observed.
+They moved out of this file on 2026-08-04, so that harness behavior with a re-verify date stops
+sitting in a document nobody re-verifies.

@@ -46,8 +46,8 @@ missing — never invent it:
 
 Spawn six agents, each un-named with `run_in_background: true` — five when the
 diff touches no test file — so they run concurrently and each report arrives on
-its own notification (see `workflows.md` §Spawn shapes; observed on `claude-code` 2.1.220,
-2026-07-27). The six: four `code-reviewer` agents, one per axis; one
+its own notification (`~/.agents/rules/subagent_spawning.md`). The six: four
+`code-reviewer` agents, one per axis; one
 `testing-reviewer`, the fifth verdict axis; and one `refactoring-reviewer`, the
 advisory track. Each code-reviewer gets the same shared context plus one axis
 mandate.
@@ -396,6 +396,9 @@ finding block must be self-contained — a fresh session with zero context can f
   fails — no verified reason, recommend the simpler fix. Direction and
   options, not full implementation>
 - **Verify:** <how to confirm the fix — test to run or add, behavior to observe>
+- **Trigger:** <the caller, input value, configuration, or user-action sequence that
+  reaches this — required for Blocking and Decide, omitted for Noted>
+- **Disposition:** <Blocking | Decide | Noted — assigned per §6>
 
 ## Structural opportunities — advisory, outside the verdict
 
@@ -419,6 +422,14 @@ any untagged Blocker or failed required suite → Fail; Majors → Pass with rev
 Advisory structural items and `[pre-existing]`-tagged Blockers never move it.
 
 ## 6. Recommend the next route
+
+Give every finding **in the numbered list** a disposition, plus the trigger Blocking and
+Decide require, before relaying it — `~/.agents/rules/reporting_findings.md` governs the
+report, relayed findings included. A
+reviewer's severity is a rank, not a disposition: it says how bad, never who acts. Structural
+opportunities take that file's advisory route instead: evidence and cost, no disposition, no
+trigger. Nothing is dropped either way — the route decides who acts, never whether the user
+sees it.
 
 Record a proposed **next route** for every finding. Recommend `/plan` and `/build` for
 large fixes and a direct test-first fix for small ones. Advisory structural items are a

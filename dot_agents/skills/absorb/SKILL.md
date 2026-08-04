@@ -64,6 +64,39 @@ Inventory the subject before judging it: locate and count its surfaces — agent
 skills, commands, rules, hooks, scripts, tests, CI, docs — with `ls`/`grep`/`wc`,
 not by trusting its README.
 
+### Reachability probe — run this before spawning anyone
+
+The subject's mechanisms improve some class of work. Probe our own history for
+that class *before* the fan-out, with the tools that can answer it:
+`git log --diff-filter=A --name-only`, `find`, and `grep` over the corpus,
+`.boris/`, and the memory store. Two questions, each answered with a command and
+its output:
+
+1. **Has this class of work ever happened here?** Name the commits, artifacts, or
+   transcript moments. Zero is a result, not a gap in the probe.
+2. **Can it happen today?** Name the capability the subject's mechanisms assume —
+   a renderer, a browser, a service, a test harness — and the probe showing it
+   configured or absent.
+
+Record both answers in the study plan; they open the study report.
+
+**When both come back empty, stop and put the choice to the user before spawning
+anyone:** "Nothing in this class has ever run here and nothing can run it today,
+so no import from this subject can name an observed moment (§8) and none can land
+now. I can (a) stop, (b) run a reduced study whose briefs hunt defects in *our*
+corpus that the subject's questions expose, and skip the kill steps, or (c) run
+the full study to build the deferred-candidate record." The user picks. The full
+study costs one agent per surface plus one skeptic per candidate; do not spend
+that for them.
+
+An empty probe does not devalue the defect track: in the impeccable study
+(`.boris/2026-08-04-impeccable-study.md`, 2026-08-04) every edit that landed came
+from Part 1 — defects in our own corpus the forced read surfaced — while all nine
+surviving imports failed the gate 0/10.
+That asymmetry is what option (b) exists to buy cheaply.
+
+### The study plan
+
 Then write a study plan: one deep-dive per surface, merging trivial surfaces and
 splitting oversized ones. Depth must come from the plan's structure, not from
 intention — a single-pass skim of a 3,000-file subject was rejected as shallow
@@ -74,7 +107,7 @@ scope is ambiguous; otherwise proceed.
 ## 3. Fan out — per-surface deep dives
 
 Spawn the deep-dive agents un-named with `run_in_background: true`
-(`workflows.md` §Spawn shapes; observed on `claude-code` 2.1.220, 2026-07-27).
+(`~/.agents/rules/subagent_spawning.md`).
 Every brief carries:
 
 - The untrusted-text banner.
@@ -135,9 +168,15 @@ weakens the candidate rather than excusing it.
 
 ## 5. Verify in the main thread
 
-A sub-agent's report is a claim, not evidence (`engineering_judgment.md` §6,
-borrowed authority). Before any finding enters the study report, re-run its
-load-bearing evidence yourself — the grep, the Read, the count. This applies
+`rules/subagent_spawning.md` §What a report is worth governs every dive report. This
+skill tightens the trigger: re-run a finding's load-bearing evidence — the grep, the
+Read, the count — **before it leaves your context, into the study report or into a
+message to the user.** A live relay is the same claim on a shorter path.
+
+One exception: when the user asks for a dive result before you can probe it, relay it
+tagged `[dive claim, not re-probed]` and probe it before your next message, stating the
+outcome. Nothing reaches the study report untagged and unprobed, and never write
+"verified" over a batch in which one item was not. This applies
 doubly to Part 1 findings (defects in *our* corpus the forced read surfaced):
 those turn into edits, so a wrong one costs real changes.
 
@@ -167,7 +206,8 @@ Refuted → move to Rejected, recording the disproof. Inconclusive → keep, tag
 Write `~/code/dotfiles/.boris/<YYYY-MM-DD>-<subject>-study.md` — the dotfiles
 repo regardless of this session's cwd; `.boris` is git-ignored. (The ECC
 exemplar predates this naming and keeps its old name.) Header: subject,
-commit or retrieval date, method (agent count, what the briefs required), and
+commit or retrieval date, method (agent count, what the briefs required), the
+reachability probe's two answers with the commands that produced them, and
 the untrusted-text banner. Five parts, every one present — "none found" is a
 result, not an omission:
 
@@ -205,10 +245,18 @@ The user picks what lands. Then:
   change is the exception: edit the live store at
   `$CLAUDE_CONFIG_DIR/projects/<slug>/memory/` (chezmoi doesn't manage it) and
   update its `MEMORY.md`.
-- Run `instructions-reviewer` once over the landed batch (the house gate) and
-  resolve or explicitly defer each finding.
+- Run `instructions-reviewer` once over the landed batch — the house gate;
+  `AGENTS.md` §Task lifecycle governs closure.
 - A landed claim resting on an external source names its
   `instruction_external_facts.md` §3 entry.
 
-Un-landed Import items with a future condition go to the open-items file the
-corpus already uses, not into memory.
+- **Write the open items before you call the study done.** Every Import candidate
+  that survived its kill step and the §8 gates but that the user did not take goes
+  to `~/code/dotfiles/.boris/corpus-review-open-items.md` — never to memory, and the
+  dotfiles repo regardless of this session's cwd — under a dated heading naming the
+  subject and its commit, one entry each carrying the surviving form, the target
+  file, and the condition that would make it land. A candidate that was refuted, or
+  that could name no observed moment, belongs in the report's Part 3 and never here;
+  Part 3 is what stops the next study from re-examining it. The study is not done
+  until that file holds one entry per deferred candidate. State the count and the
+  path in your closing message.
