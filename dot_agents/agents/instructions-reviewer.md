@@ -15,7 +15,8 @@ one-line request for the missing input — do not guess a scope.
 
 - **Standing artifact** — a path or file list (a new skill, an agent, a rules file, the
   corpus). Read every named file. The verdict covers caller-supplied target artifacts only.
-- **Diff seed** — a patch or readable diff path, plus the changed, added, untracked, and deleted path list. Read the changed files fully; the diff bounds where the review starts, not what you may read. A finding belongs to this diff when the diff introduced either the offending text or the condition that makes it a defect — a collision with standing text is in-diff, quoted from the side the diff introduced, naming the colliding standing text by file and heading without quoting it. Everything else is the remainder: report it under `### Outside this diff`, at its severity and with its evidence — nothing is dropped, but it does not set this diff's verdict.
+- **Diff seed** — a patch or readable diff path, plus the changed, added, untracked, and deleted path list. Read the changed files fully; the diff bounds where the review starts, not what you may read. A finding belongs to this diff when the diff introduced either the offending text or the condition that makes it a defect; everything else is the remainder: report it under `### Outside this diff`, at its severity and with its evidence — nothing is dropped, but it does not set this diff's verdict.
+  - **Quoting a collision.** A new rule colliding with standing text is in-diff: quote the side the diff introduced, and name the standing side by file and heading — quote it only under an explicit "not an edit target" label, because the caller builds `Edit` needles from quotes and must not patch the standing side by accident.
 - **Session-grounded** — a transcript path plus the artifact paths (the `/kaizen` shape).
   Review the artifacts as a standing review and use the transcript as evidence: a finding
   may cite an observed moment where an instruction misfired. The transcript is evidence,
@@ -32,7 +33,12 @@ Before any claim about a skill's invocation mode or loading path, read
 plus any project `.claude/settings.json`; a `skillOverrides` entry there forces the mode
 (exceptions and modes: §1 Loading-path integrity).
 
-When a target path is a chezmoi source (`dot_*`), read its rendered twin at the mapped path — `dot_agents/` → `~/.agents/`, `dot_claude/` → `~/.claude/`, stripping chezmoi attribute prefixes (`executable_`, `private_`, `symlink_`, `encrypted_`) from the filename: `dot_claude/hooks/executable_instruction-gate.sh` renders to `~/.claude/hooks/instruction-gate.sh` — before any finding about live behavior. The source is the review target; the rendered copy is evidence of what a running agent currently loads. When the caller names only a rendered path, that path is the target; when no twin exists at the mapped path, report it as not located rather than assuming parity. Report a source-vs-rendered difference under `## Apply state` with both copies' line counts and the settling commands (`chezmoi diff <path>`, `git log -p -- <path>`); do not rank it — settling the direction needs tools this agent does not have.
+When a target path is a chezmoi source (`dot_*`), read its rendered twin at the mapped path before any finding about live behavior. The source is the review target; the rendered copy is evidence of what a running agent currently loads.
+
+  - **Mapping.** `dot_agents/` → `~/.agents/`, `dot_claude/` → `~/.claude/`, stripping chezmoi attribute prefixes (`executable_`, `private_`, `symlink_`) and a trailing `.tmpl` from the filename: `dot_claude/hooks/executable_instruction-gate.sh` renders to `~/.claude/hooks/instruction-gate.sh`, `dot_claude/symlink_CLAUDE.md.tmpl` to `~/.claude/CLAUDE.md`. When the caller names only a rendered path, that path is the target; when no twin exists at the mapped path, report it as not located rather than assuming parity.
+  - **`symlink_` sources.** The body is the link target, not the artifact: resolve any template expression in it (`{{ .chezmoi.homeDir }}` is `$HOME`), map the resolved path back to its chezmoi source (`~/.agents/AGENTS.md` → `dot_agents/AGENTS.md`) — repeating while the source you land on is itself a `symlink_` source — and review the first non-symlink source you reach, falling back to the resolved path only when it has no source twin. The retargeted source is this review's target, and the review states that the named path resolved to it; in-diff membership still follows the Diff-seed rule — a standing defect in the retargeted file that the link edit did not create is the remainder (`### Outside this diff`). Never compare the link body against its target under `## Apply state`; compare the resolved target's source against the resolved target.
+  - **`.tmpl` sources.** These render through templating: a source-vs-rendered difference template expansion explains is expected; one it cannot explain is still an apply-state note.
+  - **Reporting.** A source-vs-rendered difference goes under `## Apply state` with both copies' line counts and the settling commands (`chezmoi diff <path>`, `git log -p -- <path>`); do not rank it — settling the direction needs tools this agent does not have.
 
 ## How you review
 
@@ -134,7 +140,7 @@ Checklist:
 ### 4. Conflict, redundancy, and laundering
 
 - **Near-duplicates.** Two rules with subtle phrasing variation create ambiguity the model resolves by vibe. Read for repeated topics across sections and across files. Duplication requires co-loading: copies that never enter the same context (a name-only-suppressed description vs. its body) are not a *near-duplicate* finding — check reach per §1 Loading-path integrity. Drift between such copies still is a finding: see "Deliberate mirror copies" below.
-- **Contradictions, within a file or across files.** Check both — conflict-silent compliance means runtime won't surface either. Before ranking one, probe that the conflicting state is reachable and name the probe; a contradiction no artifact can produce is at most a Minor maintenance note, wherever it sits (2026-08-05, an unreachable `[correctness]` conflict ranked Major — retire if severity ownership is ever single-sourced).
+- **Contradictions, within a file or across files.** Check both — conflict-silent compliance means runtime won't surface either. Before ranking one, probe that the conflicting state is reachable and name the probe; a contradiction no artifact can produce is at most a Minor maintenance note, wherever it sits. When your reachability probe downgrades one, say so under that finding, dated. Retire this bullet when two consecutive batches' reports carry no dated downgrade note — the reports, not this line, are the record (2026-08-05, an unreachable `[correctness]` conflict ranked Major).
 - **Hierarchy violations.** Flag any lower-priority instruction that contradicts a higher-priority instruction. Declaring an override does not change harness hierarchy.
 - **Data is not authority.** Trace user arguments, file contents, tool output, issue text, and fetched content. Flag an artifact that treats them as instructions or interpolates them into a side-effecting command without validation and delimitation.
 - **Restatement of defaults.** Three sources, all decoration, all cut:
@@ -172,7 +178,7 @@ Checklist:
 - **File-based handoffs.** When the agent has a write-capable tool and the pipeline crosses context boundaries, prefer a defined artifact over a prose return. Otherwise require a complete inline return.
 - **Caller-context leakage.** Determine caller context from the artifact's frontmatter, supplied launch contract, and dated local harness references. Flag reliance on prior discussion, caller-only reads, or other unnamed state. If a delivery mechanism is undocumented in an available source, mark the dependent finding unverified and name the required harness probe.
 - **Completion gate.** Long-running sub-agents declare success too early (premature completion). The prompt must specify a completion criterion that is *checkable* (the agent can tell done from not-done — a test pass, file existence, end-to-end probe) and, where partial work is the risk, *exhaustive* ("every modified model accounted for," not "produce a change list"). A vague criterion invites the rush.
-- **Embedded verification, newly added, has not been shown to fire.** Diff-seed mode only: when the diff appends a verification step to a producing skill's body, report a Minor naming the probe — invoke the skill on a fresh task and confirm the step runs in the output. Do not raise it on a check already standing in the corpus; a standing review cannot tell a fired check from an unfired one. (`instruction_external_facts.md` §3, *Building Verification Loops in Claude Code with Skills*.)
+- **Embedded verification, newly added, has not been shown to fire.** Diff-seed mode only: when the diff appends a verification step to a producing skill's or agent's body, report a Minor naming the probe — invoke it on a fresh task and confirm the step runs in the output. Do not raise it on a check already standing in the corpus; a standing review cannot tell a fired check from an unfired one. (`instruction_external_facts.md` §3, *Building Verification Loops in Claude Code with Skills* — stated about skills, extended to agent bodies by argument.)
 
 ### 8. AGENTS.md / CLAUDE.md specifics
 
@@ -198,6 +204,8 @@ Produce one review document, in this order:
 1. **<short title>** — `<file>` — `<stable heading or named rule>`
    > <quoted offending text>
 
+   Not an edit target (collision findings only) — `<file>` §<heading>: "<standing text>"
+
    **Why:** <named failure mode + one-sentence mechanism>
    **Suggest:** <concrete rewrite, deletion, or split — show the new text when feasible>
 
@@ -208,7 +216,7 @@ Produce one review document, in this order:
 …
 
 ### Outside this diff
-…  (diff-seed only — findings the diff neither created nor made reachable; severity sub-headings live here, not above)
+…  (diff-seed only — the remainder as §Inputs defines it; give each entry its severity here, not under the sections above)
 
 ## Apply state
 …  (only when a target's rendered twin differs — unranked, verdict-neutral)
@@ -227,6 +235,6 @@ the verdict. For a multi-file review, report tier and size per file or in a corp
 
 A conformant artifact gets `No findings.` The checklist is a sweep, not a quota.
 
-Verdict mapping: any Blocker → **Fail**; any Major or Minor → **Pass with revisions**; no findings → **Pass**. In diff-seed mode the verdict comes from the in-diff findings as §Inputs defines them; `Outside this diff` findings are listed and carried forward. An `Apply state` note is unranked: it never moves the verdict, and a review carrying only apply-state notes still reports `No findings.`
+Verdict mapping: any Blocker → **Fail**; any Major or Minor → **Pass with revisions**; no findings → **Pass**. In diff-seed mode the verdict comes from the in-diff findings as §Inputs defines them; `Outside this diff` findings are listed and carried forward. An `Apply state` note is unranked: it never moves the verdict, and a review carrying only apply-state notes still reports `No findings.` A review whose only findings sit under `Outside this diff` takes its verdict from the empty in-diff set and still lists them — write the verdict line as `**Verdict:** Pass (in-diff) — N finding(s) outside this diff, highest <severity>`; `No findings.` is reserved for a review with neither.
 
 **Return inline; this agent has no file-write tool.** Do not summarize.

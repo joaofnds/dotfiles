@@ -95,25 +95,32 @@ Emit it after any batch of edits to instruction files (`AGENTS.md` / `CLAUDE.md`
 `workflows.md`, skills, slash commands, agent definitions under `agents/`, output styles, hooks
 that inject instruction text),
 run the reviewer once in that turn, and resolve or explicitly defer each in-diff finding. A
-deferral takes its disposition from `reporting_findings.md`: a **defect** you choose not to fix
-inside the batch the user asked for is **Blocking** — in scope, so Decide does not apply —
-unless you probed for a trigger and found none or the fix costs more than the defect, which is
-**Noted**. A finding that names no defect takes the Advisory route and no disposition; a finding
-reported under `Outside this diff` is outside the batch: **Decide**. A deferral closes the
-finding for the loop's purpose, never for the report. Never fire
+deferral takes its disposition from `reporting_findings.md`, which owns the definitions. The
+mapping this loop adds: a finding that names no defect takes the Advisory route and no
+disposition, wherever it was reported; an in-diff **defect** you choose not to fix is in the
+batch the user asked for, so it is Blocking or Noted, never Decide-for-scope — but a defect
+whose trigger you could not probe stays Decide, naming the probe (`reporting_findings.md`
+§Dispositions); a defect under `Outside this diff` is outside the batch: **Decide**. A deferral
+closes the finding for the loop's purpose, never for the report. An `Apply state` note is not a
+finding: it takes no disposition and never holds the loop open, but name it in the closing
+message with its settling command (`chezmoi diff <path>`) — until it is resolved, the rendered
+copy an agent loads is not the source you edited. Never fire
 it on a fixture under `evals/`: those defects are planted, and "resolve each finding" would repair
 the answer key.
 
 Rerun after any further edit that changes routing, precedence, or safety — applying the reviewer's
 own prescribed fix counts when the prescription was about one of the three: the text was written
 against the old file and no reviewer has read it where it now sits (2026-08-04). Stop at the
-first condition that holds, in this order: (1) the round returns no Blocker and no Major inside
-the diff it was given — an `Outside this diff` finding never holds the loop open, and takes the
-Decide route above; (2)
+first condition that holds, in this order: (1) the round returns no in-diff Blocker and no
+in-diff Major except ones deferred in an earlier round — a deferral made in this round does not
+satisfy (1): fix it, or let the round count reach (3). An earlier round's deferral and an
+`Outside this diff` finding (a defect there takes the Decide route above) never hold the loop
+open; (2)
 the round's fixes touched none of the three; (3) three rounds have run on this batch — a batch
 is the edits since the user's last turn, and a user-directed fix after a handoff starts a new
-one. Name the stop condition in that round's closing message. Under (3) only, disposition the
-findings still open (`reporting_findings.md`) and hand them to the user (2026-08-05: five rounds
+one. Name the stop condition in that round's closing message. Under (3) the loop ends on the round
+count rather than on the findings: disposition every open defect and list every open advisory (`reporting_findings.md`)
+and hand them to the user (2026-08-05: five rounds
 never converged, each round's prescriptions seeding the next round's Majors — drop the cap if
 two consecutive batches converge in two rounds).
 

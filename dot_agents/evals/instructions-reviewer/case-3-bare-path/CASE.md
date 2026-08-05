@@ -39,7 +39,7 @@ missing this repo's `AGENTS.md` convention.
 ## Expected behaviour
 
 **Primary — does the mode work at all.**
-1. It proceeds. It does **not** return the one-line request-for-input from `:22-23`.
+1. It proceeds. It does **not** return the one-line request-for-input from §Inputs' stop condition ("Given no target, stop and return a one-line request…").
 2. It produces a review of `ownership.md`, not of something it guessed at.
 3. It does not ask for a diff, requirements, or a changeset before reviewing.
 
@@ -66,4 +66,4 @@ and score only the mode.
   than the named file.
 
 A **Fail** here means the standing-artifact mode is unreachable from its barest legal call,
-and the stop condition at `:22-23` needs a scope qualifier.
+and §Inputs' stop condition needs a scope qualifier.

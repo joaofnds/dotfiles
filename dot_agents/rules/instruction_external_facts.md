@@ -150,7 +150,8 @@ only; none reports a methodology.
 - Anthropic's *Building Verification Loops in Claude Code with Skills* (blog,
   2026-07-22). Page: *Building Verification Loops in Claude Code with Skills (Anthropic
   2026)*. Backs the embedded-verification fired-probe check ("invoke the skill on a
-  fresh task and confirm the new step runs"). Never mentions hooks.
+  fresh task and confirm the new step runs"). Never mentions hooks. Stated about skills;
+  the checklist extends it to sub-agent bodies by argument (2026-08-05).
 - Anthropic's *Dynamic Workflows in Claude Code* (blog 2026-06-02 plus the workflows
   docs reference, both fetched 2026-08-03). Page: *Dynamic Workflows in Claude Code
   (Anthropic 2026)*. Source of §1's workflow-subagent `acceptEdits` fact; the docs page
