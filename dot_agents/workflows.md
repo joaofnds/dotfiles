@@ -172,9 +172,6 @@ work in flight → /handoff → [new session] resume → next applicable stage
 
 ## Spawn shapes
 
-Several stages above fan work out to subagents. The mechanics of that — the three shapes, why a
+Several stages above fan work out to subagents. The mechanics of that — the two shapes, why a
 subagent spawn never carries a `name`, and what to do with a truncated report — are agent
 mechanics rather than workflow, and they live in `~/.agents/rules/subagent_spawning.md`.
-
-They moved out of this file on 2026-08-04, so that harness behavior with a re-verify date stops
-sitting in a document nobody re-verifies.

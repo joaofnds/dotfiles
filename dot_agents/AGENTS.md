@@ -59,9 +59,9 @@ Required reads by phase:
 - **Before marking done** → `ownership.md`, plus `reporting_findings.md` when the report carries any finding. **Also a conditional route:** surfacing a defect or follow-up mid-task fires both, announced in that turn even inside a continuing phase (`reporting_findings.md` governs every finding you report, not only the closing list)
 - **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
 
-Every sub-agent spawn passes no `name` — a named spawn returns a receipt and the report never
-arrives with it (`workflows.md` §Spawn shapes; observed on `claude-code` 2.1.220, 2026-07-27 —
-re-verify after a CLI bump).
+Every sub-agent spawn passes no `name` — `name` selected an agent-team teammate when teams
+were enabled, returning no report on the spawn turn (`subagent_spawning.md` §Why no `name`;
+unprobed with them off). Agent teams are disabled here; do not propose them.
 
 One phase requires an action rather than a read. Announce it in place of `Reading:`, on its own
 prefix line, so its absence is visible:
