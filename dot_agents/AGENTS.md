@@ -93,7 +93,10 @@ prefix line, so its absence is visible:
 
 Emit it after any batch of edits to instruction files (`AGENTS.md` / `CLAUDE.md` / `GEMINI.md`, rules,
 `workflows.md`, skills, slash commands, agent definitions under `agents/`, output styles, hooks
-that inject instruction text),
+that inject instruction text, and a chezmoi `symlink_` source whose body is the path to any of
+those, directory pointers included (`symlink_skills.tmpl` → `~/.agents/skills`) — retargeting a
+pointer changes which instructions load, so it is an edit to them, though a pointer fires the
+gate and carries nothing to obey),
 run the reviewer once in that turn, and resolve or explicitly defer each in-diff finding. A
 deferral takes its disposition from `reporting_findings.md`, which owns the definitions. The
 mapping this loop adds: a finding that names no defect takes the Advisory route and no
@@ -126,8 +129,8 @@ and hand them to the user (2026-08-05: five rounds
 never converged, each round's prescriptions seeding the next round's Majors — drop the cap if
 two consecutive batches converge in two rounds).
 
-Only edits to that set fire the gate, and that set is also the one an agent *obeys* — except
-`workflows.md`, gated by form and read-only by content: never cite it as the source of an
+Only edits to that set fire the gate, and that set is also the one an agent *obeys* — except a
+`symlink_` pointer (above) and `workflows.md` — the latter gated by form and read-only by content: never cite it as the source of an
 obligation (its header says the same), and opening it needs no announcement. The set an
 agent merely *reads* is wider: it adds `workflows.md`, eval cases and their fixtures,
 `review_checklist.md`, `.boris/**`, memory files, the ad-hoc prompt text you write when

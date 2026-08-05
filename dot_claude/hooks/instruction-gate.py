@@ -10,7 +10,7 @@ Points at ~/.agents/AGENTS.md rather than restating the gate: the steps, the
 `evals/` exemption, the placement rule, and the "not once per file" rerun bound
 all live there, and that file is either already in context or reachable at the
 path the block names (built-in Explore and Plan sub-agents skip AGENTS.md —
-instruction_external_facts.md §1, 2026-08-03).
+instruction_external_facts.md §1 standing list, 2026-08-03 pass).
 
 Suppression is per path per session: a later batch that re-edits an
 already-nudged file emits nothing. That batch is exactly what AGENTS.md's
@@ -28,7 +28,21 @@ import sys
 # chezmoi source (dot_*) and the rendered target (.*) match: personal artifacts
 # are edited in the source, so a target-only pattern would miss every real edit.
 INSTRUCTION = re.compile(
-    r"(^|/)(AGENTS|CLAUDE|GEMINI)\.md$"
+    # chezmoi attribute prefixes and the .tmpl suffix are part of the source
+    # filename, so `symlink_CLAUDE.md.tmpl` gates like `CLAUDE.md`.
+    # `[a-z]+_` cannot cross `/`, so this stays scoped to the basename.
+    r"(^|/)([a-z]+_)*(AGENTS|CLAUDE|GEMINI)\.md(\.tmpl)?$"
+    # A symlink source's body decides membership and a path regex cannot read
+    # one: match the names used for pointers at gated directories
+    # (`symlink_skills.tmpl` -> ~/.agents/skills). `.tmpl` is optional because
+    # both forms exist in this tree (`dot_gemini/symlink_agents` has none); the
+    # suffix is optional in the name, not in effect — without it the body is
+    # literal and a template expression never expands. The six names are the
+    # gated dir kinds from AGENTS.md, not a repo inventory: `rules` and `commands`
+    # have no pointer yet and stay listed so the first one is covered on creation.
+    # `plugins` is out — `/plugin` installs that tree, so nothing under it is
+    # authored here. AGENTS.md governs the rest.
+    r"|(^|/)symlink_(rules|skills|agents|commands|hooks|output-styles)(\.tmpl)?$"
     r"|(^|/)workflows\.md$"
     r"|/(\.agents|dot_agents)/(rules|skills|agents|output-styles)/"
     r"|/(\.claude|dot_claude)/(hooks|output-styles|agents|skills|commands)/",
