@@ -11,6 +11,11 @@ Points at ~/.agents/AGENTS.md rather than restating the gate: the steps, the
 all live there, and that file is either already in context or reachable at the
 path the block names (built-in Explore and Plan sub-agents skip AGENTS.md —
 instruction_external_facts.md §1, 2026-08-03).
+
+Suppression is per path per session: a later batch that re-edits an
+already-nudged file emits nothing. That batch is exactly what AGENTS.md's
+rerun rule targets, so the router is the only carrier there — never read the
+hook's silence as "no gate is due".
 """
 
 import hashlib
@@ -90,7 +95,8 @@ def main():
                 open(marker, "a").close()
                 fresh.append(path)
     except Exception:
-        fresh = hits  # state unavailable: a repeat nudge beats a silent miss
+        fresh = hits  # state unavailable: nudge every time rather than miss
+        first = False  # the compact form is self-sufficient by design
 
     if not fresh:
         return
@@ -118,9 +124,9 @@ def main():
         # Self-sufficient on purpose: session_id propagation into sub-agents is
         # unverified, so this may land in a context that never saw the full block.
         message = (
-            f"<instruction-artifact-gate>Also an instruction artifact: {listed} — same "
-            "`Gate:` batch (~/.agents/AGENTS.md §Task lifecycle; main conversation only)."
-            "</instruction-artifact-gate>"
+            f"<instruction-artifact-gate>Instruction artifact edited: {listed} — the "
+            "`Gate:` obligation covers it (~/.agents/AGENTS.md §Task lifecycle; main "
+            "conversation only).</instruction-artifact-gate>"
         )
 
     print(

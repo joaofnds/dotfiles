@@ -1,8 +1,8 @@
 # External Facts Behind the Instruction Review Checklist
 
-Every external fact `instructions-reviewer.md` cites **and this file has audited**, with its
-verification date and what the source actually established. A numeric or outcome claim in the
-checklist that is not listed here is unaudited — treat it as a mechanism argument and never
+Every external fact an instruction artifact cites **and this file has audited**, with its
+verification date and what the source actually established. A numeric or outcome claim in any instruction
+artifact that is not listed here is unaudited — treat it as a mechanism argument and never
 cite it as measured. The reviewer has no documentation or web
 access, so re-verification is the author's job. Cite a fact from here **with its date**.
 
@@ -17,22 +17,38 @@ Covers the numeric limits and field semantics in §1–§2 and §8 of the checkl
 limits, import depth, listing caps, tool-field behavior, and what reaches a sub-agent.
 A checklist claim resting on Claude Code harness documentation cites **this section with
 its date**; §3 records the sources behind it (page *Claude Code Instruction-Artifact
-Mechanics*). The router's §3-entry requirement covers paper, benchmark, and non-harness
-vendor claims.
+Mechanics*). A harness mechanic this section carries is cited as §1 with its date wherever
+the claim lands; one it does not carry gets its own §3 entry (`AGENTS.md` §Task lifecycle
+states the same rule).
 
 First verified 2026-07-25; re-verified 2026-08-03 against the live memory, skills,
 sub-agents, and settings references at code.claude.com/docs (all four vault raw notes
 carry `fetched: 2026-08-03`; page *Claude Code Instruction-Artifact Mechanics*).
 Every fact the checklist cites held, with one qualification: `CLAUDE.md`/`AGENTS.md`
 reach every subagent *except* the built-in Explore and Plan agents, which skip them —
-the checklist's §1 Loading-path bullet now carries it. The prompting-best-practices
-pages were last checked 2026-07-25.
+the checklist's §1 Loading-path bullet now carries it. The *Anthropic Prompting Best
+Practices* page was last checked 2026-07-25; *Claude Code Instruction-Artifact Mechanics*
+was re-fetched 2026-08-03 (§3 carries both dates).
 
 **Re-verify trigger:** each Claude Code or model release.
 **Settling step for a disputed one:** re-check the sub-agents / skills / memory reference.
 
-A **Blocker** resting on any of these is reported as
-`Blocker [unverified — harness fact dated 2026-08-03]`.
+**Standing numerics (re-verified 2026-08-03, page *Claude Code Instruction-Artifact
+Mechanics*; these five are mirrored in `agents/instructions-reviewer.md` §1–§2, the
+skill-listing entry as its 1,536 cap only — edit both or neither):**
+
+- `MEMORY.md`: first 200 lines or 25KB, whichever comes first; content past the cap is
+  silently dropped on the next load.
+- Skill listing: 1,536 characters per entry (`description` + `when_to_use`, configurable);
+  the listing overall gets 1% of the context window.
+- `@path` imports in `CLAUDE.md`: maximum depth 4.
+- `CLAUDE.md` is delivered as a user message after the system prompt and loads in full at
+  any length; the 200-line target is a recommendation, not a cap.
+- `CLAUDE.md`/`AGENTS.md` reach every subagent except the built-in Explore and Plan.
+
+A **Blocker** resting on any of these is reported in the reviewer's form
+(`agents/instructions-reviewer.md`, `Blocker [unverified — dated YYYY-MM-DD]`) with this
+section's date filled in: `Blocker [unverified — dated 2026-08-03]`.
 
 Provenance note: a 2026-07-25 pass found the reviewer had been asserting six such
 mechanics with none verified, and four were wrong. That is why these carry dates at all.
@@ -75,22 +91,25 @@ This set grows.
 
 ## 3. Cited sources, and what each measured
 
+Cite any source below **with its page's `retrieved:` date**, except where the page also
+backs a §1 harness mechanic — then cite §1 with §1's date. The vault's Lint 2(b) sweeps
+those dates because "the current release" is not observable from inside the vault.
+
 **Measured nothing.** All three now have `type: source` pages in the `prompts` vault,
-`provenance: primary`, `retrieved: 2026-07-30`, each carrying `Claim type: mechanism` — which
-is where the never-an-outcome-claim rule below is now recorded formally, per source.
+`provenance: primary`, each carrying `Claim type: mechanism` — which is where the
+never-an-outcome-claim rule below is now recorded formally, per source.
 
 - mattpocock's *Writing Great Skills* ("Deletions have a keep-side test," "Invocation mode
   sets what the description is for") is a practitioner guide. Page: *Writing Great Skills
-  (Pocock)*. Pinned to a commit, so it moves only when the pin does.
+  (Pocock)* (retrieved 2026-07-30). Pinned to a commit, so it moves only when the pin does.
 - The Anthropic prompting-best-practices pages (size and dispatch limits, "XML tags as
   delimiters") are vendor documentation, so re-check them per release. Pages: *Anthropic
-  Prompting Best Practices* and *Claude Code Instruction-Artifact Mechanics*.
+  Prompting Best Practices* (retrieved 2026-07-25) and *Claude Code Instruction-Artifact
+  Mechanics* (retrieved 2026-08-03).
 - The agents.md convention ("AGENTS.md / CLAUDE.md specifics") is a convention, and carries
-  adoption only. Page: *AGENTS.md as a Cross-Agent Convention*.
+  adoption only. Page: *AGENTS.md as a Cross-Agent Convention* (retrieved 2026-07-30).
 
-All three support a **mechanism argument**, never an **outcome claim**. Cite one **with its
-`retrieved:` date**; the vault's Lint 2(b) sweeps those dates because "the current release"
-is not observable from inside the vault.
+All three support a **mechanism argument**, never an **outcome claim**.
 
 **The Claude-5 set — added 2026-08-03, all `type: source`, `provenance: primary`,
 `Claim type: mechanism`, `retrieved: 2026-08-03`.** These back the checklist's
