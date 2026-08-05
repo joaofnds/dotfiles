@@ -139,11 +139,11 @@ benchmark, or vendor doc:
    models, tasks, numbers with their denominators — not what the citing text says
    it measured. A rule built from a spec's paper summaries died on review: two
    citations overreached, one argued the opposite
-   (`rules/instruction_external_facts.md` §4, recorded 2026-07-27).
+   (`~/.agents/rules/instruction_external_facts.md` §4, recorded 2026-07-27).
 
 Anything external destined to land in our corpus follows
-`rules/instruction_external_facts.md`: mechanism argument vs outcome claim,
-dated, with its §3 entry written before the landed text cites it.
+`~/.agents/rules/instruction_external_facts.md`: mechanism argument vs outcome claim,
+dated, with its entry written before the landed text cites it.
 
 When the search finds no independent support beyond the subject's prose — no
 wiki page, no primary source — record the candidate as "no independent support —
@@ -231,7 +231,8 @@ The user picks what lands. Then:
 - Run `instructions-reviewer` once over the landed batch — the house gate;
   `AGENTS.md` §Task lifecycle governs closure.
 - A landed claim resting on an external source names its
-  `instruction_external_facts.md` §3 entry.
+  `instruction_external_facts.md` entry in the branch and anchor form
+  `AGENTS.md` §Task lifecycle requires.
 
 - **Write the open items before you call the study done.** Every Import candidate
   that survived its kill step and the §8 gates but that the user did not take goes

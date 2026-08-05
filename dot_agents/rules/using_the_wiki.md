@@ -44,7 +44,7 @@ underspecification and requirement elicitation, eval design, documented failure 
 **Query it before writing or revising any rule, skill, agent definition, `AGENTS.md`, or
 `CLAUDE.md` claim that rests on a paper, a benchmark, or vendor documentation.** Not
 optional enrichment: a rule written from paper *summaries* shipped and was reverted the same
-day (`instruction_external_facts.md` §4).
+day (`instruction_external_facts.md` §4, recorded 2026-07-27).
 
 Vendor and practitioner sources live in `raw/` alongside the papers, and their notes carry a
 `fetched:` date in the header because the URLs serve mutable content. That date is what
@@ -80,12 +80,22 @@ the cross-paper negative list. Then, for the specific claim:
   land it marked `(unverified — vault unreachable YYYY-MM-DD)` and say so in the reply. The
   soft-failure licence in §When to skip does not extend to this gate, and "out of scope" is
   not available as a judgement — a claim resting on a paper is in scope by definition.
+- **No page is not an outage.** A reachable vault with no page for the source is the
+  fetch-primary case: read the primary text, record what it established in
+  `instruction_external_facts.md` yourself, and open a vault-gap note there naming the pages
+  owed. Do not mark the claim `unverified` — that label is for an unread source.
+- **A stale page is not an outage either.** When the page exists but a live primary read
+  contradicts it, the read wins for that field only: record the supersession in the
+  `instruction_external_facts.md` entry, name the refresh the page is owed, and leave the
+  rest of the page authoritative. The page-wins rule below resumes for that field once the
+  refresh lands.
 
 **The checkable artifact is the citation, not the query.** Every paper or benchmark claim
 you land in an instruction artifact names its `instruction_external_facts.md` §3 entry, and
-that entry names the wiki page it came from. A cited claim with no entry is the defect,
-whether or not you ran the query — which is what makes this gate reviewable by an agent
-with only Grep.
+that entry names the wiki page it came from. The branch and anchor form are `AGENTS.md`
+§Task lifecycle's, restated in §1's own rule paragraph and the preamble above it. A cited claim naming no entry is the
+defect, whether or not you ran the query — which is what makes this gate reviewable by an
+agent with only Grep.
 
 `instruction_external_facts.md` stays self-contained (the instructions-reviewer has no
 vault access): it owns the operative one-paragraph summary and the verification date; the

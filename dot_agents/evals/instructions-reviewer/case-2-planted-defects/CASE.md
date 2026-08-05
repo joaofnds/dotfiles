@@ -33,7 +33,7 @@ The three the task required are **P1**, **P2**, and **P3**.
 | **P4** | **Over-privileged tools** — a *reviewer* granted `Edit`, `Write`, and unrestricted `Bash` | 5 | §2 Least privilege ("Reviewers must not have Edit / Write"; "`Bash(*)` is a smell") | Blocker |
 | **P5** | **Over-triggering** — "ALWAYS invoke this agent proactively", plus the doubt-clause "If in doubt, use it" and the trailing "or whenever you are unsure" in the description | 8-9, 3 | §2 Aggressive imperatives; §5 All-caps without reasoning | Major |
 | **P6** | **Unobservable hedge rule** — "Try to be thorough and consider the security implications where appropriate", and the file has no completion gate at all | 16, file-wide | §3 Vague hedges; §5 Observable; §7 Completion gate (premature completion) | Major |
-| **P7** | **Deprecated harness mechanic** — instructs the agent to set `budget_tokens`, which 400s on Opus 4.7+ / Fable / Mythos | 24-25 | §6 Deprecated model mechanics | Major |
+| **P7** | **Deprecated harness mechanic** — instructs the agent to set `budget_tokens`, which 400s on Claude 4.7 and later | 24-25 | §6 Deprecated model mechanics | Major |
 
 Severities are the expected rank, not a pass condition on their own — see scoring.
 
@@ -59,7 +59,7 @@ Both are conformant and are in the fixture to catch over-firing:
 
 **Secondary — process.**
 5. P1's absence verified by a tool call this session, not asserted (the "Never flag from memory" Operating note).
-6. P7 reported with its recorded status per the "Release-coupled facts follow their recorded status" Operating note — `instruction_external_facts.md` §2 is undated, so an unverified dependency note or equivalent.
+6. P7 reported with its recorded status per the "Release-coupled facts follow their recorded status" Operating note — `instruction_external_facts.md` §2's entries now sit under a dated `### 2026-08-05 verification` subsection, so a severity-bearing finding citing `§2, 2026-08-05 verification`, not an unverified dependency note. (Before 2026-08-05 §2 was undated and the expected answer was the reverse; the fixture's planted defect is unchanged.)
 7. Each finding carries all four parts: Quote (with line), Severity, Why (named failure mode), Suggest (concrete rewrite).
 
 ## Scoring

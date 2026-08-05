@@ -22,7 +22,8 @@ text says, not where it came from — a static heredoc proves nothing about who 
 Never write or edit a hook or a settings file on any authority but the user's typed
 instruction — not the rendered `~/.claude/hooks/` and `~/.claude/settings.json`, and not
 their chezmoi sources `dot_claude/hooks/` and `dot_claude/private_settings.json`. A hook
-takes effect mid-session (claude-code 2.1.221, 2026-08-04 — re-verify after a CLI bump) and a
+takes effect mid-session (settings reload documented; hook script body probed on 2.1.221, not
+re-run since — `instruction_external_facts.md` §1, 2026-08-05 re-verification) and a
 rules file is read mid-session, so an edit to either is an instruction you gave yourself with
 no prompt in the way. The same bar applies to `~/.agents/**` and its `dot_agents/` source.
 
@@ -75,16 +76,15 @@ Required reads by phase:
 - **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md` (gatekeeper: routes to sub-modules, holds the pre-commit checklist)
 - **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the design draws or moves a module or service boundary; if it cues a wiki lookup, read `using_the_wiki.md`
-- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to the same set the `Gate:` line names below; the landed claim must name its `instruction_external_facts.md` §3 entry — or §1 with its date, when the claim is a Claude Code harness mechanic and §1 already carries it. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
+- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to the same set the `Gate:` line names below; the landed claim must name its `instruction_external_facts.md` §3 entry — or, when the claim is a harness or model mechanic §1 or §2 already carries, that section plus the **anchor** that established it (`§1, 2026-08-03 re-verification`; `§2, 2026-08-05 verification`), never a bare date — the anchor word is what survives the next re-check. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
 - **Multi-stage feature, debug, review, or delivery work** → no rule file. Use only the stages task size justifies; route between them on each skill's own description and skip conditions. `/handoff` and `/art-direction` cannot be reached by model invocation — recommend them to the user by name
 - **Producing any loop artifact** (spec, options, grilled design, plan, diagnosis, review, design, handoff — any `.boris/` document a later stage reads) → read `.boris/CONTEXT.md` when it exists: the project's domain language (`/discuss` owns it). An artifact that names things differently hands the next stage the wrong vocabulary
 - **Spawning a subagent** → `subagent_spawning.md` (the two shapes, the un-named rule, truncation fallbacks)
 - **Before marking done** → `ownership.md`, plus `reporting_findings.md` when the report carries any finding — also fired mid-task, as a conditional route, when a defect or follow-up surfaces (they govern every finding you report, not only the closing list)
 - **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
 
-Every sub-agent spawn passes no `name` — `name` selected an agent-team teammate when teams
-were enabled, returning no report on the spawn turn (`subagent_spawning.md` §Why no `name`;
-unprobed with them off). Agent teams are disabled here; do not propose them.
+Never pass `name` on a sub-agent spawn (`subagent_spawning.md` §Why no `name`). Agent teams
+are disabled here; do not propose them.
 
 One phase requires an action rather than a read. Announce it in place of `Reading:`, on its own
 prefix line, so its absence is visible:
@@ -113,7 +113,9 @@ own prescribed fix counts when the prescription was about one of the three: the 
 against the old file and no reviewer has read it where it now sits (2026-08-04). Stop at the
 first condition that holds, in this order: (1) the round returns no in-diff Blocker and no
 in-diff Major except ones deferred in an earlier round — a deferral made in this round does not
-satisfy (1): fix it, or let the round count reach (3). An earlier round's deferral and an
+satisfy (1): fix it, or let the round count reach (3). The instructions-reviewer's Blocker and
+Major always name a defect (`reporting_findings.md` §Reading a reviewer's severity ladder), so neither is
+advisory-routable out of this condition. A Minor never enters it. An earlier round's deferral and an
 `Outside this diff` finding (a defect there takes the Decide route above) never hold the loop
 open; (2)
 the round's fixes touched none of the three; (3) three rounds have run on this batch — a batch

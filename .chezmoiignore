@@ -3,5 +3,6 @@ sweep
 **/*_spec.rb
 AGENTS.md
 CLAUDE.md
+GEMINI.md
 .boris
 scripts

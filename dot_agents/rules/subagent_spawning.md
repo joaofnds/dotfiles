@@ -2,11 +2,14 @@
 
 Governs every subagent spawn — inside a workflow loop or ad hoc.
 
-Everything here, the shapes and the fallbacks both, is **observed harness behavior**, not a
-documented mechanism: observed on `claude-code` 2.1.220 (2026-07-27) and re-confirmed on
-2.1.221 (2026-08-04, a nine-agent fan-out plus three synchronous gates). It reversed once
-between releases already — 2.1.187 returned the full report from a named spawn, 2.1.220
-returned only a receipt — so re-verify after a CLI bump rather than trusting these lines.
+The shapes and the fallbacks are **observed harness behavior**, not a documented mechanism:
+observed on `claude-code` 2.1.220 (2026-07-27) and re-confirmed on 2.1.221 (2026-08-04, a
+nine-agent fan-out plus three synchronous gates), not re-checked at 2.1.222; they reversed
+once already — 2.1.187
+returned the full report from a named spawn, 2.1.220 returned only a receipt. §Why no `name`
+carries no settled explanation: the retraction and the two open candidates are in
+`instruction_external_facts.md` §1, 2026-08-05 re-verification, and that section's schema observation is
+unprobed. Re-verify every line here after a CLI bump rather than trusting it.
 
 ## The two shapes
 
@@ -33,17 +36,19 @@ waiting on takes `run_in_background: true`, same as a fan-out member.
 
 ## Why no `name`
 
-`name` does not configure a subagent. It selects a different thing: an **agent-team teammate**,
-a persistent session that joins a team, returns no report on the spawn turn, and whose only
-route back is a mailbox. Observed 2026-08-04 on 2.1.221 with agent teams enabled: a named spawn
-returned an `agent_id`, added a `members` entry to `~/.claude/teams/<session>/config.json`, and
-never delivered a report on the spawn turn.
+**Do not pass `name`.** On 2.1.222 with agent teams off the `Agent` tool appears to expose no
+`name` property (`description`, `isolation`, `model`, `prompt`, `run_in_background`,
+`subagent_type`) — read from inside the session, so unsettled: the probe is a spawn with
+`name` set with the team state established first (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`
+absent from `~/.claude/settings.json` and unexported), recording whether the call errors as an
+unknown parameter — **the user's probe to run, not yours**. Until it runs, treat the rule as
+live rather than unreachable.
 
-Agent teams are disabled here — `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` is unset — so the shape
-should be unreachable, and what a named spawn does in that state has not been probed. Either
-way, do not pass `name`. Memory `agent-teams-abandoned` (dotfiles project store — unreachable
-from another project) carries why they were tried and dropped; the surviving rule is this
-paragraph.
+The reason recorded here through 2026-08-04 — that `name` selects an agent-team teammate — is
+retracted, not disproved: `instruction_external_facts.md` §1, 2026-08-05 re-verification, carries what the
+sub-agents reference does and does not settle, and why the 2.1.221 probe cannot isolate the
+cause. Do not restore either explanation as settled. Memory `agent-teams-abandoned` (dotfiles
+project store — unreachable from another project) carries why teams were tried and dropped.
 
 ## Truncated reports
 

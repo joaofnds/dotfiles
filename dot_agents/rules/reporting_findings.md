@@ -26,6 +26,22 @@ defect is never advisory either, whether or not it survives the revert. Neither 
 whose outcome is independent of its subject: that is false safety, not friction, and it
 takes a disposition patch or no patch, even though it is a test-structure finding.
 
+**Reading a reviewer's severity ladder.** A review sub-agent hands you `Blocker` / `Major` /
+`Minor`, and `code-reviewer`, `refactoring-reviewer`, and `testing-reviewer` add `Nit`; they
+rank impact and say nothing about the defect question. Map them: **Blocker**
+always names a defect — it is defined as wrong or unsafe behavior. **Major** names one where
+the ladder ranks defect impact — `instructions-reviewer` (routing, authority, evidence
+quality, or completion changed through a named mechanism), `code-reviewer`,
+`testing-reviewer`. Where a ladder ranks **friction cost** instead — `refactoring-reviewer`
+§Severity, and any coupling or test-smell finding outside those three ladders — severity says nothing about the defect
+question and the three classes above decide. **Minor and Nit are the ambiguous rungs**: each names a concrete
+consuming-agent effect, so each names a defect when that effect is the agent behaving wrongly,
+and takes the advisory route when the effect is only the context or maintenance the finding
+buys. Severity does not survive the mapping — an advisory-routed Minor is an advisory finding,
+not a lesser defect, and it holds no gate open. (Derived from
+`agents/instructions-reviewer.md` §How you review — re-derive this mapping whenever that
+ladder changes; that file is the authority.)
+
 Every defect you surface, yours or one relayed from a reviewer, carries exactly one
 disposition, named in the report:
 
