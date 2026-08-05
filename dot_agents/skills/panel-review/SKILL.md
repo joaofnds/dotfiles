@@ -246,7 +246,7 @@ then:
 - A reviewer that strayed outside its mandate: fold the finding into the
   owning axis's set if it stands; never double-count.
 - **An arbitration resting on the repo's `AGENTS.md` / `CLAUDE.md` is a precedence
-  claim**, and `coding_style.md` §Precedence governs it whether or not you loaded that
+  claim**, and `coding_style.md`'s opening precedence paragraph governs it whether or not you loaded that
   file: quote the sentence you are ranking above the reviewer's rule, with its path. No
   quotable sentence means the repo does not state it — relay the disagreement to the
   user unresolved, and leave the finding at the severity its reviewer gave it.
@@ -261,6 +261,9 @@ then:
 
 ### Verdict-bearing or advisory
 
+Mirrored in `~/.agents/rules/reporting_findings.md` §Dispositions, which states the same
+test for reporting outside a panel — edit both.
+
 The refactoring track, the testing axis, and the Architecture axis's coupling
 findings all produce findings of either kind.
 Refactoring severity measures friction cost, not defect severity — so
@@ -273,7 +276,7 @@ to each such finding, with the patch in hand:
   point the finding rests on. For a coupling finding: the diff introduced the
   dependency, the shared concept, or the ordering assumption it rests on, or
   added a site to an existing coupling's span. These join the numbered findings at their stated
-  severity. Overlap between the cited lines and the diff is not sufficient — a
+  severity, unless §6 assigns them **Noted**. Overlap between the cited lines and the diff is not sufficient — a
   two-line edit inside a pre-existing 300-line function did not introduce Long
   Function.
 - **Advisory** — the finding survives reverting the patch, even when the cited
@@ -296,8 +299,10 @@ defect in the patch.
 A `[correctness]` Blocker is neither verdict-bearing nor advisory — a third
 class. Report it at Blocker severity wherever it was found; when it sits
 outside the diff, tag it `[pre-existing]`, keep it in the numbered findings,
-and state it above the verdict line rather than in it. It routes to `/debug`
-or `/plan` for the owning code rather than becoming a merge condition here.
+and state it above the verdict line rather than in it — a `[pre-existing]`-tagged
+one routes to `/debug` or `/plan` for the owning code rather than becoming a
+merge condition here. A `[correctness]` Blocker **inside** the diff is a defect
+in the patch: it moves the verdict to Fail like any other untagged Blocker.
 
 ## 4. Verify — the kill step
 
@@ -378,6 +383,8 @@ finding block must be self-contained — a fresh session with zero context can f
 - **Patch:** <readable path> · **Spec:** <path>
 - **Test run:** `<cmd>` → <result plus the relevant failing output when red>
 - **Testing axis:** <ran | skipped — no test file in the diff>
+- **Pre-existing correctness Blockers:** <count, listed at findings N…, outside
+  the verdict | none>
 - **Verdict:** Pass / Pass with revisions / Fail
 - **Files examined:** <every file in the diff; flag any a reviewer skipped —
   the verdict is invalid while one is unexamined. List the refactoring
@@ -397,42 +404,58 @@ finding block must be self-contained — a fresh session with zero context can f
   options, not full implementation>
 - **Verify:** <how to confirm the fix — test to run or add, behavior to observe>
 - **Trigger:** <the caller, input value, configuration, or user-action sequence that
-  reaches this — required for Blocking and Decide, omitted for Noted>
-- **Disposition:** <Blocking | Decide | Noted — assigned per §6>
+  reaches this; for a verdict-bearing smell or test defect, the revert-test
+  evidence stands in>
+- **Disposition:** <Blocking | Decide — per §6; a Noted finding belongs in
+  **No action recommended**, not here>
+- **Route:** <`/plan` + `/build` for a large fix | direct test-first fix |
+  `/debug` or `/plan` for the owning code, on a `[pre-existing]` `[correctness]`
+  Blocker | none>
 
 ## Structural opportunities — advisory, outside the verdict
 
 - [<Severity>] <smell> → <refactoring> — `path:line` (full site list for a
-  cross-file smell) — <what improves and along which axis, plus the mechanics
-  or the catalog document to open>
+  cross-file smell) — <what improves and along which axis, the cost of doing
+  it, plus the mechanics or the catalog document to open>
 - [<Severity>] <coupling type> — `path:line` — <why it isn't worth accepting,
   the stability evidence for a spatial type or the violable assumption for a
-  temporal one, and the coarse cure>
+  temporal one, and the coarse cure with its cost>
 - [<Severity>] <test smell> — `path:line` — <the rule broken, the pillar lost,
-  and the fix in the target's framework idiom>
+  and the fix in the target's framework idiom, with its cost>
 
 ## Dropped by verification
 
 - [<Severity>] `path:line` — <finding> — dropped (<refuted | stable target>):
   <one-line reason, with the commit count when it's a stability drop>
+
+## No action recommended
+
+- [<Severity>] `path:line` — <defect> — <evidence> — ground for Noted: <the
+  probe that found no trigger, or the cost comparison that outweighs it> —
+  route: none
 ```
 
 Order findings worst first. The verdict follows the surviving verdict-bearing findings:
-any untagged Blocker or failed required suite → Fail; Majors → Pass with revisions.
-Advisory structural items and `[pre-existing]`-tagged Blockers never move it.
+any Blocker not tagged `[pre-existing]` — including one carrying `[unverified]` — or a
+failed required suite → Fail; a surviving Major or Minor → Pass with revisions; nothing
+surviving in the numbered list → Pass.
+Advisory structural items, `[pre-existing]`-tagged Blockers, and findings §6 dispositioned
+**Noted** never move it. A Blocker or Major you were about to disposition Noted is a signal
+the disposition is wrong — re-check it against `reporting_findings.md`: a real defect whose
+trigger resists cheap probing is **Decide**, never Noted.
 
 ## 6. Recommend the next route
 
 Give every finding **in the numbered list** a disposition, plus the trigger Blocking and
-Decide require, before relaying it — `~/.agents/rules/reporting_findings.md` governs the
-report, relayed findings included. A
-reviewer's severity is a rank, not a disposition: it says how bad, never who acts. Structural
-opportunities take that file's advisory route instead: evidence and cost, no disposition, no
-trigger. Nothing is dropped either way — the route decides who acts, never whether the user
-sees it.
+Decide require (revert-test evidence stands in for it on a verdict-bearing smell), before
+relaying it — `~/.agents/rules/reporting_findings.md` governs the report, relayed findings
+included. **Noted** findings move out of the numbered list into **No action recommended**;
+the numbered list carries Blocking and Decide only. Structural opportunities take that
+file's advisory route instead: evidence and cost, no disposition, no trigger.
 
-Record a proposed **next route** for every finding. Recommend `/plan` and `/build` for
-large fixes and a direct test-first fix for small ones. Advisory structural items are a
+Record the route in each finding's **Route** field: `/plan` and `/build` for large
+fixes, a direct test-first fix for small ones, `/debug` or `/plan` for the owning
+code on a `[pre-existing]` `[correctness]` Blocker. Advisory structural items are a
 follow-up `/plan` candidate, never a merge condition — propose one only if the user wants
 the debt addressed. Do not modify source as part of panel review; return the report
 before remediation begins. After remediation, the owning session reruns the full suite

@@ -87,7 +87,7 @@ and a count, not forty.
 
 - **Files examined** — list every file in the reviewed diff, each marked examined / not-examined. The verdict is invalid while any file is unexamined. State the caller-provided test command and raw outcome. If missing or blocked without an explicit waiver, name the prerequisite and do not claim an executable pass. With a waiver, label the verdict static-only and state that the caller owns runtime verification.
 - **Verdict:** Pass / Pass with revisions / Fail — append "(static-only)" when a mandate assigned execution to the caller.
-- **Findings**, grouped **Blocker / Major / Minor / Nit**. Each: `path:line` (absolute, matching the harness instruction that outranks this file), a one-sentence defect, the rule or failure mode it breaks (per above), and a concrete fix.
+- **Findings**, grouped **Blocker / Major / Minor / Nit**. Each: `path:line`, absolute, a one-sentence defect, the rule or failure mode it breaks (per above), and a concrete fix.
 - **Strengths:** only what is genuinely load-bearing to preserve, or omit the section. No manufactured praise — the value here is an honest defect list.
 
-Be direct. If the step should be reworked, say so plainly and first.
+If the step should be reworked, say so plainly and first.

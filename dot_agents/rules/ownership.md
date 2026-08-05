@@ -26,11 +26,10 @@ work, create commits, or file issues without authorization.
   completion until resolved or explicitly deferred by the user.
 - An unrelated pre-existing failure does not erase valid scoped evidence, but it must
   remain explicit and must never be reported as a pass.
-- A **Noted** finding neither blocks completion nor becomes a deferral question; say plainly
-  that it needs nothing. `reporting_findings.md` decides which findings are Noted.
+- A **Noted** finding neither blocks completion nor becomes a deferral question
+  (`reporting_findings.md` decides which findings are Noted).
 - Do not derail active work for an unrelated issue. Surface it with a concrete choice:
-  "I found X with evidence Y. Fix it now or defer?" — that is a **Decide**, so it carries its
-  trigger too.
+  "I found X with evidence Y. Fix it now or defer?" — a **Decide** (`reporting_findings.md`).
 
 The failure mode this prevents is silent tolerance, not bounded scope. Never walk past
 broken state without reporting it; never seize ownership of work the user did not ask

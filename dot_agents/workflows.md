@@ -2,7 +2,8 @@
 
 **Audience: you, not the agent.** This is a map of the development loop and why each stage
 sits where it does. It carries no agent obligations — every rule an agent is bound by lives
-in a skill under `~/.agents/skills/` or a rule under `~/.agents/rules/`. Where this file
+in `~/.agents/AGENTS.md`, a skill under `~/.agents/skills/`, or a rule under
+`~/.agents/rules/`. Where this file
 states something as a rule, it is describing one that lives there.
 
 Use-case loops that chain the custom skills under `~/.agents/skills/`. They cover
@@ -47,14 +48,15 @@ re-enters an earlier stage rather than pushing through.
 - **/build** — execute that plan plus every artifact it cites (the acceptance
   criteria live in the spec), in a fresh session if the plan is large. If a material
   assumption fails, record the discrepancy and route back to `/grill` (re-pick) or
-  `/plan` (re-sequence). Minor path or sequencing corrections may continue when they do
-  not change scope, behavior, or approach; record them in the plan.
+  `/plan` (re-sequence) — `build/SKILL.md` step 2. Minor path or sequencing corrections
+  may continue when they do not change scope, behavior, or approach; record them in the plan.
 - **verify** — execute the plan's acceptance-criterion checks and capture the raw output.
   `/build` is not done until every criterion has execution evidence; prose review is not
   runtime verification. Use `/verify-this` for a criterion the plan mapped to a runnable
   check — it turns the claim into a falsifiable baseline/treatment verdict. `/verify`
   drives the running app end-to-end but is user-invoked only: for a criterion that needs
-  the deployed app, stop and ask for it. A `/verify-this` verdict does not stand in for it.
+  the deployed app, stop and ask for it (`~/.agents/skills/build/SKILL.md` step 7). A
+  `/verify-this` verdict does not stand in for it.
 - **review** — name its purpose: correctness, architecture, security, or knowledge
   sharing. Review is a feedback channel, not a late quality phase: keep changes small and
   use `/adversarial-review` for this session's work; reserve `/panel-review` for a

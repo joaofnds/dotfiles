@@ -74,5 +74,5 @@ The plan is the last artifact a human ratifies and the first thing a cold sessio
 - Write it so the file alone is enough — no "as we discussed" references that point at lost context.
 - Don't restate what already lives in another artifact (PRD, ADR, issue, existing plan, commit, diff) — reference it by path or URL instead, and only capture what's new.
 - Redact secrets and PII — no API keys, passwords, tokens, or personal data in the file.
-- Be direct; if anything we agreed on now looks wrong, flag it instead of planning around it.
+- If anything we agreed on now looks wrong, flag it instead of planning around it.
 - No code blocks longer than ~10 lines; use a signature or prose for anything bigger.

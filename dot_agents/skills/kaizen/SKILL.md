@@ -7,20 +7,19 @@ description: >
   session: "kaizen", "retro on this process", "how could this skill/agent/rule be
   better". Skip mid-task (no evidence yet). Skip when the improvement is grounded
   in an external subject — a repo, file, or published guidance to learn from →
-  /absorb. Improving the work product itself →
-  /adversarial-review, or a user-invoked /code-review, not this.
+  /absorb. Skip for consolidating the memory store itself → /dream. Improving
+  the work product itself → /adversarial-review, or a user-invoked /code-review,
+  not this.
 ---
 
 # Kaizen — Retro on the Instructions You Used
 
-**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; the improvement is grounded in an external subject to learn from rather than this session's transcript → `/absorb`; improving the work product itself rather than the process → `/adversarial-review`, or recommend a user-invoked `/code-review`.
+**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; the improvement is grounded in an external subject to learn from rather than this session's transcript → `/absorb`; consolidating the memory store → `/dream`; improving the work product itself rather than the process → `/adversarial-review`, or recommend a user-invoked `/code-review`.
 
-**You are a neutral witness; a fresh critic is the judge.** The move you're tempted to
-make — ask the agent that just ran the session "what would you change?" — is the least
-trustworthy one available: it defends its own choices, wants to please you, and
-critiques a *remembered* version of the instruction rather than its actual text
-(`engineering_judgment.md` §6: narrative-continuity-over-correctness, fabricated
-verification). So the biased party only observes; judgment is delegated.
+**You are a neutral witness; a fresh critic is the judge.** The agent that ran the
+session critiques a *remembered* version of the instruction and defends its own
+choices (`engineering_judgment.md` §6: narrative-continuity-over-correctness), so
+the biased party only observes; judgment is delegated.
 
 ## What counts as a target
 
@@ -63,8 +62,8 @@ your reading.
 
 ## Spawn the fresh critic
 
-Use `run_in_background: false` when you have nothing to do but wait for it, `true` when the
-session continues meanwhile (`~/.agents/rules/subagent_spawning.md`).
+Spawn un-named; `~/.agents/rules/subagent_spawning.md` §The two shapes picks
+foreground vs background.
 
 One independent agent — `instructions-reviewer` if available (built for instruction
 files), else a general agent carrying this brief. Send:

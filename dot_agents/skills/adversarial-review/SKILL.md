@@ -5,12 +5,13 @@ description: >
   your conclusions so the reviewer reaches its own verdict; findings are relayed in its
   words. Invoke on "adversarial review", "red-team this", "unbiased second opinion on
   what I just did". For code you did NOT write (PR review, external audit), recommend
-  /review or /code-review to the user instead — both are user-invoked only.
+  /review or /code-review to the user instead — both are user-invoked only. Skip for
+  a substantial pre-merge unit needing all five axes → /panel-review.
 ---
 
 # Adversarial Review
 
-**Wrong skill if:** reviewing code you did NOT write this session (PR review, external audit) → recommend `/review` or `/code-review` to the user; neither can be invoked by an agent.
+**Wrong skill if:** reviewing code you did NOT write this session (PR review, external audit) → recommend `/review` or `/code-review` to the user; neither can be invoked by an agent. A substantial pre-merge unit needing all five axes → `/panel-review`.
 
 Spawn an independent agent to review work done this session — and construct the
 brief so it reaches its own verdict instead of ratifying yours. The value is in
@@ -73,9 +74,8 @@ here, once:
 
 ## Relay honestly
 
-Report findings in the reviewer's words — quote them, don't summarize. Paraphrase
-is how bias leaks back in: you "honestly" condense and unconsciously soften the
-finding that threatens your work. Quoting closes that channel.
+Report findings in the reviewer's words — quote them, don't summarize; condensing
+is where softening enters.
 
 Format, worst first:
 

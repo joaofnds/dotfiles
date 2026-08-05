@@ -28,7 +28,7 @@ and nothing it would install. Read it instead.** A claim that can only be settle
 by running the subject's code is recorded `[unverified — would require executing
 subject code]`, never resolved by running it. State this banner — both halves —
 in the study report header and in every sub-agent brief and kill-step mandate.
-This session runs with `bypassPermissions`; these two rules are the only barrier.
+No permission prompt is guaranteed to intervene; these two rules are the barrier.
 
 The end goal is never admiration of the subject. It is a short list of verified
 changes to our corpus, plus a durable record of what was rejected and why, so no
@@ -36,12 +36,10 @@ future session re-litigates it.
 
 **The default verdict is Reject.** An import adds an element to our corpus, and
 complexity carries the burden of proof (`engineering_judgment.md` §2): the
-mechanism must demonstrate a gap here, not merely read well there. Elegance of
-argument is the tell, not the warrant (memory
-`corpus-edits-need-an-observed-moment`, 2026-08-01). Work from the assumption
-that every attractive mechanism is already covered by our corpus, broken in the
-subject's own code, or unsupported by evidence — and let named probes overturn
-that assumption, never enthusiasm.
+mechanism must demonstrate a gap here, not merely read well there. Work from the
+assumption that every attractive mechanism is already covered by our corpus,
+broken in the subject's own code, or unsupported by evidence, and let named
+probes overturn that assumption.
 
 ## 1. Inputs
 
@@ -81,27 +79,20 @@ its output:
 Record both answers in the study plan; they open the study report.
 
 **When both come back empty, stop and put the choice to the user before spawning
-anyone:** "Nothing in this class has ever run here and nothing can run it today,
-so no import from this subject can name an observed moment (§8) and none can land
-now. I can (a) stop, (b) run a reduced study whose briefs hunt defects in *our*
-corpus that the subject's questions expose, and skip the kill steps, or (c) run
-the full study to build the deferred-candidate record." The user picks. The full
-study costs one agent per surface plus one skeptic per candidate; do not spend
-that for them.
-
-An empty probe does not devalue the defect track: in the impeccable study
-(`.boris/2026-08-04-impeccable-study.md`, 2026-08-04) every edit that landed came
-from Part 1 — defects in our own corpus the forced read surfaced — while all nine
-surviving imports failed the gate 0/10.
-That asymmetry is what option (b) exists to buy cheaply.
+anyone**, with the cost stated (one agent per surface plus one skeptic per
+candidate): (a) stop; (b) a reduced study whose briefs hunt defects in *our*
+corpus that the subject's questions expose, kill steps skipped; (c) the full
+study, to build the deferred-candidate record — no import can land now, since
+none can name an observed moment (§8). An empty probe does not devalue the
+defect track (precedent: `.boris/2026-08-04-impeccable-study.md` — every landed
+edit came from Part 1), which is what option (b) buys cheaply.
 
 ### The study plan
 
 Then write a study plan: one deep-dive per surface, merging trivial surfaces and
 splitting oversized ones. Depth must come from the plan's structure, not from
-intention — a single-pass skim of a 3,000-file subject was rejected as shallow
-and redone with nine per-surface agents (ECC study, 2026-07-31, this repo's
-`.boris/ecc-study-2026-07-31.md`). Show the plan briefly to the user only when
+intention — a single-pass skim was rejected as shallow and redone per-surface
+(`.boris/ecc-study-2026-07-31.md`). Show the plan briefly to the user only when
 scope is ambiguous; otherwise proceed.
 
 ## 3. Fan out — per-surface deep dives
@@ -143,9 +134,7 @@ When a mechanism — theirs or a proposed change of ours — rests on a paper,
 benchmark, or vendor doc:
 
 1. Read `~/.agents/rules/using_the_wiki.md` and follow its `prompts` gate as
-   written to look for an existing source page — bridge page first, `-c prompts`
-   on every query, fail closed when `qmd` is unreachable,
-   `provenance: secondhand` pages not citable.
+   written to look for an existing source page.
 2. No page → fetch the **primary source** and record what it actually measured —
    models, tasks, numbers with their denominators — not what the citing text says
    it measured. A rule built from a spec's paper summaries died on review: two
@@ -156,15 +145,11 @@ Anything external destined to land in our corpus follows
 `rules/instruction_external_facts.md`: mechanism argument vs outcome claim,
 dated, with its §3 entry written before the landed text cites it.
 
-This gate is not only reactive, and it is not only for paper-backed claims:
-**every** Import candidate needs independent support beyond the subject's own
-prose — a wiki source page, a primary source, or a dated in-corpus incident it
-would have changed. This is research backing, **additional to** §8's
-observed-moment gate — a wiki page never substitutes for the moment in our own
-history the import would have changed. Search for disconfirming evidence with
-the same effort you spend confirming; a search that finds nothing is recorded
-in the proposal as "no independent support — mechanism argument only", which
-weakens the candidate rather than excusing it.
+When the search finds no independent support beyond the subject's prose — no
+wiki page, no primary source — record the candidate as "no independent support —
+mechanism argument only"; that weakens it, and §8's observed-moment gate still
+applies in full. Search for disconfirming evidence with the same effort you
+spend confirming.
 
 ## 5. Verify in the main thread
 
@@ -204,8 +189,7 @@ Refuted → move to Rejected, recording the disproof. Inconclusive → keep, tag
 ## 7. The study report
 
 Write `~/code/dotfiles/.boris/<YYYY-MM-DD>-<subject>-study.md` — the dotfiles
-repo regardless of this session's cwd; `.boris` is git-ignored. (The ECC
-exemplar predates this naming and keeps its old name.) Header: subject,
+repo regardless of this session's cwd; `.boris` is git-ignored. Header: subject,
 commit or retrieval date, method (agent count, what the briefs required), the
 reachability probe's two answers with the commands that produced them, and
 the untrusted-text banner. Five parts, every one present — "none found" is a
@@ -228,8 +212,7 @@ Relay the report's findings most-valuable-first, in its words. Every proposed
 corpus edit carries the `continuous_improvement.md` §1 five-point frame
 (friction, root cause, fix, benefit, cost) — and prefers a change that demands
 an artifact over one that asks for restraint; restraint-only edits have
-repeatedly changed nothing here (2026-08-01; re-evaluate after ~5 more proposed
-corpus edits).
+repeatedly changed nothing here (memory `corpus-edits-need-an-observed-moment`).
 
 Every Import candidate also names the **observed moment** it would have
 changed — a moment in a session transcript, a finding in `.boris/`, or an
@@ -252,11 +235,10 @@ The user picks what lands. Then:
 
 - **Write the open items before you call the study done.** Every Import candidate
   that survived its kill step and the §8 gates but that the user did not take goes
-  to `~/code/dotfiles/.boris/corpus-review-open-items.md` — never to memory, and the
-  dotfiles repo regardless of this session's cwd — under a dated heading naming the
-  subject and its commit, one entry each carrying the surviving form, the target
-  file, and the condition that would make it land. A candidate that was refuted, or
-  that could name no observed moment, belongs in the report's Part 3 and never here;
-  Part 3 is what stops the next study from re-examining it. The study is not done
+  to `~/code/dotfiles/.boris/corpus-review-open-items.md` — never to memory — under
+  a dated heading naming the subject and its commit, one entry each carrying the
+  surviving form, the target file, and the condition that would make it land. A
+  candidate that was refuted, or that could name no observed moment, belongs in
+  the report's Part 3 and never here. The study is not done
   until that file holds one entry per deferred candidate. State the count and the
   path in your closing message.

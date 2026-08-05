@@ -35,6 +35,9 @@ scope, or reversibility is unclear, ask — do not assume.
 Never create a branch or a worktree. The harness says to branch before committing on the
 default branch; this overrides that — commit where you are, or ask.
 
+Never invent or execute a production, deploy, or release command on your own initiative.
+Use the project's one documented pipeline when the user directs it; otherwise ask.
+
 ## Task lifecycle — visible phase announcements
 
 **These announcements are main-conversation output.** A sub-agent inherits this file but
@@ -44,9 +47,10 @@ writing code still reads `coding_style.md`; a reviewer with its own doctrine rea
 its prompt names and nothing else.
 
 At task start and whenever the task enters a new phase, the first substantive reply must
-begin with exactly one of:
+begin with one of the announcement lines below — `Reading:`, `No rule files apply:`, or the
+`Gate:` line further down:
 
-    Reading: <rule paths under ~/.agents/rules/, plus ~/.agents/workflows.md when applicable>
+    Reading: <rule paths under ~/.agents/rules/, plus `.boris/CONTEXT.md` when the loop-artifact phase fires and the repo has one>
     No rule files apply: <one-sentence reason>
 
 A continuing phase needs no announcement — the rules are already loaded.
@@ -57,6 +61,8 @@ is a failed turn. The same turn carries the Read calls, or the first real work a
 
 Name only files you will open, and open every one in that turn before any other tool —
 except a file already open this session, which you name `(loaded)` and do not reopen.
+A named file that turns out not to exist is not a violation — the attempted Read is the
+existence check.
 Announce a conditional route — `using_the_wiki.md`, `coupling.md`, `testing/02-mocking-roles.md`,
 `ownership.md`, `reporting_findings.md` — when its condition fires, not in advance. Name it in the turn you open it, and
 leave it unnamed until then. A conditional route fires on its own condition, inside a continuing
@@ -69,9 +75,11 @@ Required reads by phase:
 - **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md` (gatekeeper: routes to sub-modules, holds the pre-commit checklist)
 - **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the design draws or moves a module or service boundary; if it cues a wiki lookup, read `using_the_wiki.md`
-- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to `AGENTS.md`, `CLAUDE.md`, rules, `workflows.md`, skills, slash commands, agent definitions, output styles, and hooks — the same set the `Gate:` line names; the landed claim must name its `instruction_external_facts.md` §3 entry. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
-- **Multi-stage feature, debug, review, or delivery work** → `~/.agents/workflows.md`; use only stages justified by task size
-- **Before marking done** → `ownership.md`, plus `reporting_findings.md` when the report carries any finding. **Also a conditional route:** surfacing a defect or follow-up mid-task fires both, announced in that turn even inside a continuing phase (`reporting_findings.md` governs every finding you report, not only the closing list)
+- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to the same set the `Gate:` line names below; the landed claim must name its `instruction_external_facts.md` §3 entry — or §1 with its date, when the claim is a Claude Code harness mechanic and §1 already carries it. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
+- **Multi-stage feature, debug, review, or delivery work** → no rule file. Use only the stages task size justifies; route between them on each skill's own description and skip conditions. `/handoff` and `/art-direction` cannot be reached by model invocation — recommend them to the user by name
+- **Producing any loop artifact** (spec, options, grilled design, plan, diagnosis, review, design, handoff — any `.boris/` document a later stage reads) → read `.boris/CONTEXT.md` when it exists: the project's domain language (`/discuss` owns it). An artifact that names things differently hands the next stage the wrong vocabulary
+- **Spawning a subagent** → `subagent_spawning.md` (the two shapes, the un-named rule, truncation fallbacks)
+- **Before marking done** → `ownership.md`, plus `reporting_findings.md` when the report carries any finding — also fired mid-task, as a conditional route, when a defect or follow-up surfaces (they govern every finding you report, not only the closing list)
 - **After non-trivial file changes that exposed recurring friction** → `continuous_improvement.md` §1
 
 Every sub-agent spawn passes no `name` — `name` selected an agent-team teammate when teams

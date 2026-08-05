@@ -51,13 +51,14 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
       - **Landed:** what shipped, in one line per milestone.
       - **Not landed:** each unbuilt task, and the reason — descoped, superseded, blocked.
       - **Left over:** work still wanted, each item carrying its `reporting_findings.md` disposition
-        and the trigger Blocking and Decide require. **Blocking** and **Decide** items name
+        — the trigger where the item is a defect, a one-line reason where it is deferred
+        work. **Blocking** and **Decide** items name
         where they went — a new plan under `.boris/plans/`, or an issue — and creating either
         needs the user's go-ahead first, so ask for it in the summary. **Noted** items stay
         listed here under one heading and are routed nowhere. The archive is not a queue.
       - **Next:** the first of these that applies —
-        - `fix <X> first` — Status is `partial`, or a **Blocking** item survives.
         - `stopped — <why>` — Status is `abandoned`.
+        - `fix <X> first` — Status is `partial`, or a **Blocking** item survives.
         - `your call on <Y>` — an open **Decide** item changes what the next milestone builds.
         - `proceed to <next milestone>` — none of the above, and a milestone remains.
         - `done — nothing follows` — none of the above, and this was the last or only plan.
