@@ -94,17 +94,28 @@ prefix line, so its absence is visible:
 Emit it after any batch of edits to instruction files (`AGENTS.md` / `CLAUDE.md` / `GEMINI.md`, rules,
 `workflows.md`, skills, slash commands, agent definitions under `agents/`, output styles, hooks
 that inject instruction text),
-run the reviewer once in that turn, and resolve or explicitly defer each finding — a deferral
-takes its disposition from `reporting_findings.md` (Decide for a defect, Advisory for a finding
-that names none) and closes the finding for the loop's purpose. Never fire
+run the reviewer once in that turn, and resolve or explicitly defer each in-diff finding. A
+deferral takes its disposition from `reporting_findings.md`: a **defect** you choose not to fix
+inside the batch the user asked for is **Blocking** — in scope, so Decide does not apply —
+unless you probed for a trigger and found none or the fix costs more than the defect, which is
+**Noted**. A finding that names no defect takes the Advisory route and no disposition; a finding
+reported under `Outside this diff` is outside the batch: **Decide**. A deferral closes the
+finding for the loop's purpose, never for the report. Never fire
 it on a fixture under `evals/`: those defects are planted, and "resolve each finding" would repair
 the answer key.
 
 Rerun after any further edit that changes routing, precedence, or safety — applying the reviewer's
 own prescribed fix counts when the prescription was about one of the three: the text was written
-against the old file and no reviewer has read it where it now sits (2026-08-04). Stop when a round
-returns no Blocker and no Major, or when a round's fixes touched none of the three; name the stop
-condition in that round's closing message — when both hold, name the no-Blocker-no-Major one.
+against the old file and no reviewer has read it where it now sits (2026-08-04). Stop at the
+first condition that holds, in this order: (1) the round returns no Blocker and no Major inside
+the diff it was given — an `Outside this diff` finding never holds the loop open, and takes the
+Decide route above; (2)
+the round's fixes touched none of the three; (3) three rounds have run on this batch — a batch
+is the edits since the user's last turn, and a user-directed fix after a handoff starts a new
+one. Name the stop condition in that round's closing message. Under (3) only, disposition the
+findings still open (`reporting_findings.md`) and hand them to the user (2026-08-05: five rounds
+never converged, each round's prescriptions seeding the next round's Majors — drop the cap if
+two consecutive batches converge in two rounds).
 
 Only edits to that set fire the gate, and that set is also the one an agent *obeys* — except
 `workflows.md`, gated by form and read-only by content: never cite it as the source of an
