@@ -18,7 +18,7 @@ later (`/research` → `/grill` → `/plan`).
 
 ## Interview discipline
 
-Every bullet below mirrors `/grill` §How to run it, which adds one more
+Every bullet in this section mirrors `/grill` §How to run it, which adds one more
 (**Dispatch the facts you can't settle cheaply**): edit both or neither, keeping each
 side's subject (the goal here, the approach there).
 
@@ -29,12 +29,12 @@ side's subject (the goal here, the approach there).
   user reacts to a concrete position instead of a blank. The recommendation is a
   proposal — don't build on it as settled until the user confirms.
 - **Explore before asking.** If reading the codebase answers a scoping question, read
-  it instead of asking. (You read only to ask better questions — surveying *how to
-  build it* is `/research`'s job, not yours.)
-- **Map the space before diving in.** Do a breadth-first pass across the whole
-  problem first — enumerate every open question before going deep on any one (a map for
-  yourself; still ask them one at a time). Going deep early tunnels into a branch a
-  later answer may prune.
+  it instead of asking. (You read to settle facts, not to survey how to build it —
+  surveying is `/research`'s job, not yours.)
+- **Map before asking.** Do a breadth-first pass across the whole problem first —
+  enumerate every open question and which depends on which, before asking the first
+  one (a map for yourself; still ask them one at a time). Going deep early tunnels
+  into a branch a later answer may prune.
 - **Follow dependencies.** Once the space is mapped, resolve upstream questions first;
   let each answer narrow what's left.
 - **Be direct.** If an answer contradicts an earlier one, or the goal itself looks

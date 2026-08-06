@@ -46,9 +46,9 @@ The six bullets below that also appear in `/discuss` §Interview discipline — 
 except **Dispatch the facts you can't settle cheaply** — mirror it: edit both or neither,
 keeping each side's subject (the approach here, the goal there).
 
-- **Map the decisions before asking.** Enumerate every decision the design still needs,
-  and which depends on which, before asking the first one. Going deep early tunnels into
-  a branch a later answer may prune.
+- **Map before asking.** Enumerate every decision the design still needs, and which
+  depends on which, before asking the first one. Going deep early tunnels into a branch
+  a later answer may prune.
 - **One question at a time.** Wait for the answer before asking the next — batching
   produces shallow answers. The user answering several at once is not batching by you;
   follow their lead when they do.
