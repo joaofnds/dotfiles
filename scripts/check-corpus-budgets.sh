@@ -154,10 +154,11 @@ note "always-loaded surface $always lines"
 # Every other budget here is per-file, so a corpus that grows by adding a little to each
 # file trips none of them — which is how it went ~3,000 → 11,524 lines between 2026-07-01
 # and 2026-08-06 with every file inside its own budget. This is the only check that sees
-# the total, and it is a ratchet: set at the count on the day it landed, so the next
-# addition has to be paid for by a deletion. Raise it only with a consolidation pass in
-# the same change, and say what was consolidated.
-corpus_ceiling=11524
+# the total. Set deliberately BELOW the current count on 2026-08-06 (11,524), so it reads
+# as standing debt rather than a ratchet: the corpus has to lose ~1,500 lines to go green,
+# and until it does every run says so. Lower it further after each consolidation pass;
+# raising it needs a reason written in the same change.
+corpus_ceiling=10000
 if [ "$total" -gt "$corpus_ceiling" ]; then
   fail "corpus $total lines over the $corpus_ceiling ceiling — consolidate or delete before adding (instruction-saturation, rules/instruction_failure_modes.md)"
 fi
