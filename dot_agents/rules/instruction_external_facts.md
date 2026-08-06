@@ -10,9 +10,10 @@ section prints beside it, never with a date alone** — the `###` heading that e
 only the standing list carries it, a §3 page's `retrieved:` date, or the bolded label a §3
 or §4 note prints (`recorded 2026-07-27`, `scope correction 2026-08-05`). The test is
 whether the label survives the next re-check: a `###` heading and a bolded label do, an H2
-date does not — `## 1. Harness mechanics — verified <date>` moves on every pass, so never
-cite it as a fact's anchor — its one right use is §1's `Blocker [unverified — dated <date>]`
-label, which reports recency, not provenance. A §3 `retrieved:` date moves too, when the page
+date does not — §1's heading is re-dated on every pass, so never cite it as a fact's anchor.
+The one place a §1 date is right is the `Blocker [unverified — dated <date>]` label, which
+reports recency, not provenance; §1's own paragraph says which date fills it, and it is the
+date of the anchor carrying the fact, not of the heading. A §3 `retrieved:` date moves too, when the page
 is refetched, so a refresh is an
 edit to every site citing that page; name those sites in the §3 entry, as the mattpocock
 entry does. What is never right is a section number with a bare date and no label.
@@ -22,7 +23,7 @@ entry does. What is never right is a section number with a bare date and no labe
 3. Cited sources, and what each measured — measured nothing / measured something
 4. Rejected citations — do not restore
 
-## 1. Harness mechanics — verified 2026-08-05 (CLI 2.1.222)
+## 1. Harness mechanics — standing list verified 2026-08-05, extended 2026-08-06 (CLI 2.1.222)
 
 Covers the numeric limits and field semantics in §1–§2 and §8 of the checklist: load
 limits, import depth, listing caps, tool-field behavior, and what reaches a sub-agent.
@@ -70,8 +71,11 @@ edit both or neither):**
 - `CLAUDE.md`/`AGENTS.md` reach every subagent except the built-in Explore and Plan.
 
 A **Blocker** resting on any of these is reported in the reviewer's form
-(`agents/instructions-reviewer.md`, `Blocker [unverified — dated YYYY-MM-DD]`) with this
-section's date filled in: `Blocker [unverified — dated 2026-08-05]`.
+(`agents/instructions-reviewer.md`, `Blocker [unverified — dated YYYY-MM-DD]`) with the
+standing list's date filled in: `Blocker [unverified — dated 2026-08-05]`. A Blocker resting on a
+fact a dated subsection below carries takes **that subsection's** date instead — the label reports
+the recency of the fact, not of the section it sits in, and later passes add subsections rather
+than re-verifying the whole section (first true of the 2026-08-06 pass).
 
 Provenance note: a 2026-07-25 pass found the reviewer had been asserting six such
 mechanics with none verified, and four were wrong. That is why these carry dates at all.
@@ -143,6 +147,148 @@ withdrawal, and the Explore/Plan qualification. Four additions and one retractio
 **§2 was settled separately the same day** — see its `### 2026-08-05 verification` heading,
 which also records the dead prefill path that cost the first attempt.
 
+### 2026-08-06 verification — the four tool-field and invocation mechanics
+
+Opened because `agents/instructions-reviewer.md` rested findings, one of them a **Blocker**, on
+four mechanics no section here carried. Read live from the skills and sub-agents references at
+code.claude.com on CLI 2.1.222. **All four held**; nothing needed correcting, and two
+imprecisions in the checklist's wording were tightened. Cite these as
+`§1, 2026-08-06 verification`.
+
+- **A skill's `allowed-tools` pre-approves, it does not restrict.** Verbatim: "Tools Claude can
+  use without asking permission during the turn that invokes this skill. The grant clears when
+  you send your next message." The restrictive field is `disallowed-tools`, and its row states the
+  same boundary in its own words: "Tools removed from Claude's available pool while this skill is
+  active … The restriction clears when you send your next message." Both durations are quoted,
+  neither inferred. So treating `allowed-tools` as a safety boundary is a false boundary, as the
+  checklist's §2 says.
+- **A background subagent's tool set is narrowed, and the narrowing beats the `tools` field.**
+  Verbatim: "a background subagent keeps every MCP tool but only these built-in tools: `Read`,
+  `Grep`, `Glob`, `Bash`, `PowerShell`, `Edit`, `Write`, `NotebookEdit`, `WebFetch`, `WebSearch`,
+  `TodoWrite`, `Skill`, `ToolSearch`, `EnterWorktree`, `ExitWorktree`, `Monitor`, `TaskStop`,
+  `SendMessage`, and `Artifact`. Claude Code removes every other built-in tool from a background
+  subagent, whether inherited or listed in the `tools` field, so the same definition can resolve
+  to different tools in the foreground and the background." Two corrections to the checklist's
+  wording: it said "keeps only a fixed built-in set" and dropped that **every MCP tool survives**;
+  and a `tools` list resolving to nothing "**usually**" fails the agent at launch, not always.
+- **`user-invocable: false` is Claude-only and its description stays in context.** The invocation
+  table gives it User-invocable **No**, Claude-invocable **Yes**, "Description always in context,
+  full skill loads when invoked." One scope the checklist should not overstate: "The
+  `user-invocable` field only controls menu visibility, not Skill tool access. Use
+  `disable-model-invocation: true` to block programmatic invocation."
+- **A skill's `context: fork` inherits no caller context.** Verbatim: "Add `context: fork` to your
+  frontmatter when you want a skill to run in isolation. The skill content becomes the prompt that
+  drives the subagent. **It won't have access to your conversation history.**" **Do not confuse
+  this with a conversation fork**, which is the opposite: "A fork is a subagent that inherits the
+  entire conversation so far instead of starting fresh" (`/subtask`, sub-agents reference). The
+  two mechanisms share the word and invert the behavior, which is the trap this entry exists to
+  keep shut. Also true and unused by the checklist so far: a *backgrounded* forked skill takes the
+  narrow background tool set above, because "the skill's subagent is a regular agent type, so the
+  exemption for subagents that fork the conversation doesn't cover it."
+
+**Mirrors this subsection creates.** `allowed-tools` and `context: fork` are mirrored once each in
+`agents/instructions-reviewer.md` §2 *Tool fields are not one mechanism* and *Forked / isolated
+skills*. `user-invocable: false` mirrors into **two** §2 bullets, each carrying the half its check
+needs: the description half in *Invocation mode sets what the description is for*, the boundary
+half in *Tool fields*. The background entry's **list** is pointed at from *Sub-agent `tools`
+resolves differently by run mode*, not copied — keep it that way, it is the one list long enough
+that a second copy would drift — but its two corrections travel with it as text there (every MCP
+tool survives; a list resolving to nothing "usually" fails at launch). Edit every site or none.
+
+**Vault gap, opened 2026-08-06.** These came from a live primary read; the `prompts` page *Claude
+Code Instruction-Artifact Mechanics* still carries `retrieved: 2026-08-03` and is **silent** on all
+four fields. Silence is not a conflict — the page states nothing to disagree with — so
+`using_the_wiki.md` §"No page is not an outage" applies here **by extension**: its stated condition
+is a source with no page at all, and this is a page silent on four of its fields. Either way this
+section is the record and the page-wins rule is not suspended; it applies unchanged the moment the
+refresh lands. §3's entry for that page names the gap. A third branch in `using_the_wiki.md` for
+the silent-page case would retire this extension.
+
+### 2026-08-06 verification, second pass — loading-path carriers
+
+Opened to close the rest of the checklist's unanchored mechanics, the ones the first pass left.
+Read live from the memory, skills, sub-agents, and hooks references on CLI 2.1.222. Cite as
+`§1, 2026-08-06 second pass`. **Eight held**, two of them correcting a checklist wording that was
+incomplete rather than false. **One checklist claim was wrong outright, and one carrier was
+missing entirely.**
+
+Held, each now citable:
+
+- **`@path` imports expand at launch and buy back no context.** "Imported files are expanded and
+  loaded into context at launch alongside the CLAUDE.md that references them", "a maximum depth of
+  four hops", and, verbatim from the troubleshooting section: "Splitting into `@path` imports helps
+  organization but doesn't reduce context, since imported files load at launch."
+- **`CLAUDE.md` is a user message, not system prompt.** "CLAUDE.md content is delivered as a user
+  message after the system prompt, not as part of the system prompt itself."
+- **A skill body is never re-read.** "the rendered `SKILL.md` content enters the conversation as a
+  single message and stays there for the rest of the session … Claude Code does not re-read the
+  skill file on later turns, so write guidance that should apply throughout a task as standing
+  instructions rather than one-time steps." Two mechanics the checklist does not carry and may
+  want: re-invoking a skill whose rendered content is unchanged appends a short already-loaded note
+  rather than a second copy (v2.1.202+), and auto-compaction re-attaches the most recent invocation
+  of each skill keeping the first 5,000 tokens, under a combined 25,000-token budget, so older
+  skills can drop out entirely.
+- **Auto memory never reaches a non-fork subagent.** "The main conversation's auto memory isn't
+  loaded into subagents; the exception is a fork … A subagent's own auto memory, enabled with the
+  subagent `memory` field, is a separate directory."
+- **`skillOverrides` has exactly four states**, and the table gives each one's two effects: `on`
+  (name and description listed, in the `/` menu), `name-only` (name only, in the menu),
+  `user-invocable-only` (hidden from Claude, in the menu), `off` (hidden from both). "A skill that
+  is absent from `skillOverrides` is treated as `"on"`."
+- **A sub-agent's `tools` restricts and `disallowedTools` subtracts.** "`tools` — Tools the
+  subagent can use. Inherits every tool available to subagents if omitted"; "`disallowedTools` —
+  Tools to deny, removed from inherited or specified list."
+- **Permission rules evaluate deny → ask → allow, and specificity does not reorder them.**
+  Verbatim: "Rules are evaluated in order: deny, then ask, then allow. The first match in that
+  order determines the outcome, and rule specificity doesn't change the order." The consequence an
+  author gets wrong: "A broad deny rule like `Bash(aws *)` blocks every matching call, including
+  calls that also match a narrower allow rule like `Bash(aws s3 ls)`, so a deny rule can't carry
+  allowlist exceptions." The checklist said only "`deny` beats `allow`", which drops `ask` and
+  drops the specificity clause. Also load-bearing for the least-privilege bullet: a bare tool name
+  in `deny` "removes the tool from Claude's context entirely", while a scoped rule leaves the tool
+  available and blocks matching calls.
+- **Nested `CLAUDE.md` files load on demand, not at launch.** "Claude also discovers `CLAUDE.md`
+  and `CLAUDE.local.md` files in subdirectories under your current working directory. Instead of
+  loading them at launch, they are included when Claude reads files in those subdirectories." The
+  checklist's §8 said "auto-load by directory", which reads as at-launch.
+
+**Wrong, and corrected in the checklist: hook reach is per event, not main-thread-only.** The
+checklist said "hook injections (each main-thread prompt — never subagents)". The hooks reference
+says the opposite of the second half: "Hooks from settings files, managed policy settings, and
+plugins also run inside subagents. When a subagent calls a tool, tool events such as `PreToolUse`
+and `PostToolUse` fire the same configured hooks as in the main conversation, and the input carries
+the `agent_id` and `agent_type` … fields that identify the subagent." What *is* main-thread-only is
+the **event**, not the hook: stdout becomes model-visible context only for `UserPromptSubmit`,
+`UserPromptExpansion`, and `SessionStart`, and a subagent has no user prompt. So a
+`UserPromptSubmit` injection reaches main-thread prompts only, while a `PostToolUse` hook that
+injects instruction text reaches subagents too — which is what
+`dot_claude/hooks/executable_instruction-gate.sh` does, and matches the 2026-08-04 probe recorded
+in its header.
+
+**Missing carrier: `.claude/rules/`.** The checklist's loading-path list never named it. "Rules
+without [`paths` frontmatter] are loaded at launch with the same priority as `.claude/CLAUDE.md`",
+and a rule *with* `paths:` is conditional — "Path-scoped rules trigger when Claude reads files
+matching the pattern, not on every tool use." User-level rules in `~/.claude/rules/` load before
+project rules. Compaction treats **path-scoped** rules differently from the project root file:
+"Project-root CLAUDE.md survives compaction … Nested CLAUDE.md files in subdirectories and rules
+with `paths:` frontmatter are not re-injected automatically." The quote covers the `paths:` kind
+only — whether a rule without `paths:` survives is **unrecorded**, so do not assert it either way.
+
+**Mirrors this subsection creates.** Nearly every item above is **restated** in
+`agents/instructions-reviewer.md`, not merely anchored — edit each site with this section or
+neither. In §1 *Loading-path integrity*: the corrected hook-reach clause, the `.claude/rules/`
+carrier, `@path` depth-and-expand-at-launch, `CLAUDE.md`-as-user-message, and auto memory never
+reaching a non-fork subagent. In §1 *Skill bodies persist*: the never-re-read rule. In §1
+*Per-file budgets*: the `.claude/rules/` compaction split. In §2 *Tool fields*:
+`tools`/`disallowedTools`. In §2 `permissions`: the `deny` → `ask` → `allow` order. In §8: nested
+`CLAUDE.md` loading on demand. The `skillOverrides` **table** — each state's two effects — is
+uncopied, but the state names `name-only` / `user-invocable-only` / `off` are restated in §1
+*Loading-path integrity* and §4 *Tool guidance duplicated across carriers*, so a renamed or added
+state is an edit to both.
+
+**Vault gap.** Same as the first pass: the `prompts` page *Claude Code Instruction-Artifact
+Mechanics* (`retrieved: 2026-08-03`) is silent on all of these. §3's entry names it.
+
 ## 2. Deprecated model mechanics
 
 Moved here 2026-07-27 from the inline "Deprecated model mechanics" rule, where it arrived
@@ -207,14 +353,24 @@ those dates because "the current release" is not observable from inside the vaul
 `provenance: primary`, each carrying `Claim type: mechanism` — which is where the
 never-an-outcome-claim rule below is now recorded formally, per source.
 
-- mattpocock's *Writing Great Skills* ("Deletions have a keep-side test," "Invocation mode
-  sets what the description is for" — its user-invoked half only, per the scope correction
-  below) is a practitioner guide. Page: *Writing Great Skills
+- mattpocock's *Writing Great Skills* is a practitioner guide. Page: *Writing Great Skills
   (Pocock)* (retrieved 2026-07-30; scope correction verified against upstream 2026-08-05,
   page not refreshed — cite that date for the correction, 2026-07-30 for the rest). Pinned to
   a commit, so it moves only when the pin does.
-  **Upstream renamed** to `writing-for-agents` on 2026-07-23 (`1fc6573`); the pin holds the
-  text, not the name, so the page's title no longer resolves upstream. **Scope correction,
+  **Citing sites, all in `agents/instructions-reviewer.md` — a page refresh is an edit to each:**
+  §Operating notes "Deletions have a keep-side test"; §2 "Invocation mode sets what the
+  description is for"; and §7 Completion gate, whose example pair "every modified model accounted
+  for" / "produce a change list" is **verbatim** from the source and was uncited until 2026-08-06.
+  `git log -S` dates that text to `b4f9d77` (2026-06-26), three weeks before this entry existed,
+  so it is derivation rather than convergence.
+  **Upstream renamed *and rewritten*** on 2026-07-23 (`1fc6573`): not a rename with the text
+  held, as this entry said until 2026-08-06 — `git diff --stat 697d4ce..HEAD` is 289 deletions,
+  including the whole 201-line `GLOSSARY.md`, replaced by 103 lines across `SKILL.md` and
+  `SKILL-MECHANICS.md`. The pin holds the **old** text, and the page's title no longer resolves
+  upstream. Concept-by-concept the two overlap almost entirely; the one idea added after the pin
+  is the environment-as-source-of-truth "cache" test (`f054def`, 2026-07-28), which this page has
+  never covered and which the 2026-08-06 study rejected against §3 *Reference over restatement*
+  (`.boris/2026-08-06-writing-for-agents-study.md`). **Scope correction,
   2026-08-05:** the source backs only the user-invoked half — "the `description` becomes
   human-facing — a one-line summary, trigger lists stripped" (pinned page, line 22). It
   states no "skip when" rule — verified negative against the pinned page, the renamed
@@ -225,7 +381,10 @@ never-an-outcome-claim rule below is now recorded formally, per source.
   Prompting Best Practices* (retrieved 2026-07-30) and *Claude Code Instruction-Artifact
   Mechanics* (retrieved 2026-08-03). The best-practices page was **read live 2026-08-05**
   for §2; the vault page was not refreshed, so its `retrieved:` date still reads 2026-07-30
-  and a §2 claim cites §2's anchor, not this one.
+  and a §2 claim cites §2's anchor, not this one. **Gap, 2026-08-06:** the *Instruction-Artifact
+  Mechanics* page is silent on the four tool-field and invocation mechanics §1's
+  `### 2026-08-06 verification` records, all read live that day. Refreshing the page must pick
+  them up; until it does, cite §1's subsection, not this entry.
 - **Vault gap, opened 2026-08-05.** Two pages behind §2 have no `prompts` vault page yet:
   the *Extended thinking* reference and *Prompting Claude Opus 5*, both on
   `platform.claude.com`, both read primary that day. §2 is self-contained on their content,
@@ -358,9 +517,11 @@ whose entire function is to land before the work.
 - **Barez et al. 2025, *CoT Is Not Explainability*** (aigi.ox.ac.uk, not on arXiv) — an
   interpretability position paper. Its 25% figure is the share of surveyed papers misusing
   CoT, not an unfaithfulness rate. Its own recommendation is to corroborate CoT, not to
-  discard it. Contested by arXiv 2512.23032. **Still cited in the Operating notes, only for
-  what it is *not*** (a transcript measurement) — that use stands as a mechanism argument.
-  Do not restore the 25% figure or any unfaithfulness rate.
+  discard it. Contested by arXiv 2512.23032. **Still permitted, recorded 2026-07-27:** cited in
+  `agents/instructions-reviewer.md` Operating notes *only* for what it is *not* (a transcript
+  measurement); that use stands as a mechanism argument, and it is the only permitted one.
+  Do not restore the 25% figure or any unfaithfulness rate. (No other §4 entry prints the
+  `Still permitted` label. The checklist's §6 keys route three on it.)
 - **arXiv 2505.19716, *Concise Reasoning, Big Gains*** — a CoT-distillation paper. Makes
   no correct-vs-incorrect length claim. The length finding belongs to **arXiv 2504.05185,
   *Concise Reasoning via RL***, where the mechanism is a PPO/GRPO training artifact and so

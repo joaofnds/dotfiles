@@ -76,7 +76,7 @@ Required reads by phase:
 - **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md` (gatekeeper: routes to sub-modules, holds the pre-commit checklist)
 - **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the design draws or moves a module or service boundary; if it cues a wiki lookup, read `using_the_wiki.md`
-- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to the same set the `Gate:` line names below; the landed claim must name its `instruction_external_facts.md` §3 entry — or, when the claim is a harness or model mechanic §1 or §2 already carries, that section plus the **anchor** that established it (`§1, 2026-08-03 re-verification`; `§2, 2026-08-05 verification`), never a bare date — the anchor word is what survives the next re-check. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
+- **Writing or revising an instruction-artifact claim that rests on a paper, benchmark, or vendor documentation** → `using_the_wiki.md` (collection `prompts`) *before* writing it, plus `instruction_external_facts.md`. Applies to the same set the `Gate:` line names below; the landed claim must name its `instruction_external_facts.md` §3 entry — or §4's, when that entry records the use the claim makes as still permitted — or, when the claim is a harness or model mechanic §1 or §2 already carries, that section plus the **anchor** that established it (`§1, 2026-08-03 re-verification`; `§2, 2026-08-05 verification`), never a bare date — the anchor word is what survives the next re-check. A claim resting on nothing external does not fire this, and neither does an in-corpus incident, transcript, or tool run — date those inline
 - **Multi-stage feature, debug, review, or delivery work** → no rule file. Use only the stages task size justifies; route between them on each skill's own description and skip conditions. `/handoff` and `/art-direction` cannot be reached by model invocation — recommend them to the user by name
 - **Producing any loop artifact** (spec, options, grilled design, plan, diagnosis, review, design, handoff — any `.boris/` document a later stage reads) → read `.boris/CONTEXT.md` when it exists: the project's domain language (`/discuss` owns it). An artifact that names things differently hands the next stage the wrong vocabulary
 - **Spawning a subagent** → `subagent_spawning.md` (the two shapes, the un-named rule, truncation fallbacks)
@@ -123,7 +123,9 @@ advisory-routable out of this condition. A Minor never enters it. An earlier rou
 open; (2)
 the round's fixes touched none of the three; (3) three rounds have run on this batch — a batch
 is the edits since the user's last turn, and a user-directed fix after a handoff starts a new
-one. Name the stop condition in that round's closing message. Under (3) the loop ends on the round
+one. Name the stop condition in that round's closing message, and in the same message name every
+reviewer prescription applied **in this batch** with changed wording, and every finding the
+reviewer downgraded on a reachability probe — those two are what the reviewer's own retirement triggers read. Under (3) the loop ends on the round
 count rather than on the findings: disposition every open defect and list every open advisory (`reporting_findings.md`)
 and hand them to the user (2026-08-05: five rounds
 never converged, each round's prescriptions seeding the next round's Majors — drop the cap if

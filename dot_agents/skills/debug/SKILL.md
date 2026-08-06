@@ -5,12 +5,12 @@ description: >
   the START of looking into a failure, before the cause is known: "debug this", "why
   is this failing", "investigate this bug". Confirms the cause but lands no fix
   (/plan → /build) and writes no durable report (/diagnose, run after). Dumping
-  in-flight state to a fresh session → /handoff.
+  in-flight state to a fresh session → /handoff (user-invoked).
 ---
 
 # Debug
 
-**Wrong skill if:** dumping in-flight state to a fresh session → `/handoff`; investigation already concluded and you want the durable report → `/diagnose`; cause already confirmed and you want the fix proven → `/verify-this`.
+**Wrong skill if:** dumping in-flight state to a fresh session → suggest `/handoff` to the user; investigation already concluded and you want the durable report → `/diagnose`; cause already confirmed and you want the fix proven → `/verify-this`.
 
 Investigate a bug down to a confirmed root cause. The job is understanding, not
 repair — probe and instrument freely, but don't land the fix here; that's
@@ -52,4 +52,4 @@ probe must remain, record its exact path, purpose, and diff in the diagnosis or 
 
 When investigation ends, use `/diagnose` if the cause must survive a session boundary.
 If continuing now, use `/grill` when the remedy is open and `/plan` when it is settled.
-Use `/handoff` only to pause live investigation.
+To pause live investigation, `/handoff` — user-invoked, so recommend it by name.

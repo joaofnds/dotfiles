@@ -1,9 +1,7 @@
 ---
 name: handoff
 description: >
-  Compact in-flight work into a briefing a fresh session can pick up cold. Use it for
-  live investigation or partially executed plans; use /plan for a settled design that
-  has not started.
+  Compact in-flight work into a briefing a fresh session can pick up cold.
 argument-hint: "What will the next session focus on?"
 disable-model-invocation: true
 ---

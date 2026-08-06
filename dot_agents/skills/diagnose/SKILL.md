@@ -6,12 +6,12 @@ description: >
   leads exhausted and best hypothesis recorded). Invoke on "diagnose this",
   "root-cause report", "document what went wrong". Proposes NO fixes — that's /plan,
   run later off the report. Fix approach already settled → /plan; cause still under
-  investigation → /debug; pausing that investigation → /handoff.
+  investigation → /debug; pausing that investigation → /handoff (user-invoked).
 ---
 
 # Diagnose
 
-**Wrong skill if:** the fix approach is already settled → `/plan` directly; no confirmed cause and leads remain → keep debugging (`/debug`) or `/handoff`.
+**Wrong skill if:** the fix approach is already settled → `/plan` directly; no confirmed cause and leads remain → keep debugging (`/debug`), or suggest `/handoff` to the user.
 
 Write a durable root-cause report on the bug investigated this session, for a
 fresh session to act on later (usually via `/plan`). Diagnosis only — describe
