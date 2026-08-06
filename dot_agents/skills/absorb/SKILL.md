@@ -153,7 +153,7 @@ spend confirming.
 
 ## 5. Verify in the main thread
 
-`rules/subagent_spawning.md` §What a report is worth governs every dive report. This
+`~/.agents/rules/subagent_spawning.md` §What a report is worth governs every dive report. This
 skill tightens the trigger: re-run a finding's load-bearing evidence — the grep, the
 Read, the count — **before it leaves your context, into the study report or into a
 message to the user.** A live relay is the same claim on a shorter path.
