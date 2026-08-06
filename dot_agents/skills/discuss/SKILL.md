@@ -18,8 +18,13 @@ later (`/research` → `/grill` → `/plan`).
 
 ## Interview discipline
 
+Every bullet below mirrors `/grill` §How to run it, which adds one more
+(**Dispatch the facts you can't settle cheaply**): edit both or neither, keeping each
+side's subject (the goal here, the approach there).
+
 - **One question at a time.** Wait for the answer before the next — batching produces
-  shallow answers.
+  shallow answers. The user answering several at once is not batching by you; follow
+  their lead when they do.
 - **Recommend an answer for every question.** Say what you'd choose and why, so the
   user reacts to a concrete position instead of a blank. The recommendation is a
   proposal — don't build on it as settled until the user confirms.
