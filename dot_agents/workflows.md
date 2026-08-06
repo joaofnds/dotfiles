@@ -154,7 +154,8 @@ feeds back into the build loop.
 - Same shape as the debug loop: a durable diagnosis artifact drives the fix.
 
 `/adversarial-review` is the lighter in-session variant — findings relayed live,
-no durable report — so it loops informally: `review → fix → re-verify`.
+no durable report — so it loops: `review → fix → re-verify`, bounded at three rounds when it
+runs as a producer gate (`adversarial-review` §As a producer gate).
 
 ## Cross-session continuity loop
 

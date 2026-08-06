@@ -151,6 +151,17 @@ always=$(lines "$corpus/AGENTS.md")
 note "corpus $total lines across $(corpus_files | wc -l | tr -d ' ') files"
 note "always-loaded surface $always lines"
 
+# Every other budget here is per-file, so a corpus that grows by adding a little to each
+# file trips none of them — which is how it went ~3,000 → 11,524 lines between 2026-07-01
+# and 2026-08-06 with every file inside its own budget. This is the only check that sees
+# the total, and it is a ratchet: set at the count on the day it landed, so the next
+# addition has to be paid for by a deletion. Raise it only with a consolidation pass in
+# the same change, and say what was consolidated.
+corpus_ceiling=11524
+if [ "$total" -gt "$corpus_ceiling" ]; then
+  fail "corpus $total lines over the $corpus_ceiling ceiling — consolidate or delete before adding (instruction-saturation, rules/instruction_failure_modes.md)"
+fi
+
 printf '\n'
 if [ "$failures" -eq 0 ]; then
   printf 'OK — %s warning(s)\n' "$warnings"

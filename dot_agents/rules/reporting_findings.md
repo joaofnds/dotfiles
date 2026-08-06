@@ -32,15 +32,17 @@ rank impact and say nothing about the defect question. Map them: **Blocker**
 always names a defect — it is defined as wrong or unsafe behavior. **Major** names one where
 the ladder ranks defect impact — `instructions-reviewer` (routing, authority, evidence
 quality, or completion changed through a named mechanism), `code-reviewer`,
-`testing-reviewer`. Where a ladder ranks **friction cost** instead — `refactoring-reviewer`
-§Severity, and any coupling or test-smell finding outside those three ladders — severity says nothing about the defect
+`testing-reviewer`, and a general agent carrying `adversarial-review` §Send the reviewer's
+mandate (the approach, the evidence, or what the next stage will do changed). Where a ladder ranks **friction cost** instead — `refactoring-reviewer`
+§Severity, and any coupling or test-smell finding outside those four ladders — severity says nothing about the defect
 question and the three classes above decide. **Minor and Nit are the ambiguous rungs**: each names a concrete
-consuming-agent effect, so each names a defect when that effect is the agent behaving wrongly,
+bounded effect on the artifact or the consuming agent, so each names a defect when that effect is the agent behaving wrongly,
 and takes the advisory route when the effect is only the context or maintenance the finding
 buys. Severity does not survive the mapping — an advisory-routed Minor is an advisory finding,
-not a lesser defect, and it holds no gate open. (Derived from
-`agents/instructions-reviewer.md` §How you review — re-derive this mapping whenever that
-ladder changes; that file is the authority.)
+not a lesser defect, and it holds no gate open. (The instructions-reviewer, code-reviewer and
+testing-reviewer rungs derive from `agents/instructions-reviewer.md` §How you review —
+re-derive them whenever that ladder changes; that file is their authority. The general-agent
+rung derives from `adversarial-review` §Send the reviewer — edit both.)
 
 Every defect you surface, yours or one relayed from a reviewer, carries exactly one
 disposition, named in the report:

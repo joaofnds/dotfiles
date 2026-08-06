@@ -56,7 +56,11 @@ Structure it strictly as follows, readable cold:
    cause. Resolve uncertainty before finalizing; if a file remains a candidate, name the
    probe that will confirm it instead of asserting it is in scope.
 5. **Contracts** — schema/API/type/interface changes, with before/after.
-6. **Edge cases & risks** — what could go wrong, side effects on other parts of the system, rollback/migration concerns.
+6. **Edge cases & risks** — what could go wrong, side effects on other parts of the system,
+   rollback/migration concerns. A risk asserting something is *missing* — uncovered,
+   unguarded, uncalled — names the probe you ran, or names the measurement that would settle
+   it (`~/.agents/rules/ownership.md` §Before Marking Done item 3). A refuted example is not
+   replaced by a second unprobed one.
 7. **Testing strategy** — the exact command to run the tests (e.g. `pnpm test --run`, `go test ./...`), what to verify manually if tests aren't enough, and which existing tests are likely to break and why. When a spec exists, map every acceptance criterion to a runnable check or a named manual verification — an unmapped criterion is a plan gap, not a detail for `/build` to discover. For UI work with a ratified direction, map that file's **Verify** checks as a named manual verification.
 8. **Gotchas** — non-obvious things we learned this session that aren't visible in the code (failed approaches, surprising constraints, why something is the way it is).
 9. **Task tracker** — a granular `- [ ]` checklist in execution order. Slice vertically: each task is one observable behavior cut through every layer it needs, never a layer or component ("GET /orders/:id returns the stored order" is one task; "add repository" / "add service" / "add endpoint" is that same behavior wrongly split into three). `/build` executes each task test-first: cross-boundary vertical slices start outside-in; local behavior starts at the narrowest observable layer. Each item names its first failing test, touched files, and observable completion check. For config, tooling, or docs, name the verifiable outcome. Keep each task independently executable and verifiable.

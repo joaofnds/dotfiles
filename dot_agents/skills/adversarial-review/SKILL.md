@@ -35,9 +35,21 @@ stated. (Producer skills call this gate automatically — see "As a producer gat
   summarize it.
 - **How to verify** — the test command and how to run it. Tell it to run things,
   not to trust that they pass.
-- **The mandate** — "Assume there are problems and find them. Default to skeptical.
-  Cite `file:line` and give a concrete repro or counterexample for each finding;
-  drop anything you can't substantiate."
+- **The mandate** — "Assume there are problems and find them. Default to skeptical. Cite
+  `file:line` and give a concrete repro or counterexample for each finding; drop anything
+  you can't substantiate by a command or by a stated argument. Label each finding
+  **verified by command** or **reasoning only**, and name the command. Rank each finding
+  Blocker / Major / Minor — Blocker: the artifact is wrong or unsafe as written; Major: it
+  changes the approach, the evidence, or what the next stage will do; Minor: bounded cost.
+  If a severity has nothing in it, say so. If the work is sound as written, say that
+  plainly — a clean report is a valid result, not a failure to look."
+
+  Include that ladder only in a **general** agent's brief. `code-reviewer`,
+  `testing-reviewer` and `instructions-reviewer` rank on their own — don't restate this one
+  at them. Either way a Blocker or Major here always names a defect, so neither is
+  advisory-routable out of stop condition (1) below; a Minor may take the Advisory route and
+  never enters (1) (`~/.agents/rules/reporting_findings.md` §Reading a reviewer's severity
+  ladder — edit both).
 
 ## Withhold — this is the point
 
@@ -66,11 +78,39 @@ here, once:
 
 - It fires when the artifact ratifies something expensive to reverse — an approach, a
   lean, a plan. Skipping must be said out loud, never done silently.
-- Fold material findings into the artifact before calling it done — a finding that only
-  restates what's already written isn't material. One that invalidates the artifact's
-  core (the lean, the approach) reopens the producing stage; don't edit around it.
-- If the gate catches the same class of gap across artifacts, the producing skill is
-  defective — flag it, don't just fix the doc.
+- Fold or explicitly defer each material finding before calling it done — a deferral takes
+  a disposition (`~/.agents/rules/reporting_findings.md`) and closes the finding for the
+  loop's purpose, never for the report; a finding that only restates what's already written
+  isn't material. One that invalidates the artifact's core (the lean, the approach) reopens
+  the producing stage; don't edit around it.
+- **Probe the fix before the artifact is called done** — next round or stop, whichever comes
+  first. An edit answering a finding that named a compile error, a command, a count or a
+  `file:line` gets that same probe re-run against the new text; a scratch program in a temp
+  dir is not the code the producing skill forbade. Name each fix you probed and its command.
+  (2026-08-06: six consecutive gate rounds whose worst finding was the previous round's
+  unprobed repair.)
+- **The gate is bounded at three rounds.** Round 1 is the gate; rounds 2 and 3 exist only
+  because a fix can break what it repairs. Stop at the first condition that holds: (1) the
+  round returns no Blocker and no Major except ones deferred in an **earlier** round — a
+  deferral made in this round does not satisfy (1): fix it, or let the round count reach
+  (3); (2) every finding this round was folded, and the round's fixes changed no claim about
+  how code, tooling, or the platform behaves; (3) three rounds have run. Under (3) the loop
+  ends on the count, not on the findings — give every open defect a disposition
+  (`~/.agents/rules/reporting_findings.md`), list every open advisory, and hand them to the
+  user. Name the stop condition in the closing message. If the user asks to run until the
+  report is clean, say the bound and what the residue will look like first — a skeptical
+  reviewer on a long prose artifact does not return an empty list. Run further rounds only if
+  they still ask. The three
+  rounds are counted per
+  artifact draft: a finding that reopens the producing stage ends this count, and the redrafted
+  artifact enters the gate at round 1 — tell the user the count reset and why, so a second
+  reset is theirs to authorize. (2026-08-06: eight rounds, 15 reviewers, artifact
+  707 → 1378 lines. Drop the cap when two consecutive gates converge in two rounds — and
+  never while leaving the probe obligation above out, since that is what makes three rounds
+  enough.)
+- If the gate catches the same class of gap across artifacts — or the same class in two
+  rounds on one artifact — the producing skill or your own revision loop is defective. Say
+  so to the user in that round, with the two instances quoted, before fixing the doc again.
 
 ## Relay honestly
 
