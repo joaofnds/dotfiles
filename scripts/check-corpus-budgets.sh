@@ -81,6 +81,35 @@ for f in "$corpus"/skills/*/SKILL.md; do
   check "$f" - 500 skill
 done
 
+# Tier-3 references under a skill, on-demand with the same 500-line ceiling the agents
+# loop uses. Checked explicitly for the same reason that loop states: the glob above does
+# not recurse, so moving content out of a SKILL.md into references/ left it unmeasured.
+# (Added 2026-08-07, after 171 lines moved from panel-review/SKILL.md into that blind spot.)
+printf '\nSkill tier-3 references\n'
+for f in "$corpus"/skills/*/references/*.md; do
+  [ -e "$f" ] || continue
+  check "$f" - 500 reference
+done
+
+# A skill body is re-attached after auto-compaction only up to its first 5,000 tokens
+# (instruction_external_facts.md §1, 2026-08-06 second pass), and re-invoking appends an
+# already-loaded note rather than a second copy — so everything past that point is gone for
+# the rest of a long session and cannot be recovered. Lines cannot see this; a body of few,
+# long lines passes the 500-line ceiling and still overflows. 20,000 chars is 5,000 tokens
+# at 4 chars/token, which is an estimate, not a documented ratio — hence WARN, not FAIL.
+# (Added 2026-08-07: panel-review/SKILL.md sat at 28,794 chars, so its kill step, stability
+# probe, report skeleton, and disposition rules dropped out of the orchestrator's context at
+# exactly the point it needed them. Splitting the axis mandates out took it to 17,812.)
+printf '\nSkill body vs compaction re-attach budget (~20000 chars)\n'
+for f in "$corpus"/skills/*/SKILL.md; do
+  [ -e "$f" ] || continue
+  c=$(wc -c < "$f" | tr -d ' ')
+  if [ "$c" -gt 20000 ]; then
+    warn "${f#"$root"/} — $c chars, over the ~20000 re-attach budget: the tail is dropped after compaction"
+  fi
+done
+note "checked $(ls "$corpus"/skills/*/SKILL.md 2>/dev/null | wc -l | tr -d ' ') skill bodies"
+
 # Density: a line ceiling only binds while a line means the same thing everywhere.
 #
 # Known exception, recorded 2026-08-06 rather than hidden by loosening the
@@ -143,9 +172,83 @@ else
   note "no line-anchored citations"
 fi
 
-# `evals/` lives under dot_agents/ but is not loaded into any context, so it is not corpus.
+# Cross-file section citations must resolve to a heading that exists.
+#
+# This is the one class of decay a gate review cannot see by construction: the citing file
+# is not in the diff that moved the heading, so no diff-seeded review ever opens it. Only a
+# standing sweep or this check catches it. (Added 2026-08-07, after one pass found three
+# mirror declarations in instruction_external_facts.md §1 naming sections that had moved to
+# agents/references/dispatch-fields.md — the paragraph whose whole job is making "edit every
+# site or none" executable — plus two testing-module pointers aimed at the wrong section.)
+#
+# Deliberately conservative, because a noisy check is worse than none: a citation is
+# resolved only when its basename is unique in the corpus, and a section token is checked
+# only in the two forms the corpus actually uses. Anything else is skipped and counted, so
+# the skip rate stays visible rather than reading as a clean pass.
+printf '\nCross-file section citations\n'
+cite_out=$(python3 - "$corpus" <<'PY'
+import re, sys, pathlib, collections
+
+corpus = pathlib.Path(sys.argv[1])
+files = [p for p in corpus.rglob('*.md')
+         if 'evals' not in p.parts and p.name != 'review_checklist.md']
+
+by_name = collections.defaultdict(list)
+for p in files:
+    by_name[p.name].append(p)
+
+heads = {}
+for p in files:
+    hs = []
+    for ln in p.read_text(errors='replace').splitlines():
+        if re.match(r'^#{2,4}\s+', ln):
+            hs.append(re.sub(r'^#+\s+', '', ln).strip())
+        elif m := re.match(r'^\*\*([A-Z][^*]{3,80})\*\*', ln):
+            hs.append(m.group(1).strip())          # bold paragraph lead
+    heads[p] = hs
+
+CITE = re.compile(r'`([A-Za-z0-9_./-]+\.md)`\s*§(\*?[A-Za-z0-9][^,.;:)\]]*?)\*?(?=[\s,.;:)\]]|$)')
+bad, checked, skipped = [], 0, 0
+
+for p in files:
+    for ln_no, ln in enumerate(p.read_text(errors='replace').splitlines(), 1):
+        for path_txt, sec in CITE.findall(ln):
+            targets = by_name.get(pathlib.PurePath(path_txt).name, [])
+            if len(targets) != 1:
+                skipped += 1
+                continue
+            t = targets[0]
+            sec = sec.strip().strip('*')
+            if re.match(r'^\d', sec):
+                n = re.match(r'^(\d+)', sec).group(1)
+                ok = any(re.match(rf'^§?{n}[.\s]', h) or h.startswith(f'{n}.') for h in heads[t])
+            else:
+                ok = any(h.lower().startswith(sec.lower()) for h in heads[t])
+            checked += 1
+            if not ok:
+                bad.append((p, ln_no, path_txt, sec))
+
+for p, ln_no, path_txt, sec in bad:
+    print(f"FAIL::{p.relative_to(corpus.parent)}:{ln_no} — `{path_txt}` §{sec} resolves to no heading in that file")
+print(f"NOTE::{checked} citation(s) resolved, {len(bad)} dangling, {skipped} skipped (basename not unique)")
+PY
+)
+while IFS= read -r line; do
+  case "$line" in
+    FAIL::*) fail "${line#FAIL::}" ;;
+    NOTE::*) note "${line#NOTE::}" ;;
+  esac
+done <<EOF
+$cite_out
+EOF
+
+# Not corpus: `evals/` is never loaded into any context, and `review_checklist.md` is a
+# human-facing coverage audit the user reads against a panel review — no mandate names it and
+# no agent loads it (2026-08-07; its own header said so, and deleting it on that evidence was
+# the wrong call). "Nothing loads it" is grounds to keep it out of a context budget, never
+# grounds to delete it.
 printf '\nTotals\n'
-corpus_files() { find "$corpus" -name '*.md' -not -path "$corpus/evals/*"; }
+corpus_files() { find "$corpus" -name '*.md' -not -path "$corpus/evals/*" -not -name 'review_checklist.md'; }
 total=$(corpus_files | tr '\n' '\0' | xargs -0 cat | wc -l | tr -d ' ')
 always=$(lines "$corpus/AGENTS.md")
 note "corpus $total lines across $(corpus_files | wc -l | tr -d ' ') files"
