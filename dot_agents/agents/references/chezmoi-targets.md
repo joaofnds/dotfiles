@@ -4,10 +4,6 @@ Tier-3 reference for `agents/instructions-reviewer.md` §Inputs. Load it when, a
 review target path is a chezmoi source (`dot_*`) or its rendered twin. Every other review can
 ignore this file.
 
-The rule that sends you here: when a target path is a chezmoi source, read its rendered twin at
-the mapped path before any finding about live behavior. The source is the review target; the
-rendered copy is evidence of what a running agent currently loads.
-
 ## Mapping
 
 A `dot_` source root renders to the dotted directory of the same name: `dot_agents/` →

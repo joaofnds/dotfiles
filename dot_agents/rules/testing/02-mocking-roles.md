@@ -23,7 +23,7 @@ Precise names for precise roles. Use the right word and the test reads correctly
 | **Spy** | Records interactions for later inspection. May return canned answers. | Yes | Yes (after the fact) |
 | **Mock** | Pre-programmed with expectations; fails the test itself if the protocol is wrong. | Yes | Yes (eager, built-in) |
 
-We lean overwhelmingly on **Fakes**. Some Fakes also spy — a Fake that captures the list of requests it received is a Fake-plus-Spy, not a Mock. The line we don't cross is pre-programmed expectations: we do not build doubles that fail the test from the inside because "you called me in the wrong order." Interaction coupling of that kind is fragile (§3 below).
+We lean overwhelmingly on **Fakes**. Some Fakes also spy — a Fake that captures the list of requests it received is a Fake-plus-Spy, not a Mock. The line we don't cross is pre-programmed expectations: we do not build doubles that fail the test from the inside because "you called me in the wrong order." Interaction coupling of that kind is fragile (§2 below).
 
 Name your double after its role. A double that returns one canned user is a **Stub**, not a **Fake**, even if its type looks similar to one. A double that records calls but doesn't return meaningful state is a **Spy**. Calling everything "mock" is how tests become incomprehensible.
 
@@ -100,8 +100,6 @@ This is the single most load-bearing rule in this document. It's why we have `HT
         assert librarySpy.get.wasCalledWith("https://pokeapi.co/api/v2/pokemon/pikachu")
 ```
 
-Every library upgrade becomes a test-rewrite project. Every API shape change cascades across every test that touched that library. The library's idioms are baked into the test suite.
-
 ```
 [GOOD] — wrap the library in an owned interface; fake that interface
     interface HTTPClient:
@@ -112,16 +110,7 @@ Every library upgrade becomes a test-rewrite project. Every API shape change cas
     class RealHTTPClient implements HTTPClient:
         constructor(realLibrary) { ... }                 // adapter around the third party
 
-    class FakeHTTPClient implements HTTPClient:
-        requests  = []
-        responses = []
-
-        addResponse(response):       responses.push(response)
-        reset():                     requests.clear(); responses.clear()
-
-        get(url, options?):
-            requests.push({ method: "GET", url, options })
-            return responses.shift() or error("no response queued")
+    class FakeHTTPClient implements HTTPClient:      // shape per §4
 
     test "fetches a pokemon":
         http = new FakeHTTPClient()
@@ -133,8 +122,6 @@ Every library upgrade becomes a test-rewrite project. Every API shape change cas
         assert result.name == "pikachu"
         assert http.requests[0].url == "https://pokeapi.co/api/v2/pokemon/pikachu"
 ```
-
-The consequence: when the third-party API changes, one adapter class changes and every test keeps working. When the domain needs grow, we extend *our* interface. The test suite knows nothing about the library.
 
 Corollary: if application tests repeatedly mock someone else's class, the seam wants an
 owned port. Extract it, adapter-wrap the library, and fake the port.
@@ -203,11 +190,6 @@ class FakeEmailService implements EmailService:
 
 Fakes are injected through the dependency graph — a constructor parameter, a container override, a module decoration. Never by import-time module replacement.
 
-- ✅ Pass the Fake to the constructor.
-- ✅ Register the Fake in the test harness's DI module.
-- ✅ Decorate the real binding with a Fake via a container override at harness setup.
-- ❌ Replace the module at import time so that every consumer transparently gets the Fake.
-
 Module patching is invisible at the test's call site. It violates encapsulation, makes the test impossible to reason about locally, and couples to a module resolution detail that changes with build tooling.
 
 ---
@@ -251,9 +233,9 @@ The moment the mock needs `if args.x then return y`, a state machine, a queue of
 
 ## 7. The unit-is-a-behavior corollary
 
-The London-school reflex is: "isolate the class — mock every collaborator around it." We don't. The classical view (Khorikov) is that the **unit** is a unit of *behavior*, not a unit of *structure*. One behavior may span a service, a value object, and a couple of pure helpers; testing them together is still a unit test as long as it's fast and hits no I/O.
+The London-school reflex is: "isolate the class — mock every collaborator around it." We don't; the gatekeeper's *unit is a behavior* vocabulary is why.
 
-So when deciding what to fake: **fake at the I/O boundary, not at every class boundary.**
+When deciding what to fake: **fake at the I/O boundary, not at every class boundary.**
 
 ```
 [BAD] — London reflex; every collaborator mocked, test is coupled to internal structure
@@ -272,8 +254,6 @@ So when deciding what to fake: **fake at the I/O boundary, not at every class bo
         assert emailMock.send.wasCalledWith("joao@x.com", any(), any())
 ```
 
-Five assertions, four mocks, zero confidence that anything works. Every refactor breaks at least one.
-
 ```
 [GOOD] — classical; real value objects and helpers, Fake at the I/O seams only
     test "registers a user":
@@ -287,7 +267,7 @@ Five assertions, four mocks, zero confidence that anything works. Every refactor
         assert emails.sent[0].to == "joao@x.com"
 ```
 
-Two Fakes, two state assertions, real hasher and real validator. The test breaks if and only if the behavior breaks.
+The test breaks if and only if the behavior breaks.
 
 ---
 

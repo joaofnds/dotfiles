@@ -55,8 +55,8 @@ coupling strength, and the difference is not in the code.
 
 So the necessary/unnecessary judgment is a claim about the *dependency's rate of
 change*, not about the coupling's shape. It governs the five spatial types only;
-temporal coupling is judged on whether the assumption can be violated — see
-§Before reporting. Never assert it from the code alone:
+temporal coupling is judged on whether the assumption can be violated. Never
+assert it from the code alone:
 either cite an observed change history — in a panel review the orchestrator owns that
 probe (`panel-review` §4); reading this directly during design, run it yourself
 (`git log --since='1 year ago' --oneline -- <path>`) — or state the stability
@@ -141,11 +141,5 @@ Before reporting:
   is dropped in arbitration; if it doesn't, state the coarse cure from §Cures
   and say the site-level mechanics are unenumerated.
 - **Semantic coupling is yours.** No other lens covers it.
-- **Is the target stable?** Spatial types only — the stability test says nothing
-  about temporal coupling, which is judged on whether the ordering or
-  concurrency assumption can be violated, not on how often the target changes.
-  Never answer this from the code: in a panel review the orchestrator runs the
-  probe (`panel-review` §4), so report the finding and state the stability
-  assumption *as* an assumption. Reading this during design, run the `git log`
-  yourself; if the target is stable, the coupling is a design choice, not a
-  defect — say so and move on rather than reporting it.
+- **Is the target stable?** Run §Necessary or unnecessary. If the target is stable, the
+  coupling is a design choice, not a defect — say so and move on rather than reporting it.

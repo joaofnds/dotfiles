@@ -95,8 +95,8 @@ vendor-documentation claim
 you land in an instruction artifact names its `instruction_external_facts.md` §3 entry, and
 that entry names the wiki page it came from. A source §4 rejected but still permits for one
 narrow use names its **§4** entry instead — §3 is for audited sources, and moving a rejected one
-into §3 to satisfy this rule is the failure it guards against. The branch and anchor form are `AGENTS.md`
-§Task lifecycle's, restated in §1's own rule paragraph and the preamble above it. A cited claim naming no entry is the
+into §3 to satisfy this rule is the failure it guards against. The branch and anchor form are §1's own rule
+paragraph's and the preamble's; `AGENTS.md` §Task lifecycle routes here for them. A cited claim naming no entry is the
 defect, whether or not you ran the query — which is what makes this gate reviewable by an
 agent with only Grep.
 

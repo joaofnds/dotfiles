@@ -11,12 +11,6 @@ description: >
 
 # Diagnose
 
-**Wrong skill if:** the fix approach is already settled → `/plan` directly; no confirmed cause and leads remain → keep debugging (`/debug`), or suggest `/handoff` to the user.
-
-Write a durable root-cause report on the bug investigated this session, for a
-fresh session to act on later (usually via `/plan`). Diagnosis only — describe
-the defect and why it exists; don't write code or propose fixes.
-
 **Diagnose, don't prescribe.** Describe the problem and its cause — including
 what's absent or what was already tried. Never propose or rate a fix; that's the
 next session's job. A precise cause naturally narrows the fix space — that's the

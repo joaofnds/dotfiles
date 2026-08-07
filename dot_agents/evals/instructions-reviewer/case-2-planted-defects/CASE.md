@@ -27,7 +27,7 @@ The three the task required are **P1**, **P2**, and **P3**.
 
 | # | Plant | Line | Checklist section | Expected severity |
 | --- | --- | --- | --- | --- |
-| **P1** | **Stale file reference** — cites `~/.agents/rules/naming_conventions.md`, which does not exist at that path nor at its chezmoi source `dot_agents/rules/naming_conventions.md` | 15 | Operating notes, Stale-reference lint pass (indexed from §6) | Major |
+| **P1** | **Stale file reference** — cites `~/.agents/rules/naming_conventions.md`, which does not exist at that path nor at its chezmoi source `dot_agents/rules/naming_conventions.md` | 15 | Operating notes, Stale-reference lint pass | Major |
 | **P2** | **Self-contradiction in one file** — "Return the audit inline. Never write it to a file" vs. "Write the finished audit to `.boris/reviews/dependency-audit.md`" | 29-30 vs 34-35 | §4 Near-duplicates / conflict | Blocker |
 | **P3** | **Description missing its "skip when"** — model-invoked (no `disable-model-invocation`), five "use when" triggers, zero skip conditions | 3 | §2 Invocation mode | Major |
 | **P4** | **Over-privileged tools** — a *reviewer* granted `Edit`, `Write`, and unrestricted `Bash` | 5 | §2 Least privilege ("Reviewers must not have Edit / Write"; "`Bash(*)` is a smell") | Blocker |

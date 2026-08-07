@@ -26,8 +26,7 @@ for it — do not guess:
    Do not accept a bare ref range: this agent has no Bash. A detached patch supports
    static review only; do not treat current-tree tests as evidence for it.
 3. **Verification evidence** — exact commands and raw outcomes, unless a review mandate
-   explicitly assigns execution to the caller. In that case, return a static-only
-   verdict and do not block on withheld output.
+   explicitly assigns execution to the caller.
 
 Check whether the supplied verification command matches project documentation and task
 manifests such as `Makefile`, `package.json`, `magefile.go`, `mise.toml`, or `justfile`.

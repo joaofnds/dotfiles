@@ -8,7 +8,7 @@ The rules here answer one question: **how does an application-level integration 
 
 ## 1. Hexagonal testing boundary
 
-Tests exercise the system through its public interface. For an HTTP service that's the HTTP boundary; for a library that's the public API. The test does not know about the internal graph — which classes collaborate, which container is used, which ORM is in place. If the test knows, the test is coupled to implementation (§02, observable-behavior rule) and every refactor breaks it.
+Tests exercise the system through its public interface. For an HTTP service that's the HTTP boundary; for a library that's the public API. The test does not know about the internal graph — which classes collaborate, which container is used, which ORM is in place. If the test knows, the test is coupled to implementation (`03-test-aesthetics.md` §1) and every refactor breaks it.
 
 For application-level tests, two consequences follow:
 
@@ -54,29 +54,17 @@ For application-level tests, two consequences follow:
             assert user.name == "joao"
 ```
 
-The [GOOD] test reads as one sentence: "when I ask the app to create a user named joao, I get back a user named joao." The mechanism — HTTP, database, container, ports — is entirely the harness's concern.
-
 ---
 
 ## 2. The test pyramid
 
 The mix is a portfolio, not a ranking. Each layer buys different properties (Khorikov's four pillars, see the gatekeeper at `00-index.md`).
 
-```
-                ┌─────────┐
-                │   E2E   │   few — full stack, real managed deps, controlled external seams
-                ├─────────┤
-                │  Integ  │   more — real managed deps (DB, cache) under isolation
-                ├─────────┤
-                │  Unit   │   many — no I/O, pure behavior, milliseconds each
-                └─────────┘
-```
-
-- **Unit tests** at the base exercise domain logic with no I/O. Fast feedback, high resistance to refactoring (when they assert on behavior, §03), weak at catching integration bugs.
+- **Unit tests** at the base exercise domain logic with no I/O. Fast feedback, high resistance to refactoring (when they assert on behavior, `03-test-aesthetics.md` §1), weak at catching integration bugs.
 - **Integration tests** in the middle exercise real managed dependencies — your database, your cache — under per-test isolation. They catch schema drift, mapper errors, and transaction boundaries that unit tests cannot see.
 - **End-to-end tests** at the top exercise the full stack via the public interface. Expensive to run, brittle if overused, but indispensable for user-visible workflows.
 
-Inverted pyramids (mostly end-to-end) give slow, fragile feedback. Hourglass suites (unit + end-to-end, no integration) miss the class of bugs that lives at the integration layer. Match each test to the narrowest layer that can actually verify the property in question.
+Inverted pyramids (mostly end-to-end) give slow, fragile feedback. Hourglass suites (unit + end-to-end, no integration) miss the class of bugs that lives at the integration layer.
 
 **Rule of thumb when deciding where a test belongs:** "what is the narrowest layer at which this test would fail if the behavior is wrong?" Write it there.
 
@@ -114,8 +102,6 @@ Before any feature is tested this way, the project must have a **walking skeleto
     5. e2e now green; focused inner tests cover behavior that needed separate feedback
 ```
 
-The outside test is the compass: it tells you what "done" means in user-visible terms. The inner tests are the map: they force each collaborator to exist with the right shape.
-
 ---
 
 ## 4. Managed vs unmanaged dependencies
@@ -148,11 +134,10 @@ For integration tests, distinguish two categories of out-of-process dependency (
 
 A Harness for application-level tests is responsible for:
 
-1. Boot the full DI graph using the *real* module — the same wiring production uses. Tests do not hand-register dependencies.
+1. Boot the full DI graph using the *real* module — the same wiring production uses.
 2. Expose a Driver (see §7) for talking to the system.
 3. Expose the managed-dependency isolation controls the suite uses.
-4. Accept overrides for swapping Fakes or decorating specific dependencies at setup time.
-5. Provide a static `setup()` constructor and an instance `teardown()` method.
+4. Expose a static `setup(options)` constructor and an instance `teardown()` — the names this section's rules, §6, and `00-index.md`'s checklist call.
 
 Rough shape:
 
@@ -199,16 +184,6 @@ be isolated by a transaction visible only to the test runner.
         driver.users.delete(user.id)                     // misses this on failure → next test breaks
 ```
 
-```
-[GOOD] — transactional wrapping; rollback is unconditional
-    beforeEach: harness.db.begin()
-    afterEach:  harness.db.rollback()
-
-    test "creates user":
-        user = driver.users.create("joao")
-        assert user.name == "joao"
-```
-
 Apply an equivalent isolation primitive to every managed stateful resource: unique cache namespaces, disposable topics, or explicit reset where production semantics allow it.
 
 Resource leakage — connection pools, ports, goroutines left dangling across tests — is a test smell (Meszaros). The harness's `teardown()` is mandatory and must close everything it opened.
@@ -237,9 +212,8 @@ class ApplicationDriver extends Driver:
 
 ### 7.2 Operation shape
 
-Each operation exposes a raw or error-returning method. Add a success-asserting convenience
-only when it removes repeated happy-path boilerplate. Do not require both shapes when the
-base operation already reads clearly.
+Each operation exposes a raw or error-returning method, plus a success convenience only
+where §7.5's condition holds.
 
 ```
 class UserDriver:
@@ -258,17 +232,6 @@ class UserDriver:
 
     findRaw(id) -> Response:
         return transport.get("/users/" + id)
-```
-
-Happy-path test:
-
-```
-test "finds the user that was created":
-    created = driver.users.create("joao")
-
-    found = driver.users.find(created.id)
-
-    assert found == created
 ```
 
 Error-path test:
@@ -311,5 +274,3 @@ driver.users.mustCreate(name)   -> asserts no error, returns the user, fails the
 - **Slow Test** — minutes of feedback. Fix: push the assertion down the pyramid. What part of this test actually needs a full end-to-end round-trip?
 - **Erratic / Flaky Test** — passes sometimes. Fix: hunt down the non-determinism — wall-clock, random, hash ordering, network, shared global state — and inject a deterministic Fake at the seam.
 - **Test Logic in Production** — `if env == "test"` branches in domain code. Fix: inject the seam properly so production and test paths are the same code.
-
-Flaky tests are worse than no tests — they train the team to ignore red.

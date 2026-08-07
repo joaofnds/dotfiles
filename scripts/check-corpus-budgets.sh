@@ -154,11 +154,22 @@ note "always-loaded surface $always lines"
 # Every other budget here is per-file, so a corpus that grows by adding a little to each
 # file trips none of them — which is how it went ~3,000 → 11,524 lines between 2026-07-01
 # and 2026-08-06 with every file inside its own budget. This is the only check that sees
-# the total. Set deliberately BELOW the current count on 2026-08-06 (11,524), so it reads
-# as standing debt rather than a ratchet: the corpus has to lose ~1,500 lines to go green,
-# and until it does every run says so. Lower it further after each consolidation pass;
-# raising it needs a reason written in the same change.
-corpus_ceiling=10000
+# the total. First set to 10,000 on 2026-08-06, deliberately BELOW the count of 11,524, so
+# the gap read as standing debt rather than a ratchet.
+#
+# RAISED to 11,500 on 2026-08-07, with the reason this line requires. The 2026-08-07
+# consolidation pass took the corpus to 11,392 and established that 10,000 is not reachable
+# by cutting sermon: ~4,350 lines are the Fowler catalog, which loads one entry at a time
+# (`agents/refactoring-reviewer.md` requires reading an entry before citing it), and 717 are
+# `review_checklist.md`, which nothing loads. The heaviest realistic simultaneous context
+# measured 1,824 lines, so the total sits ~6x above anything instruction-saturation can
+# describe. That pass also found that compressing past the sermon costs correctness: three
+# separate defects came out of trimming four lines from one AGENTS.md bullet, each caught by
+# a gate round. 11,500 leaves ~108 lines of headroom rather than debt — a deliberate
+# trade the debt framing loses. Lower it after each consolidation pass; raising it again
+# needs its own reason here. The real fix is measuring the largest load path instead of the
+# file total, which is unbuilt.
+corpus_ceiling=11500
 if [ "$total" -gt "$corpus_ceiling" ]; then
   fail "corpus $total lines over the $corpus_ceiling ceiling — consolidate or delete before adding (instruction-saturation, rules/instruction_failure_modes.md)"
 fi

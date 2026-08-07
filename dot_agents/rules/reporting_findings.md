@@ -39,10 +39,15 @@ question and the three classes above decide. **Minor and Nit are the ambiguous r
 bounded effect on the artifact or the consuming agent, so each names a defect when that effect is the agent behaving wrongly,
 and takes the advisory route when the effect is only the context or maintenance the finding
 buys. Severity does not survive the mapping — an advisory-routed Minor is an advisory finding,
-not a lesser defect, and it holds no gate open. (The instructions-reviewer, code-reviewer and
-testing-reviewer rungs derive from `agents/instructions-reviewer.md` §How you review —
-re-derive them whenever that ladder changes; that file is their authority. The general-agent
-rung derives from `adversarial-review` §Send the reviewer — edit both.)
+not a lesser defect, and it holds no gate open. (The instructions-reviewer rung derives from
+`agents/instructions-reviewer.md` §How you review — re-derive it whenever that ladder
+changes; that file is its authority. The general-agent rung derives from
+`adversarial-review` §Send the reviewer — edit both. `testing-reviewer` §Severity defines its
+own rungs, which the mapping above reads rather than governs — re-read it when it changes.
+`code-reviewer` names the four rungs in its §Output and defines none, so the mapping above is
+the only statement of what its Major means; edit it here. `refactoring-reviewer` §Severity
+likewise defines its own friction-cost rungs, which the mapping above reads rather than
+governs — re-read it when it changes.)
 
 Every defect you surface, yours or one relayed from a reviewer, carries exactly one
 disposition, named in the report:

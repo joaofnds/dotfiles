@@ -15,13 +15,9 @@ argument-hint: "Path to the options/spec doc to grill (optional)"
 
 # Grill
 
-**Wrong skill if:** the design is already hardened and nothing is contested → `/plan`;
-the requirement itself is still open → `/discuss`.
-
 Interrogate the decisions required by the spec — or by the named source of record when
 there is no spec — and demonstrated current risks until the approach is hardened. Do not
-design hypothetical future branches. `/grill` chooses how to satisfy the spec; it does
-not change scope or acceptance criteria. Route requirement changes back to `/discuss` —
+design hypothetical future branches. Route requirement changes back to `/discuss` —
 amend the spec first, or write one when the source of record is not a spec.
 
 ## Start from the source of record

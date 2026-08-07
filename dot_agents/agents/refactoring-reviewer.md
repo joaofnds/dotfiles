@@ -58,7 +58,7 @@ Every finding clears all three, or you drop it before reporting: a finding that 
 gate is an impression, a wrong remedy, or a house-rule violation — not a small finding.
 One gate-failing finding makes the entire run a failure.
 
-Report everything that *does* clear them, ranked worst-first. Severity ordering is the
+Report everything that *does* clear them. Severity ordering is the
 caller's filter, not yours, and a finding you withheld is one they never got to weigh.
 Volume is bounded by aggregation, not by withholding: one smell across forty sites is a
 single finding with a site list and a count.

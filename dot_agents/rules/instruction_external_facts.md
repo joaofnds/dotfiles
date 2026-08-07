@@ -35,8 +35,8 @@ standing list, 2026-08-03 pass` when the standing list carries it and only this 
 opening paragraph names the pass that added it; `§1 standing list, 2026-07-25 first verified`
 when it predates the subsections. Every form names an anchor no later re-check
 moves.
-A mechanic this section does not carry gets its own §3 entry (`AGENTS.md` §Task lifecycle
-states the same rule).
+A mechanic no section here carries gets its own §3 entry; a deprecated model mechanic is
+§2's, cited by §2's anchor.
 
 First verified 2026-07-25; re-verified 2026-08-03, and again 2026-08-05 on CLI 2.1.222,
 against the live memory, skills, sub-agents, and settings references at
@@ -186,12 +186,15 @@ imprecisions in the checklist's wording were tightened. Cite these as
   narrow background tool set above, because "the skill's subagent is a regular agent type, so the
   exemption for subagents that fork the conversation doesn't cover it."
 
-**Mirrors this subsection creates.** `allowed-tools` and `context: fork` are mirrored once each in
-`agents/instructions-reviewer.md` §2 *Tool fields are not one mechanism* and *Forked / isolated
-skills*. `user-invocable: false` mirrors into **two** §2 bullets, each carrying the half its check
-needs: the description half in *Invocation mode sets what the description is for*, the boundary
-half in *Tool fields*. The background entry's **list** is pointed at from *Sub-agent `tools`
-resolves differently by run mode*, not copied — keep it that way, it is the one list long enough
+**Mirrors this subsection creates.** `allowed-tools` and `context: fork` are mirrored in
+`agents/references/dispatch-fields.md` §*Tool fields are not one mechanism* and §*Forks*, and
+`allowed-tools` has a **third** site: `agents/instructions-reviewer.md` §2's *Tool, permission,
+and fork fields* bullet restates the false-boundary **Blocker** conclusion.
+`user-invocable: false` mirrors into **two** bullets, each carrying the half its check
+needs: the description half in `agents/instructions-reviewer.md` §2 *Invocation mode sets what the
+description is for*, the boundary half in `dispatch-fields.md` §*Tool fields*. The background
+entry's **list** is pointed at from that file's §*Sub-agent `tools` resolves differently by run
+mode*, not copied — keep it that way, it is the one list long enough
 that a second copy would drift — but its two corrections travel with it as text there (every MCP
 tool survives; a list resolving to nothing "usually" fails at launch). Edit every site or none.
 
@@ -275,12 +278,14 @@ with `paths:` frontmatter are not re-injected automatically." The quote covers t
 only — whether a rule without `paths:` survives is **unrecorded**, so do not assert it either way.
 
 **Mirrors this subsection creates.** Nearly every item above is **restated** in
-`agents/instructions-reviewer.md`, not merely anchored — edit each site with this section or
-neither. In §1 *Loading-path integrity*: the corrected hook-reach clause, the `.claude/rules/`
+`agents/instructions-reviewer.md` or its tier-3 `agents/references/dispatch-fields.md`, not
+merely anchored — edit each site with this section or neither. In §1 *Loading-path integrity*: the corrected hook-reach clause, the `.claude/rules/`
 carrier, `@path` depth-and-expand-at-launch, `CLAUDE.md`-as-user-message, and auto memory never
-reaching a non-fork subagent. In §1 *Skill bodies persist*: the never-re-read rule. In §1
-*Per-file budgets*: the `.claude/rules/` compaction split. In §2 *Tool fields*:
-`tools`/`disallowedTools`. In §2 `permissions`: the `deny` → `ask` → `allow` order. In §8: nested
+reaching a non-fork subagent. In §1 *Skill bodies persist*: the never-re-read rule. In
+`agents/references/dispatch-fields.md` §*Tool fields are not one mechanism*:
+`tools`/`disallowedTools`. In that file §*Permission rules*: the `deny` → `ask` → `allow`
+order, which `agents/instructions-reviewer.md` §2's *Tool, permission, and fork fields* bullet
+also spells out — edit both. In `agents/instructions-reviewer.md` §8: nested
 `CLAUDE.md` loading on demand. The `skillOverrides` **table** — each state's two effects — is
 uncopied, but the state names `name-only` / `user-invocable-only` / `off` are restated in §1
 *Loading-path integrity* and §4 *Tool guidance duplicated across carriers*, so a renamed or added

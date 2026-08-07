@@ -12,16 +12,9 @@ description: >
 
 # Verify This
 
-**Wrong skill if:** the claim is "does the shipped, deployed app behave correctly
-end-to-end" — that's `/verify`, a separate user-invoked-only skill; ask the user to run it
-rather than substituting this one. A `/verify-this` verdict never stands in for it. Also
-wrong when the cause isn't confirmed yet — that's `/debug`; this skill checks a claim, it
-doesn't find one. Also wrong for a vague claim ("the code is cleaner", "this feels
-right") — get a measurable claim first, or say why one isn't obtainable here.
-
-Verification is not a recap of what you did. It's evidence that one specific, falsifiable
-claim holds, gathered fresh, reported as one of three verdicts — never softened into a
-fourth.
+**Wrong skill if:** the claim is vague ("the code is cleaner", "this feels right") — get a
+measurable claim first, or say why one isn't obtainable here. For the deployed app
+end-to-end, ask the user to run `/verify`; a `/verify-this` verdict never stands in for it.
 
 ## Restate the claim
 

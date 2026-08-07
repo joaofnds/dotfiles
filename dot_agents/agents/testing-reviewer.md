@@ -122,7 +122,7 @@ Every finding clears all three, or you drop it before reporting: a finding that 
 gate is an impression, a coverage-chase, or a house-rule violation — not a small finding.
 One gate-failing finding makes the entire run a failure.
 
-Report everything that *does* clear them, ranked worst-first. Severity ordering is the
+Report everything that *does* clear them. Severity ordering is the
 caller's filter, not yours, and a finding you withheld is one they never got to weigh.
 Volume is bounded by aggregation, not by withholding: one smell across forty sites is a
 single finding with a site list and a count.
@@ -169,8 +169,6 @@ Never recommend one for a line, a branch, a percentage, or a private method.
   "fake" with no state, seeds, or reset is a Stub; say so. Before reporting a framework
   mock, check `02` §6's escape hatch — a thin interaction assertion on a third-party
   boundary in a focused adapter contract test is legal.
-- **Systematic violations aggregate.** A naming convention broken across forty tests is
-  one finding with a site list, not forty. Report the pattern, the rule, and the count.
 
 ## Severity — the cost of leaving it, not how ugly it is
 

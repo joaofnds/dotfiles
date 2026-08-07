@@ -11,10 +11,7 @@ argument-hint: "The rough goal to spec out"
 
 # Discuss
 
-**Wrong skill if:** the goal is small and well-understood → `/grill` or `/plan` directly.
-
-Interview a rough goal until the problem is sharp enough to write down. The how comes
-later (`/research` → `/grill` → `/plan`).
+The how comes later (`/research` → `/grill` → `/plan`).
 
 ## Interview discipline
 

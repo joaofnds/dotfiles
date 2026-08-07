@@ -14,8 +14,6 @@ description: >
 
 # Kaizen — Retro on the Instructions You Used
 
-**Wrong skill if:** mid-task (no transcript evidence yet) → don't run; the improvement is grounded in an external subject to learn from rather than this session's transcript → `/absorb`; consolidating the memory store → `/dream`; improving the work product itself rather than the process → `/adversarial-review`, or recommend a user-invoked `/code-review`.
-
 **You are a neutral witness; a fresh critic is the judge.** The agent that ran the
 session critiques a *remembered* version of the instruction and defends its own
 choices (`engineering_judgment.md` §6: narrative-continuity-over-correctness), so

@@ -113,7 +113,7 @@ than a false claim. The per-iteration form of this loop is `/build` step 4.
 - Could this verification be output-based instead of state- or communication-based? Prefer the simpler style.
 - Am I asserting on observable behavior, or am I coupled to an implementation detail (private method call, internal field, exact call sequence)?
 - When I assert on an error, am I comparing against a typed instance or exported sentinel, rather than substring-matching the message?
-- When I assert on full objects, am I using structural equality and escaping to a containment matcher only for volatile fields — not spelling out every field by hand?
+- When I assert on full objects, am I using structural equality and escaping to a containment matcher only for volatile or irrelevant fields — not spelling out every field by hand?
 - At a protocol boundary (HTTP, queue, bus), am I asserting in order: protocol shape → observable state → captured side-effects?
 
 ### Smells and anti-patterns

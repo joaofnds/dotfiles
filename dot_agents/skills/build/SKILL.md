@@ -14,11 +14,9 @@ argument-hint: "Path to the .boris/plans/ plan file"
 
 # Build
 
-**Wrong skill if:** `.boris/plans/` holds no plan yet → `/plan` (the chain's `-spec`, `-options`, `-grilled`, `-diagnosis`, and `-status` docs live there too, and none of them is a plan); in-flight state was handed off with no plan → resume from the `.boris/handoffs/` briefing.
+Given no plan path, list `.boris/plans/*.md` without a `-spec`/`-options`/`-grilled`/`-diagnosis`/`-status` suffix and ask which to build. A `-status.md` is the chain's roll-up: read it for the next milestone, then build that milestone's plan.
 
-Given no plan path as argument, list the plan files in `.boris/plans/` (those without a `-spec`/`-options`/`-grilled`/`-diagnosis`/`-status` suffix) and ask which one to build. A `-status.md` file is the chain's roll-up view, not a plan: read it to see which milestone is next, then build that milestone's plan.
-
-Execute an implementation plan written by `/plan` in a previous session. The plan is the source of truth — you have no memory of the conversation that produced it, so trust the file, not assumptions. Implementation is test-driven: cross-boundary vertical slices start outside-in; local behavior starts at the narrowest observable layer.
+The plan is the source of truth — you have no memory of the conversation that produced it, so trust the file, not assumptions.
 
 ## Steps
 
@@ -39,7 +37,6 @@ Execute an implementation plan written by `/plan` in a previous session. The pla
 
 ## Rules
 
-- Follow the project's normal coding and testing standards while implementing (the usual rule files still apply — this skill doesn't override them).
 - Stay inside the plan's Scope boundary the whole way through. If you spot necessary follow-up work, add it as a new task marked `- [ ] DEFERRED —` so it reads as out of scope rather than as unbuilt work — don't expand silently.
 - If the plan is wrong, ambiguous, or contradicts the codebase, stop and ask rather than guessing. Under-specification is divergence too: when a task forces you to design something the plan never settled — a new type, an API surface, a dependency — surface the design and get it ratified before building it. A `DESIGN:` note on the task records the decision; it doesn't authorize it.
 - Keep the plan file updated as you go: checked boxes, plus a short note on any task you had to deviate on and why.

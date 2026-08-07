@@ -40,8 +40,6 @@ The moment the repository stops using a query builder, this test fails — and n
         assert found.email == "joao@x.com"
 ```
 
-The test now survives any refactor that preserves the behavior — query builder swap, ORM change, different caching strategy. That's the property we want.
-
 **The rule of thumb:** a test for a behavior must survive any refactoring that preserves that behavior's contract. If the test breaks, one of two things is true — you broke the behavior, or the test was coupled to implementation.
 
 ---
@@ -55,8 +53,6 @@ Tests are a design feedback channel, not just a verification tool. Specific pain
 | "This test needs thirty lines of setup." | The subject has too many collaborators. | Split the subject, or introduce a coarser-grained role that owns the collaborators. |
 | "I need to fake five things to test one method." | The subject knows too much. | Invert a dependency, or replace the mock swarm with one Fake of a higher-level role. |
 | "I can't test this without peeking at private state." | The behavior isn't observable through the public API. | The API is missing a return value, event, or accessor. Add one — don't reach into internals. |
-| "The test breaks every time I refactor." | You're asserting on implementation details. | Move assertions to observable behavior (§1). |
-| "This test is flaky." | Non-determinism has leaked in. | Find the seam — clock, random, network, ordering — and inject a deterministic Fake. |
 | "I need a real database for this unit test." | The unit is too big, or repository concerns have leaked into the service. | Split. |
 
 **Do not silence test pain with more mocks.** The pain is the signal. Every time you reach for "I'll just mock that too", ask what the design is trying to tell you.
@@ -67,7 +63,7 @@ Tests are a design feedback channel, not just a verification tool. Specific pain
 
 ### 3.1 The describe subject
 
-The top-level describe names the subject of the test. Two cases:
+The top-level describe names the subject of the test:
 
 - **Unit test of a class or function** → the symbol itself, not a string. When the language allows, pass the class reference; otherwise use its bare name in lowercase. This keeps the describe in sync when the symbol is renamed.
 - **HTTP endpoint test** → the route path as a string: `"/users"`, `"/health"`, `"/auth"`.
@@ -165,7 +161,7 @@ A test asserts one thing — one behavior, one outcome. Multiple `assert` calls 
         assert driver.users.list().empty()
 ```
 
-Two `describe`s, two names, two stories. If deletion breaks, the creation assertion is noise; if creation breaks, the deletion assertion never runs.
+If deletion breaks, the creation assertion is noise; if creation breaks, the deletion assertion never runs.
 
 ```
 [GOOD] — two tests, each telling one story
@@ -196,24 +192,8 @@ This mirrors how the reader thinks about the method: "what does it do, and then 
 
 Prefer values local to the test: the reader sees setup beside the behavior, and parallel
 tests cannot share accidental mutable state. Use describe-scoped variables and hooks only
-for genuinely shared setup; reset mutable shared state before every test.
-
-```
-describe UserService:
-    let service, harness, db
-
-    beforeAll:
-        harness = TestHarness.setup()
-        service = harness.get(UserService)
-        db = harness.db
-
-    beforeEach: db.begin()
-    afterEach:  db.rollback()
-
-    afterAll:   harness.teardown()
-
-    test "...": ...
-```
+for genuinely shared setup; reset mutable shared state before every test. The hook shape is
+`01-architecture-and-harness.md` §1 and §5.
 
 Immutable fixtures shared by several tests may live as `const` declarations at the top
 of the describe.
@@ -249,17 +229,6 @@ No `if`, no `for`, no `switch`, no `try`/`catch` in the body of a test. Branches
 ### 4.7 Parameterized tests
 
 When the same behavior runs against many inputs, use the framework's parameterized primitive — one generated test per row. Never loop multiple assertions inside a single test body: a failure on row three won't tell you it was row three, and the first failing row hides the rest.
-
-```
-[BAD] — one test wraps every case; a failure doesn't say which input broke
-    test "normalizes inputs":
-        cases = [
-            { input: "JOAO", expected: "joao" },
-            { input: "  j ", expected: "j" },
-        ]
-        for each (input, expected) in cases:
-            assert service.normalize(input) == expected
-```
 
 ```
 [GOOD] — each row is its own named, independently-reporting test

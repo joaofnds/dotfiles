@@ -10,10 +10,9 @@ description: >
 
 # Debug
 
-**Wrong skill if:** dumping in-flight state to a fresh session → suggest `/handoff` to the user; investigation already concluded and you want the durable report → `/diagnose`; cause already confirmed and you want the fix proven → `/verify-this`.
+**Wrong skill if:** cause already confirmed and you want the fix proven → `/verify-this`.
 
-Investigate a bug down to a confirmed root cause. The job is understanding, not
-repair — probe and instrument freely, but don't land the fix here; that's
+Probe and instrument freely, but don't land the fix here; that's
 /plan → /build, off the cause you find.
 
 **Build the loop before theorizing.** Get a tight, red-capable repro first: one

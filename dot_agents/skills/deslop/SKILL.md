@@ -1,6 +1,6 @@
 ---
 name: deslop
-description: Remove AI writing patterns from prose — essays, docs, plans, commit-message bodies, code comments. Skip standing instruction files (AGENTS.md, CLAUDE.md, GEMINI.md, rules, skills, agent definitions): these slop checks never apply to them, however their prose reads.
+description: Remove AI writing patterns from prose — essays, docs, plans, commit-message bodies, code comments. Skip standing instruction files — these slop checks never apply to them, however their prose reads.
 ---
 
 # Deslop

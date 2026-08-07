@@ -14,9 +14,7 @@ description: >
 **Wrong skill if:** reviewing code you did NOT write this session (PR review, external audit) → recommend `/review` or `/code-review` to the user; neither can be invoked by an agent. A substantial pre-merge unit needing all five axes → `/panel-review`.
 
 Spawn an independent agent to review work done this session — and construct the
-brief so it reaches its own verdict instead of ratifying yours. The value is in
-what you withhold: the moment you hand the reviewer your conclusions, you've
-taught it the answer you want to hear.
+brief so it reaches its own verdict instead of ratifying yours.
 
 This applies to any artifact you produced this session — code, but also reasoning
 docs (a spec, an options survey, a plan). For a doc there's nothing to run, so the

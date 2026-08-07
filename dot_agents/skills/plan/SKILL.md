@@ -13,9 +13,9 @@ description: >
 
 # Plan
 
-**Wrong skill if:** trade-offs are still open or the user is still exploring → keep discussing or `/grill`; dumping in-flight context with no settled approach → suggest `/handoff` to the user.
+**Wrong skill if:** trade-offs are still open — `/grill`.
 
-Stop building. Write an implementation plan as a self-contained document — assume a fresh session with zero memory of this conversation will execute it (via `/build`). Don't write or modify any code now.
+Don't write or modify any code now.
 
 The goal, scope, and chosen approach are already settled in this conversation. Pull those from the discussion — don't ask the user to restate them. A plan that names things outside `.boris/CONTEXT.md`'s vocabulary hands `/build` the wrong words. If a `/discuss` spec, `/research` options doc, `/grill` hardened-design doc (`*-grilled.md`), or `/art-direction` design file (`.boris/design/*.md`) exists, cite it by path and don't restate what it already holds (Goal, Scope, rejected options, the resolved decisions, the ratified tokens) — capture only the plan. For UI work, check `.boris/design/` before writing: a direction there whose **Status** reads `Ratified` is binding; a `Draft` is not — cite it and say so. A plan that neither cites a direction nor records that none was ratified is incomplete. The grill doc is where the approach was converged and hardened: read it before writing the Approach and Edge cases sections, since a fresh session holds none of that interrogation.
 
