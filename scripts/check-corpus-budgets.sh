@@ -260,7 +260,7 @@ note "always-loaded surface $always lines"
 # the total. First set to 10,000 on 2026-08-06, deliberately BELOW the count of 11,524, so
 # the gap read as standing debt rather than a ratchet.
 #
-# RAISED to 11,500 on 2026-08-07, with the reason this line requires. The 2026-08-07
+# RAISED to 11,000 on 2026-08-07, with the reason this line requires. The 2026-08-07
 # consolidation pass took the corpus to 11,392 and established that 10,000 is not reachable
 # by cutting sermon: ~4,350 lines are the Fowler catalog, which loads one entry at a time
 # (`agents/refactoring-reviewer.md` requires reading an entry before citing it), and 717 are
@@ -269,10 +269,12 @@ note "always-loaded surface $always lines"
 # describe. That pass also found that compressing past the sermon costs correctness: three
 # separate defects came out of trimming four lines from one AGENTS.md bullet, each caught by
 # a gate round. 11,500 leaves ~108 lines of headroom rather than debt — a deliberate
-# trade the debt framing loses. Lower it after each consolidation pass; raising it again
+# trade the debt framing loses. Re-anchored the same day after review_checklist.md left the
+# corpus set (it is human-facing, not agent-consumed): the total fell to 10,676 by definition
+# rather than by cutting, which would have left 824 lines of unearned headroom. Lower it after each consolidation pass; raising it again
 # needs its own reason here. The real fix is measuring the largest load path instead of the
 # file total, which is unbuilt.
-corpus_ceiling=11500
+corpus_ceiling=11000
 if [ "$total" -gt "$corpus_ceiling" ]; then
   fail "corpus $total lines over the $corpus_ceiling ceiling — consolidate or delete before adding (instruction-saturation, rules/instruction_failure_modes.md)"
 fi
