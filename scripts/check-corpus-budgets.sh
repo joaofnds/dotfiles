@@ -268,10 +268,15 @@ note "always-loaded surface $always lines"
 # measured 1,824 lines, so the total sits ~6x above anything instruction-saturation can
 # describe. That pass also found that compressing past the sermon costs correctness: three
 # separate defects came out of trimming four lines from one AGENTS.md bullet, each caught by
-# a gate round. 11,500 leaves ~108 lines of headroom rather than debt — a deliberate
-# trade the debt framing loses. Re-anchored the same day after review_checklist.md left the
-# corpus set (it is human-facing, not agent-consumed): the total fell to 10,676 by definition
-# rather than by cutting, which would have left 824 lines of unearned headroom. Lower it after each consolidation pass; raising it again
+# a gate round. Re-anchored the same day to 11,000 after review_checklist.md left the corpus
+# set (it is human-facing, not agent-consumed) and the total fell to 10,676 by definition
+# rather than by cutting.
+#
+# THIS NUMBER IS A CAP, NEVER AN ALLOWANCE. The gap between the total and the ceiling is not
+# budget to spend, and a passing run says nothing about whether any sentence in the corpus
+# could be shorter. That check belongs to instructions-reviewer §3 "Compressible prose is a
+# finding, and headroom never answers it", which fires on every instruction edit because the
+# gate does — no periodic trigger, and none wanted. Lower it after each consolidation pass; raising it again
 # needs its own reason here. The real fix is measuring the largest load path instead of the
 # file total, which is unbuilt.
 corpus_ceiling=11000
