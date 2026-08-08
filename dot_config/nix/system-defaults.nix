@@ -1,8 +1,10 @@
 { ... }:
 {
   networking.applicationFirewall.enable = true;
+  networking.applicationFirewall.blockAllIncoming = false;
+  networking.applicationFirewall.allowSigned = true;
+  networking.applicationFirewall.allowSignedApp = false;
   networking.applicationFirewall.enableStealthMode = true;
-  networking.applicationFirewall.blockAllIncoming = true;
 
   networking.dns = [
     "1.1.1.1"
