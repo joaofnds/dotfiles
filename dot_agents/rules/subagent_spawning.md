@@ -4,7 +4,8 @@ Governs every subagent spawn — inside a workflow loop or ad hoc.
 
 The shapes and the fallbacks are **observed harness behavior**, not a documented mechanism:
 observed on `claude-code` 2.1.220 (2026-07-27) and re-confirmed on 2.1.221 (2026-08-04, a
-nine-agent fan-out plus three synchronous gates), not re-checked at 2.1.222; they reversed
+nine-agent fan-out plus three synchronous gates); the fan-out shape and continuation
+(§Continuing a completed agent) re-confirmed on 2.1.226 (2026-08-10); they reversed
 once already — 2.1.187
 returned the full report from a named spawn, 2.1.220 returned only a receipt. §Why no `name`
 carries no settled explanation: the retraction and the two open candidates are in
@@ -34,6 +35,28 @@ only serialized — accept it when you did not want the concurrency, not by defa
 The count is not the selector — needing the result now is. A single agent you are not
 waiting on takes `run_in_background: true`, same as a fan-out member.
 
+Before picking either, check whether an agent you already ran holds the context — continuing
+it is often cheaper than a new spawn (§Continuing a completed agent).
+
+## Continuing a completed agent
+
+A completed agent stays continuable by the session that spawned it. A new session holds no
+`agentId`, so treat continuation as session-local until a probe says otherwise — record an
+`agentId` to a file, `SendMessage` it from a fresh session, and note here whether it
+resolves or errors. Cross-session work travels by file (`/handoff`, `.boris/`) meanwhile. `SendMessage` to its `agentId`
+— printed on the spawn result for both shapes, and repeated as a background report's task
+id (read off both on 2026-08-10) — resumes it from its transcript with context intact.
+Observed 2026-08-10 on 2.1.226: a finished background dive agent answered two recall
+questions about its earlier reads with zero tool calls, and a quota-killed background agent
+carrying ~110k tokens of reads was recovered by one follow-up message instead of a fresh
+spawn re-reading everything.
+
+Choose it when the follow-up trades on the agent's accumulated context — a clarification, a
+re-check against files it already read, recovering work an error cut short. A fresh spawn is
+the fallback, and stays the right shape when the point is an unprimed read —
+`adversarial-review` and `/kaizen` both rest on one, so never continue an agent into either
+role. The resumed run reports like any background agent: on its own notification.
+
 ## Why no `name`
 
 **Do not pass `name`.** On 2.1.222 with agent teams off the `Agent` tool appears to expose no
@@ -56,8 +79,10 @@ project store — unreachable from another project) carries why teams were tried
   assistant text from it. Never `Read` or `tail` the file whole: it is the subagent's
   full JSONL transcript and will overflow your context.
 - **Synchronous** — there is no notification. The result carries a trailing `agentId`
-  with a resume instruction; resume that agent and ask for the missing part. Untested —
-  no truncated synchronous Agent result has been observed.
+  with a resume instruction; resume that agent and ask for the missing part. The truncated
+  synchronous case is unobserved, and both resumes behind §Continuing a completed agent
+  were background agents — try the resume first, fall back to a fresh spawn, and record a
+  synchronous resume here when one is observed.
 
 ## What a report is worth
 

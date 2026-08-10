@@ -40,8 +40,15 @@ means nothing to reflect on; say so and stop.
 Two sources, in priority order:
 
 1. **The raw session transcript — primary.** Probe the active runtime for its transcript
-   path rather than assuming Claude Code's layout. In Claude Code, check
-   `~/.claude/projects/<cwd, each "/" replaced by "-">/$CLAUDE_CODE_SESSION_ID.jsonl`.
+   path rather than assuming Claude Code's layout. In Claude Code the transcripts live in
+   `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/projects/<slug>/<session-id>.jsonl`, where `<slug>`
+   is the cwd with `/`, `.`, spaces, and `~` all collapsed to `-` (verified 2026-08-10 on
+   2.1.226). Don't derive the slug — `ls` that `projects/` dir and match an entry against
+   the cwd, then pick `$CLAUDE_CODE_SESSION_ID.jsonl` (set in Claude Code sessions,
+   verified 2026-08-10 on 2.1.226). If the variable is empty, do not guess by mtime — a
+   concurrent session in the same cwd writes a newer file. Confirm a candidate by grepping
+   it for a distinctive string from this session's own first user message, and report
+   "no transcript evidence" when nothing confirms.
    Pass an existing path to the critic. If no transcript source is available, ask for an
    export or stop with an explicit "no transcript evidence" result; memory alone is not
    a substitute.

@@ -44,7 +44,7 @@ INSTRUCTION = re.compile(
     # authored here. AGENTS.md governs the rest.
     r"|(^|/)symlink_(rules|skills|agents|commands|hooks|output-styles)(\.tmpl)?$"
     r"|(^|/)workflows\.md$"
-    r"|/(\.agents|dot_agents)/(rules|skills|agents|output-styles)/"
+    r"|/(\.agents|dot_agents)/(rules|skills|agents|commands|output-styles)/"
     r"|/(\.claude|dot_claude)/(hooks|output-styles|agents|skills|commands)/",
 )
 # evals/ fixtures carry planted defects; "resolve each finding" would repair the

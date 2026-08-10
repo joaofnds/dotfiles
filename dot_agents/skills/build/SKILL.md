@@ -6,7 +6,7 @@ description: >
   plan file and wants it built — "build @.boris/plans/...", "implement this plan",
   "resume", "pick up where we left off". Takes the plan path as an argument, and
   asks which plan when given none. Skip when .boris/plans/ holds no plan yet (use
-  /plan) — the chain's input docs, spec/options/grilled/diagnosis and the status
+  /plan) — the chain's input docs, spec/options/grilled/design/diagnosis and the status
   roll-up, are not plans. Skip too when in-flight state was handed off with no
   plan: resume from the .boris/handoffs/ briefing instead.
 argument-hint: "Path to the .boris/plans/ plan file"
@@ -14,7 +14,7 @@ argument-hint: "Path to the .boris/plans/ plan file"
 
 # Build
 
-Given no plan path, list `.boris/plans/*.md` without a `-spec`/`-options`/`-grilled`/`-diagnosis`/`-status` suffix and ask which to build. A `-status.md` is the chain's roll-up: read it for the next milestone, then build that milestone's plan.
+Given no plan path, list `.boris/plans/*.md` without a `-spec`/`-options`/`-grilled`/`-design`/`-diagnosis`/`-status` suffix and ask which to build. A `-status.md` is the chain's roll-up: read it for the next milestone, then build that milestone's plan.
 
 The plan is the source of truth — you have no memory of the conversation that produced it, so trust the file, not assumptions.
 
