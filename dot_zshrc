@@ -23,6 +23,11 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 [ -x "$(command -v zoxide)" ] && eval "$(zoxide init zsh)"
 [ -x "$(command -v starship)" ] && eval "$(starship init zsh)"
 
-if [[ -z "$TMUX" && "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "zed" && -z "$EMACS_VTERM_PATH" ]]; then
-  tat
+if [[ 
+	-z "$TMUX" &&
+	-z "$CLAUDE_AGENT_SDK_VERSION" &&
+	-z "$EMACS_VTERM_PATH" &&
+	"$TERM_PROGRAM" != "vscode" &&
+	"$TERM_PROGRAM" != "zed" ]]; then
+	tat
 fi
