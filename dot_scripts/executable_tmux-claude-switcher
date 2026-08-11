@@ -1,0 +1,213 @@
+#!/usr/bin/env bun
+
+import { $ } from "bun";
+import { mkdtemp, readdir, rm, stat } from "node:fs/promises";
+import { homedir, tmpdir } from "node:os";
+import { join } from "node:path";
+
+// Without this a tab in a tmux -F format comes back as "_" and every row mis-parses. The bug
+// hides under the real binding, which inherits a UTF-8 environment, and appears from a bare shell.
+process.env.LC_ALL = "en_US.UTF-8";
+
+const FIELDS = [
+  "#{session_name}",
+  "#{window_index}",
+  "#{pane_index}",
+  "#{pane_id}",
+  "#{pane_tty}",
+  "#{pane_current_path}",
+  "#{pane_title}",
+].join("\t");
+
+// Basic ANSI slots only, named by role. toggle-dark-mode rewrites ghostty's theme between
+// Solarized Dark and Light and reloads it, so these follow the palette; pinned hex would not.
+const STYLE = {
+  reset: "\x1b[0m",
+  busy: "\x1b[33m",
+  idle: "\x1b[2m",
+  origin: "\x1b[32m",
+  session: "\x1b[36m",
+};
+
+function paint(role, text) {
+  return `${STYLE[role]}${text}${STYLE.reset}`;
+}
+
+// Filled against hollow, so the two states still read apart in grayscale.
+const STATE_MARKS = { busy: paint("busy", "●"), idle: paint("idle", "○") };
+
+async function claudePanes() {
+  const filter = "#{==:#{pane_current_command},claude}";
+  const out = await $`tmux list-panes -a -f ${filter} -F ${FIELDS}`.nothrow().text();
+
+  return out
+    .split("\n")
+    .filter((line) => line.length > 0)
+    .map((line) => {
+      const [session, window, index, id, tty, cwd, title] = line.split("\t");
+      return { session, window: Number(window), index: Number(index), id, tty, cwd, title };
+    })
+    .sort((a, b) => a.session.localeCompare(b.session) || a.window - b.window || a.index - b.index);
+}
+
+// Each CLAUDE_CONFIG_DIR keeps its own agent list, so a session started under one store is
+// invisible to the others. Verified: the runsmith pane only appears under ~/.claude-runsmith.
+async function configStores() {
+  const home = homedir();
+  const names = await readdir(home);
+  const stores = [];
+
+  for (const name of names.filter((n) => n.startsWith(".claude"))) {
+    const dir = join(home, name);
+    const projects = await stat(join(dir, "projects")).catch(() => null);
+    if (projects?.isDirectory()) stores.push(dir);
+  }
+
+  return stores;
+}
+
+// claude agents --json reports a pid and a live status; tmux knows each pane's tty. ps joins them.
+async function statusByTty() {
+  const stores = await configStores();
+
+  const [lists, processes] = await Promise.all([
+    Promise.all(
+      stores.map((dir) =>
+        $`claude agents --json`.env({ ...process.env, CLAUDE_CONFIG_DIR: dir }).nothrow().text(),
+      ),
+    ),
+    $`ps -axo pid=,tty=`.nothrow().text(),
+  ]);
+
+  const ttys = new Map();
+  for (const line of processes.split("\n")) {
+    const match = line.trim().match(/^(\d+)\s+(\S+)$/);
+    if (match && match[2] !== "??") ttys.set(Number(match[1]), `/dev/${match[2]}`);
+  }
+
+  const states = new Map();
+  for (const raw of lists) {
+    let agents = [];
+    try {
+      agents = JSON.parse(raw);
+    } catch {
+      continue;
+    }
+
+    for (const agent of agents) {
+      const tty = ttys.get(agent.pid);
+      if (tty && agent.status) states.set(tty, agent.status);
+    }
+  }
+
+  return states;
+}
+
+// Two values are verified live, idle and busy. Anything else renders as its own word rather
+// than collapsing into a symbol that would hide it.
+function stateMark(status) {
+  if (!status) return " ";
+  return STATE_MARKS[status] ?? status;
+}
+
+function abbreviate(cwd) {
+  const home = process.env.HOME;
+  return home && cwd.startsWith(home) ? `~${cwd.slice(home.length)}` : cwd;
+}
+
+// The conversation title is pane_title minus its leading glyph. Three values identify nothing:
+// the empty string, the pre-first-prompt literal, and tmux's hostname default.
+function label(pane, host) {
+  const title = pane.title.replace(/^\S*\s/, "");
+  const usable = title.length > 0 && title !== "Claude Code" && pane.title !== host;
+
+  return usable ? title : abbreviate(pane.cwd);
+}
+
+async function renderPreview(paneId) {
+  const height = Number(process.env.FZF_PREVIEW_LINES) || 40;
+  const captured = await $`tmux capture-pane -e -p -S ${-height} -t ${paneId}`.nothrow().text();
+
+  // capture-pane -e keeps colour escapes, so a visually blank row is not an empty string.
+  const blank = (line) => line.replace(/\x1b\[[0-9;]*m/g, "").trim() === "";
+
+  const lines = captured.split("\n");
+  while (lines.length > 0 && blank(lines[lines.length - 1])) lines.pop();
+
+  // Pad the top so a pane holding less than a windowful still lands its newest line on the
+  // bottom row, the way a terminal does, instead of floating at the top of the window.
+  const body = lines.slice(-height);
+  const padding = Array(Math.max(0, height - body.length)).fill("");
+
+  console.log([...padding, ...body].join("\n"));
+}
+
+async function pickPane(rows) {
+  const dir = await mkdtemp(join(tmpdir(), "claude-switcher-"));
+  const rowsFile = join(dir, "rows");
+  const pickFile = join(dir, "pick");
+
+  try {
+    await Bun.write(rowsFile, `${rows.join("\n")}\n`);
+
+    // Field 1 is the pane id. --with-nth hides it from the list, and from what fzf matches on,
+    // so anything the user should be able to search has to live in field 2.
+    const fzf = [
+      "fzf --ansi --reverse --delimiter '\\t' --with-nth 2 --header 'claude sessions'",
+      `--preview '${Bun.main} --preview {1}'`,
+      "--preview-window right:65%",
+    ].join(" ");
+
+    // fzf returns 130 on cancel and display-popup passes that straight through. Every non-zero
+    // exit means nothing was chosen, and run-shell would report one as a full-pane error.
+    await $`tmux display-popup -E -w 90% -h 80% ${`${fzf} <'${rowsFile}' >'${pickFile}'`}`.nothrow();
+
+    const picked = Bun.file(pickFile);
+    if (!(await picked.exists())) return "";
+
+    return (await picked.text()).split("\t")[0].trim();
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+}
+
+async function focus(paneId) {
+  const switched = await $`tmux switch-client -t ${paneId}`.nothrow();
+  if (switched.exitCode === 0) return;
+
+  // display-message runs its argument through strftime, so a bare %14 would print as 14.
+  const message = `pane ${paneId.replace("%", "%%")} is gone`;
+  await $`tmux display-message -d 2000 ${message}`.nothrow();
+}
+
+const [first, second] = process.argv.slice(2);
+
+if (first === "--preview") {
+  await renderPreview(second);
+} else {
+  const origin = first ?? "";
+  const panes = await claudePanes();
+
+  if (panes.length === 0) {
+    await $`tmux display-message -d 2000 ${"no claude sessions"}`.nothrow();
+    process.exit(0);
+  }
+
+  const [host, states] = await Promise.all([
+    $`tmux display-message -p ${"#{host}"}`.nothrow().text(),
+    statusByTty(),
+  ]);
+
+  const width = Math.max(...panes.map((pane) => pane.session.length));
+
+  const rows = panes.map((pane) => {
+    const marker = pane.id === origin ? `${paint("origin", "*")} ` : "  ";
+    const state = stateMark(states.get(pane.tty));
+    const session = paint("session", pane.session.padEnd(width));
+
+    return `${pane.id}\t${marker}${state} ${session}  ${label(pane, host.trim())}`;
+  });
+
+  const picked = await pickPane(rows);
+  if (picked) await focus(picked);
+}
