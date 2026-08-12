@@ -50,5 +50,6 @@ Before closing, grep every unique probe tag and remove temporary instrumentation
 probe must remain, record its exact path, purpose, and diff in the diagnosis or handoff.
 
 When investigation ends, use `/diagnose` if the cause must survive a session boundary.
-If continuing now, use `/grill` when the remedy is open and `/plan` when it is settled.
+If continuing now, `/grill` is the next step when the remedy is open and `/plan` when it
+is settled — both user-invoked, so recommend them by name.
 To pause live investigation, `/handoff` — user-invoked, so recommend it by name.

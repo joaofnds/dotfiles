@@ -99,6 +99,10 @@ and `/build` implements from it:
 /grill → /art-direction → /plan → /build → verify → /panel-review → learn
 ```
 
+The chain skills (`/discuss`, `/research`, `/grill`, `/plan`, `/build`) and `/absorb`,
+`/dream`, `/kaizen` are user-invoked only as of 2026-08-12: an agent recommends the
+stage by name and the user runs it.
+
 Decision points:
 
 - **Problem framed?** No → `/discuss`. Yes but approach open → `/research` then `/grill`.
