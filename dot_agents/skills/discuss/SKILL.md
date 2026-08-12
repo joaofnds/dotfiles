@@ -1,5 +1,6 @@
 ---
 name: discuss
+disable-model-invocation: true
 description: >
   Interview a rough goal into a durable spec/PRD — need, scope, constraints, and what
   "done" means. Invoke at the very start of a feature, while the goal is still vague:

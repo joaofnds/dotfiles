@@ -1,5 +1,6 @@
 ---
 name: grill
+disable-model-invocation: true
 description: >
   Interview the user relentlessly to stress-test a design before building — and,
   handed an options doc from /research, pick the winning approach off its lean, then

@@ -1,5 +1,6 @@
 ---
 name: build
+disable-model-invocation: true
 description: >
   Pick up an implementation plan written by /plan (or any .boris/plans/*.md plan)
   and execute it faithfully in a fresh session. Invoke when the user points at a

@@ -1,5 +1,6 @@
 ---
 name: kaizen
+disable-model-invocation: true
 description: >
   End-of-session retrospective on the instruction artifacts actually exercised —
   skills, agents, rules, CLAUDE.md/AGENTS.md — where a fresh critic reads the

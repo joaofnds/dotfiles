@@ -1,5 +1,6 @@
 ---
 name: research
+disable-model-invocation: true
 description: >
   Take a spec/PRD and survey genuinely different implementation options in this
   codebase, with pros/cons — leans toward one but does NOT decide (/grill converges,

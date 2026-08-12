@@ -1,5 +1,6 @@
 ---
 name: absorb
+disable-model-invocation: true
 description: >
   Study an external subject — a repository's instruction corpus, a single
   agent/skill/rule file, or a body of published guidance — and turn what it does

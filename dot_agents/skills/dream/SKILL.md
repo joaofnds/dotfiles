@@ -1,5 +1,6 @@
 ---
 name: dream
+disable-model-invocation: true
 description: >
   Consolidation pass over this project's native Claude memory store
   ($CLAUDE_CONFIG_DIR/projects/<slug>/memory/, default ~/.claude/…): merges duplicate notes, resolves

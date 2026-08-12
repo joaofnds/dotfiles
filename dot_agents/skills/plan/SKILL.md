@@ -1,5 +1,6 @@
 ---
 name: plan
+disable-model-invocation: true
 description: >
   Stop building and write the agreed approach as a self-contained implementation
   plan saved to a file, so a fresh session with zero memory of this conversation
