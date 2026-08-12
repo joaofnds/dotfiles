@@ -94,5 +94,6 @@ version the prefix while preserving the terminal suffix, for example
    the named source of record; otherwise return to `/discuss`.
 9. **Next step** — normally `/plan`. Name it, and name the artifacts it must read.
 
-Before done, run the producer gate from `adversarial-review` against the decision
-evidence, especially simpler rejected options and unverified negative assumptions.
+Before done, reread the decision evidence yourself — especially simpler rejected options
+and unverified negative assumptions. No producer gate here (dropped 2026-08-12 for
+cost): the interrogation is the hardening, and `/plan`'s gate checks the written result.

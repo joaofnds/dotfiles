@@ -70,9 +70,11 @@ instruction files); otherwise a general agent carrying this brief.
 
 ## As a producer gate
 
-`/discuss`, `/research`, `/grill`, `/diagnose`, and `/plan` end by running this skill on their own draft doc —
-each names its artifact-specific mandate aims; everything else about the gate lives
-here, once:
+`/diagnose` and `/plan` end by running this skill on their own draft doc — each names
+its artifact-specific mandate aims; everything else about the gate lives here, once.
+(`/discuss`, `/research`, and `/grill` dropped it 2026-08-12 for cost: their artifacts
+are reread and stress-tested by the next stage, and `/plan`'s gate covers the chain's
+last ratified artifact.)
 
 - It fires when the artifact ratifies something expensive to reverse — an approach, a
   lean, a plan. Skipping must be said out loud, never done silently.

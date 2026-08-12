@@ -70,12 +70,12 @@ adjacent to the spec even when researched on a later day. Save it beside the spe
 
 ## Before done: red-team the options
 
-Your lean is where your bias hides. Run the producer gate from the `adversarial-review`
-skill ("As a producer gate") on the doc, withholding the recommendation from the brief.
-Aim the mandate at: an option dismissed too fast, the platform-native premise
-under-examined, a recommendation that doesn't follow from the stated trade-offs, and
-any `file:line` citation that doesn't hold. If a finding invalidates the lean,
-re-survey rather than defending it.
+Your lean is where your bias hides. Reread the doc against: an option dismissed too
+fast, the platform-native premise under-examined, a recommendation that doesn't follow
+from the stated trade-offs, and any `file:line` citation that doesn't hold — re-check
+each citation against the actual code. If the reread invalidates the lean, re-survey
+rather than defending it. No producer gate here (dropped 2026-08-12 for cost): `/grill`
+stress-tests the lean next.
 
 ## Rules
 

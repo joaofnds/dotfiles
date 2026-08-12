@@ -67,11 +67,11 @@ blocks it and the spec names that fact and who can resolve it.
 
 ## Before done: red-team the draft
 
-You ran the whole interview — you're the last person who can see the spec's gaps. Run
-the producer gate from the `adversarial-review` skill ("As a producer gate") on the
-draft. Aim the mandate at: unstated assumptions, scope gaps, a premise never
-questioned, acceptance criteria that can't actually be checked, and internal
-contradictions.
+You ran the whole interview — you're the last person who can see the spec's gaps. Reread
+the draft yourself for: unstated assumptions, scope gaps, a premise never questioned,
+acceptance criteria that can't actually be checked, and internal contradictions. No
+producer gate here (dropped 2026-08-12 for cost): `/grill` interrogates this content
+next, and `/plan`'s gate covers the chain's last artifact.
 
 ## Rules
 
