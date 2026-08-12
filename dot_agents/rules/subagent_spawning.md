@@ -38,6 +38,21 @@ waiting on takes `run_in_background: true`, same as a fan-out member.
 Before picking either, check whether an agent you already ran holds the context — continuing
 it is often cheaper than a new spawn (§Continuing a completed agent).
 
+## Model
+
+A spawn inherits the parent's model unless the agent definition pins one or the call
+passes `model` — the call outranks the definition (tool schema, read 2026-08-12).
+Inheriting the top model is the expensive default; pick per mandate (2026-08-12, cost):
+
+- `haiku` — mechanical retrieval: Explore sweeps, locating files, existence probes,
+  extracting a value from a file you can name.
+- `sonnet` — read-and-judge work: skeptics, deep dives, summarizing a subsystem.
+- omit (inherit) — only when the mandate needs the parent's model: an unprimed review
+  whose verdict the session will act on, or analysis you would otherwise do yourself.
+
+A specialist's frontmatter pin (`code-reviewer` and the other reviewers) already encodes
+this choice — don't override it without a reason you can state.
+
 ## Continuing a completed agent
 
 A completed agent stays continuable by the session that spawned it. A new session holds no
