@@ -1,6 +1,6 @@
 {
   "effortLevel": "high",
-  "model": "opus[1m]",
+  "model": "opus",
   "switchModelsOnFlag": false,
   "agentPushNotifEnabled": true,
   "inputNeededNotifEnabled": true,
