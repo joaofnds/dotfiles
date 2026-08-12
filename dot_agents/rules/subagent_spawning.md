@@ -49,14 +49,14 @@ Inheriting the top model is the expensive default; pick per mandate (2026-08-12,
 
 - `haiku` — mechanical retrieval: Explore sweeps, locating files, existence probes,
   extracting a value from a file you can name.
-- `sonnet` — a bounded, checkable output you verify yourself: refutation skeptics
-  (`panel-review` §4 — a refute/inconclusive verdict you re-derive from the code), deep
-  dives, summarizing a subsystem.
-- omit (inherit) — the mandate forms a judgment you will adopt: an unprimed review whose
-  finding list sets your next step (a producer gate's reviewer, `/kaizen`'s critic), or
-  analysis you would otherwise do yourself. Re-checking a report's load-bearing evidence
-  (§What a report is worth) is mandatory in both branches; only the judgment-formation
-  differs.
+- `sonnet` — output a named artifact settles: refutation skeptics (`panel-review` §4),
+  deep dives, summarizing a subsystem — in each the code or file is the arbiter.
+- omit (inherit) — only when the mandate needs the parent's model: an unprimed review
+  whose finding list sets your next step (a producer gate's reviewer, `/kaizen`'s
+  critic), or analysis you would otherwise do yourself and no artifact settles.
+
+Re-checking a report's load-bearing evidence (§What a report is worth) is unconditional
+at every tier — it is not what the model choice keys on.
 
 A specialist's frontmatter pin (`code-reviewer` and the other reviewers) already encodes
 this choice — don't override it without a reason you can state. A continuation
