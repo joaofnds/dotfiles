@@ -91,9 +91,9 @@ then:
   and so does a site list falling inside the module or seam the axis finding
   names, even with no shared line. The axis reviewer's rule citation is the **Why**, the
   refactoring reviewer's mechanics are the **Fix**; never list both. The merged
-  entry carries the axis finding's severity and axis label, and goes to the
-  skeptic under the standard mandate — unless the merged **Fix** is the only
-  disputed part, which verifies under the refactoring mandate instead.
+  entry carries the axis finding's severity and axis label, and, when §4 sends it
+  to a skeptic, verifies under the standard mandate — unless the merged **Fix** is
+  the only disputed part, which verifies under the refactoring mandate instead.
 
 ### Verdict-bearing or advisory
 
@@ -142,8 +142,10 @@ in the patch: it moves the verdict to Fail like any other untagged Blocker.
 
 ## 4. Verify — the kill step
 
-For every **Blocker and Major** finding, spawn a skeptic (general agent) —
-un-named, `run_in_background: true` — mandated to refute it:
+For every **Blocker**, spawn a skeptic (general agent) — un-named,
+`run_in_background: true`, `model: sonnet` — mandated to refute it. Majors skip the
+kill step (narrowed from Blocker-and-Major 2026-08-12, for cost) — spot-check any you
+doubt yourself:
 
 > Try to refute this review finding against the actual code — read the code
 > yourself, don't trust the claim: `<finding, with file:line and the claimed
@@ -201,7 +203,7 @@ outcomes:
 A refuted finding is dropped from the findings list and recorded in the
 report footer — dropped, never silently vanished. An inconclusive finding
 stays in the report with `[unverified]` appended to its severity — silently
-dropping a real Blocker costs more than carrying a doubtful one. Minor/Nit
+dropping a real Blocker costs more than carrying a doubtful one. Major, Minor, and Nit
 findings and the whole advisory section skip verification — the stability probe
 above excepted, which runs on every spatial coupling finding whose evidence is
 the target's rate of change, regardless of severity or provenance; spot-check
