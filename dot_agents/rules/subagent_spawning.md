@@ -28,7 +28,7 @@ Two shapes, picked per spawn: one agent you are waiting on, or several launched 
   nothing to do but wait for all of them — a panel of reviewers is a fan-out even though
   the next step needs every verdict.
 
-The selector is per spawn, not per skill: `/research` may run both a fan-out and a producer
+The selector is per spawn, not per skill: `/plan` may run both a fan-out and a producer
 gate, and takes a different shape for each. Picking `false` for a fan-out is not wrong,
 only serialized — accept it when you did not want the concurrency, not by default.
 
@@ -41,17 +41,25 @@ it is often cheaper than a new spawn (§Continuing a completed agent).
 ## Model
 
 A spawn inherits the parent's model unless the agent definition pins one or the call
-passes `model` — the call outranks the definition (tool schema, read 2026-08-12).
+passes `model`. The parameter's own schema text says the call outranks the definition
+(read in-session 2026-08-12 — documented, not probed; the probe when it matters: spawn
+`code-reviewer`, pinned `sonnet`, with `model: haiku` and read the model off the run).
 Inheriting the top model is the expensive default; pick per mandate (2026-08-12, cost):
 
 - `haiku` — mechanical retrieval: Explore sweeps, locating files, existence probes,
   extracting a value from a file you can name.
-- `sonnet` — read-and-judge work: skeptics, deep dives, summarizing a subsystem.
+- `sonnet` — read-and-judge work whose output you re-check before acting: refutation
+  skeptics (`panel-review` §4 — §What a report is worth already makes you re-run a
+  finding's load-bearing evidence), deep dives, summarizing a subsystem.
 - omit (inherit) — only when the mandate needs the parent's model: an unprimed review
-  whose verdict the session will act on, or analysis you would otherwise do yourself.
+  you will act on without re-deriving it (a producer gate's reviewer, `/kaizen`'s
+  critic), or analysis you would otherwise do yourself.
 
 A specialist's frontmatter pin (`code-reviewer` and the other reviewers) already encodes
-this choice — don't override it without a reason you can state.
+this choice — don't override it without a reason you can state. A continuation
+(`SendMessage`, §Continuing a completed agent) runs on the model the original spawn
+used; whether a resume can change it is unprobed — spawn fresh when you need a
+different model.
 
 ## Continuing a completed agent
 
