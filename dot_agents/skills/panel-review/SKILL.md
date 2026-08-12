@@ -92,8 +92,7 @@ then:
   names, even with no shared line. The axis reviewer's rule citation is the **Why**, the
   refactoring reviewer's mechanics are the **Fix**; never list both. The merged
   entry carries the axis finding's severity and axis label, and, when §4 sends it
-  to a skeptic, verifies under the standard mandate — unless the merged **Fix** is
-  the only disputed part, which verifies under the refactoring mandate instead.
+  to a skeptic, verifies under the standard mandate.
 
 ### Verdict-bearing or advisory
 
@@ -143,9 +142,9 @@ in the patch: it moves the verdict to Fail like any other untagged Blocker.
 ## 4. Verify — the kill step
 
 For every **Blocker**, spawn a skeptic (general agent) — un-named,
-`run_in_background: true`, `model: sonnet` — mandated to refute it. Majors skip the
-kill step (narrowed from Blocker-and-Major 2026-08-12, for cost) — spot-check any you
-doubt yourself:
+`run_in_background: true`, `model: sonnet` (`~/.agents/rules/subagent_spawning.md`
+§Model owns this choice — edit both) — mandated to refute it. Majors skip the kill
+step (narrowed from Blocker-and-Major 2026-08-12, for cost):
 
 > Try to refute this review finding against the actual code — read the code
 > yourself, don't trust the claim: `<finding, with file:line and the claimed
@@ -154,25 +153,9 @@ doubt yourself:
 > handles it. If you can neither reproduce the failure nor positively
 > disprove it, return inconclusive — do not call it refuted.
 
-A verdict-bearing **refactoring or test-smell** finding claims friction, not
-wrong output — that mandate has no purchase on it, so refute its evidence
-instead:
-
-> Try to refute this finding against the actual code — read the code yourself,
-> don't trust the claim: `<finding, with file:line, the smell, and the claimed
-> friction>`. Refuted means positive disproof of the smell itself: the cited
-> sites don't contain the pattern, or the blocks named as duplicated encode
-> different knowledge. An under-inclusive site list is not a refutation — it
-> understates the finding; return the missing sites. A wrong test path, or a
-> cited document under `~/.agents/rules/refactoring/catalog/` or
-> `~/.agents/rules/testing/` that doesn't say what the finding claims, is a
-> correction and not a refutation: return the correct citation and keep the
-> finding. If you can neither confirm the evidence nor positively disprove it,
-> return inconclusive.
-
-Testing **Blockers** go to the standard mandate above, not this one — "the
-assertion's outcome is independent of the subject" is a claim about wrong
-output and is statically provable or disprovable.
+A testing **Blocker** takes the same mandate — "the assertion's outcome is
+independent of the subject" is a claim about wrong output and is statically
+provable or disprovable.
 
 A spatial coupling finding that turns on whether the coupled target is stable is
 yours to settle — one probe run once by you beats N skeptics re-deriving the
