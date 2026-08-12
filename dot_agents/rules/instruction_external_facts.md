@@ -176,6 +176,11 @@ imprecisions in the checklist's wording were tightened. Cite these as
   full skill loads when invoked." One scope the checklist should not overstate: "The
   `user-invocable` field only controls menu visibility, not Skill tool access. Use
   `disable-model-invocation: true` to block programmatic invocation."
+- **A `disable-model-invocation: true` skill leaves the model's skill listing.** Probed
+  2026-08-12 on a live session: `/handoff` (frontmatter-marked, no `skillOverrides` entry) was
+  absent from the listing while every enabled skill appeared. Vendor docs state only that the
+  field blocks programmatic invocation (the entry above); the listing effect is local
+  observation, not documentation.
 - **A skill's `context: fork` inherits no caller context.** Verbatim: "Add `context: fork` to your
   frontmatter when you want a skill to run in isolation. The skill content becomes the prompt that
   drives the subagent. **It won't have access to your conversation history.**" **Do not confuse
