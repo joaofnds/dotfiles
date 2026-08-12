@@ -65,8 +65,10 @@ correctness — form your own from the code."
 One reviewer by default. For high-stakes or wide-blast-radius work, spawn two or
 three **independently** — same neutral brief, none sees the others — and union
 their findings; a single reviewer has its own blind spots. Route to a specialized
-reviewer when one fits (`code-reviewer` for code, `instructions-reviewer` for
-instruction files); otherwise a general agent carrying this brief.
+reviewer when one fits: `code-reviewer` for code; `instructions-reviewer` only for
+instruction artifacts (rules, skills, agent definitions, CLAUDE.md/AGENTS.md — never a
+`.boris/` work product, however imperative it reads: a spec, plan, or diagnosis takes a
+general agent); otherwise a general agent carrying this brief.
 
 ## As a producer gate
 

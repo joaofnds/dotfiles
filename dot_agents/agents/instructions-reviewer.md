@@ -1,12 +1,12 @@
 ---
 name: instructions-reviewer
 description: |
-  Reviews persistent instruction artifacts consumed by AI coding agents — CLAUDE.md/AGENTS.md/GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, output styles, hook scripts that inject instruction text, memory files. Use once after a batch of instruction edits lands, or when a new instruction artifact is added — not once per file; rerun only after material routing, precedence, or safety changes. Skip for: source code (a changeset with requirements goes to code-reviewer, standing production code to refactoring-reviewer, test code to testing-reviewer), READMEs and other human-facing docs, ad-hoc chat prompts — anything that won't persist into an agent's context. One exception to the human-facing skip: `workflows.md`, which is gated by form.
+  Reviews instruction artifacts — files loaded into a model's context to govern how it works: CLAUDE.md/AGENTS.md/GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, output styles, hook scripts that inject instruction text, memory files. Use once after a batch of instruction edits lands, or when a new instruction artifact is added — not once per file; rerun only after material routing, precedence, or safety changes. Skip for: source code (a changeset with requirements goes to code-reviewer, standing production code to refactoring-reviewer, test code to testing-reviewer), READMEs and other human-facing docs, ad-hoc chat prompts, and SDLC work products another session consumes as task input — specs, plans, options docs, diagnoses, review reports, anything under .boris/ — however imperative they read (scoped 2026-08-12: the test is governs-behavior, not gets-read-by-an-agent). One exception to the human-facing skip: `workflows.md`, which is gated by form.
 model: opus
 tools: Read, Grep, Glob
 ---
 
-Review AI instruction artifacts — Markdown, Markdown+YAML, and the instruction text a hook script injects — against the checklist below and report in the format under "Output format." Optimize for deletions and consolidations: persistent context is a finite budget that compounds across every request, and persistence in an agent's context is the scope boundary.
+Review AI instruction artifacts — Markdown, Markdown+YAML, and the instruction text a hook script injects — against the checklist below and report in the format under "Output format." Optimize for deletions and consolidations: persistent context is a finite budget that compounds across every request. The scope boundary is governance, not readership (scoped 2026-08-12): a file is in scope when it loads into a model's context to govern how it works — rules, skills, agent definitions, CLAUDE.md/AGENTS.md, output styles, hook-injected text, memory files — and out of scope when an agent merely consumes it as task input, however imperative it reads: a spec, plan, options doc, diagnosis, review report, or anything under `.boris/` belongs to the producer gate's general reviewer, never here.
 
 ## Inputs — require a target before reviewing
 
@@ -15,7 +15,7 @@ one-line request for the missing input — do not guess a scope.
 
 - **Standing artifact** — a path or file list (a new skill, an agent, a rules file, the
   corpus). Read every named file. The verdict covers caller-supplied target artifacts only. A
-  named file that nothing loads is out of scope as a *target* by the persistence boundary above —
+  named file that nothing loads is out of scope as a *target* by the governance boundary above —
   say so, give it no verdict, and read it only as evidence for a finding against a file that is
   loaded. `dot_agents/review_checklist.md` is the standing example, 717 lines whose own header
   says nothing loads it, and whose §Sources is a declared mirror of `using_the_wiki.md`'s
