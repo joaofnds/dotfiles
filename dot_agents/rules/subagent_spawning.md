@@ -42,18 +42,21 @@ it is often cheaper than a new spawn (§Continuing a completed agent).
 
 A spawn inherits the parent's model unless the agent definition pins one or the call
 passes `model`. The parameter's own schema text says the call outranks the definition
-(read in-session 2026-08-12 — documented, not probed; the probe when it matters: spawn
-`code-reviewer`, pinned `sonnet`, with `model: haiku` and read the model off the run).
+(read in-session 2026-08-12 — documented, not probed; the probe when it matters: call a
+specialist with a frontmatter pin using a different `model` and read the model off the
+run).
 Inheriting the top model is the expensive default; pick per mandate (2026-08-12, cost):
 
 - `haiku` — mechanical retrieval: Explore sweeps, locating files, existence probes,
   extracting a value from a file you can name.
-- `sonnet` — read-and-judge work whose output you re-check before acting: refutation
-  skeptics (`panel-review` §4 — §What a report is worth already makes you re-run a
-  finding's load-bearing evidence), deep dives, summarizing a subsystem.
-- omit (inherit) — only when the mandate needs the parent's model: an unprimed review
-  you will act on without re-deriving it (a producer gate's reviewer, `/kaizen`'s
-  critic), or analysis you would otherwise do yourself.
+- `sonnet` — a bounded, checkable output you verify yourself: refutation skeptics
+  (`panel-review` §4 — a refute/inconclusive verdict you re-derive from the code), deep
+  dives, summarizing a subsystem.
+- omit (inherit) — the mandate forms a judgment you will adopt: an unprimed review whose
+  finding list sets your next step (a producer gate's reviewer, `/kaizen`'s critic), or
+  analysis you would otherwise do yourself. Re-checking a report's load-bearing evidence
+  (§What a report is worth) is mandatory in both branches; only the judgment-formation
+  differs.
 
 A specialist's frontmatter pin (`code-reviewer` and the other reviewers) already encodes
 this choice — don't override it without a reason you can state. A continuation
