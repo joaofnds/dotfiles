@@ -97,4 +97,6 @@ version the prefix while preserving the terminal suffix, for example
 
 Before done, reread the decision evidence yourself — especially simpler rejected options
 and unverified negative assumptions. No producer gate here (dropped 2026-08-12 for
-cost): the interrogation is the hardening, and `/plan`'s gate checks the written result.
+cost): the interrogation is the hardening, and `/plan`'s gate checks the written
+result — say out loud if the chain won't continue to `/plan`, so the user knows this
+artifact had no independent check.

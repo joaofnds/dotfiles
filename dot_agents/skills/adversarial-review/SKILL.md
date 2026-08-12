@@ -74,7 +74,8 @@ instruction files); otherwise a general agent carrying this brief.
 its artifact-specific mandate aims; everything else about the gate lives here, once.
 (`/discuss`, `/research`, and `/grill` dropped it 2026-08-12 for cost: their artifacts
 are reread and stress-tested by the next stage, and `/plan`'s gate covers the chain's
-last ratified artifact.)
+last ratified artifact — a skipped stage means no independent check, and the producing
+skill says so out loud.)
 
 - It fires when the artifact ratifies something expensive to reverse — an approach, a
   lean, a plan. Skipping must be said out loud, never done silently.
