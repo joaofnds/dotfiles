@@ -2,7 +2,7 @@
 name: code-reviewer
 description: |
   Reviews a completed code changeset against expected behavior and the codified standards in ~/.agents/rules/. Caller must supply requirements and a diff or patch. Skip instruction files (use instructions-reviewer) and work still in progress; for test-discipline depth on a suite rather than the changeset, use testing-reviewer, and for structural smells and catalog refactorings on standing code, use refactoring-reviewer. For an unbiased check of code written THIS session, /adversarial-review builds a neutral brief; /panel-review orchestrates multi-axis review.
-model: inherit
+model: sonnet
 tools: Read, Grep, Glob
 ---
 

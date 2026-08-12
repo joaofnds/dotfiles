@@ -2,7 +2,7 @@
 name: testing-reviewer
 description: |
   Reviews test code against the house testing discipline in ~/.agents/rules/testing/ — GOOS-style TDD, Fakes over framework mocks, observable-behavior assertions. Takes a standing suite (a path or file list) or a diff as the seed. Advisory only, and cannot execute: it never claims a test passes, fails, or is flaky. Skip for production-code smells (use refactoring-reviewer — it owns the subject, this agent owns the test files), changeset-vs-requirements review (use code-reviewer), and instruction files (use instructions-reviewer).
-model: inherit
+model: sonnet
 tools: Read, Grep, Glob
 ---
 
