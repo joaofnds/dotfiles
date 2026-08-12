@@ -176,11 +176,6 @@ imprecisions in the checklist's wording were tightened. Cite these as
   full skill loads when invoked." One scope the checklist should not overstate: "The
   `user-invocable` field only controls menu visibility, not Skill tool access. Use
   `disable-model-invocation: true` to block programmatic invocation."
-- **A `disable-model-invocation: true` skill leaves the model's skill listing.** Probed
-  2026-08-12 on a live session: `/handoff` (frontmatter-marked, no `skillOverrides` entry) was
-  absent from the listing while every enabled skill appeared. Vendor docs state only that the
-  field blocks programmatic invocation (the entry above); the listing effect is local
-  observation, not documentation.
 - **A skill's `context: fork` inherits no caller context.** Verbatim: "Add `context: fork` to your
   frontmatter when you want a skill to run in isolation. The skill content becomes the prompt that
   drives the subagent. **It won't have access to your conversation history.**" **Do not confuse
@@ -211,6 +206,21 @@ is a source with no page at all, and this is a page silent on four of its fields
 section is the record and the page-wins rule is not suspended; it applies unchanged the moment the
 refresh lands. §3's entry for that page names the gap. A third branch in `using_the_wiki.md` for
 the silent-page case would retire this extension.
+
+### 2026-08-12 probe — a `disable-model-invocation` skill leaves the skill listing
+
+Local probe, not documentation; cite as `§1, 2026-08-12 probe`.
+
+- **A `disable-model-invocation: true` skill leaves the model's skill listing.**
+  Probed 2026-08-12 on a live session: `/handoff` (frontmatter-marked, no
+  `skillOverrides` entry) was absent from the listing while every enabled skill
+  appeared. Vendor docs state only that the field blocks programmatic invocation
+  (§1, 2026-08-06 verification); the listing effect is local observation.
+
+**Mirrors this subsection creates.** Restated in `AGENTS.md` §Task lifecycle
+(multi-stage bullet) and in `agents/instructions-reviewer.md` §2 *Invocation mode
+sets what the description is for* ("costs zero dispatch context"). Edit all three
+or none.
 
 ### 2026-08-06 verification, second pass — loading-path carriers
 
