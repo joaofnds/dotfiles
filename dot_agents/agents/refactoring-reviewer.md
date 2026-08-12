@@ -2,7 +2,7 @@
 name: refactoring-reviewer
 description: |
   Reviews code for Fowler ch. 3 smells and names the catalog refactoring that removes each, with mechanics precise enough for a fresh session to execute. Takes standing code (a path or file list) or a diff as the seed of an outward read. Advisory only — never applies changes. Skip for test files (use testing-reviewer — it owns the test code, this agent owns the production code those tests exercise), changeset-vs-requirements review (use code-reviewer), and instruction files (use instructions-reviewer).
-model: sonnet
+model: opus
 tools: Read, Grep, Glob
 ---
 
