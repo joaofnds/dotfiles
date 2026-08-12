@@ -296,10 +296,13 @@ code on a `[pre-existing]` `[correctness]` Blocker. Advisory structural items ar
 follow-up `/plan` candidate, never a merge condition — propose one only if the user wants
 the debt addressed. Do not modify source as part of panel review; return the report
 before remediation begins. After remediation, the owning session reruns the full suite
-and targeted review for each affected axis. When remediation **added or relocated a
-production file**, no reviewer has read that file — send the new paths to
-`refactoring-reviewer` (§2 makes it a track, so "affected axis" never reaches it). Not
-on every remediation: a fix inside a file an axis already read is already covered.
+and runs each remediated finding's **Verify** step (§5), then decides out loud: re-review, or
+proceed. Re-review only the affected axis, and only when remediation changed the
+approach a finding rested on, or touched a production file no reviewer read — an added,
+relocated, or simply unexamined file has no reader, so send its path to
+`refactoring-reviewer` (§2 makes it a track, so "affected axis" never reaches it).
+Otherwise proceed: a fix confined to files an axis already read, with its Verify step
+green, is covered.
 
 ## 7. Relay
 

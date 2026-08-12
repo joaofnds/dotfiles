@@ -142,20 +142,21 @@ A heavy review doesn't just report — it produces a durable fix artifact that
 feeds back into the build loop.
 
 ```
-/panel-review → .boris/reviews/*.md → fix or /plan → /build → verify → targeted re-review → learn
+/panel-review → .boris/reviews/*.md → fix or /plan → /build → verify → re-review or proceed → learn
 ```
 
 - **/panel-review** — five verdict axes plus a refactoring track (six reviewers), one
   adversarial kill step, one self-contained report under `.boris/reviews/`. Explicitly
   hand a large fix to `/plan` off that report; small fixes go straight in test-first.
-  Record each finding's resolution, rerun verification, and re-review the affected axis
-  before closing. The report's advisory structural items are a separate follow-up, not
-  a merge condition.
+  Record each finding's resolution, rerun verification, then decide: re-review the
+  affected axis or proceed. The report's advisory structural items are a separate
+  follow-up, not a merge condition.
 - Same shape as the debug loop: a durable diagnosis artifact drives the fix.
 
 `/adversarial-review` is the lighter in-session variant — findings relayed live,
-no durable report — so it loops: `review → fix → re-verify`, bounded at three rounds when it
-runs as a producer gate (`adversarial-review` §As a producer gate).
+no durable report. As a producer gate it runs one round, then reruns once only if a fix
+changed a behavioral claim or a Blocker's repair can't be probed
+(`adversarial-review` §As a producer gate).
 
 ## Cross-session continuity loop
 
