@@ -26,7 +26,7 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 if [[ 
 	-z "$TMUX" &&
 	-z "$CLAUDE_AGENT_SDK_VERSION" &&
-	-z "$EMACS_VTERM_PATH" &&
+	-z "$INSIDE_EMACS" &&
 	"$TERM_PROGRAM" != "vscode" &&
 	"$TERM_PROGRAM" != "zed" ]]; then
 	tat
