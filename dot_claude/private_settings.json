@@ -60,7 +60,8 @@
     "schedule": "user-invocable-only",
     "security-review": "user-invocable-only",
     "simplify": "off",
-    "update-config": "off"
+    "update-config": "off",
+    "verify": "off"
   },
 
   "statusLine": {

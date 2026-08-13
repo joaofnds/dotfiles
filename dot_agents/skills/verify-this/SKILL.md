@@ -5,16 +5,17 @@ description: >
   it falsifiably, capture baseline and treatment, and return VERIFIED, NOT VERIFIED, or
   INCONCLUSIVE. Invoke on "verify this", "prove it works", "did this fix it", "show me the
   evidence" — or whenever declaring a fix or feature done rests on a runtime claim tests
-  only half-cover. Not for the deployed app end-to-end (/verify, user-invoked, third-party)
-  and not for finding an unconfirmed cause (/debug) — this is for a specific claim you can
-  gather evidence for yourself, right now, in this session.
+  only half-cover. Not for the deployed app end-to-end, and not for finding an unconfirmed
+  cause (/debug) — this is for a specific claim you can gather evidence for yourself, right
+  now, in this session.
 ---
 
 # Verify This
 
 **Wrong skill if:** the claim is vague ("the code is cleaner", "this feels right") — get a
 measurable claim first, or say why one isn't obtainable here. For the deployed app
-end-to-end, ask the user to run `/verify`; a `/verify-this` verdict never stands in for it.
+end-to-end, that is the user's own hands-on check (`~/.agents/skills/build/SKILL.md` step 7
+states what to hand them); a `/verify-this` verdict never stands in for it.
 
 ## Restate the claim
 

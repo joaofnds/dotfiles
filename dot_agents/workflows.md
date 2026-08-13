@@ -50,13 +50,13 @@ re-enters an earlier stage rather than pushing through.
   assumption fails, record the discrepancy and route back to `/grill` (re-pick) or
   `/plan` (re-sequence) — `build/SKILL.md` step 2. Minor path or sequencing corrections
   may continue when they do not change scope, behavior, or approach; record them in the plan.
-- **verify** — execute the plan's acceptance-criterion checks and capture the raw output.
-  `/build` is not done until every criterion has execution evidence; prose review is not
-  runtime verification. Use `/verify-this` for a criterion the plan mapped to a runnable
-  check — it turns the claim into a falsifiable baseline/treatment verdict. `/verify`
-  drives the running app end-to-end but is user-invoked only: for a criterion that needs
-  the deployed app, stop and ask for it (`~/.agents/skills/build/SKILL.md` step 7). A
-  `/verify-this` verdict does not stand in for it.
+- **verify** — get evidence for every acceptance criterion in the plan: raw output for the
+  checks you can run, the user's own report for the ones only they can run. `/build` is not
+  done until every criterion has one or the other; prose review is not runtime verification. Use `/verify-this` for a criterion the plan mapped to a runnable
+  check — it turns the claim into a falsifiable baseline/treatment verdict. For a criterion
+  that needs the deployed app, stop and ask the user to exercise that flow against the spec
+  and report what they observed (`~/.agents/skills/build/SKILL.md` step 7). A `/verify-this`
+  verdict does not stand in for that observation.
 - **review** — name its purpose: correctness, architecture, security, or knowledge
   sharing. Review is a feedback channel, not a late quality phase: keep changes small and
   use `/adversarial-review` for this session's work; reserve `/panel-review` for a
