@@ -34,8 +34,14 @@ skipping it is the user acting on a gap that is not there.
    to the user, give each one a disposition (`reporting_findings.md`); a reviewer sub-agent
    ranks by severity instead and assigns none. A missing-thing claim carries its probe —
    §A missing thing is a claim.
-4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects
-   or creating a tracked follow-up.
+4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects or
+   creating a tracked follow-up. Asking is for a judgment call, never for a chore: when the
+   next step is mechanical, reversible, and inside the work you just did — deleting a file
+   you created, updating a comment your change made stale, re-running the project's check
+   command — do it and report it done. "Say the word and I'll X" is a defect whenever you
+   can do X. Pushing, committing, deploying, filing an issue, and anything else
+   outward-facing or that writes history stay asks — this file's opening paragraph for
+   commits and issues, `AGENTS.md` §Autonomy for deploys and releases.
 5. Distinguish scoped verification from repository health. "The targeted tests pass;
    the full suite is red because X" is honest. "Everything passes" is not.
 
