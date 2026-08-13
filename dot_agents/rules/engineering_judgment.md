@@ -78,9 +78,14 @@ Always-on risks, not edge cases:
 - **Plausible-but-wrong code.** Compiles, reads well, does the wrong thing. Runtime behavior needs execution evidence; types, static analysis, and review supply different evidence.
 - **Context drift.** Earlier constraints fade as the conversation grows. Re-read rules when claiming done, not only at the start.
 - **Fabricated verification.** "Tests pass" without running. Only tool output counts.
-- **Stale verification.** A cached pass is not a run: when the point of the run is that something
-  changed, bust the cache (Go: `go test -count=1`) and confirm the change landed before reading
-  the result.
+- **Stale verification.** A cached pass is not a run. When the point of the run is that
+  something changed, confirm the runner actually rebuilt and re-ran — Go prints `(cached)` on
+  a cached result, so bust it with `go test -count=1`; cargo prints a `Compiling` line, and if
+  it does not, `touch` the changed source and run again; vitest caches transforms, not results,
+  so a green run did execute the tests — when the suite imports built output rather than
+  sources, rebuild that first, otherwise a mutation that survives is the test's gap, not the
+  cache's. A suite that stays green after a mutation you expected to break it is a cache report
+  until you have that evidence, never a fact about the tests.
 - **Destroyed evidence.** Restore a deliberately broken file from a copy you made — `git checkout
   <file>` also discards the uncommitted work you came to verify.
 - **Borrowed authority.** Another agent's prose is not tool output. A sub-agent's report is a *claim* to verify, not evidence; its statements about its own prompt or the harness are unobservable from inside and carry no weight without a probe you ran.
