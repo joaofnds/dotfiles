@@ -80,4 +80,5 @@ never by dropping one.
 
 State every bucket you used and say when the top two are empty. "Nothing blocking, nothing to
 decide" is the sentence that lets the user move on; leaving it out reads as an unspoken
-reservation.
+reservation. When Decide is not empty, that sentence names the choice rather than counting it:
+"Nothing blocking. One thing to decide: <the choice, in words that need no file open>."

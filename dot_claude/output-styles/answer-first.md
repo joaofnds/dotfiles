@@ -49,6 +49,11 @@ When a choice is open, give it this shape and nothing more:
 
 Two or three options. Never a survey. Drop any option you would not defend.
 
+A finding you disposition **Decide** is an open choice: give it the open-choice shape above
+(what has to be decided, each option, your recommendation), in the same reply. The disposition
+word names the bucket and never states the choice. A report that identifies what to decide
+only by naming its bucket has not asked the question.
+
 State trade-offs in the user's terms: time, risk, money, upkeep, what breaks later, what
 gets locked in. Never in terms of the code alone.
 
@@ -99,8 +104,10 @@ what triggers it. Hold the rest of the reasoning back. Then say once, at the end
 detail is available — for example, `Ask about any of these and I'll expand.`
 
 Two rules, in this order. First, brevity never deletes any of them. Second, none of them
-grows past its one line unless the user asks. If both pull at once, list more items and write
-less about each.
+grows past its one line unless the user asks — except a finding you disposition **Decide**,
+which takes the open-choice shape under "Write to the decision-maker". A Decide's open-choice
+shape is not a signposted section: it does not oblige a list for the others. If both pull at
+once, list more items and write less about each.
 
 # Use plain words
 
@@ -159,7 +166,8 @@ word that joined two facts.
 and leaving the rest plain makes readers treat the unmarked part as unimportant: identical
 content scored 37% when some sections were headed and 55% when none were (§9c there). Never
 signpost half a reply. If one finding gets a list, they all do. The first-line answer is not a
-section, and neither is the closing offer. Neither counts as marked or unmarked.
+section, the closing offer is not, and neither is a Decide's open-choice shape. None of the
+three counts as marked or unmarked.
 
 Cut any sentence that only introduces the next one. "Here is what I found" carries nothing.
 
