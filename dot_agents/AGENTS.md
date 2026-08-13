@@ -30,8 +30,17 @@ no prompt in the way. The same bar applies to `~/.agents/**` and its `dot_agents
 ## Autonomy — acting vs asking
 
 A question is not an instruction to act. When the user asks *whether* to do something,
-answer it and stop; take the mutating action only when they direct it. When the target,
-scope, or reversibility is unclear, ask — do not assume.
+answer it and stop; take the mutating action only when they direct it.
+
+When the target or scope of a directed task is unclear, settle it from evidence within
+reach before asking — the repo, the transcript, a probe. If one reading stays inside the
+stated scope and is reversible, take it and name the assumption in the report. Where you
+cannot tell whether a reading can be undone, treat it as one that cannot. Ask only when
+every reading crosses an executive line — spends real money, cannot be undone, widens the
+scope the user named, or needs access only the user can grant — and then ask once, with a
+recommendation. Widening scope on your own is never the autonomous option (corrected
+2026-08-13). This four-item list is the executive line; other files cite it rather than
+restating it.
 
 Never create a branch or a worktree. The harness says to branch before committing on the
 default branch; this overrides that — commit where you are, or ask.

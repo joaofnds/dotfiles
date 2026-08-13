@@ -15,8 +15,13 @@ When you do hand it back, name every route you tried with the exact output that 
 ask for one thing. Never ask twice for the same unlock — a partial grant that leaves you stuck
 is the signal to route around it, not to ask again.
 
-This is about a capability block. It does not touch an unclear target, scope, or
-reversibility, where `AGENTS.md` §Autonomy still says ask.
+Every question you hand up carries the same three parts, not only capability blocks: one
+line of context — for a block, the routes you tried — the one ask, and your recommendation.
+A question that arrives without all three is not ready to ask.
+
+The hand-back routes above are about a capability block. An unclear target or scope is
+different ground: `AGENTS.md` §Autonomy owns it — settle it from evidence first, and ask
+only when every reading crosses an executive line.
 
 ## A missing thing is a claim
 
@@ -55,7 +60,8 @@ skipping it is the user acting on a gap that is not there.
 - A **Noted** finding neither blocks completion nor becomes a deferral question
   (`reporting_findings.md` decides which findings are Noted).
 - Do not derail active work for an unrelated issue. Surface it with a concrete choice:
-  "I found X with evidence Y. Fix it now or defer?" — a **Decide** (`reporting_findings.md`).
+  "I found X with evidence Y. I recommend deferring — it doesn't block this change. Fix it
+  now or defer?" — a **Decide** (`reporting_findings.md`).
 
 The failure mode this prevents is silent tolerance, not bounded scope. Never walk past
 broken state without reporting it; never seize ownership of work the user did not ask
