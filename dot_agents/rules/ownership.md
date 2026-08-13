@@ -4,6 +4,20 @@ Own every problem you observe by making it visible and leaving an actionable nex
 step. Ownership does not grant permission to expand the user's scope, edit unrelated
 work, create commits, or file issues without authorization.
 
+## When you are blocked
+
+A blocker you can route around is not a blocker. Before handing one back, exhaust the routes
+inside your own reach: a different tool, a different layer of the same system, a harness you
+build and revert. The user's turnaround costs them a context switch and costs you the wait;
+building the route costs one turn.
+
+When you do hand it back, name every route you tried with the exact output that closed it, and
+ask for one thing. Never ask twice for the same unlock — a partial grant that leaves you stuck
+is the signal to route around it, not to ask again.
+
+This is about a capability block. It does not touch an unclear target, scope, or
+reversibility, where `AGENTS.md` §Autonomy still says ask.
+
 ## Before Marking Done
 
 1. Verify the requested scope and report the exact commands and outcomes.
