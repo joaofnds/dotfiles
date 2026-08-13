@@ -60,6 +60,31 @@ check() {
 printf 'Always-loaded router\n'
 check "$corpus/AGENTS.md" 60 200 router
 
+# Output styles live outside dot_agents/, which is why no glob below can see
+# them, but they are always-on: dot_claude/private_settings.json sets
+# "outputStyle": "answer-first", so the whole file sits in the system prompt
+# every turn — the router's tier, so the router's budget. (Added 2026-08-13,
+# after answer-first.md reached ~290 lines with nothing measuring it.)
+#
+# Known exception, recorded rather than hidden by loosening the threshold:
+# answer-first.md is over the ceiling today. That is a real finding — but a
+# permanently red gate hides the next real breach, so it WARNs until trimmed.
+# Trimming is gated instruction work, not a fix to make here. Delete the
+# exemption when the file is under the ceiling.
+printf '\nOutput styles (always-on)\n'
+style_exempt="dot_claude/output-styles/answer-first.md"
+for f in "$root"/dot_claude/output-styles/*.md; do
+  [ -e "$f" ] || continue
+  rel="${f#"$root"/}"
+  n=$(lines "$f")
+  if [ "$rel" = "$style_exempt" ] && [ "$n" -gt 200 ]; then
+    densities="$densities$(density "$f") $rel"$'\n'
+    warn "$rel — $n lines, ceiling 200 (known exception, 2026-08-13: trim pending)"
+  else
+    check "$f" 60 200 output-style
+  fi
+done
+
 printf '\nSub-agent system prompts\n'
 for f in "$corpus"/agents/*.md; do
   [ -e "$f" ] || continue
