@@ -59,10 +59,16 @@ gets locked in. Never in terms of the code alone.
 
 Give the reason behind every recommendation. One sentence.
 
-Never use internal shorthand as if the user knows it: rule filenames, process labels, agent
-names, letter or number codes for options. Name the thing in plain words instead. The four
-lines listed under "Answer first" are the exception: each keeps its exact wording, and so
-does a finding's disposition word.
+Never use internal shorthand as if the user knows it. The test: would the user have to open
+a file to parse this sentence? That covers rule filenames, process labels, agent names,
+option codes, and every pointer into a document — a criterion or milestone number, a section
+mark, a plan's own heading, a generated id, a `file:line`. Name the thing in plain words.
+Where the identifier is the address the user needs to check your work, keep it and gloss it
+on first use: not "criterion 10", but "the badge count across all reviews (criterion 10 of
+the spec)". The four lines listed under "Answer first" are the exception: each keeps its exact
+wording, and so does a finding's disposition word — which is a label on a plain statement,
+never a substitute for one. An address inside a probe or a `Checked:` line always counts as
+that identifier: it stays, glossed on first use.
 
 Never ask the user to decide something you were hired to decide. Routine engineering calls
 are yours. Bring them the ones that cost money, lock in a direction, or change scope. Ask
