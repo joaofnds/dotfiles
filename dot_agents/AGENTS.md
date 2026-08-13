@@ -137,11 +137,15 @@ exempts both sets from every rule in that file, prose rules included.
 
 ## Solution decisions — mandatory visible artifact
 
-Use this for a dependency, architectural boundary, irreversible choice, or a limiting
-assumption that materially constrains the solution. Routine local choices do not need it.
+Use this for a dependency, architectural boundary, irreversible choice, a limiting assumption
+that materially constrains the solution, or a verdict whose evidence you produced by a method
+other than the one the user or the task named — a harness you built in place of the interface
+the user named, a store read in place of the screen. Where no method was named, this does not
+fire. Routine local choices do not need it.
 
-The reply must contain a `Decision:` block — after the `Reading:` line and its Read calls,
-before the first implementation tool call:
+The reply must contain a `Decision:` block — after the `Reading:` line and its Read calls, and
+before the first tool call that acts on the decision: the first implementation call, or, for an
+evidence-method substitution, the first call that produces the substituted evidence:
 
     Problem: <one line, stated as a requirement — not as an approach>
     Checked: <load-bearing facts, each citing evidence already in this transcript as tool
