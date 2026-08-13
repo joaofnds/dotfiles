@@ -34,14 +34,15 @@ The plan is the source of truth — you have no memory of the conversation that 
     - **A named manual verification** — the deployed app behaving correctly end-to-end → stop, and hand the user the check in the reply: the steps to exercise, the environment to exercise them in, and the spec line that says what a pass looks like. Resume when they report what they observed. A report is the observation only when it names what they did and what they saw, in terms that decide that spec line true or false — a bare verdict ("looks fine"), or an observation of a different flow, is not; ask what they saw. Quote their answer in the reply that resumes work, and paste that quote into the plan beside the task the criterion covers — your paraphrase of what they must have seen is not the observation. A `/verify-this` verdict does not stand in for it.
     - **A visual criterion against a `.boris/design/` file** → run that file's **Verify** checks and report what the screenshots showed. Rereading your own code and concluding it matches the tokens is not evidence. If you cannot render, the criterion is NOT VERIFIED.
 
-    If any criterion lacks evidence, fails, or comes back NOT VERIFIED or INCONCLUSIVE, the build is not done.
+    If any criterion lacks evidence, fails, or comes back NOT VERIFIED or INCONCLUSIVE, the build is not done — the one exception is a criterion you handed the user under the manual-verification route above and that they then closed out without reporting an observation, which §Rules closes out as `partial`. A criterion you never handed over gets no exception.
 
 ## Rules
 
 - Stay inside the plan's Scope boundary the whole way through. If you spot necessary follow-up work, add it as a new task marked `- [ ] DEFERRED —` so it reads as out of scope rather than as unbuilt work — don't expand silently.
 - If the plan is wrong, ambiguous, or contradicts the codebase, stop and ask rather than guessing. Under-specification is divergence too: when a task forces you to design something the plan never settled — a new type, an API surface, a dependency — surface the design and get it ratified before building it. A `DESIGN:` note on the task records the decision; it doesn't authorize it.
 - Keep the plan file updated as you go: checked boxes, plus a short note on any task you had to deviate on and why.
-- When every task is checked, tests pass, the refactor pass has run, and every acceptance criterion has the evidence step 7 requires — captured output for a check you ran, or the user's reported observation for a criterion routed to them — **close the plan out before you summarize.** Write a closeout at the top of the plan file, directly under the title:
+- **A criterion routed to the user and not yet answered is not a closeout state.** Write no closeout, leave the status file's milestone marker alone, archive nothing, and add `- [ ] AWAITING — <criterion>: <what you asked them to exercise>` to the task tracker, so the next session finds the pending check without the conversation. An `AWAITING` line is a check for the user, not work: step 3 skips it, "every task is checked" below ignores it, and **Not landed** never claims it. Delete the line when they report the observation, or when a closeout claims the criterion under **Left over**. Lead the summary with `waiting on your check of <X>`. If the user closes out without observing it, Status is `partial` and the closeout bullet below applies.
+- When every task is checked, tests pass, the refactor pass has run, and every acceptance criterion has the evidence step 7 requires — captured output for a check you ran, or the user's reported observation for a criterion routed to them, or, for a criterion the user closed out unobserved, a **Left over** entry reading `unverified — <criterion>` in place of evidence — **close the plan out before you summarize.** Write a closeout at the top of the plan file, directly under the title:
 
       **Status:** built | partial | abandoned — YYYY-MM-DD
 
@@ -54,14 +55,24 @@ The plan is the source of truth — you have no memory of the conversation that 
         where they went — a new plan under `.boris/plans/`, or an issue — and creating either
         needs the user's go-ahead first, so ask for it in the summary. **Noted** items stay
         listed here under one heading and are routed nowhere. The archive is not a queue.
+        An acceptance criterion the user closed out without observing is a **Decide** item — a
+        result is unverified (`reporting_findings.md` §Dispositions) whose probe you could not
+        run. List it as `unverified — <criterion>`, naming the check they would have to run in
+        place of a destination; it is the one **Decide** item that names no new plan or issue.
+        Where archiving this closeout would leave no live artifact holding the check — a
+        single-milestone stem, or the last milestone — say so in the summary and ask whether
+        to file it before you archive.
       - **Next:** the first of these that applies —
         - `stopped — <why>` — Status is `abandoned`.
+        - `unverified — <X>` — Status is `partial` only because the user closed out an
+          unobserved criterion, and no **Blocking** item survives.
         - `fix <X> first` — Status is `partial`, or a **Blocking** item survives.
         - `your call on <Y>` — an open **Decide** item changes what the next milestone builds.
         - `proceed to <next milestone>` — none of the above, and a milestone remains.
         - `done — nothing follows` — none of the above, and this was the last or only plan.
 
-  The **Next:** line is also the first line of your summary to the user. Learning whether the
+  The **Next:** line is also the first line of your summary to the user, and where no closeout
+  was written the `waiting on your check of <X>` line takes its place. Learning whether the
   next milestone is safe to start must not require opening the plan file.
 
   If the plan cites a status file, or a `<date>-<slug>-status.md` exists in `.boris/plans/` for
