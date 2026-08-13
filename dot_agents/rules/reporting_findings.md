@@ -59,8 +59,8 @@ disposition, named in the report:
 **Blocking and Decide require a named trigger:** the caller, input value, configuration, or
 sequence of user actions that reaches the defect, named as concretely as a probe would be.
 
-**Noted carries the same evidence bar as a missing-claim** (`ownership.md` §Before Marking Done
-item 3). Name what you searched and over what scope: the grep for callers, the config you read,
+**Noted carries the same evidence bar as a missing-claim** (`ownership.md` §A missing thing is
+a claim). Name what you searched and over what scope: the grep for callers, the config you read,
 the entry points you walked. An exported, public, or otherwise externally callable surface
 always has a nameable trigger, so "no caller in this repo" does not make it Noted. A real
 defect whose trigger resists cheap probing — a race, a production-only configuration, a

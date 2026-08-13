@@ -18,16 +18,22 @@ is the signal to route around it, not to ask again.
 This is about a capability block. It does not touch an unclear target, scope, or
 reversibility, where `AGENTS.md` §Autonomy still says ask.
 
+## A missing thing is a claim
+
+"No coverage", "no guard", "no caller", "nothing handles this" is an unprobed negative until
+you name the probe: the grep, the suite you read, the run you did. Report the probe beside the
+claim, or narrow the claim to what you actually checked. This binds every time you say it —
+answering a question, arguing for work, writing a report — not only at the close. The cost of
+skipping it is the user acting on a gap that is not there.
+
 ## Before Marking Done
 
 1. Verify the requested scope and report the exact commands and outcomes.
 2. Inspect the diff and working tree; do not attribute unrelated changes to yourself.
 3. List every failure or defect observed, with its evidence. When you are the agent reporting
    to the user, give each one a disposition (`reporting_findings.md`); a reviewer sub-agent
-   ranks by severity instead and assigns none. A claim that something is **missing** — no
-   coverage, no guard, no caller — is an unprobed negative until you name the probe: the grep,
-   the suite you read, the run you did. Report the probe beside the claim, or narrow the claim
-   to what you actually checked.
+   ranks by severity instead and assigns none. A missing-thing claim carries its probe —
+   §A missing thing is a claim.
 4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects
    or creating a tracked follow-up.
 5. Distinguish scoped verification from repository health. "The targeted tests pass;
