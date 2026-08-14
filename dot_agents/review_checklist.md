@@ -195,6 +195,7 @@ line".
 
 - Is there a fallback branch handling a case the code's own producer decides — "if X is missing"? Make the contract mandatory and delete it. *(`coding_style.md` §1)*
 - Does the change touch a shared contract — schema, API response, event payload, queue message? The Style reviewer sees the contract touch from `coding_style.md` §1; the deploy-compatibility constraint that follows is **§B's**, since `engineering_judgment.md` §4 loads under the Architecture mandate and not this one. *(`coding_style.md` §1 → §B Production readiness)*
+- Does the change carry a suppression, lint exclusion, ignore rule, or shim to get past a tool? The Style reviewer sees the exception from `coding_style.md` §1; the design-decision judgment that follows is **§B's**, since `engineering_judgment.md` §5 loads under the Architecture mandate and not this one. *(`coding_style.md` §1 → §B Complexity and its burden of proof)*
 
 ### Entities and construction
 
@@ -333,7 +334,8 @@ demonstrated complexity, and none of them is introduced to satisfy a document.
 - † Is the structure matched to the problem — transaction script for CRUD, domain model for complex rules? The rule warns against both over- and under-architecting; neither direction is a default. *(`engineering_judgment.md` §2)*
 - Is flexibility built for a future that hasn't arrived? *(`engineering_judgment.md` §2, `coding_style.md` §3)*
 - † Do scattered edits for one logical change signal coupling, or is this a protocol or schema change that correctly crosses files? "File count is evidence to inspect, not a target." *(`engineering_judgment.md` §3)*
-- Is the change working *around* a library rather than with it? One workaround is a fact; a pattern of them at every turn is the wrong tool or the wrong usage, and the finding is the pattern, not the instance. *(`engineering_judgment.md` §5)*
+- Is the change working *around* a library rather than with it? A pattern of workarounds at every turn is the wrong tool or the wrong usage. A single suppression, ignore rule, exclusion, or shim is its own finding — §5 makes it a design decision that survives only with evidence that every surface that could express the intent was read and none can. *(`engineering_judgment.md` §5)*
+- Does a refusal from a linter, type checker, or test get answered by reshaping the change, rather than by narrowing what the guard sees? *(`engineering_judgment.md` §5)*
 
 ### Object-level structure
 
@@ -643,6 +645,7 @@ and `coupling.md` §Before reporting is an explicit gate. These are the corpus's
 - **A "prefer X" resting on neither a rule nor a concrete failure.** Drop it. *(`code-reviewer.md`)*
 - **A structural smell reported by an axis that does not own it.** §A names nothing from the Fowler catalog; §B names the coupling type, not the smell. *(`panel-review` §2, `coupling.md` §Before reporting)*
 - **A deploy-compatibility or call-deadline finding reported by the Style axis.** `coding_style.md` §1 routes a shared contract to `engineering_judgment.md` §4; §2c states the deadline rule itself. Both are the Architecture mandate's. Reading a rule in a file you loaded is not owning the check. *(`panel-review` §2)*
+- **An exception's design-decision judgment reported by the Style axis.** `coding_style.md` §1 routes a suppression, exclusion, or shim to `engineering_judgment.md` §5; the evidence-bar judgment is the Architecture mandate's. Style reports the sighting only. *(`panel-review` §2)*
 - **A write-sequence defect reported as a coupling type, or the reverse.** Distinct defects at the same site, distinct dispositions — the write-sequence check is verdict-bearing with no revert test, a coupling finding is revert-tested and can land advisory. Report each under its own name; §3's same-`file:line` dedup does not merge them. *(`panel-review` §2–3)*
 
 Four more, all `‡` — every page that yields a rule also names where the rule does not fire,

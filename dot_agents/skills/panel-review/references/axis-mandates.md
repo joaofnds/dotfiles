@@ -47,13 +47,13 @@ Axis mandates — pass one per reviewer:
   through one.
   These parts of `coding_style.md` are the Architecture axis's; report no defect
   under any of them: all of §3, §2's opening layering statement, all of §2b,
-  §1's routing of a shared-contract change to `engineering_judgment.md` §4,
+  §1's two routing bullets — a shared-contract change to `engineering_judgment.md` §4, an exception to §5 —
   §2c's *Defensive networking* deadline requirement and its *The client defines
   the contract* port-placement rule, and §2a's *Behavior lives with data* — the
   anemic-model rule. Yours are all of §2a except that one, §2c's
   *Framework-agnostic constructors*, *Safe parsing at boundaries*, and *Defensive
-  networking*'s error-translation clause, §2d, §2e, all of §1 outside the routing
-  rule, and all of §4. That covers §2 exactly once. Two carve-outs inside your
+  networking*'s error-translation clause, §2d, §2e, all of §1 outside those two routing
+  bullets, and all of §4. That covers §2 exactly once. Two carve-outs inside your
   half: §2d is yours for mapper mechanics, but whether a boundary needs an
   anti-corruption layer at all is Architecture's (`engineering_judgment.md` §2);
   and §1's Beck four-criteria bullet is yours at the expression level only —
