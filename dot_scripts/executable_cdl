@@ -1,255 +1,264 @@
-#!/usr/bin/env bash
-# Claude Desktop multi-instance launcher.
-#
-# Each instance is fully isolated by combining three mechanisms:
-#   * CLAUDE_CONFIG_DIR=~/.claude-<name>              — Claude Code's config root
-#   * --user-data-dir=~/.claude-<name>/electron-data  — Electron/Chromium storage
-#   * .app wrapper with CFBundleIdentifier=com.anthropic.claudefordesktop.<name>
-#     — gives macOS-keyed storage (Keychain, Prefs, Caches, SavedState) its own
-#     bucket, so accounts and tokens cannot leak across instances.
-#
-# Instances are auto-discovered from ~/.claude-*/. ~/.claude/ is the unmanaged
-# default install and is never treated as an instance.
+#!/usr/bin/env -S bun --no-env-file
 
-set -euo pipefail
+import {
+  access,
+  cp,
+  lstat,
+  mkdir,
+  mkdtemp,
+  readdir,
+  readlink,
+  rename,
+  rm,
+  rmdir,
+  stat,
+  symlink,
+  writeFile,
+} from "node:fs/promises";
+import { constants } from "node:fs";
+import { homedir, tmpdir } from "node:os";
+import { basename, join } from "node:path";
+import { createInterface } from "node:readline/promises";
 
-CLAUDE_APP="/Applications/Claude.app"
-CLAUDE_BIN="$CLAUDE_APP/Contents/MacOS/Claude"
-WRAPPER_BUNDLE_PREFIX="com.anthropic.claudefordesktop"
+const home = process.env.HOME ?? homedir();
+const claudeApp = process.env.CLAUDE_APP ?? "/Applications/Claude.app";
+const claudeBin = join(claudeApp, "Contents", "MacOS", "Claude");
+const applicationsDir = process.env.APPLICATIONS_DIR ?? "/Applications";
+const compiler = process.env.CC ?? "cc";
+const bundlePrefix = "com.anthropic.claudefordesktop";
+const sharedLinks = ["agents", "CLAUDE.md", "hooks", "plugins", "settings.json", "skills", "statusline-command.js"];
+let terminal;
 
-# Files in ~/.claude/ that get symlinked into each instance.
-# Mirrors the chezmoi pattern in dot_claude-livefire/ and dot_claude-runsmith/.
-SHARED_LINKS=(
-	agents
-	CLAUDE.md
-	hooks
-	plugins
-	settings.json
-	skills
-	statusline-command.js
-)
+class UserError extends Error {}
 
-instance_dir() { echo "$HOME/.claude-$1"; }
-instance_user_data() { echo "$HOME/.claude-$1/electron-data"; }
-instance_bundle_id() { echo "$WRAPPER_BUNDLE_PREFIX.$1"; }
-
-list_instance_names() {
-	local d
-	for d in "$HOME"/.claude-*/; do
-		[ -d "$d" ] || continue
-		basename "$d" | sed 's/^\.claude-//'
-	done
+function instanceDir(name) {
+  return join(home, `.claude-${name}`);
 }
 
-find_wrapper_for_instance() {
-	local target_id
-	target_id=$(instance_bundle_id "$1")
-	local app plist id
-	for app in /Applications/*.app; do
-		plist="$app/Contents/Info.plist"
-		[ -f "$plist" ] || continue
-		id=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$plist" 2>/dev/null || true)
-		if [ "$id" = "$target_id" ]; then
-			echo "$app"
-			return 0
-		fi
-	done
-	return 1
+function userDataDir(name) {
+  return join(instanceDir(name), "electron-data");
 }
 
-ensure_symlinks() {
-	local name="$1"
-	local dir
-	dir=$(instance_dir "$name")
-	mkdir -p "$dir"
-	local link target current
-	for link in "${SHARED_LINKS[@]}"; do
-		target="$HOME/.claude/$link"
-		if [ ! -e "$target" ]; then
-			echo "  ⚠️  source missing: $target (skipping $link)"
-			continue
-		fi
-		if [ -L "$dir/$link" ]; then
-			current=$(readlink "$dir/$link")
-			[ "$current" = "$target" ] && continue
-			echo "  ↻ updating $link"
-			rm "$dir/$link"
-		elif [ -e "$dir/$link" ]; then
-			echo "  ⚠️  $dir/$link exists and is not a symlink (skipping)"
-			continue
-		fi
-		ln -s "$target" "$dir/$link"
-		echo "  + linked $link → $target"
-	done
+function bundleId(name) {
+  return `${bundlePrefix}.${name}`;
 }
 
-launch_default() {
-	echo "🚀 Launching default Claude (unmanaged ~/.claude/)"
-	open -n "$CLAUDE_APP"
+function requireInstanceName(name) {
+  if (!/^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(name ?? "")) {
+    throw new UserError("Instance names must use letters, numbers, underscores, and hyphens only");
+  }
 }
 
-new_instance() {
-	local name="${1:-}"
-	[ -n "$name" ] || {
-		echo "usage: cdl new <name>" >&2
-		exit 1
-	}
-	[ "$name" = "default" ] && {
-		echo "❌ 'default' is reserved for the unmanaged ~/.claude/ instance (run: cdl default)" >&2
-		exit 1
-	}
-	local dir
-	dir=$(instance_dir "$name")
-	if [ -d "$dir" ]; then
-		echo "ℹ️  Instance '$name' already exists at $dir"
-	else
-		echo "📁 Creating instance '$name' at $dir"
-		mkdir -p "$dir"
-		ensure_symlinks "$name"
-	fi
-	launch_instance "$name"
+function requireDisplayName(display) {
+  if (!/^[A-Za-z0-9][A-Za-z0-9 -]*$/.test(display ?? "")) {
+    throw new UserError("Display names must use letters, numbers, spaces, and hyphens only");
+  }
 }
 
-launch_instance() {
-	local name="${1:-}"
-	[ -n "$name" ] || {
-		echo "usage: cdl launch <name>" >&2
-		exit 1
-	}
-	local dir
-	dir=$(instance_dir "$name")
-	[ -d "$dir" ] || {
-		echo "❌ Instance '$name' does not exist (run: cdl new $name)" >&2
-		exit 1
-	}
-
-	local wrapper
-	if wrapper=$(find_wrapper_for_instance "$name"); then
-		echo "🚀 Launching via wrapper: $wrapper"
-		open -n "$wrapper"
-	else
-		local user_data
-		user_data=$(instance_user_data "$name")
-		mkdir -p "$user_data"
-		echo "🚀 Launching '$name' (no wrapper — run: cdl wrapper $name)"
-		CLAUDE_CONFIG_DIR="$dir" "$CLAUDE_BIN" --user-data-dir="$user_data" >/dev/null 2>&1 &
-		disown
-	fi
+async function exists(path) {
+  return lstat(path).then(() => true).catch(() => false);
 }
 
-delete_instance() {
-	local name="${1:-}"
-	[ -n "$name" ] || {
-		echo "usage: cdl delete <name>" >&2
-		exit 1
-	}
-	local dir
-	dir=$(instance_dir "$name")
-	[ -d "$dir" ] || {
-		echo "❌ Instance '$name' does not exist" >&2
-		exit 1
-	}
-
-	local wrapper=""
-	wrapper=$(find_wrapper_for_instance "$name" || true)
-
-	echo "⚠️  About to delete:"
-	echo "   - $dir"
-	[ -n "$wrapper" ] && echo "   - $wrapper"
-	read -r -p "Type 'yes' to confirm: " confirm
-	[ "$confirm" = "yes" ] || {
-		echo "Cancelled."
-		return 1
-	}
-
-	rm -rf "$dir"
-	[ -n "$wrapper" ] && rm -rf "$wrapper"
-	echo "✅ Deleted"
+async function targetExists(path) {
+  return access(path, constants.F_OK).then(() => true).catch(() => false);
 }
 
-# Move ~/Library/Application Support/Claude-<X>/ into the instance's electron-data/.
-# Match is case-insensitive on the suffix after "Claude-".
-migrate_instance() {
-	local name="${1:-}"
-	[ -n "$name" ] || {
-		echo "usage: cdl migrate <name>" >&2
-		exit 1
-	}
-	local dir
-	dir=$(instance_dir "$name")
-	[ -d "$dir" ] || {
-		echo "❌ Instance '$name' does not exist" >&2
-		exit 1
-	}
-
-	local target
-	target=$(instance_user_data "$name")
-	if [ -d "$target" ] && [ -n "$(ls -A "$target" 2>/dev/null)" ]; then
-		echo "❌ $target already exists and is non-empty — refusing to overwrite" >&2
-		return 1
-	fi
-
-	local appsupp="$HOME/Library/Application Support"
-	local lower
-	lower=$(echo "$name" | tr '[:upper:]' '[:lower:]')
-	local match="" candidate base suffix suffix_lower
-	for candidate in "$appsupp"/Claude-*/; do
-		[ -d "$candidate" ] || continue
-		base=$(basename "$candidate")
-		suffix="${base#Claude-}"
-		suffix_lower=$(echo "$suffix" | tr '[:upper:]' '[:lower:]')
-		if [ "$suffix_lower" = "$lower" ]; then
-			match="${candidate%/}"
-			break
-		fi
-	done
-
-	if [ -z "$match" ]; then
-		echo "ℹ️  No external user-data dir found for '$name' — nothing to migrate."
-		return 0
-	fi
-
-	echo "📦 Migrating $match → $target"
-	rmdir "$target" 2>/dev/null || true
-	mv "$match" "$target"
-	echo "✅ Migration complete"
+async function directoryExists(path) {
+  return stat(path).then((info) => info.isDirectory()).catch(() => false);
 }
 
-write_wrapper() {
-	local name="$1"
-	local display="$2"
-	local wrapper="/Applications/Claude $display.app"
+async function isExecutable(path) {
+  const info = await stat(path).catch(() => undefined);
+  return info?.isFile() && (await access(path, constants.X_OK).then(() => true).catch(() => false));
+}
 
-	# Preserve any custom icon across rebuilds.
-	local saved_icon=""
-	if [ -d "$wrapper" ]; then
-		read -r -p "⚠️  $wrapper exists. Overwrite? (y/N): " yn
-		case "$yn" in [yY] | [yY][eE][sS]) ;; *) return 1 ;; esac
-		if [ -f "$wrapper/Contents/Resources/claude-icon.icns" ]; then
-			saved_icon=$(mktemp -t cdl-icon.XXXXXX)
-			cp "$wrapper/Contents/Resources/claude-icon.icns" "$saved_icon"
-		fi
-		rm -rf "$wrapper"
-	fi
+function command(command, args, options = {}) {
+  return Bun.spawnSync([command, ...args], { stderr: "pipe", stdout: "pipe", ...options });
+}
 
-	mkdir -p "$wrapper/Contents/MacOS" "$wrapper/Contents/Resources"
+function commandOutput(result) {
+  return `${new TextDecoder().decode(result.stdout)}${new TextDecoder().decode(result.stderr)}`.trim();
+}
 
-	local bundle_id
-	bundle_id=$(instance_bundle_id "$name")
-	local instance_dir_path
-	instance_dir_path=$(instance_dir "$name")
-	local user_data_path
-	user_data_path=$(instance_user_data "$name")
+function launch(commandName, args, environment = process.env) {
+  const child = Bun.spawn([commandName, ...args], { env: environment, stderr: "ignore", stdout: "ignore" });
+  child.unref();
+}
 
-	cat >"$wrapper/Contents/Info.plist" <<PLIST
-<?xml version="1.0" encoding="UTF-8"?>
+async function ask(prompt) {
+  terminal ??= createInterface({ input: process.stdin, output: process.stdout });
+  return terminal.question(prompt);
+}
+
+async function listInstanceNames() {
+  const entries = await readdir(home, { withFileTypes: true }).catch(() => []);
+  const names = await Promise.all(
+    entries
+      .filter((entry) => entry.name.startsWith(".claude-"))
+      .map(async (entry) => ((await directoryExists(join(home, entry.name))) ? entry.name.slice(".claude-".length) : "")),
+  );
+
+  return names.filter((name) => /^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(name)).sort();
+}
+
+function plistValue(path, key) {
+  const result = command("/usr/libexec/PlistBuddy", ["-c", `Print :${key}`, path]);
+  return result.exitCode === 0 ? commandOutput(result) : "";
+}
+
+async function findWrapper(name) {
+  const targetId = bundleId(name);
+  const entries = await readdir(applicationsDir, { withFileTypes: true }).catch(() => []);
+
+  for (const entry of entries) {
+    if (!entry.name.endsWith(".app")) continue;
+    const app = join(applicationsDir, entry.name);
+    if (!(await directoryExists(app))) continue;
+    if (plistValue(join(app, "Contents", "Info.plist"), "CFBundleIdentifier") === targetId) return app;
+  }
+
+  return "";
+}
+
+async function ensureSymlinks(name) {
+  const directory = instanceDir(name);
+  await mkdir(directory, { recursive: true });
+
+  for (const link of sharedLinks) {
+    const target = join(home, ".claude", link);
+    const destination = join(directory, link);
+    if (!(await targetExists(target))) {
+      const destinationInfo = await lstat(destination).catch(() => undefined);
+      if (destinationInfo?.isSymbolicLink() && (await readlink(destination)) === target) await rm(destination);
+      console.log(`  source missing: ${target} (skipping ${link})`);
+      continue;
+    }
+
+    const destinationInfo = await lstat(destination).catch(() => undefined);
+    if (destinationInfo?.isSymbolicLink()) {
+      if ((await readlink(destination)) === target) continue;
+      console.log(`  updating ${link}`);
+      await rm(destination);
+    } else if (destinationInfo) {
+      console.log(`  ${destination} exists and is not a symlink (skipping)`);
+      continue;
+    }
+
+    await symlink(target, destination);
+    console.log(`  linked ${link} -> ${target}`);
+  }
+}
+
+function launchDefault() {
+  console.log("Launching default Claude Desktop (unmanaged ~/.claude/)");
+  launch("open", ["-n", claudeApp]);
+}
+
+async function launchInstance(name) {
+  requireInstanceName(name);
+  const directory = instanceDir(name);
+  if (!(await directoryExists(directory))) throw new UserError(`Instance '${name}' does not exist (run: cdl new ${name})`);
+
+  const wrapper = await findWrapper(name);
+  if (wrapper) {
+    console.log(`Launching via wrapper: ${wrapper}`);
+    launch("open", ["-n", wrapper]);
+    return;
+  }
+
+  const userData = userDataDir(name);
+  await mkdir(userData, { recursive: true });
+  console.log(`Launching '${name}' (no wrapper - run: cdl wrapper ${name})`);
+  launch(claudeBin, [`--user-data-dir=${userData}`], { ...process.env, CLAUDE_CONFIG_DIR: directory });
+}
+
+async function newInstance(name) {
+  requireInstanceName(name);
+  if (name === "default") throw new UserError("'default' is reserved for the unmanaged ~/.claude/ instance (run: cdl default)");
+
+  const directory = instanceDir(name);
+  if (await directoryExists(directory)) {
+    console.log(`Instance '${name}' already exists at ${directory}`);
+  } else {
+    console.log(`Creating instance '${name}' at ${directory}`);
+    await ensureSymlinks(name);
+  }
+
+  await launchInstance(name);
+}
+
+async function deleteInstance(name) {
+  requireInstanceName(name);
+  const directory = instanceDir(name);
+  if (!(await directoryExists(directory))) throw new UserError(`Instance '${name}' does not exist`);
+
+  const wrapper = await findWrapper(name);
+  console.log("About to delete:");
+  console.log(`  - ${directory}`);
+  if (wrapper) console.log(`  - ${wrapper}`);
+  if ((await ask("Type 'yes' to confirm: ")).trim() !== "yes") throw new UserError("Cancelled.");
+
+  await rm(directory, { force: true, recursive: true });
+  if (wrapper) await rm(wrapper, { force: true, recursive: true });
+  console.log("Deleted");
+}
+
+function claudeIsRunning() {
+  const exact = command("pgrep", ["-x", "Claude"]);
+  if (exact.exitCode === 0) return true;
+  if (exact.exitCode !== 1) throw new UserError("Cannot determine whether Claude Desktop is running");
+
+  const byPath = command("pgrep", ["-f", claudeBin]);
+  if (byPath.exitCode === 0) return true;
+  if (byPath.exitCode !== 1) throw new UserError("Cannot determine whether Claude Desktop is running");
+
+  return false;
+}
+
+async function migrateInstance(name) {
+  requireInstanceName(name);
+  if (!(await directoryExists(instanceDir(name)))) throw new UserError(`Instance '${name}' does not exist`);
+
+  const target = userDataDir(name);
+  const targetInfo = await lstat(target).catch(() => undefined);
+  if (targetInfo) {
+    if (!targetInfo.isDirectory() || (await readdir(target)).length > 0) {
+      throw new UserError(`${target} exists and is not an empty directory - refusing to overwrite`);
+    }
+  }
+  if (claudeIsRunning()) throw new UserError("Quit Claude Desktop before migrating its user data");
+
+  const supportDirectory = join(home, "Library", "Application Support");
+  const entries = await readdir(supportDirectory, { withFileTypes: true }).catch(() => []);
+  let match;
+  for (const entry of entries) {
+    if (!entry.name.startsWith("Claude-") || entry.name.slice("Claude-".length).toLowerCase() !== name.toLowerCase()) continue;
+    if (await directoryExists(join(supportDirectory, entry.name))) {
+      match = entry;
+      break;
+    }
+  }
+  if (!match) {
+    console.log(`No external user-data dir found for '${name}' - nothing to migrate.`);
+    return;
+  }
+
+  const source = join(supportDirectory, match.name);
+  console.log(`Migrating ${source} -> ${target}`);
+  if (targetInfo) await rmdir(target);
+  await rename(source, target);
+  console.log("Migration complete");
+}
+
+function plist(name, display) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key><string>claude-launcher</string>
-    <key>CFBundleIdentifier</key><string>$bundle_id</string>
-    <key>CFBundleName</key><string>Claude $display</string>
-    <key>CFBundleDisplayName</key><string>Claude $display</string>
+    <key>CFBundleIdentifier</key><string>${bundleId(name)}</string>
+    <key>CFBundleName</key><string>Claude ${display}</string>
+    <key>CFBundleDisplayName</key><string>Claude ${display}</string>
     <key>CFBundleVersion</key><string>1.0</string>
     <key>CFBundleShortVersionString</key><string>1.0</string>
     <key>CFBundlePackageType</key><string>APPL</string>
@@ -259,145 +268,166 @@ write_wrapper() {
     <key>NSHighResolutionCapable</key><true/>
 </dict>
 </plist>
-PLIST
+`;
+}
 
-	# Compile a native arm64 Mach-O launcher. A shell-script executable inside
-	# an .app has no architecture slice, so LaunchServices flags the bundle as
-	# Intel-only — first showing the "Intel app" deprecation banner, then
-	# eventually refusing to launch at all. A real Mach-O removes the ambiguity.
-	local src
-	src=$(mktemp -t cdl-launcher.XXXXXX).c
-	cat >"$src" <<C_SRC
-#include <stdlib.h>
+function cString(value) {
+  return JSON.stringify(value).replaceAll("\u2028", "\\u2028").replaceAll("\u2029", "\\u2029");
+}
+
+function wrapperArchitecture() {
+  if (process.arch !== "x64") return process.arch;
+  const translated = command("sysctl", ["-in", "sysctl.proc_translated"]);
+  return translated.exitCode === 0 && commandOutput(translated) === "1" ? "arm64" : "x86_64";
+}
+
+async function writeWrapper(name, display) {
+  const id = bundleId(name);
+  const wrapper = join(applicationsDir, `Claude ${display}.app`);
+  if (await directoryExists(wrapper)) {
+    if (plistValue(join(wrapper, "Contents", "Info.plist"), "CFBundleIdentifier") !== id) {
+      throw new UserError(`Refusing to overwrite ${wrapper} because it is not this instance's wrapper`);
+    }
+    if (!/^(y|yes)$/i.test((await ask(`${wrapper} exists. Overwrite? (y/N): `)).trim())) throw new UserError("Cancelled.");
+  }
+
+  const stagingRoot = await mkdtemp(join(applicationsDir, ".cdl-wrapper."));
+  const stagedWrapper = join(stagingRoot, `Claude ${display}.app`);
+  const stagedContents = join(stagedWrapper, "Contents");
+  await mkdir(join(stagedContents, "MacOS"), { recursive: true });
+  await mkdir(join(stagedContents, "Resources"), { recursive: true });
+  await writeFile(join(stagedContents, "Info.plist"), plist(name, display));
+
+  const sourceDirectory = await mkdtemp(join(tmpdir(), "cdl-launcher-"));
+  const source = join(sourceDirectory, "claude-launcher.c");
+  const userData = userDataDir(name);
+  await writeFile(
+    source,
+    `#include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
 int main(void) {
-    mkdir("$user_data_path", 0755);
-    setenv("CLAUDE_CONFIG_DIR", "$instance_dir_path", 1);
-    char *args[] = { "Claude", "--user-data-dir=$user_data_path", NULL };
-    execv("$CLAUDE_BIN", args);
+    mkdir(${cString(userData)}, 0755);
+    setenv("CLAUDE_CONFIG_DIR", ${cString(instanceDir(name))}, 1);
+    char *args[] = { "Claude", ${cString(`--user-data-dir=${userData}`)}, NULL };
+    execv(${cString(claudeBin)}, args);
     return 1;
 }
-C_SRC
-	if ! cc -arch arm64 -O2 -o "$wrapper/Contents/MacOS/claude-launcher" "$src" 2>&1; then
-		rm -f "$src"
-		echo "❌ Failed to compile launcher (need Xcode Command Line Tools: xcode-select --install)" >&2
-		return 1
-	fi
-	rm -f "$src"
+`,
+  );
 
-	if [ -n "$saved_icon" ]; then
-		mv "$saved_icon" "$wrapper/Contents/Resources/claude-icon.icns"
-	else
-		local icon
-		icon=$(find "$CLAUDE_APP/Contents/Resources" -maxdepth 1 -name "*.icns" 2>/dev/null | head -1 || true)
-		[ -n "$icon" ] && cp "$icon" "$wrapper/Contents/Resources/claude-icon.icns"
-	fi
+  const compile = command(compiler, ["-arch", wrapperArchitecture(), "-O2", "-o", join(stagedContents, "MacOS", "claude-launcher"), source]);
+  await rm(sourceDirectory, { force: true, recursive: true });
+  if (compile.exitCode !== 0) {
+    await rm(stagingRoot, { force: true, recursive: true });
+    throw new UserError(`Failed to compile launcher (need Xcode Command Line Tools: xcode-select --install)\n${commandOutput(compile)}`);
+  }
 
-	# Force Launch Services to register the new bundle ID; otherwise macOS may
-	# cache the old identifier and route launches to the wrong app.
-	/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$wrapper" 2>/dev/null || true
+  const existingIcon = join(wrapper, "Contents", "Resources", "claude-icon.icns");
+  const stagedIcon = join(stagedContents, "Resources", "claude-icon.icns");
+  if (await exists(existingIcon)) {
+    await cp(existingIcon, stagedIcon);
+  } else {
+    const resources = join(claudeApp, "Contents", "Resources");
+    const icon = (await readdir(resources).catch(() => [])).find((entry) => entry.endsWith(".icns"));
+    if (icon) await cp(join(resources, icon), stagedIcon);
+  }
 
-	echo "✅ Wrapper: $wrapper (bundle: $bundle_id)"
+  let backup = "";
+  try {
+    if (await directoryExists(wrapper)) {
+      backup = await mkdtemp(join(applicationsDir, ".cdl-previous."));
+      await rmdir(backup);
+      await rename(wrapper, backup);
+    }
+    await rename(stagedWrapper, wrapper);
+    await rmdir(stagingRoot);
+    if (backup) await rm(backup, { force: true, recursive: true });
+  } catch (error) {
+    if (backup) await rename(backup, wrapper).catch(() => {});
+    await rm(stagingRoot, { force: true, recursive: true });
+    throw error;
+  }
+
+  command("/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister", ["-f", wrapper]);
+  console.log(`Wrapper: ${wrapper} (bundle: ${id})`);
 }
 
-create_wrapper_cmd() {
-	local name="${1:-}"
-	[ -n "$name" ] || {
-		echo "usage: cdl wrapper <name>" >&2
-		exit 1
-	}
-	[ -d "$(instance_dir "$name")" ] || {
-		echo "❌ Instance '$name' does not exist (run: cdl new $name)" >&2
-		exit 1
-	}
+async function createWrapper(name) {
+  requireInstanceName(name);
+  if (!(await directoryExists(instanceDir(name)))) throw new UserError(`Instance '${name}' does not exist (run: cdl new ${name})`);
 
-	local default_display
-	default_display=$(echo "$name" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
-	read -r -p "Display name suffix (shown as 'Claude <suffix>') [$default_display]: " display
-	display="${display:-$default_display}"
-	write_wrapper "$name" "$display"
+  const defaultDisplay = `${name[0].toUpperCase()}${name.slice(1)}`;
+  const display = (await ask(`Display name suffix (shown as 'Claude <suffix>') [${defaultDisplay}]: `)).trim() || defaultDisplay;
+  requireDisplayName(display);
+  await writeWrapper(name, display);
 }
 
-repair() {
-	local name="${1:-}"
-	[ -n "$name" ] || {
-		echo "usage: cdl repair <name>" >&2
-		exit 1
-	}
-	[ -d "$(instance_dir "$name")" ] || {
-		echo "❌ Instance '$name' does not exist" >&2
-		exit 1
-	}
-	echo "🔧 Repairing symlinks for '$name'"
-	ensure_symlinks "$name"
+async function repair(name) {
+  requireInstanceName(name);
+  if (!(await directoryExists(instanceDir(name)))) throw new UserError(`Instance '${name}' does not exist`);
+
+  console.log(`Repairing symlinks for '${name}'`);
+  await ensureSymlinks(name);
 }
 
-list_cmd() {
-	echo "Claude Desktop instances"
-	echo "========================"
-	local found=0 name app wrapper
-	while IFS= read -r name; do
-		found=1
-		wrapper="(no wrapper)"
-		if app=$(find_wrapper_for_instance "$name"); then
-			wrapper="$(basename "$app")"
-		fi
-		printf "  %-20s  %s\n" "$name" "$wrapper"
-	done < <(list_instance_names)
-	[ "$found" -eq 1 ] || echo "  (none — create one with: cdl new <name>)"
+async function listInstances() {
+  console.log("Claude Desktop instances");
+  console.log("========================");
+  const names = await listInstanceNames();
+  if (names.length === 0) {
+    console.log("  (none - create one with: cdl new <name>)");
+    return;
+  }
+  for (const name of names) {
+    const wrapper = await findWrapper(name);
+    console.log(`  ${name.padEnd(20)}  ${wrapper ? basename(wrapper) : "(no wrapper)"}`);
+  }
 }
 
-diagnose() {
-	echo "🔍 Diagnostics"
-	echo "=============="
-	if [ -d "$CLAUDE_APP" ]; then echo "✅ Claude.app present"; else
-		echo "❌ Claude.app missing"
-		return
-	fi
-	if [ -x "$CLAUDE_BIN" ]; then echo "✅ Claude binary executable"; else echo "❌ Claude binary not executable"; fi
-	echo
-	echo "Instances:"
-	local name dir user_data wrapper link
-	while IFS= read -r name; do
-		dir=$(instance_dir "$name")
-		user_data=$(instance_user_data "$name")
-		echo "  📂 $name"
-		echo "     dir:        $dir"
-		if [ -d "$user_data" ]; then
-			echo "     user-data:  $user_data (exists)"
-		else
-			echo "     user-data:  $user_data (created on launch)"
-		fi
-		wrapper=$(find_wrapper_for_instance "$name" || true)
-		if [ -n "$wrapper" ]; then echo "     wrapper:    $wrapper"; else echo "     wrapper:    (none)"; fi
-		for link in "${SHARED_LINKS[@]}"; do
-			if [ -L "$dir/$link" ]; then
-				:
-			elif [ -e "$dir/$link" ]; then
-				echo "     ⚠️  $link is not a symlink"
-			else
-				echo "     ⚠️  $link missing"
-			fi
-		done
-	done < <(list_instance_names)
-	echo
-	echo "External user-data dirs (candidates for migration):"
-	local appsupp="$HOME/Library/Application Support" d base suffix
-	local stray=0
-	for d in "$appsupp"/Claude-*/; do
-		[ -d "$d" ] || continue
-		stray=1
-		base=$(basename "$d")
-		suffix="${base#Claude-}"
-		echo "  - $d  (cdl migrate $(echo "$suffix" | tr '[:upper:]' '[:lower:]'))"
-	done
-	[ "$stray" -eq 1 ] || echo "  (none)"
+async function diagnose() {
+  console.log("Claude Desktop diagnostics");
+  console.log("========================");
+  console.log(`${await directoryExists(claudeApp) ? "present" : "missing"}: ${claudeApp}`);
+  console.log(`${await isExecutable(claudeBin) ? "executable" : "not executable"}: ${claudeBin}`);
+  console.log("\nInstances:");
+  for (const name of await listInstanceNames()) {
+    const directory = instanceDir(name);
+    const userData = userDataDir(name);
+    const wrapper = await findWrapper(name);
+    console.log(`  ${name}`);
+    console.log(`    dir:       ${directory}`);
+    console.log(`    user-data: ${userData} (${(await directoryExists(userData)) ? "exists" : "created on launch"})`);
+    console.log(`    wrapper:   ${wrapper || "(none)"}`);
+    for (const link of sharedLinks) {
+      const destination = join(directory, link);
+      const info = await lstat(destination).catch(() => undefined);
+      if (info?.isSymbolicLink()) {
+        if (await targetExists(destination)) continue;
+        console.log(`    ${link}: broken symlink`);
+        continue;
+      }
+      console.log(`    ${link}: ${info ? "not a symlink" : "missing"}`);
+    }
+  }
+
+  const supportDirectory = join(home, "Library", "Application Support");
+  const external = await Promise.all(
+    (await readdir(supportDirectory, { withFileTypes: true }).catch(() => []))
+      .filter((entry) => entry.name.startsWith("Claude-"))
+      .map(async (entry) => ((await directoryExists(join(supportDirectory, entry.name))) ? entry.name : "")),
+  );
+  console.log("\nExternal user-data dirs (candidates for migration):");
+  const candidates = external.filter(Boolean);
+  if (candidates.length === 0) console.log("  (none)");
+  for (const directory of candidates) {
+    const name = directory.slice("Claude-".length).toLowerCase();
+    console.log(`  - ${join(supportDirectory, directory)} (cdl migrate ${name})`);
+  }
 }
 
-usage() {
-	cat <<USAGE
-cdl — Claude Desktop multi-instance launcher
+function usage() {
+  console.log(`cdl - Claude Desktop multi-instance launcher
 
 Usage:
   cdl list                  List all instances
@@ -409,27 +439,62 @@ Usage:
   cdl repair <name>         Re-sync shared symlinks from ~/.claude/
   cdl migrate <name>        Move ~/Library/Application Support/Claude-<X>/ into the instance
   cdl delete <name>         Delete instance dir (and wrapper if present)
-  cdl diagnose              Show instance state and migration candidates
-USAGE
+  cdl diagnose              Show instance state and migration candidates`);
 }
 
-if [ ! -d "$CLAUDE_APP" ]; then
-	echo "❌ Claude.app not found in /Applications. Install from https://claude.ai/download" >&2
-	exit 1
-fi
+async function main() {
+  const [commandName = "", ...args] = process.argv.slice(2);
+  const allowsMissingApp = ["", "help", "-h", "--help", "list", "diagnose"].includes(commandName);
+  if (!allowsMissingApp && !(await directoryExists(claudeApp))) {
+    throw new UserError(`Claude.app not found at ${claudeApp}. Install it from https://claude.ai/download`);
+  }
 
-cmd="${1:-}"
-shift || true
-case "$cmd" in
-"" | help | -h | --help) usage ;;
-list) list_cmd ;;
-default) launch_default ;;
-new) new_instance "${1:-}" ;;
-launch) if [ "${1:-}" = "default" ]; then launch_default; else launch_instance "${1:-}"; fi ;;
-delete | rm) delete_instance "${1:-}" ;;
-wrapper) create_wrapper_cmd "${1:-}" ;;
-repair) repair "${1:-}" ;;
-migrate) migrate_instance "${1:-}" ;;
-diagnose) diagnose ;;
-*) launch_instance "$cmd" ;;
-esac
+  switch (commandName) {
+    case "":
+    case "help":
+    case "-h":
+    case "--help":
+      usage();
+      break;
+    case "list":
+      await listInstances();
+      break;
+    case "default":
+      launchDefault();
+      break;
+    case "new":
+      await newInstance(args[0] ?? "");
+      break;
+    case "launch":
+      if (args[0] === "default") launchDefault();
+      else await launchInstance(args[0] ?? "");
+      break;
+    case "delete":
+    case "rm":
+      await deleteInstance(args[0] ?? "");
+      break;
+    case "wrapper":
+      await createWrapper(args[0] ?? "");
+      break;
+    case "repair":
+      await repair(args[0] ?? "");
+      break;
+    case "migrate":
+      await migrateInstance(args[0] ?? "");
+      break;
+    case "diagnose":
+      await diagnose();
+      break;
+    default:
+      await launchInstance(commandName);
+  }
+}
+
+try {
+  await main();
+} catch (error) {
+  console.error(`Error: ${error instanceof Error ? error.message : error}`);
+  process.exitCode = 1;
+} finally {
+  terminal?.close();
+}
