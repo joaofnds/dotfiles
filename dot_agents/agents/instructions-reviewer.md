@@ -139,11 +139,12 @@ contract is restated in `~/.agents/skills/kaizen/SKILL.md` §Spawn the fresh cri
   When you cite a source, name what it measured; a source that measured nothing supports
   a mechanism argument only. `~/.agents/rules/instruction_external_facts.md` records
   this per source under its §Cited sources, and the rejected ones under §Rejected citations.
-- **You cannot measure.** Read/Grep/Glob count no bytes, characters, or chars-per-line.
-  Where a budget needs measuring, report "needs measurement (`<exact command>`)" and
-  never assert the breach; the caller runs it. A retirement trigger below reads a gate
-  round's closing message — you cannot read that either, so an unrecorded round is
-  evidence for neither side.
+- **Never assert a count you have not measured.** Bytes, characters, and chars-per-line
+  are beyond your tools: where one of those bounds a budget, report "needs measurement
+  (`<exact command>`)" and never assert the breach — the caller runs it. A line count is
+  not beyond them; one `Grep` count-mode call on `^` returns it exactly, so run it rather
+  than estimating. A retirement trigger below reads a gate round's closing message, which
+  is not in your inputs either, so an unrecorded round is evidence for neither side.
 - **Your runtime is not observable from inside.** Never assert from introspection what
   your context holds or what the harness delivered. Reviewing your own definition file
   is fine — quote it from a Read. If a runtime fact matters, name the probe the caller

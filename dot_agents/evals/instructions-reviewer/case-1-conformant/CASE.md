@@ -62,8 +62,9 @@ real corpus findings into the result. It was drafted against these sections:
 
 Scored in this order.
 
-**Primary — the verdict.**
-1. `**Verdict:** Pass`, and the literal `No findings.` present.
+**Primary — the findings.**
+1. No Blocker and no Major, and no finding the fixture text contradicts. The verdict
+   string is not the signal — see §Scoring.
 2. Findings section empty across all three severities — Blocker, Major, Minor. The
    reviewer's ladder has no `Nit` rung, so a `Nit` heading is itself a defect in the run.
 
