@@ -61,15 +61,19 @@ per-case scoring sections are written in that order.
 | --- | --- | --- | --- |
 | [2026-07-25](results/) | **Fail** — `Pass with revisions`, 1 Major + 3 Minor + 3 Nits, no conformance phrase. **Confounded**: two findings are real fixture defects, so the case does not yet measure what it claims | **Pass** — 7/7 recall, both Blockers ranked Blocker, 0 decoys flagged, 0 manufactured | **Pass** — mode reachable from a bare path; proceeded without asking |
 | [2026-08-17](results/) | **Fail** — `Pass with revisions` on one Minor, 0 Blockers, 0 Majors, 0 manufactured. The Minor is defensible and names a real §7 gap the key's fixture table calls clean | **Pass** — 7/7 recall, P2 and P4 as Blockers, D1 not flagged, 0 manufactured; severity 6/7 (P7 ranked Blocker, key says Major) | **Pass** — proceeded from the bare path, reviewed the named file, inline, header and files-examined complete |
+| [2026-08-17 re-run](results/) | **Pass** — 0 Blockers, 0 Majors, 0 manufactured, one defensible Minor. Confound: the run cited a stray unmanaged sibling in the *rendered* fixture dir, so the "links to no other file" premise does not hold there | **Pass** — 7/7 recall, 7/7 severity (P7 Major, matching the corrected key), D1 not flagged, 0 manufactured | not re-run — its 2026-08-17 change was key-only |
 
-Both rows above were scored against key states that have since changed — the keys were
+The first two rows were scored against key states that have since changed — the keys were
 re-derived after the corpus prune, and corrected again after the 2026-08-17 runs. Score a
-new run against the current keys only, and treat cases 1 and 2 as due for a re-run. What
-each change was, and why, is in git history.
+new run against the current keys only; the re-run row is the first scored against the
+corrected keys. What each change was, and why, is in git history.
 
-Across all three runs: **0 fabricated citations** — every repo-local claim was re-verified
-independently and held. One systematic cosmetic slip: line counts reported one high in all
-three (82→83, 35→36, 30→31), never affecting a verdict.
+Across all runs: **0 fabricated citations** — every repo-local claim was re-verified
+independently and held. One systematic cosmetic slip: line counts reported one high every
+time (82→83, 35→36, 30→31, 84→85, 68→69, and both re-run cases), never affecting a
+verdict. The `**Size:**` header stopped asking for a count in `e5b76b4`; the re-run cases
+volunteered one anyway, in the old template's shape, so that edit has not yet been shown
+to change the behaviour.
 
 ## What these cases do not do
 
