@@ -60,6 +60,7 @@ per-case scoring sections are written in that order.
 | Date | Case 1 (clean) | Case 2 (defects) | Case 3 (bare path) |
 | --- | --- | --- | --- |
 | [2026-07-25](results/) | **Fail** — `Pass with revisions`, 1 Major + 3 Minor + 3 Nits, no conformance phrase. **Confounded**: two findings are real fixture defects, so the case does not yet measure what it claims | **Pass** — 7/7 recall, both Blockers ranked Blocker, 0 decoys flagged, 0 manufactured | **Pass** — mode reachable from a bare path; proceeded without asking |
+| [2026-08-17](results/) | **Fail** — `Pass with revisions` on one Minor, 0 Blockers, 0 Majors, 0 manufactured. The Minor is defensible and names a real §7 gap the key's fixture table calls clean | **Pass** — 7/7 recall, P2 and P4 as Blockers, D1 not flagged, 0 manufactured; severity 6/7 (P7 ranked Blocker, key says Major) | **Pass** — proceeded from the bare path, reviewed the named file, inline, header and files-examined complete |
 
 All three answer keys were re-derived 2026-08-17 against the post-prune reviewer (the
 corpus prune that landed `writing_instructions.md` and split the reviewer's §1/§7/§8
