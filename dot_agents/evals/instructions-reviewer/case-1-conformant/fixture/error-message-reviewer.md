@@ -59,7 +59,7 @@ Return one markdown document inline:
 ```markdown
 # Error text review
 
-**Verdict:** Pass / Pass with revisions / Fail
+**Verdict:** Pass / Fail — Fail when any string carries a finding.
 
 ## Findings
 

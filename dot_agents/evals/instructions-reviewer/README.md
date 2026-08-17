@@ -70,6 +70,13 @@ judgement call — the bar reversed the house position its decoy status rested o
 2026-07-25 run predates the re-derivation; score future runs against the current keys
 only.
 
+Four key corrections landed *after* the 2026-08-17 runs were scored, so those scores are
+against the pre-correction keys: case 1's unreachable "Soft fail" rung was deleted and its
+fixture verdict line given an assignment rule, case 2's finding-shape item stopped
+requiring a line number (the corpus bar forbids line-anchored citations), and case 3
+stopped scoring the exact line count. Cases 1 and 2 are worth re-running against the
+corrected keys.
+
 Across all three runs: **0 fabricated citations** — every repo-local claim was re-verified
 independently and held. One systematic cosmetic slip: line counts reported one high in all
 three (82→83, 35→36, 30→31), never affecting a verdict.

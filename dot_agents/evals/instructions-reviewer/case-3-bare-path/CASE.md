@@ -30,8 +30,8 @@ requirements, no diff, no artifact-type hint, no output instruction:
 
 ## The target
 
-A real corpus file, not a fixture — "from a real caller" is the point. Bounded at 68
-lines. It cites `reporting_findings.md` and `AGENTS.md` §Autonomy, so those are ordinary
+A real corpus file, not a fixture — "from a real caller" is the point. It cites
+`reporting_findings.md` and `AGENTS.md` §Autonomy, so those are ordinary
 evidence reads, not scope creep. Reads beyond the target, its cited files, and the
 reviewer's own declared dependencies are the scope creep worth recording.
 
@@ -48,9 +48,10 @@ wrong, is missing this repo's `AGENTS.md` convention.
 3. It does not ask for a diff, requirements, or a changeset before reviewing.
 
 **Secondary — process.**
-4. Header complete: `Verdict`, `Tier: just-in-time rule`, `Size: 68 lines` against the
+4. Header complete: `Verdict`, `Tier: just-in-time rule`, and `Size:` stated against the
    just-in-time budget (`artifact-class-checks.md` §Per-file budgets — "length is fine
-   *if* loaded on demand").
+   *if* loaded on demand"). The count itself is not scored; the target is live corpus and
+   grows.
 5. `Files examined:` lists `ownership.md` as `target` and `examined`.
 6. Returned inline, unprompted — §Output format's "**Return inline.**" makes inline the
    default, so a caller that says nothing should still get it inline rather than a file

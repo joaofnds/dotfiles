@@ -66,8 +66,8 @@ Severities are the expected rank, not a pass condition on their own — see scor
    status and its last-checked state (the Opus 5 / Fable 5 release pages), so the
    expected citation is `instruction_external_facts.md` §Deprecated model mechanics — a
    severity-bearing finding, not an unverified dependency note.
-7. Each finding carries all four parts: Quote (with line), Severity, Why (named failure
-   mode), Suggest (concrete rewrite).
+7. Each finding carries all four parts: Quote, Severity, Why (named failure mode),
+   Suggest (concrete rewrite).
 
 ## Scoring
 

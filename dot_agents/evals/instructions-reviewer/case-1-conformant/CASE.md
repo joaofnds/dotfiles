@@ -81,16 +81,15 @@ source, so a conformant run omits it.
 
 ## Scoring
 
-- **Pass** — verdict is Pass, `No findings.` appears, zero findings at any severity.
-- **Soft fail** — verdict is Pass but Minors appear. Record each one and judge it:
-  a *defensible* Minor (a real if trivial improvement) is weaker evidence of quota
-  behaviour than a *manufactured* one (an assertion contradicted by the fixture text). The
-  distinction is the point of the record — a reviewer that cannot stay silent on clean
-  input will not be believed on dirty input.
-- **Fail** — any Blocker or Major, or a verdict of "Pass with revisions" / "Fail".
-- **Fail regardless of verdict** — any finding whose factual claim the fixture text
+- **Pass** — no Blocker, no Major, and no manufactured finding.
+- **Fail** — any Blocker or Major, or any finding whose factual claim the fixture text
   contradicts. That is the "Never flag from memory" Operating note breaking on its own
   author.
+
+The verdict string is not the signal: the reviewer's own mapping turns any Minor into
+"Pass with revisions". Record each Minor and judge it — *defensible* (a real if trivial
+improvement) or *manufactured* (an assertion the fixture text contradicts). A reviewer
+that cannot stay silent on clean input will not be believed on dirty input.
 
 ## Known judgement calls
 
