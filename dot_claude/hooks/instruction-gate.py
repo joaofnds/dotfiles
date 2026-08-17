@@ -10,7 +10,7 @@ Points at ~/.agents/AGENTS.md rather than restating the gate: the steps, the
 `evals/` exemption, the placement rule, and the "not once per file" rerun bound
 all live there, and that file is either already in context or reachable at the
 path the block names (built-in Explore and Plan sub-agents skip AGENTS.md —
-instruction_external_facts.md §1 standing list, 2026-08-03 pass).
+instruction_external_facts.md §Harness mechanics).
 
 Suppression is per path per session: a later batch that re-edits an
 already-nudged file emits nothing. That batch is exactly what AGENTS.md's

@@ -85,9 +85,25 @@ for f in "$root"/dot_claude/output-styles/*.md; do
   fi
 done
 
+# Line-ceiling exemption, 2026-08-17: instructions-reviewer.md. The corpus prune
+# rewrapped its ~190-char lines to corpus width, doubling its line count while its
+# content shrank 27% (46.8KB -> 30.3KB, plus a 4.1KB split into
+# references/artifact-class-checks.md). The 250 ceiling stays for every other agent;
+# this file is bounded by bytes instead: FAIL if it exceeds its post-prune size.
+# Delete this exemption if the file ever drops under the line ceiling.
 printf '\nSub-agent system prompts\n'
 for f in "$corpus"/agents/*.md; do
   [ -e "$f" ] || continue
+  rel="${f#"$root"/}"
+  if [ "$rel" = "dot_agents/agents/instructions-reviewer.md" ]; then
+    bytes=$(wc -c < "$f" | tr -d ' ')
+    if [ "$bytes" -gt 31000 ]; then
+      fail "$rel — ${bytes} bytes, byte ceiling 31000 (line-ceiling exemption above)"
+    else
+      note "$rel — $(wc -l < "$f" | tr -d ' ') lines, exempt from the 250 line ceiling; ${bytes}/31000 bytes"
+    fi
+    continue
+  fi
   check "$f" 150 250 agent
 done
 
@@ -117,7 +133,7 @@ for f in "$corpus"/skills/*/references/*.md; do
 done
 
 # A skill body is re-attached after auto-compaction only up to its first 5,000 tokens
-# (instruction_external_facts.md §1, 2026-08-06 second pass), and re-invoking appends an
+# (instruction_external_facts.md §Harness mechanics), and re-invoking appends an
 # already-loaded note rather than a second copy — so everything past that point is gone for
 # the rest of a long session and cannot be recovered. Lines cannot see this; a body of few,
 # long lines passes the 500-line ceiling and still overflows. 20,000 chars is 5,000 tokens
@@ -142,14 +158,9 @@ note "checked $(ls "$corpus"/skills/*/SKILL.md 2>/dev/null | wc -l | tr -d ' ') 
 # finding, not a false positive — at corpus density its content is ~720 lines
 # against a 250 ceiling — but a permanently red gate hides the next real breach.
 #
-# Two splits have landed against it (references/chezmoi-targets.md and
-# references/dispatch-fields.md), moving it 188 -> 181 chars/line. Both were
-# genuine branch-specific extractions and neither cleared the threshold, which is
-# the honest measure of how much of that file is load-bearing on every review.
-# Further splits must come from material a review genuinely skips; do not move a
-# section every review needs just to clear this number, and do not raise the
-# threshold. Delete this exemption when the file is under it.
-density_exempt="dot_agents/agents/instructions-reviewer.md"
+# Density exemption retired 2026-08-17: instructions-reviewer.md now wraps at corpus
+# width, so the density check applies to it like any other file.
+density_exempt=""
 
 printf '\nLine density (chars/line, vs corpus median)\n'
 median=$(printf '%s' "$densities" | awk '{print $1}' | sort -n | awk '{v[NR]=$1} END {print (NR ? v[int((NR+1)/2)] : 0)}')
@@ -202,7 +213,7 @@ fi
 # This is the one class of decay a gate review cannot see by construction: the citing file
 # is not in the diff that moved the heading, so no diff-seeded review ever opens it. Only a
 # standing sweep or this check catches it. (Added 2026-08-07, after one pass found three
-# mirror declarations in instruction_external_facts.md §1 naming sections that had moved to
+# mirror declarations in instruction_external_facts.md §Harness mechanics naming sections that had moved to
 # agents/references/dispatch-fields.md — the paragraph whose whole job is making "edit every
 # site or none" executable — plus two testing-module pointers aimed at the wrong section.)
 #

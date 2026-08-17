@@ -105,7 +105,7 @@ withholding content for shortness (`~/code/dotfiles/.boris/CONTEXT.md` §Writing
 
 Evidence for the rules in this file is recorded in
 `~/code/dotfiles/.boris/2026-08-12-reply-readability-research.md`. That file is uncommitted and
-local to one machine, and its sources are not yet in `instruction_external_facts.md` §3 (owed).
+local to one machine, and its sources are not yet in `instruction_external_facts.md` §Cited sources (owed).
 A Read that fails means the record is absent, not that the rule lapsed. Ask the user before
 changing a rule whose record you cannot open.
 
