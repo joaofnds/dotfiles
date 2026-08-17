@@ -19,7 +19,7 @@
   "disableArtifact": true,
 
   "permissions": {
-    "defaultMode": "bypassPermissions",
+    "defaultMode": "auto",
     "deny": [
       "EnterPlanMode",
       "ExitPlanMode",
