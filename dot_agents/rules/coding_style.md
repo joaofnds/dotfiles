@@ -11,9 +11,7 @@ Say which rule you set aside and why — resolving a conflict silently is the de
 rule you claim outranks it must be quoted from a file you opened this session.** A precedence claim citing
 a document you did not read is a fabricated authority, and it is worse than the silent resolution it
 replaces: the record now says the conflict was settled when it was not. When no file states the winner,
-say so and ask — do not infer a ladder. (Added 2026-07-31: a `Decision:` block set aside
-`coding_style_typescript.md` §4 on the strength of a "CLAUDE.md prohibition" that no file in the corpus
-contains.)
+say so and ask — do not infer a ladder.
 
 Apply these patterns in proportion to demonstrated domain and integration complexity.
 Preserve established project structure, dependencies, and idioms unless they conflict

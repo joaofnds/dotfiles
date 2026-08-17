@@ -291,14 +291,14 @@ reports under the parts the Architecture mandate names — §3 entire, §2b, §2
 *Behavior lives with data*, §2c's deadline and port-placement rules — and under the four
 language-file bullets routed here from §A. The rest of both files is §A's.
 Module and production level — and object-level structure below the module boundary, which
-the Architecture mandate assigns here; `coupling.md` §Resolutions supplies the rationale,
+the Architecture mandate assigns here; `coding_style.md` §3 supplies the rationale,
 not the assignment. Simplicity relative to the spec is §C's; catalog smells are §F's.
 
 **Provenance: mixed.** The coupling block is *transcribed* — `coupling.md` enumerates the
 five types, the stability test, and a before-reporting gate, and the Architecture mandate
 tells the reviewer to sweep all five. **Temporal is the exception:** it is not one of the
-five, it lives in §Resolutions below the module boundary, and the mandate names it
-separately for exactly that reason. Everything unmarked is *derived* from
+five, it lives beside the five types in `coupling.md` §Nygard's five types, and the
+mandate names it separately for exactly that reason. Everything unmarked is *derived* from
 `engineering_judgment.md` and `coding_style.md` prose; `‡` lines are neither, and this
 section carries the most of them. The first three subsections are also
 gated by `coding_style.md` lines 7–10: layering, ports, and mappers apply in proportion to
@@ -363,9 +363,9 @@ demonstrated complexity, and none of them is introduced to satisfy a document.
 - **Semantic** — is one domain concept modeled twice with nothing that breaks when they drift? **No other axis covers this.** *(`coupling.md` §3)*
 - **Functional** — do two implementations answer the same question differently? *(`coupling.md` §4)*
 - **Incidental** — do two things change together for no reason, sharing a fate only because they share a host? *(`coupling.md` §5)*
-- **Temporal** — does correctness rest on ordering ("do this, then always that"), or on two callers *not* arriving at once? Outside Nygard's five, so the Architecture mandate names it separately; without that it goes unswept. *(`coupling.md` §Resolutions)*
+- **Temporal** — does correctness rest on ordering ("do this, then always that"), or on two callers *not* arriving at once? Outside Nygard's five, so the Architecture mandate names it separately; without that it goes unswept. *(`coupling.md` §Nygard's five types)*
 - ‡ Does the change introduce one of the three object-grain failure modes the page names — global or static state reachable under concurrent access, two-step initialization (constructor plus a separate `init()` before the object is usable), or an API carrying hidden state between calls (`strtok`'s shape)? *(wiki: Temporal Coupling)*
-- ‡ Is the *simultaneity* axis asked, not only the ordering one? House-backed since 2026-07-30 — `coupling.md` §Resolutions now names both forms, and the Architecture mandate sweeps both. The page's contribution is the question pair: "Must method A run before method B?" and "**Can two clients call this method at once and remain safe?**" *(wiki: Temporal Coupling)*
+- ‡ Is the *simultaneity* axis asked, not only the ordering one? House-backed since 2026-07-30 — `coupling.md` §Nygard's five types now names both forms, and the Architecture mandate sweeps both. The page's contribution is the question pair: "Must method A run before method B?" and "**Can two clients call this method at once and remain safe?**" *(wiki: Temporal Coupling)*
 - Is the coupled target stable? Cite an observed change history or state the assumption *as* an assumption — never assert it from the code. Spatial types only: temporal coupling is judged on whether the assumption can be violated, not on the target's rate of change. *(`coupling.md` §Stability test, §Before reporting)*
 - Does the finding reduce to a catalog smell? Use that to decide what to withhold, never what to name — §F owns the smell name. *(`coupling.md` §Before reporting)*
 - Does the patch's evidence survive reverting the patch? Then it is advisory and does not move the verdict. The orchestrator applies this, not this reviewer — §B reports and does not self-classify. *(`panel-review` §3)*

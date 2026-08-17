@@ -1,84 +1,72 @@
 # Reporting Findings
 
-How every finding you hand to the user is classified and stated. `ownership.md` decides what
-you must not walk past; this file decides how it arrives.
+How every finding you hand to the user is classified and stated. `ownership.md` decides
+what you must not walk past; this file decides how it arrives.
 
-This governs the agent reporting to the user. A reviewer sub-agent is not that agent: it ranks
-by severity, assigns no disposition, and drops nothing — reading this as a sub-agent, take this
-paragraph and stop here. The caller classifies and routes every ranked finding
-(`agents/code-reviewer.md`: "severity ordering is the caller's filter, not yours").
+This governs the agent reporting to the user. A reviewer sub-agent is not that agent: it
+ranks by severity, assigns no disposition, and drops nothing — reading this as a
+sub-agent, take this paragraph and stop here. The caller classifies and routes every
+ranked finding.
 
 ## Dispositions
 
-These dispositions cover **defects**: something behaves wrongly, or a result is unverified. A
+Dispositions cover **defects**: something behaves wrongly, or a result is unverified. A
 finding that names no defect — a naming, scope, or documentation observation — takes the
-advisory route instead: report it under one **Advisory** heading with its evidence and its
-cost, and no trigger. Smells, test-structure notes, and coupling are the three classes that
-can be either: with a patch in hand, the **revert test** decides — the finding is
-verdict-bearing when its evidence would not stand with the patch reverted, advisory when it
-survives the revert (mirrors `~/.agents/skills/panel-review/SKILL.md` §3 "Verdict-bearing or
-advisory", which holds the worked forms and the two exemptions — edit both). With no patch
-to revert, a finding in these three classes takes the advisory route: evidence and cost,
-no trigger. A verdict-bearing
-finding is never advisory: it takes whichever disposition the definitions below give it, its
-revert-test evidence standing in for the trigger wherever one is required. A correctness
-defect is never advisory either, whether or not it survives the revert. Neither is a test
-whose outcome is independent of its subject: that is false safety, not friction, and it
-takes a disposition patch or no patch, even though it is a test-structure finding.
+advisory route instead: report it under one **Advisory** heading with its evidence and
+its cost, and no trigger.
 
-**Reading a reviewer's severity ladder.** A review sub-agent hands you `Blocker` / `Major` /
-`Minor`, and `code-reviewer`, `refactoring-reviewer`, and `testing-reviewer` add `Nit`; they
-rank impact and say nothing about the defect question. Map them: **Blocker**
-always names a defect — it is defined as wrong or unsafe behavior. **Major** names one where
-the ladder ranks defect impact — `instructions-reviewer` (routing, authority, evidence
-quality, or completion changed through a named mechanism), `code-reviewer`,
-`testing-reviewer`, and a general agent carrying `adversarial-review` §Send the reviewer's
-mandate (the approach, the evidence, or what the next stage will do changed). Where a ladder ranks **friction cost** instead — `refactoring-reviewer`
-§Severity, and any coupling or test-smell finding outside those four ladders — severity says nothing about the defect
-question and the three classes above decide. **Minor and Nit are the ambiguous rungs**: each names a concrete
-bounded effect on the artifact or the consuming agent, so each names a defect when that effect is the agent behaving wrongly,
-and takes the advisory route when the effect is only the context or maintenance the finding
-buys. Severity does not survive the mapping — an advisory-routed Minor is an advisory finding,
-not a lesser defect, and it holds no gate open. (The instructions-reviewer rung derives from
-`agents/instructions-reviewer.md` §How you review — re-derive it whenever that ladder
-changes; that file is its authority. The general-agent rung derives from
-`adversarial-review` §Send the reviewer — edit both. `testing-reviewer` §Severity defines its
-own rungs, which the mapping above reads rather than governs — re-read it when it changes.
-`code-reviewer` names the four rungs in its §Output and defines none, so the mapping above is
-the only statement of what its Major means; edit it here. `refactoring-reviewer` §Severity
-likewise defines its own friction-cost rungs, which the mapping above reads rather than
-governs — re-read it when it changes.)
+Smells, test-structure notes, and coupling can be either. With a patch in hand, the
+revert test decides: the finding is verdict-bearing when its evidence would not stand
+with the patch reverted, advisory when it survives the revert. With no patch to revert,
+these three classes take the advisory route. A verdict-bearing finding takes whichever
+disposition the definitions below give it, its revert-test evidence standing in for the
+trigger. A correctness defect is never advisory, and neither is a test whose outcome is
+independent of its subject — that is false safety, not friction, and it takes a
+disposition patch or no patch.
+
+Mirrored in `~/.agents/skills/panel-review/SKILL.md` §Verdict-bearing or advisory —
+edit together.
 
 Every defect you surface, yours or one relayed from a reviewer, carries exactly one
 disposition, named in the report:
 
 - **Blocking** — the requested result is wrong, or unverified, until this is fixed.
-- **Decide** — real and reachable, but outside the requested scope. The user picks now or later.
-- **Noted** — you probed for a trigger and found none, or the fix costs more than the defect does.
+- **Decide** — real and reachable, but outside the requested scope. The user picks now
+  or later.
+- **Noted** — you probed for a trigger and found none, or the fix costs more than the
+  defect does.
 
-**Blocking and Decide require a named trigger:** the caller, input value, configuration, or
-sequence of user actions that reaches the defect, named as concretely as a probe would be.
+Blocking and Decide require a named trigger: the caller, input value, configuration, or
+sequence of user actions that reaches the defect. Noted carries the probe: name what you
+searched and over what scope. An exported or externally callable surface always has a
+nameable trigger, so "no caller in this repo" does not make it Noted. A real defect
+whose trigger resists cheap probing — a race, a production-only configuration, a
+third-party response you can't induce — is Decide, naming the probe you could not run.
 
-**Noted carries the same evidence bar as a missing-claim** (`ownership.md` §A missing thing is
-a claim). Name what you searched and over what scope: the grep for callers, the config you read,
-the entry points you walked. An exported, public, or otherwise externally callable surface
-always has a nameable trigger, so "no caller in this repo" does not make it Noted. A real
-defect whose trigger resists cheap probing — a race, a production-only configuration, a
-third-party response you can't induce — is **Decide**, naming the probe you could not run. It
-is never Noted.
+Deferred work is not a finding, but takes the same three dispositions when a closeout
+lists it, with a one-line reason for the deferral in place of the trigger.
 
-**Deferred work is not a finding, but takes the same three dispositions when a closeout lists
-it** (`~/.agents/skills/build/SKILL.md` §Rules): a one-line reason for why it is deferred replaces the
-named trigger. The advisory route above covers findings that name no defect, not work the
-user still wants.
+## Reading a reviewer's severity ladder
 
-Every Noted finding appears. The disposition decides who acts, never whether the user sees it.
-Give each one a line carrying the defect, its evidence, and the ground for Noted — the probe
-that found no trigger, or the cost comparison that outweighs the defect — grouped under a
-single heading marked "no action recommended". Bound volume by that grouping,
-never by dropping one.
+A review sub-agent hands you Blocker / Major / Minor, some adding Nit; these rank impact
+and say nothing about the defect question. Map them: **Blocker** always names a defect.
+**Major** names one where the ladder ranks defect impact — the instructions, code, and
+testing reviewers, and an adversarial-review general agent; where a ladder ranks
+friction cost instead — the refactoring reviewer, and any coupling or test-smell finding
+outside those ladders — the three either-way classes above decide. **Minor and Nit** name
+a defect when their concrete effect is the agent behaving wrongly, and take the advisory
+route when the effect is only context or maintenance. Severity does not survive the
+mapping: an advisory-routed Minor is advisory, not a lesser defect, and holds no gate
+open. The general-agent rung is mirrored in `~/.agents/skills/adversarial-review/SKILL.md`
+§Send the reviewer — edit together.
 
-State every bucket you used and say when the top two are empty. "Nothing blocking, nothing to
-decide" is the sentence that lets the user move on; leaving it out reads as an unspoken
-reservation. When Decide is not empty, that sentence names the choice rather than counting it:
-"Nothing blocking. One thing to decide: <the choice, in words that need no file open>."
+## The closing sentence
+
+Every Noted finding appears, one line each — the defect, its evidence, and the ground
+for Noted — grouped under a single heading marked "no action recommended". Bound volume
+by that grouping, never by dropping one.
+
+State every bucket you used and say when the top two are empty. "Nothing blocking,
+nothing to decide" is the sentence that lets the user move on; leaving it out reads as
+an unspoken reservation. When Decide is not empty, that sentence names the choice in
+words that need no file open.

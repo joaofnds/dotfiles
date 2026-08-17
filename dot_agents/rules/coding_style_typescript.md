@@ -49,12 +49,10 @@ Language-specific preferences for TypeScript projects. Read the generic `coding_
   constant in a third file would have broken it. Make the cycle survivable with `forwardRef` — at the
   `@Inject` site, and in both modules' `imports` when the cycle is module-level; both forms are already
   in use here. Never with a new token constant.
-  (Verified 2026-07-31 against `tsc` 6.0.3 emit for `RosterImportService`: `design:paramtypes` is `Object`
-  at exactly the two positions carrying an `@Inject`, and the adapter appears only as the `Inject()`
-  argument plus a module-level `require` — which is why an interface-typed parameter needs a token at all.
-  Recorded after `Symbol("OrganizationKinds")` shipped in `c9aeffe5` and cleared a full panel review — a
-  clean panel run is not evidence this rule is unneeded. Re-check on a TypeScript major or a move to
-  standard decorators, which emit no such metadata.)
+  (Verified against `tsc` 6.0.3 emit: `design:paramtypes` is `Object` at `@Inject`
+  positions, which is why an interface-typed parameter needs a token at all. A clean
+  panel run is not evidence this rule is unneeded. Re-check on a TypeScript major or a
+  move to standard decorators, which emit no such metadata.)
 
 ## 5. Testing
 - **Native Tooling**: When choosing, prefer native modules like `node:test` and `node:assert/strict` over a heavy runner. This is the default for a new suite, not a mandate to fight an existing one — where no repo `AGENTS.md` names a runner, the runner the suite already uses wins for new tests in it. A second runner alongside the first is worse than either choice. Jest or Japa when the project mandates them.
