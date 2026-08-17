@@ -78,15 +78,13 @@ candidate): (a) stop; (b) a reduced study whose briefs hunt defects in *our*
 corpus that the subject's questions expose, kill steps skipped; (c) the full
 study, to build the deferred-candidate record — no import can land now, since
 none can name an observed moment (§8). An empty probe does not devalue the
-defect track (precedent: `.boris/2026-08-04-impeccable-study.md` — every landed
-edit came from Part 1), which is what option (b) buys cheaply.
+defect track, which is what option (b) buys cheaply.
 
 ### The study plan
 
 Then write a study plan: one deep-dive per surface, merging trivial surfaces and
 splitting oversized ones. Depth must come from the plan's structure, not from
-intention — a single-pass skim was rejected as shallow and redone per-surface
-(`.boris/ecc-study-2026-07-31.md`). Show the plan briefly to the user only when
+intention — sweep per-surface, never in a single skim. Show the plan briefly to the user only when
 scope is ambiguous; otherwise proceed.
 
 ## 3. Fan out — per-surface deep dives
@@ -131,9 +129,8 @@ benchmark, or vendor doc:
    written to look for an existing source page.
 2. No page → fetch the **primary source** and record what it actually measured —
    models, tasks, numbers with their denominators — not what the citing text says
-   it measured. A rule built from a spec's paper summaries died on review: two
-   citations overreached, one argued the opposite
-   (`~/.agents/rules/instruction_external_facts.md` §4, recorded 2026-07-27).
+   it measured
+   (`~/.agents/rules/instruction_external_facts.md` §Rejected citations).
 
 Anything external destined to land in our corpus follows
 `~/.agents/rules/instruction_external_facts.md`: mechanism argument vs outcome claim,
@@ -206,14 +203,13 @@ Relay the report's findings most-valuable-first, in its words. Every proposed
 corpus edit carries the `continuous_improvement.md` §1 five-point frame
 (friction, root cause, fix, benefit, cost) — and prefers a change that demands
 an artifact over one that asks for restraint; restraint-only edits have
-repeatedly changed nothing here (memory `corpus-edits-need-an-observed-moment`).
+repeatedly changed nothing here.
 
 Every Import candidate also names the **observed moment** it would have
 changed — a moment in a session transcript, a finding in `.boris/`, or an
 `evals/` case — and says how it knows. A candidate that cannot name one goes to
 Part 3 as "no observed moment", not into a proposal. Argument quality is not
-the warrant: three well-argued ECC imports landed on it and were reverted the
-same day (memory `corpus-edits-need-an-observed-moment`, 2026-08-01).
+the warrant.
 
 The user picks what lands. Then:
 
@@ -225,8 +221,8 @@ The user picks what lands. Then:
 - Run `instructions-reviewer` once over the landed batch — the house gate;
   `AGENTS.md` §Task lifecycle governs closure.
 - A landed claim resting on an external source names its
-  `instruction_external_facts.md` entry in the branch and anchor form
-  `AGENTS.md` §Task lifecycle requires.
+  `instruction_external_facts.md` entry, cited as that file's preamble requires
+  (`instruction_external_facts.md` §<heading>).
 
 - **Write the open items before you call the study done.** Every Import candidate
   that survived its kill step and the §8 gates but that the user did not take goes

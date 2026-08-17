@@ -76,7 +76,7 @@ takes a general agent, with `.boris/CONTEXT.md` the one exception, which
 
 `/diagnose` and `/plan` end by running this skill on their own draft doc — each names
 its artifact-specific mandate aims; everything else about the gate lives here, once.
-(`/discuss`, `/research`, and `/grill` dropped it 2026-08-12 for cost: their artifacts
+(`/discuss`, `/research`, and `/grill` carry no gate: their artifacts
 are reread and stress-tested by the next stage, and `/plan`'s gate covers the chain's
 last ratified artifact — a skipped stage means no independent check, and the producing
 skill says so out loud.)
@@ -90,9 +90,8 @@ skill says so out loud.)
   the producing stage; don't edit around it.
 - **Probe the fix before the artifact is called done.** An edit answering a finding that
   named a compile error, a command, a count or a `file:line` gets that same probe re-run
-  against the new text; a scratch program in a temp dir is not the code the producing skill
-  forbade. Name each fix you probed and its command. (2026-08-06: six consecutive gate
-  rounds whose worst finding was the previous round's unprobed repair.)
+  against the new text. Writing a scratch program in a temp dir to run the probe does
+  not break the producing skill's no-code rule. Name each fix you probed and its command.
 - **The gate is one round.** Fold or defer the findings, probe the fixes, then decide out
   loud: send the revised artifact back for one more round, or proceed. Rerun only when a
   fix changed a claim about how code, tooling, or the platform behaves, or repaired a

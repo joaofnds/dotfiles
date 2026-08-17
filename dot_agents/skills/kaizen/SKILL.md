@@ -43,10 +43,10 @@ Two sources, in priority order:
 1. **The raw session transcript — primary.** Probe the active runtime for its transcript
    path rather than assuming Claude Code's layout. In Claude Code the transcripts live in
    `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/projects/<slug>/<session-id>.jsonl`, where `<slug>`
-   is the cwd with `/`, `.`, spaces, and `~` all collapsed to `-` (verified 2026-08-10 on
-   2.1.226). Don't derive the slug — `ls` that `projects/` dir and match an entry against
-   the cwd, then pick `$CLAUDE_CODE_SESSION_ID.jsonl` (set in Claude Code sessions,
-   verified 2026-08-10 on 2.1.226). If the variable is empty, do not guess by mtime — a
+   is the cwd with `/`, `.`, spaces, and `~` all collapsed to `-`
+   (`instruction_external_facts.md` §Harness mechanics). Don't derive the slug — `ls` that `projects/` dir and match an entry against
+   the cwd, then pick `$CLAUDE_CODE_SESSION_ID.jsonl` (set in Claude Code
+   sessions — `instruction_external_facts.md` §Harness mechanics). If the variable is empty, do not guess by mtime — a
    concurrent session in the same cwd writes a newer file. Confirm a candidate by grepping
    it for a distinctive string from this session's own first user message, and report
    "no transcript evidence" when nothing confirms.
@@ -80,18 +80,19 @@ files), else a general agent carrying this brief. Send:
   file before making any claim about it."
 - The session goal in the user's terms, so it can judge whether an instruction helped or
   hindered reaching it.
-- The bar below, as *its* acceptance test for every finding it returns.
+- The bar below, as *its* acceptance test for every finding that cites the session.
 
 Withhold your own read on what should change, which parts you think worked, and any
 leading framing. Say it in the brief: "This brief contains no assessment of the
 instructions — form your own from the transcript and the files."
 
 If the critic is `instructions-reviewer`, it also audits file quality holistically —
-accept its session-grounded findings under the bar, and treat any strong file-quality
-findings it raises *outside* the transcript evidence as a clearly-labeled bonus, not as
-session-grounded.
+accept its session-grounded findings under the bar, and take file-quality findings it
+raises *outside* the transcript evidence at their reported severities. In your relay,
+say which findings carry transcript evidence and which do not
+(`instructions-reviewer.md` §Inputs — edit both).
 
-## The bar — every finding the critic returns must clear all four
+## The bar — every finding that cites the session must clear all four
 
 1. **Grounded** — cites an actual moment in the transcript/index, not a hypothetical.
 2. **Quoted** — reproduces the real instruction text it Read; no `file:line` from memory.
@@ -101,7 +102,8 @@ session-grounded.
    `continuous_improvement.md` §1 (friction, root cause, fix, benefit, cost). Not
    "clarify step 3."
 
-A finding missing any of these is confabulation wearing a suit — drop it. A clean session
+A finding missing any of these is confabulation wearing a suit — drop it. A
+file-quality finding citing no session moment still clears 2 and 4. A clean session
 is a valid verdict: if nothing clears the bar, output "no change warranted" with the
 evidence that the artifacts held up. Manufacturing edits violates
 `continuous_improvement.md` §1: omit reflection when no actionable improvement was found.

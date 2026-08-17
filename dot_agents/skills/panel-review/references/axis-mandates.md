@@ -85,8 +85,7 @@ Axis mandates — pass one per reviewer:
   mutation-by-replacement and §1's model-domain-concepts clause are §2a's;
   `coding_style_go.md` §1's Repository-Interfaces placement and §6's *Accept
   interfaces, return structs* are §2c's port-placement rule. Style is told to
-  drop all four. `coupling.md` §Resolutions below the module boundary is the finer-grain
-  rationale for Tell-Don't-Ask and the Law of Demeter, not the assignment.
+  drop all four.
   **Production — `engineering_judgment.md` §4:**
   deadlines or cancellation on remote and blocking work, retry safety within an
   explicit budget, propagation barriers where the failure modes justify them,
@@ -109,8 +108,8 @@ Axis mandates — pass one per reviewer:
   name, never one defect under two.
   Sweep all five of Nygard's coupling types
   (`coupling.md` §Nygard's five types) plus **temporal coupling** in both of its
-  forms, ordering and concurrency — it is outside that enumeration, in
-  §Resolutions below the module boundary. Then report only those that are
+  forms, ordering and concurrency — it is outside that enumeration, named
+  beside the five types in the same section. Then report only those that are
   defects under `coupling.md`'s §Before reporting gate — whose stability
   question is spatial types only; temporal coupling is judged on whether the
   ordering or concurrency assumption can be violated, never on the target's rate

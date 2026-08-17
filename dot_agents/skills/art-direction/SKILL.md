@@ -3,9 +3,9 @@ name: art-direction
 description: Develop or implement a distinctive visual direction for new or substantially redesigned UI.
 ---
 
-<!-- Vendored from Anthropic's frontend-design skill, 2026-06-21; owned copy, local edits
-     win on re-sync. Renamed 2026-08-01: skillOverrides keys match by name, so
-     "frontend-design": "off" disabled this copy too — keep the names distinct. -->
+<!-- Vendored from Anthropic's frontend-design skill; owned copy, local edits win on
+     re-sync. Keep this name distinct from the upstream skill's: skillOverrides keys
+     match by name (`instruction_external_facts.md` §Harness mechanics), so sharing it would let "frontend-design": "off" disable this copy. -->
 
 # Art Direction
 
@@ -55,7 +55,8 @@ icons used as decoration, a vague aspirational headline. Reaching for shadcn/ui 
 — which `coding_style_frontend.md` prescribes — puts you one step from this look. Those
 components are the right floor; their defaults are not a direction.
 
-*(Both lists are calibration by observation, dated 2026-08-01, not measurement. Re-look on a
+*(Both lists are calibration by observation, not measurement, against Opus 5 /
+Fable 5 defaults. Re-look on a
 model swap, or when a design you didn't steer lands outside both clusters.)*
 
 Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on a default.

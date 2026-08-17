@@ -144,7 +144,7 @@ in the patch: it moves the verdict to Fail like any other untagged Blocker.
 For every **Blocker**, spawn a skeptic (general agent) — un-named,
 `run_in_background: true`, `model: sonnet` (`~/.agents/rules/subagent_spawning.md`
 §Model owns this choice — edit both) — mandated to refute it. Majors skip the kill
-step (narrowed from Blocker-and-Major 2026-08-12, for cost):
+step:
 
 > Try to refute this review finding against the actual code — read the code
 > yourself, don't trust the claim: `<finding, with file:line and the claimed
