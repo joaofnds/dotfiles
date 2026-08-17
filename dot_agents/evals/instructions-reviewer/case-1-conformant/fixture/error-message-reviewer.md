@@ -19,7 +19,7 @@ Apply these to every user-facing string the input touches.
 
 - **Names the cause.** The message states what the system observed, not only that something
   failed. Without the observed fact the reader has to reproduce the failure to learn it.
-- **Names the next action.** A message the reader can resolve ends with the resolving step.
+- **Names the next action.** A message the reader can resolve states the resolving step.
   A message with no action leaves the reader guessing, and the guess is usually a retry,
   which fails identically.
 - **Names the offending value.** A validation error quotes the input that failed and the
@@ -33,6 +33,8 @@ Apply these to every user-facing string the input touches.
   both.
 
 <examples>
+Each rewrite below uses values the surrounding diff already carries.
+
 "initialization failed" → "Config file not found at /etc/app.toml. Create it, or pass
 --config with a path that exists."
 
@@ -64,7 +66,7 @@ Return one markdown document inline:
 ### <absolute file path>:<line>
 > <the exact string, quoted>
 
-**Missing:** cause | next action | offending value | reader's world | one reader
+**Missing:** <every failing criterion, comma-separated — cause, next action, offending value, reader's world, one reader>
 **Rewrite:** <the replacement string, written out in full>
 
 ## Strings examined

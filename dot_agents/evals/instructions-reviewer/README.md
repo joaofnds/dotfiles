@@ -61,6 +61,14 @@ per-case scoring sections are written in that order.
 | --- | --- | --- | --- |
 | [2026-07-25](results/) | **Fail** — `Pass with revisions`, 1 Major + 3 Minor + 3 Nits, no conformance phrase. **Confounded**: two findings are real fixture defects, so the case does not yet measure what it claims | **Pass** — 7/7 recall, both Blockers ranked Blocker, 0 decoys flagged, 0 manufactured | **Pass** — mode reachable from a bare path; proceeded without asking |
 
+All three answer keys were re-derived 2026-08-17 against the post-prune reviewer (the
+corpus prune that landed `writing_instructions.md` and split the reviewer's §1/§7/§8
+into `artifact-class-checks.md`). Same day: the case-1 fixture's two authored defects
+were repaired, closing the 2026-07-25 confound, and case-2's D2 decoy became a
+judgement call — the bar reversed the house position its decoy status rested on. The
+2026-07-25 run predates the re-derivation; score future runs against the current keys
+only.
+
 Across all three runs: **0 fabricated citations** — every repo-local claim was re-verified
 independently and held. One systematic cosmetic slip: line counts reported one high in all
 three (82→83, 35→36, 30→31), never affecting a verdict.

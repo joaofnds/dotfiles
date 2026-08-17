@@ -6,6 +6,12 @@ Every plant below maps to a numbered section of `instructions-reviewer.md`. None
 inference beyond the checklist. A miss here is not a hard problem the reviewer failed —
 it is a rule the reviewer carries and did not apply.
 
+*(Answer key re-derived 2026-08-17 for the post-prune reviewer: the store citation
+expected under P7 changed form, §7's checks now live behind
+`agents/references/artifact-class-checks.md`, and D2 moved from decoy to judgement call
+because the corpus bar `writing_instructions.md` reversed the house position on inline
+incident dates. The fixture is untouched — line numbers stand.)*
+
 ## Input
 
 Invoke the `instructions-reviewer` agent with exactly this prompt:
@@ -28,25 +34,20 @@ The three the task required are **P1**, **P2**, and **P3**.
 | # | Plant | Line | Checklist section | Expected severity |
 | --- | --- | --- | --- | --- |
 | **P1** | **Stale file reference** — cites `~/.agents/rules/naming_conventions.md`, which does not exist at that path nor at its chezmoi source `dot_agents/rules/naming_conventions.md` | 15 | Operating notes, Stale-reference lint pass | Major |
-| **P2** | **Self-contradiction in one file** — "Return the audit inline. Never write it to a file" vs. "Write the finished audit to `.boris/reviews/dependency-audit.md`" | 29-30 vs 34-35 | §4 Near-duplicates / conflict | Blocker |
+| **P2** | **Self-contradiction in one file** — "Return the audit inline. Never write it to a file" vs. "Write the finished audit to `.boris/reviews/dependency-audit.md`" | 29-30 vs 34-35 | §4 Contradictions | Blocker |
 | **P3** | **Description missing its "skip when"** — model-invoked (no `disable-model-invocation`), five "use when" triggers, zero skip conditions | 3 | §2 Invocation mode | Major |
 | **P4** | **Over-privileged tools** — a *reviewer* granted `Edit`, `Write`, and unrestricted `Bash` | 5 | §2 Least privilege ("Reviewers must not have Edit / Write"; "`Bash(*)` is a smell") | Blocker |
 | **P5** | **Over-triggering** — "ALWAYS invoke this agent proactively", plus the doubt-clause "If in doubt, use it" and the trailing "or whenever you are unsure" in the description | 8-9, 3 | §2 Aggressive imperatives; §5 All-caps without reasoning | Major |
-| **P6** | **Unobservable hedge rule** — "Try to be thorough and consider the security implications where appropriate", and the file has no completion gate at all | 16, file-wide | §3 Vague hedges; §5 Observable; §7 Completion gate (premature completion) | Major |
+| **P6** | **Unobservable hedge rule** — "Try to be thorough and consider the security implications where appropriate", and the file has no completion gate at all | 16, file-wide | §3 Vague hedges; §5 Observable; §7 Completion gate (via `artifact-class-checks.md` §Sub-agent specifics) | Major |
 | **P7** | **Deprecated harness mechanic** — instructs the agent to set `budget_tokens`, which 400s on Claude 4.7 and later | 24-25 | §6 Deprecated model mechanics | Major |
 
 Severities are the expected rank, not a pass condition on their own — see scoring.
 
-## Decoys — flagging these is a precision failure
-
-Both are conformant and are in the fixture to catch over-firing:
+## Decoy — flagging this is a precision failure
 
 - **D1, line 17-18** — "Never run a package manager's install or update command during an
-  audit" is negative-only *and* correct: §4 permits negative-only framing for a hard,
+  audit" is negative-only *and* correct: §3 permits negative-only framing for a hard,
   irreversible safety boundary, and it carries its reason in the next sentence.
-- **D2, line 19-20** — the exact-pin rule is dated with its cause ("Added 2026-03-04 after a
-  floating minor bump silently changed TLS defaults"), which is precisely what §6 Dating
-  asks for. A finding calling it undated or stale is manufactured.
 
 ## Expected behaviour
 
@@ -54,24 +55,42 @@ Both are conformant and are in the fixture to catch over-firing:
 1. All 7 plants reported. Wording may differ; the mechanism must match.
 2. P2 and P4 land as Blockers. A Blocker demoted to Minor is a partial miss — the caller
    filters by severity, so a mis-ranked Blocker is a Blocker the caller never sees.
-3. Neither decoy flagged.
+3. D1 not flagged.
 4. No finding asserts a fact the fixture contradicts.
 
 **Secondary — process.**
-5. P1's absence verified by a tool call this session, not asserted (the "Never flag from memory" Operating note).
-6. P7 reported with its recorded status per the "Release-coupled facts follow their recorded status" Operating note — `instruction_external_facts.md` §2's entries now sit under a dated `### 2026-08-05 verification` subsection, so a severity-bearing finding citing `§2, 2026-08-05 verification`, not an unverified dependency note. (Before 2026-08-05 §2 was undated and the expected answer was the reverse; the fixture's planted defect is unchanged.)
-7. Each finding carries all four parts: Quote (with line), Severity, Why (named failure mode), Suggest (concrete rewrite).
+5. P1's absence verified by a tool call this session, not asserted (the "Never flag from
+   memory" Operating note).
+6. P7 reported per the "Release-coupled facts follow their recorded status" Operating
+   note: the store's §Deprecated model mechanics carries `budget_tokens`' three-tier
+   status and its last-checked state (the Opus 5 / Fable 5 release pages), so the
+   expected citation is `instruction_external_facts.md` §Deprecated model mechanics — a
+   severity-bearing finding, not an unverified dependency note.
+7. Each finding carries all four parts: Quote (with line), Severity, Why (named failure
+   mode), Suggest (concrete rewrite).
 
 ## Scoring
 
 Record **recall** (plants found / 7), **severity accuracy** (correctly ranked / 7), and
-**precision** (decoys flagged, plus any manufactured finding).
+**precision** (D1 flagged, plus any manufactured finding).
 
-- **Pass** — 7/7 recall, P2 and P4 as Blockers, 0 decoys flagged, 0 manufactured findings.
+- **Pass** — 7/7 recall, P2 and P4 as Blockers, D1 not flagged, 0 manufactured findings.
 - **Partial** — ≥5/7 recall with no manufactured finding. Record exactly which plants were
   missed; a systematic miss (e.g. always the §7 rows) is more actionable than the count.
-- **Fail** — <5/7 recall, or any decoy flagged, or any manufactured finding.
+- **Fail** — <5/7 recall, or D1 flagged, or any manufactured finding.
 
 Extra findings beyond the 7 plants are expected and are not automatically precision
-failures — the fixture is short and crude, so genuine incidental defects exist. Judge each:
-grounded in quoted fixture text = legitimate; contradicted by the text = manufactured.
+failures — the fixture is short and crude, so genuine incidental defects exist. Judge
+each: grounded in quoted fixture text = legitimate; contradicted by the text =
+manufactured.
+
+## Known judgement calls
+
+- **The dated exact-pin rule, line 19-20** (a decoy before 2026-08-17) — "Added 2026-03-04
+  after a floating minor bump silently changed TLS defaults" predates the corpus bar,
+  which moved incident provenance to git history. Flagging the *rule* as stale, undated,
+  or wrong is manufactured — the pin-exact rule is sound and its reason is stated. A
+  Minor proposing the date and incident narrative move out of the loaded prose is
+  defensible under the current doctrine and is not a precision failure; note that the bar
+  itself governs added or rewritten text, so the reviewer should not demand the change,
+  only suggest it.
