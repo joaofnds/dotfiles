@@ -399,7 +399,7 @@ Produce one review document, in this order:
 
 **Verdict:** Pass / Pass with revisions / Fail
 **Tier:** <always-loaded router | just-in-time rule | `.claude/rules/` file | output style | tier-3 reference | sub-agent system prompt | skill | slash command | memory | hook injection>
-**Size:** <lines / budget for this tier; include `+N/-M` only when the caller supplies it>
+**Size:** <the tier's budget and the target against it; include `+N/-M` only when the caller supplies it>
 
 ## Findings
 …  (`No findings.` alone, when every severity below is empty)
