@@ -82,7 +82,7 @@ Required reads by phase:
   stages task size justifies. The chain skills (`/discuss`, `/research`, `/grill`,
   `/plan`, `/build`), `/handoff`, `/art-direction`, `/absorb`, `/dream`, `/kaizen`, and
   `/stepping-away` are user-invoked and cannot be reached by model invocation: recommend
-  the next stage to the user by name. When picking it needs a skill's trigger or skip conditions, read its
+  the next stage to the user by name. When the choice needs a skill's trigger or skip conditions, read its
   frontmatter under `~/.agents/skills/<name>/`
 - **Producing any loop artifact** (any `.boris/` document a later stage reads) → read
   `.boris/CONTEXT.md` when it exists: the project's domain language. An artifact that
