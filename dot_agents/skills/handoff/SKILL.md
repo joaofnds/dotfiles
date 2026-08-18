@@ -2,6 +2,7 @@
 name: handoff
 description: >
   Compact in-flight work into a briefing a fresh session can pick up cold.
+  Skip when the user is leaving but this session keeps working → /stepping-away.
 argument-hint: "What will the next session focus on?"
 disable-model-invocation: true
 ---

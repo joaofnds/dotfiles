@@ -11,7 +11,7 @@ full narrative of past passes.
 
 Read from the live memory, skills, sub-agents, settings, hooks, and workflows
 references at code.claude.com; last full pass on CLI 2.1.222. **Re-verify on each
-Claude Code or model release.** Facts marked *(probe)* are local observations, not
+Claude Code or model release; the launch-flag fact also on a desktop app release.** Facts marked *(probe)* are local observations, not
 documentation, and re-verify the same way.
 
 Load limits and delivery:
@@ -47,6 +47,9 @@ Load limits and delivery:
   `<slug>` is the cwd with `/`, `.`, spaces, and `~` collapsed to `-` *(probe,
   2.1.226)*.
 - `$CLAUDE_CODE_SESSION_ID` is set in Claude Code sessions *(probe, 2.1.226)*.
+- The desktop app launches the CLI with `--permission-mode auto
+  --allow-dangerously-skip-permissions` *(probe: `ps` on a live session, desktop app
+  1.32352.1, CLI 2.1.229)*.
 
 Tool, permission, and invocation fields:
 

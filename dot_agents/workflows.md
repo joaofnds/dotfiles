@@ -16,7 +16,7 @@ are not.
 Adding or changing a feature. Each front-half stage writes a durable doc the next
 one consumes. These docs live under `.boris/plans/` at the repo root (reviews under
 `.boris/reviews/`, handoffs under `.boris/handoffs/`, ratified visual directions under
-`.boris/design/`) — a personal, git-ignored home
+`.boris/design/`, away logs under `.boris/away/`) — a personal, git-ignored home
 (via `core.excludesFile`), so workflow artifacts are intended to remain untracked.
 
 ```
@@ -100,8 +100,8 @@ and `/build` implements from it:
 ```
 
 The chain skills (`/discuss`, `/research`, `/grill`, `/plan`, `/build`) and `/absorb`,
-`/dream`, `/kaizen` are user-invoked only as of 2026-08-12: an agent recommends the
-stage by name and the user runs it.
+`/dream`, `/kaizen`, `/handoff`, `/stepping-away` are user-invoked only: an agent
+recommends the stage by name and the user runs it.
 
 Decision points:
 
@@ -164,8 +164,9 @@ changed a behavioral claim or a Blocker's repair can't be probed
 
 ## Cross-session continuity loop
 
-When context runs low mid-work, preserve actual state rather than forcing a premature
-plan or pretending an existing plan captures execution progress.
+When the session must survive a boundary — context running low, or the user stepping
+away — preserve actual state rather than forcing a premature plan or pretending an
+existing plan captures execution progress.
 
 ```
 work in flight → /handoff → [new session] resume → next applicable stage
@@ -177,6 +178,12 @@ work in flight → /handoff → [new session] resume → next applicable stage
 - Use `/plan` for a settled design that has not started. Use `/handoff` for any session
   that must preserve live execution or investigation state; cite the existing plan or
   diagnosis and record completed steps, current verification, and the next action.
+- **/stepping-away** — the inverse case: the user leaves but this session keeps
+  working. The agent continues autonomously, substitutes `/adversarial-review` for
+  "is this right?" questions, queues the actions standing rules keep as asks
+  (commits, deploys), and keeps an
+  append-as-it-goes decision log in `.boris/away/`; it stops only when done or when
+  everything left needs the user. `/handoff` moves work to a fresh session instead.
 
 ## Spawn shapes
 
