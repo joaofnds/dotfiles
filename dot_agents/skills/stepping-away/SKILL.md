@@ -28,7 +28,7 @@ This skill changes when you stop and ask, not what you are allowed to do. It gra
 ## Stop conditions
 
 1. **Done.** Every line of in-flight work is complete and verified the way the work admits — observed behavior where something runs, the artifact's own confirmation step (the command, the render, the diff read back) where nothing does. A green suite alone is never the evidence.
-2. **Blocked on the user alone.** A line of work is blocked when its next step crosses the executive line (`~/.agents/AGENTS.md` §Autonomy: spends real money, cannot be undone, widens the named scope, or needs access only the user can grant), sits behind a queued ask, or needs the user's own words — a ratification, an observation, or a goal statement a running skill requires from them. Never supply that answer yourself; park the line in the log with the exact question. One blocked line parks; stop only when every line is blocked.
+2. **Blocked on the user alone.** A line of work is blocked when its next step crosses the executive line (`~/.agents/AGENTS.md` §Autonomy), sits behind a queued ask, or needs the user's own words — a ratification, an observation, or a goal statement a running skill requires from them. Never supply that answer yourself; park the line in the log with the exact question. One blocked line parks; stop only when every line is blocked.
 
 Everything else is yours to settle: a failing test, a flaky tool. Probe, decide, log it, continue.
 
