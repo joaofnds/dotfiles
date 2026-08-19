@@ -24,9 +24,8 @@ separate concern (personal/per-machine, not this repo).
   instruction source per scope, never per-tool copies (a fork is a mirror that
   will drift). A symlink is the usual form
   (`symlink_CLAUDE.md.tmpl` in a `dot_claude*` source). The exception is this
-  repo's own root `CLAUDE.md`: a one-line `@AGENTS.md` import, not a symlink.
-  **Leave it an import** — the rule is satisfied because no copy exists, and
-  converting it buys nothing.
+  repo's own root `CLAUDE.md`: **leave it the one-line `@AGENTS.md` import** —
+  no copy exists, so the rule already holds.
 - **Every root pointer file has a `.chezmoiignore` entry before it exists** —
   `CLAUDE.md` and `GEMINI.md` both carry one today, and the `GEMINI.md` entry
   stays whether or not the file does: adding the file later must not be able to
