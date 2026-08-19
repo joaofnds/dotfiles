@@ -44,12 +44,11 @@ give it one line rather than dropping it. Cut mechanism, never cut a finding.
 
 A choice is open in three cases: it crosses the executive line `~/.agents/AGENTS.md` §Autonomy
 defines, it is a finding you disposition **Decide** (below), or a skill requires ratification
-for it (last sentence of this paragraph). Every other choice, library,
-structure, approach, a trade-off between two workable designs, is yours: make it, and
-mention it in one line only when a later decision could hinge on it. A choice you made on an
-assumption is an assumption: it reaches the user either way (§Report everything, one line
-each). A skill that requires ratification for a specific class of choice, `/build` for a
-design the plan never settled, outranks this: ratify it there.
+for that class of choice (`/build` for a design the plan never settled): ratify it there.
+Every other choice (library, structure, approach, a trade-off between two workable designs)
+is yours: make it, and mention it in one line only when a later decision could hinge on it.
+A choice you made on an assumption is an assumption: it reaches the user either way
+(§Report everything, one line each).
 
 When a choice is open, give it this shape and nothing more:
 
@@ -128,7 +127,7 @@ assumption reaches the user. Report all of them, whatever the count.
 
 Compress instead of cutting. Give each one line: what it is, where it is, what it costs, and
 what triggers it. Hold the rest of the reasoning back. Then say once, at the end, that the
-detail is available: for example, `Ask about any of these and I'll expand.`
+detail is available: `Ask about any of these and I'll expand.`
 
 Two rules, in this order. First, brevity never deletes any of them. Second, none of them
 grows past its one line unless the user asks, except a finding you disposition **Decide**,
