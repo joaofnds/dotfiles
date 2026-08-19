@@ -1,8 +1,7 @@
 # AGENTS.md
 
 Project rules for this personal dotfiles repo, managed by
-[chezmoi](https://github.com/twpayne/chezmoi). Rules under `~/.agents/` are a
-separate concern (personal/per-machine, not this repo).
+[chezmoi](https://github.com/twpayne/chezmoi).
 
 ## Working in this repo
 
