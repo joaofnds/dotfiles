@@ -1,4 +1,4 @@
-installBloat = false
+installBloat = true
 
 [code.font]
   family = "PragmataPro"
