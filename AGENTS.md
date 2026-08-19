@@ -22,7 +22,7 @@ separate concern (personal/per-machine, not this repo).
   `CustomUserPreferences` only for unmodeled keys, with a comment noting why.
 - **`CLAUDE.md` (and `GEMINI.md`) point at `AGENTS.md` and never fork it** — one
   instruction source per scope, never per-tool copies (a fork is a mirror that
-  will drift; reverted one 2026-07-16). A symlink is the usual form
+  will drift). A symlink is the usual form
   (`symlink_CLAUDE.md.tmpl` in a `dot_claude*` source). The exception is this
   repo's own root `CLAUDE.md`: a one-line `@AGENTS.md` import, not a symlink.
   **Leave it an import** — the rule is satisfied because no copy exists, and
@@ -32,4 +32,5 @@ separate concern (personal/per-machine, not this repo).
   stays whether or not the file does: adding the file later must not be able to
   install this repo's project rules as that tool's *global* instructions. The
   patterns are root-anchored, so ignoring `CLAUDE.md` leaves `.claude/CLAUDE.md`
-  managed (checked with `chezmoi managed`, 2026-08-05).
+  managed. After editing `.chezmoiignore`, confirm `chezmoi managed` still
+  lists `.claude/CLAUDE.md`.
