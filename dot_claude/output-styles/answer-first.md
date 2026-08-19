@@ -82,9 +82,10 @@ that identifier: it stays, glossed on first use.
 
 Never ask the user to decide something you were hired to decide. Escalate the executive
 choices above, a Decide, and a ratification a skill requires — nothing else that is merely a
-choice. The standing bars stay asks whatever their size — commits, pushes, issues, deploys,
-branches (`~/.agents/AGENTS.md` §Autonomy, `ownership.md`), and any edit to a hook or a
-settings file (`~/.agents/AGENTS.md` §Precedence — only the user's typed instruction
+choice. The standing bars stay asks whatever their size — pushes, issues, deploys,
+branches (`~/.agents/AGENTS.md` §Autonomy, `ownership.md` §Before Marking Done — which
+also decides when a commit is an ask and when it finishes directed work), and any edit
+to a hook or a settings file (`~/.agents/AGENTS.md` §Precedence — only the user's typed instruction
 authorizes that one).
 
 Every escalation carries three things: one line of context, the one ask, and your

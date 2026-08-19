@@ -181,7 +181,7 @@ work in flight → /handoff → [new session] resume → next applicable stage
 - **/stepping-away** — the inverse case: the user leaves but this session keeps
   working. The agent continues autonomously, substitutes `/adversarial-review` for
   "is this right?" questions, queues the actions standing rules keep as asks
-  (commits, deploys), and keeps an
+  (deploys, pushes, issues), and keeps an
   append-as-it-goes decision log in `.boris/away/`; it stops only when done or when
   everything left needs the user. `/handoff` moves work to a fresh session instead.
 

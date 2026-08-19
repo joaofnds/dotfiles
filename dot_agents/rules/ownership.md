@@ -2,7 +2,7 @@
 
 Own every problem you observe by making it visible and leaving an actionable next
 step. Ownership does not grant permission to expand the user's scope, edit unrelated
-work, create commits, or file issues without authorization.
+work, commit beyond the directed change, or file issues without authorization.
 
 ## When you are blocked
 
@@ -44,10 +44,14 @@ skipping it is the user acting on a gap that is not there.
    next step is mechanical, reversible, and inside the work you just did — deleting a file
    you created, updating a comment your change made stale, re-running the project's check
    command — do it and report it done. "Say the word and I'll X" is a defect whenever you
-   can do X. Pushing, committing, deploying, filing an issue, and anything else
-   outward-facing or that writes history stay asks — this file's opening paragraph for
-   commits and issues, `AGENTS.md` §Autonomy for deploys and releases.
-5. Distinguish scoped verification from repository health. "The targeted tests pass;
+   can do X.
+5. A change the user directed is unfinished until committed, unless the file is
+   git-ignored or outside a repo: commit it in the same turn it lands, staging exactly
+   the directive's paths and committing with the same pathspec (never `git add -A`,
+   never `commit -a`) — uncommitted work can be discarded by accident. Committing beyond
+   those paths, pushing, deploying, filing an issue, and anything else outward-facing or
+   that rewrites existing history stay asks.
+6. Distinguish scoped verification from repository health. "The targeted tests pass;
    the full suite is red because X" is honest. "Everything passes" is not.
 
 ## Priority
