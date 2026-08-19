@@ -2,7 +2,7 @@
 
 **Smells:** Shotgun Surgery, Duplicated Code
 **Inverse:** none
-**Improves:** maintainability — every derivation lives in one transform instead of at each consumer
+**Improves:** maintainability: every derivation lives in one transform instead of at each consumer
 
 ## When to apply
 
@@ -16,7 +16,7 @@
 
 ## When not to apply
 
-- The source data is updated after enrichment — derived fields on the copy go stale
+- The source data is updated after enrichment: derived fields on the copy go stale
   silently. A class computing on demand cannot go stale; use it instead.
 - Only one consumer computes the value, in one place. A transform for it is
   speculative infrastructure.
@@ -35,14 +35,14 @@
 
 ## Example
 
-Before — the cost rule lives at two sites:
+Before: the cost rule lives at two sites:
 
 ```js
 function invoiceLine(usage) { return `${usage.kwh} kWh: ${usage.kwh * usage.tariff}`; }
 function invoiceTax(usage) { return usage.kwh * usage.tariff * 0.2; }
 ```
 
-After — one transform; consumers read:
+After: one transform; consumers read:
 
 ```js
 function enrichUsage(usage) {
@@ -57,11 +57,11 @@ function invoiceTax(u) { return u.tax; }
 
 ## House-rule interactions
 
-- `coding_style.md` — transformations are "stateless, non-mutating translators …
+- `coding_style.md`: transformations are "stateless, non-mutating translators …
   input objects are never modified in place." The deep copy in step 1 is what keeps
   this refactoring inside that rule; enriching the input in place violates it.
-- `coding_style.md` — where this refactoring and Combine Functions into Class both
+- `coding_style.md`: where this refactoring and Combine Functions into Class both
   fit, the transform wins by default: it delivers the single change site without
   introducing a class.
-- `engineering_judgment.md` — complexity carries the burden of proof: the transform
+- `engineering_judgment.md`: complexity carries the burden of proof: the transform
   is justified by demonstrated duplication of derivations, never by anticipated ones.

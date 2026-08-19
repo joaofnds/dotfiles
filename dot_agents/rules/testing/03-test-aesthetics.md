@@ -1,4 +1,4 @@
-# 03 — Test Aesthetics
+# 03: Test Aesthetics
 
 How a test reads, how it's named, how it's structured, and how it stays useful as the code changes. Read the gatekeeper (`00-index.md`) first.
 
@@ -10,12 +10,12 @@ This module covers everything about the *look* of a test: philosophy, naming, st
 
 ## 1. Tests describe observable behavior (Khorikov)
 
-Assert on what a client of the subject can see through its public API. Do not assert on implementation details — private methods, internal fields, the exact sequence of internal calls.
+Assert on what a client of the subject can see through its public API. Do not assert on implementation details: private methods, internal fields, the exact sequence of internal calls.
 
 A test coupled to implementation is *brittle*: it breaks under refactoring even when behavior is unchanged. The reader learns to either stop refactoring or stop trusting the tests. Both outcomes are worse than no test at all.
 
 ```
-[BAD] — coupled to an internal call sequence
+[BAD]: coupled to an internal call sequence
     test "finds the user":
         service = new UserService(repo)
 
@@ -26,10 +26,10 @@ A test coupled to implementation is *brittle*: it breaks under refactoring even 
         assert repo.queryBuilder.limit.wasCalledWith(1)
 ```
 
-The moment the repository stops using a query builder, this test fails — and nothing about behavior has changed.
+The moment the repository stops using a query builder, this test fails, and nothing about behavior has changed.
 
 ```
-[GOOD] — asserts the observable outcome
+[GOOD]: asserts the observable outcome
     test "finds the user by email":
         users = new InMemoryUserRepository()
         users.seed(new User("joao@x.com"))
@@ -40,7 +40,7 @@ The moment the repository stops using a query builder, this test fails — and n
         assert found.email == "joao@x.com"
 ```
 
-**The rule of thumb:** a test for a behavior must survive any refactoring that preserves that behavior's contract. If the test breaks, one of two things is true — you broke the behavior, or the test was coupled to implementation.
+**The rule of thumb:** a test for a behavior must survive any refactoring that preserves that behavior's contract. If the test breaks, one of two things is true: you broke the behavior, or the test was coupled to implementation.
 
 ---
 
@@ -52,7 +52,7 @@ Tests are a design feedback channel, not just a verification tool. Specific pain
 |---|---|---|
 | "This test needs thirty lines of setup." | The subject has too many collaborators. | Split the subject, or introduce a coarser-grained role that owns the collaborators. |
 | "I need to fake five things to test one method." | The subject knows too much. | Invert a dependency, or replace the mock swarm with one Fake of a higher-level role. |
-| "I can't test this without peeking at private state." | The behavior isn't observable through the public API. | The API is missing a return value, event, or accessor. Add one — don't reach into internals. |
+| "I can't test this without peeking at private state." | The behavior isn't observable through the public API. | The API is missing a return value, event, or accessor. Add one; don't reach into internals. |
 | "I need a real database for this unit test." | The unit is too big, or repository concerns have leaked into the service. | Split. |
 
 **Do not silence test pain with more mocks.** The pain is the signal. Every time you reach for "I'll just mock that too", ask what the design is trying to tell you.
@@ -69,7 +69,7 @@ The top-level describe names the subject of the test:
 - **HTTP endpoint test** → the route path as a string: `"/users"`, `"/health"`, `"/auth"`.
 - **Adapter test** → the component name: `"key-value store"`, `"ID generator"`.
 
-### 3.2 Nested describes — grouping
+### 3.2 Nested describes: grouping
 
 Nest `describe` / `when` / `context` to group:
 
@@ -79,7 +79,7 @@ Nest `describe` / `when` / `context` to group:
 
 `when` reads best for conditional branches ("when X is true"); `context` reads best for modes. `describe` reads best for the subject's own operations.
 
-### 3.3 Test names — declarative, present, third-person
+### 3.3 Test names: declarative, present, third-person
 
 Every test name describes the observable outcome.
 
@@ -93,12 +93,12 @@ Every test name describes the observable outcome.
 
 Banned forms:
 
-- ❌ `should return the user` — drop the `should`. It's hedging, and it adds noise to every test name in the suite.
-- ❌ `test_findByEmail_returnsUser` — method-name echoes, not a sentence.
-- ❌ `Test 1` / `works` / `basic case` — names that tell the reader nothing.
+- ❌ `should return the user`: drop the `should`. It's hedging, and it adds noise to every test name in the suite.
+- ❌ `test_findByEmail_returnsUser`: method-name echoes, not a sentence.
+- ❌ `Test 1` / `works` / `basic case`: names that tell the reader nothing.
 - ❌ Trailing periods, capitalized first letter, mixed tenses. The name is a clause, not a sentence.
 
-When the branch is already in a nested `when`, the test name states only the outcome. Inside `when "not found"`, write `test "throws user not found"` — not `test "when not found, throws user not found"`. The hierarchy does the composition.
+When the branch is already in a nested `when`, the test name states only the outcome. Inside `when "not found"`, write `test "throws user not found"`, not `test "when not found, throws user not found"`. The hierarchy does the composition.
 
 ```
 describe UserService
@@ -148,10 +148,10 @@ test "lists created users":
 
 ### 4.3 One behavior per test
 
-A test asserts one thing — one behavior, one outcome. Multiple `assert` calls on the *same* outcome (a response: its status, its body shape, its headers) are fine; that's one behavior. Asserting on two unrelated behaviors is an **Eager Test** smell.
+A test asserts one thing: one behavior, one outcome. Multiple `assert` calls on the *same* outcome (a response: its status, its body shape, its headers) are fine; that's one behavior. Asserting on two unrelated behaviors is an **Eager Test** smell.
 
 ```
-[BAD] — two unrelated behaviors in one test
+[BAD]: two unrelated behaviors in one test
     test "creates and deletes user":
         created = driver.users.create("joao")
         assert created.name == "joao"
@@ -164,7 +164,7 @@ A test asserts one thing — one behavior, one outcome. Multiple `assert` calls 
 If deletion breaks, the creation assertion is noise; if creation breaks, the deletion assertion never runs.
 
 ```
-[GOOD] — two tests, each telling one story
+[GOOD]: two tests, each telling one story
     test "creates the user":
         created = driver.users.create("joao")
 
@@ -203,7 +203,7 @@ of the describe.
 No `if`, no `for`, no `switch`, no `try`/`catch` in the body of a test. Branches become separate tests; iteration becomes parameterized cases; expected exceptions use a rejection matcher, not `try`/`catch`.
 
 ```
-[BAD] — branching logic inside the test
+[BAD]: branching logic inside the test
     test "normalizes names":
         for each (input, expected) in cases:
             if input == "":
@@ -213,7 +213,7 @@ No `if`, no `for`, no `switch`, no `try`/`catch` in the body of a test. Branches
 ```
 
 ```
-[GOOD] — parameterized test cases, one assertion path per case
+[GOOD]: parameterized test cases, one assertion path per case
     cases = [
         { input: "JOAO",  expected: "joao" },
         { input: "  j ",  expected: "j" },
@@ -228,10 +228,10 @@ No `if`, no `for`, no `switch`, no `try`/`catch` in the body of a test. Branches
 
 ### 4.7 Parameterized tests
 
-When the same behavior runs against many inputs, use the framework's parameterized primitive — one generated test per row. Never loop multiple assertions inside a single test body: a failure on row three won't tell you it was row three, and the first failing row hides the rest.
+When the same behavior runs against many inputs, use the framework's parameterized primitive: one generated test per row. Never loop multiple assertions inside a single test body: a failure on row three won't tell you it was row three, and the first failing row hides the rest.
 
 ```
-[GOOD] — each row is its own named, independently-reporting test
+[GOOD]: each row is its own named, independently-reporting test
     each case in [
         { name: "lowercases uppercase", input: "JOAO", expected: "joao" },
         { name: "trims whitespace",     input: "  j ", expected: "j" },
@@ -240,7 +240,7 @@ When the same behavior runs against many inputs, use the framework's parameteriz
             assert service.normalize(case.input) == case.expected
 ```
 
-The primitive varies by framework — `it.each` in Jest/Vitest, `DescribeTable` + `Entry` in Ginkgo, `t.Run` subtests in Go's stdlib `testing` — so take it from the project's framework rather than from the language (`coding_style_go.md` §8). The contract is always the same: one row, one test, one name, one assertion path. The failure line tells you exactly which input broke.
+The primitive varies by framework, `it.each` in Jest/Vitest, `DescribeTable` + `Entry` in Ginkgo, `t.Run` subtests in Go's stdlib `testing`, so take it from the project's framework rather than from the language (`coding_style_go.md` §8). The contract is always the same: one row, one test, one name, one assertion path. The failure line tells you exactly which input broke.
 
 ---
 
@@ -250,24 +250,24 @@ How to write the assertion itself, once you have decided what to verify (§1) an
 
 ### 5.1 Prefer structural equality; escape to containment for volatile fields
 
-Deep-equal the full expected object when you can. A full structural match catches more regressions than a hand-picked list of field checks — new fields, silently-defaulted values, accidental omissions — and it reads as one line instead of ten.
+Deep-equal the full expected object when you can. A full structural match catches more regressions than a hand-picked list of field checks, new fields, silently-defaulted values, accidental omissions, and it reads as one line instead of ten.
 
 ```
-[BAD] — field-by-field; a new field on the domain object passes silently
+[BAD]: field-by-field; a new field on the domain object passes silently
     assert found.id    == user.id
     assert found.email == user.email
     assert found.name  == user.name
 ```
 
 ```
-[GOOD] — full structural equality
+[GOOD]: full structural equality
     assert found == user
 ```
 
-When parts of the object are volatile or irrelevant — generated ids, timestamps, server-added fields — escape to a **containment matcher** that asserts only on the fields you name. Do not assert on volatile fields, and do not silence them by equality-checking against arbitrary literals you had to copy from a previous run.
+When parts of the object are volatile or irrelevant, generated ids, timestamps, server-added fields, escape to a **containment matcher** that asserts only on the fields you name. Do not assert on volatile fields, and do not silence them by equality-checking against arbitrary literals you had to copy from a previous run.
 
 ```
-[GOOD] — containment for a volatile timestamp
+[GOOD]: containment for a volatile timestamp
     assert response.body containing { status: "ok", version: "1.0" }
 ```
 
@@ -278,25 +278,25 @@ language's identity-aware mechanism. Independently constructed error instances a
 usually equal.
 
 ```
-[BAD] — coupled to message text; a grammar edit breaks the test
+[BAD]: coupled to message text; a grammar edit breaks the test
     assert thrown.message contains "user not found"
 ```
 
 ```
-[GOOD] — compared against the stable error contract
+[GOOD]: compared against the stable error contract
     assert thrown is UserNotFoundError
     assert thrown.userId == userId
     assert isSameError(err, UserProvider.ErrNotFound)      // exported-sentinel style
 ```
 
-Message-matching is legitimate only when the message itself *is* the contract — a panic message that a public assertion API specifies, or a structured error whose rendered form is documented. In those cases the message is data, not prose.
+Message-matching is legitimate only when the message itself *is* the contract: a panic message that a public assertion API specifies, or a structured error whose rendered form is documented. In those cases the message is data, not prose.
 
 ### 5.3 Order of assertions at a protocol boundary
 
-When a test exercises the subject through a transport — HTTP, a queue, a message bus — assert in this order:
+When a test exercises the subject through a transport, HTTP, a queue, a message bus, assert in this order:
 
 1. **Protocol shape.** Status code, response shape, headers. The boundary's own contract.
-2. **Observable state.** The world has changed as expected — read back through the Driver or an owned public query port appropriate to the test layer.
+2. **Observable state.** The world has changed as expected: read back through the Driver or an owned public query port appropriate to the test layer.
 3. **Captured side-effects.** Outbound calls the Fake recorded (`http.requests[]`, `emails.sent[]`, `queue.enqueued[]`).
 
 Protocol shape first, because if the status is wrong the rest of the response is unreliable to read. State second, because the persisted record of truth is more authoritative than any captured interaction. Side-effects last, because they are the weakest form of verification (`02-mocking-roles.md` §2).
@@ -313,7 +313,7 @@ test "creates the user":
     assert emails.sent[0].subject == "Welcome"
 ```
 
-Skip any level that doesn't apply — a pure query endpoint has no state change; a pure command may have no meaningful response body — but do not reorder.
+Skip any level that doesn't apply, a pure query endpoint has no state change; a pure command may have no meaningful response body, but do not reorder.
 
 ---
 
@@ -330,7 +330,7 @@ or Object Mother only after repeated setup demonstrates the need.
 Tests should read at the domain level, not the framework level. Every driver method, harness helper, Fake seed method, Builder verb, and custom assertion is a word in your domain DSL. The test body says *what* happens; *how* is in the vocabulary.
 
 ```
-[BAD] — reads like a transport log
+[BAD]: reads like a transport log
     response1 = agent.post("/auth/register", body={ email: "joao@x.com", password: "p4ss" })
     assert response1.status == 201
     response2 = agent.post("/auth/login", body={ email: "joao@x.com", password: "p4ss" })
@@ -342,7 +342,7 @@ Tests should read at the domain level, not the framework level. Every driver met
 ```
 
 ```
-[GOOD] — reads like a spec
+[GOOD]: reads like a spec
     api.auth.mustRegister("joao@x.com", "p4ss")
     token = api.auth.mustLogin("joao@x.com", "p4ss")
 
@@ -372,14 +372,14 @@ code or let known-wrong behavior become the permanent contract.
 
 ## 9. Smells that show up at this layer
 
-- **Obscure Test** — the reader can't see what's being tested through the setup noise. Fix: push setup into the harness, Builders, or a DSL helper.
-- **Eager Test** — one test verifies multiple unrelated behaviors. Fix: split (§4.3).
-- **Fragile Test** — breaks under unrelated refactoring. Fix: move assertions to observable behavior (§1).
-- **Assertion Roulette** — many unlabeled assertions in one test; failure message can't tell you which fired. Fix: split, or extract a named custom assertion.
-- **Hard-Coded Test Data** — magic IDs, timestamps, names scattered through the body. Fix: named constants, or a Builder.
-- **Free Ride** — piggy-backing a new assertion onto an existing test "because the state is already there." Fix: a new behavior is a new test, even if setup repeats. Duplication of intent beats conflation of cases.
-- **Conditional Test Logic** — `if`/`for`/`try`/`catch` in the test body. Fix: split or parameterize (§4.6).
-- **Trivial Test** — asserts a language-level assignment with negligible regression value. Delete it unless the accessor performs behavior or protects a known regression.
+- **Obscure Test**: the reader can't see what's being tested through the setup noise. Fix: push setup into the harness, Builders, or a DSL helper.
+- **Eager Test**: one test verifies multiple unrelated behaviors. Fix: split (§4.3).
+- **Fragile Test**: breaks under unrelated refactoring. Fix: move assertions to observable behavior (§1).
+- **Assertion Roulette**: many unlabeled assertions in one test; failure message can't tell you which fired. Fix: split, or extract a named custom assertion.
+- **Hard-Coded Test Data**: magic IDs, timestamps, names scattered through the body. Fix: named constants, or a Builder.
+- **Free Ride**: piggy-backing a new assertion onto an existing test "because the state is already there." Fix: a new behavior is a new test, even if setup repeats. Duplication of intent beats conflation of cases.
+- **Conditional Test Logic**: `if`/`for`/`try`/`catch` in the test body. Fix: split or parameterize (§4.6).
+- **Trivial Test**: asserts a language-level assignment with negligible regression value. Delete it unless the accessor performs behavior or protects a known regression.
 - **`should` in every test name.** Fix: remove the `should`. The name is a clause describing what the system does, not a wish.
 
 ---

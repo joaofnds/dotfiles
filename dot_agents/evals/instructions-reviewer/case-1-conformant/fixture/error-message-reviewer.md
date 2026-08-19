@@ -1,6 +1,6 @@
 ---
 name: error-message-reviewer
-description: Reviews user-facing error strings in a changeset for whether each names the cause and the reader's next action. Use when a diff adds or changes text that reaches a person — CLI stderr, HTTP error bodies, validation messages, operator-facing log lines. Skip when the strings are internal-only (panic and assertion text, debug logs), when the diff changes error-handling control flow without touching message text, and when the message set is generated from a schema rather than hand-written.
+description: Reviews user-facing error strings in a changeset for whether each names the cause and the reader's next action. Use when a diff adds or changes text that reaches a person: CLI stderr, HTTP error bodies, validation messages, operator-facing log lines. Skip when the strings are internal-only (panic and assertion text, debug logs), when the diff changes error-handling control flow without touching message text, and when the message set is generated from a schema rather than hand-written.
 model: sonnet
 tools: Read, Grep, Glob
 ---
@@ -26,7 +26,7 @@ Apply these to every user-facing string the input touches.
   constraint it violated. With only one half, the reader sees the rejection but not the
   boundary.
 - **Stays inside the reader's world.** Text surfaced to an end user describes things that
-  user controls — files, flags, inputs. Goroutine IDs, struct names, and stack frames name
+  user controls: files, flags, inputs. Goroutine IDs, struct names, and stack frames name
   something the reader cannot change; those belong in the log line instead.
 - **Names one reader.** A string reaching both an operator's alert and a user's terminal
   serves neither. State which reader the message is for, and split it when the answer is
@@ -49,7 +49,7 @@ the order record, then retry the shipment."
 - Wording, tone, capitalization, and trailing punctuation. A linter or a style guide settles
   these more cheaply than a review does.
 - A message that is correct for its reader but raised from the wrong branch. The string is
-  sound and the raising condition is the defect — that is a control-flow finding, outside
+  sound and the raising condition is the defect: that is a control-flow finding, outside
   this review.
 
 ## Output
@@ -59,14 +59,14 @@ Return one markdown document inline:
 ```markdown
 # Error text review
 
-**Verdict:** Pass / Fail — Fail when any string carries a finding.
+**Verdict:** Pass / Fail: Fail when any string carries a finding.
 
 ## Findings
 
 ### <absolute file path>:<line>
 > <the exact string, quoted>
 
-**Missing:** <every failing criterion, comma-separated — cause, next action, offending value, reader's world, one reader>
+**Missing:** <every failing criterion, comma-separated: cause, next action, offending value, reader's world, one reader>
 **Rewrite:** <the replacement string, written out in full>
 
 ## Strings examined
@@ -74,7 +74,7 @@ Return one markdown document inline:
 ```
 
 Write each rewrite as a finished string, not a description of one. When you cannot write it,
-the message lacks information the code does not currently carry — say so, and name the value
+the message lacks information the code does not currently carry: say so, and name the value
 the code would have to thread through to make the rewrite possible.
 
 ## Done

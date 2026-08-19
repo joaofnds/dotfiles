@@ -16,16 +16,16 @@ Probe and instrument freely, but don't land the fix here; that's
 /plan → /build, off the cause you find.
 
 **Build the loop before theorizing.** Get a tight, red-capable repro first: one
-command you've already run that goes red on *this* bug and green once it's fixed —
+command you've already run that goes red on *this* bug and green once it's fixed:
 the exact command, input, and output. That loop is the skill; hypotheses just
 consume it, so spend your effort here. When a repro is hard to get, reach for a
 failing test, a curl against a running server, a replay of a captured trace, a
-bisection, or a differential run of two configs. Then *minimise* — cut to the
+bisection, or a differential run of two configs. Then *minimise*: cut to the
 smallest scenario that still goes red, one element at a time, re-checking the
 minimised case still reproduces the *reported magnitude*; if the cost drops, you
 minimised away the cause, not the noise. For a latency or intermittency symptom
 ("sometimes slow", "occasional hang"), "red" is a measured cost on
-**representative real input through the real caller** — the user's own files, not
+**representative real input through the real caller**: the user's own files, not
 a unit test that bypasses the path and not a synthetic fixture; reproduce the
 reported magnitude before you trust any number, and a result far smaller than
 what the user perceives means you are measuring something else. If you can't
@@ -33,13 +33,13 @@ reproduce it at all, that's finding #1, not a license to guess.
 
 **Hold competing hypotheses.** Name more than one cause the evidence could
 support; don't latch onto the first. Then go find the observation that tells them
-apart — read the code, trace the data flow, add instrumentation, bisect. Change
+apart: read the code, trace the data flow, add instrumentation, bisect. Change
 one thing at a time. Tag any probe you add with a unique prefix (`[DEBUG-a4f2]`)
 so cleanup is a single grep.
 
 **Confirm by prediction, not plausibility.** You've found it only when you can
 switch the symptom on and off at will and account for every observation. "It
-works now" without knowing why is program-by-coincidence — keep going. Only tool
+works now" without knowing why is program-by-coincidence; keep going. Only tool
 output and observed behavior count, never a story that fits.
 
 **Reach the root, not the symptom.** Ask why until the cause is structural;
@@ -51,5 +51,5 @@ probe must remain, record its exact path, purpose, and diff in the diagnosis or 
 
 When investigation ends, use `/diagnose` if the cause must survive a session boundary.
 If continuing now, `/grill` is the next step when the remedy is open and `/plan` when it
-is settled — both user-invoked, so recommend them by name.
-To pause live investigation, `/handoff` — user-invoked, so recommend it by name.
+is settled: both user-invoked, so recommend them by name.
+To pause live investigation, `/handoff`: user-invoked, so recommend it by name.

@@ -1,10 +1,10 @@
-# 02 — Mocking and Roles
+# 02: Mocking and Roles
 
 What test doubles we use, what we don't, and why. Read the gatekeeper (`00-index.md`) first.
 
 This module answers three questions:
 1. What kind of double is the right one for this collaborator?
-2. How do we verify — on the output, on the state, or on the interaction?
+2. How do we verify: on the output, on the state, or on the interaction?
 3. When is a framework mock allowed, and when is it banned?
 
 The short version: **prefer real collaborators. Where I/O or unmanaged dependencies make that impossible, write a Fake. Framework mocks on your own code are banned.**
@@ -19,11 +19,11 @@ Precise names for precise roles. Use the right word and the test reads correctly
 |---|---|---|---|
 | **Dummy** | Passed to satisfy a signature; never invoked. | No | No |
 | **Stub** | Returns canned answers to queries. | No | No |
-| **Fake** | Working implementation with a shortcut (in-memory store, fixed clock, test-signed token). Deterministic. | Yes | Optional — may spy |
+| **Fake** | Working implementation with a shortcut (in-memory store, fixed clock, test-signed token). Deterministic. | Yes | Optional: may spy |
 | **Spy** | Records interactions for later inspection. May return canned answers. | Yes | Yes (after the fact) |
 | **Mock** | Pre-programmed with expectations; fails the test itself if the protocol is wrong. | Yes | Yes (eager, built-in) |
 
-We lean overwhelmingly on **Fakes**. Some Fakes also spy — a Fake that captures the list of requests it received is a Fake-plus-Spy, not a Mock. The line we don't cross is pre-programmed expectations: we do not build doubles that fail the test from the inside because "you called me in the wrong order." Interaction coupling of that kind is fragile (§2 below).
+We lean overwhelmingly on **Fakes**. Some Fakes also spy: a Fake that captures the list of requests it received is a Fake-plus-Spy, not a Mock. The line we don't cross is pre-programmed expectations: we do not build doubles that fail the test from the inside because "you called me in the wrong order." Interaction coupling of that kind is fragile (§2 below).
 
 Name your double after its role. A double that returns one canned user is a **Stub**, not a **Fake**, even if its type looks similar to one. A double that records calls but doesn't return meaningful state is a **Spy**. Calling everything "mock" is how tests become incomprehensible.
 
@@ -34,12 +34,12 @@ Name your double after its role. A double that returns one canned user is a **St
 Three ways a test can know the code worked. Prefer the earliest one that expresses the
 observable contract without hiding a boundary interaction that is itself the contract:
 
-1. **Output-based** — the function returns a value; assert on the value. Purest. Survives any refactor except changing the return type.
-2. **State-based** — the system mutates state; assert on the state afterward (read it back through the real repository, inspect a Fake's captured state).
-3. **Communication-based** — the code calls a collaborator; assert on the interaction via a spy or mock. Most fragile, most coupled to implementation, hardest to refactor around.
+1. **Output-based**: the function returns a value; assert on the value. Purest. Survives any refactor except changing the return type.
+2. **State-based**: the system mutates state; assert on the state afterward (read it back through the real repository, inspect a Fake's captured state).
+3. **Communication-based**: the code calls a collaborator; assert on the interaction via a spy or mock. Most fragile, most coupled to implementation, hardest to refactor around.
 
 ```
-[BAD] — communication-based verification on our own code
+[BAD]: communication-based verification on our own code
     test "creates user":
         mockRepo = inlineMock()
         service = new UserService(mockRepo)
@@ -52,7 +52,7 @@ observable contract without hiding a boundary interaction that is itself the con
 This test breaks the moment the service computes `role` differently, adds a field, or renames `save()`. None of those are changes in behavior.
 
 ```
-[GOOD] — state-based verification through a Fake that implements the real interface
+[GOOD]: state-based verification through a Fake that implements the real interface
     test "creates user":
         users = new InMemoryUserRepository()             // Fake of our own repo interface
         service = new UserService(users)
@@ -63,7 +63,7 @@ This test breaks the moment the service computes `role` differently, adds a fiel
 ```
 
 ```
-[BEST] — output-based verification when the method returns the value
+[BEST]: output-based verification when the method returns the value
     test "creates user with a defaulted role":
         service = new UserService(new InMemoryUserRepository())
 
@@ -72,7 +72,7 @@ This test breaks the moment the service computes `role` differently, adds a fiel
         assert created.role == "default"
 ```
 
-If you're reaching for `toHaveBeenCalledWith` on code you own, you've coupled the test to a call sequence you chose — not a contract the client depends on. Rewrite the verification around the return value, the persisted state, or the emitted event.
+If you're reaching for `toHaveBeenCalledWith` on code you own, you've coupled the test to a call sequence you chose: not a contract the client depends on. Rewrite the verification around the return value, the persisted state, or the emitted event.
 
 ---
 
@@ -83,10 +83,10 @@ third-party in an interface you own, then fake that port. A focused adapter cont
 may use a thin third-party Spy when the outbound call itself is the observable contract;
 §6 defines that exception.
 
-This is the single most load-bearing rule in this document. It's why we have `HTTPClient` (our interface), with `RealHTTPClient` (adapter wrapping the library) and `FakeHTTPClient` (deterministic in-memory double) — instead of patching the library's `fetch` function. Same for `Clock`, `IDGenerator`, `UserProvider`, `TokenProvider`, `KVStore`, `Queue`. The third-party library sits behind *our* interface; tests only ever see our interface.
+This is the single most load-bearing rule in this document. It's why we have `HTTPClient` (our interface), with `RealHTTPClient` (adapter wrapping the library) and `FakeHTTPClient` (deterministic in-memory double), instead of patching the library's `fetch` function. Same for `Clock`, `IDGenerator`, `UserProvider`, `TokenProvider`, `KVStore`, `Queue`. The third-party library sits behind *our* interface; tests only ever see our interface.
 
 ```
-[BAD] — mocking a third-party library directly
+[BAD]: mocking a third-party library directly
     test "fetches a pokemon":
         librarySpy = replaceModule("third-party-http-lib", {
             get: (url) => { return { status: 200, body: { name: "pikachu" } } }
@@ -101,7 +101,7 @@ This is the single most load-bearing rule in this document. It's why we have `HT
 ```
 
 ```
-[GOOD] — wrap the library in an owned interface; fake that interface
+[GOOD]: wrap the library in an owned interface; fake that interface
     interface HTTPClient:
         get(url, options?) -> Response
         post(url, options?) -> Response
@@ -139,7 +139,7 @@ A shared stateful Fake satisfies all of:
 - **Implement the real interface.** The interface is the contract; the Fake is a second valid implementation of it, same as the production adapter. Compile-time check required.
 - **Stateful when the role is stateful.** `FakeClock` holds a moment. `InMemoryUserRepository` holds users. `FakeHTTPClient` holds a queue of canned responses and a captured list of received requests.
 - **Deterministic.** No wall-clock calls, no randomness, no network. A `FakeClock.now()` returns a fixed moment; an `IncrementalIdGenerator` counts up from 1.
-- **Expose explicit seed methods.** `addResponse(r)`, `setNextStatus("down")`, `seedUser(user)`. The test arranges state through named, domain-level verbs — not by poking internal fields.
+- **Expose explicit seed methods.** `addResponse(r)`, `setNextStatus("down")`, `seedUser(user)`. The test arranges state through named, domain-level verbs: not by poking internal fields.
 - **Expose a `reset()` method.** Called in `beforeEach`. Clears captured state and queued responses. A Fake that can't be reset will leak state between tests.
 - **Capture inputs for optional inspection.** `requests[]`, `generatedIds[]`. This is how a Fake plays a Spy role when the test wants to assert on the outbound call.
 
@@ -163,7 +163,7 @@ class FakeEmailService implements EmailService:
 ```
 
 ```
-[BAD] — inline anonymous stub, no state, no reset, no contract check
+[BAD]: inline anonymous stub, no state, no reset, no contract check
     test "sends a welcome email":
         service = new UserService({ send: (to, subj, body) => {} })   // not typed to interface
 
@@ -173,7 +173,7 @@ class FakeEmailService implements EmailService:
 ```
 
 ```
-[GOOD] — first-class Fake, shared, stateful, verifiable
+[GOOD]: first-class Fake, shared, stateful, verifiable
     test "sends a welcome email":
         emails = new FakeEmailService()
         service = new UserService(emails)
@@ -186,9 +186,9 @@ class FakeEmailService implements EmailService:
 
 ---
 
-## 5. Injection — through DI only, never through module patching
+## 5. Injection: through DI only, never through module patching
 
-Fakes are injected through the dependency graph — a constructor parameter, a container override, a module decoration. Never by import-time module replacement.
+Fakes are injected through the dependency graph: a constructor parameter, a container override, a module decoration. Never by import-time module replacement.
 
 Module patching is invisible at the test's call site. It violates encapsulation, makes the test impossible to reason about locally, and couples to a module resolution detail that changes with build tooling.
 
@@ -196,19 +196,19 @@ Module patching is invisible at the test's call site. It violates encapsulation,
 
 ## 6. The narrow mock escape hatch
 
-Framework mocks — generated or inline, any form of anonymous record-and-return spy produced by a mocking library — are allowed under **strict** conditions:
+Framework mocks, generated or inline, any form of anonymous record-and-return spy produced by a mocking library, are allowed under **strict** conditions:
 
 1. The adapter itself is the subject of a focused contract test.
 2. The interface is owned by a third-party library we don't control.
 3. The test asserts that a call happened with specific arguments because that call is the boundary contract.
 4. The mock has zero state beyond what the interaction assertion reads.
 
-Typical legal uses: verifying that a queue client's `.add()` method was called with a job payload we constructed, or that a logger received a structured event. The call itself is the contract — the library is the unmanaged outside world, and we're verifying the boundary we hand data across.
+Typical legal uses: verifying that a queue client's `.add()` method was called with a job payload we constructed, or that a logger received a structured event. The call itself is the contract: the library is the unmanaged outside world, and we're verifying the boundary we hand data across.
 
 The moment the mock needs `if args.x then return y`, a state machine, a queue of responses, or two interdependent methods, you have outgrown a mock. Write a Fake.
 
 ```
-[LEGAL ESCAPE HATCH] — thin interaction verification on a third-party queue client
+[LEGAL ESCAPE HATCH]: thin interaction verification on a third-party queue client
     test "enqueues a user-created job":
         queueClient = inlineSpy({ add: () => {} })       // mock of third-party Queue.add()
         service = new UserCreatedPublisher(queueClient)
@@ -219,9 +219,9 @@ The moment the mock needs `if args.x then return y`, a state machine, a queue of
 ```
 
 ```
-[OUT OF BOUNDS] — mocking our own domain interface
+[OUT OF BOUNDS]: mocking our own domain interface
     test "creates user":
-        repoSpy = inlineSpy({ save: () => {} })          // ❌ our own UserRepository — must be a Fake
+        repoSpy = inlineSpy({ save: () => {} })          // ❌ our own UserRepository: must be a Fake
         service = new UserService(repoSpy)
 
         service.create("joao")
@@ -233,12 +233,12 @@ The moment the mock needs `if args.x then return y`, a state machine, a queue of
 
 ## 7. The unit-is-a-behavior corollary
 
-The London-school reflex is: "isolate the class — mock every collaborator around it." We don't; the gatekeeper's *unit is a behavior* vocabulary is why.
+The London-school reflex is: "isolate the class; mock every collaborator around it." We don't; the gatekeeper's *unit is a behavior* vocabulary is why.
 
 When deciding what to fake: **fake at the I/O boundary, not at every class boundary.**
 
 ```
-[BAD] — London reflex; every collaborator mocked, test is coupled to internal structure
+[BAD]: London reflex; every collaborator mocked, test is coupled to internal structure
     test "registers a user":
         repoMock     = inlineSpy()
         emailMock    = inlineSpy()
@@ -255,7 +255,7 @@ When deciding what to fake: **fake at the I/O boundary, not at every class bound
 ```
 
 ```
-[GOOD] — classical; real value objects and helpers, Fake at the I/O seams only
+[GOOD]: classical; real value objects and helpers, Fake at the I/O seams only
     test "registers a user":
         users  = new InMemoryUserRepository()            // Fake at I/O boundary
         emails = new FakeEmailService()                  // Fake at I/O boundary

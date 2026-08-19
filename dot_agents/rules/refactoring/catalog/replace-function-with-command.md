@@ -2,11 +2,11 @@
 
 **Smells:** Long Function
 **Inverse:** Replace Command with Function
-**Improves:** maintainability — a function too tangled to decompose in place gains fields for its locals and methods for its steps
+**Improves:** maintainability: a function too tangled to decompose in place gains fields for its locals and methods for its steps
 
 ## When to apply
 
-- A function is so complex that Extract Function keeps failing on it — every fragment
+- A function is so complex that Extract Function keeps failing on it: every fragment
   needs half the locals, so every extraction drags a parameter train. As a command
   object, the locals become fields and the fragments become parameterless private
   methods; decomposition finally proceeds.
@@ -17,10 +17,10 @@
 
 ## When not to apply
 
-- **The default is a function** — `coding_style.md`'s "solely to satisfy this document" bars introducing a class to
+- **The default is a function**: `coding_style.md`'s "solely to satisfy this document" bars introducing a class to
   house what a function can express; most long functions yield to ordinary extraction
   well before a command is warranted.
-- Undo, queueing, or scheduling are *anticipated* rather than required — building
+- Undo, queueing, or scheduling are *anticipated* rather than required: building
   command infrastructure for them now is speculative generality; the refactoring back
   (Replace Command with Function) is exactly what happens to unused lifecycles.
 - Direction against Replace Command with Function is settled by demonstrated need:
@@ -38,7 +38,7 @@
 
 ## Example
 
-Before — every helper would need five parameters:
+Before: every helper would need five parameters:
 
 ```js
 function score(candidate, medicalExam, scoringGuide) {
@@ -48,7 +48,7 @@ function score(candidate, medicalExam, scoringGuide) {
 }
 ```
 
-After — locals are fields; steps are methods:
+After: locals are fields; steps are methods:
 
 ```js
 class Scorer {
@@ -64,9 +64,9 @@ class Scorer {
 
 ## House-rule interactions
 
-- `coding_style.md` — do not introduce classes solely to satisfy structure: the
+- `coding_style.md`: do not introduce classes solely to satisfy structure: the
   command must be evidenced by failed extraction attempts or a required lifecycle,
   never by a preference for objects.
-- `engineering_judgment.md` — match complexity to the problem: the command sits at
+- `engineering_judgment.md`: match complexity to the problem: the command sits at
   the top of a gradient (inline → extracted functions → command); pick the lowest
   rung that works.

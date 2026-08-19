@@ -2,12 +2,12 @@
 
 **Smells:** Mutable Data
 **Inverse:** none
-**Improves:** resilience — a field that cannot change after construction cannot be corrupted after construction
+**Improves:** resilience: a field that cannot change after construction cannot be corrupted after construction
 
 ## When to apply
 
 - A setter exists for a field that is only ever set during creation. Its presence is a
-  false advertisement — readers must assume the field can change anywhere, and trace
+  false advertisement: readers must assume the field can change anywhere, and trace
   all callers to learn it doesn't.
 - The field is an identity (an ID, a key) that must never change once assigned;
   a setter on identity is a bug with a public API.
@@ -16,7 +16,7 @@
 
 ## When not to apply
 
-- The field legitimately changes during the object's life — removing its setter just
+- The field legitimately changes during the object's life: removing its setter just
   pushes mutation into ad-hoc field pokes. The refactoring targets creation-only
   fields, not mutability in general.
 - A serialization or ORM framework genuinely requires the setter; then constrain and
@@ -34,14 +34,14 @@
 
 ## Example
 
-Before — the ID is assignable forever:
+Before: the ID is assignable forever:
 
 ```js
 const account = new Account();
 account.setId("acc-42");
 ```
 
-After — identity is fixed at birth:
+After: identity is fixed at birth:
 
 ```js
 class Account {
@@ -54,11 +54,11 @@ const account = new Account("acc-42");
 
 ## House-rule interactions
 
-- `coding_style.md` — explicit construction: entities map properties explicitly at
+- `coding_style.md`: explicit construction: entities map properties explicitly at
   creation; a post-construction setter phase is the bulk-assignment pattern this rule
   exists to prevent, one field at a time.
-- `coding_style.md` — behavior lives with data: getter/setter pairs with logic
+- `coding_style.md`: behavior lives with data: getter/setter pairs with logic
   elsewhere define the anemic model; every deleted setter moves the design away from
   it.
-- `engineering_judgment.md` — narrows future bugs: the whole class of
+- `engineering_judgment.md`: narrows future bugs: the whole class of
   "mutated after creation" defects for this field becomes unrepresentable.

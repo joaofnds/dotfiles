@@ -2,14 +2,14 @@
 
 **Smells:** Lazy Element, Speculative Generality
 **Inverse:** Extract Class
-**Improves:** maintainability — a class that stopped earning its keep stops charging rent
+**Improves:** maintainability: a class that stopped earning its keep stops charging rent
 
 ## When to apply
 
 - The class no longer justifies its existence: earlier refactorings moved its
   substance elsewhere, and what remains is a few fields and forwards. Fold it into its
   closest collaborator.
-- The class was built for a generality that never materialized — one implementation,
+- The class was built for a generality that never materialized: one implementation,
   one caller, no variation ever demanded.
 - As a waypoint: to re-partition two badly-split classes, inline one into the other
   first, then extract along the better seam.
@@ -18,7 +18,7 @@
 
 ## When not to apply
 
-- The class is small but load-bearing — a value object with an invariant, a boundary
+- The class is small but load-bearing: a value object with an invariant, a boundary
   type keeping a wire shape out of the domain. Size is not the measure; contribution
   is.
 - Multiple independent clients use the class; inlining into one of them strands the
@@ -35,7 +35,7 @@
 
 ## Example
 
-Before — `TrackingInfo` holds two fields and no behavior of its own:
+Before: `TrackingInfo` holds two fields and no behavior of its own:
 
 ```js
 class Shipment {
@@ -57,10 +57,10 @@ class Shipment {
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — code is a liability: a structure whose only content
+- `engineering_judgment.md`: code is a liability: a structure whose only content
   is structure is pure carrying cost; deletion is the feature.
-- `engineering_judgment.md` — YAGNI: the class built for the future that never
+- `engineering_judgment.md`: YAGNI: the class built for the future that never
   came is this rule's textbook exhibit, and inlining is its enforcement.
-- `coding_style.md` — Beck's ordering: removal is a fewest-elements win that costs
-  no intent — when the class *was* carrying intent (a named domain concept), see
+- `coding_style.md`: Beck's ordering: removal is a fewest-elements win that costs
+  no intent; when the class *was* carrying intent (a named domain concept), see
   "When not to apply" instead.

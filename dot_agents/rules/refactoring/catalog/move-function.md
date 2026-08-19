@@ -2,11 +2,11 @@
 
 **Smells:** Feature Envy, Shotgun Surgery, Insider Trading, Divergent Change
 **Inverse:** none
-**Improves:** maintainability — the function lives with the data and neighbors it actually works with, so changes stay local
+**Improves:** maintainability: the function lives with the data and neighbors it actually works with, so changes stay local
 
 ## When to apply
 
-- A function references another module's data or functions more than its own home's —
+- A function references another module's data or functions more than its own home's:
   the classic Feature Envy read. Move it to where its interest lies.
 - One logical change keeps touching this function *and* a cluster in another module;
   co-locating them turns a multi-module edit into a local one.
@@ -17,10 +17,10 @@
 
 - The function uses both modules roughly equally. Moving it just reverses the envy;
   consider Extract Function to split it along the module seam first.
-- The "envy" is a deliberate pattern — a mapper or anti-corruption layer *exists* to
+- The "envy" is a deliberate pattern: a mapper or anti-corruption layer *exists* to
   read another model's fields. Translation code at a boundary is doing its job, not
   smelling.
-- The target module should not know about the source's types — a move that reverses a
+- The target module should not know about the source's types: a move that reverses a
   dependency direction is an architecture change, not a tidy-up.
 
 ## Mechanics
@@ -31,11 +31,11 @@
    what it can no longer see, renames to fit the target's vocabulary).
 3. Make the source function delegate to the new one. Run the tests.
 4. Migrate callers to the new location, testing as you go; then delete the delegating
-   stub — or keep it when external callers make removal a separate task.
+   stub, or keep it when external callers make removal a separate task.
 
 ## Example
 
-Before — a billing function that only reads customer data:
+Before: a billing function that only reads customer data:
 
 ```js
 // billing.js
@@ -45,7 +45,7 @@ function loyaltyDiscount(order) {
 }
 ```
 
-After — moved to the module whose data it envied:
+After: moved to the module whose data it envied:
 
 ```js
 // customer.js
@@ -57,11 +57,11 @@ function loyaltyDiscountFor(customer) {
 
 ## House-rule interactions
 
-- `coding_style.md` — Tell, Don't Ask: a function interrogating a neighbor's
+- `coding_style.md`: Tell, Don't Ask: a function interrogating a neighbor's
   internals is the asking this rule forbids; moving it inside the neighbor turns the
   interrogation into behavior offered by the role.
-- `coding_style.md` — put domain behavior with the model it governs; Move Function
+- `coding_style.md`: put domain behavior with the model it governs; Move Function
   is the mechanical step that enforces it.
-- `engineering_judgment.md` — dependencies point inward: verify the move does not
+- `engineering_judgment.md`: dependencies point inward: verify the move does not
   make a domain module import an adapter. A move that fixes envy but reverses an arrow
   is a worse trade.

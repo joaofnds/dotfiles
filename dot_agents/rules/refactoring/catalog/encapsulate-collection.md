@@ -2,22 +2,22 @@
 
 **Smells:** Data Class, Mutable Data
 **Inverse:** none
-**Improves:** resilience — no client can bypass the owner's invariants by mutating the collection behind its back
+**Improves:** resilience: no client can bypass the owner's invariants by mutating the collection behind its back
 
 ## When to apply
 
 - A class exposes a mutable collection through a getter. Every client holding the
-  reference can add or remove elements without the owner knowing — the owner's
+  reference can add or remove elements without the owner knowing: the owner's
   invariants and side effects (counts, notifications, validation) are silently
   bypassable.
 - Add/remove logic for the collection is scattered across clients instead of living
   with the owner.
-- A bug already occurred where the collection changed "by itself" — that is this
+- A bug already occurred where the collection changed "by itself"; that is this
   smell's signature incident.
 
 ## When not to apply
 
-- The collection is immutable at the language level (frozen, readonly type) — there
+- The collection is immutable at the language level (frozen, readonly type): there
   is no back door to close.
 - The "owner" is a transparent data bundle by design, with no invariants over the
   collection; adding ceremony around a list nobody guards is encapsulation theater.
@@ -33,7 +33,7 @@
 
 ## Example
 
-Before — anyone can push past the limit:
+Before: anyone can push past the limit:
 
 ```js
 class Course {
@@ -43,7 +43,7 @@ class Course {
 course.roster.push(student);
 ```
 
-After — enrollment goes through the rule; readers get a copy:
+After: enrollment goes through the rule; readers get a copy:
 
 ```js
 class Course {
@@ -58,10 +58,10 @@ class Course {
 
 ## House-rule interactions
 
-- `coding_style.md` — behavior lives with data: scattered `push` calls on an
+- `coding_style.md`: behavior lives with data: scattered `push` calls on an
   exposed list are the anemic-model pattern in miniature; the add/remove methods bring
   the behavior home.
-- `coding_style.md` — Tell, Don't Ask: `course.enroll(student)` tells;
+- `coding_style.md`: Tell, Don't Ask: `course.enroll(student)` tells;
   `course.roster.push(student)` asks for internals and decides for them.
-- `engineering_judgment.md` — narrows future bugs: returning copies makes the
+- `engineering_judgment.md`: narrows future bugs: returning copies makes the
   whole bypass class unrepresentable rather than merely discouraged.

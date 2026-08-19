@@ -2,25 +2,25 @@
 
 **Smells:** Mutable Data
 **Inverse:** none
-**Improves:** readability — one name means one thing for its whole life
+**Improves:** readability: one name means one thing for its whole life
 
 ## When to apply
 
-- A variable is assigned more than once for more than one purpose — first it holds the
+- A variable is assigned more than once for more than one purpose: first it holds the
   raw input, later the scaled result, later the formatted string. Each purpose deserves
   its own name, and each name can then be `const`.
 - A parameter is reassigned inside the function body; readers checking the call site
   can no longer trust what the name refers to below the reassignment.
-- A temp does double duty across two phases of a computation — often the same signal
+- A temp does double duty across two phases of a computation, often the same signal
   that Split Phase reads at larger scale.
 
 ## When not to apply
 
-- The variable is a collecting variable — an accumulator in a loop, a string being
+- The variable is a collecting variable: an accumulator in a loop, a string being
   built up. Repeated assignment *is* its single purpose; splitting it would be
   nonsense.
 - The reassignment implements an algorithm's genuine state evolution (a `current`
-  pointer walking a structure). One purpose, changing value — leave it.
+  pointer walking a structure). One purpose, changing value: leave it.
 
 ## Mechanics
 
@@ -32,7 +32,7 @@
 
 ## Example
 
-Before — `size` means three different things:
+Before: `size` means three different things:
 
 ```js
 let size = files.reduce((s, f) => s + f.bytes, 0);
@@ -52,8 +52,8 @@ display(label);
 
 ## House-rule interactions
 
-- `coding_style.md` — move understanding from your head into the code: tracking
+- `coding_style.md`: move understanding from your head into the code: tracking
   which meaning a reused variable currently holds is exactly the volatile head-state
   that renaming into distinct constants persists.
-- `coding_style.md` — Beck's ordering: three honest names beat one lying name on
+- `coding_style.md`: Beck's ordering: three honest names beat one lying name on
   reveals-intent; the extra declarations are elements well spent.

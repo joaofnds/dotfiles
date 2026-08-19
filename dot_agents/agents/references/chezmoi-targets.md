@@ -1,4 +1,4 @@
-# Chezmoi targets — source, rendered twin, and apply state
+# Chezmoi targets: source, rendered twin, and apply state
 
 Tier-3 reference for `agents/instructions-reviewer.md` §Inputs. Load it when, and only when, a
 review target path is a chezmoi source (`dot_*`) or its rendered twin. Every other review can
@@ -7,7 +7,7 @@ ignore this file.
 ## Mapping
 
 A `dot_` source root renders to the dotted directory of the same name: `dot_agents/` →
-`~/.agents/`, `dot_claude/` → `~/.claude/`, and the settings variants the same way —
+`~/.agents/`, `dot_claude/` → `~/.claude/`, and the settings variants the same way:
 `dot_claude-livefire/` → `~/.claude-livefire/`, `dot_claude-runsmith/` → `~/.claude-runsmith/`.
 
 Strip chezmoi attribute prefixes (`executable_`, `private_`, `symlink_`) and a trailing `.tmpl`
@@ -41,5 +41,5 @@ is expected; one it cannot explain is still an apply-state note.
 ## Reporting
 
 A source-vs-rendered difference goes under `## Apply state` with both copies' line counts and the
-settling commands (`chezmoi diff <path>`, `git log -p -- <path>`). Do not rank it — settling the
+settling commands (`chezmoi diff <path>`, `git log -p -- <path>`). Do not rank it: settling the
 direction needs tools this agent does not have.

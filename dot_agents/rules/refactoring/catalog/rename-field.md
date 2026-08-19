@@ -2,20 +2,20 @@
 
 **Smells:** Mysterious Name
 **Inverse:** none
-**Improves:** readability — the record's most-visible surface, its field names, speaks the domain's language
+**Improves:** readability: the record's most-visible surface, its field names, speaks the domain's language
 
 ## When to apply
 
-- A field name is abbreviated, borrowed from an old model, or simply wrong — readers
+- A field name is abbreviated, borrowed from an old model, or simply wrong: readers
   translate `n`, `usrTyp`, or `data2` on every access.
 - The domain vocabulary moved on: the business now says "subscription" where the code
   still says "contract", and every conversation about the code needs a glossary.
-- A data structure is about to gain more users — names on widely-shared records pay
+- A data structure is about to gain more users: names on widely-shared records pay
   compound interest, so fix them before the audience grows.
 
 ## When not to apply
 
-- The field crosses a persistence or wire boundary you cannot migrate right now — a
+- The field crosses a persistence or wire boundary you cannot migrate right now: a
   rename there is a schema/API change with its own coordination cost, not a local edit.
   Rename the in-memory field and translate at the boundary, or schedule the migration
   as its own task.
@@ -34,7 +34,7 @@
 
 ## Example
 
-Before — one abbreviation, decoded at every use:
+Before: one abbreviation, decoded at every use:
 
 ```js
 const acct = { hldr: "Ana", bal: 1200 };
@@ -52,10 +52,10 @@ if (account.balance < 0) notifyOverdraft(account.holder);
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — name things in the domain's language: misaligned
+- `engineering_judgment.md`: name things in the domain's language: misaligned
   field names cause misaligned models, and this refactoring is the repair.
-- `coding_style.md` — domain models keep schemas and wire formats out: when the
+- `coding_style.md`: domain models keep schemas and wire formats out: when the
   stored or serialized name must stay, the translation belongs at the boundary mapper,
   not as a permanently wrong domain name.
-- `coding_style.md` — surgical execution: rename the field the task establishes is
+- `coding_style.md`: surgical execution: rename the field the task establishes is
   wrong; a vocabulary sweep across the model is its own agreed task.

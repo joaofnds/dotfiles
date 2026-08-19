@@ -7,18 +7,18 @@ description: >
   contradictions, prunes stale entries, repairs [[wikilinks]], and rebuilds the
   MEMORY.md index. Invoke when the store has grown noisy or repetitive, or for
   periodic cleanup: "dream", "consolidate memory", "clean up project memory".
-  Not for authoring new memories or improving skills/agents/rules — that's kaizen, or
+  Not for authoring new memories or improving skills/agents/rules; that's kaizen, or
   /absorb when an external subject (a repo or file to learn from) drives it.
 argument-hint: "[--auto]"
 ---
 
-# Dream — Memory Consolidation
+# Dream: Memory Consolidation
 
 **Wrong skill if:** you want to review a code change → `/adversarial-review`, or the `code-reviewer` agent.
 
 The store you consolidate is Claude Code's native memory: per-project markdown notes
 under `$CLAUDE_CONFIG_DIR/projects/<slug>/memory/` (default `~/.claude/projects/…` when the
-env var is unset), each with this exact schema — preserve it byte-for-byte when you rewrite
+env var is unset), each with this exact schema: preserve it byte-for-byte when you rewrite
 a note:
 
 ```
@@ -29,7 +29,7 @@ metadata:
   node_type: memory
   type: <feedback | project | …>   # keep whatever the originals use
   originSessionId: <uuid>
-  modified: <ISO 8601, when the original has it — harness-written, never invent one>
+  modified: <ISO 8601, when the original has it, harness-written, never invent one>
 ---
 
 <prose body: what/why/how-to-apply/root-cause, with [[wikilink]] cross-refs>
@@ -38,7 +38,7 @@ metadata:
 Carry through any frontmatter key not shown here unchanged; the harness may add fields
 this skill does not know.
 
-`MEMORY.md` is the index — one line per note, `- [Title](file.md) — one-line summary`.
+`MEMORY.md` is the index: one line per note, `- [Title](file.md): one-line summary`.
 It is a pointer list, not a content store.
 
 **Model:** consolidation is dedup-and-contradiction *judgment*, not a speed task. If you
@@ -53,7 +53,7 @@ earlier write).
 ## Phase 1: Orient
 
 1. Resolve the current project's memory dir from the working directory. The config root is
-   `$CLAUDE_CONFIG_DIR` when set, else `~/.claude` — always honor the env var, since the live
+   `$CLAUDE_CONFIG_DIR` when set, else `~/.claude`; always honor the env var, since the live
    store lives wherever the running session put it:
    ```bash
    slug=$(printf '%s' "$PWD" | sed 's:[/.]:-:g')
@@ -71,7 +71,7 @@ earlier write).
 3. Read `MEMORY.md` and every `<name>.md` note. Build a map: title, `type`, summary,
    `originSessionId`, age (file mtime), and the fact each asserts. You now know the store.
 
-## Phase 2: Analyze — find issues (no writes)
+## Phase 2: Analyze: find issues (no writes)
 
 Work entirely in memory. Produce candidate lists; change nothing yet.
 
@@ -81,25 +81,25 @@ Work entirely in memory. Produce candidate lists; change nothing yet.
   original; keep the better filename/slug, union the `[[wikilinks]]`, keep the newer
   `originSessionId`. Carry `metadata.modified` into the merged note: the newer value when
   both originals carry it, the only value when one does, no key when neither does. Never
-  invent or refresh it — 2e anchors on this value next run.
+  invent or refresh it; 2e anchors on this value next run.
 - **2b. Contradictions.** Two notes assert opposing facts about the same topic. Do **not**
-  auto-resolve — the newer / higher-context note is the *likely* winner, but flag the pair
+  auto-resolve: the newer / higher-context note is the *likely* winner, but flag the pair
   for the user. Record both slugs and the topic.
 - **2c. Prune candidates.** A note is prunable when: it describes a decision/file/behavior
   that no longer exists (verify against the repo before proposing: a file you didn't find
   may mean your grep was wrong, not that the note is stale), OR it was superseded by
   a newer note (contradiction already resolved elsewhere). A load-bearing claim resting on
-  a relative date no timestamp can anchor is **not** a prune — the knowledge is unique and
+  a relative date no timestamp can anchor is **not** a prune: the knowledge is unique and
   the defect is the phrasing: list it under **Unanchorable dates** in Phase 3, reported for
   the user, never prompted `a/b/skip`, and unchanged in both modes. A relative date a
-  timestamp *can* anchor is a 2e repair. Age alone is **not** grounds to prune — old
+  timestamp *can* anchor is a 2e repair. Age alone is **not** grounds to prune; old
   load-bearing facts stay.
 - **2d. Index & link integrity.** List MEMORY.md entries pointing at missing files, notes
   on disk missing from the index, and `[[wikilinks]]` whose target note doesn't exist.
   Also list, for every note you plan to merge/resolve/prune, the *inbound* `[[wikilinks]]`
-  that point at it — those need repointing or removal when it's deleted (Phase 4).
+  that point at it: those need repointing or removal when it's deleted (Phase 4).
 - **2e. Relative-date repairs.** List every note whose body states a relative date that
-  the note's own timestamp can anchor — `metadata.modified` when present, else the mtime
+  the note's own timestamp can anchor: `metadata.modified` when present, else the mtime
   mapped in Phase 1. Include notes already being rewritten for a merge, contradiction, or
   link repair, resolving each phrase against the timestamp of the note the phrase came
   from, never the survivor's. Record the note, the phrase, and the absolute date; this
@@ -110,32 +110,32 @@ Work entirely in memory. Produce candidate lists; change nothing yet.
 Print the proposal before any change. Omit any empty section.
 
 ```
-## dream — consolidation report  (<slug>)
+## dream: consolidation report  (<slug>)
 
 Merges (<N>):
   <a.md> + <b.md> → <merged.md>  "<merged summary>"
 
 Conflicts (<N>):
-  <a.md> vs <b.md> — "<topic>"  [a/b/skip]
+  <a.md> vs <b.md>: "<topic>"  [a/b/skip]
 
 Unanchorable dates (<N>):
-  <file.md> — "<phrase>" — no timestamp can anchor it; left unchanged
+  <file.md>: "<phrase>": no timestamp can anchor it; left unchanged
 
 Prune (<N>):
-  <file.md> — <reason>
+  <file.md>: <reason>
 
 Index/links (<N>):
   <fix description>
 
 Date repairs (<N>):
-  <file.md> — "<phrase>" → <YYYY-MM-DD>
+  <file.md>: "<phrase>" → <YYYY-MM-DD>
 
 Proposed: <N> merges, <N> prunes, <N> conflicts, <N> index fixes, <N> date repairs. Apply? [Y/n]
 Reported only (no change proposed): <N> unanchorable dates.
 ```
 
 (Under `--auto`, replace the `Apply? [Y/n]` line with `Applying automatically (contradictions
-skipped)…` — see Phase 4.)
+skipped)…`: see Phase 4.)
 
 Zero proposals and zero unanchorable items: print `Dream complete. Store is already clean.`
 and stop. Zero proposals with at least one unanchorable item: print the Unanchorable dates
@@ -153,25 +153,25 @@ report them as left-untouched. Otherwise, interactive:
 
 Apply in this order, preserving the frontmatter schema above on every written note:
 
-- **Merges** — write the merged note; delete the originals; repoint every inbound
+- **Merges**: write the merged note; delete the originals; repoint every inbound
   `[[wikilink]]` from a deleted slug to the survivor. Carry `metadata.modified` per 2a.
-- **Contradictions** — for `a`/`b`, delete the loser and add `(updated YYYY-MM-DD, previously:
+- **Contradictions**: for `a`/`b`, delete the loser and add `(updated YYYY-MM-DD, previously:
   <one line>)` to the winner's body; repoint the loser's inbound `[[wikilinks]]` to the winner.
   `skip` ⇒ leave both.
-- **Prunes** — delete the note. Never delete a note whose knowledge isn't captured elsewhere;
+- **Prunes**: delete the note. Never delete a note whose knowledge isn't captured elsewhere;
   if in doubt, demote it to a merge instead. Since a prune has no survivor, strip the now-dangling
   inbound `[[wikilinks]]` from the notes that referenced it.
-- **Relative-date repairs** — apply the 2e list exactly. Never derive a date from a file
+- **Relative-date repairs**: apply the 2e list exactly. Never derive a date from a file
   already rewritten this run.
 - **Rebuild `MEMORY.md`** preserving its top heading (`# Memory Index`), then one
-  `- [Title](file.md) — summary` bullet per note on disk — no orphan pointers, no notes missing.
+  `- [Title](file.md): summary` bullet per note on disk: no orphan pointers, no notes missing.
 
 ## Phase 5: Verify & summary
 
 Confirm with tool output, not assertion:
 
 ```bash
-# re-derive the store path — this fence may run in a fresh shell, so don't rely on $mem
+# re-derive the store path: this fence may run in a fresh shell, so don't rely on $mem
 slug=$(printf '%s' "$PWD" | sed 's:[/.]:-:g')
 cfg="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 mem="$cfg/projects/$slug/memory"
@@ -185,16 +185,16 @@ for f in "$mem"/*.md; do
 # no wikilink points at a note that no longer exists
 grep -rhoE '\[\[[^]]+\]\]' "$mem"/*.md | sort -u | tr -d '[]' | while read -r s; do
   [ -f "$mem/$s.md" ] || echo "DANGLING WIKILINK: $s"; done
-# relative dates in notes Phase 4 rewrote or 2e listed — check hits against the 2e list by name
+# relative dates in notes Phase 4 rewrote or 2e listed: check hits against the 2e list by name
 grep -rniE '\b(last|this|next) (week|month|year)|\byesterday\b|\b([0-9]+|an?|one|two|three|four|five|several|a few|a couple of) (days?|weeks?|months?|years?) ago\b' \
-  "$mem"/*.md && echo "RELATIVE DATE PRESENT — a Phase 4 miss only if the note was rewritten or 2e-listed"
+  "$mem"/*.md && echo "RELATIVE DATE PRESENT: a Phase 4 miss only if the note was rewritten or 2e-listed"
 ```
 
-Any `DANGLING WIKILINK` is a Phase 4 miss — go back and repoint it to the survivor or strip it,
+Any `DANGLING WIKILINK` is a Phase 4 miss; go back and repoint it to the survivor or strip it,
 then re-run the check until clean. Also confirm no relative date survived in a rewritten or
 2e-listed note.
 
-After the checks come back clean, prune old backups — keep the two most recent:
+After the checks come back clean, prune old backups: keep the two most recent:
 
 ```bash
 ls -1dt "$mem"-backup-* | tail -n +3 | xargs -r rm -rf
@@ -203,7 +203,7 @@ ls -1dt "$mem"-backup-* | tail -n +3 | xargs -r rm -rf
 Then print:
 
 ```
-Dream complete — merged: <N>, pruned: <N>, conflicts resolved: <N>, skipped: <N>, index fixes: <N>, date repairs: <N>, unanchorable dates reported: <N>
+Dream complete: merged: <N>, pruned: <N>, conflicts resolved: <N>, skipped: <N>, index fixes: <N>, date repairs: <N>, unanchorable dates reported: <N>
 Backup: <mem>-backup-<stamp>
 ```
 
@@ -213,4 +213,4 @@ Backup: <mem>-backup-<stamp>
   no-deletion-without-replacement rule.
 - Source of truth for *this skill* is `dot_agents/skills/dream/SKILL.md` in the dotfiles repo;
   the store it operates on is live user data under `$CLAUDE_CONFIG_DIR` (default `~/.claude/`).
-  Different trees — don't confuse editing the skill with running it.
+  Different trees; don't confuse editing the skill with running it.

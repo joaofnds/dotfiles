@@ -1,4 +1,4 @@
-# Artifact-class checks — budgets, sub-agent specifics, router specifics
+# Artifact-class checks: budgets, sub-agent specifics, router specifics
 
 Tier-3 reference for `agents/instructions-reviewer.md` §1, §7, and §8. Read §Per-file
 budgets on every review; read §Sub-agent specifics and §AGENTS.md / CLAUDE.md specifics
@@ -6,7 +6,7 @@ only when a target is that class.
 
 ## Per-file budgets
 
-`scripts/check-corpus-budgets.sh` measures these — edit the two together. A line
+`scripts/check-corpus-budgets.sh` measures these: edit the two together. A line
 ceiling binds only while lines stay comparable; the script checks chars/line against
 the corpus median and records its exemptions. The remedy for an over-budget file is
 consolidation or a split, never rewrapping.
@@ -14,7 +14,7 @@ consolidation or a split, never rewrapping.
 - **Always-loaded routers** (`CLAUDE.md`, `AGENTS.md`): target < 60 lines; the vendor's
   < 200 is a recommendation, not a cap. Where every section is a house delta, judge
   each line by the keep-side test rather than trimming to hit 60.
-- **`MEMORY.md`**: a mechanical limit — first 200 lines or 25KB load, the rest silently
+- **`MEMORY.md`**: a mechanical limit: first 200 lines or 25KB load, the rest silently
   dropped (`instruction_external_facts.md` §Harness mechanics). Over the line limit is
   a Blocker; near the 25KB half is "needs measurement (`wc -c`, frontmatter and block
   comments excluded)".
@@ -30,7 +30,7 @@ consolidation or a split, never rewrapping.
   on-demand rule with a 500-line ceiling.
 - **`.claude/rules/` files**: with `paths:` frontmatter, the just-in-time budget;
   without it, the always-loaded router budget.
-- **Hook-injected instruction text**: budgeted against the reach its event buys — a
+- **Hook-injected instruction text**: budgeted against the reach its event buys: a
   `UserPromptSubmit` injection takes the router budget; a `PostToolUse` injection
   fires per tool call, so a few lines and a pointer, never a restatement.
 
@@ -48,18 +48,18 @@ consolidation or a split, never rewrapping.
 - **Completion gate.** The prompt must specify a completion criterion that is
   *checkable* (the agent can tell done from not-done) and, where partial work is the
   risk, *exhaustive* ("every modified model accounted for," not "produce a change
-  list" — the pair is verbatim from `instruction_external_facts.md` §Cited sources,
+  list": the pair is verbatim from `instruction_external_facts.md` §Cited sources,
   *Writing Great Skills*). A vague criterion invites the rush.
 - **Embedded verification, newly added, has not been shown to fire.** Diff-seed mode
   only: when the diff appends a verification step to a producing skill's or agent's
-  body, report a Minor naming the probe — invoke it on a fresh task and confirm the
+  body, report a Minor naming the probe: invoke it on a fresh task and confirm the
   step runs. Do not raise it on a check already standing in the corpus.
 
 ## AGENTS.md / CLAUDE.md specifics
 
 - **Project-root AGENTS.md.** Require only non-discoverable commands, constraints,
   conventions, and boundaries needed to work safely in that repository.
-- **Personal-rules AGENTS.md**: expect a router — pointers to rules files, no
+- **Personal-rules AGENTS.md**: expect a router: pointers to rules files, no
   project-specific content.
 - **CLAUDE.md specifics**: `@path` imports; discovered files are concatenated, not
   overridden, so a project file does not supersede the user file and a cross-level

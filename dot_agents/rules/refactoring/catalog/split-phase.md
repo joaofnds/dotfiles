@@ -2,12 +2,12 @@
 
 **Smells:** Divergent Change, Shotgun Surgery
 **Inverse:** none
-**Improves:** maintainability — each phase changes for its own reason and can be exercised alone
+**Improves:** maintainability: each phase changes for its own reason and can be exercised alone
 
 ## When to apply
 
-- One block deals with two concerns in sequence — typically parse-then-compute or
-  compute-then-format — so a change to either concern must be threaded through the
+- One block deals with two concerns in sequence, typically parse-then-compute or
+  compute-then-format, so a change to either concern must be threaded through the
   other's code.
 - The same second phase should serve input arriving in different shapes: one parsing
   phase per shape feeding a single computation phase removes the duplication.
@@ -16,7 +16,7 @@
 
 ## When not to apply
 
-- The phases are trivially entangled — a two-line function does not need an
+- The phases are trivially entangled: a two-line function does not need an
   intermediate data structure between its halves; the added element reveals nothing.
 - The phases share most of their state. If the intermediate structure would carry
   nearly every local, the seam is in the wrong place or there is no seam.
@@ -36,7 +36,7 @@
 
 ## Example
 
-Before — parsing and pricing interleaved:
+Before: parsing and pricing interleaved:
 
 ```js
 function shippingCost(line) {
@@ -47,7 +47,7 @@ function shippingCost(line) {
 }
 ```
 
-After — parse produces a record; pricing consumes it:
+After: parse produces a record; pricing consumes it:
 
 ```js
 function shippingCost(line) {
@@ -64,12 +64,12 @@ function price({ weight, zone }) {
 
 ## House-rule interactions
 
-- `coding_style.md` — safe parsing at boundaries: when the first phase ingests
+- `coding_style.md`: safe parsing at boundaries: when the first phase ingests
   external data, this refactoring gives the untrusted edge its own home, and the
   intermediate structure becomes the validated shape that crosses inward.
-- `engineering_judgment.md` — draw boundaries at the demonstrated cost inflection: a
+- `engineering_judgment.md`: draw boundaries at the demonstrated cost inflection: a
   cheap source-level split is exactly the early boundary that rule endorses, provided
   the two concerns demonstrably change for different reasons.
-- `coding_style.md` — Beck's ordering: the intermediate structure is an added
-  element, bought by the phases' independent reasons to change — not by pipeline
+- `coding_style.md`: Beck's ordering: the intermediate structure is an added
+  element, bought by the phases' independent reasons to change, not by pipeline
   aesthetics.

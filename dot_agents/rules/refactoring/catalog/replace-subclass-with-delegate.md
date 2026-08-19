@@ -2,11 +2,11 @@
 
 **Smells:** Refused Bequest, Insider Trading
 **Inverse:** none
-**Improves:** maintainability — variation moves to a composed object, freeing the single inheritance axis and allowing change at runtime
+**Improves:** maintainability: variation moves to a composed object, freeing the single inheritance axis and allowing change at runtime
 
 ## When to apply
 
-- The hierarchy models one axis of variation, and a second axis has appeared — you
+- The hierarchy models one axis of variation, and a second axis has appeared: you
   can subclass by booking type *or* by customer tier, not both. Delegates compose;
   superclasses don't.
 - The category an instance belongs to must change at runtime (the premium booking
@@ -17,10 +17,10 @@
 
 ## When not to apply
 
-- One axis, static categories, healthy overrides — plain inheritance is simpler and
+- One axis, static categories, healthy overrides: plain inheritance is simpler and
   this house keeps simple things simple; don't dismantle a hierarchy that isn't
   hurting (the surgical-execution rule applies to hierarchies too).
-- The delegate would forward the entire parent surface back — if everything must be
+- The delegate would forward the entire parent surface back: if everything must be
   re-exposed, the boundary is drawn wrong; reconsider which behavior actually varies.
 
 ## Mechanics
@@ -35,7 +35,7 @@
 
 ## Example
 
-Before — booking varies by subclassing:
+Before: booking varies by subclassing:
 
 ```js
 class Booking {
@@ -46,7 +46,7 @@ class PremiumBooking extends Booking {
 }
 ```
 
-After — booking varies by delegate, swappable at runtime:
+After: booking varies by delegate, swappable at runtime:
 
 ```js
 class Booking {
@@ -63,9 +63,9 @@ class PremiumDelegate {
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — composition over inheritance: this refactoring is
+- `engineering_judgment.md`: composition over inheritance: this refactoring is
   the canonical migration from the discouraged form to the favored one; in this
   corpus its findings should be common wherever hierarchies strain.
-- `coding_style.md` — Beck's ordering: the delegate adds elements (class, field,
+- `coding_style.md`: Beck's ordering: the delegate adds elements (class, field,
   factory); the purchase must be a demonstrated second axis, runtime change, or
-  coupling break — not composition for its own sake.
+  coupling break, not composition for its own sake.

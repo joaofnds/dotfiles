@@ -2,7 +2,7 @@
 
 **Smells:** Primitive Obsession, Repeated Switches
 **Inverse:** Remove Subclass
-**Improves:** maintainability — behavior that varies by kind attaches to the kind, so a new kind is an addition, not an edit spree
+**Improves:** maintainability: behavior that varies by kind attaches to the kind, so a new kind is an addition, not an edit spree
 
 ## When to apply
 
@@ -10,7 +10,7 @@
   several places. Reifying each code as a type lets polymorphism eat those
   conditionals (this refactoring is the enabling step for Replace Conditional with
   Polymorphism).
-- Some fields or invariants only apply to certain codes — subclasses give each kind
+- Some fields or invariants only apply to certain codes: subclasses give each kind
   its own shape instead of a shared record with sometimes-valid fields (Temporary
   Field by construction).
 - Direction against Remove Subclass is settled by where the weight is: behavior
@@ -18,14 +18,14 @@
 
 ## When not to apply
 
-- The type code only labels — it is displayed, stored, compared, but never branches
+- The type code only labels: it is displayed, stored, compared, but never branches
   behavior. A validated value (Replace Primitive with Object) suffices; a hierarchy
   for a label is the class `coding_style.md` bars introducing "solely to satisfy this
   document".
-- The kind must change at runtime — objects cannot re-class. Use Replace Subclass
+- The kind must change at runtime: objects cannot re-class. Use Replace Subclass
   with Delegate's shape instead: a swappable kind-delegate.
 - In Go or class-light TypeScript, the rendering is one implementation of a common
-  interface per kind (or a per-kind function table), selected by a factory — the
+  interface per kind (or a per-kind function table), selected by a factory: the
   finding must speak that language, not "subclass."
 
 ## Mechanics
@@ -40,7 +40,7 @@
 
 ## Example
 
-Before — the code branches; the kinds are strings:
+Before: the code branches; the kinds are strings:
 
 ```js
 function payFor(employee) {
@@ -49,7 +49,7 @@ function payFor(employee) {
 }
 ```
 
-After — each kind answers for itself:
+After: each kind answers for itself:
 
 ```js
 class Employee {
@@ -62,11 +62,11 @@ class Commissioned extends Employee {
 
 ## House-rule interactions
 
-- `coding_style.md` — subclasses are introduced elements: the demonstrated need is
+- `coding_style.md`: subclasses are introduced elements: the demonstrated need is
   behavior branching on the code in multiple places; a single label field never
   qualifies.
-- `coding_style.md` — leverage the type system: the refactored form lets the
+- `coding_style.md`: leverage the type system: the refactored form lets the
   compiler own kind-dispatch (exhaustive unions, sealed interfaces) instead of
   string comparison at runtime.
-- `engineering_judgment.md` — encapsulate what varies: the kinds are the varying
+- `engineering_judgment.md`: encapsulate what varies: the kinds are the varying
   thing; this refactoring builds the enclosure around them.

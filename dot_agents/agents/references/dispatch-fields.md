@@ -1,15 +1,15 @@
-# Dispatch fields — tools, permissions, and fork semantics
+# Dispatch fields: tools, permissions, and fork semantics
 
 Tier-3 reference for `agents/instructions-reviewer.md` §2. Load it before ranking any
 finding on a tool field, a permission rule, or a fork, and skip it entirely on an
-artifact with no such frontmatter — a rules file, a memory file, an output style, a
+artifact with no such frontmatter: a rules file, a memory file, an output style, a
 plain `AGENTS.md`.
 
 Every mechanic here is release-coupled and mirrored from
 `~/.agents/rules/instruction_external_facts.md` §Harness mechanics, which carries the
-last-checked state — edit together, and never assert one from memory.
+last-checked state: edit together, and never assert one from memory.
 
-## Tool fields are not one mechanism — check which one you're reading
+## Tool fields are not one mechanism: check which one you're reading
 
 A sub-agent's `tools` restricts, with `disallowedTools` subtracting from it.
 
@@ -27,13 +27,13 @@ visibility only, not `Skill` tool access, so it is never a boundary either.
 ## Sub-agent `tools` resolves differently by run mode
 
 A background sub-agent keeps every MCP tool but only a fixed subset of the built-in
-ones, and that narrowing subtracts from the field — the same definition can expose
+ones, and that narrowing subtracts from the field: the same definition can expose
 different tools in the foreground and the background. A `tools` list where no entry
 resolves usually fails the agent at launch.
 
 Flag a definition that depends on a **built-in** tool outside the background set
 without stating which mode it runs in. `instruction_external_facts.md` §Harness mechanics lists the
-set — read it rather than guessing.
+set; read it rather than guessing.
 
 ## Permission rules
 
@@ -46,7 +46,7 @@ deny.
 A workflow-spawned sub-agent runs in `acceptEdits` and inherits the session allowlist
 regardless of the session's permission mode, so its `tools` list is not a boundary
 there. Check `disableWorkflows` in the settings §Inputs had you read before ranking a
-finding on this — a workflow cannot be spawned while it is on.
+finding on this: a workflow cannot be spawned while it is on.
 
 ## Forks
 

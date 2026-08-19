@@ -2,7 +2,7 @@
 
 **Smells:** Lazy Element, Middle Man, Speculative Generality, Shotgun Surgery
 **Inverse:** Extract Function
-**Improves:** readability — removes a hop that costs the reader a jump and reveals nothing
+**Improves:** readability: removes a hop that costs the reader a jump and reveals nothing
 
 ## When to apply
 
@@ -11,7 +11,7 @@
 - A function does little but delegate to another. When forwarding dominates, inline the
   middle layer and let callers talk to the real work.
 - A group of functions is badly factored. Inline them into one large function first,
-  then re-extract along boundaries that reflect intent — inlining is how a factoring
+  then re-extract along boundaries that reflect intent: inlining is how a factoring
   that went wrong gets unwound.
 - Direction against Extract Function is settled by the current code's demonstrated
   pain, never by symmetry: inline when the name adds a hop, extract when the body hides
@@ -19,10 +19,10 @@
 
 ## When not to apply
 
-- The name carries meaning the body does not — that is a function worth keeping. Decide
+- The name carries meaning the body does not: that is a function worth keeping. Decide
   by whether the name answers a question the body raises, not by taste; taste invites
   re-extraction next month.
-- The method is overridden or dispatched to polymorphically — callers depend on the
+- The method is overridden or dispatched to polymorphically: callers depend on the
   dispatch, not on this body.
 - Recursion, or call sites where the transplanted body would need reworking beyond
   mechanical substitution. If inlining requires redesign, it is not this refactoring.
@@ -39,11 +39,11 @@
 
 ## Example
 
-Before — `destinationCity` restates its one-line body:
+Before: `destinationCity` restates its one-line body:
 
 ```js
 function shippingLabel(order) {
-  return `${order.customer} — ${destinationCity(order)}`;
+  return `${order.customer}: ${destinationCity(order)}`;
 }
 
 function destinationCity(order) {
@@ -55,16 +55,16 @@ After:
 
 ```js
 function shippingLabel(order) {
-  return `${order.customer} — ${order.destination.city}`;
+  return `${order.customer}: ${order.destination.city}`;
 }
 ```
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — code is a liability; the value is what code does, and
+- `engineering_judgment.md`: code is a liability; the value is what code does, and
   a delegation layer does nothing. When in doubt, delete.
-- `coding_style.md` — Beck's ordering: inlining removes an element, a win only while
+- `coding_style.md`: Beck's ordering: inlining removes an element, a win only while
   intent stays revealed. If the inlined body needs a comment to explain itself, the
   extraction was right and the inline is wrong.
-- `coding_style.md` — surgical execution: inline the function the task demonstrates
+- `coding_style.md`: surgical execution: inline the function the task demonstrates
   is hollow; do not sweep the module for every one-line function.

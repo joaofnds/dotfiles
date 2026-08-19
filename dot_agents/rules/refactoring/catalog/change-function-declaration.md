@@ -2,7 +2,7 @@
 
 **Smells:** Mysterious Name, Alternative Classes with Different Interfaces, Speculative Generality, Comments
 **Inverse:** none
-**Improves:** readability — makes the most-read line of a function, its signature, say what it does
+**Improves:** readability: makes the most-read line of a function, its signature, say what it does
 
 ## When to apply
 
@@ -19,19 +19,19 @@
 ## When not to apply
 
 - The declaration is a published interface you do not control every caller of. Use the
-  migration path below and keep the old declaration delegating until callers are gone —
+  migration path below and keep the old declaration delegating until callers are gone,
   or leave it alone when the boundary is contractual.
 - The new name is different but not clearer. Renames spend history and review
   attention; spend them when the name is wrong, not merely not-yours.
 
 ## Mechanics
 
-Simple path — all callers in reach:
+Simple path: all callers in reach:
 
 1. Change the declaration: name, parameter set, or both.
 2. Update every caller. Run the tests.
 
-Migration path — callers many, remote, or unknown:
+Migration path: callers many, remote, or unknown:
 
 1. Extract the body into a new function with the target name and signature.
 2. Have the old function delegate to the new one. Run the tests.
@@ -41,7 +41,7 @@ Migration path — callers many, remote, or unknown:
 
 ## Example
 
-Before — neither the name nor the parameters explain anything:
+Before: neither the name nor the parameters explain anything:
 
 ```js
 function calc(u, list) {
@@ -59,10 +59,10 @@ function unreadCount(user, messages) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — name things in the domain's language: the declaration
+- `engineering_judgment.md`: name things in the domain's language: the declaration
   is where domain vocabulary either lands in the code or does not.
-- `coding_style.md` — the `Impl`-suffix ban is this refactoring's naming bar stated
+- `coding_style.md`: the `Impl`-suffix ban is this refactoring's naming bar stated
   for classes: a name must say what a thing *is*, and a non-name fails even when it
   compiles.
-- `coding_style.md` — surgical execution: rename what the task touches; a repo-wide
+- `coding_style.md`: surgical execution: rename what the task touches; a repo-wide
   vocabulary sweep is its own task, agreed to explicitly.

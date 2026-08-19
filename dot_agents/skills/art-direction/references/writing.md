@@ -12,7 +12,7 @@ Keep the register conversational and tuned: plain verbs, sentence case, no fille
 
 ## The headline test
 
-The AI-default headline is an abstract aspiration with no object — "Build the future,"
+The AI-default headline is an abstract aspiration with no object: "Build the future,"
 "Unlock your potential," "Where ideas come to life." It fits any product, which is the
 tell. Name the subject and what it does for this reader. If the headline would survive
 being pasted onto a competitor's page, it hasn't said anything yet.

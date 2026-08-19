@@ -2,11 +2,11 @@
 
 **Smells:** Duplicated Code
 **Inverse:** Push Down Field
-**Improves:** maintainability — one declaration carries the shared datum, and behavior on it can follow upward
+**Improves:** maintainability: one declaration carries the shared datum, and behavior on it can follow upward
 
 ## When to apply
 
-- Sibling subclasses each declare a field for the same datum — often under different
+- Sibling subclasses each declare a field for the same datum, often under different
   names that history, not meaning, drove apart. One superclass declaration removes
   the duplicate and its drift risk.
 - Pulled-up data is the enabler for pulling up the behavior that uses it: field
@@ -19,10 +19,10 @@
 - Same name, different meaning: two subclasses both call a field `rate`, but one
   stores a percentage and the other a currency amount. Unifying them corrupts both;
   the similarity is nominal, not semantic.
-- The field would sit unused on some subclasses after the pull — that is the
+- The field would sit unused on some subclasses after the pull: that is the
   Temporary Field smell being manufactured, and the direction is wrong.
 - In composition-first codebases, the shared datum belongs on the composed common
-  struct/type rather than a superclass — same refactoring, different vehicle.
+  struct/type rather than a superclass: same refactoring, different vehicle.
 
 ## Mechanics
 
@@ -35,7 +35,7 @@
 
 ## Example
 
-Before — the same datum declared twice:
+Before: the same datum declared twice:
 
 ```js
 class Engineer extends Employee {
@@ -58,8 +58,8 @@ class Salesperson extends Employee {}
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — DRY over knowledge governs the step-1 inspection:
+- `engineering_judgment.md`: DRY over knowledge governs the step-1 inspection:
   one datum in two declarations must unify; two data sharing a name must not.
-- `coding_style.md` — behavior lives with data: after the field rises, audit
-  which subclass methods now manipulate superclass data — they are Pull Up Method
+- `coding_style.md`: behavior lives with data: after the field rises, audit
+  which subclass methods now manipulate superclass data: they are Pull Up Method
   candidates, and leaving them scattered rebuilds the anemic split this rule bans.

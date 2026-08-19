@@ -23,7 +23,7 @@ not draft is bounded by the Guardrails in `SKILL.md`.
 **After:**
 > "Most teams struggle with alignment. Nobody wants to admit they're confused."
 
-**Changes:** Removed the throat-clearing openers and the permission-granting ending. "Nobody" reads as a lazy extreme, but the source gives no real scope to name — per the Guardrails, that's left alone and flagged for the author, not invented.
+**Changes:** Removed the throat-clearing openers and the permission-granting ending. "Nobody" reads as a lazy extreme, but the source gives no real scope to name; per the Guardrails, that's left alone and flagged for the author, not invented.
 
 ---
 

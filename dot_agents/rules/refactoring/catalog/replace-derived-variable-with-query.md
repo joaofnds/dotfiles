@@ -2,14 +2,14 @@
 
 **Smells:** Mutable Data
 **Inverse:** none
-**Improves:** maintainability — a computed value cannot be stale, so no update site can forget it
+**Improves:** maintainability: a computed value cannot be stale, so no update site can forget it
 
 ## When to apply
 
 - A variable holds a value derivable from other data, and every mutation of the source
   must remember to update it. Each update site is a chance to forget; a query has no
   update sites.
-- The derived value has already drifted once — a bug where the total and the items
+- The derived value has already drifted once: a bug where the total and the items
   disagreed is this refactoring's strongest evidence.
 - The stored value exists "for convenience" with no measured cost behind it.
 
@@ -17,7 +17,7 @@
 
 - The computation is demonstrably expensive on a demonstrated hot path, and the cached
   value is a deliberate, measured optimization. Then the pair (cache + invalidation)
-  is a design decision — document it as such and keep the assertion from the mechanics
+  is a design decision: document it as such and keep the assertion from the mechanics
   as a guard.
 - The source data for the derivation is itself transient (consumed streams, cleared
   buffers) so the value cannot be recomputed later. That is a snapshot, not a derived
@@ -34,7 +34,7 @@
 
 ## Example
 
-Before — `total` must be maintained by every mutation:
+Before: `total` must be maintained by every mutation:
 
 ```js
 const cart = { items: [], total: 0 };
@@ -44,7 +44,7 @@ function addItem(cart, item) {
 }
 ```
 
-After — the total cannot disagree with the items:
+After: the total cannot disagree with the items:
 
 ```js
 const cart = { items: [] };
@@ -58,8 +58,8 @@ function cartTotal(cart) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — a good change narrows the space of future bugs: the
+- `engineering_judgment.md`: a good change narrows the space of future bugs: the
   entire class "update site forgot the derived value" is eliminated, not patched.
-- `engineering_judgment.md` — facts before theories: the performance case for
+- `engineering_judgment.md`: facts before theories: the performance case for
   keeping the stored value must be measured under a representative workload, never
   assumed from the shape of the loop.

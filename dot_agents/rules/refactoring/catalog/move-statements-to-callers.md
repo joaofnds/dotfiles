@@ -2,7 +2,7 @@
 
 **Smells:** Divergent Change
 **Inverse:** Move Statements into Function
-**Improves:** maintainability — behavior that no longer belongs to every call stops being imposed on every caller
+**Improves:** maintainability: behavior that no longer belongs to every call stops being imposed on every caller
 
 ## When to apply
 
@@ -10,7 +10,7 @@
   caller needs the core without the trimming. The bundled statements have become a
   per-caller decision.
 - The function's edges (its first or last statements) vary by circumstance while the
-  middle is stable — a sign the boundary was drawn one statement too wide.
+  middle is stable: a sign the boundary was drawn one statement too wide.
 - Direction against Move Statements into Function is settled by uniformity: behavior
   every caller repeats moves in; behavior only some callers want moves out.
 
@@ -18,7 +18,7 @@
 
 - All callers still need the statements. Moving them out then just manufactures the
   duplication the inverse refactoring exists to remove.
-- The divergence is better served by a parameter or a second function — hoisting
+- The divergence is better served by a parameter or a second function: hoisting
   statements to many call sites multiplies edit points; prefer it when callers are few.
 - The statements are entangled mid-function, not at its edges. Restructure the function
   first (Slide Statements) until the movable part sits at a boundary.
@@ -34,7 +34,7 @@
 
 ## Example
 
-Before — `notify` forces a log entry on every caller:
+Before: `notify` forces a log entry on every caller:
 
 ```js
 function notify(user, message) {
@@ -43,7 +43,7 @@ function notify(user, message) {
 }
 ```
 
-After — the digest job wants no activity entries:
+After: the digest job wants no activity entries:
 
 ```js
 function notify(user, message) {
@@ -57,9 +57,9 @@ notify(user, digestText);
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — orthogonality: hoisting statements to N call sites
+- `engineering_judgment.md`: orthogonality: hoisting statements to N call sites
   creates N edit points for one rule; acceptable only because the rule genuinely became
-  per-caller — if it ever re-unifies, apply the inverse.
-- `coding_style.md` — surgical execution: migrate the callers this task touches;
+  per-caller; if it ever re-unifies, apply the inverse.
+- `coding_style.md`: surgical execution: migrate the callers this task touches;
   when other teams' call sites are affected, the delegating stub stays until their
   migration is agreed.

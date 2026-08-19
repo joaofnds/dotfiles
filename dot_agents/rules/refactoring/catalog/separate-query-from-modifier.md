@@ -2,22 +2,22 @@
 
 **Smells:** Mutable Data
 **Inverse:** none
-**Improves:** testability — a pure query can be called anywhere, any number of times, with nothing to undo
+**Improves:** testability: a pure query can be called anywhere, any number of times, with nothing to undo
 
 ## When to apply
 
-- One function both returns a value and changes observable state — callers who only
+- One function both returns a value and changes observable state: callers who only
   want the answer get the side effect anyway, and callers must know the hidden pairing
   to use it safely. Splitting yields a query callable freely and a modifier called
   deliberately.
 - A caller has appeared that needs the value *without* the effect (or the effect
-  without the value) — the demand that proves the bundling wrong.
+  without the value): the demand that proves the bundling wrong.
 - The side effect is the surprising kind: a getter that increments, a check that
   logs, a find that marks. Surprise in a query is the smell at its strongest.
 
 ## When not to apply
 
-- The value *is* a receipt of the modification — an ID from an insert, the popped
+- The value *is* a receipt of the modification: an ID from an insert, the popped
   element of a stack. Splitting `pop` into `peek` + `drop` may serve no caller and
   introduces a race window in concurrent use.
 - Atomicity matters: when ask-then-act can interleave with other actors, the combined
@@ -35,7 +35,7 @@
 
 ## Example
 
-Before — asking the total also stamps the audit:
+Before: asking the total also stamps the audit:
 
 ```js
 function totalOutstanding(customer) {
@@ -44,7 +44,7 @@ function totalOutstanding(customer) {
 }
 ```
 
-After — reading is free; recording is a choice:
+After: reading is free; recording is a choice:
 
 ```js
 function totalOutstanding(customer) {
@@ -57,9 +57,9 @@ function recordBalanceCheck(customer) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md` — listen to the tests: a value assertion that cannot
+- `engineering_judgment.md`: listen to the tests: a value assertion that cannot
   run without stubbing a side effect is this smell speaking through the harness; the
   split is the design fix, not more mocking.
-- `coding_style.md` — Beck's ordering: the second function is an added element
-  bought by intent-revelation — each name now tells the whole truth about what calling
+- `coding_style.md`: Beck's ordering: the second function is an added element
+  bought by intent-revelation: each name now tells the whole truth about what calling
   it does.

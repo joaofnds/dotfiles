@@ -11,11 +11,11 @@ visible reflection. Omit it when no actionable improvement was found.
 
 Every proposed improvement states:
 
-1. **Friction** — the observed event, command, or location.
-2. **Root cause** — the system condition that produced it, not who caused it.
-3. **Fix** — the smallest concrete change that removes the cause.
-4. **Benefit** — the future repetition or failure it prevents.
-5. **Cost** — effort, risk, and scope.
+1. **Friction**: the observed event, command, or location.
+2. **Root cause**: the system condition that produced it, not who caused it.
+3. **Fix**: the smallest concrete change that removes the cause.
+4. **Benefit**: the future repetition or failure it prevents.
+5. **Cost**: effort, risk, and scope.
 
 Do not propose an improvement until all five are known.
 

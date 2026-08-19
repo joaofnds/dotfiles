@@ -7,10 +7,10 @@ Read this when fixture setup obscures the behavior under test.
 Shared fixtures are instantiated Builder classes (`new UserBuilder({ banned: true }).build()`,
 or a named variant `new UserBuilder().banned().build()`), not loose `makeX(overrides?)`
 factory functions imported directly. The builder takes a `Partial<T>` over sensible
-defaults — via its constructor or a `with(partial)` method — so an arbitrary field needs no
+defaults, via its constructor or a `with(partial)` method, so an arbitrary field needs no
 per-field setter and a new field on the type is a single edit; add a named method (like
 `banned()`) only for a meaningful variant. One construction point per fixture. (Distinct
-from entity construction, which takes a props object and no builder — see
+from entity construction, which takes a props object and no builder: see
 coding_style_typescript.md §3.)
 
 Use a Builder when a fixture has many irrelevant fields or when several tests vary the

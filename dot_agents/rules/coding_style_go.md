@@ -35,7 +35,7 @@ var (
 
 - **Wrap within a layer, translate across one.** `fmt.Errorf("loading order %s: %w", id, err)`
   adds context while keeping the cause reachable. At a boundary the cause is an
-  implementation detail — an adapter returns the port's sentinel, not the driver's error
+  implementation detail: an adapter returns the port's sentinel, not the driver's error
   (`coding_style.md` §2e). `%v` instead of `%w` is the deliberate choice to stop unwrapping.
 - **`errors.Is` for identity, `errors.As` for data.** `errors.Is(err, ErrNotFound)` matches a
   sentinel through any depth of wrapping; `errors.As(err, &pgErr)` extracts a typed error to
@@ -45,19 +45,19 @@ var (
 
 ## 3. Resource Cleanup
 
-- **`defer` the release on the line after the acquisition** — the pairing is what makes it reviewable.
+- **`defer` the release on the line after the acquisition**: the pairing is what makes it reviewable.
 - **`defer` is function-scoped, not block-scoped.** A `defer` inside a loop accumulates until
   the function returns; extract the body into its own function.
 - **`defer cancel()` for every `context.WithCancel` / `WithTimeout`**, including when the
   context is obviously finished. `go vet`'s `lostcancel` check exists because this is missed.
-- **Check the error from a deferred `Close` on anything you wrote to** — that is where a
+- **Check the error from a deferred `Close` on anything you wrote to**: that is where a
   flush failure surfaces. Discard it explicitly (`_ = f.Close()`) on a read-only handle.
 
 ## 4. Concurrency
 
 - **Minimal and explicit**: Use goroutines and channels when concurrency is required and ownership, cancellation, and shutdown are clear.
 - **Never start a goroutine without knowing how it stops.** The party that starts it owns
-  waiting for it — `sync.WaitGroup`, `errgroup.Group`, or an explicit done channel. A
+  waiting for it: `sync.WaitGroup`, `errgroup.Group`, or an explicit done channel. A
   fire-and-forget goroutine is a leak that has not been observed yet.
 - **Context propagation**: Pass `context.Context` through I/O call paths for cancellation and deadlines. Propagate the context through every ORM and driver call.
 - **Select on `ctx.Done()` in any loop that can block**, and give every channel send a
@@ -78,25 +78,25 @@ var (
 
 - **Accept interfaces, return structs.** A constructor returns its concrete type; the consumer
   declares the narrow interface it needs. Go packages are small enough that the consumer is
-  usually a single package, so this lands where `coding_style.md` §2c does — the same principle
+  usually a single package, so this lands where `coding_style.md` §2c does: the same principle
   at finer grain, not a competing one. It still decides something: once several packages consume
   one contract, a narrow per-consumer interface and one shared port differ in width and owner,
   and §2c's count-and-locality test is what picks. An interface sitting next to its single
   implementation is usually that implementation's shape, not a port.
-- Interfaces stay small — one to three methods. A large one is a package boundary that has not
+- Interfaces stay small: one to three methods. A large one is a package boundary that has not
   been drawn yet.
-- **Type assertions use the comma-ok form.** `v, ok := x.(T)`, never bare `v := x.(T)` — the
+- **Type assertions use the comma-ok form.** `v, ok := x.(T)`, never bare `v := x.(T)`: the
   bare form panics at runtime on the wrong dynamic type. A type switch is the multi-case
   spelling. **The bare form is the escape hatch** `coding_style.md` §1 means in Go; the checked
   forms are this language's `instanceof` and are the sanctioned move. `any` is not an escape
-  hatch at all — it is the current spelling of `interface{}`, required only for a genuinely
+  hatch at all: it is the current spelling of `interface{}`, required only for a genuinely
   unconstrained type parameter, and governed by §5.
 
 ## 7. Naming Conventions
 
 ### Variables & Receivers
 - **One receiver name per type, on every one of its methods** (`staticcheck` ST1016). Length is
-  the repo's call — Go's own norm is a one- or two-letter abbreviation; some codebases name the
+  the repo's call: Go's own norm is a one- or two-letter abbreviation; some codebases name the
   role in full. Match what the type's existing methods already use.
 - **Short-lived variables**: `o` for order, `err` for error, `ctx` for context.
 - **Descriptive for longer scope**: `userID`, `orderID`, `controller`.
@@ -109,7 +109,7 @@ var (
 - `New<Type>` pattern: `NewOrderService`, `NewController`.
 
 ### Import Organization
-Run the project's formatter — `goimports`, usually through `golangci-lint fmt`. Do not
+Run the project's formatter: `goimports`, usually through `golangci-lint fmt`. Do not
 hand-arrange groups: `goimports` sorts *within* a group but never moves an import between
 groups, so whatever grouping a file already has is the grouping it keeps. Match the
 surrounding files. Only a configured tool (`goimports -local`, or `gci` in `.golangci.yaml`)
@@ -122,14 +122,14 @@ rules; the first is Go-specific and lives only here.
 
 - **The framework is a project fact, not a language default.** Take it from the project's
   `AGENTS.md` when it names one, otherwise from the test entry point in the same directory,
-  otherwise from the nearest sibling suite in the repo — and write every new test in that
+  otherwise from the nearest sibling suite in the repo, and write every new test in that
   framework. A directory whose `func TestX(t *testing.T)` calls `RunSpecs` is a Ginkgo suite, and
   a spec there belongs in the spec tree, where the suite's hooks and the Ginkgo reporter reach it.
-  One entry point covers a whole directory — an internal `foo` and an external `foo_test` compile
+  One entry point covers a whole directory: an internal `foo` and an external `foo_test` compile
   into one binary and share Ginkgo's global registry, so the single `RunSpecs` runs the specs of
   both. A directory with no `RunSpecs` and no project statement is a plain `testing` package; when
   the project statement and the directory disagree, the project's `AGENTS.md` wins and the
-  directory is debt — say which you followed.
+  directory is debt: say which you followed.
 - **One row, one named test.** In a Ginkgo suite that is `DescribeTable` plus one `Entry` per row;
   in a plain `testing` package it is `t.Run`. Either way the row's name is the test's name and the
   failure line identifies the input (`03-test-aesthetics.md` §4.7).

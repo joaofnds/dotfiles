@@ -2,15 +2,15 @@
 
 **Smells:** Lazy Element, Speculative Generality
 **Inverse:** Replace Function with Command
-**Improves:** maintainability — an operation that needs no lifecycle sheds the class that pretended it did
+**Improves:** maintainability: an operation that needs no lifecycle sheds the class that pretended it did
 
 ## When to apply
 
 - A command object's whole life is construct-then-execute: no staged execution, no
-  inspected intermediates, no undo — the ceremony of a class wrapped around what is
+  inspected intermediates, no undo: the ceremony of a class wrapped around what is
   semantically one function call. Collapse it.
 - The lifecycle the command was built for never arrived (queueing, undo,
-  parameterized re-execution) — speculative machinery now carried by every reader and
+  parameterized re-execution): speculative machinery now carried by every reader and
   call site.
 - Direction against Replace Function with Command is settled the same way from either
   side: the class stays only while its fields-and-stages mechanics do demonstrable
@@ -20,7 +20,7 @@
 
 - The command's features are used: callers stage it, retry it, inspect it, or store
   it for later. Used lifecycle is not ceremony.
-- The class is the codebase's uniform plugin surface — a family of interchangeable
+- The class is the codebase's uniform plugin surface: a family of interchangeable
   operations dispatched polymorphically. One member collapsing to a function breaks
   the family's shape; judge the family, not the member.
 
@@ -36,7 +36,7 @@
 
 ## Example
 
-Before — a class per arithmetic operation:
+Before: a class per arithmetic operation:
 
 ```js
 class ChargeCalculator {
@@ -56,10 +56,10 @@ function charge(customer, usage) {
 
 ## House-rule interactions
 
-- `coding_style.md` — the house default is no class without demonstrated need; this
+- `coding_style.md`: the house default is no class without demonstrated need; this
   refactoring is that rule executing in reverse on a class that lost (or never had)
   its justification.
-- `engineering_judgment.md` — YAGNI: unused lifecycle hooks are the flexibility
+- `engineering_judgment.md`: YAGNI: unused lifecycle hooks are the flexibility
   built for a future that never came; deleting them is the rule's enforcement arm.
-- `engineering_judgment.md` — code is a liability: constructor, fields, and
+- `engineering_judgment.md`: code is a liability: constructor, fields, and
   boilerplate all carried maintenance cost for what one signature now states.

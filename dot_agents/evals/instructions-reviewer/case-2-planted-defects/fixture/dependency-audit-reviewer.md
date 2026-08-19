@@ -26,7 +26,7 @@ walking the transitive tree, so a thousand-package manifest cannot exhaust the w
 
 ## Output
 
-Return the audit inline as markdown. Never write it to a file — the caller wants it in the
+Return the audit inline as markdown. Never write it to a file: the caller wants it in the
 conversation, and a file the caller has to open is a file the caller will not read.
 
 ## Handoff

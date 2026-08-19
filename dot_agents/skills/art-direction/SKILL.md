@@ -13,7 +13,7 @@ description: Develop or implement a distinctive visual direction for new or subs
 
 Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take one real aesthetic risk you can justify.
 
-`coding_style_frontend.md` owns the convention floor — tokens, spacing scale, icon set,
+`coding_style_frontend.md` owns the convention floor: tokens, spacing scale, icon set,
 component primitives, the accessibility floor, responsive breakpoints. Don't restate it
 here and don't relitigate it: this skill decides taste, that file decides correctness.
 
@@ -37,8 +37,8 @@ Leverage motion deliberately. Think about where and if animation can serve the s
 Match complexity to the vision. Maximalist directions need elaborate execution; minimal directions need precision in spacing, type, and detail.
 
 Copy is design material, and generic copy makes a design feel as templated as generic type
-does. **When the work involves writing or revising interface copy — labels, headlines, empty
-states, errors, button text — read `~/.agents/skills/art-direction/references/writing.md`
+does. **When the work involves writing or revising interface copy, labels, headlines, empty
+states, errors, button text, read `~/.agents/skills/art-direction/references/writing.md`
 before writing it. Skip it when the brief supplies final copy and you're only setting it.**
 
 ## Calibration: what the defaults look like right now
@@ -46,20 +46,20 @@ before writing it. Skip it when the brief supplies final copy and you're only se
 AI-generated design clusters around two families. Both are legitimate for some briefs, but
 they arrive regardless of subject, so they are defaults rather than choices.
 
-**The editorial cluster** — (1) a warm cream background (near #F4F1EA) with a high-contrast serif display and a terracotta accent; (2) a near-black background with a single bright acid-green or vermilion accent; (3) a broadsheet-style layout with hairline rules, zero border-radius, and dense newspaper-like columns.
+**The editorial cluster**: (1) a warm cream background (near #F4F1EA) with a high-contrast serif display and a terracotta accent; (2) a near-black background with a single bright acid-green or vermilion accent; (3) a broadsheet-style layout with hairline rules, zero border-radius, and dense newspaper-like columns.
 
 **The SaaS-template cluster**, and the one our own stack falls into by default: Inter or
 Poppins throughout, a purple-to-blue gradient hero, `rounded-2xl` cards in a three-column
 feature grid, centered everything, untouched shadcn grays and default-state buttons, Lucide
-icons used as decoration, a vague aspirational headline. Reaching for shadcn/ui and Tailwind
-— which `coding_style_frontend.md` prescribes — puts you one step from this look. Those
+icons used as decoration, a vague aspirational headline. Reaching for shadcn/ui and Tailwind,
+which `coding_style_frontend.md` prescribes, puts you one step from this look. Those
 components are the right floor; their defaults are not a direction.
 
 *(Both lists are calibration by observation, not measurement, against Opus 5 /
 Fable 5 defaults. Re-look on a
 model swap, or when a design you didn't steer lands outside both clusters.)*
 
-Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on a default.
+Where the brief pins down a visual direction, follow it exactly: the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on a default.
 
 ## Process: brainstorm, critique, ratify
 
@@ -75,30 +75,30 @@ files, not chat.
 
 Name it `<prefix>-design.md` under `.boris/design/` at the repo root (created if absent),
 reusing the `YYYY-MM-DD-<slug>` prefix of the chain's existing spec, options, or grilled doc
-under `.boris/plans/` — `/build`'s archive sweep finds chain artifacts by stem. Mint a fresh
+under `.boris/plans/`: `/build`'s archive sweep finds chain artifacts by stem. Mint a fresh
 `YYYY-MM-DD-<slug>` only when no chain exists yet, and tell `/plan` to reuse it. Six headings:
 
-- **Status** — `Ratified YYYY-MM-DD`, or `Draft` when the user hasn't approved it. `/plan` and `/build` treat a `Draft` as a proposal, not a constraint.
-- **Subject** — the concrete subject, its audience, the page's single job.
-- **Tokens** — the palette hex values, the type roles and families, the layout concept, the signature element.
-- **Rejected** — directions considered and dropped, each with the reason.
-- **Tried** — a running log across passes: what was built, what didn't work, what not to retry.
-- **Verify** — copy the three checks below into the file verbatim, so the building session inherits them.
+- **Status**: `Ratified YYYY-MM-DD`, or `Draft` when the user hasn't approved it. `/plan` and `/build` treat a `Draft` as a proposal, not a constraint.
+- **Subject**: the concrete subject, its audience, the page's single job.
+- **Tokens**: the palette hex values, the type roles and families, the layout concept, the signature element.
+- **Rejected**: directions considered and dropped, each with the reason.
+- **Tried**: a running log across passes: what was built, what didn't work, what not to retry.
+- **Verify**: copy the three checks below into the file verbatim, so the building session inherits them.
 
 During an authorized implementation task, build from that file and derive every color and
 type decision from its tokens.
 
 ## Verify what you built
 
-Self-agreement is not verification — rereading your own code and concluding it matches the
+Self-agreement is not verification: rereading your own code and concluding it matches the
 plan proves nothing. Render it and look:
 
 1. Serve the page and screenshot it, at desktop width and at 320px.
-2. Read each screenshot against the file's **Tokens** section, one line at a time. A palette value that never appears, a display face that silently fell back, a signature element that reads as ordinary — each is a defect, not a nuance.
-3. Walk the page against `coding_style_frontend.md` §6 in full — visible focus and reduced motion, plus the items a palette or a signature element can break: color as the sole carrier of meaning, accessible names on icon-only controls, hit-target size.
+2. Read each screenshot against the file's **Tokens** section, one line at a time. A palette value that never appears, a display face that silently fell back, a signature element that reads as ordinary; each is a defect, not a nuance.
+3. Walk the page against `coding_style_frontend.md` §6 in full: visible focus and reduced motion, plus the items a palette or a signature element can break: color as the sole carrier of meaning, accessible names on icon-only controls, hit-target size.
 
 Fix what the screenshots show, then re-shoot. **If you cannot render in this environment,
-say so plainly and mark the direction unverified** — never report visual work as done on the
+say so plainly and mark the direction unverified**; never report visual work as done on the
 strength of the code alone.
 
 ## Restraint and self-critique

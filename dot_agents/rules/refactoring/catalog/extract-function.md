@@ -2,7 +2,7 @@
 
 **Smells:** Long Function, Duplicated Code, Comments
 **Inverse:** Inline Function
-**Improves:** readability — replaces a block you must read with a name you can trust
+**Improves:** readability: replaces a block you must read with a name you can trust
 
 ## When to apply
 
@@ -19,19 +19,19 @@
 ## When not to apply
 
 - You cannot find a name clearly better than the code itself. A fragment with no
-  articulable intent gains nothing from a function boundary — the indirection costs the
+  articulable intent gains nothing from a function boundary: the indirection costs the
   reader a jump and reveals nothing, so under Beck's ordering the added element buys
   nothing.
 - The fragment touches so many locals that the extracted signature would be noisier than
   the inline code. Restructure first (Split Variable, Replace Temp with Query) or leave
   it alone.
-- The surrounding function is long but linear — a narrative of unrepeated steps that
+- The surrounding function is long but linear: a narrative of unrepeated steps that
   reads top to bottom. Extraction that only shortens, without isolating a nameable idea,
   trades one readable page for five fragments.
 
 ## Mechanics
 
-1. Choose the fragment and draft the name first — after what the fragment achieves, not
+1. Choose the fragment and draft the name first: after what the fragment achieves, not
    how it works. If no name comes, stop: see "When not to apply."
 2. Create the new function with that name and move the fragment into it.
 3. Turn each local the fragment reads into a parameter. If the fragment assigns one
@@ -44,7 +44,7 @@
 
 ## Example
 
-Before — the total computation must be read to be understood:
+Before: the total computation must be read to be understood:
 
 ```js
 function emailReceipt(order) {
@@ -54,7 +54,7 @@ function emailReceipt(order) {
 }
 ```
 
-After — `orderTotal` states the what; the loop becomes a detail:
+After: `orderTotal` states the what; the loop becomes a detail:
 
 ```js
 function emailReceipt(order) {
@@ -70,11 +70,11 @@ function orderTotal(order) {
 
 ## House-rule interactions
 
-- `coding_style.md` — comments default to zero, and extraction is move 2 of the three
+- `coding_style.md`: comments default to zero, and extraction is move 2 of the three
   moves that must be exhausted before writing one. A block you were about to comment is
   this refactoring's primary trigger.
-- `coding_style.md` — Beck's ordering ranks fewest-elements fourth. Extraction adds
+- `coding_style.md`: Beck's ordering ranks fewest-elements fourth. Extraction adds
   an element, so it is admissible only when it buys intent-revelation or removes
   duplication; extraction for length alone does not clear the bar.
-- `coding_style.md` — surgical execution: extract within the code the task touches;
+- `coding_style.md`: surgical execution: extract within the code the task touches;
   do not sweep through adjacent functions extracting opportunistically.
