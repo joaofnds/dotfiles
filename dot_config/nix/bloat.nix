@@ -10,6 +10,10 @@
     pkgs.yt-dlp
   ];
 
+  homebrew.brews = [
+    "backlog-md"
+  ];
+
   homebrew.casks = [
     "audacity"
     "focusrite-control-2"
