@@ -5,17 +5,23 @@ description: >
   Take a spec/PRD and survey genuinely different implementation options in this
   codebase, with pros/cons: leans toward one but does NOT decide (/grill converges,
   /plan writes it up). Invoke once a spec exists, before /grill: "research options for
-  this spec". Takes the spec path as argument; no spec yet → /discuss first.
+  this spec". Takes the card ID as argument (or a spec path, from which it finds or
+  creates the card); no spec yet → /discuss first.
   Codebase-grounded only: a web-only report is the built-in deep-research. Skip when
   there's one sane implementation: go to /plan (or /grill if it needs hardening).
-argument-hint: "Path to the spec/PRD to research options for"
+argument-hint: "Card ID (or spec path) to research options for"
 ---
 
 # Research
 
 Don't write code here.
 
-Read the spec first (the argument is its path). It is the source of truth for *what* is
+## The card
+
+The stage column is Research. Handed a spec path or a bare goal instead of a card ID: find the card
+carrying that spec, or create one.
+
+Read the spec first (the card's attached spec doc). It is the source of truth for *what* is
 needed: treat its scope, constraints, and acceptance criteria as fixed, and tie every
 option back to them. If the spec is missing or ambiguous, stop and say so rather than
 inventing requirements.
@@ -45,10 +51,8 @@ inventing requirements.
 
 ## Output
 
-Write a durable options doc a fresh session (or `/grill`) can pick up cold. Reuse the
-spec's full `YYYY-MM-DD-<slug>` prefix and name it `<prefix>-options.md`, so it sorts
-adjacent to the spec even when researched on a later day. Save it beside the spec under
-`.boris/plans/` at the repo root. Tell the user the exact path.
+Write a durable options doc a fresh session (or `/grill`) can pick up cold: a file in
+`backlog/docs/` titled "<feature> options", attached to the card with `--doc`.
 
 ### Structure
 
