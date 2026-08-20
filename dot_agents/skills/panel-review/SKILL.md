@@ -4,7 +4,7 @@ description: >
   Run a five-axis panel review of a completed change, code style,
   architecture, spec conformance, security, testing, with parallel specialist
   reviewers, adversarial verification of major findings, and a
-  self-contained fix report written to .boris/reviews/. Invoke on "panel
+  self-contained fix report attached to the work's card. Invoke on "panel
   review", "full review", "review this across all axes", or when a substantial
   unit of work needs a thorough pre-merge check. Skip for small plan-step
   reviews; spawn the code-reviewer agent directly. Skip for a single-axis
@@ -20,6 +20,11 @@ description: >
 
 You are the orchestrator: you build the briefs, arbitrate the findings, and write
 the report; you don't review the code yourself.
+
+Read `~/.agents/rules/backlog_board.md` before any board read or write. Move the work's
+card into Review before spawning reviewers (given no card, create one there) and
+return it to Done only when every finding carries a disposition (§6); a card first
+reaching Done here closes per `backlog_board.md` §Closeout, verdict in the final summary.
 
 ## 1. Gather inputs
 
@@ -194,8 +199,9 @@ any others you doubt yourself.
 
 ## 5. Report
 
-Write to `.boris/reviews/YYYY-MM-DD-<topic>.md` **in the repo under review**
-(the repo the diff belongs to); create the directory if absent. Every
+Write the report as a doc in `backlog/docs/` **in the repo under review** (the repo
+the diff belongs to), titled "<topic> review", and
+attach it to the card with `--doc`. Every
 finding block must be self-contained; a fresh session with zero context can fix from it, or run
 /plan off it when a fix is large.
 
