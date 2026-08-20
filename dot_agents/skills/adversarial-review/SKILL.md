@@ -67,10 +67,10 @@ three **independently**, same neutral brief, none sees the others, and union
 their findings; a single reviewer has its own blind spots. Route to a specialized
 reviewer when one fits: `code-reviewer` for code; `instructions-reviewer` only for
 instruction artifacts (rules, skills, agent definitions, CLAUDE.md/AGENTS.md, output
-styles, slash commands, hook-injected text, its own description enumerates the set,
-never a `.boris/` work product, however imperative it reads: a spec, plan, or diagnosis
-takes a general agent, with `.boris/CONTEXT.md` the one exception, which
-`instructions-reviewer` owns); otherwise a general agent carrying this brief.
+styles, slash commands, hook-injected text; its own description enumerates the set;
+never a `.boris/` or `backlog/docs/` work product, however imperative it reads: a spec,
+plan, or diagnosis takes a general agent, with `.boris/CONTEXT.md` the one exception,
+which `instructions-reviewer` owns); otherwise a general agent carrying this brief.
 
 ## As a producer gate
 
