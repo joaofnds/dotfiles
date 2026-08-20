@@ -172,13 +172,19 @@ contract is restated in `~/.agents/skills/kaizen/SKILL.md` §Spawn the fresh cri
 - Cite the mechanism, not the symptom. Be direct: if a document should be deleted, say
   so.
 - For uncertain rules, propose a deletion experiment whose trigger is a forcing function
-  rather than a calendar date: a release, a model swap, a count of runs.
+  rather than a calendar date: a release, a model swap, a count of runs. A
+  prescription deleting a default-satisfied rule names the model-swap re-check:
+  unspecified behavior is the class that regresses silently
+  (`instruction_external_facts.md` §Cited sources, *What Prompts Don't Say*).
 - **Deletions have a keep-side test.** A corpus's justified length is proportional to
   its distance from model defaults. A sentence encoding a deliberate house delta, a
   choice a capable model won't make unprompted, is incompressible; keep it however
   strict it reads. What compresses is the material around the delta: choreography,
   anticipated-failure sermons, persuasion aimed at the author. Flag the sermon, never
-  the rule.
+  the rule. Rank deletion candidates by inferability: format restatements (guessed
+  at 70.7%) go first; a conditional clause is guessed at only 22.9% and is never a
+  brevity deletion (`instruction_external_facts.md` §Cited sources, *What Prompts
+  Don't Say*).
 - When an artifact governs coding or code review, check it against
   `~/.agents/rules/engineering_judgment.md`, `~/.agents/rules/coding_style.md` plus the
   language file it names, and `~/.agents/rules/testing/00-index.md`. Do not apply
@@ -226,7 +232,10 @@ depend on them.
   material behind a pointer that says when and why to load it. Keep references one
   level from the entry file; give a reference over 100 lines a table of contents.
 - **Placement.** Put routing, authority, and safety constraints before explanatory
-  background; flag a concrete buried dependency, not a line position alone.
+  background; flag a concrete buried dependency, not a line position alone. A long
+  embedded reference block precedes the instruction that consumes it
+  (`instruction_external_facts.md` §Cited sources, *Anthropic Prompting Best
+  Practices*).
 
 ### 2. Dispatch and discoverability
 
@@ -248,13 +257,18 @@ unverified, not invalid.
   doubt-clauses ("if in doubt, use X") overtrigger the same way on current models;
   rewrite to a condition that names the situation. Anti-laziness prompting written for
   older models is the usual source; dial it back rather than restating it.
+- **Prose is not a control.** Danger language or ask-if-unsure as the only mitigation
+  on a destructive path is a finding: severity prose changes nothing, refusals stay
+  near zero, and ask rate is set by model and harness, not by the prompt
+  (`instruction_external_facts.md` §Cited sources, *Coding Agents Are Guessing*;
+  small-model scope). Remedy: a named target, a gate, or a deny rule, never stronger
+  adjectives.
 - **Tool, permission, and fork fields: read the reference before ranking one.**
   `~/.agents/agents/references/dispatch-fields.md` owns the field semantics; `instruction_external_facts.md` §Harness mechanics carries the facts. A skill's `allowed-tools` treated as a safety
   boundary is a Blocker. Skip both on an artifact with none of those fields.
 - **Least privilege regardless.** Reviewers must not have `Edit` / `Write`. `Bash(*)`
   is a smell; prefer scoped commands. Frontmatter is never the only safety control:
-  permission deny rules and hooks are the enforcement layer, and instruction text is
-  not enforcement at all.
+  permission deny rules and hooks are the enforcement layer.
 - **Capability closure.** Map every mandated action, evidence requirement, and
   completion criterion to a declared tool or caller-supplied input. An impossible
   action is Major; an impossible safety check is Blocker.
@@ -278,8 +292,9 @@ unverified, not invalid.
   *role* naming domain and stance is sound; cut the padding around it, not the role.
 - **Examples.** Keep only examples that resolve distinct ambiguities; delimit them. In
   dispatch text an example anchors the model to the demonstrated pattern and narrows
-  the trigger; state the condition instead (mechanism argument: `instruction_external_facts.md` §Cited sources,
-  *The New Rules of Context Engineering*).
+  the trigger; state the condition instead. The cited reversal covers tool-usage
+  examples; the dispatch-text extension is a house delta (`instruction_external_facts.md`
+  §Cited sources, *The New Rules of Context Engineering*).
 - **Reference over restatement.** When an artifact describes expected output in prose
   and a code-based reference exists in-repo, flag the prose and point at the
   reference, but only when the consuming context can read it. Where the consumer
@@ -340,6 +355,18 @@ unverified, not invalid.
 
 - **Observable?** Require an identifiable action, artifact, omission, evidence
   requirement, or decision boundary.
+- **Target bindable?** A state-mutating rule (delete, move, rewrite, send) names an
+  object bindable without judgment: a path, an enumerated set, or a pattern plus a
+  probe; description-by-role ("stale entries") is a finding. A missing object
+  degrades acted runs far faster than vague intent (`instruction_external_facts.md`
+  §Cited sources, *Coding Agents Are Guessing*; small-model scope: no Blocker on it
+  alone).
+- **Verification oracle-backed?** A test, command, or reference whose output settles
+  the question is sound; regenerate-and-compare, majority voting, or asking whether
+  the prompt was clear is unsound on open-ended output: samples converge on one
+  wrong reading (`instruction_external_facts.md` §Cited sources, *Semantic
+  Collapse*, *Self-Consistency*). Divergence may alarm; convergence never passes.
+  Agreement-keyed verification gating completion is Major.
 - **Justified?** Require a failure-mode clause when the rule's scope or exception would
   otherwise be ambiguous; do not add persuasion to an exact house choice.
 - **One specificity level?** Mixing principles, heuristics, and recipes in one bullet
