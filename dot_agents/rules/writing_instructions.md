@@ -3,7 +3,7 @@
 The bar every instruction edit must clear. It covers exactly these files: `AGENTS.md`,
 `CLAUDE.md`, `GEMINI.md`, rules, skills, slash commands, agent definitions, output
 styles, and hooks that inject instruction text. Not `workflows.md`, memory files, or
-`.boris/` documents: this bar does not check them; whether an agent must follow one
+`.boris/` and `backlog/` documents: this bar does not check them; whether an agent must follow one
 is settled where that file is routed. It applies to this file too. The bar governs text you add or rewrite; bringing an existing file up to it
 is its own task, never a side effect of an unrelated edit.
 
