@@ -116,23 +116,23 @@ batch-introduced defect only on the user's direction. A finding that names no de
 takes the advisory route. An
 in-diff defect you choose not to fix is Blocking or Noted; a defect whose trigger you
 could not probe, or one outside the diff, is Decide. An apply-state note is not a finding
-and blocks nothing, but name it in the closing message with its settling command
+and blocks nothing, but name it in the reply with its settling command
 (`chezmoi diff <path>`). Never fire the gate on a fixture under `evals/`: those defects
 are planted, and resolving them would repair the answer key. A plan or spec that
 embeds instruction text for later landing (verbatim templates, per-file content
 contracts) fires the gate on those passages at ratification, before a builder
 executes them.
 
-A batch is the edits since the user's last turn. After the round, decide out loud: rerun
+A batch is the edits since the user's last turn. After the round, decide: rerun
 or proceed. Rerun only when a further edit in this batch changed routing, precedence, or
 safety: a reviewer prescription applied counts when it was about one of the three,
 because no reviewer has read that text where it now sits. One rerun at most; after it,
-proceed regardless, dispositioning every open defect and listing every open advisory. In
-the closing message name the rerun-or-proceed decision and its reason, every reviewer
-prescription applied with changed wording, every finding the reviewer downgraded on a
-reachability probe, and the batch's per-file net line delta (`git diff --numstat`
-against the pre-batch ref):
-growth no commit message justifies is a defect to fix before close. Do not reintroduce
+proceed regardless, dispositioning every open defect and listing every open advisory. Record
+in the commit message the rerun-or-proceed decision and its reason, every reviewer
+prescription applied with changed wording, and the batch's per-file net line delta
+(`git diff --numstat` against the pre-batch ref): growth no commit message justifies is a
+defect to fix before close. A finding the reviewer downgraded on a reachability probe is a
+finding: it goes to the user with the batch's others. Do not reintroduce
 a multi-round loop.
 
 Editing a file agents read but do not obey, `.boris/**`, `backlog/**`, memory files, eval cases and
