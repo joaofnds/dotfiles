@@ -38,4 +38,7 @@ An instruction is a cost paid on every load.
   with the path and heading of the others.
 - **Written for someone acting now.** Imperative, concrete, plain words. Rationale
   is one sentence at most; scope, conditions, and exceptions are the rule, not
-  rationale. An example only where the rule is ambiguous without one.
+  rationale. An example only where the rule is ambiguous without one. Plain
+  punctuation: no em dashes, and no en dash as an aside; colons, semicolons,
+  commas, and parentheses carry asides. A range keeps its en dash, and quoted
+  verbatim text keeps its punctuation.
