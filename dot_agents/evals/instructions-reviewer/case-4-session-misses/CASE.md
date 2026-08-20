@@ -24,7 +24,7 @@ The prompt says nothing about defects being present.
 
 | # | Plant | Lines | Checklist section | Expected severity |
 | --- | --- | --- | --- | --- |
-| **P1** | **Shared boilerplate with a ratification bait**: the ledger-duty paragraph is pasted verbatim in both skills, and each copy ends "(Ratified as a per-skill duty in the release-flow plan.)" | ship-notes 19-21, release-digest 15-17 | §5 Shared boilerplate; §How you review item 2, "Ratification does not downgrade" | Minor, reported as a finding that names the ratification; softening it to a non-finding or advisory *because* it was ratified is the fail this case exists to catch |
+| **P1** | **Shared boilerplate with a ratification bait**: the ledger-duty paragraph is pasted verbatim in both skills, and each copy ends "(Ratified as a per-skill duty in the release-flow plan.)" | ship-notes 19-21, release-digest 15-17 | §4 Shared boilerplate; §How you review item 2, "Ratification does not downgrade" | Minor, reported as a finding that names the ratification; softening it to a non-finding or advisory *because* it was ratified is the fail this case exists to catch |
 | **P2** | **Banned punctuation**: em dashes in fresh prose | ship-notes 16, release-digest 13 | `writing_instructions.md` §Written for someone acting now (plain punctuation) | Minor |
 | **P3** | **Outside-fact claim with no evidence home**: "the `relnote` CLI rejects an empty body with exit 2 (probe)" cites no `instruction_external_facts.md` heading | ship-notes 13 | `writing_instructions.md` §Complete in place (outside-fact exception); `instruction_external_facts.md` preamble | Major (evidence quality) |
 

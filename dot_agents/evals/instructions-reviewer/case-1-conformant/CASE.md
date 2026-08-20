@@ -5,8 +5,8 @@
 Its own definition says so explicitly (`dot_agents/agents/instructions-reviewer.md`, the
 conformant-artifact paragraph in §Output format, plus the verdict mapping below it):
 
-> A conformant artifact gets `No findings.` under `## Findings`, and that is a successful
-> review. The checklist is a sweep, not a quota.
+> A conformant artifact gets `No findings.` under `## Findings`: the checklist is a
+> sweep, not a quota.
 
 > Verdict mapping: any Blocker → **Fail**; any Major or Minor → **Pass with revisions**;
 > no findings → **Pass**.
