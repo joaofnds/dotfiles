@@ -84,7 +84,10 @@ Required reads by phase:
   `/stepping-away` are user-invoked and cannot be reached by model invocation: recommend
   the next stage to the user by name. When the choice needs a skill's trigger or skip conditions, read its
   frontmatter under `~/.agents/skills/<name>/`
-- **Producing any loop artifact** (any `.boris/` document a later stage reads) → read
+- **Reading or writing a `backlog/` board** (any `backlog` command, or editing board
+  files directly) → `backlog_board.md`
+- **Producing any loop artifact** (any `.boris/` or `backlog/docs/` document a later
+  stage reads) → read
   `.boris/CONTEXT.md` when it exists: the project's domain language. An artifact that
   names things differently hands the next stage the wrong vocabulary
 - **Spawning or continuing a subagent** → `subagent_spawning.md`
@@ -122,7 +125,7 @@ the closing message name the rerun-or-proceed decision and its reason, every rev
 prescription applied with changed wording, and every finding the reviewer downgraded on a
 reachability probe. Do not reintroduce a multi-round loop.
 
-Editing a file agents read but do not obey, `.boris/**`, memory files, eval cases and
+Editing a file agents read but do not obey, `.boris/**`, `backlog/**`, memory files, eval cases and
 fixtures, `review_checklist.md`, sub-agent prompt text and reports, does not fire the
 gate.
 
