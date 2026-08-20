@@ -27,8 +27,9 @@ hypothesis plus what would confirm it. Tag each finding `confirmed` or `hypothes
 **Write it cold-readable.** The next session has zero memory of this one; the
 file alone must suffice. Inline the evidence; no "as we discussed."
 
-Save it durably under `.boris/plans/` at the repo root (create the dir if absent), as
-`YYYY-MM-DD-<slug>-diagnosis.md`. Tell the user the path.
+Read `~/.agents/rules/backlog_board.md` before any board read or write. Write the report
+as a doc titled "<subject> diagnosis" and attach it with `--doc` to the bug's card; given
+no card, create one (`--type bug -s Research`).
 
 ## Structure
 
