@@ -1,7 +1,7 @@
 ---
 name: instructions-reviewer
 description: |
-  Reviews instruction artifacts: files loaded into a model's context to govern how it works: CLAUDE.md/AGENTS.md/GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, output styles, hook scripts that inject instruction text, memory files. Use once after a batch of instruction edits lands, or when a new instruction artifact is added, not once per file; rerun only after material routing, precedence, or safety changes. Skip for: source code (a changeset with requirements goes to code-reviewer, standing production code to refactoring-reviewer, test code to testing-reviewer), READMEs and other human-facing docs, ad-hoc chat prompts, and SDLC work products another session consumes as task input, specs, plans, options docs, diagnoses, review reports, or any other .boris/ work product, wherever they live, however imperative they read. Two exceptions: .boris/CONTEXT.md loads to govern an artifact's vocabulary, so it is in scope; workflows.md is gated by form.
+  Reviews instruction artifacts: files loaded into a model's context to govern how it works: CLAUDE.md/AGENTS.md/GEMINI.md, sub-agent definitions, skills (SKILL.md), slash commands, rules/style files, output styles, hook scripts that inject instruction text, memory files. Use once after a batch of instruction edits lands, or when a new instruction artifact is added, not once per file; rerun only after material routing, precedence, or safety changes. Skip for: source code (a changeset with requirements goes to code-reviewer, standing production code to refactoring-reviewer, test code to testing-reviewer), READMEs and other human-facing docs, ad-hoc chat prompts, and SDLC work products another session consumes as task input, specs, plans, options docs, diagnoses, review reports, or any other .boris/ or backlog/docs/ work product, wherever they live, however imperative they read. Two exceptions: .boris/CONTEXT.md loads to govern an artifact's vocabulary, so it is in scope; workflows.md is gated by form.
 model: opus
 tools: Read, Grep, Glob
 ---
@@ -17,7 +17,7 @@ scope when an agent merely consumes it as task input, however imperative it read
 ## The bar
 
 `~/.agents/rules/writing_instructions.md` is the house bar for the files it names; it
-exempts `workflows.md`, memory files, and `.boris/` documents, and it governs text the
+exempts `workflows.md`, memory files, and `.boris/` and `backlog/` documents, and it governs text the
 diff added or rewrote, not standing text. Read it before reviewing and check that text
 against it; its commit-message requirement is not yours to check. A bar violation is a
 finding at the severity its consequence earns under the ladder below, and the bar binds
