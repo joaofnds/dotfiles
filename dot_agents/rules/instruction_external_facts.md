@@ -100,6 +100,36 @@ restated in `agents/instructions-reviewer.md` and
 §Assemble the evidence; the `skillOverrides` key rule in
 `skills/art-direction/SKILL.md`: edit those sites with this list or neither.
 
+## backlog.md CLI
+
+Probes against backlog.md v1.50.1 at `/opt/homebrew/bin/backlog`; the final bullet
+is a git probe with its own trigger. **Re-verify on any backlog.md upgrade.**
+
+- `backlog init` writes a `<CRITICAL_INSTRUCTION>` workflow block into the repo's
+  `AGENTS.md`. A hand-rolled board (mkdir `backlog/{tasks,docs}` plus a config file)
+  is fully functional without init.
+- Transitions are ungated: the CLI silently accepts `-s Done` with unchecked
+  acceptance criteria, forward moves while a dependency is open, and nonexistent
+  `--ref`/`--doc` paths.
+- `backlog doc create` rejects paths outside `backlog/docs/`.
+- A doc file without the four-key frontmatter (id, title, type, created_date) lists
+  as a blank-titled row.
+- Doc and task IDs allocate max+1, so hand-assigned IDs are safe.
+- No global or user-level config exists; `backlog config` is project-scoped.
+- The CLI re-serializes `backlog/config.yml` during read operations (checksum and
+  line count change on a `task list`). Raw-edited values of known keys survived
+  re-serialization in fresh-board probes, but one live-board raw edit
+  (`zero_padded_ids`) was later found reverted, cause unpinned: prefer
+  `backlog config set`, and re-verify the file after a subsequent `task list`.
+- `backlog task <id> --json` wraps output as `{schemaVersion: 1, kind, task:{...}}`;
+  the card fields (`status`, `labels`, `dependencies`,
+  `acceptanceCriteria[].checked`, `subtasks`, `documentation`, `finalSummary`,
+  `parentTaskId`) sit under `task`.
+- Git, not backlog, but load-bearing for bootstrap: under a `backlog/` ignore
+  pattern, `git check-ignore -q backlog` exits 1 while nothing exists on disk;
+  probing the child path `backlog/config.yml` exits 0 *(probe, git 2.55.0;
+  re-verify on a git upgrade)*.
+
 ## Deprecated model mechanics
 
 **Re-verify on each model release**, against the extended-thinking reference and the
