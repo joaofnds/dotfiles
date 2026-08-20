@@ -65,24 +65,10 @@ check "$corpus/AGENTS.md" 60 200 router
 # "outputStyle": "answer-first", so the whole file sits in the system prompt
 # every turn — the router's tier, so the router's budget. (Added 2026-08-13,
 # after answer-first.md reached ~290 lines with nothing measuring it.)
-#
-# Known exception, recorded rather than hidden by loosening the threshold:
-# answer-first.md is over the ceiling today. That is a real finding — but a
-# permanently red gate hides the next real breach, so it WARNs until trimmed.
-# Trimming is gated instruction work, not a fix to make here. Delete the
-# exemption when the file is under the ceiling.
 printf '\nOutput styles (always-on)\n'
-style_exempt="dot_claude/output-styles/answer-first.md"
 for f in "$root"/dot_claude/output-styles/*.md; do
   [ -e "$f" ] || continue
-  rel="${f#"$root"/}"
-  n=$(lines "$f")
-  if [ "$rel" = "$style_exempt" ] && [ "$n" -gt 200 ]; then
-    densities="$densities$(density "$f") $rel"$'\n'
-    warn "$rel — $n lines, ceiling 200 (known exception, 2026-08-13: trim pending)"
-  else
-    check "$f" 60 200 output-style
-  fi
+  check "$f" 60 200 output-style
 done
 
 # Line-ceiling exemption, 2026-08-17: instructions-reviewer.md. The corpus prune
