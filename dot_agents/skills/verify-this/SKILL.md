@@ -82,6 +82,6 @@ Confounds: <named, or "none identified">
 
 Artifacts that don't fit inline, screenshots, transcripts, profiles, go to
 `/tmp/verify-this/<claim-slug>/`. This is throwaway evidence for one claim, not a durable
-plan or review doc, so it does not belong under `.boris/`. Skip writing to disk anything
+plan or review doc, so it does not belong under `.boris/` or `backlog/`. Skip writing to disk anything
 that would expose secrets, customer data, or credentials from the session; keep only the
 minimal inline evidence instead.
