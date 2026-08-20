@@ -168,7 +168,14 @@ checked against the Opus 5 / Fable 5 release pages):
   keep-side deletion test and the user-invoked description rule only; it states no
   "skip when" rule.
 - *Anthropic Prompting Best Practices* and *Claude Code Instruction-Artifact
-  Mechanics*: vendor documentation behind the Harness-mechanics list.
+  Mechanics*: vendor documentation behind the Harness-mechanics list. Also: place
+  long data above the instruction that consumes it (its "30%" figure names no eval),
+  and one coherent mandate per sub-agent (raw Subagents Reference note; vault page
+  update owed). The vendor conflicts with itself on emphasis: the prompting page says
+  dial back "CRITICAL"/"YOU MUST" on current models; the Claude Code sub-agents page
+  still teaches "use proactively" descriptions, and its best-practices page teaches
+  "IMPORTANT"/"YOU MUST" emphasis (fetched 2026-08-20; vault page owed). The house
+  follows the dial-back side (user-ratified); do not relitigate from the older pages.
 - *AGENTS.md as a Cross-Agent Convention*: a convention; carries adoption only.
 - *The New Rules of Context Engineering (Anthropic 2026)*: six "then vs now"
   reversals. Its one number (over 80% of the system prompt removed "with no measurable
@@ -196,18 +203,39 @@ Measured something (papers: quote the split before resting a finding on one):
   correctly in 41.1% of cases; omission cost 22.6% accuracy on average. Requirements
   followed at 98.7% individually fell to 79.7–85.0% when 19 were specified together:
   adherence is a budget, and each added requirement taxes the others. Licenses:
-  leaving a requirement to inference is unreliable. Does not license: that authored
-  scope statements improve compliance: the remedy was never tested in that form.
+  leaving a requirement to inference is unreliable. Format requirements were guessed
+  at 70.7%, conditional requirements at 22.9%; 5.9% of unspecified requirements lost
+  over 20% accuracy on a model update, about 2× the specified rate. Does not license:
+  that authored scope statements improve compliance: the remedy was never tested in
+  that form.
 - *Coding Agents Are Guessing (Ji et al. 2026)*: 55.8–67.8% of *acted* runs violated
   a boundary (27.0–46.3% over all scored runs: quote the denominator). Small/fast
-  models only, no frontier model. The nearest tested intervention was null: agents do
-  not self-restrain on stated consequence severity. Does not test explicit
-  out-of-scope declarations.
+  models only, no frontier model. Degrading the *target* collapsed acted-run Safe
+  Success 67.9% to 8.6%, while vague *intent* cost far less (50.9% to 29.4%): a
+  missing object leaves nothing to bind the action to. The nearest tested
+  intervention was null: agents do not self-restrain on stated consequence severity.
+  Explicit refusal stayed at or below 2.5% in every configuration, and ask rate is a
+  model property modulated by the harness (the same model asked 31.8% in one
+  harness, 10.5% in another).
+  Does not test explicit out-of-scope declarations.
 - *Semantic Collapse (Richter and Papadakis 2026)*: models collapse onto a single
   incorrect interpretation, "coherent but behaviorally misaligned", instead of
   surfacing ambiguity; detrimental collapse on 10–16% of MBPP, rising up to 5.53×
-  under injected underspecification. Also licenses: inconsistency is a real signal of
-  model uncertainty; its absence is not evidence of correctness.
+  under injected underspecification. At k=10, 50.3–73.0% of deliberately
+  underspecified MBPP tasks (function-level codegen; no agentic claim) produced
+  semantically indistinguishable programs across every sample, so
+  regenerate-and-compare converges on one wrong reading. Also licenses:
+  inconsistency is a real signal of model uncertainty; its absence is not evidence of
+  correctness.
+- *Self-Consistency (Wang et al. 2022)*: majority voting over sampled reasoning
+  paths improves accuracy only where the final answer comes from a fixed answer set;
+  open-ended output is outside its scope.
+- *Judging LLM-as-a-Judge (Zheng et al. 2023)*: a default-prompted GPT-4 judge
+  passed wrong answers 14/20; 6/20 with a chain-of-thought judge prompt, 3/20
+  reference-guided. Pairwise position bias 66.2–75.0% toward the first-listed
+  answer; the paper's fix is query both orders, tie on disagreement. All judges
+  2023-era, pre-reasoning. Does not license: the 80%+ agreement figure is a
+  chat-preference rate, not a general reliability certificate for LLM judges.
 
 ## Rejected citations: do not restore
 
