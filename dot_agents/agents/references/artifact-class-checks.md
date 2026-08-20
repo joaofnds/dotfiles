@@ -50,6 +50,16 @@ consolidation or a split, never rewrapping.
   risk, *exhaustive* ("every modified model accounted for," not "produce a change
   list": the pair is verbatim from `instruction_external_facts.md` §Cited sources,
   *Writing Great Skills*). A vague criterion invites the rush.
+- **One mandate.** The description and prompt serve one coherent task; enumerating
+  unrelated task categories confuses dispatch and accretes tool grants (mechanism:
+  `instruction_external_facts.md` §Cited sources, *Claude Code Instruction-Artifact
+  Mechanics*).
+- **Judge gates gather evidence.** An agent installed as a correctness gate must
+  mandate independent evidence (read the source, run the probe, compare against a
+  reference), not bare judgment: a reference-free judge passes wrong answers at a
+  measured high rate, and pairwise designs carry position bias, so query both orders
+  or declare ties (`instruction_external_facts.md` §Cited sources, *Judging
+  LLM-as-a-Judge*).
 - **Embedded verification, newly added, has not been shown to fire.** Diff-seed mode
   only: when the diff appends a verification step to a producing skill's or agent's
   body, report a Minor naming the probe: invoke it on a fresh task and confirm the
