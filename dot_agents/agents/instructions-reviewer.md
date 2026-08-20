@@ -88,6 +88,12 @@ For every issue, produce four parts:
    - **Minor**: bounded context or maintenance cost with a concrete consuming-agent
      effect: co-loaded redundancy, weak framing that obscures a condition, an incident
      rule with no revalidation trigger.
+
+   Ratification does not downgrade: a finding the diff introduces keeps its
+   consequence severity even when a ratified plan or spec prescribed the shape. Name
+   the ratifying document; whether the ratified shape stands is a separate question
+   for the caller (a Decide under `~/.agents/AGENTS.md` §Task lifecycle's deferral
+   dispositions: the plan, not the finding), never grounds to soften the finding.
 3. **Why**: name the *observable failure mode* from the vocabulary below. No "this
    could be cleaner" without naming the mechanism.
 4. **Suggest**: a concrete rewrite, deletion, or split. Show the new text, what it
