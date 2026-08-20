@@ -73,10 +73,8 @@ signature and ask for an explicit go-ahead; keep low-value iteration private. A 
 that exists only in this conversation is lost at the context boundary, and `/plan` cites
 files, not chat.
 
-Name it `<prefix>-design.md` under `.boris/design/` at the repo root (created if absent),
-reusing the `YYYY-MM-DD-<slug>` prefix of the chain's existing spec, options, or grilled doc
-under `.boris/plans/`: `/build`'s archive sweep finds chain artifacts by stem. Mint a fresh
-`YYYY-MM-DD-<slug>` only when no chain exists yet, and tell `/plan` to reuse it. Six headings:
+Write the direction as a doc titled "<feature> design" and attach it with `--doc` to the feature's card;
+given no card, create one in the column matching the work's stage. Six headings:
 
 - **Status**: `Ratified YYYY-MM-DD`, or `Draft` when the user hasn't approved it. `/plan` and `/build` treat a `Draft` as a proposal, not a constraint.
 - **Subject**: the concrete subject, its audience, the page's single job.
