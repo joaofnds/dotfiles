@@ -11,7 +11,7 @@ description: >
   BEFORE /plan, not after. Skip when the design is already hardened and nothing is
   contested: go straight to /plan; skip when the requirement itself is still open:
   that is /discuss.
-argument-hint: "Path to the options/spec doc to grill (optional)"
+argument-hint: "Card ID or doc to grill (optional)"
 ---
 
 # Grill
@@ -19,7 +19,13 @@ argument-hint: "Path to the options/spec doc to grill (optional)"
 Interrogate the decisions required by the spec, or by the named source of record when
 there is no spec, and demonstrated current risks until the approach is hardened. Do not
 design hypothetical future branches. Route requirement changes back to `/discuss`;
-amend the spec first, or write one when the source of record is not a spec.
+amend the spec first, or write one when the source of record is not a spec. Acceptance
+criteria live on the card: a requirement change edits them only after the user
+ratifies it, the same bar as amending the spec.
+
+## The card
+
+The stage column is Grill.
 
 ## Start from the source of record
 
@@ -74,10 +80,9 @@ another round here.
 
 ## Close-out
 
-Use the source artifact's `YYYY-MM-DD-<slug>` prefix; if none exists, mint one. Persist
-`<prefix>-grilled.md` under `.boris/plans/` and tell the user the path. If one exists,
-version the prefix while preserving the terminal suffix, for example
-`<prefix>-v2-grilled.md`. Never overwrite an existing artifact implicitly.
+Write the hardened result as a doc titled "<feature> grilled" and attach it to the
+card with `--doc`. When one is already attached, attach a new "<feature> grilled,
+take 2" (then take 3); never rewrite an attached doc silently.
 
 ### Structure
 
