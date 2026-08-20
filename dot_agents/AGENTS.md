@@ -104,12 +104,16 @@ its own prefix line, so its absence is visible:
 
     Gate: instructions-reviewer: <the files edited>
 
-Emit it after any batch of edits to instruction files: the set `writing_instructions.md`
-covers, plus `workflows.md` (gated by form, read-only by content: never cite it as the
-source of an obligation) and any chezmoi `symlink_` source pointing at one of those, since
+Emit it after any batch of edits to instruction files, before the batch's commits stop
+being local. Instruction files here are the set `writing_instructions.md` covers, plus
+`workflows.md` (gated by form, read-only by content: never cite it as the source of an
+obligation) and any chezmoi `symlink_` source pointing at one of those, since
 retargeting a pointer changes which instructions load. Run the reviewer once in that turn
 and resolve or explicitly defer each in-diff finding with a disposition from
-`reporting_findings.md`. A finding that names no defect takes the advisory route. An
+`reporting_findings.md`. While history is local, fold each fix into the commit that
+introduced the defect (amend, or re-create the series); a standalone fix commit for a
+batch-introduced defect only on the user's direction. A finding that names no defect
+takes the advisory route. An
 in-diff defect you choose not to fix is Blocking or Noted; a defect whose trigger you
 could not probe, or one outside the diff, is Decide. An apply-state note is not a finding
 and blocks nothing, but name it in the closing message with its settling command
@@ -122,8 +126,11 @@ safety: a reviewer prescription applied counts when it was about one of the thre
 because no reviewer has read that text where it now sits. One rerun at most; after it,
 proceed regardless, dispositioning every open defect and listing every open advisory. In
 the closing message name the rerun-or-proceed decision and its reason, every reviewer
-prescription applied with changed wording, and every finding the reviewer downgraded on a
-reachability probe. Do not reintroduce a multi-round loop.
+prescription applied with changed wording, every finding the reviewer downgraded on a
+reachability probe, and the batch's per-file net line delta (`git diff --numstat`
+against the pre-batch ref):
+growth no commit message justifies is a defect to fix before close. Do not reintroduce
+a multi-round loop.
 
 Editing a file agents read but do not obey, `.boris/**`, `backlog/**`, memory files, eval cases and
 fixtures, `review_checklist.md`, sub-agent prompt text and reports, does not fire the
