@@ -18,32 +18,20 @@ description: >
 
 Don't write or modify any code now.
 
-The goal, scope, and chosen approach are already settled in this conversation. Pull those from the discussion; don't ask the user to restate them. A plan that names things outside `.boris/CONTEXT.md`'s vocabulary hands `/build` the wrong words. If a `/discuss` spec, `/research` options doc, `/grill` hardened-design doc (`*-grilled.md`), or `/art-direction` design file (`.boris/design/*.md`) exists, cite it by path and don't restate what it already holds (Goal, Scope, rejected options, the resolved decisions, the ratified tokens); capture only the plan. For UI work, check `.boris/design/` before writing: a direction there whose **Status** reads `Ratified` is binding; a `Draft` is not; cite it and say so. A plan that neither cites a direction nor records that none was ratified is incomplete. The grill doc is where the approach was converged and hardened: read it before writing the Approach and Edge cases sections, since a fresh session holds none of that interrogation.
+## The card
+
+The stage column is Plan.
+
+The goal, scope, and chosen approach are already settled in this conversation. Pull those from the discussion; don't ask the user to restate them. A plan that names things outside `.boris/CONTEXT.md`'s vocabulary hands `/build` the wrong words. If a `/discuss` spec, `/research` options doc, `/grill` hardened-design doc, or `/art-direction` design doc exists on the card, cite it by path and don't restate what it already holds (Goal, Scope, rejected options, the resolved decisions, the ratified tokens); capture only the plan. For UI work, check the card's attached docs for a "<feature> design" doc before writing: one whose **Status** reads `Ratified` is binding; a `Draft` is not; cite it and say so. A plan that neither cites a direction nor records that none was ratified is incomplete. The grill doc is where the approach was converged and hardened: read it before writing the Approach and Edge cases sections, since a fresh session holds none of that interrogation.
 
 **Before writing:** read or grep the referenced files and verify every load-bearing
 assumption, especially claims that existing code, framework, or platform support is
 unavailable. If evidence changes the approach, return to `/grill`. Correct stale paths
 and citations rather than copying them forward.
 
-Name the file `YYYY-MM-DD-<slug>.md` (`<slug>` is a 2–5 word kebab-case goal, e.g. `2026-06-23-add-oauth-login.md`). Save it under `.boris/plans/` at the repo root (create the dir if absent): the git-ignored home `/build` reads from. Tell the user the exact path.
+Write the plan as a doc titled "<feature> plan" ("<feature> plan, milestone N" for a chain) and attach it with `--doc` to the card `/build` will pick up: the feature card, or the milestone's child card.
 
-**Slice big work into milestone plans.** If the tracker won't fit one build, a rough tell: more than about a dozen vertical tasks, or several independently shippable surfaces, write two or three sequential milestone plans off the same grilled doc instead of one monolith: `YYYY-MM-DD-<slug>-1-<milestone>.md`, `-2-…`. Each milestone is independently buildable, verifiable, and reviewable, and states what the previous one delivered as its starting state. Slice by shippable behavior, never by layer. Sizing is the goal, not parallelism; milestones run in order.
-
-**Every milestone chain also gets a status file**, `YYYY-MM-DD-<slug>-status.md`, beside the plans, a chain of two included. It is the user's whole-chain view, so keep it to one screen and track milestones only: tasks stay in their own plan file, and duplicating them here creates a second thing to keep true. Write it when you write the chain, with every milestone unchecked. `/build` is what updates it. A single plan gets no status file: its own closeout already carries the same information.
-
-    # <slug>: milestone status
-
-    - [ ] 1 <milestone>: <the shippable behavior, one line>
-    - [ ] 2 <milestone>: …
-
-    ## Needs your attention
-    - <nothing yet>
-
-Markers: `[ ]` not started, `[~]` partial (name what is missing on the line), `[x]` built. **Needs your attention** holds the open **Decide** items from finished milestones (`~/.agents/rules/reporting_findings.md`), each naming the milestone it came from. Blocking items never rest here; they hold their milestone at `[~]`. Noted items never appear at all; that is the point of the bucket.
-
-Each milestone plan cites the status file by path in its Goal section, so `/build` finds it without guessing at filenames.
-
-**Re-sequencing an existing chain edits the status file, never rewrites it.** Coming back to `/plan` mid-chain, keep every `[x]` and `[~]` line and every **Needs your attention** entry, and add, remove, or renumber only the milestones that changed. Note the re-sequence date on each line you changed. A fresh unchecked file would erase the only record of what already shipped.
+**Slice big work into milestone children.** If the tracker won't fit one build (a rough tell: more than about a dozen vertical tasks, or several independently shippable surfaces), mint the parent-plus-children card shape per `backlog_board.md` §Milestones, one child per milestone off the same grilled doc, each child carrying its own plan doc and its own acceptance criteria. The parent's criteria stay on the parent, checked at parent closeout; a criterion one milestone wholly delivers moves to that child at minting time. Each milestone is independently buildable, verifiable, and reviewable, and states what the previous one delivered as its starting state. Slice by shippable behavior, never by layer. Sizing is the goal, not parallelism; milestones run in order. The same section owns the size rule (tracker item vs. own card), and that call is made here, at planning time.
 
 ## Structure
 
