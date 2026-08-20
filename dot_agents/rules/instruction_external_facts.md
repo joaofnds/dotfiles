@@ -5,7 +5,9 @@ sources: the harness, vendor documentation, papers. A numeric or outcome claim i
 instruction artifact that is not listed here is unaudited: treat it as a mechanism
 argument and never cite it as measured. Cite an entry as `instruction_external_facts.md` §<heading>. The instructions-reviewer has no web or vault access, so
 re-verification is the author's job; git history holds when each entry changed and the
-full narrative of past passes.
+full narrative of past passes. Record an entry only with its verifying check (probe or
+source read) run in the recording session; a claim inherited from a spec, a report, or
+memory is re-checked before it enters.
 
 ## Harness mechanics
 
