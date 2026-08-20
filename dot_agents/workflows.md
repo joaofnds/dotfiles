@@ -13,15 +13,18 @@ are not.
 
 ## Feature loop
 
-Adding or changing a feature. Each front-half stage writes a durable doc the next
-one consumes. These docs live under `.boris/plans/` at the repo root (reviews under
-`.boris/reviews/`, handoffs under `.boris/handoffs/`, ratified visual directions under
-`.boris/design/`, away logs under `.boris/away/`): a personal, git-ignored home
-(via `core.excludesFile`), so workflow artifacts are intended to remain untracked.
+Adding or changing a feature. One card per feature travels a per-repo backlog.md
+board (Todo → Spec → Research → Grill → Plan → Build → Review → Done); the card
+carries status, acceptance criteria, dependencies, and notes, and each front-half
+stage attaches its durable doc to it under `backlog/docs/`, git-ignored (via
+`core.excludesFile`), so workflow artifacts remain untracked. The board holds state
+only; the skills own the process, and `~/.agents/rules/backlog_board.md` holds the
+shared mechanics (bootstrap, the guard, doc conventions, milestones, closeout).
+Cross-ticket knowledge (the glossary, study docs) and away logs stay under `.boris/`.
 
 ```
 (chat) → /discuss → /research → /grill → /plan → /build → verify → review → deploy → release → observe → learn
-          spec.md    options.md   pick+harden  plan.md   execute   red/green                                 feedback
+          spec doc   options doc  pick+harden  plan doc  execute   red/green                                 feedback
 ```
 
 The domain glossary at `.boris/CONTEXT.md` gates every loop artifact; `~/.agents/AGENTS.md`
@@ -34,23 +37,26 @@ re-enters an earlier stage rather than pushing through.
 
 - **chat**: optional plain conversation to shake out a rough goal. No skill, no
   artifact. Skip straight to `/discuss` when the goal is already stated.
-- **/discuss**: interview the goal into a `*-spec.md` (need, scope, constraints,
-  success). Question-heavy; no code, no options.
+- **/discuss**: create the card, interview the goal into a spec doc (need, scope,
+  constraints); the acceptance criteria go onto the card itself. Question-heavy; no
+  code, no options.
 - **/research**: take the spec, explore the codebase, question the premise, survey the
-  viable implementation options with pros/cons → `*-options.md`. Often there are two or
-  three; say plainly when only one survives evidence. Leans, doesn't decide.
+  viable implementation options with pros/cons → an options doc on the card. Often
+  there are two or three; say plainly when only one survives evidence. Leans, doesn't
+  decide.
 - **/grill**: read the options doc, confirm or overturn its lean (this is where the
   approach is *picked*), then interrogate that design until it's hardened.
-- **/plan**: write the hardened approach to a self-contained plan file, citing the
-  spec/options docs by path; work too big for one build session becomes sequential
-  milestone plans, not one monolith; a chain also gets a `-status.md` roll-up that `/build`
-  keeps current.
-- **/build**: execute that plan plus every artifact it cites (the acceptance
-  criteria live in the spec), in a fresh session if the plan is large. If a material
+- **/plan**: write the hardened approach to a self-contained plan doc on the card,
+  citing the spec/options docs by path; work too big for one build session becomes a
+  parent card with one child card per milestone, chained by dependency; the parent's
+  subtask list is the roll-up, and a milestone is safe to start when the one before it
+  is Done.
+- **/build**: execute that plan plus every doc on the card (the acceptance
+  criteria live on the card), in a fresh session if the plan is large. If a material
   assumption fails, record the discrepancy and route back to `/grill` (re-pick) or
   `/plan` (re-sequence): `build/SKILL.md` step 2. Minor path or sequencing corrections
   may continue when they do not change scope, behavior, or approach; record them in the plan.
-- **verify**: get evidence for every acceptance criterion in the plan: raw output for the
+- **verify**: get evidence for every acceptance criterion on the card: raw output for the
   checks you can run, the user's own report for the ones only they can run. `/build` is not
   done until every criterion has one or the other; prose review is not runtime verification. Use `/verify-this` for a criterion the plan mapped to a runnable
   check; it turns the claim into a falsifiable baseline/treatment verdict. For a criterion
@@ -88,7 +94,8 @@ Skip points: the front half scales to the feature:
   the diff. The spec/research/grill apparatus earns its keep on large or vague work.
 
 For design-heavy UI work, `/art-direction` converges and ratifies the visual direction
-during design, and writes it to `.boris/design/<prefix>-design.md`. It is governed by
+during design, and attaches it to the feature's card as a design doc in `backlog/docs/`.
+It is governed by
 `skillOverrides` and is currently user-invoked only: check your available-skills context
 before routing to it, and when it isn't listed, recommend it to the user and say why rather
 than stalling. If the user declines, build on `coding_style_frontend.md`'s convention floor
@@ -107,8 +114,9 @@ Decision points:
 
 - **Problem framed?** No → `/discuss`. Yes but approach open → `/research` then `/grill`.
   Approach settled → straight to `/plan`.
-- **Same session or handing off?** Handing off after the plan → the plan file is the
-  handoff. Pausing mid-work with no settled approach → `/handoff`.
+- **Same session or handing off?** Handing off after the plan → the card and its plan
+  doc are the handoff. Pausing mid-work with no settled approach → `/handoff` flushes
+  the session onto the card.
 - **Plan assumption broke mid-build?** Don't push through; back to `/grill` (re-pick)
   or `/plan` (re-sequence), then re-enter `/build`.
 - **Review depth?** Quick check of this session's work → `/adversarial-review`.
@@ -124,8 +132,9 @@ Investigating a failure.
 
 - **/debug**: live investigation: build a red-capable repro, hold competing
   hypotheses, confirm the root cause by prediction. Finds the cause; lands no fix.
-- **/diagnose**: serialize the confirmed cause to a durable `*-diagnosis.md` file.
-  Read-only; proposes no fix. Exists to survive the context boundary.
+- **/diagnose**: serialize the confirmed cause to a durable diagnosis doc on the card
+  (bug cards travel the same columns). Read-only; proposes no fix. Exists to survive
+  the context boundary.
 - **/grill**: when more than one remedy remains viable, choose and harden the fix without
   changing the diagnosed facts.
 - **/plan**: serialize an already-settled fix design.
@@ -146,11 +155,13 @@ A heavy review doesn't just report; it produces a durable fix artifact that
 feeds back into the build loop.
 
 ```
-/panel-review → .boris/reviews/*.md → fix or /plan → /build → verify → re-review or proceed → learn
+/panel-review → review report doc on the card → fix or /plan → /build → verify → re-review or proceed → learn
 ```
 
 - **/panel-review**: five verdict axes plus a refactoring track (six reviewers), one
-  adversarial kill step, one self-contained report under `.boris/reviews/`. Explicitly
+  adversarial kill step, one self-contained report. The card sits in Review while the
+  review is in flight; the report attaches as a doc and the card returns to Done once
+  findings are dispositioned. Explicitly
   hand a large fix to `/plan` off that report; small fixes go straight in test-first.
   Record each finding's resolution, rerun verification, then decide: re-review the
   affected axis or proceed. The report's advisory structural items are a separate
@@ -172,12 +183,13 @@ existing plan captures execution progress.
 work in flight → /handoff → [new session] resume → next applicable stage
 ```
 
-- **/handoff**: compacts in-flight state to
-  `.boris/handoffs/YYYY-MM-DD-<slug>.md`; names the next skill to reach for.
-  Resume by opening the new session with that file (`@.boris/handoffs/...`).
+- **/handoff**: flushes in-flight state onto the card (notes, attached docs, checked
+  criteria) and prints a one-paragraph resume blurb ("continue TASK-N: read the card
+  and its attached docs; next: <hint>"). It writes no file: the card is the handoff.
+  Resume by pasting the blurb into the new session.
 - Use `/plan` for a settled design that has not started. Use `/handoff` for any session
-  that must preserve live execution or investigation state; cite the existing plan or
-  diagnosis and record completed steps, current verification, and the next action.
+  that must preserve live execution or investigation state; the card's notes carry
+  completed steps, current verification, and the next action.
 - **/stepping-away**: the inverse case: the user leaves but this session keeps
   working. The agent continues autonomously, substitutes `/adversarial-review` for
   "is this right?" questions, queues the actions standing rules keep as asks
