@@ -14,6 +14,12 @@ argument-hint: "The rough goal to spec out"
 
 The how comes later (`/research` → `/grill` → `/plan`).
 
+## The card
+
+The stage column is Spec, and this stage usually creates the card. Acceptance criteria live on the
+card: write each one with `--ac`, concrete enough to check: behavior, not
+implementation.
+
 ## Interview discipline
 
 Every bullet in this section mirrors `/grill` §How to run it, which adds one more
@@ -41,10 +47,8 @@ side's subject (the goal here, the approach there).
 ## Output
 
 When the problem is sharp and no blocking question is left open, write a durable spec a
-fresh session (or `/research`) can pick up cold. Name it `YYYY-MM-DD-<slug>-spec.md`
-(`<slug>` = 2–5 word kebab-case goal). Save it under `.boris/plans/` at the repo root
-(create the dir if absent): the git-ignored home the rest of the chain reads from. Tell
-the user the exact path.
+fresh session (or `/research`) can pick up cold: a doc in `backlog/docs/` titled
+"<feature> spec", attached to the card with `--doc`.
 
 The test for whether an open question blocks the spec: is it a *what*-question you can
 state precisely now? Sharp what-questions block; resolve them before writing.
@@ -58,8 +62,8 @@ blocks it and the spec names that fact and who can resolve it.
 2. **Scope**: what's in, out, and deferred, as explicit lists.
 3. **Constraints**: technical, product, and time constraints; systems it must fit;
    what it must not break.
-4. **Acceptance criteria**: what must be true for this to be done, each concrete
-   enough to check. Behavior, not implementation.
+4. **Acceptance criteria**: on the card (§The card), not in the doc; the doc keeps
+   the narrative and no criteria checklist.
 5. **Open questions**: implementation questions for `/research` or `/grill`, plus any
    externally blocked requirement question with its owner and unblock condition. Do not
    hand downstream an ambiguity that prevents the acceptance criteria from being read.
