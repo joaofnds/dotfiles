@@ -118,7 +118,10 @@ in-diff defect you choose not to fix is Blocking or Noted; a defect whose trigge
 could not probe, or one outside the diff, is Decide. An apply-state note is not a finding
 and blocks nothing, but name it in the closing message with its settling command
 (`chezmoi diff <path>`). Never fire the gate on a fixture under `evals/`: those defects
-are planted, and resolving them would repair the answer key.
+are planted, and resolving them would repair the answer key. A plan or spec that
+embeds instruction text for later landing (verbatim templates, per-file content
+contracts) fires the gate on those passages at ratification, before a builder
+executes them.
 
 A batch is the edits since the user's last turn. After the round, decide out loud: rerun
 or proceed. Rerun only when a further edit in this batch changed routing, precedence, or
@@ -134,7 +137,7 @@ a multi-round loop.
 
 Editing a file agents read but do not obey, `.boris/**`, `backlog/**`, memory files, eval cases and
 fixtures, `review_checklist.md`, sub-agent prompt text and reports, does not fire the
-gate.
+gate; the ratification rule above is the exception.
 
 ## Solution decisions: mandatory visible artifact
 
