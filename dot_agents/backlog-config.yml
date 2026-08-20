@@ -1,0 +1,10 @@
+project_name: "PLACEHOLDER"
+default_status: "Todo"
+statuses: ["Todo", "Spec", "Research", "Grill", "Plan", "Build", "Review", "Done"]
+date_format: yyyy-mm-dd
+auto_commit: false
+remote_operations: false
+filesystem_only: true
+check_active_branches: false
+auto_open_browser: false
+bypass_git_hooks: false
