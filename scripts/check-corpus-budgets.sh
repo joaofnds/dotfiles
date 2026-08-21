@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Line budgets for dot_agents/, per the tiers in
-# dot_agents/agents/instructions-reviewer.md §1.
+# dot_agents/agents/references/artifact-class-checks.md §Per-file budgets.
 #
 # A target is advisory and prints WARN; a ceiling is binding and prints FAIL.
 # The distinction is load-bearing: a router made entirely of deliberate house

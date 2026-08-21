@@ -23,7 +23,10 @@ consolidation or a split, never rewrapping.
 - **Sub-agent system prompts**: 30–150 lines; a single-mandate specialist resolving a
   body of doctrine earns up to 250, every extra line under the keep-side test; past
   250, split class-conditional or release-coupled material into tier-3 references
-  under `agents/references/`.
+  under `agents/references/`. `instructions-reviewer.md` is the one file exempt from the
+  250, bounded by a 31,000-byte ceiling instead: report "needs measurement (`wc -c
+  dot_agents/agents/instructions-reviewer.md`)" against it. The exemption retires when
+  that file drops under 250 lines.
 - **Just-in-time rule files**: length is fine *if* loaded on demand, never if
   always-on. Output styles are budgeted here when loaded on demand and as routers when
   a settings `outputStyle` makes them always-on; a tier-3 reference takes the
