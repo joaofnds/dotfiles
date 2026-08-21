@@ -18,12 +18,12 @@ Don't write code here.
 
 ## The card
 
-The stage column is Research. Handed a spec path or a bare goal instead of a card ID: find the card
-carrying that spec, or create one.
+The stage column is Research. Handed a spec path instead of a card ID: find the card
+carrying that spec, or create one. Handed a bare goal, route to `/discuss` first.
 
 Read the spec first (the card's attached spec doc). It is the source of truth for *what* is
-needed: treat its scope, constraints, and acceptance criteria as fixed, and tie every
-option back to them. If the spec is missing or ambiguous, stop and say so rather than
+needed: treat its scope and constraints as fixed, treat the card's acceptance criteria the
+same way, and tie every option back to both. If the spec is missing or ambiguous, stop and say so rather than
 inventing requirements.
 
 ## How to run it

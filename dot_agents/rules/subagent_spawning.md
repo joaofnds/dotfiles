@@ -21,6 +21,15 @@ waiting on takes `run_in_background: true`, same as a fan-out member. Before pic
 either, check whether an agent you already ran holds the context; continuing it is
 often cheaper than a new spawn.
 
+## A review spawn is read-only
+
+A general agent inherits `Edit`, `Write`, and `Bash`, and the `Agent` call has no tools
+field, so the mandate is the only lever: a review, refutation, or audit brief says "read
+only: make no edits and run no mutating commands; return findings". The `*-reviewer`
+specialists carry `Read, Grep, Glob` and need no such clause. `skills/panel-review/SKILL.md`
+(§4, the kill step) and `skills/adversarial-review/SKILL.md` §Send the reviewer cite this
+heading; renaming it breaks both pointers.
+
 ## Model
 
 A spawn inherits the parent's model unless the definition pins one or the call passes

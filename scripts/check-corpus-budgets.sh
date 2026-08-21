@@ -303,7 +303,7 @@ note "always-loaded surface $always lines"
 # file total, which is unbuilt.
 corpus_ceiling=11000
 if [ "$total" -gt "$corpus_ceiling" ]; then
-  fail "corpus $total lines over the $corpus_ceiling ceiling — consolidate or delete before adding (instruction-saturation, rules/instruction_failure_modes.md)"
+  fail "corpus inventory $total lines over the $corpus_ceiling maintenance cap — consolidate or delete before adding (not a simultaneous-load measure; see the note above)"
 fi
 
 printf '\n'

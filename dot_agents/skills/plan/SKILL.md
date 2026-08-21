@@ -29,6 +29,8 @@ assumption, especially claims that existing code, framework, or platform support
 unavailable. If evidence changes the approach, return to `/grill`. Correct stale paths
 and citations rather than copying them forward.
 
+Before attaching the plan, check `backlog task <id> --json`: an empty `acceptanceCriteria` leaves `/build`'s criteria check with nothing to verify. Write the settled outcomes onto the card with `--ac`; where they aren't settled, route to `/discuss` instead of inventing them.
+
 Write the plan as a doc titled "<feature> plan" ("<feature> plan, milestone N" for a chain) and attach it with `--doc` to the card `/build` will pick up: the feature card, or the milestone's child card.
 
 **Slice big work into milestone children.** If the tracker won't fit one build (a rough tell: more than about a dozen vertical tasks, or several independently shippable surfaces), mint the parent-plus-children card shape per `backlog_board.md` §Milestones, one child per milestone off the same grilled doc, each child carrying its own plan doc and its own acceptance criteria. The parent's criteria stay on the parent, checked at parent closeout; a criterion one milestone wholly delivers moves to that child at minting time. Each milestone is independently buildable, verifiable, and reviewable, and states what the previous one delivered as its starting state. Slice by shippable behavior, never by layer. Sizing is the goal, not parallelism; milestones run in order. The same section owns the size rule (tracker item vs. own card), and that call is made here, at planning time.
@@ -50,7 +52,7 @@ Structure it strictly as follows, readable cold:
    unguarded, uncalled, names the probe you ran, or names the measurement that would settle
    it (`~/.agents/rules/ownership.md` §A missing thing is a claim). A refuted example is not
    replaced by a second unprobed one.
-7. **Testing strategy**: the exact command to run the tests (e.g. `pnpm test --run`, `go test ./...`), what to verify manually if tests aren't enough, and which existing tests are likely to break and why. When a spec exists, map every acceptance criterion to a runnable check or a named manual verification: an unmapped criterion is a plan gap, not a detail for `/build` to discover. For UI work with a ratified direction, map that file's **Verify** checks as a named manual verification.
+7. **Testing strategy**: the exact command to run the tests (e.g. `pnpm test --run`, `go test ./...`), what to verify manually if tests aren't enough, and which existing tests are likely to break and why. Map every acceptance criterion on the card to a runnable check or a named manual verification: an unmapped criterion is a plan gap, not a detail for `/build` to discover. For UI work with a ratified direction, map that file's **Verify** checks as a named manual verification.
 8. **Gotchas**: non-obvious things we learned this session that aren't visible in the code (failed approaches, surprising constraints, why something is the way it is).
 9. **Task tracker**: a granular `- [ ]` checklist in execution order. Slice vertically: each task is one observable behavior cut through every layer it needs, never a layer or component ("GET /orders/:id returns the stored order" is one task; "add repository" / "add service" / "add endpoint" is that same behavior wrongly split into three). `/build` executes each task test-first: cross-boundary vertical slices start outside-in; local behavior starts at the narrowest observable layer. Each item names its first failing test, touched files, and observable completion check. For config, tooling, or docs, name the verifiable outcome. Keep each task independently executable and verifiable.
 10. **For the executing session**: instructions to the agent that picks this up cold (write this section into the plan):
@@ -60,7 +62,7 @@ Structure it strictly as follows, readable cold:
 
 ## Before done: red-team the plan
 
-The plan is the last artifact a human ratifies and the first thing a cold session obeys: an error here gets executed verbatim. Run the producer gate from the `adversarial-review` skill ("As a producer gate") on the plan. Aim the mandate at executability: every spec acceptance criterion maps to a task and a check; each `file:line` citation holds against the actual code; no tracker item exceeds the Scope boundary; a session with zero context can execute each task without inventing a design decision. A finding that breaks the approach itself goes back to `/grill`; don't patch the plan around a broken design.
+The plan is the last artifact a human ratifies and the first thing a cold session obeys: an error here gets executed verbatim. Run the producer gate from the `adversarial-review` skill ("As a producer gate") on the plan. Aim the mandate at executability: every acceptance criterion on the card maps to a task and a check; each `file:line` citation holds against the actual code; no tracker item exceeds the Scope boundary; a session with zero context can execute each task without inventing a design decision. A finding that breaks the approach itself goes back to `/grill`; don't patch the plan around a broken design.
 
 ## Rules
 

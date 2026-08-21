@@ -3,7 +3,7 @@ name: panel-review
 description: >
   Run a five-axis panel review of a completed change, code style,
   architecture, spec conformance, security, testing, with parallel specialist
-  reviewers, adversarial verification of major findings, and a
+  reviewers, adversarial verification of Blocker findings, and a
   self-contained fix report attached to the work's card. Invoke on "panel
   review", "full review", "review this across all axes", or when a substantial
   unit of work needs a thorough pre-merge check. Skip for small plan-step
@@ -23,7 +23,7 @@ the report; you don't review the code yourself.
 
 Read `~/.agents/rules/backlog_board.md` before any board read or write. Move the work's
 card into Review before spawning reviewers (given no card, create one there) and
-return it to Done only when every finding carries a disposition (§6); a card first
+return it to Done only when every finding in the numbered list carries a disposition (§6); a card first
 reaching Done here closes per `backlog_board.md` §Closeout, verdict in the final summary.
 
 ## 1. Gather inputs
@@ -148,8 +148,9 @@ in the patch: it moves the verdict to Fail like any other untagged Blocker.
 
 For every **Blocker**, spawn a skeptic (general agent), un-named,
 `run_in_background: true`, `model: sonnet` (`~/.agents/rules/subagent_spawning.md`
-§Model owns this choice; edit both), mandated to refute it. Majors skip the kill
-step:
+§Model owns this choice; edit both), mandated to refute it. Open the brief with the
+read-only clause (`~/.agents/rules/subagent_spawning.md` §A review spawn is
+read-only). Majors skip the kill step:
 
 > Try to refute this review finding against the actual code; read the code
 > yourself, don't trust the claim: `<finding, with file:line and the claimed

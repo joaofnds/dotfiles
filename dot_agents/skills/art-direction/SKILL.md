@@ -68,10 +68,11 @@ Work in two passes. First, brainstorm a short design plan based on the human's d
 Then review that plan against the brief. Revise any choice that could fit an unrelated
 subject, and any choice that landed in a cluster above without the brief asking for it.
 
-**Get the direction ratified, then write it to a file.** Show the user the tokens and the
-signature and ask for an explicit go-ahead; keep low-value iteration private. A direction
-that exists only in this conversation is lost at the context boundary, and `/plan` cites
-files, not chat.
+**Write the direction to a file, then get it ratified.** Write it with **Status**
+`Draft`, show the user the tokens and the signature, and ask for an explicit go-ahead;
+on their go-ahead change **Status** to `Ratified YYYY-MM-DD`. Keep low-value iteration
+private. A direction that exists only in this conversation is lost at the context
+boundary, and `/plan` cites files, not chat.
 
 Write the direction as a doc titled "<feature> design" and attach it with `--doc` to the feature's card;
 given no card, create one in the column matching the work's stage. Six headings:

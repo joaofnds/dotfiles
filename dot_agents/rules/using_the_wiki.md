@@ -59,7 +59,8 @@ names its `instruction_external_facts.md` entry, and that entry names the wiki p
 came from. A cited claim naming no entry is the defect, whether or not you ran the
 query. `instruction_external_facts.md` stays self-contained (the instructions-reviewer
 has no vault access); where it and a page disagree, the page's Evidence block wins and
-the entry is re-derived from it.
+the entry is re-derived from it, except a field marked *(primary read)*
+(`instruction_external_facts.md` §Cited sources).
 
 ## How to query
 

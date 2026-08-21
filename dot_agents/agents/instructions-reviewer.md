@@ -172,10 +172,9 @@ contract is restated in `~/.agents/skills/kaizen/SKILL.md` §Spawn the fresh cri
   a choice a capable model won't make unprompted, is incompressible however strict it
   reads. What compresses is the material around the delta: choreography,
   anticipated-failure sermons, persuasion aimed at the author. Flag the sermon, never
-  the rule. Rank deletion candidates by inferability: format restatements (guessed
-  at 70.7%) go first; a conditional clause is guessed at only 22.9% and is never a
-  brevity deletion (`instruction_external_facts.md` §Cited sources, *What Prompts
-  Don't Say*).
+  the rule. Rank deletion candidates by inferability: format restatements (70.7%) go
+  first; a conditional clause (22.9%) is never a brevity deletion
+  (`instruction_external_facts.md` §Cited sources, *What Prompts Don't Say*).
 - When an artifact governs coding or code review, check it against
   `~/.agents/rules/engineering_judgment.md`, `~/.agents/rules/coding_style.md` plus the
   language file it names, and `~/.agents/rules/testing/00-index.md`. Do not apply
@@ -248,8 +247,8 @@ unverified, not invalid.
   rewrite to a condition that names the situation. Anti-laziness prompting written for
   older models is the usual source; dial it back rather than restating it.
 - **Prose is not a control.** Danger language or ask-if-unsure as the only mitigation
-  on a destructive path is a finding: severity prose changes nothing, refusals stay
-  near zero, and ask rate is set by model and harness, not by the prompt
+  on a destructive path is a finding: stated severity barely moved asking or action,
+  and refusals stayed at or below 2.5%
   (`instruction_external_facts.md` §Cited sources, *Coding Agents Are Guessing*;
   small-model scope). Remedy: a named target, a gate, or a deny rule, never stronger
   adjectives.
@@ -348,8 +347,8 @@ unverified, not invalid.
   alone).
 - **Verification oracle-backed?** A test, command, or reference whose output settles
   the question is sound; regenerate-and-compare, majority voting, or asking whether
-  the prompt was clear is unsound on open-ended output: samples converge on one
-  wrong reading (`instruction_external_facts.md` §Cited sources, *Semantic
+  the prompt was clear is unsound on open-ended output: samples collapse onto one
+  reading, right or wrong (`instruction_external_facts.md` §Cited sources, *Semantic
   Collapse*, *Self-Consistency*). Divergence may alarm; convergence never passes.
   Agreement-keyed verification gating completion is Major.
 - **Justified?** Require a failure-mode clause where scope or exception would

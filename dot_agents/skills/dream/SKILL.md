@@ -56,7 +56,7 @@ earlier write).
    `$CLAUDE_CONFIG_DIR` when set, else `~/.claude`; always honor the env var, since the live
    store lives wherever the running session put it:
    ```bash
-   slug=$(printf '%s' "$PWD" | sed 's:[/.]:-:g')
+   slug=$(printf '%s' "$PWD" | sed 's:[/. ~]:-:g')
    cfg="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
    mem="$cfg/projects/$slug/memory"
    ls -la "$mem" 2>/dev/null || { echo "No memory store for $slug"; }
@@ -172,7 +172,7 @@ Confirm with tool output, not assertion:
 
 ```bash
 # re-derive the store path: this fence may run in a fresh shell, so don't rely on $mem
-slug=$(printf '%s' "$PWD" | sed 's:[/.]:-:g')
+slug=$(printf '%s' "$PWD" | sed 's:[/. ~]:-:g')
 cfg="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 mem="$cfg/projects/$slug/memory"
 # every index link resolves to a file
@@ -197,7 +197,7 @@ then re-run the check until clean. Also confirm no relative date survived in a r
 After the checks come back clean, prune old backups: keep the two most recent:
 
 ```bash
-ls -1dt "$mem"-backup-* | tail -n +3 | xargs -r rm -rf
+ls -1dt "$mem"-backup-* | tail -n +3 | while IFS= read -r old; do rm -rf -- "$old"; done
 ```
 
 Then print:

@@ -114,6 +114,9 @@ is a git probe with its own trigger. **Re-verify on any backlog.md upgrade.**
   acceptance criteria, forward moves while a dependency is open, and nonexistent
   `--ref`/`--doc` paths.
 - `backlog doc create` rejects paths outside `backlog/docs/`.
+- `task edit --notes` replaces the whole implementation-notes field, `--append-notes`
+  appends; `task create` without `-s` lands the card in `default_status`, `--parent`
+  included *(probe, 1.50.1)*.
 - A doc file without the four-key frontmatter (id, title, type, created_date) lists
   as a blank-titled row.
 - Doc and task IDs allocate max+1, so hand-assigned IDs are safe.
@@ -124,9 +127,9 @@ is a git probe with its own trigger. **Re-verify on any backlog.md upgrade.**
   (`zero_padded_ids`) was later found reverted, cause unpinned: prefer
   `backlog config set`, and re-verify the file after a subsequent `task list`.
 - `backlog task <id> --json` wraps output as `{schemaVersion: 1, kind, task:{...}}`;
-  the card fields (`status`, `labels`, `dependencies`,
-  `acceptanceCriteria[].checked`, `subtasks`, `documentation`, `finalSummary`,
-  `parentTaskId`) sit under `task`.
+  the card fields (`title`, `description`, `status`, `labels`, `dependencies`,
+  `acceptanceCriteria[].checked`, `subtasks`, `documentation`, `implementationNotes`,
+  `finalSummary`, `parentTaskId`) sit under `task`.
 - Git, not backlog, but load-bearing for bootstrap: under a `backlog/` ignore
   pattern, `git check-ignore -q backlog` exits 1 while nothing exists on disk;
   probing the child path `backlog/config.yml` exits 0 *(probe, git 2.55.0;
@@ -157,8 +160,9 @@ these.
 ## Cited sources, and what each licenses
 
 Each entry names its `prompts`-vault page; the page's Evidence block wins over the
-summary here. Every source below supports a mechanism argument unless its entry states
-a measurement.
+summary here, except a field of an entry marked *(primary read)*, taken from the primary
+text and outranking the page on that field until the page is refreshed. Every source
+below supports a mechanism argument unless its entry states a measurement.
 
 Measured nothing (vendor docs, practitioner guides: re-check per release; last
 checked against the Opus 5 / Fable 5 release pages):
@@ -167,15 +171,15 @@ checked against the Opus 5 / Fable 5 release pages):
   was renamed and rewritten after the pin, so the pin holds the old text. Backs the
   keep-side deletion test and the user-invoked description rule only; it states no
   "skip when" rule.
-- *Anthropic Prompting Best Practices* and *Claude Code Instruction-Artifact
-  Mechanics*: vendor documentation behind the Harness-mechanics list. Also: place
-  long data above the instruction that consumes it (its "30%" figure names no eval),
-  and one coherent mandate per sub-agent (raw Subagents Reference note; vault page
-  update owed). The vendor conflicts with itself on emphasis: the prompting page says
-  dial back "CRITICAL"/"YOU MUST" on current models; the Claude Code sub-agents page
-  still teaches "use proactively" descriptions, and its best-practices page teaches
-  "IMPORTANT"/"YOU MUST" emphasis (fetched 2026-08-20; vault page owed). The house
-  follows the dial-back side (user-ratified); do not relitigate from the older pages.
+- *Anthropic Prompting Best Practices* and *Claude Code Instruction-Artifact Mechanics*
+  *(primary read)*: vendor documentation behind the Harness-mechanics list. Also: place
+  long data above the instruction that consumes it (its "30%" figure names no eval), and
+  one coherent mandate per sub-agent (raw Subagents Reference note). The vendor
+  conflicts with itself on emphasis: the prompting page says dial back "CRITICAL"/"YOU
+  MUST" on current models; the Claude Code sub-agents page still teaches "use
+  proactively" descriptions, and its best-practices page teaches "IMPORTANT"/"YOU MUST"
+  emphasis. The house follows the dial-back side (user-ratified); do not relitigate from
+  the older pages.
 - *AGENTS.md as a Cross-Agent Convention*: a convention; carries adoption only.
 - *The New Rules of Context Engineering (Anthropic 2026)*: six "then vs now"
   reversals. Its one number (over 80% of the system prompt removed "with no measurable
@@ -199,43 +203,46 @@ checked against the Opus 5 / Fable 5 release pages):
 
 Measured something (papers: quote the split before resting a finding on one):
 
-- *What Prompts Don't Say (Yang et al. 2025)*: an omitted requirement was inferred
-  correctly in 41.1% of cases; omission cost 22.6% accuracy on average. Requirements
-  followed at 98.7% individually fell to 79.7–85.0% when 19 were specified together:
-  adherence is a budget, and each added requirement taxes the others. Licenses:
-  leaving a requirement to inference is unreliable. Format requirements were guessed
-  at 70.7%, conditional requirements at 22.9%; 5.9% of unspecified requirements lost
-  over 20% accuracy on a model update, about 2× the specified rate. Does not license:
-  that authored scope statements improve compliance: the remedy was never tested in
-  that form.
-- *Coding Agents Are Guessing (Ji et al. 2026)*: 55.8–67.8% of *acted* runs violated
-  a boundary (27.0–46.3% over all scored runs: quote the denominator). Small/fast
-  models only, no frontier model. Degrading the *target* collapsed acted-run Safe
-  Success 67.9% to 8.6%, while vague *intent* cost far less (50.9% to 29.4%): a
-  missing object leaves nothing to bind the action to. The nearest tested
-  intervention was null: agents do not self-restrain on stated consequence severity.
-  Explicit refusal stayed at or below 2.5% in every configuration, and ask rate is a
-  model property modulated by the harness (the same model asked 31.8% in one
-  harness, 10.5% in another).
-  Does not test explicit out-of-scope declarations.
-- *Semantic Collapse (Richter and Papadakis 2026)*: models collapse onto a single
-  incorrect interpretation, "coherent but behaviorally misaligned", instead of
-  surfacing ambiguity; detrimental collapse on 10–16% of MBPP, rising up to 5.53×
-  under injected underspecification. At k=10, 50.3–73.0% of deliberately
-  underspecified MBPP tasks (function-level codegen; no agentic claim) produced
-  semantically indistinguishable programs across every sample, so
-  regenerate-and-compare converges on one wrong reading. Also licenses:
-  inconsistency is a real signal of model uncertainty; its absence is not evidence of
-  correctness.
+- *What Prompts Don't Say (Yang et al. 2025)* *(primary read)*: an unspecified
+  requirement was met at over 98% accuracy in only 41.1% of cases; omission cost 22.6%
+  accuracy on average. Requirements followed at 98.7% individually fell to 79.7–85.0%
+  when 19 were specified together: adherence is a budget, and each added requirement
+  taxes the others. Licenses: leaving a requirement to inference is unreliable. By
+  category that same rate was 70.7% for format requirements and 22.9% for conditional
+  ones; 5.9% of unspecified requirements lost over 20% accuracy on a model update, about
+  2× the specified rate. Does not license: that authored scope statements improve
+  compliance: the remedy was never tested in that form.
+- *Coding Agents Are Guessing (Ji et al. 2026)* *(primary read)*: 55.8–67.8% of
+  *acted* runs violated a boundary (27.0–46.3% over all scored runs: quote the
+  denominator). Small/fast models only, no frontier model. Degrading the *target*
+  collapsed acted-run Safe Success 67.9% to 8.6%, while vague *intent* cost far less
+  (50.9% to 29.4%): a missing object leaves nothing to bind the action to. The nearest
+  tested intervention was null: blast-radius cues barely moved asking (42.0% vs 47.1%)
+  or action, and explicit refusal stayed at or below 2.5% in every configuration. Asking
+  does move on underspecification, monotonically with target ambiguity and
+  non-monotonically with intent, while harness and model set its level (the same model
+  asked 31.8% under one harness, 10.5% under another). Does not test explicit
+  out-of-scope declarations.
+- *Semantic Collapse (Richter and Papadakis 2026)* *(primary read)*: models collapse
+  onto a single incorrect interpretation, "coherent but behaviorally misaligned",
+  instead of surfacing ambiguity; detrimental collapse on 10–16% of MBPP, rising up to
+  5.53× under injected underspecification, where it reaches 23–55% of underspecified
+  MBPP tasks. At k=10, 50.3–73.0% of those tasks (function-level codegen; no agentic
+  claim) produced semantically indistinguishable programs across every sample, correct
+  and incorrect collapse together: regenerate-and-compare cannot tell the two apart.
+  Also licenses: inconsistency is a real signal of model uncertainty; its absence is not
+  evidence of correctness.
 - *Self-Consistency (Wang et al. 2022)*: majority voting over sampled reasoning
   paths improves accuracy only where the final answer comes from a fixed answer set;
   open-ended output is outside its scope.
-- *Judging LLM-as-a-Judge (Zheng et al. 2023)*: a default-prompted GPT-4 judge
-  passed wrong answers 14/20; 6/20 with a chain-of-thought judge prompt, 3/20
-  reference-guided. Pairwise position bias 66.2–75.0% toward the first-listed
-  answer; the paper's fix is query both orders, tie on disagreement. All judges
-  2023-era, pre-reasoning. Does not license: the 80%+ agreement figure is a
-  chat-preference rate, not a general reliability certificate for LLM judges.
+- *Judging LLM-as-a-Judge (Zheng et al. 2023)* *(primary read)*: a default-prompted
+  GPT-4 judge passed wrong answers 14/20; 6/20 with a chain-of-thought judge prompt,
+  3/20 reference-guided. On the similar-answer challenge set with default prompts,
+  first-position bias was 75.0% for Claude-v1, 50.0% for GPT-3.5, and 30.0% for GPT-4
+  (swap consistency 23.8%, 46.2%, 65.0%); the paper's fix is query both orders, tie on
+  disagreement. All judges 2023-era, pre-reasoning. Does not license: the 80%+ agreement
+  figure is a chat-preference rate, not a general reliability certificate for LLM
+  judges.
 
 ## Rejected citations: do not restore
 

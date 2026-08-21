@@ -22,11 +22,14 @@ These cases replace the trust with a score.
 case-1-conformant/       clean input: does it manufacture findings?
 case-2-planted-defects/  known defects: does it find them?
 case-3-bare-path/        bare path, no diff: does the standing-artifact mode work?
+case-4-session-misses/   diff-seed: does it catch three defect classes it once missed?
 results/                 one file per run: YYYY-MM-DD-case-N.md
 ```
 
 Each `CASE.md` holds the exact invocation prompt, the expected behaviour, and the scoring
-rule. Cases 1 and 2 carry a fixture; case 3 targets a real corpus file on purpose.
+rule. Cases 1, 2, and 4 carry a fixture; case 3 targets a real corpus file on purpose.
+Case 4 is the only case running the gate's own diff-seed mode, and has no recorded run
+yet.
 
 This directory sits under `dot_agents/` to stay beside what it grades, but it is not corpus.
 `scripts/check-corpus-budgets.sh` excludes it from the line totals, and a corpus-wide sweep
@@ -56,6 +59,8 @@ through a sloppy process beats a well-formatted one that reaches the wrong verdi
 per-case scoring sections are written in that order.
 
 ## Runs to date
+
+Case 4 has no row: it has never been run.
 
 | Date | Case 1 (clean) | Case 2 (defects) | Case 3 (bare path) |
 | --- | --- | --- | --- |

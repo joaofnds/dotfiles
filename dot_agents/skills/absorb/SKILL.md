@@ -213,8 +213,10 @@ the warrant.
 
 The user picks what lands. Then:
 
-- Edit the **chezmoi source tree**, never the rendered `~/.agents` copies;
-  `chezmoi apply` the containing directory for brand-new files. A memory-store
+- Edit the **chezmoi source tree**, never the rendered `~/.agents` copies, then
+  `chezmoi apply` every changed managed path, new or existing (a brand-new file needs
+  its containing directory): until it runs, live sessions load the old text. Hand the
+  user any apply the harness denies. A memory-store
   change is the exception: edit the live store at
   `$CLAUDE_CONFIG_DIR/projects/<slug>/memory/` (chezmoi doesn't manage it) and
   update its `MEMORY.md`.

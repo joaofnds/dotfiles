@@ -78,9 +78,9 @@ Required reads by phase:
   `using_the_wiki.md` and `instruction_external_facts.md` when a claim rests on a paper,
   a benchmark, or vendor documentation. An in-corpus incident or tool run does not fire
   that pair
-- **Multi-stage feature, debug, review, or delivery work** → no rule file. Use only the
-  stages task size justifies. The chain skills (`/discuss`, `/research`, `/grill`,
-  `/plan`, `/build`), `/handoff`, `/art-direction`, `/absorb`, `/dream`, `/kaizen`, and
+- **Multi-stage feature, debug, review, or delivery work** → no rule file of its own; the
+  other rows still fire. Use only the stages task size justifies. The chain skills
+  (`/discuss`, `/research`, `/grill`, `/plan`, `/build`), `/handoff`, `/art-direction`, `/absorb`, `/dream`, `/kaizen`, and
   `/stepping-away` are user-invoked and cannot be reached by model invocation: recommend
   the next stage to the user by name. When the choice needs a skill's trigger or skip conditions, read its
   frontmatter under `~/.agents/skills/<name>/`
@@ -136,8 +136,8 @@ finding: it goes to the user with the batch's others. Do not reintroduce
 a multi-round loop.
 
 Editing a file agents read but do not obey, `.boris/**`, `backlog/**`, memory files, eval cases and
-fixtures, `review_checklist.md`, sub-agent prompt text and reports, does not fire the
-gate; the ratification rule above is the exception.
+fixtures, `review_checklist.md`, ad-hoc sub-agent launch prompts and their reports, does
+not fire the gate; the ratification rule above is the exception.
 
 ## Solution decisions: mandatory visible artifact
 

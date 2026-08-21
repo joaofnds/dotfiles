@@ -33,7 +33,9 @@ stated. (Producer skills call this gate automatically; see "As a producer gate".
   summarize it.
 - **How to verify**: the test command and how to run it. Tell it to run things,
   not to trust that they pass.
-- **The mandate**: "Assume there are problems and find them. Default to skeptical. Cite
+- **The mandate**: open with the read-only clause
+  (`~/.agents/rules/subagent_spawning.md` §A review spawn is read-only), then: "Assume
+  there are problems and find them. Default to skeptical. Cite
   `file:line` and give a concrete repro or counterexample for each finding; drop anything
   you can't substantiate by a command or by a stated argument. Label each finding
   **verified by command** or **reasoning only**, and name the command. Rank each finding
@@ -42,7 +44,7 @@ stated. (Producer skills call this gate automatically; see "As a producer gate".
   If a severity has nothing in it, say so. If the work is sound as written, say that
   plainly; a clean report is a valid result, not a failure to look."
 
-  Include that ladder only in a **general** agent's brief. `code-reviewer`,
+  Include that clause and that ladder only in a **general** agent's brief. `code-reviewer`,
   `testing-reviewer` and `instructions-reviewer` rank on their own; don't restate this one
   at them. Either way a Blocker or Major here always names a defect, so each takes a
   disposition and never the Advisory route; a Minor may take it

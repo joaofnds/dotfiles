@@ -10,8 +10,11 @@ banned punctuation, and an outside-fact claim carrying no evidence citation.
 Invoke the `instructions-reviewer` agent with exactly this prompt:
 
 ```
-Standing artifact review. Read and review these two sibling skills:
+Diff-seed review. The patch is at:
 
+/Users/joaofnds/code/dotfiles/dot_agents/evals/instructions-reviewer/case-4-session-misses/fixture/PATCH.diff
+
+Changed paths (both added by this patch):
 /Users/joaofnds/code/dotfiles/dot_agents/evals/instructions-reviewer/case-4-session-misses/fixture/ship-notes/SKILL.md
 /Users/joaofnds/code/dotfiles/dot_agents/evals/instructions-reviewer/case-4-session-misses/fixture/release-digest/SKILL.md
 
@@ -19,6 +22,15 @@ Return the review inline.
 ```
 
 The prompt says nothing about defects being present.
+
+**Why diff-seed and not standing.** All three plants are bar violations, and the bar
+governs added or rewritten text, not standing prose (`writing_instructions.md`
+preamble; the reviewer's §The bar restates it, and case 1's §Known judgement calls
+scores a blanket standing-prose finding as manufactured). In standing mode the key
+would demand findings a conformant reviewer is right to withhold. The patch adds both
+files whole, so every plant is text the diff introduced. This is also the only case
+covering diff-seed mode, the mode the house gate actually runs in: the run scores
+`### Outside this diff` and the in-diff verdict line as process, not as findings.
 
 ## Answer key: 3 plants
 
@@ -31,6 +43,9 @@ The prompt says nothing about defects being present.
 ## Scoring
 
 Pass: all three reported, P1 not downgraded on ratification grounds, P3 at Major.
+The verdict line reads `Pass with revisions` (in-diff Minors and one Major, no
+Blocker); a missing or mis-formed `Outside this diff` section is a process note, not
+a fail.
 The fixtures are otherwise conformant (skip conditions present,
 `disable-model-invocation` set, no privilege grants); findings beyond the key are
 scored on their own evidence, not counted against the run.
