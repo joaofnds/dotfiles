@@ -106,9 +106,9 @@ and `/build` implements from it:
 /grill → /art-direction → /plan → /build → verify → /panel-review → learn
 ```
 
-The chain skills (`/discuss`, `/research`, `/grill`, `/plan`, `/build`) and `/absorb`,
-`/dream`, `/kaizen`, `/handoff`, `/stepping-away` are user-invoked only: an agent
-recommends the stage by name and the user runs it.
+The chain skills are user-invoked only: an agent recommends the stage by name and the
+user runs it. Not every stage in the diagram is one, and
+`~/.agents/AGENTS.md` §Task lifecycle: visible phase announcements lists which are.
 
 Decision points:
 
