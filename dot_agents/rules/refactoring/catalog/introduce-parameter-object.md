@@ -56,12 +56,12 @@ readingsOutsideRange(station, operatingPlan.tempRange);
 
 ## House-rule interactions
 
-- `coding_style.md`: a plain immutable record satisfies this refactoring in JS; a
+- `coding-style.md`: a plain immutable record satisfies this refactoring in JS; a
   class enters only when behavior (like `contains`) accrues to justify it: the
   progression is earned, not front-loaded.
-- `coding_style.md`: leverage the type system: in typed languages the named shape
+- `coding-style.md`: leverage the type system: in typed languages the named shape
   lets the compiler police what "two numbers" never could: mixed-up argument order
   dies at compile time.
-- `engineering_judgment.md`: name things in the domain's language: the object's
+- `engineering-judgment.md`: name things in the domain's language: the object's
   value is the *name*; if the domain has no word for the group, that absence is
   evidence for "When not to apply."

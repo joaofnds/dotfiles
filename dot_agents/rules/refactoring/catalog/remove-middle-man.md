@@ -56,9 +56,9 @@ shipment.carrier.eta();
 
 ## House-rule interactions
 
-- `coding_style.md`: Tell, Don't Ask pulls toward Hide Delegate; this refactoring
+- `coding-style.md`: Tell, Don't Ask pulls toward Hide Delegate; this refactoring
   is the counterweight for when forwarding has become pure ceremony. The rule's target
   is decision-making on others' internals: a client *reading* a stable, public
   delegate is not that failure.
-- `engineering_judgment.md`: code is a liability: N forwarding methods are N
+- `engineering-judgment.md`: code is a liability: N forwarding methods are N
   maintenance points; when they carry no logic, deletion is the win.

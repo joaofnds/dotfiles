@@ -63,7 +63,7 @@ cannot tell it is being graded. Three requirements, each checkable from the run 
   that depends on the agent choosing not to open it has measured nothing. Stage the
   fixture tree the agent reads without the key in it, and keep the key outside that tree.
   An agent's statement that it did not read the key is a self-report, and
-  `~/.agents/rules/subagent_spawning.md` §What a report is worth governs what that is
+  `~/.agents/rules/subagent-spawning.md` §What a report is worth governs what that is
   worth: nothing.
 - **Chain-following is scored from the transcript.** Whether the agent read the files it
   was supposed to read, in the order it claims, is settled by reading the run's

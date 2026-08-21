@@ -3,7 +3,7 @@
 Governs every subagent spawn, inside a workflow loop or ad hoc. Everything here is
 observed harness behavior, not documented mechanism, last checked on claude-code
 2.1.226, except the `name` behavior, whose probe is recorded in
-`instruction_external_facts.md` §Harness mechanics. Re-verify a line here after a CLI
+`instruction-external-facts.md` §Harness mechanics. Re-verify a line here after a CLI
 bump before trusting it; the shapes have reversed on a release before.
 
 ## The two shapes
@@ -63,7 +63,7 @@ travels by file.
 
 A named spawn has returned only a receipt in place of its report, and the cause is
 unsettled; no explanation may be restored as settled
-(`instruction_external_facts.md` §Harness mechanics records what is and is not
+(`instruction-external-facts.md` §Harness mechanics records what is and is not
 established). Do not pass `name` on any spawn.
 
 ## Truncated reports

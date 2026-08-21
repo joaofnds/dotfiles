@@ -55,9 +55,9 @@ class Organization {
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: YAGNI: the empty layer is preserved speculation, and
+- `engineering-judgment.md`: YAGNI: the empty layer is preserved speculation, and
   this refactoring is the cleanup crew.
-- `engineering_judgment.md`: code is a liability: a class boundary is code too;
+- `engineering-judgment.md`: code is a liability: a class boundary is code too;
   when it separates nothing, it only charges comprehension rent.
-- `coding_style.md`: Beck's ordering: pure fewest-elements win: no intent lives
+- `coding-style.md`: Beck's ordering: pure fewest-elements win: no intent lives
   in the boundary, so nothing is lost by removing it.

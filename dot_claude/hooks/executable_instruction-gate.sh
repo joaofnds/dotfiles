@@ -33,7 +33,7 @@
 # mechanism, not a 2.1.222
 # probe: the harness exec's the command per event, so the file is read from disk each
 # time — the mid-session-effect probe is still 2.1.221 / 2026-08-04, and settings-side
-# reload is documented (instruction_external_facts.md §Harness mechanics).
+# reload is documented (instruction-external-facts.md §Harness mechanics).
 # NOT re-probed at 2.1.222 either: that it also fires inside sub-agents (probed
 # 2026-08-04 on 2.1.221) — the main-conversation-only clause rests on that older probe.
 

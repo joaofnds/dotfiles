@@ -9,10 +9,10 @@
 - **Over-triggering**: aggressive trigger language invokes a skill outside its scope.
 - **Judgment displacement**: a rule pins a context-dependent judgment call to a constant
   ("always 3 retries", "cap files at 200 lines") and current models comply faithfully even
-  where context makes the constant wrong (evidence: `instruction_external_facts.md` §Cited sources).
+  where context makes the constant wrong (evidence: `instruction-external-facts.md` §Cited sources).
 - **Assumed shared context**: guidance vague enough to presume project knowledge the
   model lacks; the gap fills silently with plausible generic defaults, not with a
-  question (evidence: `instruction_external_facts.md` §Cited sources).
+  question (evidence: `instruction-external-facts.md` §Cited sources).
 - **Pink-elephant negation**: a negative names the prohibited behavior without a positive replacement.
 - **Caller-context leakage**: a fresh sub-agent is assumed to know caller state.
 - **Premature completion**: an agent lacks a checkable completion gate.

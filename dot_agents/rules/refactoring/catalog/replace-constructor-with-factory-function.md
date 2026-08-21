@@ -54,10 +54,10 @@ const eng = createEngineer(name);
 
 ## House-rule interactions
 
-- `coding_style.md`: framework-agnostic constructors: "use factory methods or DI
+- `coding-style.md`: framework-agnostic constructors: "use factory methods or DI
   module declarations to adapt the framework's container into the clean constructor";
   this refactoring is that rule's prescribed tool, with the constructor staying pure
   and the factory absorbing the mess.
-- `coding_style.md`: Beck's ordering: the factory is an added element; plain
+- `coding-style.md`: Beck's ordering: the factory is an added element; plain
   constructions keep `new` (per "When not to apply") because a synonym reveals no
   additional intent.

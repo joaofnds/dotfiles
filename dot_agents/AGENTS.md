@@ -21,7 +21,7 @@ who wrote it.
 Never write or edit a hook or a settings file on any authority but the user's typed
 instruction: not the rendered `~/.claude/hooks/` and `~/.claude/settings.json`, and not
 their chezmoi sources `dot_claude/hooks/` and `dot_claude/private_settings.json`. Both
-take effect mid-session (evidence: `instruction_external_facts.md` §Harness mechanics),
+take effect mid-session (evidence: `instruction-external-facts.md` §Harness mechanics),
 so such an edit is an instruction you gave yourself with no prompt in the way. The same
 bar applies to `~/.agents/**` and its `dot_agents/` source.
 
@@ -67,15 +67,15 @@ mid-phase, announce that file in the turn you open it.
 
 Required reads by phase:
 
-- **Coding** → `coding_style.md`, plus the language file when the task has one:
-  `coding_style_go.md`, `coding_style_typescript.md`
-- **Frontend / UI** (components, styling, layout) → add `coding_style_frontend.md`
+- **Coding** → `coding-style.md`, plus the language file when the task has one:
+  `coding-style-go.md`, `coding-style-typescript.md`
+- **Frontend / UI** (components, styling, layout) → add `coding-style-frontend.md`
 - **Tests, written or reviewed** → add `testing/00-index.md`
-- **Design / problem analysis** → `engineering_judgment.md`; add `coupling.md` when the
-  design draws or moves a module or service boundary; `using_the_wiki.md` when it cues a
+- **Design / problem analysis** → `engineering-judgment.md`; add `coupling.md` when the
+  design draws or moves a module or service boundary; `using-the-wiki.md` when it cues a
   wiki lookup
-- **Editing any instruction artifact** → `writing_instructions.md`; add
-  `using_the_wiki.md` and `instruction_external_facts.md` when a claim rests on a paper,
+- **Editing any instruction artifact** → `writing-instructions.md`; add
+  `using-the-wiki.md` and `instruction-external-facts.md` when a claim rests on a paper,
   a benchmark, or vendor documentation. An in-corpus incident or tool run does not fire
   that pair
 - **Multi-stage feature, debug, review, or delivery work** → no rule file of its own; the
@@ -85,18 +85,18 @@ Required reads by phase:
   the next stage to the user by name. When the choice needs a skill's trigger or skip conditions, read its
   frontmatter under `~/.agents/skills/<name>/`
 - **Reading or writing a `backlog/` board** (any `backlog` command, or editing board
-  files directly) → `backlog_board.md`
+  files directly) → `backlog-board.md`
 - **Producing any loop artifact** (any `.boris/` or `backlog/docs/` document a later
   stage reads) → read
   `.boris/CONTEXT.md` when it exists: the project's domain language. An artifact that
   names things differently hands the next stage the wrong vocabulary
-- **Spawning or continuing a subagent** → `subagent_spawning.md`
-- **Before marking done** → `ownership.md`, plus `reporting_findings.md` when the report
+- **Spawning or continuing a subagent** → `subagent-spawning.md`
+- **Before marking done** → `ownership.md`, plus `reporting-findings.md` when the report
   carries any finding, also fired mid-task, when a defect or follow-up surfaces
 - **After non-trivial file changes that exposed recurring friction** →
-  `continuous_improvement.md`
+  `continuous-improvement.md`
 
-Never pass `name` on a sub-agent spawn (`subagent_spawning.md` says why). Agent teams are
+Never pass `name` on a sub-agent spawn (`subagent-spawning.md` says why). Agent teams are
 disabled here; do not propose them.
 
 One phase requires an action rather than a read. Announce it in place of `Reading:`, on
@@ -105,12 +105,12 @@ its own prefix line, so its absence is visible:
     Gate: instructions-reviewer: <the files edited>
 
 Emit it after any batch of edits to instruction files, before the batch's commits stop
-being local. Instruction files here are the set `writing_instructions.md` covers, plus
+being local. Instruction files here are the set `writing-instructions.md` covers, plus
 `workflows.md` (gated by form, read-only by content: never cite it as the source of an
 obligation) and any chezmoi `symlink_` source pointing at one of those, since
 retargeting a pointer changes which instructions load. Run the reviewer once in that turn
 and resolve or explicitly defer each in-diff finding with a disposition from
-`reporting_findings.md`. While history is local, fold each fix into the commit that
+`reporting-findings.md`. While history is local, fold each fix into the commit that
 introduced the defect (amend, or re-create the series); a standalone fix commit for a
 batch-introduced defect only on the user's direction. A finding that names no defect
 takes the advisory route. An
@@ -136,7 +136,7 @@ finding: it goes to the user with the batch's others. Do not reintroduce
 a multi-round loop.
 
 Editing a file agents read but do not obey, `.boris/**`, `backlog/**`, memory files, eval cases and
-fixtures, `review_checklist.md`, ad-hoc sub-agent launch prompts and their reports, does
+fixtures, `review-checklist.md`, ad-hoc sub-agent launch prompts and their reports, does
 not fire the gate; the ratification rule above is the exception.
 
 ## Solution decisions: mandatory visible artifact

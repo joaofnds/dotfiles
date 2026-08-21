@@ -56,10 +56,10 @@ function charge(customer, usage) {
 
 ## House-rule interactions
 
-- `coding_style.md`: the house default is no class without demonstrated need; this
+- `coding-style.md`: the house default is no class without demonstrated need; this
   refactoring is that rule executing in reverse on a class that lost (or never had)
   its justification.
-- `engineering_judgment.md`: YAGNI: unused lifecycle hooks are the flexibility
+- `engineering-judgment.md`: YAGNI: unused lifecycle hooks are the flexibility
   built for a future that never came; deleting them is the rule's enforcement arm.
-- `engineering_judgment.md`: code is a liability: constructor, fields, and
+- `engineering-judgment.md`: code is a liability: constructor, fields, and
   boilerplate all carried maintenance cost for what one signature now states.

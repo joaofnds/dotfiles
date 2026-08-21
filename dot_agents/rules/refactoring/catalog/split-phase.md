@@ -64,12 +64,12 @@ function price({ weight, zone }) {
 
 ## House-rule interactions
 
-- `coding_style.md`: safe parsing at boundaries: when the first phase ingests
+- `coding-style.md`: safe parsing at boundaries: when the first phase ingests
   external data, this refactoring gives the untrusted edge its own home, and the
   intermediate structure becomes the validated shape that crosses inward.
-- `engineering_judgment.md`: draw boundaries at the demonstrated cost inflection: a
+- `engineering-judgment.md`: draw boundaries at the demonstrated cost inflection: a
   cheap source-level split is exactly the early boundary that rule endorses, provided
   the two concerns demonstrably change for different reasons.
-- `coding_style.md`: Beck's ordering: the intermediate structure is an added
+- `coding-style.md`: Beck's ordering: the intermediate structure is an added
   element, bought by the phases' independent reasons to change, not by pipeline
   aesthetics.

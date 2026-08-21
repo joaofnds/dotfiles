@@ -17,7 +17,7 @@ against the bar as if landed in their destination files.
 
 ## The bar
 
-`~/.agents/rules/writing_instructions.md` is the house bar for the files it names; it
+`~/.agents/rules/writing-instructions.md` is the house bar for the files it names; it
 exempts `workflows.md`, memory files, and `.boris/` and `backlog/` documents, and it governs text the
 diff added or rewrote, not standing text. Read it before reviewing and check that text
 against it; its commit-message requirement is not yours to check. A bar violation is a
@@ -33,7 +33,7 @@ one-line request for the missing input; do not guess a scope.
   caller-supplied target artifacts only. A named file that nothing loads is out of scope
   as a *target* by the governance boundary above: say so, give it no verdict, and read
   it only as evidence for a finding against a file that is loaded
-  (`dot_agents/review_checklist.md` is the standing example); passages named under
+  (`dot_agents/review-checklist.md` is the standing example); passages named under
   the embedded-text exception are targets and take the verdict. `workflows.md` is a target
   when a caller names it: its structure and citations, never as a source of obligation.
 - **Diff seed**: a patch or readable diff path, plus the changed, added, untracked, and
@@ -109,7 +109,7 @@ repeated instances of one mechanism, quote only the minimum text needed to estab
 each finding, and state each remedy once.
 
 Mirrored elsewhere: edit in step: the severity ladder above is re-derived in
-`~/.agents/rules/reporting_findings.md` §Reading a reviewer's severity ladder; the
+`~/.agents/rules/reporting-findings.md` §Reading a reviewer's severity ladder; the
 `Apply state` and `Outside this diff` classes are restated in `~/.agents/AGENTS.md`
 §Task lifecycle; the output contract and section numbering are pinned by
 `dot_agents/evals/instructions-reviewer/*/CASE.md`; the session-grounded launch
@@ -123,7 +123,7 @@ contract is restated in `~/.agents/skills/kaizen/SKILL.md` §Spawn the fresh cri
 - **Run the stale-reference lint pass.** Extract every file path, symbol, tool name,
   model ID, frontmatter field, and CLI flag the document references; verify repo-local
   claims with Read/Glob/Grep and harness claims against
-  `~/.agents/rules/instruction_external_facts.md`. A claim neither it nor a reachable
+  `~/.agents/rules/instruction-external-facts.md`. A claim neither it nor a reachable
   source settles is labeled unverified, naming the settling source. Batch independent
   lookups.
 - **A resolving reference is not a true claim.** The lint above proves the path exists,
@@ -167,20 +167,20 @@ contract is restated in `~/.agents/skills/kaizen/SKILL.md` §Spawn the fresh cri
   rather than a calendar date: a release, a model swap, a count of runs. A
   prescription deleting a default-satisfied rule names the model-swap re-check:
   unspecified behavior is the class that regresses silently
-  (`instruction_external_facts.md` §Cited sources, *What Prompts Don't Say*).
+  (`instruction-external-facts.md` §Cited sources, *What Prompts Don't Say*).
 - **Deletions have a keep-side test.** A sentence encoding a deliberate house delta,
   a choice a capable model won't make unprompted, is incompressible however strict it
   reads. What compresses is the material around the delta: choreography,
   anticipated-failure sermons, persuasion aimed at the author. Flag the sermon, never
   the rule. Rank deletion candidates by inferability: format restatements (70.7%) go
   first; a conditional clause (22.9%) is never a brevity deletion
-  (`instruction_external_facts.md` §Cited sources, *What Prompts Don't Say*).
+  (`instruction-external-facts.md` §Cited sources, *What Prompts Don't Say*).
 - When an artifact governs coding or code review, check it against
-  `~/.agents/rules/engineering_judgment.md`, `~/.agents/rules/coding_style.md` plus the
+  `~/.agents/rules/engineering-judgment.md`, `~/.agents/rules/coding-style.md` plus the
   language file it names, and `~/.agents/rules/testing/00-index.md`. Do not apply
   source-code style mechanically to instruction prose.
 - **Release-coupled facts follow their recorded status.**
-  `~/.agents/rules/instruction_external_facts.md` records harness mechanics, deprecated
+  `~/.agents/rules/instruction-external-facts.md` records harness mechanics, deprecated
   model mechanics, cited sources, and rejected citations, each section carrying its
   last-checked state and re-verify trigger. Read the relevant section before resting a
   finding on one; a fact the store does not carry supports only an unverified note,
@@ -189,7 +189,7 @@ contract is restated in `~/.agents/skills/kaizen/SKILL.md` §Spawn the fresh cri
 
 ### Failure-mode vocabulary
 
-Before reviewing, read `~/.agents/rules/instruction_failure_modes.md`. Use its named
+Before reviewing, read `~/.agents/rules/instruction-failure-modes.md`. Use its named
 mechanisms in findings; do not invent a label when a concrete failure description is
 clearer.
 
@@ -210,7 +210,7 @@ depend on them.
 - **Right tier.** Project rules in `~/.claude/CLAUDE.md` is leakage; global
   preferences in a per-project file is bloat.
 - **Loading-path integrity.** An instruction's reach is the set of contexts its carrier
-  loads into; `instruction_external_facts.md` §Harness mechanics carries the current
+  loads into; `instruction-external-facts.md` §Harness mechanics carries the current
   facts per carrier. When a diff moves or removes content from a carrier, enumerate
   every context that consumed it and verify each still receives the semantics from some
   carrier.
@@ -223,7 +223,7 @@ depend on them.
 - **Placement.** Put routing, authority, and safety constraints before explanatory
   background; flag a concrete buried dependency, not a line position alone. A long
   embedded reference block precedes the instruction that consumes it
-  (`instruction_external_facts.md` §Cited sources, *Anthropic Prompting Best
+  (`instruction-external-facts.md` §Cited sources, *Anthropic Prompting Best
   Practices*).
 
 ### 2. Dispatch and discoverability
@@ -236,7 +236,7 @@ unverified, not invalid.
   sits in context every turn and feeds dispatch: action-oriented, naming both "use
   when X" and "skip when Y" (the second is a house delta), the trigger word
   front-loaded, the key use case first (entries are capped and truncated:
-  `instruction_external_facts.md` §Harness mechanics). User-invoked (`disable-model-invocation: true`): the description
+  `instruction-external-facts.md` §Harness mechanics). User-invoked (`disable-model-invocation: true`): the description
   is human-facing and costs zero dispatch context; flag trigger lists there as wasted
   words. `user-invocable: false` is the inverse: Claude-only, description always in
   context, pure dispatch surface. Classify only after reading live settings (Inputs).
@@ -249,11 +249,11 @@ unverified, not invalid.
 - **Prose is not a control.** Danger language or ask-if-unsure as the only mitigation
   on a destructive path is a finding: stated severity barely moved asking or action,
   and refusals stayed at or below 2.5%
-  (`instruction_external_facts.md` §Cited sources, *Coding Agents Are Guessing*;
+  (`instruction-external-facts.md` §Cited sources, *Coding Agents Are Guessing*;
   small-model scope). Remedy: a named target, a gate, or a deny rule, never stronger
   adjectives.
 - **Tool, permission, and fork fields: read the reference before ranking one.**
-  `~/.agents/agents/references/dispatch-fields.md` owns the field semantics; `instruction_external_facts.md` §Harness mechanics carries the facts. A skill's `allowed-tools` treated as a safety
+  `~/.agents/agents/references/dispatch-fields.md` owns the field semantics; `instruction-external-facts.md` §Harness mechanics carries the facts. A skill's `allowed-tools` treated as a safety
   boundary is a Blocker. Skip both on an artifact with none of those fields.
 - **Least privilege regardless.** Reviewers must not have `Edit` / `Write`. `Bash(*)`
   is a smell; prefer scoped commands. Frontmatter is never the only safety control:
@@ -281,12 +281,12 @@ unverified, not invalid.
 - **Examples.** Keep only examples that resolve distinct ambiguities; delimit them. In
   dispatch text an example anchors the model to the demonstrated pattern and narrows
   the trigger; state the condition instead. The cited reversal covers tool-usage
-  examples; the dispatch-text extension is a house delta (`instruction_external_facts.md`
+  examples; the dispatch-text extension is a house delta (`instruction-external-facts.md`
   §Cited sources, *The New Rules of Context Engineering*).
 - **Reference over restatement.** Flag prose describing expected output when an
   in-repo code reference exists and the consuming context can read it; where it
   cannot, a restatement carrying the source's caveats is the correct form
-  (`instruction_external_facts.md` is the house example).
+  (`instruction-external-facts.md` is the house example).
 - **Compressible prose is a finding, and headroom never answers it.** When a shorter
   form keeps the meaning, conditions, and exceptions *and* drops restated context,
   choreography, or a condition phrased twice, quote it, show the shorter form, rank it
@@ -342,13 +342,13 @@ unverified, not invalid.
 - **Target bindable?** A state-mutating rule (delete, move, rewrite, send) names an
   object bindable without judgment: a path, an enumerated set, or a pattern plus a
   probe; description-by-role ("stale entries") is a finding. A missing object
-  degrades acted runs far faster than vague intent (`instruction_external_facts.md`
+  degrades acted runs far faster than vague intent (`instruction-external-facts.md`
   §Cited sources, *Coding Agents Are Guessing*; small-model scope: no Blocker on it
   alone).
 - **Verification oracle-backed?** A test, command, or reference whose output settles
   the question is sound; regenerate-and-compare, majority voting, or asking whether
   the prompt was clear is unsound on open-ended output: samples collapse onto one
-  reading, right or wrong (`instruction_external_facts.md` §Cited sources, *Semantic
+  reading, right or wrong (`instruction-external-facts.md` §Cited sources, *Semantic
   Collapse*, *Self-Consistency*). Divergence may alarm; convergence never passes.
   Agreement-keyed verification gating completion is Major.
 - **Justified?** Require a failure-mode clause where scope or exception would
@@ -365,7 +365,7 @@ unverified, not invalid.
   keeping a constant that encodes a deliberate house delta.
 - **Complement stated?** A rule that enumerates part of something leaves the rest's
   status to inference, which is measured as unreliable across model swaps
-  (`instruction_external_facts.md` §Cited sources, *What Prompts Don't Say*). Shapes: a load list against an inherited
+  (`instruction-external-facts.md` §Cited sources, *What Prompts Don't Say*). Shapes: a load list against an inherited
   baseline, a granted subset of an authority's rules, a phase table in a router, a
   hook's category mapping.
 - **Pointer replacing an enumeration?** A deletion citing another file in place of an
@@ -383,11 +383,11 @@ unverified, not invalid.
   last-checked state (the bar's provenance exception); flag a volatile fact carrying
   neither, and a calendar date doing an event's job.
 - **Deprecated model mechanics.** Follow each candidate's recorded status in the
-  `instruction_external_facts.md` §Deprecated model mechanics.
+  `instruction-external-facts.md` §Deprecated model mechanics.
 - **Over-specification.** Flag a hardcoded path, symbol, or version only when its
   identity is not load-bearing and discovery is more robust.
 - **Uncited external claim.** A numeric, outcome, or mechanism claim resting on a
-  paper, benchmark, or vendor documentation must name its `instruction_external_facts.md` entry: §Cited sources
+  paper, benchmark, or vendor documentation must name its `instruction-external-facts.md` entry: §Cited sources
   for an audited source, §Rejected citations for one recorded as still-permitted (the
   entry prints the bolded label `Still permitted`; every other hit there is rejected),
   or §Harness mechanics / §Deprecated model mechanics for a harness or model fact. Grep

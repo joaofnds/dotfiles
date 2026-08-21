@@ -57,9 +57,9 @@ notify(user, digestText);
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: orthogonality: hoisting statements to N call sites
+- `engineering-judgment.md`: orthogonality: hoisting statements to N call sites
   creates N edit points for one rule; acceptable only because the rule genuinely became
   per-caller; if it ever re-unifies, apply the inverse.
-- `coding_style.md`: surgical execution: migrate the callers this task touches;
+- `coding-style.md`: surgical execution: migrate the callers this task touches;
   when other teams' call sites are affected, the delegating stub stays until their
   migration is agreed.

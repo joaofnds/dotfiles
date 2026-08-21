@@ -17,7 +17,7 @@
 ## When not to apply
 
 - **One switch, one place**: a single conditional over a closed set is clear, honest
-  code; `coding_style.md`'s "solely to satisfy this document" forbids conjuring a class hierarchy to satisfy a
+  code; `coding-style.md`'s "solely to satisfy this document" forbids conjuring a class hierarchy to satisfy a
   principle. The duplication of the dispatch is what buys the hierarchy.
 - The cases vary by data, not behavior: a lookup table (rates by plan) does the job
   with zero structure.
@@ -59,10 +59,10 @@ const speed = (bird) => birds[bird.type](bird);
 
 ## House-rule interactions
 
-- `coding_style.md`: the hierarchy (or table) is an introduced element; a single
+- `coding-style.md`: the hierarchy (or table) is an introduced element; a single
   non-repeated switch does not pay for it. The finding must show the repetition.
-- `engineering_judgment.md`: program to interfaces, encapsulate what varies:
+- `engineering-judgment.md`: program to interfaces, encapsulate what varies:
   this refactoring is that principle's canonical mechanical form.
-- `coding_style.md`: leverage the type system: in typed languages, prefer the
+- `coding-style.md`: leverage the type system: in typed languages, prefer the
   rendering where the compiler proves every case is handled (sealed unions,
   exhaustive interfaces) over string-keyed tables.

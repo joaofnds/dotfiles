@@ -221,9 +221,9 @@ note "check 7: $unresolved unresolved index links, $unlinked catalog entries unl
 
 # 8a — catalog citations name a rule, never a line. A line-anchored citation cannot
 # survive an edit to the target: it keeps resolving, but to a different rule, and no
-# reader can tell. (Enforced 2026-07-27, after every coding_style.md:N citation in the
-# catalog had drifted 2-5 lines and the 8 engineering_judgment.md tail citations 1.)
-lineno_cited=$(grep -rhoE '`(coding_style|engineering_judgment)\.md:[0-9]+`' "$catalog" | sort -u)
+# reader can tell. (Enforced 2026-07-27, after every coding-style.md:N citation in the
+# catalog had drifted 2-5 lines and the 8 engineering-judgment.md tail citations 1.)
+lineno_cited=$(grep -rhoE '`(coding-style|engineering-judgment)\.md:[0-9]+`' "$catalog" | sort -u)
 lineno_count=0
 while IFS= read -r citation; do
   [ -z "$citation" ] && continue
@@ -237,48 +237,48 @@ EOF
 # position: moving a rule is free, renaming or deleting one fails here and the citing
 # documents need re-wording. Table: <file>|<substring the file must still contain>.
 rule_anchors=$(cat <<'ANCHORS'
-coding_style.md|Preserve established project structure
-coding_style.md|Do not introduce classes
-coding_style.md|solely to satisfy this document
-coding_style.md|Simplicity, by Beck's four criteria
-coding_style.md|Boring control flow
-coding_style.md|Comments default to zero
-coding_style.md|Move understanding from your head into the code
-coding_style.md|Never the `Impl` suffix
-coding_style.md|Surgical execution
-coding_style.md|Leverage the type system
-coding_style.md|Don't defend against your own code
-coding_style.md|Pure structural types
-coding_style.md|Behavior lives with data
-coding_style.md|Explicit construction
-coding_style.md|Framework-agnostic constructors
-coding_style.md|Defensive networking
-coding_style.md|Safe parsing at boundaries
-coding_style.md|Stateless, non-mutating translators
-coding_style.md|thin translation layer
-coding_style.md|Tell, Don't Ask
-coding_style.md|Control non-deterministic side effects
-coding_style.md|Put domain behavior with the model it governs
-coding_style.md|Generic utilities carve-out
-coding_style.md|Inject side-effecting or replaceable dependencies
-engineering_judgment.md|Facts before theories
-engineering_judgment.md|Name things in the domain's language
-engineering_judgment.md|Never program by coincidence
-engineering_judgment.md|Draw boundaries at the demonstrated cost inflection
-engineering_judgment.md|Dependencies point inward
-engineering_judgment.md|Program to interfaces, encapsulate what varies
-engineering_judgment.md|Match complexity to the problem
-engineering_judgment.md|Design for the current need
-engineering_judgment.md|Complexity carries the burden of proof
-engineering_judgment.md|Work in the smallest coherent steps
-engineering_judgment.md|Code is a liability
-engineering_judgment.md|Make the change easy
-engineering_judgment.md|DRY is about knowledge, not code
-engineering_judgment.md|Orthogonality: one change, one place
-engineering_judgment.md|Listen to the tests
-engineering_judgment.md|Prefer removing the cause
-engineering_judgment.md|narrows the space of future bugs
-engineering_judgment.md|Don't fight your tools
+coding-style.md|Preserve established project structure
+coding-style.md|Do not introduce classes
+coding-style.md|solely to satisfy this document
+coding-style.md|Simplicity, by Beck's four criteria
+coding-style.md|Boring control flow
+coding-style.md|Comments default to zero
+coding-style.md|Move understanding from your head into the code
+coding-style.md|Never the `Impl` suffix
+coding-style.md|Surgical execution
+coding-style.md|Leverage the type system
+coding-style.md|Don't defend against your own code
+coding-style.md|Pure structural types
+coding-style.md|Behavior lives with data
+coding-style.md|Explicit construction
+coding-style.md|Framework-agnostic constructors
+coding-style.md|Defensive networking
+coding-style.md|Safe parsing at boundaries
+coding-style.md|Stateless, non-mutating translators
+coding-style.md|thin translation layer
+coding-style.md|Tell, Don't Ask
+coding-style.md|Control non-deterministic side effects
+coding-style.md|Put domain behavior with the model it governs
+coding-style.md|Generic utilities carve-out
+coding-style.md|Inject side-effecting or replaceable dependencies
+engineering-judgment.md|Facts before theories
+engineering-judgment.md|Name things in the domain's language
+engineering-judgment.md|Never program by coincidence
+engineering-judgment.md|Draw boundaries at the demonstrated cost inflection
+engineering-judgment.md|Dependencies point inward
+engineering-judgment.md|Program to interfaces, encapsulate what varies
+engineering-judgment.md|Match complexity to the problem
+engineering-judgment.md|Design for the current need
+engineering-judgment.md|Complexity carries the burden of proof
+engineering-judgment.md|Work in the smallest coherent steps
+engineering-judgment.md|Code is a liability
+engineering-judgment.md|Make the change easy
+engineering-judgment.md|DRY is about knowledge, not code
+engineering-judgment.md|Orthogonality: one change, one place
+engineering-judgment.md|Listen to the tests
+engineering-judgment.md|Prefer removing the cause
+engineering-judgment.md|narrows the space of future bugs
+engineering-judgment.md|Don't fight your tools
 ANCHORS
 )
 

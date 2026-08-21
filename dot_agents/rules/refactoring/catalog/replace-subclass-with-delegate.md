@@ -63,9 +63,9 @@ class PremiumDelegate {
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: composition over inheritance: this refactoring is
+- `engineering-judgment.md`: composition over inheritance: this refactoring is
   the canonical migration from the discouraged form to the favored one; in this
   corpus its findings should be common wherever hierarchies strain.
-- `coding_style.md`: Beck's ordering: the delegate adds elements (class, field,
+- `coding-style.md`: Beck's ordering: the delegate adds elements (class, field,
   factory); the purchase must be a demonstrated second axis, runtime change, or
   coupling break, not composition for its own sake.

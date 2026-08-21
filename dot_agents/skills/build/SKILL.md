@@ -38,7 +38,7 @@ the conversation that produced it, so trust the file, not assumptions.
    card ("<feature> design"), not the plan; derive every color and type
    decision from that doc rather than choosing
    one. If the plan records that no direction was ratified, build on
-   `coding_style_frontend.md`'s floor and invent no palette; if the plan says
+   `coding-style-frontend.md`'s floor and invent no palette; if the plan says
    neither, stop and ask.
 2. **Reality-check before touching anything.** Confirm the files and
    `file:line` references in "Current state". Stop for drift that changes
@@ -130,7 +130,7 @@ the conversation that produced it, so trust the file, not assumptions.
 - Stay inside the plan's Scope boundary the whole way through. If you spot
   necessary follow-up work, don't expand silently: record it as a card note,
   or as its own card when it warrants its own context, criteria, or docs (the
-  size rule, `backlog_board.md` §Milestones), with its one-line reason, so it reads
+  size rule, `backlog-board.md` §Milestones), with its one-line reason, so it reads
   as out of scope rather than as unbuilt work. It is scope you are not
   building: step 3 never executes it, the "every task is checked" gates in
   step 5 and at closeout ignore it, and the final summary's Landed line never
@@ -157,7 +157,7 @@ the conversation that produced it, so trust the file, not assumptions.
   every acceptance criterion on the card is checked with the evidence step 7
   requires (or the user directed a `partial`/`abandoned` label, with the
   reason in the final summary), **close the card out before you summarize**,
-  on `backlog_board.md` §Closeout terms:
+  on `backlog-board.md` §Closeout terms:
 
   - Write `--final-summary` with **Landed** (what shipped, one line per
     milestone) and **Next**: the first of these that applies:
@@ -172,8 +172,8 @@ the conversation that produced it, so trust the file, not assumptions.
       remains.
     - `done: nothing follows`: none of the above, and this was the last or
       only card.
-  - Route left-over items by their `reporting_findings.md` disposition, per
-    `backlog_board.md` §Closeout: each carries the trigger where it is a defect, a
+  - Route left-over items by their `reporting-findings.md` disposition, per
+    `backlog-board.md` §Closeout: each carries the trigger where it is a defect, a
     one-line reason where it is deferred work. An acceptance criterion the
     user closed out without observing is a **Decide** item, a result
     unverified whose probe you could not run: record it as

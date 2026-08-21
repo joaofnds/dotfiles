@@ -1,10 +1,10 @@
 # Coding Style & Architecture Manifesto
 
-Cross-language coding style. Language-specific preferences live in `coding_style_typescript.md` / `coding_style_go.md`. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki: see `using_the_wiki.md`.
+Cross-language coding style. Language-specific preferences live in `coding-style-typescript.md` / `coding-style-go.md`. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki: see `using-the-wiki.md`.
 
 **On conflict, the more specific rule governs.** Among the files here: the language file wins over
-this one, which wins over `engineering_judgment.md`, which wins over `coupling.md`, and
-`coupling.md` states its own half ("`coding_style.md` wins"). On anything about tests,
+this one, which wins over `engineering-judgment.md`, which wins over `coupling.md`, and
+`coupling.md` states its own half ("`coding-style.md` wins"). On anything about tests,
 `testing/00-index.md` and its modules win over all four, including `coupling.md`'s test-shaped
 symptoms. The repo's own `AGENTS.md` / `CLAUDE.md` wins over every file here, tests included.
 Say which rule you set aside and why: resolving a conflict silently is the defect, not having one. **The
@@ -38,11 +38,11 @@ ports, mappers, DI, or messaging solely to satisfy this document.
 - **Move understanding from your head into the code.** Renaming and extracting are how the persistence happens: your head is volatile storage. *(See: refactoring-fowler-2018)*
 - **Never the `Impl` suffix.** `FooImpl` is forbidden: a non-name that says nothing. Name a class for what it *is*: the technology, strategy, or source (`SlackNotifier`, `OtelProbe`, `PostgresUserRepository`). If the only thing distinguishing the class from its interface is "the implementation," you haven't yet understood what makes it distinct.
 - **Surgical execution.** Only touch what is directly relevant to the user's intent. Do not "fix" adjacent code, refactor for aesthetic reasons, or leave dead imports behind from your changes.
-- **An exception is a design decision.** A suppression, ignore rule, lint or file exclusion, shim, or any other special case needed to get past a tool mid-change routes to `engineering_judgment.md` §5: not a judgment call to make inline.
+- **An exception is a design decision.** A suppression, ignore rule, lint or file exclusion, shim, or any other special case needed to get past a tool mid-change routes to `engineering-judgment.md` §5: not a judgment call to make inline.
 - **Goal-driven TDD.** Tests are written *before* the implementation. Red → simplest green → refactor. Beck's three green-step tactics: **fake it** (return a literal, let the next test force generalization), **triangulate** (a second test forces the abstraction), **obvious implementation** (just write it when the answer is clear), picked by confidence. *(See: canon-tdd, growing-object-oriented-software-guided-by-tests, test-driven-development)*
 - **Leverage the type system.** Use it to its fullest. Avoid escape hatches that bypass compile-time checks: which token is an escape hatch is per-language, so take the list from the language file rather than assuming it transfers. Don't sniff fields on opaque values to guess the type: that is a runtime cast in disguise. Use real classes with `instanceof` (or the language's equivalent), or parse with a schema validator at the boundary. If the compiler is unhappy, the upstream type is wrong: fix it there.
 - **Don't defend against your own code.** When you control both the producer and the consumer of a contract, enforce it at the type/schema level: don't add fallback branches that "handle the case where X is missing" when *you* decide whether X is provided. Iterative design leaves these branches behind ("schema is optional for now"); they become the silent path where bugs hide as the code evolves around them. Make the contract mandatory and delete the fallback.
-- **Changing a shared contract routes to `engineering_judgment.md` §4.** Schema, API response, event payload, queue message: the deploy-compatibility constraint lives there, and it applies whether or not the task was framed as design.
+- **Changing a shared contract routes to `engineering-judgment.md` §4.** Schema, API response, event payload, queue message: the deploy-compatibility constraint lives there, and it applies whether or not the task was framed as design.
 
 ## 2. Architectural Principles & Layering
 
@@ -52,7 +52,7 @@ pointing inward: domain depends on nothing; use cases depend on domain; adapters
 on use cases. Simpler programs may use simpler structures when contracts and testability
 remain clear. *(See: hexagonal-architecture, clean-architecture, layered-architecture-ddd, domain-driven-design)*
 A DI lookup key is not the *type* arrow these describe. Where a language file has the consumer name its
-adapter as a DI token (`coding_style_typescript.md` §4), the token is a lookup key: the consumer touches
+adapter as a DI token (`coding-style-typescript.md` §4), the token is a lookup key: the consumer touches
 no member of the adapter, and the compiler checks only the port. Report a backward arrow when the type
 points the wrong way, not when the container's lookup key does: the load-time module edge this creates
 is an accepted cost, recorded there. That edge is a deliberate accepted coupling, not a defect: report it

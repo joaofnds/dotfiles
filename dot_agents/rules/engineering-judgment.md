@@ -2,7 +2,7 @@
 
 Imperatives that govern how the agent analyzes problems, designs solutions, writes code, and evaluates work. Not syntax or idioms: the thinking that precedes and surrounds every line.
 
-Good engineering is mostly thinking, not typing. When a principle's background matters, consult the personal wiki; see `using_the_wiki.md`.
+Good engineering is mostly thinking, not typing. When a principle's background matters, consult the personal wiki; see `using-the-wiki.md`.
 
 ## 1. Understanding the Problem
 
@@ -32,7 +32,7 @@ Get boundaries and dependency directions right at this stage and the implementat
 
 Implementation should feel mechanical. If it's hard, go back to §2.
 
-- **Seek the simplest thing that could work.** If two approaches solve it and one is a net deletion, that one wins. Simple is Beck's four criteria in order, `coding_style.md` §1, where fewest elements ranks fourth. *(See: simplicity-vs-ease, Kent Beck / XP)*
+- **Seek the simplest thing that could work.** If two approaches solve it and one is a net deletion, that one wins. Simple is Beck's four criteria in order, `coding-style.md` §1, where fewest elements ranks fourth. *(See: simplicity-vs-ease, Kent Beck / XP)*
 - **Work in the smallest coherent steps.** Before each change, predict the observable result; change one variable; run the check; reconcile the result before continuing. Unexpected output invalidates the current model, not the evidence. *(See: small-steps-fast-feedback, empiricism-in-software-engineering)*
 - **Code is a liability.** Every line is future maintenance, a potential bug, a thing to understand. The value is what the code does. When in doubt, delete.
 - **Make the change easy, then make the easy change.** Separate the refactor (no behavior change) from the implement (small, verifiable). *(See: Kent Beck / XP)*

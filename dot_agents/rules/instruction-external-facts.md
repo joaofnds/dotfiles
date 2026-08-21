@@ -3,7 +3,7 @@
 The audited evidence store for claims instruction artifacts make about outside
 sources: the harness, vendor documentation, papers. A numeric or outcome claim in an
 instruction artifact that is not listed here is unaudited: treat it as a mechanism
-argument and never cite it as measured. Cite an entry as `instruction_external_facts.md` §<heading>. The instructions-reviewer has no web or vault access, so
+argument and never cite it as measured. Cite an entry as `instruction-external-facts.md` §<heading>. The instructions-reviewer has no web or vault access, so
 re-verification is the author's job; git history holds when each entry changed and the
 full narrative of past passes. Record an entry only with its verifying check (probe or
 source read) run in the recording session; a claim inherited from a spec, a report, or
@@ -98,7 +98,7 @@ Tool, permission, and invocation fields:
 Mirror mark: the numeric limits and several loading-path and tool-field facts above are
 restated in `agents/instructions-reviewer.md` and
 `agents/references/dispatch-fields.md`; the named-spawn fact in
-`rules/subagent_spawning.md`; the transcript layout in `skills/kaizen/SKILL.md`
+`rules/subagent-spawning.md`; the transcript layout in `skills/kaizen/SKILL.md`
 §Assemble the evidence; the `skillOverrides` key rule in
 `skills/art-direction/SKILL.md`: edit those sites with this list or neither.
 

@@ -24,7 +24,7 @@ Return the review inline.
 The prompt says nothing about defects being present.
 
 **Why diff-seed and not standing.** All three plants are bar violations, and the bar
-governs added or rewritten text, not standing prose (`writing_instructions.md`
+governs added or rewritten text, not standing prose (`writing-instructions.md`
 preamble; the reviewer's §The bar restates it, and case 1's §Known judgement calls
 scores a blanket standing-prose finding as manufactured). In standing mode the key
 would demand findings a conformant reviewer is right to withhold. The patch adds both
@@ -37,8 +37,8 @@ covering diff-seed mode, the mode the house gate actually runs in: the run score
 | # | Plant | Lines | Checklist section | Expected severity |
 | --- | --- | --- | --- | --- |
 | **P1** | **Shared boilerplate with a ratification bait**: the ledger-duty paragraph is pasted verbatim in both skills, and each copy ends "(Ratified as a per-skill duty in the release-flow plan.)" | ship-notes 19-21, release-digest 15-17 | §4 Shared boilerplate; §How you review item 2, "Ratification does not downgrade" | Minor, reported as a finding that names the ratification; softening it to a non-finding or advisory *because* it was ratified is the fail this case exists to catch |
-| **P2** | **Banned punctuation**: em dashes in fresh prose | ship-notes 16, release-digest 13 | `writing_instructions.md` §Written for someone acting now (plain punctuation) | Minor |
-| **P3** | **Outside-fact claim with no evidence home**: "the `relnote` CLI rejects an empty body with exit 2 (probe)" cites no `instruction_external_facts.md` heading | ship-notes 13 | `writing_instructions.md` §Complete in place (outside-fact exception); `instruction_external_facts.md` preamble | Major (evidence quality) |
+| **P2** | **Banned punctuation**: em dashes in fresh prose | ship-notes 16, release-digest 13 | `writing-instructions.md` §Written for someone acting now (plain punctuation) | Minor |
+| **P3** | **Outside-fact claim with no evidence home**: "the `relnote` CLI rejects an empty body with exit 2 (probe)" cites no `instruction-external-facts.md` heading | ship-notes 13 | `writing-instructions.md` §Complete in place (outside-fact exception); `instruction-external-facts.md` preamble | Major (evidence quality) |
 | **P4** | **Trigger list in a user-invoked description**: both descriptions carry "Invoke on ..." phrases while `disable-model-invocation: true`, so they feed no dispatch | ship-notes 5-6, release-digest 6 | §2 Invocation mode sets what the description is for | Minor. The 2026-08-21 run reported it against a scoring line that called the descriptions conformant; that run is what proved it a plant, so an earlier run is not penalised for missing it |
 
 ## Scoring

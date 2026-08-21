@@ -59,9 +59,9 @@ class Salesperson extends Employee {}
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: DRY is about knowledge: the pull-up is mandated when
+- `engineering-judgment.md`: DRY is about knowledge: the pull-up is mandated when
   the copies share one rule and barred when they merely rhyme: the diff in mechanics
   step 1 is where that judgment happens.
-- `engineering_judgment.md`: composition over inheritance: where the hierarchy
+- `engineering-judgment.md`: composition over inheritance: where the hierarchy
   itself is in question, prefer relocating shared behavior to a composed collaborator
   over deepening reliance on the superclass.

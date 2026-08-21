@@ -63,7 +63,7 @@ keeping each side's subject (the approach here, the goal there).
   it; surveying is `/research`'s job, not yours.)
 - **Dispatch the facts you can't settle cheaply.** When a fact needs a wide scan or a
   long probe, spawn for it rather than running it inline on the interview's critical
-  path; `~/.agents/rules/subagent_spawning.md` picks the shape and governs what the
+  path; `~/.agents/rules/subagent-spawning.md` picks the shape and governs what the
   report is worth.
 - **Follow dependencies.** Once the decisions are mapped, resolve upstream ones first;
   let each answer narrow the branches you still need to walk.

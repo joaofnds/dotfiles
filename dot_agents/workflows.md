@@ -18,7 +18,7 @@ board (Todo → Spec → Research → Grill → Plan → Build → Review → Do
 carries status, acceptance criteria, dependencies, and notes, and each front-half
 stage attaches its durable doc to it under `backlog/docs/`, git-ignored (via
 `core.excludesFile`), so workflow artifacts remain untracked. The board holds state
-only; the skills own the process, and `~/.agents/rules/backlog_board.md` holds the
+only; the skills own the process, and `~/.agents/rules/backlog-board.md` holds the
 shared mechanics (bootstrap, the guard, doc conventions, milestones, closeout).
 Cross-ticket knowledge (the glossary, study docs) and away logs stay under `.boris/`.
 
@@ -72,7 +72,7 @@ re-enters an earlier stage rather than pushing through.
   your available-skills context cannot be called. Check there before routing to one, and
   when it isn't listed, recommend it to the user and say why rather than stalling on it.
   A reviewer's severity is not a disposition: relaying its findings to the user means giving
-  each one a disposition (`~/.agents/rules/reporting_findings.md`).
+  each one a disposition (`~/.agents/rules/reporting-findings.md`).
 - **deploy**: use the project's one documented pipeline, rollback path, and change
   controls. A verified change should be deployable with no hidden testing or sign-off
   work remaining. Never invent or execute a production command without authorization
@@ -83,7 +83,7 @@ re-enters an earlier stage rather than pushing through.
   deployment command is not evidence that users received the change.
 - **learn**: before closing, ask what recurs: a fix that could be a regression test, a
   mistake that could be a lint or a rule, friction worth a memory entry. Feed it back so
-  loop N+1 is cheaper than loop N (`continuous_improvement.md` §1). A loop that only
+  loop N+1 is cheaper than loop N (`continuous-improvement.md` §1). A loop that only
   ships features is linear; one that also hardens the system compounds.
 
 Skip points: the front half scales to the feature:
@@ -98,7 +98,7 @@ during design, and attaches it to the feature's card as a design doc in `backlog
 It is governed by
 `skillOverrides` and is currently user-invoked only: check your available-skills context
 before routing to it, and when it isn't listed, recommend it to the user and say why rather
-than stalling. If the user declines, build on `coding_style_frontend.md`'s convention floor
+than stalling. If the user declines, build on `coding-style-frontend.md`'s convention floor
 and record in the plan that no visual direction was ratified. `/plan` cites that design file
 and `/build` implements from it:
 
@@ -201,4 +201,4 @@ work in flight → /handoff → [new session] resume → next applicable stage
 
 Several stages above fan work out to subagents. The mechanics of that, the two shapes, continuing a completed agent, why a
 subagent spawn never carries a `name`, and what to do with a truncated report, are agent
-mechanics rather than workflow, and they live in `~/.agents/rules/subagent_spawning.md`.
+mechanics rather than workflow, and they live in `~/.agents/rules/subagent-spawning.md`.

@@ -54,10 +54,10 @@ if (!plan.withinRange(room.tempRange)) alerts.push("range violation");
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: dependencies point inward: the whole-object form is
+- `engineering-judgment.md`: dependencies point inward: the whole-object form is
   right between domain neighbors and wrong when it hands a domain type to
   infrastructure or a generic helper: check the arrow before applying.
-- `coding_style.md`: generic utilities carve-out: `clamp`-style helpers take
+- `coding-style.md`: generic utilities carve-out: `clamp`-style helpers take
   primitives by design; this refactoring's scope is domain functions, not utilities.
-- `coding_style.md`: Tell, Don't Ask: caller-side unpacking is asking; the
+- `coding-style.md`: Tell, Don't Ask: caller-side unpacking is asking; the
   follow-up move of the function onto the object completes the tell.

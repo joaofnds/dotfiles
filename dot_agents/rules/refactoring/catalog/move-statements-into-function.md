@@ -56,8 +56,8 @@ issueRefund(chargeback);
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: DRY is about knowledge, not code: move the statements
+- `engineering-judgment.md`: DRY is about knowledge, not code: move the statements
   in only when they encode the same rule at every call site; identical lines serving
   different purposes stay put.
-- `coding_style.md`: Beck's ordering: no element is added here; the win is pure
+- `coding-style.md`: Beck's ordering: no element is added here; the win is pure
   duplication removal, the second criterion.

@@ -19,7 +19,7 @@
 
 ## When not to apply
 
-- **This house prefers composition** (`engineering_judgment.md` "Program to interfaces, encapsulate what varies"): when the shared
+- **This house prefers composition** (`engineering-judgment.md` "Program to interfaces, encapsulate what varies"): when the shared
   code can live in a composed collaborator or an embedded type with similar effort,
   that wins: it shares behavior without welding the classes onto one axis of
   variation.
@@ -64,8 +64,8 @@ class Employee extends Party { /* totalMonthlyCost of self */ }
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: composition over inheritance: the house default
+- `engineering-judgment.md`: composition over inheritance: the house default
   reverses Fowler's coin-flip; extraction of a parent must argue why a composed
   shared type serves worse.
-- `coding_style.md`: the superclass is an introduced element: duplication between
+- `coding-style.md`: the superclass is an introduced element: duplication between
   the siblings must be demonstrated, not predicted.

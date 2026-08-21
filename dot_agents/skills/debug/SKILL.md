@@ -12,10 +12,10 @@ description: >
 
 **Wrong skill if:** cause already confirmed and you want the fix proven → `/verify-this`.
 
-Read `~/.agents/rules/backlog_board.md` before any board read or write. The stage column
+Read `~/.agents/rules/backlog-board.md` before any board read or write. The stage column
 is Research, the card type `bug`. A defect picked up from a
 legacy queue file (a `.boris/BACKLOG.md` item): create the bug card from the item, move its evidence into an attached doc, and
-delete the item's lines; the file dies with its last item. `backlog_board.md` §Migrate on touch
+delete the item's lines; the file dies with its last item. `backlog-board.md` §Migrate on touch
 governs whole artifacts, not queue items.
 
 Probe and instrument freely, but don't land the fix here; that's

@@ -58,8 +58,8 @@ class Salesperson extends Employee {}
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: DRY over knowledge governs the step-1 inspection:
+- `engineering-judgment.md`: DRY over knowledge governs the step-1 inspection:
   one datum in two declarations must unify; two data sharing a name must not.
-- `coding_style.md`: behavior lives with data: after the field rises, audit
+- `coding-style.md`: behavior lives with data: after the field rises, audit
   which subclass methods now manipulate superclass data: they are Pull Up Method
   candidates, and leaving them scattered rebuilds the anemic split this rule bans.

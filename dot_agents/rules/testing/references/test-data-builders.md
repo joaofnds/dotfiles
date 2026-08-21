@@ -11,7 +11,7 @@ defaults, via its constructor or a `with(partial)` method, so an arbitrary field
 per-field setter and a new field on the type is a single edit; add a named method (like
 `banned()`) only for a meaningful variant. One construction point per fixture. (Distinct
 from entity construction, which takes a props object and no builder: see
-coding_style_typescript.md §3.)
+coding-style-typescript.md §3.)
 
 Use a Builder when a fixture has many irrelevant fields or when several tests vary the
 same shape. Give every field a sensible default so each test names only the values that

@@ -16,7 +16,7 @@
 
 ## When not to apply
 
-- **`coding_style.md`'s "solely to satisfy this document" outranks this refactoring**: never introduce a class merely
+- **`coding-style.md`'s "solely to satisfy this document" outranks this refactoring**: never introduce a class merely
   because functions *could* be grouped. The class must be bought by demonstrated shared
   state or duplicated signatures, not by taxonomy.
 - Two functions and one record rarely justify the ceremony: Introduce Parameter Object
@@ -59,12 +59,12 @@ class Trip {
 
 ## House-rule interactions
 
-- `coding_style.md`: "do not introduce classes … solely to satisfy this document."
+- `coding-style.md`: "do not introduce classes … solely to satisfy this document."
   The canonical collision: this refactoring is admissible only when shared data and
   duplicated signatures demonstrate the need; grouping for tidiness fails the rule and
   the finding must be dropped.
-- `coding_style.md`: put domain behavior with the model it governs, using "a class,
+- `coding-style.md`: put domain behavior with the model it governs, using "a class,
   value object, module, or pure function according to the language and required state."
   The class is one rendering of this refactoring, not its definition.
-- `coding_style.md`: Beck's ordering: the class is an added element and must buy
+- `coding-style.md`: Beck's ordering: the class is an added element and must buy
   removal of the repeated parameter clump or shared derivations, or it is not a win.

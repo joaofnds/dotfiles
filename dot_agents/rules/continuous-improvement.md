@@ -26,7 +26,7 @@ Classify friction without derailing the task:
 - **One-time:** ignore it unless it reveals a defect.
 - **Recurring:** fix it now only when it is in scope, low risk, and cheaper than carrying
   it; otherwise record it for the reflection.
-- **Blocks the task** (not the `reporting_findings.md` disposition): resolve it as first-class work
+- **Blocks the task** (not the `reporting-findings.md` disposition): resolve it as first-class work
   with its own verification, or surface the blocker and ask.
 
 Signals worth investigating include repeated manual steps, the same knowledge copied
@@ -52,7 +52,7 @@ When a defect appears:
    If adopted, verify that it created no new friction, then encode the successful
    standard at the mechanism step 4 named.
 
-Query `using_the_wiki.md` when the background would affect the decision.
+Query `using-the-wiki.md` when the background would affect the decision.
 
 ## 4. System Over Part
 

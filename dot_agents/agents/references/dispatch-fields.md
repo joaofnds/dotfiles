@@ -6,7 +6,7 @@ artifact with no such frontmatter: a rules file, a memory file, an output style,
 plain `AGENTS.md`.
 
 Every mechanic here is release-coupled and mirrored from
-`~/.agents/rules/instruction_external_facts.md` §Harness mechanics, which carries the
+`~/.agents/rules/instruction-external-facts.md` §Harness mechanics, which carries the
 last-checked state: edit together, and never assert one from memory.
 
 ## Tool fields are not one mechanism: check which one you're reading
@@ -32,7 +32,7 @@ different tools in the foreground and the background. A `tools` list where no en
 resolves usually fails the agent at launch.
 
 Flag a definition that depends on a **built-in** tool outside the background set
-without stating which mode it runs in. `instruction_external_facts.md` §Harness mechanics lists the
+without stating which mode it runs in. `instruction-external-facts.md` §Harness mechanics lists the
 set; read it rather than guessing.
 
 ## Permission rules

@@ -36,11 +36,11 @@ skipping it is the user acting on a gap that is not there.
 1. Verify the requested scope and report the exact commands and outcomes.
 2. Inspect the diff and working tree; do not attribute unrelated changes to yourself.
 3. List every failure or defect observed, with its evidence. When you are the agent reporting
-   to the user, give each one a disposition (`reporting_findings.md`); a reviewer sub-agent
+   to the user, give each one a disposition (`reporting-findings.md`); a reviewer sub-agent
    ranks by severity instead and assigns none. A missing-thing claim carries its probe:
    §A missing thing is a claim.
 4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects or
-   creating a tracked follow-up; inside a chain skill's closeout, `backlog_board.md`
+   creating a tracked follow-up; inside a chain skill's closeout, `backlog-board.md`
    §Closeout routes the follow-up by disposition instead. Asking is for a judgment call,
    never for a chore: when the next step is mechanical, reversible, and inside the work
    you just did, deleting a file you created, updating a comment your change made stale,
@@ -64,10 +64,10 @@ skipping it is the user acting on a gap that is not there.
 - An unrelated pre-existing failure does not erase valid scoped evidence, but it must
   remain explicit and must never be reported as a pass.
 - A **Noted** finding neither blocks completion nor becomes a deferral question
-  (`reporting_findings.md` decides which findings are Noted).
+  (`reporting-findings.md` decides which findings are Noted).
 - Do not derail active work for an unrelated issue. Surface it with a concrete choice:
   "I found X with evidence Y. I recommend deferring: it doesn't block this change. Fix it
-  now or defer?": a **Decide** (`reporting_findings.md`).
+  now or defer?": a **Decide** (`reporting-findings.md`).
 
 The failure mode this prevents is silent tolerance, not bounded scope. Never walk past
 broken state without reporting it; never seize ownership of work the user did not ask

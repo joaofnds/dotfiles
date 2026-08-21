@@ -17,7 +17,7 @@ description: >
 
 **You are a neutral witness; a fresh critic is the judge.** The agent that ran the
 session critiques a *remembered* version of the instruction and defends its own
-choices (`engineering_judgment.md` §6: narrative-continuity-over-correctness), so
+choices (`engineering-judgment.md` §6: narrative-continuity-over-correctness), so
 the biased party only observes; judgment is delegated.
 
 ## What counts as a target
@@ -44,9 +44,9 @@ Two sources, in priority order:
    path rather than assuming Claude Code's layout. In Claude Code the transcripts live in
    `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/projects/<slug>/<session-id>.jsonl`, where `<slug>`
    is the cwd with `/`, `.`, spaces, and `~` all collapsed to `-`
-   (`instruction_external_facts.md` §Harness mechanics). Don't derive the slug; `ls` that `projects/` dir and match an entry against
+   (`instruction-external-facts.md` §Harness mechanics). Don't derive the slug; `ls` that `projects/` dir and match an entry against
    the cwd, then pick `$CLAUDE_CODE_SESSION_ID.jsonl` (set in Claude Code
-   sessions: `instruction_external_facts.md` §Harness mechanics). If the variable is empty, do not guess by mtime: a
+   sessions: `instruction-external-facts.md` §Harness mechanics). If the variable is empty, do not guess by mtime: a
    concurrent session in the same cwd writes a newer file. Confirm a candidate by grepping
    it for a distinctive string from this session's own first user message, and report
    "no transcript evidence" when nothing confirms.
@@ -68,14 +68,14 @@ your reading.
 
 ## Spawn the fresh critic
 
-Spawn un-named; `~/.agents/rules/subagent_spawning.md` §The two shapes picks
+Spawn un-named; `~/.agents/rules/subagent-spawning.md` §The two shapes picks
 foreground vs background.
 
 One independent agent: `instructions-reviewer` if available (built for instruction
 files), else a general agent carrying this brief. Send:
 
 - The transcript path (primary) and the friction-log index (supplementary).
-- The artifact paths plus `~/code/dotfiles/dot_agents/rules/continuous_improvement.md`
+- The artifact paths plus `~/code/dotfiles/dot_agents/rules/continuous-improvement.md`
   (source tree, same as the artifacts), with: "Read each
   file before making any claim about it."
 - The session goal in the user's terms, so it can judge whether an instruction helped or
@@ -99,10 +99,10 @@ say which findings carry transcript evidence and which do not
 3. **Falsifiable**: states which observed moment the change would have prevented, and
    how it knows.
 4. **Concrete diff**: proposed replacement text with the five-point frame from
-   `continuous_improvement.md` §1 (friction, root cause, fix, benefit, cost). Not
+   `continuous-improvement.md` §1 (friction, root cause, fix, benefit, cost). Not
    "clarify step 3."
 5. **Prose is the last mechanism**: names the strongest mechanism that could enforce the
-   rule instead, ranked in `continuous_improvement.md` §3. Root Cause and PDCA. Where a
+   rule instead, ranked in `continuous-improvement.md` §3. Root Cause and PDCA. Where a
    check could carry it, the proposal is that check: name the file it lands in,
    `scripts/check-corpus-budgets.sh` or a sibling registered in `scripts/check-all.sh`,
    or a hook under `dot_claude/hooks/`, and the exact condition it would test.
@@ -114,7 +114,7 @@ file-quality finding citing no session moment is exempt from 1 and 3, and takes 
 5 on the same terms. A clean session is a valid verdict: output "no change warranted"
 only when no finding clears 1-4 (2 and 4 for a file-quality finding), with the
 evidence that the artifacts held up. Manufacturing edits violates
-`continuous_improvement.md` §1: omit reflection when no actionable improvement was found.
+`continuous-improvement.md` §1: omit reflection when no actionable improvement was found.
 
 ## Output: propose against the source of truth, don't apply
 

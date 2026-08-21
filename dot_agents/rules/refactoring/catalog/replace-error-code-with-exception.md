@@ -59,10 +59,10 @@ function reserve(sku, qty) {
 
 ## House-rule interactions
 
-- `coding_style.md`: error translation at boundaries: the thrown type must be a
+- `coding-style.md`: error translation at boundaries: the thrown type must be a
   stable application/port error; letting driver or HTTP errors fly raw just moves the
   problem.
-- `coding_style.md`: "use domain errors only for domain outcomes": the same
+- `coding-style.md`: "use domain errors only for domain outcomes": the same
   boundary discipline that governs which failures deserve an exception at all.
-- `engineering_judgment.md`: narrows future bugs: the forgotten-check class
+- `engineering-judgment.md`: narrows future bugs: the forgotten-check class
   disappears structurally instead of being reviewed for.

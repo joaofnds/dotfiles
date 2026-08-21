@@ -15,7 +15,7 @@ consolidation or a split, never rewrapping.
   < 200 is a recommendation, not a cap. Where every section is a house delta, judge
   each line by the keep-side test rather than trimming to hit 60.
 - **`MEMORY.md`**: a mechanical limit: first 200 lines or 25KB load, the rest silently
-  dropped (`instruction_external_facts.md` §Harness mechanics). Over the line limit is
+  dropped (`instruction-external-facts.md` §Harness mechanics). Over the line limit is
   a Blocker; near the 25KB half is "needs measurement (`wc -c`, frontmatter and block
   comments excluded)".
 - **SKILL.md body**: < 500 lines; longer goes to linked tier-3 files. Slash commands
@@ -45,23 +45,23 @@ consolidation or a split, never rewrapping.
   crosses context boundaries, prefer a defined artifact over a prose return. Otherwise
   require a complete inline return.
 - **Caller-context leakage.** Determine caller context from the artifact's
-  frontmatter, supplied launch contract, and `instruction_external_facts.md` §Harness
+  frontmatter, supplied launch contract, and `instruction-external-facts.md` §Harness
   mechanics. Flag reliance on prior discussion, caller-only reads, or other unnamed
   state.
 - **Completion gate.** The prompt must specify a completion criterion that is
   *checkable* (the agent can tell done from not-done) and, where partial work is the
   risk, *exhaustive* ("every modified model accounted for," not "produce a change
-  list": the pair is verbatim from `instruction_external_facts.md` §Cited sources,
+  list": the pair is verbatim from `instruction-external-facts.md` §Cited sources,
   *Writing Great Skills*). A vague criterion invites the rush.
 - **One mandate.** The description and prompt serve one coherent task; enumerating
   unrelated task categories confuses dispatch and accretes tool grants (mechanism:
-  `instruction_external_facts.md` §Cited sources, *Claude Code Instruction-Artifact
+  `instruction-external-facts.md` §Cited sources, *Claude Code Instruction-Artifact
   Mechanics*).
 - **Judge gates gather evidence.** An agent installed as a correctness gate must
   mandate independent evidence (read the source, run the probe, compare against a
   reference), not bare judgment: a reference-free judge passes wrong answers at a
   measured high rate, and pairwise designs carry position bias, so query both orders
-  or declare ties (`instruction_external_facts.md` §Cited sources, *Judging
+  or declare ties (`instruction-external-facts.md` §Cited sources, *Judging
   LLM-as-a-Judge*).
 - **Embedded verification, newly added, has not been shown to fire.** Diff-seed mode
   only: when the diff appends a verification step to a producing skill's or agent's
@@ -76,7 +76,7 @@ consolidation or a split, never rewrapping.
   project-specific content.
 - **CLAUDE.md specifics**: `@path` imports; discovered files are concatenated, not
   overridden, so a project file does not supersede the user file and a cross-level
-  contradiction stays live (`instruction_external_facts.md` §Harness mechanics).
+  contradiction stays live (`instruction-external-facts.md` §Harness mechanics).
   Cross-tool portability: `ln -s AGENTS.md CLAUDE.md` (chezmoi: `symlink_` prefix); if
   both exist with duplicated content, suggest the symlink.
 - **`/init` slop.** Flag anything a competent agent would derive unaided.

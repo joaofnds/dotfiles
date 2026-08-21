@@ -240,7 +240,7 @@ When the same behavior runs against many inputs, use the framework's parameteriz
             assert service.normalize(case.input) == case.expected
 ```
 
-The primitive varies by framework, `it.each` in Jest/Vitest, `DescribeTable` + `Entry` in Ginkgo, `t.Run` subtests in Go's stdlib `testing`, so take it from the project's framework rather than from the language (`coding_style_go.md` §8). The contract is always the same: one row, one test, one name, one assertion path. The failure line tells you exactly which input broke.
+The primitive varies by framework, `it.each` in Jest/Vitest, `DescribeTable` + `Entry` in Ginkgo, `t.Run` subtests in Go's stdlib `testing`, so take it from the project's framework rather than from the language (`coding-style-go.md` §8). The contract is always the same: one row, one test, one name, one assertion path. The failure line tells you exactly which input broke.
 
 ---
 

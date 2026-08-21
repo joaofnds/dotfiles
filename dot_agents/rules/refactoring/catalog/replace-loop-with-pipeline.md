@@ -56,9 +56,9 @@ const names = members
 
 ## House-rule interactions
 
-- `coding_style.md`: boring control flow cuts both ways: it prefers a plain
+- `coding-style.md`: boring control flow cuts both ways: it prefers a plain
   pipeline over loop bookkeeping, and a plain loop over a clever pipeline. The rule
   outranks any preference for functional style: if the pipeline needs a comment, the
   loop wins.
-- `coding_style.md`: Beck's ordering: the pipeline wins only on reveals-intent;
+- `coding-style.md`: Beck's ordering: the pipeline wins only on reveals-intent;
   when a colleague would read the loop faster, the refactoring has no purchase.

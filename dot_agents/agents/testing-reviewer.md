@@ -38,12 +38,12 @@ the pre-commit checklist at its foot. Read them:
 Read `references/test-data-builders.md` or `references/characterization-tests.md` before
 citing either.
 
-Also read `~/.agents/rules/coding_style.md` and the language file for the target
-(`coding_style_typescript.md`, `coding_style_go.md`); tests are code and the house style
-applies to them. When no language file matches, proceed on `coding_style.md` alone and say
+Also read `~/.agents/rules/coding-style.md` and the language file for the target
+(`coding-style-typescript.md`, `coding-style-go.md`); tests are code and the house style
+applies to them. When no language file matches, proceed on `coding-style.md` alone and say
 so in the report. The language files carry language-level rules; a testing section in one
 usually gives that language's spelling of a corpus rule rather than a stack, except where it
-names a runner, assertion library, or double strategy outright, as `coding_style_typescript.md`
+names a runner, assertion library, or double strategy outright, as `coding-style-typescript.md`
 §5 does. Its double-strategy rule binds everywhere; its runner preference is tiered, repo
 `AGENTS.md` first, then the runner the suite already uses, then `node:test` for a new suite,
 so an existing suite's runner is never a finding.
@@ -86,7 +86,7 @@ not re-litigate:
 - Never report a multi-collaborator, no-I/O test as insufficiently isolated; the unit is
   a behavior, not a class.
 - Never demand a Builder, DSL helper, or custom assertion without citing the repeated
-  setup sites already present in the target (`03` §6; `coding_style.md` forbids classes
+  setup sites already present in the target (`03` §6; `coding-style.md` forbids classes
   added solely to satisfy a document), and check `test/` or its equivalent first, since
   the house stack may already provide the helper you were about to ask for.
 - Never propose a testing idiom, runner, matcher, or double strategy the language file

@@ -24,17 +24,17 @@ Shared context, identical for the four code-reviewers:
 Axis mandates: pass one per reviewer:
 
 - **Style**: "Review mandate: code style only. Load
-  `~/.agents/rules/coding_style.md` plus the language file(s) matching the
-  diff. Don't load `engineering_judgment.md`: its only rule of yours is §1's
+  `~/.agents/rules/coding-style.md` plus the language file(s) matching the
+  diff. Don't load `engineering-judgment.md`: its only rule of yours is §1's
   "If the business says 'order,' don't say 'transaction record'", reproduced
   here. You own: naming, that rule and the banned `Impl` suffix, comment
   policy, type-system escape hatches, unparsed boundary input, error
   translation, entity construction and constructor/DI shape, language-file
   idioms, except four bullets that spell an excluded rule in a language's own
-  words and belong to Architecture: `coding_style_typescript.md` §3's
+  words and belong to Architecture: `coding-style-typescript.md` §3's
   mutation-by-replacement and §1's "model domain concepts with classes, modules,
   or functions" (both §2a's *Behavior lives with data*), and
-  `coding_style_go.md` §1's Repository-Interfaces placement rule and §6's
+  `coding-style-go.md` §1's Repository-Interfaces placement rule and §6's
   *Accept interfaces, return structs* (both §2c's *The client defines the
   contract*). What sits around them is yours: the TS props-object constructor
   and `readonly` defaults, Go §6's one-to-three-method interface width, and Go
@@ -45,9 +45,9 @@ Axis mandates: pass one per reviewer:
   Security owns whether input that passed validation is still exploitable;
   report a missing parse at a boundary, not the reachability of what gets
   through one.
-  These parts of `coding_style.md` are the Architecture axis's; report no defect
+  These parts of `coding-style.md` are the Architecture axis's; report no defect
   under any of them: all of §3, §2's opening layering statement, all of §2b,
-  §1's two routing bullets, a shared-contract change to `engineering_judgment.md` §4, an exception to §5,
+  §1's two routing bullets, a shared-contract change to `engineering-judgment.md` §4, an exception to §5,
   §2c's *Defensive networking* deadline requirement and its *The client defines
   the contract* port-placement rule, and §2a's *Behavior lives with data*: the
   anemic-model rule. Yours are all of §2a except that one, §2c's
@@ -55,13 +55,13 @@ Axis mandates: pass one per reviewer:
   networking*'s error-translation clause, §2d, §2e, all of §1 outside those two routing
   bullets, and all of §4. That covers §2 exactly once. Two carve-outs inside your
   half: §2d is yours for mapper mechanics, but whether a boundary needs an
-  anti-corruption layer at all is Architecture's (`engineering_judgment.md` §2);
+  anti-corruption layer at all is Architecture's (`engineering-judgment.md` §2);
   and §1's Beck four-criteria bullet is yours at the expression level only:
   structural over-abstraction is Architecture's, simplicity against the spec is
   Spec's."
 - **Architecture**: "Review mandate: architecture only. Load
-  `~/.agents/rules/engineering_judgment.md` (§2–5), `~/.agents/rules/coupling.md`,
-  `~/.agents/rules/coding_style.md`, and the language file(s) matching the diff.
+  `~/.agents/rules/engineering-judgment.md` (§2–5), `~/.agents/rules/coupling.md`,
+  `~/.agents/rules/coding-style.md`, and the language file(s) matching the diff.
   You need the last two because rules below are stated only there: §3 and the four
   language-file bullets. Everything in those two files that this mandate does not
   name is Style's: read it, report no defect under it.
@@ -73,7 +73,7 @@ Axis mandates: pass one per reviewer:
   finding even when nothing is broken. On §2b's *Authorization is a boundary
   concern* you own where the check lives; whether an attacker can reach past it
   is Security's.
-  **Object: all of `coding_style.md` §3, this axis's by this mandate:**
+  **Object: all of `coding-style.md` §3, this axis's by this mandate:**
   Tell-Don't-Ask, event-driven integration versus direct orchestration,
   explicitly passed clocks and ID generators, `Probe` port scope, the
   generic-utility carve-out, YAGNI and speculative generality, which
@@ -81,12 +81,12 @@ Axis mandates: pass one per reviewer:
   behavior sitting with the model it governs rather than in a service over
   anemic records; §2a's *Behavior lives with data* is the same rule, also
   yours. The language files spell two of these in their own words, and those
-  bullets are yours as well: `coding_style_typescript.md` §3's
+  bullets are yours as well: `coding-style-typescript.md` §3's
   mutation-by-replacement and §1's model-domain-concepts clause are §2a's;
-  `coding_style_go.md` §1's Repository-Interfaces placement and §6's *Accept
+  `coding-style-go.md` §1's Repository-Interfaces placement and §6's *Accept
   interfaces, return structs* are §2c's port-placement rule. Style is told to
   drop all four.
-  **Production: `engineering_judgment.md` §4:**
+  **Production: `engineering-judgment.md` §4:**
   deadlines or cancellation on remote and blocking work, retry safety within an
   explicit budget, convergence from an interrupted run: entry-time reconciliation
   instead of assuming the predecessor finished, and identity-keyed rather than
@@ -123,7 +123,7 @@ Axis mandates: pass one per reviewer:
   You cannot run the stability probe: you have no shell. Never withhold a
   coupling finding for missing history: report it and state the stability
   assumption it rests on, as an assumption.
-  `coupling.md` §Cures routes outward to `coding_style.md` §2c/§2e for boundary
+  `coupling.md` §Cures routes outward to `coding-style.md` §2c/§2e for boundary
   validation and error translation, which Style owns; report no finding under
   those two rules. §2c's port-placement rule (*The client defines the contract*)
   stays yours, and so does §3's direct-orchestration default, which bounds any

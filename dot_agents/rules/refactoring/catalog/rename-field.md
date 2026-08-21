@@ -52,10 +52,10 @@ if (account.balance < 0) notifyOverdraft(account.holder);
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: name things in the domain's language: misaligned
+- `engineering-judgment.md`: name things in the domain's language: misaligned
   field names cause misaligned models, and this refactoring is the repair.
-- `coding_style.md`: domain models keep schemas and wire formats out: when the
+- `coding-style.md`: domain models keep schemas and wire formats out: when the
   stored or serialized name must stay, the translation belongs at the boundary mapper,
   not as a permanently wrong domain name.
-- `coding_style.md`: surgical execution: rename the field the task establishes is
+- `coding-style.md`: surgical execution: rename the field the task establishes is
   wrong; a vocabulary sweep across the model is its own agreed task.

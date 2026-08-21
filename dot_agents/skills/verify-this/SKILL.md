@@ -22,7 +22,7 @@ states what to hand them); a `/verify-this` verdict never stands in for it.
 Before touching anything, rewrite the claim as *condition → metric → threshold*. "The fix
 works" isn't falsifiable; "under concurrent writes, the retry succeeds within 3 attempts"
 is. If the user's claim doesn't reduce to this shape, ask what would prove it wrong before
-gathering evidence; guessing the threshold defeats the point (engineering_judgment.md §1,
+gathering evidence; guessing the threshold defeats the point (engineering-judgment.md §1,
 facts before theories).
 
 ## Baseline, then treatment
@@ -46,7 +46,7 @@ observation you didn't make.
 ## The failure modes this guards against
 
 This skill exists because these happen by default; treat each as active, not
-hypothetical. The first four mirror `engineering_judgment.md` §6 (edit both); "just
+hypothetical. The first four mirror `engineering-judgment.md` §6 (edit both); "just
 produced" below is this skill's stricter reading of §6's "only tool output counts":
 
 - **Fabricated verification**: "tests pass" without having run them. Only tool output you

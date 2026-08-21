@@ -106,7 +106,7 @@ criteria, or docs (`--parent` for a slice of the feature, `--dep` for ordering).
 Closing a card (`-s Done`, guard-checked) records the outcome on the card:
 
 - `--final-summary` carries Landed and Next.
-- Left-over items route by their `reporting_findings.md` disposition: a Blocking
+- Left-over items route by their `reporting-findings.md` disposition: a Blocking
   item becomes a new card without asking; a Decide item becomes a card only after
   the user says yes; a Noted item becomes a note on the card.
 - `partial` and `abandoned` labels go on only at the user's direction, with the
@@ -138,4 +138,4 @@ A card note is an implementation note, written with `backlog task edit <id>
 `/handoff`'s state unless replacing is the intent.
 
 The CLI behavior this file asserts is probed, not documented; evidence:
-`instruction_external_facts.md` §backlog.md CLI.
+`instruction-external-facts.md` §backlog.md CLI.

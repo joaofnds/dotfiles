@@ -31,7 +31,7 @@ requirements, no diff, no artifact-type hint, no output instruction:
 ## The target
 
 A real corpus file, not a fixture: "from a real caller" is the point. It cites
-`reporting_findings.md` and `AGENTS.md` §Autonomy, so those are ordinary
+`reporting-findings.md` and `AGENTS.md` §Autonomy, so those are ordinary
 evidence reads, not scope creep. Reads beyond the target, its cited files, and the
 reviewer's own declared dependencies are the scope creep worth recording.
 
@@ -56,8 +56,8 @@ wrong, is missing this repo's `AGENTS.md` convention.
 6. Returned inline, unprompted: §Output format's "**Return inline.**" makes inline the
    default, so a caller that says nothing should still get it inline rather than a file
    write.
-7. Reads its declared dependencies: `instruction_failure_modes.md` (§Failure-mode
-   vocabulary), `writing_instructions.md` (§The bar), and `artifact-class-checks.md`
+7. Reads its declared dependencies: `instruction-failure-modes.md` (§Failure-mode
+   vocabulary), `writing-instructions.md` (§The bar), and `artifact-class-checks.md`
    §Per-file budgets (read on every review).
 8. Scope held: no review of files the caller did not name: cited files and declared
    dependencies appear as evidence, never as verdict-bearing targets.

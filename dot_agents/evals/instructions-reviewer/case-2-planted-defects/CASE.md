@@ -9,7 +9,7 @@ it is a rule the reviewer carries and did not apply.
 *(Answer key re-derived 2026-08-17 for the post-prune reviewer: the store citation
 expected under P7 changed form, §7's checks now live behind
 `agents/references/artifact-class-checks.md`, and D2 moved from decoy to judgement call
-because the corpus bar `writing_instructions.md` reversed the house position on inline
+because the corpus bar `writing-instructions.md` reversed the house position on inline
 incident dates. The fixture is untouched: line numbers stand.)*
 
 ## Input
@@ -64,7 +64,7 @@ Severities are the expected rank, not a pass condition on their own: see scoring
 6. P7 reported per the "Release-coupled facts follow their recorded status" Operating
    note: the store's §Deprecated model mechanics carries `budget_tokens`' three-tier
    status and its last-checked state (the Opus 5 / Fable 5 release pages), so the
-   expected citation is `instruction_external_facts.md` §Deprecated model mechanics: a
+   expected citation is `instruction-external-facts.md` §Deprecated model mechanics: a
    severity-bearing finding, not an unverified dependency note.
 7. Each finding carries all four parts: Quote, Severity, Why (named failure mode),
    Suggest (concrete rewrite).

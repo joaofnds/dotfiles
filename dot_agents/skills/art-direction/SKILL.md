@@ -5,15 +5,15 @@ description: Develop or implement a distinctive visual direction for new or subs
 
 <!-- Vendored from Anthropic's frontend-design skill; owned copy, local edits win on
      re-sync. Keep this name distinct from the upstream skill's: skillOverrides keys
-     match by name (`instruction_external_facts.md` §Harness mechanics), so sharing it would let "frontend-design": "off" disable this copy. -->
+     match by name (`instruction-external-facts.md` §Harness mechanics), so sharing it would let "frontend-design": "off" disable this copy. -->
 
 # Art Direction
 
-**Wrong skill if:** the change is a scoped fix, or the work must preserve an established visual system → follow `coding_style_frontend.md` and open no new direction.
+**Wrong skill if:** the change is a scoped fix, or the work must preserve an established visual system → follow `coding-style-frontend.md` and open no new direction.
 
 Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take one real aesthetic risk you can justify.
 
-`coding_style_frontend.md` owns the convention floor: tokens, spacing scale, icon set,
+`coding-style-frontend.md` owns the convention floor: tokens, spacing scale, icon set,
 component primitives, the accessibility floor, responsive breakpoints. Don't restate it
 here and don't relitigate it: this skill decides taste, that file decides correctness.
 
@@ -52,7 +52,7 @@ they arrive regardless of subject, so they are defaults rather than choices.
 Poppins throughout, a purple-to-blue gradient hero, `rounded-2xl` cards in a three-column
 feature grid, centered everything, untouched shadcn grays and default-state buttons, Lucide
 icons used as decoration, a vague aspirational headline. Reaching for shadcn/ui and Tailwind,
-which `coding_style_frontend.md` prescribes, puts you one step from this look. Those
+which `coding-style-frontend.md` prescribes, puts you one step from this look. Those
 components are the right floor; their defaults are not a direction.
 
 *(Both lists are calibration by observation, not measurement, against Opus 5 /
@@ -94,7 +94,7 @@ plan proves nothing. Render it and look:
 
 1. Serve the page and screenshot it, at desktop width and at 320px.
 2. Read each screenshot against the file's **Tokens** section, one line at a time. A palette value that never appears, a display face that silently fell back, a signature element that reads as ordinary; each is a defect, not a nuance.
-3. Walk the page against `coding_style_frontend.md` §6 in full: visible focus and reduced motion, plus the items a palette or a signature element can break: color as the sole carrier of meaning, accessible names on icon-only controls, hit-target size.
+3. Walk the page against `coding-style-frontend.md` §6 in full: visible focus and reduced motion, plus the items a palette or a signature element can break: color as the sole carrier of meaning, accessible names on icon-only controls, hit-target size.
 
 Fix what the screenshots show, then re-shoot. **If you cannot render in this environment,
 say so plainly and mark the direction unverified**; never report visual work as done on the

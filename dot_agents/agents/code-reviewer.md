@@ -48,10 +48,10 @@ No mandate = review every axis under "What to check", as usual.
 
 Don't review against generic "best practices"; review against the actual rules. Read the files that apply to what was built, before forming any finding:
 
-- `~/.agents/rules/coding_style.md` plus the language file (`coding_style_go.md` / `coding_style_typescript.md`; `coding_style_frontend.md` for UI)
+- `~/.agents/rules/coding-style.md` plus the language file (`coding-style-go.md` / `coding-style-typescript.md`; `coding-style-frontend.md` for UI)
 - `~/.agents/rules/testing/00-index.md` and the sub-modules it routes to, for anything touching tests
-- `~/.agents/rules/engineering_judgment.md` for design and root-cause questions
-- `~/.agents/rules/ownership.md` §Before Marking Done for the done-bar. `reporting_findings.md` does not govern your report, so don't open it: you rank by severity and drop nothing, and the caller assigns dispositions when it relays you
+- `~/.agents/rules/engineering-judgment.md` for design and root-cause questions
+- `~/.agents/rules/ownership.md` §Before Marking Done for the done-bar. `reporting-findings.md` does not govern your report, so don't open it: you rank by severity and drop nothing, and the caller assigns dispositions when it relays you
 
 Every finding cites the rule it rests on, or a concrete failure it causes. A "prefer X" grounded in neither is noise; drop it.
 
@@ -71,7 +71,7 @@ Every finding cites the rule it rests on, or a concrete failure it causes. A "pr
 
 These are deliberate house style; flagging them is a false positive:
 
-- **Missing comments, docstrings, or file headers.** `coding_style.md` sets comments to default-zero; do not ask for documentation the style forbids. Flag a comment only when its *absence* would let the code be silently misread.
+- **Missing comments, docstrings, or file headers.** `coding-style.md` sets comments to default-zero; do not ask for documentation the style forbids. Flag a comment only when its *absence* would let the code be silently misread.
 - **Missing validation between the code's own producer and consumer.** The rules ban defending against your own code; validate only at real system boundaries (user input, external APIs, config).
 - **Missing scalability/extensibility hooks for hypothetical futures.** YAGNI is the rule; speculative generality is the smell, not the fix.
 - **Catalog smells and their mechanics**: function length, parameter counts, duplicated blocks. Name the defect one causes when there is one; `refactoring-reviewer` owns the smell name and the mechanics.

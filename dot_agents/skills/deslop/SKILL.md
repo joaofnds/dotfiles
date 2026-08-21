@@ -60,7 +60,7 @@ the exact pattern, open just the file that holds it.
   repetition patterns, the span, that exhibits the pattern, and prefer the smallest edit
   that kills it. Prose that passes the Checks stays as written. On your own draft there's
   no original to preserve; rewrite freely.
-- Comment you're about to polish? Run `coding_style.md`'s test first: "will this code
+- Comment you're about to polish? Run `coding-style.md`'s test first: "will this code
   be misread or silently broken without it?" A comment that survives slop cleanup but
   fails that test gets deleted, not rewritten.
 - Commit message? Clean the body only. Leave the subject line alone; its format is a

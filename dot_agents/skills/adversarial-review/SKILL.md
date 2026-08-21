@@ -34,7 +34,7 @@ stated. (Producer skills call this gate automatically; see "As a producer gate".
 - **How to verify**: the test command and how to run it. Tell it to run things,
   not to trust that they pass.
 - **The mandate**: open with the read-only clause
-  (`~/.agents/rules/subagent_spawning.md` §A review spawn is read-only), then: "Assume
+  (`~/.agents/rules/subagent-spawning.md` §A review spawn is read-only), then: "Assume
   there are problems and find them. Default to skeptical. Cite
   `file:line` and give a concrete repro or counterexample for each finding; drop anything
   you can't substantiate by a command or by a stated argument. Label each finding
@@ -48,7 +48,7 @@ stated. (Producer skills call this gate automatically; see "As a producer gate".
   `testing-reviewer` and `instructions-reviewer` rank on their own; don't restate this one
   at them. Either way a Blocker or Major here always names a defect, so each takes a
   disposition and never the Advisory route; a Minor may take it
-  (`~/.agents/rules/reporting_findings.md` §Reading a reviewer's severity ladder; edit
+  (`~/.agents/rules/reporting-findings.md` §Reading a reviewer's severity ladder; edit
   both).
 
 ## Withhold: this is the point
@@ -86,7 +86,7 @@ skill says so out loud.)
 - It fires when the artifact ratifies something expensive to reverse: an approach, a
   lean, a plan. Skipping must be said out loud, never done silently.
 - Fold or explicitly defer each material finding before calling it done; a deferral takes
-  a disposition (`~/.agents/rules/reporting_findings.md`) and closes the finding for the
+  a disposition (`~/.agents/rules/reporting-findings.md`) and closes the finding for the
   loop's purpose, never for the report; a finding that only restates what's already written
   isn't material. One that invalidates the artifact's core (the lean, the approach) reopens
   the producing stage; don't edit around it.
@@ -99,7 +99,7 @@ skill says so out loud.)
   fix changed a claim about how code, tooling, or the platform behaves, or repaired a
   Blocker in a way its probe cannot confirm; name the reason. One rerun at most; after
   it, proceed regardless: give every open defect a disposition
-  (`~/.agents/rules/reporting_findings.md`), list every open advisory, and hand them to
+  (`~/.agents/rules/reporting-findings.md`), list every open advisory, and hand them to
   the user. A finding that reopens the producing stage ends this gate; the redrafted
   artifact gets its own single round; tell the user why. If the user asks to run until the
   report is clean, say first what the residue will look like; a skeptical reviewer on a
@@ -120,7 +120,7 @@ Format, worst first:
 > **[Severity] [Blocking | Decide | Noted]** `file:line`: <the reviewer's finding, verbatim or near-verbatim>
 
 The disposition is yours, not the reviewer's, and it never edits the reviewer's words
-(`~/.agents/rules/reporting_findings.md`). A finding that names no defect takes that
+(`~/.agents/rules/reporting-findings.md`). A finding that names no defect takes that
 file's **Advisory** route instead of a disposition.
 
 Every finding gets listed, including the ones that invalidate what you just did:

@@ -17,7 +17,7 @@ does matter.
 
 *(Answer key re-derived 2026-08-17 for the post-prune reviewer: §1, §7, and §8 now route
 through `agents/references/artifact-class-checks.md`, §6 is "Re-check triggers", and the
-corpus bar `writing_instructions.md` is a declared read. The fixture was repaired the same
+corpus bar `writing-instructions.md` is a declared read. The fixture was repaired the same
 day: the two authored defects the 2026-07-25 run surfaced are fixed and the examples now
 state their values come from the diff, closing the confound recorded in
 `results/2026-07-25-case-1.md`. The gate never fires on `evals/`, so nothing in the loop
@@ -72,7 +72,7 @@ Scored in this order.
 3. Header block complete: `**Tier:** sub-agent system prompt`, `**Size:**` stated against
    the 30–150 budget.
 4. `## Files examined` lists the fixture as `target` and `examined`. The reviewer's
-   declared reads, `writing_instructions.md`, `instruction_failure_modes.md`,
+   declared reads, `writing-instructions.md`, `instruction-failure-modes.md`,
    `artifact-class-checks.md`, may appear as evidence; that is conformant, not scope
    creep.
 5. Returned inline, not written to a file.

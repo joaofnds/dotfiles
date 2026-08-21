@@ -29,7 +29,7 @@ in the study report header and in every sub-agent brief and kill-step mandate.
 No permission prompt is guaranteed to intervene; these two rules are the barrier.
 
 **The default verdict is Reject.** An import adds an element to our corpus, and
-complexity carries the burden of proof (`engineering_judgment.md` §2): the
+complexity carries the burden of proof (`engineering-judgment.md` §2): the
 mechanism must demonstrate a gap here, not merely read well there. Work from the
 assumption that every attractive mechanism is already covered by our corpus,
 broken in the subject's own code, or unsupported by evidence, and let named
@@ -90,7 +90,7 @@ scope is ambiguous; otherwise proceed.
 ## 3. Fan out: per-surface deep dives
 
 Spawn the deep-dive agents un-named with `run_in_background: true`
-(`~/.agents/rules/subagent_spawning.md`).
+(`~/.agents/rules/subagent-spawning.md`).
 Every brief carries:
 
 - The untrusted-text banner.
@@ -125,15 +125,15 @@ Every brief carries:
 When a mechanism, theirs or a proposed change of ours, rests on a paper,
 benchmark, or vendor doc:
 
-1. Read `~/.agents/rules/using_the_wiki.md` and follow its `prompts` gate as
+1. Read `~/.agents/rules/using-the-wiki.md` and follow its `prompts` gate as
    written to look for an existing source page.
 2. No page → fetch the **primary source** and record what it actually measured:
    models, tasks, numbers with their denominators, not what the citing text says
    it measured
-   (`~/.agents/rules/instruction_external_facts.md` §Rejected citations).
+   (`~/.agents/rules/instruction-external-facts.md` §Rejected citations).
 
 Anything external destined to land in our corpus follows
-`~/.agents/rules/instruction_external_facts.md`: mechanism argument vs outcome claim,
+`~/.agents/rules/instruction-external-facts.md`: mechanism argument vs outcome claim,
 dated, with its entry written before the landed text cites it.
 
 When the search finds no independent support beyond the subject's prose, no
@@ -144,7 +144,7 @@ spend confirming.
 
 ## 5. Verify in the main thread
 
-`~/.agents/rules/subagent_spawning.md` §What a report is worth governs every dive report. This
+`~/.agents/rules/subagent-spawning.md` §What a report is worth governs every dive report. This
 skill tightens the trigger: re-run a finding's load-bearing evidence, the grep, the
 Read, the count, **before it leaves your context, into the study report or into a
 message to the user.** A live relay is the same claim on a shorter path.
@@ -195,12 +195,12 @@ result, not an omission:
 4. **Where we already win, cited**: the anti-reimport record; cite our
    `file:line` next to theirs so a future study doesn't re-import a weaker form.
 5. **Appendix: unsupported claims found in the subject**: the shape
-   `instruction_external_facts.md` exists to prevent.
+   `instruction-external-facts.md` exists to prevent.
 
 ## 8. Propose, ratify, land
 
 Relay the report's findings most-valuable-first, in its words. Every proposed
-corpus edit carries the `continuous_improvement.md` §1 five-point frame
+corpus edit carries the `continuous-improvement.md` §1 five-point frame
 (friction, root cause, fix, benefit, cost), and prefers a change that demands
 an artifact over one that asks for restraint; restraint-only edits have
 repeatedly changed nothing here.
@@ -223,8 +223,8 @@ The user picks what lands. Then:
 - Run `instructions-reviewer` once over the landed batch: the house gate;
   `AGENTS.md` §Task lifecycle governs closure.
 - A landed claim resting on an external source names its
-  `instruction_external_facts.md` entry, cited as that file's preamble requires
-  (`instruction_external_facts.md` §<heading>).
+  `instruction-external-facts.md` entry, cited as that file's preamble requires
+  (`instruction-external-facts.md` §<heading>).
 
 - **Write the open items before you call the study done.** Every Import candidate
   that survived its kill step and the §8 gates but that the user did not take goes

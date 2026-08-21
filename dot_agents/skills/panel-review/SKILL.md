@@ -21,10 +21,10 @@ description: >
 You are the orchestrator: you build the briefs, arbitrate the findings, and write
 the report; you don't review the code yourself.
 
-Read `~/.agents/rules/backlog_board.md` before any board read or write. Move the work's
+Read `~/.agents/rules/backlog-board.md` before any board read or write. Move the work's
 card into Review before spawning reviewers (given no card, create one there) and
 return it to Done only when every finding in the numbered list carries a disposition (§6); a card first
-reaching Done here closes per `backlog_board.md` §Closeout, verdict in the final summary.
+reaching Done here closes per `backlog-board.md` §Closeout, verdict in the final summary.
 
 ## 1. Gather inputs
 
@@ -47,7 +47,7 @@ missing; never invent it:
 
 Spawn six agents, each un-named with `run_in_background: true`, five when the
 diff touches no test file, so they run concurrently and each report arrives on
-its own notification (`~/.agents/rules/subagent_spawning.md`). The six: four
+its own notification (`~/.agents/rules/subagent-spawning.md`). The six: four
 `code-reviewer` agents, one per axis; one
 `testing-reviewer`, the fifth verdict axis; and one `refactoring-reviewer`, the
 advisory track. Each code-reviewer gets the same shared context plus one axis
@@ -56,7 +56,7 @@ mandate.
 Read `~/.agents/skills/panel-review/references/axis-mandates.md` before spawning; it holds
 the shared context and the four axis mandates. Paste the shared block plus one axis mandate
 into each `code-reviewer` brief **verbatim**, a paraphrase breaks the exactly-once partition
-of `coding_style.md` §2, and the specialist diff-seed block into each specialist brief.
+of `coding-style.md` §2, and the specialist diff-seed block into each specialist brief.
 
 `testing-reviewer` is the fifth **verdict axis**: a defective test in the patch
 is a defect, not debt. Skip it entirely when the diff touches no test file, and
@@ -87,7 +87,7 @@ then:
 - A reviewer that strayed outside its mandate: fold the finding into the
   owning axis's set if it stands; never double-count.
 - **An arbitration resting on the repo's `AGENTS.md` / `CLAUDE.md` is a precedence
-  claim**, and `coding_style.md`'s opening precedence paragraph governs it whether or not you loaded that
+  claim**, and `coding-style.md`'s opening precedence paragraph governs it whether or not you loaded that
   file: quote the sentence you are ranking above the reviewer's rule, with its path. No
   quotable sentence means the repo does not state it; relay the disagreement to the
   user unresolved, and leave the finding at the severity its reviewer gave it.
@@ -101,7 +101,7 @@ then:
 
 ### Verdict-bearing or advisory
 
-Mirrored in `~/.agents/rules/reporting_findings.md` §Dispositions, which states the same
+Mirrored in `~/.agents/rules/reporting-findings.md` §Dispositions, which states the same
 test for reporting outside a panel; edit both.
 
 The refactoring track, the testing axis, and the Architecture axis's coupling
@@ -147,9 +147,9 @@ in the patch: it moves the verdict to Fail like any other untagged Blocker.
 ## 4. Verify: the kill step
 
 For every **Blocker**, spawn a skeptic (general agent), un-named,
-`run_in_background: true`, `model: sonnet` (`~/.agents/rules/subagent_spawning.md`
+`run_in_background: true`, `model: sonnet` (`~/.agents/rules/subagent-spawning.md`
 §Model owns this choice; edit both), mandated to refute it. Open the brief with the
-read-only clause (`~/.agents/rules/subagent_spawning.md` §A review spawn is
+read-only clause (`~/.agents/rules/subagent-spawning.md` §A review spawn is
 read-only). Majors skip the kill step:
 
 > Try to refute this review finding against the actual code; read the code
@@ -270,14 +270,14 @@ failed required suite → Fail; a surviving Major or Minor → Pass with revisio
 surviving in the numbered list → Pass.
 Advisory structural items, `[pre-existing]`-tagged Blockers, and findings §6 dispositioned
 **Noted** never move it. A Blocker or Major you were about to disposition Noted is a signal
-the disposition is wrong; re-check it against `reporting_findings.md`: a real defect whose
+the disposition is wrong; re-check it against `reporting-findings.md`: a real defect whose
 trigger resists cheap probing is **Decide**, never Noted.
 
 ## 6. Recommend the next route
 
 Give every finding **in the numbered list** a disposition, plus the trigger Blocking and
 Decide require (revert-test evidence stands in for it on a verdict-bearing smell), before
-relaying it; `~/.agents/rules/reporting_findings.md` governs the report, relayed findings
+relaying it; `~/.agents/rules/reporting-findings.md` governs the report, relayed findings
 included. **Noted** findings move out of the numbered list into **No action recommended**;
 the numbered list carries Blocking and Decide only. Structural opportunities take that
 file's advisory route instead: evidence and cost, no disposition, no trigger.

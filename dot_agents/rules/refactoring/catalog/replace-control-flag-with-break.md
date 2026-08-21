@@ -58,9 +58,9 @@ for (const account of accounts) {
 
 ## House-rule interactions
 
-- `coding_style.md`: boring control flow, "early returns over clever
+- `coding-style.md`: boring control flow, "early returns over clever
   expression-level tricks": the flag is the opposite of boring, flow encoded as
   mutable state, and this refactoring restores the plain form.
-- `coding_style.md`: move understanding into the code: what the flag made the
+- `coding-style.md`: move understanding into the code: what the flag made the
   reader reconstruct (when does this loop actually stop?) the `break` states at the
   exact spot it happens.

@@ -56,9 +56,9 @@ class Motorcycle extends Vehicle {}
 
 ## House-rule interactions
 
-- `coding_style.md`: behavior lives with data, read in both directions: the field
+- `coding-style.md`: behavior lives with data, read in both directions: the field
   belongs beside the methods that govern it, and a base-class field governed by one
   subclass's methods violates the co-location this rule demands.
-- `engineering_judgment.md`: code is a liability: a never-meaningful inherited
+- `engineering-judgment.md`: code is a liability: a never-meaningful inherited
   field is storage plus reader-confusion with zero value; sinking it is deletion from
   everywhere it did not belong.

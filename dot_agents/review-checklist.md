@@ -5,7 +5,7 @@ that owns each item today.
 
 **This is a reference, not an instruction.** Nothing loads it, no mandate names it, and no
 reviewer reads it at review time: the rules do the work, as they did before this file
-existed. One inbound pointer exists: `using_the_wiki.md` treats §Sources as one of four
+existed. One inbound pointer exists: `using-the-wiki.md` treats §Sources as one of four
 mirrors of the qmd-scoping fact, so edit that section in step with the other three. Its
 only job is to answer two questions at a glance: what are we checking, and what are we
 not. Add, cut, and reword lines freely; nothing downstream breaks.
@@ -33,7 +33,7 @@ this line's source?" is answered by the line text alone.
 "when the requirement calls for it", "in proportion to demonstrated complexity", "unless
 documented otherwise". An unmarked line is stated without qualification in its source.
 
-The gradient is easy to lose, and losing it inverts a rule. `coding_style.md` lines 7–10
+The gradient is easy to lose, and losing it inverts a rule. `coding-style.md` lines 7–10
 gate the entire §2 architectural apparatus: apply the patterns *"in proportion to
 demonstrated domain and integration complexity"*, and *"do not introduce classes, ports,
 mappers, DI, or messaging solely to satisfy this document."* A binary question about a port
@@ -56,12 +56,12 @@ the marker.
 
 **The obstacle is adoption, not access.** A 2026-07-30 audit confirmed what this section
 already claimed: **no mandate names the wiki or these lines**, so no `‡` line is enumerated
-to any reviewer as written. `coding_style.md` and `engineering_judgment.md` each carry a
-conditional pointer to `using_the_wiki.md`, so a reviewer that loads either *sees* the
+to any reviewer as written. `coding-style.md` and `engineering-judgment.md` each carry a
+conditional pointer to `using-the-wiki.md`, so a reviewer that loads either *sees* the
 pointer, and cannot follow it, per the next paragraph. Either way nothing enumerates these
 lines. Treat them as a promotion backlog, not a live checklist.
 
-Reaching a page needs Bash, since `using_the_wiki.md` prescribes `qmd`, and every reviewer's
+Reaching a page needs Bash, since `using-the-wiki.md` prescribes `qmd`, and every reviewer's
 `tools:` is `Read, Grep, Glob`. That is downstream of adoption and not worth fixing on its
 own: a reviewer with Bash still checks nothing here, and read-only is load-bearing in all
 three reviewer definitions. Promote a line and the access question resolves with it: the
@@ -133,13 +133,13 @@ authority. Its test-facing lines go to §E for the same reason: the smell taxono
 Meszaros's, and Feathers's characterization discipline is a separate lineage that §E's
 authority files never mention.
 
-**Deliberately absent: everything a diff cannot show.** `engineering_judgment.md` §4–5 carry
+**Deliberately absent: everything a diff cannot show.** `engineering-judgment.md` §4–5 carry
 SLOs and error budgets, the golden signals, DORA metrics, blameless postmortems, and XP
 contributes pair programming and small releases. Every one belongs to an author on the list
 above, and none is checkable by reading a changeset. The Architecture mandate reaches the same
 verdict in its own words: "Skip the SLO and error-budget claim and MTTR-over-MTBF: a patch
 cannot violate a priority." Listing them would grow this file without growing what it catches,
-which is the burden-of-proof failure `engineering_judgment.md` §2 names. They govern how the
+which is the burden-of-proof failure `engineering-judgment.md` §2 names. They govern how the
 work is organized, not whether this change is sound.
 
 **Toil is the exception, and it is in §B.** The same mandate carves it back in: "*Eliminate
@@ -151,8 +151,8 @@ than a priority: see §B Production readiness.
 
 ## §A Style: `code-reviewer`, Style mandate
 
-Authority: `coding_style.md`, plus the language file matching the diff, with two
-exceptions. The domain-language naming rule lives in `engineering_judgment.md` §1, which
+Authority: `coding-style.md`, plus the language file matching the diff, with two
+exceptions. The domain-language naming rule lives in `engineering-judgment.md` §1, which
 this axis does not load, so the Style mandate quotes it inline instead. And four
 language-file bullets spell a rule §A does not own: see the routing lines below. The
 Style reviewer names nothing from the Fowler catalog; §F owns those.
@@ -162,136 +162,136 @@ mandate enumerates exactly this ownership ("naming, that rule and the banned `Im
 comment policy, type-system escape hatches, unparsed boundary input, error translation,
 entity construction and constructor/DI shape, language-file idioms … and hand-edits to
 generated files"). Every individual line below
-is **derived**: `coding_style.md` and the language files are manifestos, and no instruction
+is **derived**: `coding-style.md` and the language files are manifestos, and no instruction
 anywhere walks their bullets one by one. Lines marked `‡` are neither: see "How to read a
 line".
 
 ### Naming
 
-- Do names use the domain's language rather than a technical synonym: "order", not "transaction record"? *(`engineering_judgment.md` §1)*
-- Is any class named `<Something>Impl`? *(`coding_style.md` §1)*
-- Does an interface's name state a capability or agent noun rather than restate its single implementation? *(`coding_style_go.md` §6, §7)*
-- Do variable names scale with scope: short inside a few lines, descriptive across a function or package? *(`coding_style_go.md` §7)*
-- ‡ Does a new service class name something in the domain, or is it a `Manager`-shaped "doer"? Evans warns against names that "have no state of their own nor any meaning in the domain beyond the operation they host." Naming only. §B owns whether the entity holds behavior at all (`coding_style.md` §2a) and whether a *service* is the wrong home for it (§3, Object level); §F owns the structural shape as Data Class. *(wiki: Anemic Domain Model)*
+- Do names use the domain's language rather than a technical synonym: "order", not "transaction record"? *(`engineering-judgment.md` §1)*
+- Is any class named `<Something>Impl`? *(`coding-style.md` §1)*
+- Does an interface's name state a capability or agent noun rather than restate its single implementation? *(`coding-style-go.md` §6, §7)*
+- Do variable names scale with scope: short inside a few lines, descriptive across a function or package? *(`coding-style-go.md` §7)*
+- ‡ Does a new service class name something in the domain, or is it a `Manager`-shaped "doer"? Evans warns against names that "have no state of their own nor any meaning in the domain beyond the operation they host." Naming only. §B owns whether the entity holds behavior at all (`coding-style.md` §2a) and whether a *service* is the wrong home for it (§3, Object level); §F owns the structural shape as Data Class. *(wiki: Anemic Domain Model)*
 
 ### Comments
 
-- Would the code be misread or silently broken without this comment? If not, it goes. *(`coding_style.md` §1)*
-- Were the three moves exhausted before the comment: clearer name, extracted function, rationale moved to the design record? *(`coding_style.md` §1)*
-- Does any comment describe the *edit*: what changed, what it replaced, why it was chosen? That belongs in the commit message. *(`coding_style.md` §1)*
-- Does a config, data, or frontmatter file carry an explanatory comment? Same rule, and JSON has no comments at all. *(`coding_style.md` §1)*
+- Would the code be misread or silently broken without this comment? If not, it goes. *(`coding-style.md` §1)*
+- Were the three moves exhausted before the comment: clearer name, extracted function, rationale moved to the design record? *(`coding-style.md` §1)*
+- Does any comment describe the *edit*: what changed, what it replaced, why it was chosen? That belongs in the commit message. *(`coding-style.md` §1)*
+- Does a config, data, or frontmatter file carry an explanatory comment? Same rule, and JSON has no comments at all. *(`coding-style.md` §1)*
 - ‡ Is there commented-out code? "Few practices are as odious as commenting-out code. Don't do this!": the next reader will not have the courage to delete it, and source control already has it. *(wiki: Code Comments)*
 
 ### Control flow and types
 
-- Is control flow plain `if`/`else`, loops, and early returns rather than expression-level cleverness? *(`coding_style.md` §1)*
-- Does a method body written or restructured here break after a guard clause or early return, and, past two statements, at its other step boundaries? *(`coding_style.md` §1)*
-- Does any code use the language's type escape hatch: the token list is per-language, not transferable? *(`coding_style.md` §1; Go: bare type assertion, `coding_style_go.md` §6; TS: `as any` and casts to silence the compiler, `coding_style_typescript.md` §1)*
-- Is a type guessed by sniffing fields on an opaque value instead of `instanceof`, a discriminant, or a schema parse? *(`coding_style.md` §1, `coding_style_typescript.md` §1)*
-- When the compiler complains, was the upstream type fixed rather than the call site patched? *(`coding_style.md` §1)*
+- Is control flow plain `if`/`else`, loops, and early returns rather than expression-level cleverness? *(`coding-style.md` §1)*
+- Does a method body written or restructured here break after a guard clause or early return, and, past two statements, at its other step boundaries? *(`coding-style.md` §1)*
+- Does any code use the language's type escape hatch: the token list is per-language, not transferable? *(`coding-style.md` §1; Go: bare type assertion, `coding-style-go.md` §6; TS: `as any` and casts to silence the compiler, `coding-style-typescript.md` §1)*
+- Is a type guessed by sniffing fields on an opaque value instead of `instanceof`, a discriminant, or a schema parse? *(`coding-style.md` §1, `coding-style-typescript.md` §1)*
+- When the compiler complains, was the upstream type fixed rather than the call site patched? *(`coding-style.md` §1)*
 - ‡ † Does a check throw away what it just learned, returning `void` rather than a refined type the caller must hold? Then "the call site can omit it without typechecker complaint: fragile". "Treat `m ()` returns with deep suspicion." Conditional: the page calls the principle "a direction-of-travel, not a strict requirement", and notes encoding a property in the type system is sometimes "plain impractical". *(wiki: Parse, Don't Validate (King 2019))*
 
 ### Contracts the code owns both sides of
 
-- Is there a fallback branch handling a case the code's own producer decides: "if X is missing"? Make the contract mandatory and delete it. *(`coding_style.md` §1)*
-- Does the change touch a shared contract: schema, API response, event payload, queue message? The Style reviewer sees the contract touch from `coding_style.md` §1; the deploy-compatibility constraint that follows is **§B's**, since `engineering_judgment.md` §4 loads under the Architecture mandate and not this one. *(`coding_style.md` §1 → §B Production readiness)*
-- Does the change carry a suppression, lint exclusion, ignore rule, or shim to get past a tool? The Style reviewer sees the exception from `coding_style.md` §1; the design-decision judgment that follows is **§B's**, since `engineering_judgment.md` §5 loads under the Architecture mandate and not this one. *(`coding_style.md` §1 → §B Complexity and its burden of proof)*
+- Is there a fallback branch handling a case the code's own producer decides: "if X is missing"? Make the contract mandatory and delete it. *(`coding-style.md` §1)*
+- Does the change touch a shared contract: schema, API response, event payload, queue message? The Style reviewer sees the contract touch from `coding-style.md` §1; the deploy-compatibility constraint that follows is **§B's**, since `engineering-judgment.md` §4 loads under the Architecture mandate and not this one. *(`coding-style.md` §1 → §B Production readiness)*
+- Does the change carry a suppression, lint exclusion, ignore rule, or shim to get past a tool? The Style reviewer sees the exception from `coding-style.md` §1; the design-decision judgment that follows is **§B's**, since `engineering-judgment.md` §5 loads under the Architecture mandate and not this one. *(`coding-style.md` §1 → §B Complexity and its burden of proof)*
 
 ### Entities and construction
 
-**Gated.** `coding_style.md` lines 7–10 apply this whole area "in proportion to
+**Gated.** `coding-style.md` lines 7–10 apply this whole area "in proportion to
 demonstrated domain and integration complexity." A simple program with no meaningful domain
 is not failing these.
 
-- Does an entity map properties explicitly rather than by bulk merge or reflection? *(`coding_style.md` §2a; TS: props-object constructor, `coding_style_typescript.md` §3)*
-- Does a constructor take the canonical domain shape rather than a DB row, HTTP body, or wire payload? *(`coding_style.md` §2a)*
-- † Are properties `readonly` by default, with collections read-only too, not just their references? "Unless there is a documented reason to be mutable." *(`coding_style_typescript.md` §3)*
-- Do domain structs carry serialization or persistence tags? *(`coding_style_go.md` §1)*
-- Not §A's: two language-file bullets here spell a rule §B owns: `coding_style_typescript.md` §3's mutation-by-replacement and §1's model-domain-concepts clause, both of them `coding_style.md` §2a's *Behavior lives with data*. §A keeps the mechanics around them, which are the two TS lines above: the props-object constructor and `readonly` defaults. The other two routed bullets are Go's, under §Go idioms. *(→ §B Object-level structure)*
+- Does an entity map properties explicitly rather than by bulk merge or reflection? *(`coding-style.md` §2a; TS: props-object constructor, `coding-style-typescript.md` §3)*
+- Does a constructor take the canonical domain shape rather than a DB row, HTTP body, or wire payload? *(`coding-style.md` §2a)*
+- † Are properties `readonly` by default, with collections read-only too, not just their references? "Unless there is a documented reason to be mutable." *(`coding-style-typescript.md` §3)*
+- Do domain structs carry serialization or persistence tags? *(`coding-style-go.md` §1)*
+- Not §A's: two language-file bullets here spell a rule §B owns: `coding-style-typescript.md` §3's mutation-by-replacement and §1's model-domain-concepts clause, both of them `coding-style.md` §2a's *Behavior lives with data*. §A keeps the mechanics around them, which are the two TS lines above: the props-object constructor and `readonly` defaults. The other two routed bullets are Go's, under §Go idioms. *(→ §B Object-level structure)*
 
 ### Boundaries: the code-level half
 
-**Gated**, same as above: `coding_style.md` lines 7–10 forbid introducing ports, mappers,
+**Gated**, same as above: `coding-style.md` lines 7–10 forbid introducing ports, mappers,
 or DI "solely to satisfy this document."
 
-- Is every untrusted edge parsed with the project's schema validator: env config, incoming payloads, outgoing external responses? *(`coding_style.md` §2c; TS: `coding_style_typescript.md` §2)*
-- Is *destination* validated as well as shape: a well-formed URL resolving to link-local space, a valid relative path escaping its root? *(`coding_style.md` §2c)*
+- Is every untrusted edge parsed with the project's schema validator: env config, incoming payloads, outgoing external responses? *(`coding-style.md` §2c; TS: `coding-style-typescript.md` §2)*
+- Is *destination* validated as well as shape: a well-formed URL resolving to link-local space, a valid relative path escaping its root? *(`coding-style.md` §2c)*
 - ‡ † Is parsing finished before anything is acted on, or are checks sprinkled through the processing code? "Shotgun parsing" leaves the program having partly acted on input it later rejects, with state it may not be able to roll back. One named exception, in §G: authorisation may legitimately run ahead of the parse. *(wiki: Parse, Don't Validate (King 2019))*
-- Do adapters translate driver, ORM, and HTTP failures into stable port errors, keeping domain errors for domain outcomes? *(`coding_style.md` §2e; Go: `coding_style_go.md` §2)*
-- Does the change add an external call? The Style reviewer reads the deadline rule in `coding_style.md` §2c, it is stated there outright, not routed elsewhere, but does not own it: the finding is **§B's**, under Production readiness. *(`coding_style.md` §2c → §B)*
-- Do constructors accept pure dependencies, constructible in a test without the DI container? *(`coding_style.md` §2c; TS: `coding_style_typescript.md` §4)*
+- Do adapters translate driver, ORM, and HTTP failures into stable port errors, keeping domain errors for domain outcomes? *(`coding-style.md` §2e; Go: `coding-style-go.md` §2)*
+- Does the change add an external call? The Style reviewer reads the deadline rule in `coding-style.md` §2c, it is stated there outright, not routed elsewhere, but does not own it: the finding is **§B's**, under Production readiness. *(`coding-style.md` §2c → §B)*
+- Do constructors accept pure dependencies, constructible in a test without the DI container? *(`coding-style.md` §2c; TS: `coding-style-typescript.md` §4)*
 - Does a port's `@Inject` name the adapter class the module wires, with the field typed to
   the port interface, and is there any standalone token constant (symbol, string,
-  abstract-class-as-token, `{ provide: TOKEN, useClass: Adapter }`)? *(`coding_style_typescript.md` §4)*
+  abstract-class-as-token, `{ provide: TOKEN, useClass: Adapter }`)? *(`coding-style-typescript.md` §4)*
 
 ### Generated code
 
-- Was any generated file hand-edited: Swagger client, schema type, GraphQL codegen, mock file? Re-run the generator. *(`coding_style.md` §4)*
+- Was any generated file hand-edited: Swagger client, schema type, GraphQL codegen, mock file? Re-run the generator. *(`coding-style.md` §4)*
 
 ### Go idioms
 
-- Are sentinels package-level `var`s, with anything data-carrying a struct exposing `Unwrap() error`? *(`coding_style_go.md` §2)*
-- Does each layer wrap once, and each boundary translate rather than wrap? *(`coding_style_go.md` §2)*
-- Is error identity matched with `errors.Is` and data extracted with `errors.As`, never by message string? *(`coding_style_go.md` §2)*
-- Does the release `defer` sit on the line after the acquisition? *(`coding_style_go.md` §3)*
-- Is there a `defer` inside a loop: function-scoped, so it accumulates until return? *(`coding_style_go.md` §3)*
-- Does every `context.WithCancel` / `WithTimeout` have a `defer cancel()`? *(`coding_style_go.md` §3)*
-- Is the error from a deferred `Close` checked on anything written to, and explicitly discarded on a read handle? *(`coding_style_go.md` §3)*
-- Does every goroutine have a named owner that waits for it: `WaitGroup`, `errgroup`, or a done channel? *(`coding_style_go.md` §4)*
-- Does every blocking loop select on `ctx.Done()`, and every channel send have a receiver that outlives it? *(`coding_style_go.md` §4)*
-- Is a `context.Context` stored in a struct field? *(`coding_style_go.md` §4)*
-- Does a type parameter have two concrete instantiations already, and is it constrained to the smallest set that compiles? *(`coding_style_go.md` §5)*
-- Not §A's: the other two routed bullets sit here: `coding_style_go.md` §1's Repository-Interfaces placement and §6's *Accept interfaces, return structs* spell `coding_style.md` §2c's *The client defines the contract*. The *return structs* half was a line in this list until 2026-07-30; it is now §B's, under Dependency direction. §A keeps §6's interface width, below, and §1's no-tags-on-domain-structs, above. *(→ §B Dependency direction)*
-- Is any interface wider than three methods? That is an undrawn package boundary. *(`coding_style_go.md` §6)*
-- Does every method of a type use the same receiver name? *(`coding_style_go.md` §7)*
-- † Do imports match the file's existing grouping, arranged by the formatter rather than by hand? Absent a `goimports -local` or `gci` config, there is no project order to enforce. *(`coding_style_go.md` §7)*
+- Are sentinels package-level `var`s, with anything data-carrying a struct exposing `Unwrap() error`? *(`coding-style-go.md` §2)*
+- Does each layer wrap once, and each boundary translate rather than wrap? *(`coding-style-go.md` §2)*
+- Is error identity matched with `errors.Is` and data extracted with `errors.As`, never by message string? *(`coding-style-go.md` §2)*
+- Does the release `defer` sit on the line after the acquisition? *(`coding-style-go.md` §3)*
+- Is there a `defer` inside a loop: function-scoped, so it accumulates until return? *(`coding-style-go.md` §3)*
+- Does every `context.WithCancel` / `WithTimeout` have a `defer cancel()`? *(`coding-style-go.md` §3)*
+- Is the error from a deferred `Close` checked on anything written to, and explicitly discarded on a read handle? *(`coding-style-go.md` §3)*
+- Does every goroutine have a named owner that waits for it: `WaitGroup`, `errgroup`, or a done channel? *(`coding-style-go.md` §4)*
+- Does every blocking loop select on `ctx.Done()`, and every channel send have a receiver that outlives it? *(`coding-style-go.md` §4)*
+- Is a `context.Context` stored in a struct field? *(`coding-style-go.md` §4)*
+- Does a type parameter have two concrete instantiations already, and is it constrained to the smallest set that compiles? *(`coding-style-go.md` §5)*
+- Not §A's: the other two routed bullets sit here: `coding-style-go.md` §1's Repository-Interfaces placement and §6's *Accept interfaces, return structs* spell `coding-style.md` §2c's *The client defines the contract*. The *return structs* half was a line in this list until 2026-07-30; it is now §B's, under Dependency direction. §A keeps §6's interface width, below, and §1's no-tags-on-domain-structs, above. *(→ §B Dependency direction)*
+- Is any interface wider than three methods? That is an undrawn package boundary. *(`coding-style-go.md` §6)*
+- Does every method of a type use the same receiver name? *(`coding-style-go.md` §7)*
+- † Do imports match the file's existing grouping, arranged by the formatter rather than by hand? Absent a `goimports -local` or `gci` config, there is no project order to enforce. *(`coding-style-go.md` §7)*
 
 ### TypeScript idioms
 
-- Is `z.infer` used for a parsed boundary shape or behavior-free DTO, rather than to model domain behavior? *(`coding_style_typescript.md` §1)*
-- Are types readable at a glance, free of conditional-type and mapped-type gymnastics? *(`coding_style_typescript.md` §1)*
-- Does the flow run `unknown -> schema parse -> DomainClass` when the value has identity or behavior? *(`coding_style_typescript.md` §2)*
-- Does the parse use the structured-failure API where the caller needs one, returning the framework's validation error rather than a domain error? *(`coding_style_typescript.md` §2)*
+- Is `z.infer` used for a parsed boundary shape or behavior-free DTO, rather than to model domain behavior? *(`coding-style-typescript.md` §1)*
+- Are types readable at a glance, free of conditional-type and mapped-type gymnastics? *(`coding-style-typescript.md` §1)*
+- Does the flow run `unknown -> schema parse -> DomainClass` when the value has identity or behavior? *(`coding-style-typescript.md` §2)*
+- Does the parse use the structured-failure API where the caller needs one, returning the framework's validation error rather than a domain error? *(`coding-style-typescript.md` §2)*
 
 ### Frontend
 
-- Do color, spacing, type, radius, shadow, and z-index come from the scale? *(`coding_style_frontend.md` §1)*
-- Do call sites reference semantic tokens (`bg-surface`) rather than raw scale values (`bg-zinc-900`)? *(`coding_style_frontend.md` §1)*
-- † Is an arbitrary `[...]` value justified by local geometry, or is it a repeated value that wants a token? Computed transforms and one-off grid geometry may use `[...]`. *(`coding_style_frontend.md` §1)*
-- Is spacing owned by the container via `gap-*` rather than stacked `mt-*` on children? *(`coding_style_frontend.md` §2)*
-- Do two selectors fight over the same padding, making the result depend on source order? *(`coding_style_frontend.md` §2)*
-- Do sizes, weights, and line-heights come from the type scale, with display and body treated as distinct roles? *(`coding_style_frontend.md` §3)*
-- Is one icon set used, at consistent size and stroke weight? *(`coding_style_frontend.md` §4)*
-- † Is the project's existing icon set preserved? `lucide-react` / `@lucide/svelte` is a greenfield preference only. *(`coding_style_frontend.md` §4)*
-- Are buttons, inputs, dialogs, menus, and tooltips composed from the primitives layer rather than hand-rolled? *(`coding_style_frontend.md` §5)*
-- † Is the project's accessible component layer used? `shadcn/ui` / `shadcn-svelte` applies to a greenfield UI without one. *(`coding_style_frontend.md` §5)*
-- Is a copied shadcn component adjusted once at the source rather than overridden at each call site? *(`coding_style_frontend.md` §5)*
+- Do color, spacing, type, radius, shadow, and z-index come from the scale? *(`coding-style-frontend.md` §1)*
+- Do call sites reference semantic tokens (`bg-surface`) rather than raw scale values (`bg-zinc-900`)? *(`coding-style-frontend.md` §1)*
+- † Is an arbitrary `[...]` value justified by local geometry, or is it a repeated value that wants a token? Computed transforms and one-off grid geometry may use `[...]`. *(`coding-style-frontend.md` §1)*
+- Is spacing owned by the container via `gap-*` rather than stacked `mt-*` on children? *(`coding-style-frontend.md` §2)*
+- Do two selectors fight over the same padding, making the result depend on source order? *(`coding-style-frontend.md` §2)*
+- Do sizes, weights, and line-heights come from the type scale, with display and body treated as distinct roles? *(`coding-style-frontend.md` §3)*
+- Is one icon set used, at consistent size and stroke weight? *(`coding-style-frontend.md` §4)*
+- † Is the project's existing icon set preserved? `lucide-react` / `@lucide/svelte` is a greenfield preference only. *(`coding-style-frontend.md` §4)*
+- Are buttons, inputs, dialogs, menus, and tooltips composed from the primitives layer rather than hand-rolled? *(`coding-style-frontend.md` §5)*
+- † Is the project's accessible component layer used? `shadcn/ui` / `shadcn-svelte` applies to a greenfield UI without one. *(`coding-style-frontend.md` §5)*
+- Is a copied shadcn component adjusted once at the source rather than overridden at each call site? *(`coding-style-frontend.md` §5)*
 
 The six accessibility lines below are the one unconditional block in this section:
-`coding_style_frontend.md` §6 is headed "Non-Negotiable".
+`coding-style-frontend.md` §6 is headed "Non-Negotiable".
 
-- Is the markup semantic: a real `<button>`, `<nav>`, and heading hierarchy, never `<div onClick>`? *(`coding_style_frontend.md` §6)*
-- Does every control have an accessible name: a visible label, or `aria-label` on an icon-only button? *(`coding_style_frontend.md` §6)*
-- Is every interactive element keyboard-reachable with a visible focus indicator? *(`coding_style_frontend.md` §6)*
-- Is non-essential animation gated behind `prefers-reduced-motion`? *(`coding_style_frontend.md` §6)*
-- Does any state, validation, or category rely on color alone? *(`coding_style_frontend.md` §6)*
-- Are hit targets comfortably tappable (~44px) with adequate spacing? *(`coding_style_frontend.md` §6)*
-- Are base styles mobile-first, layered up with the theme's breakpoints rather than one-off widths? *(`coding_style_frontend.md` §7)*
-- Does the layout hold at ~320px? *(`coding_style_frontend.md` §7)*
-- † Is `'use client'` pushed to the leaves, with the bundle cost of its import graph accounted for? The rule is "be deliberate", not a threshold. *(`coding_style_frontend.md` §8)*
+- Is the markup semantic: a real `<button>`, `<nav>`, and heading hierarchy, never `<div onClick>`? *(`coding-style-frontend.md` §6)*
+- Does every control have an accessible name: a visible label, or `aria-label` on an icon-only button? *(`coding-style-frontend.md` §6)*
+- Is every interactive element keyboard-reachable with a visible focus indicator? *(`coding-style-frontend.md` §6)*
+- Is non-essential animation gated behind `prefers-reduced-motion`? *(`coding-style-frontend.md` §6)*
+- Does any state, validation, or category rely on color alone? *(`coding-style-frontend.md` §6)*
+- Are hit targets comfortably tappable (~44px) with adequate spacing? *(`coding-style-frontend.md` §6)*
+- Are base styles mobile-first, layered up with the theme's breakpoints rather than one-off widths? *(`coding-style-frontend.md` §7)*
+- Does the layout hold at ~320px? *(`coding-style-frontend.md` §7)*
+- † Is `'use client'` pushed to the leaves, with the bundle cost of its import graph accounted for? The rule is "be deliberate", not a threshold. *(`coding-style-frontend.md` §8)*
 - † When a design doc under `backlog/docs/` (or a legacy `.boris/design/` file) holds a ratified direction for this surface, do the palette, type roles, and signature element in the diff derive from its **Tokens** section? *(`art-direction` skill)*
 
 ---
 
 ## §B Architecture: `code-reviewer`, Architecture mandate
 
-Authority: `engineering_judgment.md` §2–5, `coupling.md`, `coding_style.md`, and the
+Authority: `engineering-judgment.md` §2–5, `coupling.md`, `coding-style.md`, and the
 language file matching the diff. The last two are loaded but only partly owned: this axis
 reports under the parts the Architecture mandate names, §3 entire, §2b, §2a's
 *Behavior lives with data*, §2c's deadline and port-placement rules, and under the four
 language-file bullets routed here from §A. The rest of both files is §A's.
 Module and production level, and object-level structure below the module boundary, which
-the Architecture mandate assigns here; `coding_style.md` §3 supplies the rationale,
+the Architecture mandate assigns here; `coding-style.md` §3 supplies the rationale,
 not the assignment. Simplicity relative to the spec is §C's; catalog smells are §F's.
 
 **Provenance: mixed.** The coupling block is *transcribed*: `coupling.md` enumerates the
@@ -299,20 +299,20 @@ five types, the stability test, and a before-reporting gate, and the Architectur
 tells the reviewer to sweep all five. **Temporal is the exception:** it is not one of the
 five, it lives beside the five types in `coupling.md` §Nygard's five types, and the
 mandate names it separately for exactly that reason. Everything unmarked is *derived* from
-`engineering_judgment.md` and `coding_style.md` prose; `‡` lines are neither, and this
+`engineering-judgment.md` and `coding-style.md` prose; `‡` lines are neither, and this
 section carries the most of them. The first three subsections are also
-gated by `coding_style.md` lines 7–10: layering, ports, and mappers apply in proportion to
+gated by `coding-style.md` lines 7–10: layering, ports, and mappers apply in proportion to
 demonstrated complexity, and none of them is introduced to satisfy a document.
 
 ### Dependency direction and boundaries
 
-- Do dependencies point inward: domain depends on nothing, use cases on domain, adapters on use cases? *(`engineering_judgment.md` §2, `coding_style.md` §2)*
-- Does the domain import a web framework, ORM, or transport type? The arrow is backward. *(`engineering_judgment.md` §2)*
-- Does a port live with the client that declares the need, not the implementation that satisfies it? *(`coding_style.md` §2c)*
-- Was the count-and-locality test re-run now that a second consumer exists? *(`coding_style.md` §2c)*
-- Was the port extracted to break a dependency or substitute an implementation, or is it an interface per class? *(`coding_style.md` §2c)*
-- Do constructors return concrete types while consumers declare the narrow interface they need? The Go spelling of §2c's port placement; §A owns interface width. *(`coding_style_go.md` §6, §1 Repository Interfaces)*
-- Is there an anti-corruption layer where an external model crosses in? Whether a boundary needs one is §B's; §A owns the mapper mechanics once it exists. *(`engineering_judgment.md` §2; mechanics `coding_style.md` §2d)*
+- Do dependencies point inward: domain depends on nothing, use cases on domain, adapters on use cases? *(`engineering-judgment.md` §2, `coding-style.md` §2)*
+- Does the domain import a web framework, ORM, or transport type? The arrow is backward. *(`engineering-judgment.md` §2)*
+- Does a port live with the client that declares the need, not the implementation that satisfies it? *(`coding-style.md` §2c)*
+- Was the count-and-locality test re-run now that a second consumer exists? *(`coding-style.md` §2c)*
+- Was the port extracted to break a dependency or substitute an implementation, or is it an interface per class? *(`coding-style.md` §2c)*
+- Do constructors return concrete types while consumers declare the narrow interface they need? The Go spelling of §2c's port placement; §A owns interface width. *(`coding-style-go.md` §6, §1 Repository Interfaces)*
+- Is there an anti-corruption layer where an external model crosses in? Whether a boundary needs one is §B's; §A owns the mapper mechanics once it exists. *(`engineering-judgment.md` §2; mechanics `coding-style.md` §2d)*
 - ‡ Does the ACL translate *concepts*, or only transport? An ACL "is not a mechanism for sending messages to another system … it is a mechanism that translates conceptual objects and actions from one model and protocol to another." *(wiki: Anti-Corruption Layer)*
 - ‡ Does the translator say what happens to an upstream value it does not recognize? The page names the mapping rules, "which upstream codes map to which downstream classifications and what to do with codes the downstream doesn't recognize", as what the ACL absorbs. *(wiki: Anti-Corruption Layer)*
 - ‡ If a facade wraps the upstream's messy interface, is it written strictly in the *upstream's* model? A facade in a third vocabulary will "at best diffuse responsibility for translation into multiple objects and overload the FACADE and at worst end up creating yet another model, one that doesn't belong to the other system or your own BOUNDED CONTEXT." *(wiki: Anti-Corruption Layer)*
@@ -321,35 +321,35 @@ demonstrated complexity, and none of them is introduced to satisfy a document.
 - ‡ Is a new repository or direct query rooted on an aggregate root? "As a corollary to the previous rule, only Aggregate roots can be obtained directly with database queries. All other objects must be found by traversal of associations." *(wiki: Aggregate)*
 - ‡ Does one transaction span two aggregates to hold an invariant together? Invariants hold inside an aggregate at every commit; "any rule that spans Aggregates will not be expected to be up-to-date at all times." *(wiki: Aggregate)*
 - ‡ Does the change add a call between peers in the same layer: a backend proxying to another backend? Peers waiting on peers share the pool that serves them, so saturation spreads and can deadlock. Go downward; tell the caller to retry elsewhere rather than proxying for it. *(wiki: Cascading Failures)*
-- Does the application layer orchestrate without holding domain logic? *(`coding_style.md` §2b)*
-- Is authorization resolved once at the boundary per route group, rather than re-derived inside a use case or left to the view? *(`coding_style.md` §2b)*
-- † Does the boundary sit at a demonstrated cost inflection, a deferred framework, database, or I/O decision, rather than at a guessed one? A cheap source-level boundary drawn early is explicitly fine; full implementation waits until ignoring it costs more than creating it. *(`engineering_judgment.md` §2)*
+- Does the application layer orchestrate without holding domain logic? *(`coding-style.md` §2b)*
+- Is authorization resolved once at the boundary per route group, rather than re-derived inside a use case or left to the view? *(`coding-style.md` §2b)*
+- † Does the boundary sit at a demonstrated cost inflection, a deferred framework, database, or I/O decision, rather than at a guessed one? A cheap source-level boundary drawn early is explicitly fine; full implementation waits until ignoring it costs more than creating it. *(`engineering-judgment.md` §2)*
 
 ### Complexity and its burden of proof
 
-- Does every added layer, dependency, or workaround trace to a demonstrated requirement? *(`engineering_judgment.md` §2)*
-- Does the patch work while adding structural complexity? That is a finding even when nothing is broken, and so is compensating for an effect whose cause the patch could have removed. *(`engineering_judgment.md` §5)*
-- Is the design resting on an untested negative assumption: "the platform can't do this", "I must handle this myself"? Name the probe. *(`engineering_judgment.md` §2)*
-- Does each new dependency carry a case against writing it inline: supply-chain surface, version churn, audit burden, onboarding cost? *(`engineering_judgment.md` §2)*
-- † Is the structure matched to the problem: transaction script for CRUD, domain model for complex rules? The rule warns against both over- and under-architecting; neither direction is a default. *(`engineering_judgment.md` §2)*
-- Is flexibility built for a future that hasn't arrived? *(`engineering_judgment.md` §2, `coding_style.md` §3)*
-- † Do scattered edits for one logical change signal coupling, or is this a protocol or schema change that correctly crosses files? "File count is evidence to inspect, not a target." *(`engineering_judgment.md` §3)*
-- Is the change working *around* a library rather than with it? A pattern of workarounds at every turn is the wrong tool or the wrong usage. A single suppression, ignore rule, exclusion, or shim is its own finding: §5 makes it a design decision that survives only with evidence that every surface that could express the intent was read and none can. *(`engineering_judgment.md` §5)*
-- Does a refusal from a linter, type checker, or test get answered by reshaping the change, rather than by narrowing what the guard sees? *(`engineering_judgment.md` §5)*
+- Does every added layer, dependency, or workaround trace to a demonstrated requirement? *(`engineering-judgment.md` §2)*
+- Does the patch work while adding structural complexity? That is a finding even when nothing is broken, and so is compensating for an effect whose cause the patch could have removed. *(`engineering-judgment.md` §5)*
+- Is the design resting on an untested negative assumption: "the platform can't do this", "I must handle this myself"? Name the probe. *(`engineering-judgment.md` §2)*
+- Does each new dependency carry a case against writing it inline: supply-chain surface, version churn, audit burden, onboarding cost? *(`engineering-judgment.md` §2)*
+- † Is the structure matched to the problem: transaction script for CRUD, domain model for complex rules? The rule warns against both over- and under-architecting; neither direction is a default. *(`engineering-judgment.md` §2)*
+- Is flexibility built for a future that hasn't arrived? *(`engineering-judgment.md` §2, `coding-style.md` §3)*
+- † Do scattered edits for one logical change signal coupling, or is this a protocol or schema change that correctly crosses files? "File count is evidence to inspect, not a target." *(`engineering-judgment.md` §3)*
+- Is the change working *around* a library rather than with it? A pattern of workarounds at every turn is the wrong tool or the wrong usage. A single suppression, ignore rule, exclusion, or shim is its own finding: §5 makes it a design decision that survives only with evidence that every surface that could express the intent was read and none can. *(`engineering-judgment.md` §5)*
+- Does a refusal from a linter, type checker, or test get answered by reshaping the change, rather than by narrowing what the guard sees? *(`engineering-judgment.md` §5)*
 
 ### Object-level structure
 
-- Do neighbors get told what to do in terms of their role, or asked for internals so the caller can decide? *(`coding_style.md` §3, `coupling.md` §Resolutions)*
-- Does domain behavior sit with the model it governs, rather than in a service manipulating anemic records? *(`coding_style.md` §3)*
-- Does an entity hold behavior, or is it getters and setters with the logic in a service? The same rule stated at the entity end. *(`coding_style.md` §2a)*
-- Is a state transition a named method returning a new instance, rather than in-place mutation or a service assembling props? The TS spelling of the same rule; §A owns the surrounding mechanics. *(`coding_style_typescript.md` §3)*
-- † Are side-effecting and replaceable dependencies constructor-injected, while pure stateless helpers are called directly? Wrapping a pure helper "adds a seam without adding control"; not a defect either way. *(`coding_style.md` §3)*
-- † Are clock, network, random, and ID generators passed explicitly where tests or lifecycle need control? The condition is the requirement for control, not the presence of the dependency. *(`coding_style.md` §3)*
-- Is a `Probe` port introduced only where business-level observability must outlive an adapter, with generic telemetry left at the adapter? *(`coding_style.md` §3)*
-- ‡ Does domain code name a logger, a metrics client, or a magic instrumentation string? The probe's API speaks the domain ("discount code lookup failed"), not the instrumentation technology, and hiding cross-cutting metadata like request ids from probe clients is the part the page calls "non-negotiable." **This line is stricter than the line above it, and than `coding_style.md` §3**: the page says "your domain classes should never have a direct reference to any instrumentation systems" and calls that rule "inviolable for domain code", where the house rule introduces a `Probe` port only where observability must outlive an adapter. The house rule governs; the page's stronger form is recorded here, not adopted. Carve-out in §G: technical code is exempt. *(wiki: Domain-Oriented Observability)*
-- † Is event-driven integration chosen because async delivery, independent ownership, or decoupled evolution demands it? Direct orchestration is the default, and `coupling.md` names events as a trade: operational and developmental coupling swapped for semantic coupling in the schema. *(`coding_style.md` §3, `coupling.md` §Cures)*
-- Is a shared utility genuinely generic (`clamp`, `slugify`), or is it a domain computation that belongs with its domain? *(`coding_style.md` §3)*
-- ‡ Does the collaborator's declared type name what the caller needs from it, or does it name a concrete class? "Program to an interface, not an implementation", where the page's "interface is the vocabulary of a collaboration: the conceptual boundary, not the Java `interface` keyword." Narrower than the port lines above, which ask whether a boundary is warranted; this asks what a call site declares once one exists. *(wiki: Design Patterns)*; house-adjacent: `engineering_judgment.md` §2 states the principle, and `coding_style_go.md` §6 spells the Go form.
+- Do neighbors get told what to do in terms of their role, or asked for internals so the caller can decide? *(`coding-style.md` §3, `coupling.md` §Resolutions)*
+- Does domain behavior sit with the model it governs, rather than in a service manipulating anemic records? *(`coding-style.md` §3)*
+- Does an entity hold behavior, or is it getters and setters with the logic in a service? The same rule stated at the entity end. *(`coding-style.md` §2a)*
+- Is a state transition a named method returning a new instance, rather than in-place mutation or a service assembling props? The TS spelling of the same rule; §A owns the surrounding mechanics. *(`coding-style-typescript.md` §3)*
+- † Are side-effecting and replaceable dependencies constructor-injected, while pure stateless helpers are called directly? Wrapping a pure helper "adds a seam without adding control"; not a defect either way. *(`coding-style.md` §3)*
+- † Are clock, network, random, and ID generators passed explicitly where tests or lifecycle need control? The condition is the requirement for control, not the presence of the dependency. *(`coding-style.md` §3)*
+- Is a `Probe` port introduced only where business-level observability must outlive an adapter, with generic telemetry left at the adapter? *(`coding-style.md` §3)*
+- ‡ Does domain code name a logger, a metrics client, or a magic instrumentation string? The probe's API speaks the domain ("discount code lookup failed"), not the instrumentation technology, and hiding cross-cutting metadata like request ids from probe clients is the part the page calls "non-negotiable." **This line is stricter than the line above it, and than `coding-style.md` §3**: the page says "your domain classes should never have a direct reference to any instrumentation systems" and calls that rule "inviolable for domain code", where the house rule introduces a `Probe` port only where observability must outlive an adapter. The house rule governs; the page's stronger form is recorded here, not adopted. Carve-out in §G: technical code is exempt. *(wiki: Domain-Oriented Observability)*
+- † Is event-driven integration chosen because async delivery, independent ownership, or decoupled evolution demands it? Direct orchestration is the default, and `coupling.md` names events as a trade: operational and developmental coupling swapped for semantic coupling in the schema. *(`coding-style.md` §3, `coupling.md` §Cures)*
+- Is a shared utility genuinely generic (`clamp`, `slugify`), or is it a domain computation that belongs with its domain? *(`coding-style.md` §3)*
+- ‡ Does the collaborator's declared type name what the caller needs from it, or does it name a concrete class? "Program to an interface, not an implementation", where the page's "interface is the vocabulary of a collaboration: the conceptual boundary, not the Java `interface` keyword." Narrower than the port lines above, which ask whether a boundary is warranted; this asks what a call site declares once one exists. *(wiki: Design Patterns)*; house-adjacent: `engineering-judgment.md` §2 states the principle, and `coding-style-go.md` §6 spells the Go form.
 - ‡ † Does new behavior arrive by subclassing where holding a collaborator would do? "Inheritance is white-box reuse: the subclass can see the parent's internals. Composition is black-box reuse: the container only knows the component's interface." Conditional: the page states it as "favor", not forbid, and names the abstract-class-versus-interface trade-off as a real choice. §F's Refused Bequest catches the degenerate end; this asks the question before the hierarchy exists. *(wiki: Design Patterns)*
 - ‡ Does a subclass override a concrete method? Feathers's rule of thumb is "Whenever possible, avoid overriding concrete methods", and failing that, "see if you can call the method you are overriding in the overriding method." The target shape: "In a normalized hierarchy, no class has more than one implementation of a method." *(wiki: Adding Features to Legacy Code)*
 - ‡ † Is a named GoF pattern introduced ahead of the problem it answers? "There is no prize for most patterns used." The page's stance is "'Refactor to patterns' not 'design with patterns upfront'", and records Gamma conceding that GoF's own speculate-ahead-for-flexibility advice contradicts YAGNI: "I matured too." Overlaps the speculative-generality line above; the addition is that a pattern name in a new class is the diff-visible tell. *(wiki: Design Patterns)*
@@ -372,12 +372,12 @@ demonstrated complexity, and none of them is introduced to satisfy a document.
 
 ### Production readiness
 
-- Are remote and blocking operations bounded by deadlines or cancellation? *(`engineering_judgment.md` §4)*
+- Are remote and blocking operations bounded by deadlines or cancellation? *(`engineering-judgment.md` §4)*
 - ‡ Does *every* blocking primitive take a timeout: resource-pool checkout and lock acquisition, not only the network call? The no-timeout version of any blocking API "should be labeled `CheckoutAndMaybeKillMySystem`." *(wiki: Stability Patterns §Timeouts)*
 - ‡ Is the downstream deadline derived from the caller's remaining time, or is it a fresh independent one? Without propagation the callee keeps working on a request the originator already abandoned. *(wiki: Cascading Failures)*
 - ‡ † Where a handler runs in stages, does it re-check the remaining budget between them? The page hedges: "it **may make sense** to check that there is enough time left to handle the request before each stage." *(wiki: Cascading Failures)*
 - ‡ † Is the deadline several orders of magnitude longer than the operation's mean latency? That is "usually bad": a small fraction of hung requests then eats the whole thread budget and most requests fail instead of few. Weak on a diff: the constant is visible, the mean usually isn't. *(wiki: Cascading Failures)*
-- Is a retried operation proven safe to repeat, within an explicit attempt or time budget? *(`engineering_judgment.md` §4)*
+- Is a retried operation proven safe to repeat, within an explicit attempt or time budget? *(`engineering-judgment.md` §4)*
 - ‡ Does the retry use randomised exponential backoff, and does only one layer of the stack retry? "Why do people always forget that you need to add a little jitter?" Three layers retrying three times each is 64 attempts on a dependency that is already returning errors because it is overloaded. *(wiki: Cascading Failures)*
 - ‡ † Does the retry happen while the caller waits? "Making the caller wait while you retry is a way to push past *their* timeout": queue the work and return now with success, failure, or queued-for-later. Hedged on the page: immediate retry is "usually" wrong because production timeouts "almost always" indicate persistent trouble. *(wiki: Stability Patterns §Timeouts)*
 - ‡ Does the error the caller sees separate an *application* failure (parameter violation) from a *system* failure (resources unavailable)? The page states this flatly and calls it the "Crucial caveat": an application failure "should NOT trip the breaker", and reporting both as "error" means "a user retrying bad input" needlessly trips an upstream one. Whether the caller should also stop retrying is a different page's claim: see the retriable/non-retriable line below. *(wiki: Stability Patterns §Fail Fast)*
@@ -387,19 +387,19 @@ demonstrated complexity, and none of them is introduced to satisfy a document.
 - ‡ Does anything this change accumulates have a matching drain: cache entries over an unbounded key space, rows, log volume? "For every mechanism that accumulates a resource, some other mechanism must recycle that resource." An unbounded cache of an infinite key space is a memory leak in slow motion. *(wiki: Stability Patterns §Steady State)*
 - ‡ † Is a new cache a *latency* cache, the system still carries expected load with it empty, or a *capacity* cache? Not a defect either way: the page's rule is that a new cache must be "either latency caches **or** … sufficiently well engineered to safely function as capacity caches." What it warns is that caches "**can** become hard dependencies", and that restarts and new clusters start cold. *(wiki: Cascading Failures)*
 - ‡ Does a cleanup block release every resource even when an earlier release throws? A `finally` closing a statement before a connection loses the connection whenever the statement's close throws; that leak is the fault that grounded an airline for three hours. *(wiki: Stability Antipatterns)*
-- ‡ Is a side effect outside the database, email, webhook, payment, published event, fired inside a transaction that can still abort? "[T]he email gets sent even if the transaction aborts." *(wiki: Transactions (ACID))* House-backed since 2026-07-31: `engineering_judgment.md` §4's related-writes rule, and the Architecture mandate sweeps it.
-- ‡ Is a retried write idempotent at the application level? The page's other named caveat is the commit-acknowledgement race: "if the server committed but the network dropped before the ack reached the client, retrying causes the transaction to run twice. Need application-level deduplication (operation IDs)." *(wiki: Transactions (ACID))* The concept is house-backed: `engineering_judgment.md` §4's retry-safety rule, checked at the retry line above; the commit-ack race and operation-ID dedup are the page's, and no rules file states them.
+- ‡ Is a side effect outside the database, email, webhook, payment, published event, fired inside a transaction that can still abort? "[T]he email gets sent even if the transaction aborts." *(wiki: Transactions (ACID))* House-backed since 2026-07-31: `engineering-judgment.md` §4's related-writes rule, and the Architecture mandate sweeps it.
+- ‡ Is a retried write idempotent at the application level? The page's other named caveat is the commit-acknowledgement race: "if the server committed but the network dropped before the ack reached the client, retrying causes the transaction to run twice. Need application-level deduplication (operation IDs)." *(wiki: Transactions (ACID))* The concept is house-backed: `engineering-judgment.md` §4's retry-safety rule, checked at the retry line above; the commit-ack race and operation-ID dedup are the page's, and no rules file states them.
 - ‡ Does an empty selector mean "nothing" or "everything"? Automation that read an empty set of machines-still-needing-disk-erasure as *all machines* wiped every CDN machine in many colos: "Yes, sometimes zero does mean all." Bulk and destructive operations need a cap on how much one run can touch. *(wiki: Stability Patterns §Governor)*
-- † Does dependency failure propagate unchecked, or are there barriers the failure modes justify? Circuit breakers and bulkheads are for "demonstrated propagation risks"; their absence is not a finding on its own. *(`engineering_judgment.md` §4)*
-- † Does the patch itself add a manual, repeatable step to operating the system: a runbook entry, a hand-run migration, a config edit per deploy? Toil as a standing goal is not reviewable and the Architecture mandate says to skip it; toil this diff *creates* is. *(`engineering_judgment.md` §4)*
-- Is the change safe to deploy through the project's documented route? *(`engineering_judgment.md` §4)*
-- Is a shared-contract change safe in **both** directions across the rollout window: old code serving while the new shape is live, and a rollback that does not revert a migration? *(`engineering_judgment.md` §4)*
-- Do two or more writes that must hold together survive a failure between them without leaving observable half-applied state: a transaction where one store covers them, or a durably recorded pending write driven to completion outside the request (within a budget) or an undo step where it doesn't? Where the same site's defect is instead that the consumer can't run without the provider, that correctness rests on the writes' fixed order, or that two callers may interleave unsafely, that's Operational or temporal coupling: see Coupling above, not this line. *(`engineering_judgment.md` §4)*
+- † Does dependency failure propagate unchecked, or are there barriers the failure modes justify? Circuit breakers and bulkheads are for "demonstrated propagation risks"; their absence is not a finding on its own. *(`engineering-judgment.md` §4)*
+- † Does the patch itself add a manual, repeatable step to operating the system: a runbook entry, a hand-run migration, a config edit per deploy? Toil as a standing goal is not reviewable and the Architecture mandate says to skip it; toil this diff *creates* is. *(`engineering-judgment.md` §4)*
+- Is the change safe to deploy through the project's documented route? *(`engineering-judgment.md` §4)*
+- Is a shared-contract change safe in **both** directions across the rollout window: old code serving while the new shape is live, and a rollback that does not revert a migration? *(`engineering-judgment.md` §4)*
+- Do two or more writes that must hold together survive a failure between them without leaving observable half-applied state: a transaction where one store covers them, or a durably recorded pending write driven to completion outside the request (within a budget) or an undo step where it doesn't? Where the same site's defect is instead that the consumer can't run without the provider, that correctness rests on the writes' fixed order, or that two callers may interleave unsafely, that's Operational or temporal coupling: see Coupling above, not this line. *(`engineering-judgment.md` §4)*
 - ‡ Is the migration additive only, with drops, `NOT NULL`, and new constraints deferred to a later contraction release? Expansion ships before the rollout starts and is a no-op for the old code; contraction ships after no instance of the old code remains. Where both versions write during the window, is there a shim keeping the old and new shapes in step? *(wiki: Schema Evolution)*
 - ‡ Does the change tighten what a live endpoint accepts, or drop a field it returns? "You can always accept more than before, never less." / "You can always return more than before, never less." And once live, the implementation is the spec: "as soon as the service went live, its implementation becomes the de facto specification", so tightening validation to finally match the documentation is still a breaking change. *(wiki: Schema Evolution)*
 - ‡ Does a read-modify-write pass through a typed model that does not know every field? Decoding into model objects and re-encoding silently drops the fields the model has never heard of. The application may be ignorant of a field; it must not delete it on round-trip. *(wiki: Schema Evolution)*
 - ‡ In a tag-numbered format, is every new field optional-or-defaulted, and is a removed field's tag retired rather than reused? Old writers never wrote the new field; old data still carries the retired tag. *(wiki: Schema Evolution)*
-- ‡ Is work that is not yet user-facing hidden at *runtime* rather than left half-wired on trunk? "Work that isn't yet user-facing hides at runtime, not in source control: feature flags, branch-by-abstraction, dark launches." *(wiki: Trunk-Based Development)*, and the mechanism has a preference order: "**Dark launching**: code is deployed but not wired in / not discoverable. **Branch by abstraction** … **Feature flags** … Adopt roughly in that order; feature flags are what everyone reaches for first but they introduce the 'which version do you test?' problem." *(wiki: Continuous Delivery §Separation of deployment from release)* Deployable-vs-released is `engineering_judgment.md` §4's, checked above.
+- ‡ Is work that is not yet user-facing hidden at *runtime* rather than left half-wired on trunk? "Work that isn't yet user-facing hides at runtime, not in source control: feature flags, branch-by-abstraction, dark launches." *(wiki: Trunk-Based Development)*, and the mechanism has a preference order: "**Dark launching**: code is deployed but not wired in / not discoverable. **Branch by abstraction** … **Feature flags** … Adopt roughly in that order; feature flags are what everyone reaches for first but they introduce the 'which version do you test?' problem." *(wiki: Continuous Delivery §Separation of deployment from release)* Deployable-vs-released is `engineering-judgment.md` §4's, checked above.
 
 ---
 
@@ -413,7 +413,7 @@ already; this is close to a copy of it.
 
 - Is each requirement's *behavior* present, not merely code that looks like it? *(`panel-review` §2)*
 - Is anything built that no requirement asks for?
-- Is this the simplest thing that satisfies the spec? *(`engineering_judgment.md` §3, `coding_style.md` §1)*
+- Is this the simplest thing that satisfies the spec? *(`engineering-judgment.md` §3, `coding-style.md` §1)*
 - Does the diff add or change behavior with no test movement? Name the requirement left unpinned: Minor unless a spec clause requires the coverage.
 - ‡ Does the change add a degraded, fallback, or error path that nothing exercises? "The code path you never use is the code path that (often) doesn't work." The page's remedy for a degraded *mode* is operational, "regularly run a small subset of servers near overload to exercise the path", but it prescribes tests for the failure path itself: "Test how the frontend behaves if the noncritical backend never responds (blackholing requests)." Narrower than the line above it, which asks about behavior generally. *(wiki: Cascading Failures)*
 - Is an apparent miss actually an implementation decision or a spec-authorized deferral recorded in the grilled design doc? Then it is not a miss.
@@ -429,7 +429,7 @@ without one.
 **Provenance: mixed.** The first five lines are *transcribed*: the `panel-review` Security
 mandate enumerates injection, authn/authz gaps, unsafe external input, secrets exposure,
 and attacker-reachable wrong logic. The error-response line is **derived**; I added it from
-`coding_style.md` §2e, and no mandate names it. The `‡` lines are from the wiki's OWASP
+`coding-style.md` §2e, and no mandate names it. The `‡` lines are from the wiki's OWASP
 Top 10 chapter and have no rules file behind them at all.
 
 There is still no security rules file. Before the `‡` lines, this axis rested on the mandate
@@ -446,11 +446,11 @@ so inline. Treat those as prompts to check the framework's current behavior, not
 findings on their own.
 
 - Injection: is untrusted input concatenated into SQL, a shell command, a template, or a path?
-- Authentication and authorization: is there a route, operation, or object reachable without the check that governs it? *(`coding_style.md` §2b)*
-- Is external input handled unparsed, or parsed for shape but not destination: SSRF to link-local space, path traversal out of a root? *(`coding_style.md` §2c)*
+- Authentication and authorization: is there a route, operation, or object reachable without the check that governs it? *(`coding-style.md` §2b)*
+- Is external input handled unparsed, or parsed for shape but not destination: SSRF to link-local space, path traversal out of a root? *(`coding-style.md` §2c)*
 - Are secrets exposed: logged, committed, returned in a response, or embedded in a client bundle?
-- Is there plausible-but-wrong logic an attacker can reach: an off-by-one in a bounds check, a comparison that fails open? *(`engineering_judgment.md` §6)*
-- Does an error response leak internal structure: stack traces, driver messages, schema names? *(`coding_style.md` §2e)*
+- Is there plausible-but-wrong logic an attacker can reach: an off-by-one in a bounds check, a comparison that fails open? *(`engineering-judgment.md` §6)*
+- Does an error response leak internal structure: stack traces, driver messages, schema names? *(`coding-style.md` §2e)*
 - ‡ Does the service authorize the *object*, or does it treat possession of the URL as the grant? "[Y]our service must make that check on every request … URLs are just text strings, and anybody can create whatever URL they like!" An API that authorizes a link on the way out has to reauthorize the request that comes back in. *(wiki: `raw/Release-It-16-Chapter-11-Security.md`)*
 - ‡ † Do "not authorized" and "does not exist" respond identically? "**Rule of thumb:** If a caller is not authorized to see the contents of a resource, it should be as if the resource doesn't even exist." A 403/404 split lets an attacker count your customers, or probe a login endpoint to learn which harvested emails are yours. *(wiki: `raw/Release-It-16-Chapter-11-Security.md`)*
 - ‡ Is user data escaped on the way *out*, at every sink: server-rendered HTML, client-side DOM insertion, admin screens, log viewers? "[N]ever trust input. Scrub it on the way in and escape it on the way out." Stored payloads execute later, in a higher-privileged reader's browser. *(Dated: the input-scrubbing half is the part current guidance has moved away from, in favour of context-aware output encoding. The escaping half is the durable one.)* *(wiki: `raw/Release-It-16-Chapter-11-Security.md`)*
@@ -592,7 +592,7 @@ session.
 **Provenance: transcribed.** All 24 smells are verbatim from `refactoring/00-index.md`
 §Smells, which is an enumerated list, and the reviewer's own definition scopes it to them.
 
-**Force: the whole section is `†`.** `engineering_judgment.md` §3 calls smells "design
+**Force: the whole section is `†`.** `engineering-judgment.md` §3 calls smells "design
 heuristics", and `panel-review` §3 says refactoring severity "measures friction cost, not
 defect severity": every item here is advisory unless the patch introduced it. A smell is a
 reason to look, never a verdict.
@@ -637,15 +637,15 @@ Flagging one of these is a false positive.
 **Provenance: transcribed.** `code-reviewer.md` §What NOT to flag is an enumerated list,
 and `coupling.md` §Before reporting is an explicit gate. These are the corpus's own words.
 
-- **Missing comments, docstrings, or file headers.** Comments default to zero. Flag a comment only when its *absence* lets the code be silently misread. *(`coding_style.md` §1)*
-- **Missing validation between the code's own producer and consumer.** Validate at real system boundaries only. *(`coding_style.md` §1)*
-- **Missing scalability or extensibility hooks for a hypothetical future.** Speculative generality is the smell, not the fix. *(`engineering_judgment.md` §2)*
+- **Missing comments, docstrings, or file headers.** Comments default to zero. Flag a comment only when its *absence* lets the code be silently misread. *(`coding-style.md` §1)*
+- **Missing validation between the code's own producer and consumer.** Validate at real system boundaries only. *(`coding-style.md` §1)*
+- **Missing scalability or extensibility hooks for a hypothetical future.** Speculative generality is the smell, not the fix. *(`engineering-judgment.md` §2)*
 - **A coupling type that is not present.** Report the defects; never enumerate absences. *(`panel-review` §2)*
 - **Coupling to a *spatial* type whose target is stable.** That is a design choice. Say so and move on. Temporal coupling is not covered: it is judged on whether the ordering or concurrency assumption can be violated. *(`coupling.md` §Before reporting)*
 - **A "prefer X" resting on neither a rule nor a concrete failure.** Drop it. *(`code-reviewer.md`)*
 - **A structural smell reported by an axis that does not own it.** §A names nothing from the Fowler catalog; §B names the coupling type, not the smell. *(`panel-review` §2, `coupling.md` §Before reporting)*
-- **A deploy-compatibility or call-deadline finding reported by the Style axis.** `coding_style.md` §1 routes a shared contract to `engineering_judgment.md` §4; §2c states the deadline rule itself. Both are the Architecture mandate's. Reading a rule in a file you loaded is not owning the check. *(`panel-review` §2)*
-- **An exception's design-decision judgment reported by the Style axis.** `coding_style.md` §1 routes a suppression, exclusion, or shim to `engineering_judgment.md` §5; the evidence-bar judgment is the Architecture mandate's. Style reports the sighting only. *(`panel-review` §2)*
+- **A deploy-compatibility or call-deadline finding reported by the Style axis.** `coding-style.md` §1 routes a shared contract to `engineering-judgment.md` §4; §2c states the deadline rule itself. Both are the Architecture mandate's. Reading a rule in a file you loaded is not owning the check. *(`panel-review` §2)*
+- **An exception's design-decision judgment reported by the Style axis.** `coding-style.md` §1 routes a suppression, exclusion, or shim to `engineering-judgment.md` §5; the evidence-bar judgment is the Architecture mandate's. Style reports the sighting only. *(`panel-review` §2)*
 - **A write-sequence defect reported as a coupling type, or the reverse.** Distinct defects at the same site, distinct dispositions: the write-sequence check is verdict-bearing with no revert test, a coupling finding is revert-tested and can land advisory. Report each under its own name; §3's same-`file:line` dedup does not merge them. *(`panel-review` §2–3)*
 
 Four more, all `‡`: every page that yields a rule also names where the rule does not fire,
@@ -663,8 +663,8 @@ and these were harvested with the rules above them:
 Proposed checks with no rule behind them yet: nothing checks these today. Promote a line
 by writing the rule into its authority file first, then moving the line up.
 
-- Are functions under ten lines? Fowler rejects line-count thresholds in favor of "does the name say more than the body" (`refactoring/catalog/extract-function.md`), and `code-reviewer.md` §What NOT to flag routes function length away from the Style axis entirely. Adopting this needs a bullet in `coding_style.md` §1 and an amendment to that carve-out; otherwise the check can never fire.
-- Does the change pick a storage model without the access pattern that justifies it: read versus write-heavy, consistency needs, cross-entity queries? `engineering_judgment.md` §1 states the rule ("Don't pick storage first", *(See: DDIA / Kleppmann)*), and it is diff-visible whenever a schema or a new store lands. What blocks it is ownership, not backing: §1 is loaded by no axis. §A reaches its one §1 rule, domain-language naming, only because the `panel-review` Style mandate quotes that rule inline, and no mandate quotes this one. Adopting it needs either a bullet in `engineering_judgment.md` §2, which the Architecture mandate does load, or a second inline quote in the mandate.
+- Are functions under ten lines? Fowler rejects line-count thresholds in favor of "does the name say more than the body" (`refactoring/catalog/extract-function.md`), and `code-reviewer.md` §What NOT to flag routes function length away from the Style axis entirely. Adopting this needs a bullet in `coding-style.md` §1 and an amendment to that carve-out; otherwise the check can never fire.
+- Does the change pick a storage model without the access pattern that justifies it: read versus write-heavy, consistency needs, cross-entity queries? `engineering-judgment.md` §1 states the rule ("Don't pick storage first", *(See: DDIA / Kleppmann)*), and it is diff-visible whenever a schema or a new store lands. What blocks it is ownership, not backing: §1 is loaded by no axis. §A reaches its one §1 rule, domain-language naming, only because the `panel-review` Style mandate quotes that rule inline, and no mandate quotes this one. Adopting it needs either a bullet in `engineering-judgment.md` §2, which the Architecture mandate does load, or a second inline quote in the mandate.
 - ‡ Are custom assertions and test-utility helpers themselves tested? Meszaros: "It's important that test code be testable, too": logic moved out of a test body into a helper has left the reach of the suite that would catch it going wrong. No section owns this: §E's authority never asks for tests of test code, and adopting it needs a bullet in `testing/03-test-aesthetics.md` first. *(wiki: Code Test Smells)*
 - ‡ Does the process run with the lowest privilege it needs: a non-root container user, one OS user per application? "Software that runs as root is automatically a target." The attack path §D's mandate requires is in the same passage §D quotes for uploads: a traversal-bearing filename lets "the caller … overwrite any file the service is allowed to modify … (Yet another reason to *not* run as root!)", input to effect, with privilege bounding the effect. Diff-visible too: a Dockerfile with no `USER`, `runAsUser: 0`, a unit file with `User=root`. What it lacks is an owner. Promoting it needs a security rules file, which does not exist. *(wiki: `raw/Release-It-16-Chapter-11-Security.md`)*
 
@@ -714,7 +714,7 @@ Traps:
   hash above comes from. Since 2026-07-30 there is a second collection (`prompts`,
   `~/code/prompt-wiki`), so a bare path can now land in a different *subject*, not just a
   different page, and a bare `qmd query` searches both regardless of working directory.
-  Every `‡` line in this checklist means collection `wiki`; see `using_the_wiki.md`.
+  Every `‡` line in this checklist means collection `wiki`; see `using-the-wiki.md`.
 - **A hash proves retrieval, not truth.** A page can be unchanged, faithfully cited, and
   built on a source that has since been superseded: §D is the live case. This table answers
   provenance only; currency is a separate question and each line owns it.

@@ -61,10 +61,10 @@ function shippingLabel(order) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: code is a liability; the value is what code does, and
+- `engineering-judgment.md`: code is a liability; the value is what code does, and
   a delegation layer does nothing. When in doubt, delete.
-- `coding_style.md`: Beck's ordering: inlining removes an element, a win only while
+- `coding-style.md`: Beck's ordering: inlining removes an element, a win only while
   intent stays revealed. If the inlined body needs a comment to explain itself, the
   extraction was right and the inline is wrong.
-- `coding_style.md`: surgical execution: inline the function the task demonstrates
+- `coding-style.md`: surgical execution: inline the function the task demonstrates
   is hollow; do not sweep the module for every one-line function.

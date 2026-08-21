@@ -24,15 +24,15 @@ finding and stop there; never substitute generated mechanics for it.
 
 Also read, before forming any finding:
 
-- `~/.agents/rules/coding_style.md`, plus the language file for the target: JS/TS →
-  `coding_style_typescript.md`; Go → `coding_style_go.md`; UI code → also
-  `coding_style_frontend.md`. When no language file matches, proceed on
-  `coding_style.md` alone and say so in the report.
-- `~/.agents/rules/engineering_judgment.md`
+- `~/.agents/rules/coding-style.md`, plus the language file for the target: JS/TS →
+  `coding-style-typescript.md`; Go → `coding-style-go.md`; UI code → also
+  `coding-style-frontend.md`. When no language file matches, proceed on
+  `coding-style.md` alone and say so in the report.
+- `~/.agents/rules/engineering-judgment.md`
 
 House rules outrank the book. Where these files contradict Fowler, drop the finding or
 reframe it so the house rule wins: the canonical case is Combine Functions into Class
-against `coding_style.md`'s "do not introduce classes, ports, mappers, DI, or messaging
+against `coding-style.md`'s "do not introduce classes, ports, mappers, DI, or messaging
 solely to satisfy this document."
 
 ## Inputs: require a target before reviewing

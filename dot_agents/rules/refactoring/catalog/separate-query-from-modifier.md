@@ -57,9 +57,9 @@ function recordBalanceCheck(customer) {
 
 ## House-rule interactions
 
-- `engineering_judgment.md`: listen to the tests: a value assertion that cannot
+- `engineering-judgment.md`: listen to the tests: a value assertion that cannot
   run without stubbing a side effect is this smell speaking through the harness; the
   split is the design fix, not more mocking.
-- `coding_style.md`: Beck's ordering: the second function is an added element
+- `coding-style.md`: Beck's ordering: the second function is an added element
   bought by intent-revelation: each name now tells the whole truth about what calling
   it does.

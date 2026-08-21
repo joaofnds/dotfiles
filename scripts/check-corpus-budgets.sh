@@ -119,7 +119,7 @@ for f in "$corpus"/skills/*/references/*.md; do
 done
 
 # A skill body is re-attached after auto-compaction only up to its first 5,000 tokens
-# (instruction_external_facts.md §Harness mechanics), and re-invoking appends an
+# (instruction-external-facts.md §Harness mechanics), and re-invoking appends an
 # already-loaded note rather than a second copy — so everything past that point is gone for
 # the rest of a long session and cannot be recovered. Lines cannot see this; a body of few,
 # long lines passes the 500-line ceiling and still overflows. 20,000 chars is 5,000 tokens
@@ -169,8 +169,8 @@ EOF
 
 # Cross-file citations name a rule, never a line. A line-anchored citation keeps
 # resolving after the target is edited — to a different rule — and no reader can tell.
-# (Added 2026-07-27: every catalog citation into coding_style.md had drifted 2-5 lines,
-# and coding_style.md's own pointer at coupling.md:12 resolved to a blank line.)
+# (Added 2026-07-27: every catalog citation into coding-style.md had drifted 2-5 lines,
+# and coding-style.md's own pointer at coupling.md:12 resolved to a blank line.)
 #
 # Scope covers the eval rubrics too: they cite the agent definition they grade, so an edit to
 # that definition silently re-points them. Three forms, because the first pass matched only
@@ -199,7 +199,7 @@ fi
 # This is the one class of decay a gate review cannot see by construction: the citing file
 # is not in the diff that moved the heading, so no diff-seeded review ever opens it. Only a
 # standing sweep or this check catches it. (Added 2026-08-07, after one pass found three
-# mirror declarations in instruction_external_facts.md §Harness mechanics naming sections that had moved to
+# mirror declarations in instruction-external-facts.md §Harness mechanics naming sections that had moved to
 # agents/references/dispatch-fields.md — the paragraph whose whole job is making "edit every
 # site or none" executable — plus two testing-module pointers aimed at the wrong section.)
 #
@@ -213,7 +213,7 @@ import re, sys, pathlib, collections
 
 corpus = pathlib.Path(sys.argv[1])
 files = [p for p in corpus.rglob('*.md')
-         if 'evals' not in p.parts and p.name != 'review_checklist.md']
+         if 'evals' not in p.parts and p.name != 'review-checklist.md']
 
 by_name = collections.defaultdict(list)
 for p in files:
@@ -264,13 +264,13 @@ done <<EOF
 $cite_out
 EOF
 
-# Not corpus: `evals/` is never loaded into any context, and `review_checklist.md` is a
+# Not corpus: `evals/` is never loaded into any context, and `review-checklist.md` is a
 # human-facing coverage audit the user reads against a panel review — no mandate names it and
 # no agent loads it (2026-08-07; its own header said so, and deleting it on that evidence was
 # the wrong call). "Nothing loads it" is grounds to keep it out of a context budget, never
 # grounds to delete it.
 printf '\nTotals\n'
-corpus_files() { find "$corpus" -name '*.md' -not -path "$corpus/evals/*" -not -name 'review_checklist.md'; }
+corpus_files() { find "$corpus" -name '*.md' -not -path "$corpus/evals/*" -not -name 'review-checklist.md'; }
 total=$(corpus_files | tr '\n' '\0' | xargs -0 cat | wc -l | tr -d ' ')
 always=$(lines "$corpus/AGENTS.md")
 note "corpus $total lines across $(corpus_files | wc -l | tr -d ' ') files"
@@ -286,11 +286,11 @@ note "always-loaded surface $always lines"
 # consolidation pass took the corpus to 11,392 and established that 10,000 is not reachable
 # by cutting sermon: ~4,350 lines are the Fowler catalog, which loads one entry at a time
 # (`agents/refactoring-reviewer.md` requires reading an entry before citing it), and 717 are
-# `review_checklist.md`, which nothing loads. The heaviest realistic simultaneous context
+# `review-checklist.md`, which nothing loads. The heaviest realistic simultaneous context
 # measured 1,824 lines, so the total sits ~6x above anything instruction-saturation can
 # describe. That pass also found that compressing past the sermon costs correctness: three
 # separate defects came out of trimming four lines from one AGENTS.md bullet, each caught by
-# a gate round. Re-anchored the same day to 11,000 after review_checklist.md left the corpus
+# a gate round. Re-anchored the same day to 11,000 after review-checklist.md left the corpus
 # set (it is human-facing, not agent-consumed) and the total fell to 10,676 by definition
 # rather than by cutting.
 #

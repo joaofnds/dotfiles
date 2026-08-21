@@ -1,6 +1,6 @@
 # TypeScript Coding Style
 
-Language-specific preferences for TypeScript projects. Read the generic `coding_style.md` first for universal principles.
+Language-specific preferences for TypeScript projects. Read the generic `coding-style.md` first for universal principles.
 
 ## 1. Type Safety
 - **Never use `as any`, and never cast merely to silence the compiler.** Fix owned upstream types. A narrow assertion is acceptable only when runtime evidence already establishes the type or an external declaration is demonstrably incomplete; keep it local and record the mismatch.
@@ -20,7 +20,7 @@ Language-specific preferences for TypeScript projects. Read the generic `coding_
 - **Explicit Construction over Merging**: Entities must explicitly map properties rather than using bulk merges like `Object.assign()`. This prevents unexpected payload parameters or DB properties from leaking into the Entity prototype.
 - **Props-object constructor is the canonical shape**: Entities take a single `props: { ... }` object and assign each field explicitly: `constructor(props: { id: string; name: string; ... }) { this.id = props.id; this.name = props.name; ... }`. No positional arguments, no builders, no `Object.assign(this, props)`. The repetition is the point: it's how you see exactly what crosses the boundary.
 - **`readonly` by default**: All properties on entities, value objects, and DTOs are `readonly` unless there is a documented reason to be mutable. Use `readonly T[]` (or `ReadonlyArray<T>`) for collection properties so the array itself can't be mutated either, not just the reference.
-- **Mutation by replacement, not in-place**: Entities don't expose setters or methods that mutate in place. A state transition is a **named behavior method returning a new instance**: `order.cancel(): Order`, not `order.status = 'cancelled'` and not the service assembling the new props itself. The repository takes the returned instance and writes it. The entity is an immutable snapshot of state at one point in time; immutability changes the return type, not who owns the transition (`coding_style.md` §2a: behavior lives with data). Value objects are always fully immutable, no exceptions.
+- **Mutation by replacement, not in-place**: Entities don't expose setters or methods that mutate in place. A state transition is a **named behavior method returning a new instance**: `order.cancel(): Order`, not `order.status = 'cancelled'` and not the service assembling the new props itself. The repository takes the returned instance and writes it. The entity is an immutable snapshot of state at one point in time; immutability changes the return type, not who owns the transition (`coding-style.md` §2a: behavior lives with data). Value objects are always fully immutable, no exceptions.
 - Lightweight ORM decorators (`@Entity`, `@Property`) are acceptable if they don't introduce heavy coupling.
 
 ## 4. Framework-Agnostic Constructors

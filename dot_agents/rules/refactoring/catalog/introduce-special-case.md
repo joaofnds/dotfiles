@@ -57,10 +57,10 @@ const plan = site.customer.plan;
 
 ## House-rule interactions
 
-- `coding_style.md`: don't defend against your own code: if *you* decide whether
+- `coding-style.md`: don't defend against your own code: if *you* decide whether
   the value can be missing, the fix is a mandatory contract, not a special-case
   object. This refactoring is for special values the domain itself produces.
-- `engineering_judgment.md`: DRY over knowledge: the duplicated default ("occupant")
+- `engineering-judgment.md`: DRY over knowledge: the duplicated default ("occupant")
   is one business fact encoded N times; the object makes it one.
-- `coding_style.md`: a class is not required: a frozen literal satisfies the
+- `coding-style.md`: a class is not required: a frozen literal satisfies the
   pattern in JS; add a class only when the special case accrues real behavior.

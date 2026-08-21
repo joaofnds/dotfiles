@@ -16,7 +16,7 @@
 
 ## When not to apply
 
-- **`coding_style.md`'s "solely to satisfy this document" outranks the book here**: an immutable record passed around as
+- **`coding-style.md`'s "solely to satisfy this document" outranks the book here**: an immutable record passed around as
   a value is fine as it is; wrapping it in a class because "records should be
   encapsulated" is class-introduction to satisfy a document. The trigger is mutation
   plus reach, not the existence of a record.
@@ -61,9 +61,9 @@ class Account {
 
 ## House-rule interactions
 
-- `coding_style.md`: do not introduce classes solely to satisfy a document: the
+- `coding-style.md`: do not introduce classes solely to satisfy a document: the
   class must be bought by demonstrated update paths and invariants, per "When not to
   apply."
-- `coding_style.md`: behavior lives with data: the anemic-model rule is why the
+- `coding-style.md`: behavior lives with data: the anemic-model rule is why the
   wrapper should immediately attract the update logic (like `withdraw`), not remain a
   bag of getters and setters: that would trade one Data Class for another.

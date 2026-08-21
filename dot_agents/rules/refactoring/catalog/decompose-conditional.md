@@ -50,10 +50,10 @@ charge = isSummer(date) ? summerCharge(quantity) : regularCharge(quantity);
 
 ## House-rule interactions
 
-- `coding_style.md`: comments default to zero: branch-labelling comments are this
+- `coding-style.md`: comments default to zero: branch-labelling comments are this
   refactoring not yet performed; the extracted names replace them.
-- `coding_style.md`: boring control flow: the `if` stays a plain `if`: the
+- `coding-style.md`: boring control flow: the `if` stays a plain `if`: the
   refactoring simplifies what it coordinates, not the control structure itself.
-- `coding_style.md`: Beck's ordering: three named functions are added elements
+- `coding-style.md`: Beck's ordering: three named functions are added elements
   bought by intent-revelation; for a conditional already legible, the purchase fails
   and "When not to apply" governs.
