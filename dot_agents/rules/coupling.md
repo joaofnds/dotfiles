@@ -76,9 +76,12 @@ Coarser than a refactoring catalog; they change shape, not just structure.
   this cure only where the requirement (async delivery, independent ownership) already
   justifies it.
 - **Make the order or the interleaving explicit.** The cure for temporal coupling:
-  encode a required ordering in the type or the API, and make concurrent entry safe at
-  one owner, a single writer, a lock, an idempotent operation, rather than by
-  convention.
+  encode a required ordering in the type or the API, and make concurrent entry safe
+  rather than safe by convention. Ask first whether the write target must be shared: two
+  targets with one writer each is not shared state; one target that several writers
+  update, even in different fields, is. Where the shared target is inherent to the
+  domain, make entry safe at one owner, a single writer, a lock, or an idempotent
+  operation; an idempotent operation also covers repeated entry by a single writer.
 - **Parsimonious in what you consume, generous in what you produce.** Every field you
   read from another system is a coupling you accepted. Take only what you need; when
   you publish, tell the whole story.

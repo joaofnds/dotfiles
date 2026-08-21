@@ -88,7 +88,9 @@ Axis mandates: pass one per reviewer:
   drop all four.
   **Production: `engineering_judgment.md` §4:**
   deadlines or cancellation on remote and blocking work, retry safety within an
-  explicit budget, propagation barriers where the failure modes justify them,
+  explicit budget, convergence from an interrupted run: entry-time reconciliation
+  instead of assuming the predecessor finished, and identity-keyed rather than
+  order-keyed cleanup, propagation barriers where the failure modes justify them,
   deployability through the project's one documented route, deployable-vs-released,
   rollback, canary, or flag mechanics, a shared-contract change's safety in
   both directions across the window, and whether a related-writes sequence

@@ -47,6 +47,7 @@ Implementation should feel mechanical. If it's hard, go back to §2.
 Code that works on your machine is a prototype. These principles bridge it to production software.
 
 - **Design for failure.** Bound remote and blocking operations with deadlines or cancellation. Retry only operations proven safe to repeat, within an explicit attempt or time budget. Add circuit breakers and bulkheads for demonstrated propagation risks. *(See: Release It! / Nygard)*
+- **Design for convergence, not a clean start.** Where interruption is a real risk for the operation, a crash, a restart, or a retry, make it reach the same end state from any partial prior run: reconcile the state you observe at entry rather than assuming its predecessor finished, and key cleanup to what a resource is, not the order it was created in. *(See: Release It! / Nygard)*
 - **Cascading failures are the default.** Trace how dependency failure propagates and place barriers where the service's failure modes justify them.
 - **Define what "reliable enough" means for production services.** SLOs and error budgets make the velocity-versus-stability decision explicit. *(See: SRE book, the-four-golden-signals-lets)*
 - **Optimize for recovery, not prevention.** Use rollback, canaries, or feature flags when the deployment context benefits from them. MTTR usually matters more than MTBF. *(See: dora-accelerate-metrics)*

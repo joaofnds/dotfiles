@@ -92,7 +92,7 @@ raises *outside* the transcript evidence at their reported severities. In your r
 say which findings carry transcript evidence and which do not
 (`instructions-reviewer.md` §Inputs: edit both).
 
-## The bar: every finding that cites the session must clear all four
+## The bar: 1-4 decide whether a finding is reported, 5 decides its form
 
 1. **Grounded**: cites an actual moment in the transcript/index, not a hypothetical.
 2. **Quoted**: reproduces the real instruction text it Read; no `file:line` from memory.
@@ -101,10 +101,18 @@ say which findings carry transcript evidence and which do not
 4. **Concrete diff**: proposed replacement text with the five-point frame from
    `continuous_improvement.md` §1 (friction, root cause, fix, benefit, cost). Not
    "clarify step 3."
+5. **Prose is the last mechanism**: names the strongest mechanism that could enforce the
+   rule instead, ranked in `continuous_improvement.md` §3. Root Cause and PDCA. Where a
+   check could carry it, the proposal is that check: name the file it lands in,
+   `scripts/check-corpus-budgets.sh` or a sibling registered in `scripts/check-all.sh`,
+   or a hook under `dot_claude/hooks/`, and the exact condition it would test.
 
-A finding missing any of these is confabulation wearing a suit; drop it. A
-file-quality finding citing no session moment still clears 2 and 4. A clean session
-is a valid verdict: if nothing clears the bar, output "no change warranted" with the
+Criteria 1-4 are the drop gate: a finding missing any of them is confabulation wearing a
+suit; drop it. Criterion 5 drops nothing; it sets the proposal's form, so a finding whose
+rule a check could carry is reported with that check named in place of the prose diff. A
+file-quality finding citing no session moment is exempt from 1 and 3, and takes 2, 4, and
+5 on the same terms. A clean session is a valid verdict: output "no change warranted"
+only when no finding clears 1-4 (2 and 4 for a file-quality finding), with the
 evidence that the artifacts held up. Manufacturing edits violates
 `continuous_improvement.md` §1: omit reflection when no actionable improvement was found.
 

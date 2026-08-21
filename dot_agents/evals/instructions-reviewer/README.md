@@ -51,6 +51,28 @@ Two rules that keep a run honest:
 - **One run, recorded whole.** Record the output before scoring it, including runs that
   score well. A results file that only holds failures cannot show a regression.
 
+## Blinding
+
+A case measures what it claims only when the graded agent cannot reach the answer and
+cannot tell it is being graded. Three requirements, each checkable from the run record:
+
+- **The fixture does not name itself.** No file the agent reads says "eval", "case",
+  "fixture", "answer key", or "planted". A fixture that announces the test measures the
+  agent's response to being tested.
+- **The key is unreachable, not merely unread.** `CASE.md` holds the answer key, so a run
+  that depends on the agent choosing not to open it has measured nothing. Stage the
+  fixture tree the agent reads without the key in it, and keep the key outside that tree.
+  An agent's statement that it did not read the key is a self-report, and
+  `~/.agents/rules/subagent_spawning.md` §What a report is worth governs what that is
+  worth: nothing.
+- **Chain-following is scored from the transcript.** Whether the agent read the files it
+  was supposed to read, in the order it claims, is settled by reading the run's
+  transcript, never by the agent's own account of its process. Score it in a second pass,
+  by someone other than the agent under test.
+
+A case that cannot meet all three is recorded `Confounded` with the requirement it
+missed, and its score does not count as evidence about the reviewer.
+
 ## Scoring order
 
 Final behaviour first, process compliance second: a review that reaches the right verdict

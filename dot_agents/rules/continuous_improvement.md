@@ -41,12 +41,16 @@ When a defect appears:
 1. Restore the feedback loop so work can continue.
 2. Ask why until reaching a changeable system condition.
 3. Decide whether the condition can produce the same class of defect again.
-4. State the smallest systemic change and its predicted observable effect.
+4. State the smallest systemic change, its predicted observable effect, and the
+   strongest mechanism that can carry it. Rank mechanisms: make the bad state
+   unrepresentable, then a lint, a banned API, or automation that removes the step, then
+   a canonical helper, then a test or a runtime check, then prose. Name prose only after saying which stronger mechanism
+   you ruled out and why; a rule a check could enforce belongs in the check.
 5. Apply exactly one bounded change within the user's scope; otherwise ask before
    expanding the work.
 6. Compare the observation with the prediction and adopt, revise, or discard the change.
    If adopted, verify that it created no new friction, then encode the successful
-   standard in code, tests, tooling, or instructions.
+   standard at the mechanism step 4 named.
 
 Query `using_the_wiki.md` when the background would affect the decision.
 
