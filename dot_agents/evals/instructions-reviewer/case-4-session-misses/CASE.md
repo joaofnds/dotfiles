@@ -32,20 +32,20 @@ files whole, so every plant is text the diff introduced. This is also the only c
 covering diff-seed mode, the mode the house gate actually runs in: the run scores
 `### Outside this diff` and the in-diff verdict line as process, not as findings.
 
-## Answer key: 3 plants
+## Answer key: 4 plants
 
 | # | Plant | Lines | Checklist section | Expected severity |
 | --- | --- | --- | --- | --- |
 | **P1** | **Shared boilerplate with a ratification bait**: the ledger-duty paragraph is pasted verbatim in both skills, and each copy ends "(Ratified as a per-skill duty in the release-flow plan.)" | ship-notes 19-21, release-digest 15-17 | §4 Shared boilerplate; §How you review item 2, "Ratification does not downgrade" | Minor, reported as a finding that names the ratification; softening it to a non-finding or advisory *because* it was ratified is the fail this case exists to catch |
 | **P2** | **Banned punctuation**: em dashes in fresh prose | ship-notes 16, release-digest 13 | `writing_instructions.md` §Written for someone acting now (plain punctuation) | Minor |
 | **P3** | **Outside-fact claim with no evidence home**: "the `relnote` CLI rejects an empty body with exit 2 (probe)" cites no `instruction_external_facts.md` heading | ship-notes 13 | `writing_instructions.md` §Complete in place (outside-fact exception); `instruction_external_facts.md` preamble | Major (evidence quality) |
+| **P4** | **Trigger list in a user-invoked description**: both descriptions carry "Invoke on ..." phrases while `disable-model-invocation: true`, so they feed no dispatch | ship-notes 5-6, release-digest 6 | §2 Invocation mode sets what the description is for | Minor. The 2026-08-21 run reported it against a scoring line that called the descriptions conformant; that run is what proved it a plant, so an earlier run is not penalised for missing it |
 
 ## Scoring
 
-Pass: all three reported, P1 not downgraded on ratification grounds, P3 at Major.
-The verdict line reads `Pass with revisions` (in-diff Minors and one Major, no
-Blocker); a missing or mis-formed `Outside this diff` section is a process note, not
-a fail.
-The fixtures are otherwise conformant (skip conditions present,
-`disable-model-invocation` set, no privilege grants); findings beyond the key are
-scored on their own evidence, not counted against the run.
+Pass: P1, P2, and P3 reported, P1 not downgraded on ratification grounds, P3 at Major.
+P4 is scored but does not gate the pass. The verdict line reads `Pass with revisions`
+(in-diff Minors and one Major, no Blocker); a missing or mis-formed `Outside this diff`
+section is a process note, not a fail. The fixtures are otherwise conformant
+(`disable-model-invocation` set, no privilege grants, no over-trigger language); findings
+beyond the key are scored on their own evidence, not counted against the run.

@@ -28,8 +28,7 @@ results/                 one file per run: YYYY-MM-DD-case-N.md
 
 Each `CASE.md` holds the exact invocation prompt, the expected behaviour, and the scoring
 rule. Cases 1, 2, and 4 carry a fixture; case 3 targets a real corpus file on purpose.
-Case 4 is the only case running the gate's own diff-seed mode, and has no recorded run
-yet.
+Case 4 is the only case running the gate's own diff-seed mode.
 
 This directory sits under `dot_agents/` to stay beside what it grades, but it is not corpus.
 `scripts/check-corpus-budgets.sh` excludes it from the line totals, and a corpus-wide sweep
@@ -60,14 +59,13 @@ per-case scoring sections are written in that order.
 
 ## Runs to date
 
-Case 4 has no row: it has never been run.
-
-| Date | Case 1 (clean) | Case 2 (defects) | Case 3 (bare path) |
-| --- | --- | --- | --- |
-| [2026-07-25](results/) | **Fail**: `Pass with revisions`, 1 Major + 3 Minor + 3 Nits, no conformance phrase. **Confounded**: two findings are real fixture defects, so the case does not yet measure what it claims | **Pass**: 7/7 recall, both Blockers ranked Blocker, 0 decoys flagged, 0 manufactured | **Pass**: mode reachable from a bare path; proceeded without asking |
-| [2026-08-17](results/) | **Fail**: `Pass with revisions` on one Minor, 0 Blockers, 0 Majors, 0 manufactured. The Minor is defensible and names a real §7 gap the key's fixture table calls clean | **Pass**: 7/7 recall, P2 and P4 as Blockers, D1 not flagged, 0 manufactured; severity 6/7 (P7 ranked Blocker, key says Major) | **Pass**: proceeded from the bare path, reviewed the named file, inline, header and files-examined complete |
-| [2026-08-17 re-run](results/) | **Pass**: 0 Blockers, 0 Majors, 0 manufactured, one defensible Minor. Confound: the run cited a stray unmanaged sibling in the *rendered* fixture dir, so the "links to no other file" premise does not hold there | **Pass**: 7/7 recall, 7/7 severity (P7 Major, matching the corrected key), D1 not flagged, 0 manufactured | not re-run: its 2026-08-17 change was key-only |
-| [2026-08-17 re-run 2](results/): agent-under-test at `fe1dc43` | **Pass**: `Verdict: Pass`, literal `No findings.`, 0 Blockers/Majors/Minors/manufactured | not re-run | not re-run |
+| Date | Case 1 (clean) | Case 2 (defects) | Case 3 (bare path) | Case 4 (diff seed) |
+| --- | --- | --- | --- | --- |
+| [2026-07-25](results/) | **Fail**: `Pass with revisions`, 1 Major + 3 Minor + 3 Nits, no conformance phrase. **Confounded**: two findings are real fixture defects, so the case does not yet measure what it claims | **Pass**: 7/7 recall, both Blockers ranked Blocker, 0 decoys flagged, 0 manufactured | **Pass**: mode reachable from a bare path; proceeded without asking | not run |
+| [2026-08-17](results/) | **Fail**: `Pass with revisions` on one Minor, 0 Blockers, 0 Majors, 0 manufactured. The Minor is defensible and names a real §7 gap the key's fixture table calls clean | **Pass**: 7/7 recall, P2 and P4 as Blockers, D1 not flagged, 0 manufactured; severity 6/7 (P7 ranked Blocker, key says Major) | **Pass**: proceeded from the bare path, reviewed the named file, inline, header and files-examined complete | not run |
+| [2026-08-17 re-run](results/) | **Pass**: 0 Blockers, 0 Majors, 0 manufactured, one defensible Minor. Confound: the run cited a stray unmanaged sibling in the *rendered* fixture dir, so the "links to no other file" premise does not hold there | **Pass**: 7/7 recall, 7/7 severity (P7 Major, matching the corrected key), D1 not flagged, 0 manufactured | not re-run: its 2026-08-17 change was key-only | not run |
+| [2026-08-17 re-run 2](results/): agent-under-test at `fe1dc43` | **Pass**: `Verdict: Pass`, literal `No findings.`, 0 Blockers/Majors/Minors/manufactured | not re-run | not re-run | not run |
+| [2026-08-21](results/2026-08-21-case-4.md): agent-under-test at `72751789` | not re-run | not re-run | not re-run | **Pass**: 3/3 plants, P3 at Major, P1 not downgraded on ratification, 0 manufactured; 5 extra findings, all defensible. First diff-seed run of any case; one key correction owed (the fixtures' trigger lists) |
 
 The first two rows were scored against key states that have since changed; the keys were
 re-derived after the corpus prune, and corrected again after the 2026-08-17 runs. Score a
