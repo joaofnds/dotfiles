@@ -154,11 +154,12 @@ calls, and before the first tool call that acts on the decision:
               output: a grep hit, a Read excerpt, stdout. Never a sub-agent's assertion,
               a recalled fact, or a file:line from memory. Negative assumptions always
               require a named probe, and so does any claim that behavior is preserved>
-    Chosen: <approach>: satisfies the requirement with the fewest elements
+    Chosen: <approach>: what makes it right; when it leaves the problem's cause in
+            place, name that cause and why removing it was rejected
     Rejected: <closest viable alternative>: not chosen because <verified trade-off>
 
-Gather missing evidence before deciding. If no verified trade-off justifies extra
-complexity, choose the simpler option.
+Gather missing evidence before deciding. Fewest elements decides only between options
+that leave no cause in place.
 
 ## English coaching
 
