@@ -71,13 +71,11 @@ your reading.
 Spawn un-named; `~/.agents/rules/subagent-spawning.md` §The two shapes picks
 foreground vs background.
 
-One independent agent: `instructions-reviewer` if available (built for instruction
-files), else a general agent carrying this brief. Send:
+One independent agent: `instructions-reviewer`. Send:
 
 - The transcript path (primary) and the friction-log index (supplementary).
 - The artifact paths plus `~/code/dotfiles/dot_agents/rules/continuous-improvement.md`
-  (source tree, same as the artifacts), with: "Read each
-  file before making any claim about it."
+  (source tree, same as the artifacts).
 - The session goal in the user's terms, so it can judge whether an instruction helped or
   hindered reaching it.
 - The bar below, as *its* acceptance test for every finding that cites the session.
@@ -86,11 +84,10 @@ Withhold your own read on what should change, which parts you think worked, and 
 leading framing. Say it in the brief: "This brief contains no assessment of the
 instructions; form your own from the transcript and the files."
 
-If the critic is `instructions-reviewer`, it also audits file quality holistically:
-accept its session-grounded findings under the bar, and take file-quality findings it
-raises *outside* the transcript evidence at their reported severities. In your relay,
-say which findings carry transcript evidence and which do not
-(`instructions-reviewer.md` §Inputs: edit both).
+It also audits file quality holistically: accept its session-grounded findings under
+the bar, and take file-quality findings it raises *outside* the transcript evidence at
+their reported severities. In each reply line, say whether the finding carries
+transcript evidence (`instructions-reviewer.md` §Inputs: edit both).
 
 ## The bar: 1-4 decide whether a finding is reported, 5 decides its form
 
@@ -98,9 +95,7 @@ say which findings carry transcript evidence and which do not
 2. **Quoted**: reproduces the real instruction text it Read; no `file:line` from memory.
 3. **Falsifiable**: states which observed moment the change would have prevented, and
    how it knows.
-4. **Concrete diff**: proposed replacement text with the five-point frame from
-   `continuous-improvement.md` §1 (friction, root cause, fix, benefit, cost). Not
-   "clarify step 3."
+4. **Concrete diff**: proposed replacement text. Not "clarify step 3."
 5. **Prose is the last mechanism**: names the strongest mechanism that could enforce the
    rule instead, ranked in `continuous-improvement.md` §3. Root Cause and PDCA. Where a
    check could carry it, the proposal is that check: name the file it lands in,
@@ -118,12 +113,13 @@ evidence that the artifacts held up. Manufacturing edits violates
 
 ## Output: propose against the source of truth, don't apply
 
-Relay the critic's findings in its own words, worst first, including any that indict a
-skill you like. Present each as a **proposed diff**; do not write the change. Leave
-applying to the user.
+Write the critic's report verbatim to `/tmp/kaizen-<the session id resolved in §Assemble
+the evidence>.md`, including findings that indict a skill you like. The reply carries no
+report text beyond your one-line verdict, that path, and one line per finding, worst
+first. Do not write the change; leave applying to the user.
 
 Target the source tree the critic already read: a fix applied to the live `~/.agents` copy
 is untracked and gets overwritten on the next `chezmoi apply`.
 
-If you have a response, keep it in a separate section marked as yours, *after* the
-findings; never pre-argue a finding away.
+Your own response goes in a section of that file marked as yours, *after* the findings;
+never pre-argue a finding away.
