@@ -26,8 +26,9 @@ Load limits and delivery:
   `SLASH_COMMAND_TOOL_CHAR_BUDGET` for a fixed count).
 - `@path` imports in `CLAUDE.md`: maximum depth 4; imported files expand at launch and
   buy back no context.
-- `CLAUDE.md` is delivered as a user message after the system prompt and loads in full
-  at any length; the 200-line target is a recommendation, not a cap.
+- `CLAUDE.md` is delivered as a user message after the system prompt and loads in full up
+  to 4 MiB; a larger file is skipped entirely *(memory reference, CLI 2.1.238)*. The
+  200-line target is a recommendation, not a cap.
 - `CLAUDE.md`/`AGENTS.md` reach every subagent except the built-in Explore and Plan.
 - Discovered `CLAUDE.md` files are concatenated, not overridden, loaded managed
   policy → user → project → local, so a project file does not supersede the user file
@@ -96,9 +97,9 @@ Tool, permission, and invocation fields:
   separate them. Do not restore either as settled.
 
 Mirror mark: the numeric limits and several loading-path and tool-field facts above are
-restated in `agents/instructions-reviewer.md` and
-`agents/references/dispatch-fields.md`; the named-spawn fact in
-`rules/subagent-spawning.md`; the transcript layout in `skills/kaizen/SKILL.md`
+restated in `agents/references/artifact-class-checks.md`,
+`agents/instructions-reviewer.md`, and `agents/references/dispatch-fields.md`; the
+named-spawn fact in `rules/subagent-spawning.md`; the transcript layout in `skills/kaizen/SKILL.md`
 §Assemble the evidence; the `skillOverrides` key rule in
 `skills/art-direction/SKILL.md`: edit those sites with this list or neither.
 

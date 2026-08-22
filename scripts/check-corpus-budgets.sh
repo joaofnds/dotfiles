@@ -225,17 +225,30 @@ for p in files:
     for ln in p.read_text(errors='replace').splitlines():
         if re.match(r'^#{2,4}\s+', ln):
             hs.append(re.sub(r'^#+\s+', '', ln).strip())
-        elif m := re.match(r'^\*\*([A-Z][^*]{3,80})\*\*', ln):
-            hs.append(m.group(1).strip())          # bold paragraph lead
+        elif m := re.match(r'^(?:[-*]\s+)?\*\*([A-Z][^*]{3,80})\*\*', ln):
+            hs.append(m.group(1).strip())          # bold lead, paragraph or list item
     heads[p] = hs
 
-CITE = re.compile(r'`([A-Za-z0-9_./-]+\.md)`\s*§(\*?[A-Za-z0-9][^,.;:)\]]*?)\*?(?=[\s,.;:)\]]|$)')
+CITE = re.compile(r'`(~?[A-Za-z0-9_./-]+\.md)`\s*§(\*?[A-Za-z0-9][^,.;:)\]]*?)\*?(?=[\s,.;:)\]]|$)')
 bad, checked, skipped = [], 0, 0
 
 for p in files:
     for ln_no, ln in enumerate(p.read_text(errors='replace').splitlines(), 1):
         for path_txt, sec in CITE.findall(ln):
-            targets = by_name.get(pathlib.PurePath(path_txt).name, [])
+            # Resolve by the longest path suffix that names exactly one file. Basename
+            # alone cannot separate the 17 SKILL.md files, and a citation written as
+            # `~/.agents/skills/x/SKILL.md` has to shed `~` and `.agents` before its
+            # tail matches the `dot_agents/` source tree.
+            parts = pathlib.PurePath(path_txt).parts
+            cands = by_name.get(parts[-1], [])
+            targets = cands if len(cands) == 1 else []
+            if not targets:
+                for i in range(len(parts)):
+                    tail = parts[i:]
+                    m = [t for t in cands if t.parts[-len(tail):] == tail]
+                    if len(m) == 1:
+                        targets = m
+                        break
             if len(targets) != 1:
                 skipped += 1
                 continue
