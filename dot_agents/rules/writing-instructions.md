@@ -22,6 +22,13 @@ An instruction is a cost paid on every load.
   history instead of writing it. (The same five are mirrored in
   `instructions-reviewer.md` §5. Specification rigor and in
   `instruction-failure-modes.md` §No-op / self-reference; edit together.)
+- **Name the consumer.** A rule mandating an action names what sees the evidence it
+  happened: an artifact a later step reads, a hook that fires on it, another rule keyed
+  to it, or a line the rule requires in the reply. The test is whether a run that skipped
+  the action is distinguishable from one that took it; the agent's word that it complied
+  is not evidence. Where nothing distinguishes them, carry the rule in the strongest
+  mechanism that fits (`continuous-improvement.md` §3. Root Cause and PDCA ranks them) or
+  delete it.
 - **Complete in place.** The reader complies using only the text in front of them.
   Never reference a file to justify a rule. Two exceptions: material the reader must
   open to act, a checklist to run or a catalog to pick from; and a claim about outside
