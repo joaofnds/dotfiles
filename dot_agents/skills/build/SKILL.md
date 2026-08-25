@@ -147,7 +147,7 @@ the conversation that produced it, so trust the file, not assumptions.
   Close nothing out: leave the criterion unchecked, leave the card in Build,
   and add a card note naming the criterion and what you asked them to
   exercise, so a fresh session finds the pending check without the
-  conversation. Lead the summary with `waiting on your check of <X>`. When
+  conversation. Close the summary with `waiting on your check of <X>`. When
   they report the observation, check the criterion with their quoted answer
   (step 7) and delete the note. If the user closes out without observing it,
   the closeout bullet below applies with the `partial` label.
@@ -187,9 +187,10 @@ the conversation that produced it, so trust the file, not assumptions.
     children's evidence (complete only now, so step 7's no-batch rule is not
     breached), then `-s Done`, guard-checked.
 
-  The **Next** line is also the first line of your summary to the user, and
+  The **Next** line is also the last line of your summary to the user, and
   where no closeout happened the `waiting on your check of <X>` line takes
-  its place. Whether the next milestone is safe to start must not require
+  its place; whichever line ends the summary carries the closing sentence
+  when the report has findings. Whether the next milestone is safe to start must not require
   opening any doc: its dependency card being Done is the signal.
 - A citation in a surviving doc to `.boris/<subdir>/<name>.md` that doesn't
   resolve is looked up at `.boris/archive/<subdir>/<name>.md` before being
