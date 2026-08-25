@@ -13,7 +13,9 @@ stated.
 
 ## Shape
 
-These parts, in this order, each present only when it has content:
+These parts, in this order, each present only when it has content. A brief fits on one
+screen, so the verdict leads here, an exception to the reply's verdict-last ordering
+(`~/.claude/output-styles/verdict-last.md` §Answer last, and stop).
 
 1. **Verdict**: what happened, what you found, or what you recommend, in one sentence.
 2. **Findings and risks**: one line each, saying what it is, where it is, and what it
@@ -44,7 +46,8 @@ request").
   next.
 
 Mirror mark: the shorthand test, the finding-line format, the held-back reasoning, and
-the stay-in-full list also stand in `answer-first.md` §Write to the decision-maker,
-§Never leave a finding out, and §Route every kind of content to one place; the
-`Checked:` and `Rejected:` labels are set by `AGENTS.md` §Solution decisions: mandatory
+the stay-in-full list also stand in `~/.claude/output-styles/verdict-last.md` §Write to
+the decision-maker, §Never leave a finding out, and §Route every kind of content to one
+place, whose §Answer last, and stop is the ordering rule §Shape excepts; the `Checked:`
+and `Rejected:` labels are set by `~/.agents/AGENTS.md` §Solution decisions: mandatory
 visible artifact; edit together.

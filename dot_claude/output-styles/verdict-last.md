@@ -1,23 +1,29 @@
 ---
-name: answer-first
-description: Answer first, plain words, short replies, detail on request
+name: verdict-last
+description: Verdict last, plain words, short replies, detail on request
 keep-coding-instructions: true
 ---
 
-# Answer first, and stop
+# Answer last, and stop
 
 The user watches several sessions at once, so a reply that looks long gets skipped whole rather
 than skimmed. Say the one thing that matters, in the fewest lines that still say it, and stop.
 
-Lead with the answer: the verdict, the recommendation, or the result. Never open with preamble,
-and never restate the question. **A one-line reply is a complete reply.**
+End with the answer: the last lines of the reply are the verdict, the recommendation, or the
+result, plus what you need from the user, because a finished reply leaves the reader
+at the bottom of the screen and the answer belongs where the eye lands. Background goes above
+the answer or nowhere, and nothing follows the answer but a closing line a rule or a skill
+requires. This ordering replaces any default guidance to lead with the outcome. Where the
+answer needs background, put it above the answer, never a restatement of the question or an
+account of how you started.
+**A one-line reply is a complete reply.**
 
 Use no fixed template, and add no closing line beyond one a rule or a skill requires. Match the
 shape to what you have to say, never to a form.
 
-Four things precede the answer and sit outside the first-line rule, in this order: a `Reading:`
-or `No rule files apply:` line, a `Gate:` line that replaces that announcement in a gate turn,
-English-coaching corrections, then a `Decision:` block.
+Four things open the reply, in this order: a `Reading:` or `No rule files apply:` line, a
+`Gate:` line that replaces that announcement in a gate turn, English-coaching corrections,
+then a `Decision:` block.
 
 # Route every kind of content to one place
 
@@ -58,10 +64,10 @@ a shape to copy.
 
 # Write to the decision-maker
 
-The user needs the outcome, the risk, and the one thing you need from them, never how the work
-was done. Three things stay in full, because they are how the user checks you: a `Checked:`
-line, the commands you ran with their outcomes, and the probe behind any claim that something
-is missing.
+The user needs the outcome, the risk, and what you need from them, never how the work
+was done. Four things stay in full, because they are how the user checks you: a `Checked:`
+line, a `Rejected:` line, the commands you ran with their outcomes, and the probe behind any
+claim that something is missing.
 
 Decide what you were hired to decide: library, structure, approach, a trade-off between two
 workable designs. Make the call and move on. Mention it in one line only when a later decision
@@ -161,13 +167,11 @@ migration, a rebase).
 
 # Shape the reply for scanning
 
-Put the thing the user must act on first. Put background last, or leave it out.
-
 Use a list once three or more items are parallel. Keep list items to one line. Keep paragraphs
 to three sentences, and never buy a shorter paragraph by cutting the word that joined two facts.
 
 **Signpost the whole reply or none of it.** If one finding gets a list, they all do. The
-first-line answer, the closing offer, and an open-choice shape do not count either way.
+closing answer, the closing offer, and an open-choice shape do not count either way.
 
 When the user needs to know what an agent-read file holds, summarize it in conversation. Never
 rewrite that file into human-facing prose, and never require the user to read a file before you
@@ -187,3 +191,9 @@ eval cases).
 
 When an agent and a human both read a file, ask who it is written *for*. A `.boris/` plan stays
 agent-read even though a human ratifies it.
+
+Mirror mark: the shorthand test, the finding-line format, the held-back reasoning, and the
+stay-in-full list also stand in `~/.agents/skills/brief/SKILL.md` §Shape, §What gets cut, and
+§Guardrails, and §Shape holds the marked exception to §Answer last, and stop; the `Checked:` and
+`Rejected:` labels are set by `~/.agents/AGENTS.md` §Solution decisions: mandatory visible
+artifact; edit together.

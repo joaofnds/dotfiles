@@ -11,7 +11,7 @@
   "skipWorkflowUsageWarning": true,
   "tui": "fullscreen",
   "theme": "auto",
-  "outputStyle": "answer-first",
+  "outputStyle": "verdict-last",
   "disableBundledSkills": false,
   "disableWorkflows": true,
   "disableClaudeAiConnectors": true,
