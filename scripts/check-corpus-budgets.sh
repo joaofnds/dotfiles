@@ -62,7 +62,7 @@ check "$corpus/AGENTS.md" 60 200 router
 
 # Output styles live outside dot_agents/, which is why no glob below can see
 # them, but they are always-on: dot_claude/private_settings.json sets
-# "outputStyle": "answer-first", so the whole file sits in the system prompt
+# "outputStyle": "verdict-last", so the whole file sits in the system prompt
 # every turn — the router's tier, so the router's budget. (Added 2026-08-13,
 # after answer-first.md reached ~290 lines with nothing measuring it.)
 printf '\nOutput styles (always-on)\n'
