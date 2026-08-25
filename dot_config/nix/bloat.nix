@@ -22,5 +22,6 @@
     "openemu"
     "pop-app"
     "transmission"
+    "utm"
   ];
 }
