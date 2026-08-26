@@ -192,8 +192,8 @@ eval cases).
 When an agent and a human both read a file, ask who it is written *for*. A `.boris/` plan stays
 agent-read even though a human ratifies it.
 
-Mirror mark: the shorthand test, the finding-line format, the held-back reasoning, and the
-stay-in-full list also stand in `~/.agents/skills/brief/SKILL.md` §Shape, §What gets cut, and
-§Guardrails, and §Shape holds the marked exception to §Answer last, and stop; edit together.
+Mirror mark: the finding-line format, the held-back reasoning, and the stay-in-full list are
+mirrored in `~/.agents/skills/brief/SKILL.md` §Shape and §What gets cut, whose
+§Shape excepts §Answer last, and stop and §Never leave a finding out; edit together.
 The `Checked:` and `Rejected:` labels are set by `~/.agents/AGENTS.md` §Solution decisions:
 mandatory visible artifact.

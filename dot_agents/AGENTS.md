@@ -135,9 +135,11 @@ defect to fix before close. A finding the reviewer downgraded on a reachability 
 finding: it goes to the user with the batch's others. Do not reintroduce
 a multi-round loop.
 
-Editing a file agents read but do not obey, `.boris/**`, `backlog/**`, memory files, eval cases and
-fixtures, `review-checklist.md`, ad-hoc sub-agent launch prompts and their reports, does
-not fire the gate; the ratification rule above is the exception.
+Editing a file agents read but do not obey, `.boris/**` other than `CONTEXT.md`,
+`backlog/**`, memory files, eval cases and fixtures, `review-checklist.md`, ad-hoc
+sub-agent launch prompts and their reports, does not fire the gate; the ratification
+rule above is the exception. Editing `.boris/CONTEXT.md` does fire it: later artifacts
+must obey its vocabulary.
 
 ## Solution decisions: mandatory visible artifact
 
