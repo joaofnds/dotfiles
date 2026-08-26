@@ -29,6 +29,9 @@ The instruction artifacts *actually exercised* this session:
 - **CLAUDE.md / AGENTS.md**: include one only when concrete friction traces to it.
 - **Rule files**: include only when the session actually routed or loaded them and
   concrete friction traces to them. Critiquing every standing rule is busywork.
+- **The active output style**: it governed every reply this session, so include it when
+  friction traces to it; `~/.claude/settings.json` `outputStyle` names it, and its source
+  is `~/code/dotfiles/dot_claude/output-styles/<name>.md`.
 
 Collect their real paths **in the chezmoi source tree**: `~/code/dotfiles/dot_agents/`
 (`skills/*/SKILL.md`, `agents/*.md`, `rules/*.md`, `AGENTS.md`) plus project instruction

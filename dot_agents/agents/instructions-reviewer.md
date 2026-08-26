@@ -17,9 +17,9 @@ against the bar as if landed in their destination files.
 
 ## The bar
 
-`~/.agents/rules/writing-instructions.md` is the house bar for the files it names; it
-exempts `workflows.md`, memory files, and `.boris/` and `backlog/` documents, and it governs text the
-diff added or rewrote, not standing text. Read it before reviewing and check that text
+`~/.agents/rules/writing-instructions.md` is the house bar; it exempts `workflows.md`,
+memory files, and fixtures and cases under `evals/`, and it governs text the diff added or
+rewrote, not standing text. Read it before reviewing and check that text
 against it; its commit-message requirement is not yours to check. A bar violation is a
 finding at the severity its consequence earns under the ladder below, and the bar binds
 your own prescriptions too (§How you review, item 4).
@@ -109,9 +109,7 @@ repeated instances of one mechanism, quote only the minimum text needed to estab
 each finding, and state each remedy once.
 
 Mirrored elsewhere: edit in step: the severity ladder above is re-derived in
-`~/.agents/rules/reporting-findings.md` §Reading a reviewer's severity ladder; the
-`Apply state` and `Outside this diff` classes are restated in `~/.agents/AGENTS.md`
-§Task lifecycle; the output contract and section numbering are pinned by
+`~/.agents/rules/reporting-findings.md` §Reading a reviewer's severity ladder; the output contract and section numbering are pinned by
 `dot_agents/evals/instructions-reviewer/*/CASE.md`; the session-grounded launch
 contract is restated in `~/.agents/skills/kaizen/SKILL.md` §Spawn the fresh critic;
 §1's per-file budgets (now in `~/.agents/agents/references/artifact-class-checks.md`) and §3's
@@ -317,8 +315,7 @@ unverified, not invalid.
   looks like a harness restatement and you cannot check, report it unverified.
 - **Linter laundering.** Rules a deterministic tool catches belong in CI, not the
   prompt.
-- **No-op meta-rules.** Delete a sentence imposing no condition, action, output,
-  evidence requirement, or house choice.
+- **No-op meta-rules.** Delete a sentence that fails §5's **Observable?** test.
 - **Instruction laundering.** A rule may appear once **per co-loaded path**; resolve
   reach first: a copy on a path the router never combines is that path's only copy,
   and cutting it deletes the rule from that phase. Within one path,
@@ -338,7 +335,8 @@ unverified, not invalid.
 ### 5. Specification rigor (apply per rule)
 
 - **Observable?** Require an identifiable action, artifact, omission, evidence
-  requirement, or boundary.
+  requirement, or boundary (the same five stand in `writing-instructions.md` §Change an
+  action and `instruction-failure-modes.md` §No-op / self-reference; edit together).
 - **Target bindable?** A state-mutating rule (delete, move, rewrite, send) names an
   object bindable without judgment: a path, an enumerated set, or a pattern plus a
   probe; description-by-role ("stale entries") is a finding. A missing object

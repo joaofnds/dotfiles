@@ -18,7 +18,10 @@
 - **Premature completion**: an agent lacks a checkable completion gate.
 - **Borrowed authority**: another agent's assertion is consumed as verified evidence.
 - **Linter laundering**: deterministic checks consume prompt budget instead of tooling.
-- **No-op / self-reference**: a rule imposes no identifiable condition, action, output, evidence requirement, or deliberate house choice.
+- **No-op / self-reference**: a rule imposes no identifiable action, artifact, omission,
+  evidence requirement, or boundary (the same five are mirrored in
+  `writing-instructions.md` §Change an action and in `instructions-reviewer.md` §5.
+  Specification rigor; edit all three together).
 - **Instruction laundering**: the same rule appears under several headings *that load
   together*. The corpus loads progressively, so restatement across paths the router never
   combines is not laundering: it is the only copy on that path, and cutting it deletes the

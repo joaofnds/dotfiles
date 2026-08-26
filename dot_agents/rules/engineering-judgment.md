@@ -76,7 +76,9 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 
 ## 6. Agent-Specific Failure Modes
 
-Always-on risks, not edge cases:
+Always-on risks, not edge cases. Fabricated verification, stale verification, destroyed
+evidence, and narrative continuity are mirrored in `~/.agents/skills/verify-this/SKILL.md`
+§The failure modes this guards against; edit both:
 
 - **Hallucinated symbols.** Confidently referenced functions, fields, flags, packages that don't exist. Grep before you trust.
 - **Plausible-but-wrong code.** Compiles, reads well, does the wrong thing. Runtime behavior needs execution evidence; types, static analysis, and review supply different evidence.

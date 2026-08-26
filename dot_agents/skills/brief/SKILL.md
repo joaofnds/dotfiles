@@ -48,6 +48,6 @@ request").
 Mirror mark: the shorthand test, the finding-line format, the held-back reasoning, and
 the stay-in-full list also stand in `~/.claude/output-styles/verdict-last.md` §Write to
 the decision-maker, §Never leave a finding out, and §Route every kind of content to one
-place, whose §Answer last, and stop is the ordering rule §Shape excepts; the `Checked:`
-and `Rejected:` labels are set by `~/.agents/AGENTS.md` §Solution decisions: mandatory
-visible artifact; edit together.
+place, whose §Answer last, and stop is the ordering rule §Shape excepts; edit together.
+The `Checked:` and `Rejected:` labels are set by `~/.agents/AGENTS.md` §Solution
+decisions: mandatory visible artifact.

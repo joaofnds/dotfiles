@@ -2,16 +2,17 @@
 
 ## The bar
 
-The bar every instruction edit must clear. It covers exactly these files: `AGENTS.md`,
-`CLAUDE.md`, `GEMINI.md`, rules, skills, slash commands, agent definitions, output
-styles, and hooks that inject instruction text. Not `workflows.md`, memory files,
-fixtures and cases under `evals/`, `review-checklist.md`, or `.boris/` and `backlog/`
-documents: this bar does not check them; whether an agent must follow one is settled
-where that file is routed. One exception runs the other way: instruction text a plan or
-spec embeds for later landing, a verbatim template or a per-file content contract, is
-governed as if landed in its destination file. It applies to this file too. The bar
-governs text you add or rewrite; bringing an existing file up to it is its own task,
-never a side effect of an unrelated edit.
+The bar every instruction edit must clear. A file is covered when it loads into a
+model's context to govern how it works: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, rules,
+skills, slash commands, agent definitions, output styles, the reference files those
+route into, and hooks that inject instruction text. A document an agent merely consumes
+as task input is not covered, however imperative it reads. Three carriers load and are
+still not checked here: memory files, fixtures and cases under `evals/`, whose defects
+are planted, and `workflows.md`, which is gated by form. One exception runs the other
+way: instruction text a plan or spec embeds for later landing, a verbatim template or a
+per-file content contract, is governed as if landed in its destination file. The bar
+applies to this file too. It governs text you add or rewrite; bringing an existing file
+up to it is its own task, never a side effect of an unrelated edit.
 
 An instruction is a cost paid on every load.
 
@@ -21,7 +22,7 @@ An instruction is a cost paid on every load.
   awareness or care names none of these; it changes nothing; record the incident in git
   history instead of writing it. (The same five are mirrored in
   `instructions-reviewer.md` §5. Specification rigor and in
-  `instruction-failure-modes.md` §No-op / self-reference; edit together.)
+  `instruction-failure-modes.md` §No-op / self-reference; edit all three together.)
 - **Principle over case list.** State the reason a rule exists and the test that reason
   implies; keep a list only where its entries carry what the reason cannot regenerate (a
   path another file must match, a scope boundary another rule binds against). A reader

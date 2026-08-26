@@ -46,7 +46,8 @@ observation you didn't make.
 ## The failure modes this guards against
 
 This skill exists because these happen by default; treat each as active, not
-hypothetical. The first four mirror `engineering-judgment.md` §6 (edit both); "just
+hypothetical. All four are mirrored in `engineering-judgment.md` §6. Agent-Specific
+Failure Modes; edit both. "just
 produced" below is this skill's stricter reading of §6's "only tool output counts":
 
 - **Fabricated verification**: "tests pass" without having run them. Only tool output you

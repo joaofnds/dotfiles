@@ -57,7 +57,8 @@ a defect when their concrete effect is the agent behaving wrongly, and take the 
 route when the effect is only context or maintenance. Severity does not survive the
 mapping: an advisory-routed Minor is advisory, not a lesser defect, and holds no gate
 open. The general-agent rung is mirrored in `~/.agents/skills/adversarial-review/SKILL.md`
-§Send the reviewer; edit together.
+§Send the reviewer, and the ladder itself is re-derived from
+`~/.agents/agents/instructions-reviewer.md` §How you review; edit together.
 
 ## The closing sentence
 
