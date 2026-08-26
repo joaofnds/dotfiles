@@ -22,6 +22,13 @@ An instruction is a cost paid on every load.
   history instead of writing it. (The same five are mirrored in
   `instructions-reviewer.md` §5. Specification rigor and in
   `instruction-failure-modes.md` §No-op / self-reference; edit together.)
+- **Principle over case list.** State the reason a rule exists and the test that reason
+  implies; keep a list only where its entries carry what the reason cannot regenerate (a
+  path another file must match, a scope boundary another rule binds against). A reader
+  matches a case list against the context in front of them and stops at the first
+  context you did not foresee, while a reason reaches contexts neither of you can name.
+  Adding a case to any other list is the signal to replace it with the reason its cases
+  share.
 - **Name the consumer.** A rule mandating an action names what sees the evidence it
   happened: an artifact a later step reads, a hook that fires on it, another rule keyed
   to it, or a line the rule requires in the reply. The test is whether a run that skipped
