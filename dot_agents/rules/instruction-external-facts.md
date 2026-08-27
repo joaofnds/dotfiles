@@ -116,8 +116,9 @@ is a git probe with its own trigger. **Re-verify on any backlog.md upgrade.**
   `--ref`/`--doc` paths.
 - `backlog doc create` rejects paths outside `backlog/docs/`.
 - `task edit --notes` replaces the whole implementation-notes field, `--append-notes`
-  appends; `task create` without `-s` lands the card in `default_status`, `--parent`
-  included *(probe, 1.50.1)*.
+  appends; `--doc` and `--dep` likewise replace the whole field and have no additive
+  sibling, so a second call drops the first call's values; `task create` without `-s`
+  lands the card in `default_status`, `--parent` included *(probe, 1.50.1)*.
 - A doc file without the four-key frontmatter (id, title, type, created_date) lists
   as a blank-titled row.
 - Doc and task IDs allocate max+1, so hand-assigned IDs are safe.

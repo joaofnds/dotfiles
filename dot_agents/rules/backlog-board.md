@@ -89,12 +89,13 @@ A feature too big for one build session becomes a parent card plus one child car
 per milestone, each child with its own plan doc and acceptance criteria. /plan mints
 the shape, in this order: park the parent in Build first, then create the children
 in Plan (`--parent <parent-id> -s Plan`: without `-s` they land in the config's
-`default_status`), chain them in sequence with `--dep`, and add each child as
-a `--dep` on the parent. The order is load-bearing: once the child deps exist, the
-guard's dependency refusal blocks any forward move of the parent. The parent stays
-parked in Build and reaches Done only when every child is Done; the same refusal
-enforces it, and the parent's subtask list is the roll-up. "Safe to start the next
-milestone" means the dependency card is Done.
+`default_status`), chain them in sequence with `--dep`, and add every child as a
+`--dep` on the parent in a single command, repeating `--dep` per child. The order
+is load-bearing: once the child deps exist, the guard's dependency refusal blocks
+any forward move of the parent. The parent stays parked in Build and reaches Done
+only when every child is Done; the same refusal enforces it, and the parent's
+subtask list is the roll-up. "Safe to start the next milestone" means the
+dependency card is Done.
 
 By default a plan's task tracker stays a checkbox list inside the plan doc; a unit
 of work gets its own card only when it warrants its own context, acceptance
@@ -118,11 +119,11 @@ No archive move: Done cards and their docs stay where they are.
 
 The first time a skill picks up work that has live `.boris/` artifacts, convert it:
 create the card, move each artifact into `backlog/docs/` (write the four-key
-frontmatter, id = next free `doc-N`), attach it with `--doc`, and delete the
-original path. Convert only work actually picked up; no bulk pass. `.boris/archive/`
-is frozen: never convert or move it. `.boris/CONTEXT.md` and study docs are
-cross-ticket knowledge and `.boris/away/` holds session decision logs, not work
-state; all three stay where they are.
+frontmatter, id = next free `doc-N`), attach them with one `--doc` call listing
+every converted artifact, and delete the original paths. Convert only work actually
+picked up; no bulk pass. `.boris/archive/` is frozen: never convert or move it.
+`.boris/CONTEXT.md` and study docs are cross-ticket knowledge and `.boris/away/`
+holds session decision logs, not work state; all three stay where they are.
 
 ## CLI coupling
 
@@ -133,9 +134,15 @@ consume only these fields: `title`, `description`, `status`, `labels`,
 `dependencies`, `acceptanceCriteria`, `subtasks`, `documentation`,
 `implementationNotes`, `finalSummary`, `parentTaskId`.
 
-A card note is an implementation note, written with `backlog task edit <id>
---append-notes <text>`; `--notes` replaces the whole field, so it overwrites a
-`/handoff`'s state unless replacing is the intent.
+Every value flag on `backlog task edit` replaces its field rather than extending
+it, so a command naming one value silently drops the values already there. Where
+the intent is to add and the CLI has an additive sibling (`backlog task edit
+--help` lists them; `--append-notes` for implementation notes), use it. Where the
+intent is to replace or remove, or the flag has no sibling (`--doc` and `--dep`
+have none), read the current value from the card's JSON and pass every value you
+are keeping in one command, repeating the flag. A card note is an implementation
+note: `--append-notes`, never `--notes`, which overwrites a `/handoff`'s state
+unless replacing is the intent.
 
 The CLI behavior this file asserts is probed, not documented; evidence:
 `instruction-external-facts.md` §backlog.md CLI.
