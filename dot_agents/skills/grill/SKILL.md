@@ -25,7 +25,8 @@ ratifies it, the same bar as amending the spec.
 
 ## The card
 
-The stage column is Grill.
+Read `~/.agents/rules/backlog-board.md` before any board read or write. The stage
+column is Grill.
 
 ## Start from the source of record
 
