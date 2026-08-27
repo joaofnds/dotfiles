@@ -1,6 +1,6 @@
 {
   "effortLevel": "high",
-  "model": "opus",
+  "model": "sonnet",
   "switchModelsOnFlag": false,
   "agentPushNotifEnabled": true,
   "inputNeededNotifEnabled": true,
