@@ -73,6 +73,10 @@ Tool, permission, and invocation fields:
   `tools` list resolving to nothing usually fails the agent at launch.
 - A sub-agent's `tools` restricts; `disallowedTools` subtracts from inherited or
   specified tools.
+- Deterministic subagent caps: `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` and
+  `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` (CLI 2.1.217+; SDK `max_budget_usd`). Claude
+  Code adds its own delegation instruction only under the `claude_code` system-prompt
+  preset.
 - Permission rules evaluate deny → ask → allow; the first match wins and specificity
   does not reorder, so a broad deny cannot carry allowlist exceptions. A bare tool name
   in `deny` removes the tool from context entirely; a scoped rule only blocks matching
@@ -158,6 +162,9 @@ these.
   or system XML tags in your response." Vendor-asserted mechanism, no measurement,
   stated about Opus 5 with thinking disabled. The vendor's primary remedy is keeping
   thinking on at low effort.
+- **Show-your-thinking instructions** can trigger the `reasoning_extraction` refusal
+  category on Fable 5 and Mythos 5 only, with elevated fallback to Opus 4.8; read
+  structured `thinking` blocks instead. Not carried by Opus 5.
 
 ## Cited sources, and what each licenses
 
@@ -193,6 +200,21 @@ checked against the Opus 5 / Fable 5 release pages):
 - *A Field Guide to Claude Fable 5 (Anthropic 2026)*: the judgment-displacement
   mechanism (too specific → faithful compliance even when wrong; too vague → generic
   defaults). Single-author experience, zero measurement.
+- *Prompting Claude Opus 5 (Anthropic)*: the per-model page. Its delete-list (explicit
+  verification steps, "double-check" prose, severity filters in review prompts) targets
+  redundant re-check instructions the model now performs unprompted; its "no loss in
+  quality" names no eval. A gate that demands an artifact for an observed failure is a
+  deliberate delta outside that list, and *Prompting Claude Fable 5* prescribes
+  verifier subagents for long runs. Also: lowering effort does not reliably shorten
+  the visible response, so prompt for length explicitly. Behind the subagent caps in
+  §Harness mechanics.
+- *Prompting Claude Fable 5 (Anthropic)*: the per-model page. A brief instruction
+  steers behaviors the model gets right by judgment as effectively as enumerating each
+  case (asserted equivalence, no measurement; a conditional house requirement the model
+  cannot infer is outside it). Instructing evidence-grounded progress claims "nearly
+  eliminated fabricated status reports" in vendor testing: no eval, method, or rate.
+  Fresh-context verifier subagents outperform self-critique on long runs (asserted).
+  Behind the `reasoning_extraction` fact in §Deprecated model mechanics.
 - *Effective Context Engineering for AI Agents (Anthropic 2025)*: "right altitude",
   minimal-does-not-mean-short, canonical examples over edge-case lists. Its
   context-rot numbers belong to Chroma's research, not this post.
