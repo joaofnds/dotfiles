@@ -22,6 +22,17 @@ ports, mappers, DI, or messaging solely to satisfy this document.
 
 - **Simplicity, by Beck's four criteria.** Passes the tests, reveals intent, no duplication, fewest elements: *in that order*. Minimality is the **fourth** criterion, not the first; a system that is minimal but unreadable is not simple. *(See: beck-s-four-rules-of-simple-design, simplicity-vs-ease, incremental-design)*
 - **Boring control flow.** Plain `if`/`else`, loops, early returns over clever expression-level tricks. If a piece of code needs a comment to explain *what* it is, it's too clever: rewrite it simpler.
+- **Centralize control flow when splitting a function.** Branching is the part a reader must
+  hold in their head, so keep it in one place: the parent keeps the `if`/`switch` statements
+  and the loop-and-dispatch shape; helpers take the non-branchy work, receive values, and
+  return results. A helper that takes a flag telling it which path to run has inherited
+  control flow the parent should have kept. This governs one decomposition; the same dispatch
+  duplicated at several sites is the Repeated Switches smell, routed by
+  `refactoring/00-index.md` §Smell → candidate refactorings.
+- **Guards start at their strictest.** When creating a project or adding a compiler, type
+  checker, linter, or formatter to one, enable its strictest setting (`"strict": true`, the
+  strictest preset) before code lands under it; every line written under a loose guard becomes
+  an argument against tightening it later.
 - **Blank lines are a method's paragraph breaks.** A body reads as blocks of one thought each,
   separated by exactly one blank line; none sits inside a block. One break is mandatory at any
   length: after a guard clause or early return. Past two statements, break also between deriving
@@ -100,6 +111,17 @@ dependency *cycle* it produces is still reportable.
 - **Put domain behavior with the model it governs.** Use a class, value object, module, or pure function according to the language and required state; avoid service objects that manipulate anemic records. *(See: anemic-domain-model)*
 - **Generic utilities carve-out.** Truly generic utilities (`clamp`, `slugify`, pure math) may be shared. Domain-specific computations stay with their domain even when implemented as pure functions.
 - **Inject side-effecting or replaceable dependencies.** Constructor injection exposes I/O and runtime collaborators. Pure stateless helpers may be called directly; wrapping them adds a seam without adding control. *(See: dependency-inversion-principle)*
+- **Pass meaning-selecting options explicitly.** Where an option or flag controls how the
+  callee *interprets* an argument, a parse or evaluation mode, a format, a protocol, state it
+  at the call site even when the default is the value you want: an omitted mode is
+  indistinguishable from an overlooked one, and a changed default silently rewrites what the
+  call does. Tuning knobs (sizes, retries, buffers) stay at their defaults until a requirement
+  sets them; deadlines on external calls are already mandatory (*Defensive networking*, §2c).
+- **A call must not compile with its arguments transposed.** Where adjacent parameters carry
+  domain values of one type (two IDs, two amounts, `transfer(from, to string)`), give the call
+  site a label: a parameter object, or a distinct type per role. Dependencies with unique types
+  (a DB handle, a logger) stay positional, and so do generic helpers whose order is the
+  convention (`clamp(v, lo, hi)`, `divCeil(n, d)`).
 - **YAGNI and orthogonality.** Design for the current need, not the hypothetical future. Speculative generality is a code smell. Treat scattered edits for one logical change as a coupling signal, not an automatic defect. *(See: separation-of-concerns)*
 
 ## 4. Testing

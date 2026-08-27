@@ -115,7 +115,14 @@ groups, so whatever grouping a file already has is the grouping it keeps. Match 
 surrounding files. Only a configured tool (`goimports -local`, or `gci` in `.golangci.yaml`)
 makes a project-wide order real; absent that config, there is no order to enforce.
 
-## 8. Testing
+## 8. Arithmetic
+
+- **State rounding intent at integer division.** Integer `/` truncates toward zero silently:
+  where rounding direction matters (pagination totals, capacity, chunk counts), use a named
+  helper (`divCeil`) or the `(n + d - 1) / d` form beside the value it sizes. A bare `/` says
+  truncation is what the result means.
+
+## 9. Testing
 
 `testing/00-index.md` governs test discipline. The last two bullets are the Go spellings of its
 rules; the first is Go-specific and lives only here.
