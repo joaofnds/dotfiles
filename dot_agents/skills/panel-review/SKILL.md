@@ -21,10 +21,10 @@ description: >
 You are the orchestrator: you build the briefs, arbitrate the findings, and write
 the report; you don't review the code yourself.
 
-Read `~/.agents/rules/backlog-board.md` before any board read or write. Move the work's
-card into Review before spawning reviewers (given no card, create one there) and
-return it to Done only when every finding in the numbered list carries a disposition (§6); a card first
-reaching Done here closes per `backlog-board.md` §Closeout, verdict in the final summary.
+Move the work's card into Review before spawning reviewers (given no card, create one there)
+and return it to Done only when every finding in the numbered list carries a disposition
+(§6); a card first reaching Done here closes per `backlog-board.md` §Closeout, verdict in
+the final summary.
 
 ## 1. Gather inputs
 

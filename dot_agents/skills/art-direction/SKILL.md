@@ -74,8 +74,8 @@ on their go-ahead change **Status** to `Ratified YYYY-MM-DD`. Keep low-value ite
 private. A direction that exists only in this conversation is lost at the context
 boundary, and `/plan` cites files, not chat.
 
-Read `~/.agents/rules/backlog-board.md` before any board read or write. Write the direction as a doc titled "<feature> design" and attach it with `--doc` to the feature's card;
-given no card, create one in the column matching the work's stage. Six headings:
+Write the direction as a doc titled "<feature> design" and attach it with `--doc` to the feature's card;
+given no card, create one with no `-s`, which lands it in the board's default column. Six headings:
 
 - **Status**: `Ratified YYYY-MM-DD`, or `Draft` when the user hasn't approved it. `/plan` and `/build` treat a `Draft` as a proposal, not a constraint.
 - **Subject**: the concrete subject, its audience, the page's single job.

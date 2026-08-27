@@ -84,8 +84,9 @@ Required reads by phase:
   `/stepping-away` are user-invoked and cannot be reached by model invocation: recommend
   the next stage to the user by name. When the choice needs a skill's trigger or skip conditions, read its
   frontmatter under `~/.agents/skills/<name>/`
-- **Reading or writing a `backlog/` board** (any `backlog` command, or editing board
-  files directly) → `backlog-board.md`
+- **Reading or writing a `backlog/` board** (any `backlog` command, including
+  creating or moving a card, editing a card's fields, or attaching a doc with
+  `--doc` or `--ref`; or editing board files directly) → `backlog-board.md`
 - **Producing any loop artifact** (any `.boris/` or `backlog/docs/` document a later
   stage reads) → read
   `.boris/CONTEXT.md` when it exists: the project's domain language. An artifact that
