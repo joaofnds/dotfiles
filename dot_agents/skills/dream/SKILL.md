@@ -38,8 +38,10 @@ metadata:
 Carry through any frontmatter key not shown here unchanged; the harness may add fields
 this skill does not know.
 
-`MEMORY.md` is the index: one line per note, `- [Title](file.md): one-line summary`.
-It is a pointer list, not a content store.
+`MEMORY.md` is the index: one line per note, `- [Title](file.md) — <one-line hook>`.
+It is a pointer list, not a content store: the harness loads the index's first 200 lines
+or 25KB and silently drops the rest (`instruction-external-facts.md` §Harness mechanics),
+so detail parked on one line costs the entries below it their visibility.
 
 **Model:** consolidation is dedup-and-contradiction *judgment*, not a speed task. If you
 spawn this as a background/subagent pass, run that subagent on the most capable reasoning
@@ -68,7 +70,12 @@ earlier write).
    ```bash
    cp -r "$mem" "$mem-backup-$(date +%Y%m%d-%H%M%S)"
    ```
-3. Read `MEMORY.md` and every `<name>.md` note. Build a map: title, `type`, summary,
+3. Measure the index against its cap; Phase 3 reports both numbers and Phase 5 rechecks
+   them:
+   ```bash
+   wc -c "$mem/MEMORY.md"; wc -l "$mem/MEMORY.md"
+   ```
+4. Read `MEMORY.md` and every `<name>.md` note. Build a map: title, `type`, summary,
    `originSessionId`, age (file mtime), and the fact each asserts. You now know the store.
 
 ## Phase 2: Analyze: find issues (no writes)
@@ -97,13 +104,29 @@ Work entirely in memory. Produce candidate lists; change nothing yet.
 - **2d. Index & link integrity.** List MEMORY.md entries pointing at missing files, notes
   on disk missing from the index, and `[[wikilinks]]` whose target note doesn't exist.
   Also list, for every note you plan to merge/resolve/prune, the *inbound* `[[wikilinks]]`
-  that point at it: those need repointing or removal when it's deleted (Phase 4).
+  that point at it: those need repointing or removal when it's deleted (Phase 4). A
+  pointer into the instruction corpus rots the same way, and a rename there is invisible
+  from inside the store: list every `~/.agents/…` path a note body or an index hook
+  names that no longer resolves, with the path that replaced it when a search finds one,
+  and as unresolved otherwise. Repair the pointer, never the fact it supports. Paths
+  outside the corpus are out of scope here: a note whose subject is a missing file is
+  asserting that absence, not suffering from it.
 - **2e. Relative-date repairs.** List every note whose body states a relative date that
   the note's own timestamp can anchor: `metadata.modified` when present, else the mtime
   mapped in Phase 1. Include notes already being rewritten for a merge, contradiction, or
   link repair, resolving each phrase against the timestamp of the note the phrase came
   from, never the survivor's. Record the note, the phrase, and the absolute date; this
   list is the count Phase 3 reports.
+- **2f. Over-long index lines.** Only when Phase 1's measurement puts the index at or
+  past 80% of either cap, the point at which the harness fires its own compaction
+  warning, for the same 70% target (`instruction-external-facts.md` §Harness mechanics);
+  below that the line lengths are the user's business, and rewriting them all is churn.
+  An index line carrying detail the note body holds, or should hold, spends budget every
+  other entry needs, so shorten the longest lines first and stop once the projected index
+  is under 70% of both caps. List each one with its
+  length, the hook it reduces to, and the text moving into the note body. A line is
+  shortened only by relocating what it carries; dropping the detail is a prune, and
+  prunes go through 2c.
 
 ## Phase 3: Diff report
 
@@ -111,6 +134,8 @@ Print the proposal before any change. Omit any empty section.
 
 ```
 ## dream: consolidation report  (<slug>)
+
+Index: <N> bytes, <N> lines (cap: 25KB, 200 lines)
 
 Merges (<N>):
   <a.md> + <b.md> → <merged.md>  "<merged summary>"
@@ -130,12 +155,21 @@ Index/links (<N>):
 Date repairs (<N>):
   <file.md>: "<phrase>" → <YYYY-MM-DD>
 
-Proposed: <N> merges, <N> prunes, <N> conflicts, <N> index fixes, <N> date repairs. Apply? [Y/n]
+Index lines (<N>):
+  <file.md>: <N> chars → <N>
+
+Proposed: <N> merges, <N> prunes, <N> conflicts, <N> index fixes, <N> date repairs, <N> index lines. Apply? [Y/n]
 Reported only (no change proposed): <N> unanchorable dates.
 ```
 
 (Under `--auto`, replace the `Apply? [Y/n]` line with `Applying automatically (contradictions
 skipped)…`: see Phase 4.)
+
+An index at or over either cap is never a clean store: when nothing else is proposed,
+propose the 2f shortenings, merges, and 2c-permitted prunes that bring it back under.
+When none exist, report the overflow and the notes past the cap in place of `Store is
+already clean`, and stop: an index that cannot legally fit is the user's decision, not a
+reason to stretch 2c.
 
 Zero proposals and zero unanchorable items: print `Dream complete. Store is already clean.`
 and stop. Zero proposals with at least one unanchorable item: print the Unanchorable dates
@@ -143,9 +177,9 @@ section, skip the `Apply?` prompt, and stop.
 
 ## Phase 4: Apply
 
-**`--auto` mode** (`/dream --auto`): apply merges, prunes, relative-date repairs, and
-index/link fixes automatically; **skip all contradictions** (they need human judgment) and
-report them as left-untouched. Otherwise, interactive:
+**`--auto` mode** (`/dream --auto`): apply every proposal automatically except
+contradictions (they need human judgment); report those as left-untouched. Otherwise,
+interactive:
 
 1. For each conflict, wait for `a` / `b` / `skip` (empty ⇒ skip). Record winners.
 2. Prompt `Apply? [Y/n]`. `n`/`no` ⇒ `Cancelled. No changes made.` and stop. Empty/`y`/`yes`
@@ -163,8 +197,14 @@ Apply in this order, preserving the frontmatter schema above on every written no
   inbound `[[wikilinks]]` from the notes that referenced it.
 - **Relative-date repairs**: apply the 2e list exactly. Never derive a date from a file
   already rewritten this run.
+- **Stale external paths**: rewrite each 2d path to the one that replaced it, in the note
+  body and in the index hook the rebuild below writes. Where the search found no
+  replacement, leave the note's claim intact and report the path as unresolved: a pointer
+  you cannot resolve is not evidence the fact is dead.
+- **Index lines**: apply the 2f list, writing the relocated text into the note body
+  before shortening the line, so no run can leave the detail in neither place.
 - **Rebuild `MEMORY.md`** preserving its top heading (`# Memory Index`), then one
-  `- [Title](file.md): summary` bullet per note on disk: no orphan pointers, no notes missing.
+  `- [Title](file.md) — <hook>` bullet per note on disk: no orphan pointers, no notes missing.
 
 ## Phase 5: Verify & summary
 
@@ -188,11 +228,29 @@ grep -rhoE '\[\[[^]]+\]\]' "$mem"/*.md | sort -u | tr -d '[]' | while read -r s;
 # relative dates in notes Phase 4 rewrote or 2e listed: check hits against the 2e list by name
 grep -rniE '\b(last|this|next) (week|month|year)|\byesterday\b|\b([0-9]+|an?|one|two|three|four|five|several|a few|a couple of) (days?|weeks?|months?|years?) ago\b' \
   "$mem"/*.md && echo "RELATIVE DATE PRESENT: a Phase 4 miss only if the note was rewritten or 2e-listed"
+# the index still loads whole, and is not back at the 2f trigger
+b=$(wc -c <"$mem/MEMORY.md"); l=$(wc -l <"$mem/MEMORY.md")
+echo "index: ${b} bytes, ${l} lines"
+[ "$b" -gt 25000 ] && echo "INDEX OVER BYTE CAP: $b"
+[ "$l" -gt 200 ] && echo "INDEX OVER LINE CAP: $l"
+[ "$b" -ge 20000 ] || [ "$l" -ge 160 ] && echo "INDEX NEAR CAP: 2f applies"
+# every corpus path a note cites still resolves
+grep -rhoE '~/\.agents/[A-Za-z0-9_./-]+' "$mem"/*.md | sed 's/[.,;:)]*$//' | sort -u | while read -r p; do
+  [ -e "$HOME${p#\~}" ] || echo "STALE PATH: $p"; done
 ```
 
 Any `DANGLING WIKILINK` is a Phase 4 miss; go back and repoint it to the survivor or strip it,
 then re-run the check until clean. Also confirm no relative date survived in a rewritten or
-2e-listed note.
+2e-listed note. `INDEX OVER BYTE CAP` or `INDEX OVER LINE CAP` blocks the completion line
+below: the entries past the cap are invisible to every reader, so the run is not done.
+Where no shortening, merge, or prune that 2c permits brings it under, report the overflow,
+the notes past the cap, and why each of the three levers is unavailable, then print the
+completion line: an index that cannot legally fit is the user's decision, not a reason to
+delete a note.
+`INDEX NEAR CAP` after a run that proposed no 2f shortenings is a Phase 2 miss; go back
+and propose them. A `STALE PATH` matching a 2d path you rewrote is a Phase 4 miss; go back
+and apply it. Any other, unproposed or unresolvable, is a report and next run's work: it
+does not block the backup prune below.
 
 After the checks come back clean, prune old backups: keep the two most recent:
 
@@ -203,7 +261,8 @@ ls -1dt "$mem"-backup-* | tail -n +3 | while IFS= read -r old; do rm -rf -- "$ol
 Then print:
 
 ```
-Dream complete: merged: <N>, pruned: <N>, conflicts resolved: <N>, skipped: <N>, index fixes: <N>, date repairs: <N>, unanchorable dates reported: <N>
+Dream complete: merged: <N>, pruned: <N>, conflicts resolved: <N>, skipped: <N>, index fixes: <N>, date repairs: <N>, index lines shortened: <N>, unanchorable dates reported: <N>
+Index: <N> bytes, <N> lines
 Backup: <mem>-backup-<stamp>
 ```
 

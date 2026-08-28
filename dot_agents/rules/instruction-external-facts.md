@@ -21,6 +21,11 @@ Load limits and delivery:
 - `MEMORY.md`: first 200 lines or 25KB, whichever comes first; content past the cap is
   silently dropped. Frontmatter and block-level HTML comments are stripped before
   measuring (v2.1.211+).
+- A memory write past 80% of either `MEMORY.md` cap injects a compaction instruction
+  through an internal `PostToolUse` callback, naming 70% of that cap as the target and
+  prescribing one line per entry with the detail moved into the topic files. A per-note
+  size cap exists in the same code and did not fire on a 47KB note, so its value is
+  unestablished *(bundle read plus write probe, CLI 2.1.247)*.
 - Skill listing: 1,536 characters per entry (`skillListingMaxDescChars`); the listing
   overall gets 1% of the context window (`skillListingBudgetFraction`, or
   `SLASH_COMMAND_TOOL_CHAR_BUDGET` for a fixed count).
@@ -103,7 +108,8 @@ Tool, permission, and invocation fields:
 Mirror mark: the numeric limits and several loading-path and tool-field facts above are
 restated in `agents/references/artifact-class-checks.md`,
 `agents/instructions-reviewer.md`, and `agents/references/dispatch-fields.md`; the
-named-spawn fact in `rules/subagent-spawning.md`; the transcript layout in `skills/kaizen/SKILL.md`
+named-spawn fact in `rules/subagent-spawning.md`; the `MEMORY.md` caps and compaction
+numbers in `skills/dream/SKILL.md`; the transcript layout in `skills/kaizen/SKILL.md`
 §Assemble the evidence; the `skillOverrides` key rule in
 `skills/art-direction/SKILL.md`: edit those sites with this list or neither.
 
