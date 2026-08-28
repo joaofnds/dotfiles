@@ -3,6 +3,7 @@ export HISTSIZE=1000000000
 
 export EDITOR=nvim
 export MANPAGER="col -b | bat --language=man --plain "
+export OPENCODE_DB="$HOME/.local/share/opencode/opencode.db"
 
 export LC_ALL=en_US.UTF-8
 export LANG=$LC_ALL
