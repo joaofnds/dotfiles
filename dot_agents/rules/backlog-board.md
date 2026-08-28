@@ -26,14 +26,22 @@ Never run `backlog init`: it writes backlog's own workflow-instruction block int
 ## Cards and columns
 
 One card per feature; the card carries status, acceptance criteria, dependencies,
-labels, notes, and the final summary. A stage skill verifies the column from
-`backlog task <id> --json`, moves the card into its own column when it starts (a
-skill that names no column leaves the card where it is), and,
-before ending any turn that changed card state, puts what changed on the card.
-Given no card, bootstrap the board and create one in the stage's column, unless the
-skill directs otherwise. Done means closed out. Review means a review in
-flight: the reviewing skill moves the card in, attaches its report doc, and returns
-it to Done once findings are dispositioned; never leave a card parked in Review.
+labels, notes, and the final summary. The column names the work the card is waiting
+for: a card in Plan needs planning, a card in Build has its plan and needs building.
+A stage skill verifies the column from `backlog task <id> --json`, moves the card
+into its own column when it starts (a skill that names no column leaves the card
+where it is), and, once its work is done and its artifact is attached, moves the
+card to the column of the stage that runs next: the one the user named, or the one
+the artifact's **Next step** names (a plan's next stage is Build). Where neither
+names one, leave the card where it is and say so. A card left in a column whose
+work is finished tells the next stage's skill the wrong thing. Before ending any
+turn that changed card state, put what changed on the card. Given no card,
+bootstrap the board and create one in the stage's column, unless the skill directs
+otherwise. One skip: /build's closeout moves the card past Review straight to Done
+(§Closeout), because review is optional.
+Review holds only a review in flight: the reviewing skill moves the card in,
+attaches its report doc, and returns it to Done once findings are dispositioned;
+never leave a card parked in Review. Done means closed out.
 
 Backward moves are legal, and a card may be created directly in any column; that is
 how small work skips the front half. Bug and spike work travels the same columns
@@ -88,13 +96,14 @@ files, `.boris/CONTEXT.md`), attach with `--ref` instead.
 A feature too big for one build session becomes a parent card plus one child card
 per milestone, each child with its own plan doc and acceptance criteria. /plan mints
 the shape, in this order: park the parent in Build first, then create the children
-in Plan (`--parent <parent-id> -s Plan`: without `-s` they land in the config's
-`default_status`), chain them in sequence with `--dep`, and add every child as a
+in Build and attach each child's plan doc (`--parent <parent-id> -s Build`:
+without `-s` they land in the config's `default_status`), chain them in sequence with `--dep`, and add every child as a
 `--dep` on the parent in a single command, repeating `--dep` per child. The order
 is load-bearing: once the child deps exist, the guard's dependency refusal blocks
 any forward move of the parent. The parent stays parked in Build and reaches Done
 only when every child is Done; the same refusal enforces it, and the parent's
-subtask list is the roll-up. "Safe to start the next milestone" means the
+subtask list is the roll-up. The parent is the one card whose column names its
+children's work rather than its own. "Safe to start the next milestone" means the
 dependency card is Done.
 
 By default a plan's task tracker stays a checkbox list inside the plan doc; a unit
