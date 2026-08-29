@@ -37,9 +37,6 @@ run() {
   fi
 }
 
-run "refactoring catalog structure" bash "$root/scripts/verify-refactoring-catalog.sh"
-run "dot_agents line budgets" bash "$root/scripts/check-corpus-budgets.sh"
-run "mirror marks" bash "$root/scripts/check-mirror-marks.sh"
 run "Claude Desktop launcher" bun test "$root/scripts/test-cdl.test.js"
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"

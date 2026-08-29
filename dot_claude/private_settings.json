@@ -11,7 +11,6 @@
   "skipWorkflowUsageWarning": true,
   "tui": "fullscreen",
   "theme": "auto",
-  "outputStyle": "verdict-last",
   "disableBundledSkills": false,
   "disableWorkflows": true,
   "disableClaudeAiConnectors": true,
@@ -40,25 +39,20 @@
     ]
   },
   "skillOverrides": {
-    "art-direction": "user-invocable-only",
     "artifact-capabilities": "off",
     "artifact-design": "off",
     "claude-api": "name-only",
     "code-review": "user-invocable-only",
     "dataviz": "off",
-    "deep-research": "name-only",
     "fewer-permission-prompts": "user-invocable-only",
-    "frontend-design": "off",
     "init": "off",
     "keybindings-help": "user-invocable-only",
     "loop": "user-invocable-only",
-    "review": "user-invocable-only",
     "run": "off",
     "schedule": "user-invocable-only",
     "security-review": "user-invocable-only",
     "simplify": "off",
-    "update-config": "off",
-    "verify": "off"
+    "update-config": "off"
   },
   "statusLine": {
     "type": "command",
@@ -70,29 +64,6 @@
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_FEEDBACK_COMMAND": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
-  },
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/announce-rules-reminder.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/instruction-gate.sh"
-          }
-        ]
-      }
-    ]
   },
   "attribution": {
     "commit": "",

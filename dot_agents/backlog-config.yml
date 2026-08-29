@@ -1,6 +1,6 @@
 project_name: "PLACEHOLDER"
-default_status: "Todo"
-statuses: ["Todo", "Spec", "Research", "Grill", "Plan", "Build", "Review", "Done"]
+default_status: "To Do"
+statuses: ["To Do", "Shape", "Build", "Review", "Ship", "Done"]
 date_format: yyyy-mm-dd
 auto_commit: false
 remote_operations: false
