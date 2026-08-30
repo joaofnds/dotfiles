@@ -9,6 +9,7 @@ alias y='yazi'
 alias t='tmux'
 alias tatt='tmux attach -t "$(tmux list-sessions -F "#S" | fzf -1 --preview "tmux capture-pane -e -p -t {}" --preview-window right:70%)"'
 alias cm='chezmoi'
+alias linknix='sudo ln -sfn /nix/var/nix/profiles/system /run/current-system'
 
 alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --merge-output-format=mkv"
 alias musicdl="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail"
