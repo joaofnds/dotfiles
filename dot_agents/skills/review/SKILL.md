@@ -1,54 +1,137 @@
 ---
 name: review
-description: Decide whether a change needs an independent second review, run it (one round, fresh reviewer), verify every finding against evidence, dispose of each, record them all. Use at the Review column, before shipping anything outward-facing, irreversible, or security-surfaced, and whenever João asks for a review.
+description: Decides whether a change needs an independent second review, runs it (one round, fresh reviewer, axis briefs read off the diff), verifies every finding against evidence, disposes of each, records them all. Use at the Review column, before shipping anything outward-facing, irreversible, or security-surfaced, and whenever João asks for a review or a full review.
 ---
 
 # Review
 
-The quality bar is the same everywhere: every change gets author-side verification,
-and any defect found is fixed before moving on, whatever the task's size. This skill is
-about the second look, independent review, and when it's worth its cost.
+Every change gets author-side verification, and any defect found is fixed before
+moving on, whatever the task's size. This skill covers the independent second review:
+when it runs and how.
 
 ## The tier
 
 Independent review runs when the work is outward-facing (others will read or run it),
 irreversible (data, published history, money), security-surfaced (trust boundaries,
 authentication, secrets, untrusted input), or when João asked for one. These are
-properties of the change, read off the diff, not opinions about its importance; if
-you're unsure whether one applies, it applies. Otherwise the author-side verification
-already done is the review: say so in a line and move on. Widen these triggers only
-on evidence that defects escaped, not on unease.
+properties of the change, read off the diff. If you're unsure whether one applies, it
+applies. Otherwise the author-side verification already done is the review: say so in
+a line and move on. Widen these triggers only on evidence that defects escaped, not
+on unease.
+
+## Inputs
+
+- Materialize the diff as a patch at a readable path, with the changed-file list. A
+  bare ref range can resolve to a different diff in the reviewer's context.
+- Collect the task's acceptance observations, and the spec when one exists. A
+  deferral a design doc records as spec-authorized is part of the spec. Implementing
+  less than the spec asked is not a miss when the doc records why.
+- Run the project's suite once, with the command from the project's own manifests.
+  Keep the output for the record. Do not give the reviewer the result, the reason
+  review was triggered, or what worries you. A primed reviewer repeats your reading
+  instead of making its own.
 
 ## One round, fresh eyes
 
-Dispatch the `reviewer` agent with the diff and the task's acceptance observations,
-and none of your reasoning: not why review was triggered, not what you're worried
-about. Priming a reviewer with what you believe turns a second review into the first
-one twice. Ask for everything it finds; you will filter. One
-round: the reviewer advises, you own the verdict, and a disagreement you can't settle
-with evidence goes to João with your recommendation, never back to the reviewer.
+Which axes apply is read off the diff, like the tier. Unsure means it applies.
 
-## Verify, then dispose
+- **Style, architecture, security**: every code change.
+- **Spec conformance**: when a spec or acceptance observations exist. When neither
+  exists, record the skip and continue. Do not stop to ask.
+- **Testing**: when the diff touches a test file. Record the skip otherwise.
+- **Refactoring**: always. Its findings are advisory: they describe the surrounding
+  code, not the change.
+
+Read [references/axes.md](references/axes.md) and dispatch the `reviewer` agent with
+the diff, the acceptance observations, and the applicable axis briefs pasted whole.
+One reviewer reads all axes and reports each defect once, under the axis that owns
+it. Split into parallel reviewers, grouped by axis, only when one context cannot
+read every changed file plus the briefs. A reviewer reporting unexamined files means
+split. When João names a single axis, send only that brief.
+
+One round: the reviewer advises and you own the verdict. Settle a disagreement with
+evidence, or send it to João with your recommendation. Never send it back to the
+reviewer.
+
+## Verify, then classify
 
 Each finding is a claim. Confirm or refute it with a tool result: run the test, read
-the line, reproduce the input. A finding you can't reproduce is refuted, and you say
-so. Then dispose of it one of four ways: fixed (small and reversible: in this batch);
-not a defect, with why; tracked as a task, with its id; escalated to João, with your
-recommendation.
+the line, reproduce the input. Refuting requires positive disproof: the failure
+cannot occur, the cited clause doesn't say that, or the code already handles it. A
+blocking claim you can neither reproduce nor disprove goes to João as escalated,
+with the probe you couldn't run named. Record refuted findings as refuted, with the
+evidence. Never drop one silently. To dismiss a finding because the repo's own
+instructions allow the pattern, quote the sentence that allows it, with its path. If
+you can't quote it, the repo doesn't say it, and the finding stands. When reviewers
+were split and the same defect arrives under two names, record it once, keeping the
+stronger evidence and the better fix.
 
-Severity is yours to assign after verification, in the reviewer's three words:
-blocking (wrong behavior, data loss, or a security hole; fixed before done),
-should-fix (a real defect that doesn't block), note (an observation, no action
-required). Inflation is as much a defect as under-reporting: a note called blocking
-teaches the reader to ignore the word.
+Two checks classify what survives:
+
+- **The revert test.** If the finding's evidence would still stand with the change
+  reverted, the finding is about the codebase, not the change. Pre-existing debt
+  cannot block this change; it becomes a note or a tracked task. The change owns
+  what it created: the duplication it introduced, the site it added to an existing
+  smell's or coupling's span, the function it grew past the point the finding rests
+  on. Line overlap does not decide it. A two-line edit inside a pre-existing
+  300-line function did not introduce that function's length. Two findings are
+  exempt and stay real wherever they sit: a concrete correctness defect (wrong
+  output a nameable input reaches), and a test whose outcome is independent of its
+  subject, which claims safety it does not provide.
+- **The stability probe.** When a coupling finding's weight rests on the coupled
+  target changing, run one git-history check: commits touching the path in the past
+  year, plus the path's age. A path older than the window that changed in at most
+  two commits is stable; drop the finding and record the count. A younger or busier
+  path keeps the finding, with the count as evidence. An external or historyless
+  target keeps the finding, labeled with the stability assumption it rests on. An
+  empty log is not evidence of stability. Never apply this probe to temporal
+  coupling; judge that on whether the ordering or interleaving assumption can be
+  violated.
+
+## Severity
+
+Assign severity after verification, in the reviewer's three words: blocking (wrong
+behavior, data loss, or a security hole; fixed before done), should-fix (a real
+defect that doesn't block), note (an observation, no action required). The concrete
+failure picks the word. Inflating is as much a defect as under-reporting: a note
+called blocking teaches the reader to ignore the word.
+
+- Blocking also covers a failed required suite until it is diagnosed, and a
+  change-introduced test whose outcome is independent of its subject.
+- A pre-existing correctness defect belongs to the owning code. Track it there or
+  escalate it. It is never this change's blocking condition. State it apart in the
+  brief.
+- A refactoring finding measures friction. It is at most should-fix, and only when
+  the change created the friction. Otherwise it is a note or a tracked task.
 
 Security is part of this pass, not a separate one: what untrusted data enters, what
 authority the code exercises, what a hostile input could reach.
 
+## Dispose
+
+Dispose of each verified finding one of four ways: fixed (small and reversible: in
+this batch); not a defect, with why; tracked as a task, with its id; escalated to
+João, with your recommendation. Fix blocking findings before done. Observe every
+fix: rerun the suite and the check the finding names. You verify the fixes. Never
+re-dispatch the reviewer for the same change.
+
 ## Record everything, brief the decision
 
-Every finding, with its severity and disposition, goes on the task's record. None are
-dropped or folded into "a few minor things". The reply to João is the brief: how many
-findings by severity and what was done with them, and in full only the ones that need
-his decision or that changed what's live. No findings is one line. Then the verdict:
-proceed, or what blocks.
+Every finding goes on the task's record with its severity and disposition, along
+with the suite output and any recorded axis skips. None are dropped or folded into
+"a few minor things". Each finding carries what a zero-context session needs to act
+on it: the place; the concrete failure, as a rule, spec clause, or attack path,
+never a preference; the trigger that reaches it (the caller, input, configuration,
+or action sequence; revert-test evidence stands in for a change-created smell; an
+exported surface always has a nameable trigger); the simplest viable fix, where a
+heavier fix must cite the verified reason the simpler one fails; and how to verify
+the fix. Order worst first. Group notes under one no-action heading, a line each.
+
+The review ends when every finding has its disposition. Nothing re-opens it. A clean
+report is one line on the record and in the brief. An empty review of a clean diff
+is correct.
+
+The reply to João is the brief: how many findings by severity and what was done with
+them, and in full only the ones that need his decision or that changed what's live.
+When nothing blocks, say so plainly. Then the verdict: proceed, or what blocks. A
+proceed verdict moves the card to Done, or to Ship when João has directed that step.
