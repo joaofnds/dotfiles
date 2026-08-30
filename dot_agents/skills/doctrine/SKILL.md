@@ -1,6 +1,6 @@
 ---
 name: doctrine
-description: João's full engineering doctrine, ratified 2026-08-28. Method, testing, lean foundations, delivery, architecture, DDD, code craft, data systems, operations, and the rulings for when practices conflict. Read when designing, reviewing, or choosing between practices; read sections 8 and 9 when the task touches data stores, queues, distributed state, or a running service.
+description: João's full engineering doctrine. Method, testing, lean foundations, delivery, architecture, DDD, code craft, data systems, operations, and the rulings for when practices conflict. Read when designing, reviewing, or choosing between practices; read sections 8 and 9 when the task touches data stores, queues, distributed state, or a running service.
 ---
 
 The doctrine is `principles.md` in this directory: fourteen numbered sections, each

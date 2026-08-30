@@ -1,13 +1,12 @@
 ---
 name: refactor
-description: The after-task refactoring pass, architectural and not only in-file. Find the structural opportunity the task just exposed, do the small ones in separate commits, make tasks of the large ones. Runs at the end of every task, before the handoff.
+description: The after-task refactoring pass, architectural and not only in-file. Finds the structural opportunity the task just exposed, does the small ones in separate commits, makes tasks of the large ones. Runs at the end of every task, before the handoff.
 ---
 
 # Refactor
 
-Every task teaches something about the structure the code should have had. This pass
-acts on the lesson while it's fresh: right after a change, its cost is most visible
-and the motivation to fix it is highest. A week later it's just how the code is.
+This pass runs right after the task, when the structural cost the task exposed is
+most visible.
 
 ## Look wider than the diff
 
