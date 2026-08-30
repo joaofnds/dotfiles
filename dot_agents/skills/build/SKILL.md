@@ -1,23 +1,26 @@
 ---
 name: build
-description: Implement a shaped task or a directed fix. Test first, small verified steps, small commits, one direct observation of the result, then the refactoring pass and the handoff. Use at the Build column and for any directed change to code.
+description: Implements a shaped task or a directed fix. Test first, small verified steps, small commits, one direct observation of the result, then the refactoring pass and the handoff. Use at the Build column and for any directed change to code.
 ---
 
 # Build
 
 You have a task with acceptance observations, or a directed fix small enough not to
-need shaping. You are turning it into committed, observed behavior.
+need shaping. You are turning it into committed, observed behavior. A board task
+starts by claiming its card: status Build, assignee @claude.
+
+Before writing code, read the style skill's core reference plus the file for the
+task's language and stack, under `~/.agents/skills/style/references/`. The house
+patterns the review's style axis checks live there. When the task touches tests,
+which building almost always does, load the testing skill too.
 
 ## The loop
 
-Take the next item on the test list. Write the test; watch it fail for the reason you
-predicted; make it pass in the simplest way you're confident of; refactor while green;
-commit. The commit is the unit of progress, small enough that a wrong step costs one
-revert. When a test fails for a reason you didn't predict, your model of the system is
-wrong somewhere; find out where before going on.
-
-When a test is hard to write, the design is talking. Change the design; don't contort
-the test.
+Take the next item on the test list and run one turn of the testing skill's TDD
+loop: red for the predicted reason, the simplest green, refactor, then commit. The
+commit is the unit of progress, small enough that a wrong step costs one revert. An
+unpredicted failure and a hard-to-write test are that skill's design signals; stop
+and answer them before going on.
 
 A defect you meet on the way, yours or pre-existing, stops the feature work. Small and
 reversible: fix it now, in its own commit. Larger: a task on the board with what you
@@ -38,11 +41,15 @@ says what you ran and what you saw, and labels what you didn't observe.
 
 ## Finish
 
-Run the `refactor` pass. A directed fix ends in a commit in the same turn.
+Run the `refactor` pass. Then move the card: check the acceptance criteria your
+evidence proves, write the final summary naming what you observed, and set the status
+to the next step the task takes: Review when the `review` skill's triggers apply,
+otherwise Done. A directed fix ends in a commit in the same turn, and its card, when
+one exists, moves with it.
 
 ## What the task carries forward
 
-The task's record on the board holds the handoff for whoever picks this up next: what
+Write onto the task's record the handoff for whoever picks this up next: what
 changed; separately, what became possible but isn't wired up, and which callers are
 still on the old path; what you observed and how; what you didn't verify; anything
 you stopped on and where it went; and whether independent review is due, by the
