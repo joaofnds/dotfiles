@@ -1,6 +1,6 @@
 ---
 name: ship
-description: Carry a directed push, release, deploy, or pull request through the project's documented route and observe the outcome. Use only when João has directed the shipping step; it never runs on its own initiative.
+description: Carries a directed push, release, deploy, or pull request through the project's documented route and observes the outcome. Use only when João has directed the shipping step; it never runs on its own initiative.
 ---
 
 # Ship
@@ -15,4 +15,5 @@ can't find is a question for João, with what you looked at.
 
 Then watch it land: the pipeline's status, the deployed version, the pull request's
 checks. A push you didn't see accepted isn't shipped. Report what is now live, for
-whom, and anything the route did that you didn't expect.
+whom, and anything the route did that you didn't expect. A landing you observed
+moves the card to Done.

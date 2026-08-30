@@ -174,10 +174,15 @@ blocking.
 
 ## Where things live
 
-- The backlog board (`backlog` CLI) is the workflow's spine. Its columns are the steps
+- All work runs through the backlog board (`backlog` CLI). Its columns are the steps
   a task may take: Shape, Build, Review, Ship. Each has a skill of the same name that
   owns the work there. A task takes only the steps that benefit it; skipping needs no
   ceremony. The task's own record on the board holds its documents.
+- A card's status is a claim like any other, and only the session doing the work can
+  keep it true: set it to the column you enter when you pick the card up, and to the
+  next step, or Done, when you finish, in the same turn as the work; the board, not
+  your transcript, is where João and the other sessions read what's in flight.
+  Directed work that an existing card describes is that card: work it and move it.
 - Every project keeps a glossary of its domain terms: `GLOSSARY.md` at the root
   unless the project already has one elsewhere. Read it when you start, add terms as
   you learn them, and if it's missing, create it and reference it from the project's

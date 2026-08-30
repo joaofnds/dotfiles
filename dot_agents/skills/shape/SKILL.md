@@ -1,13 +1,13 @@
 ---
 name: shape
-description: Turn a request or backlog task into something a fresh session could build from. Surface the unknowns, settle the language, state acceptance as observable behavior, plan only what is likely to change. Use at the Shape column, or before building anything whose scope or meaning is not yet clear.
+description: Turns a request or backlog task into something a fresh session could build from. Surfaces the unknowns, settles the language, states acceptance as observable behavior, plans only what is likely to change. Use at the Shape column, or before building anything whose scope or meaning is not yet clear.
 ---
 
 # Shape
 
-The cost of a wrong assumption grows with every step taken on it. Shaping is where
-assumptions get named while they're still cheap. A task that's already clear doesn't
-need this; a directed one-line fix goes straight to `build`.
+Shaping names assumptions while they're still cheap, before work builds on them. A
+task that's already clear doesn't need this; a directed one-line fix goes straight
+to `build`.
 
 ## Find the unknowns
 
@@ -41,6 +41,7 @@ When the acceptance list is the plan, stop there.
 
 ## What the task carries forward
 
-When shaping is done, the task's record on the board holds the goal in one sentence,
-the acceptance observations, the unknowns and how each was resolved, the glossary
-terms added, and the first test to write. The next session reads only this.
+When shaping is done, write onto the task's record the goal in one sentence, the
+acceptance observations, the unknowns and how each was resolved, the glossary terms
+added, and the first test to write; then move the card to the next column it takes.
+The next session reads only the card.
