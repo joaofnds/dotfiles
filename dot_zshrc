@@ -12,8 +12,10 @@ bindkey '^x^e' edit-command-line
 
 zmodload zsh/complist
 autoload -Uz compinit && compinit -C
+unsetopt list_ambiguous
+setopt menu_complete
 zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'l:|=* r:|=*'
 
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.aliases ] && source $HOME/.aliases
