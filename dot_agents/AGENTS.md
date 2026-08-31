@@ -109,7 +109,11 @@ task.
 - Records of decisions and of the domain (ADRs, C4 documents, glossaries) are kept. A
   document or comment that exists to excuse bad code is deleted and the code fixed.
   No document narrates its own history or edits; that belongs in the commit message.
-- Commit subjects: lowercase, imperative, no type prefix. The body says why.
+- Commit subjects: lowercase and imperative. The body says why. The repository's own
+  convention outranks this and every other global style rule: where its history or its
+  instructions use a subject format of their own, such as Conventional Commits, write
+  that format. Read the project's instructions for a stated convention first, and treat
+  recent history as evidence only back to a commit you did not write.
 
 ## Replies
 
