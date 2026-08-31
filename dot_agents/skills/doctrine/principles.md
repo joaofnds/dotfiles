@@ -10,7 +10,7 @@ carries the section's core commitment.
 - **Keep a per-project ubiquitous-language document.** Every project gets a glossary
   recording its domain terms as they're learned; load it whenever returning to the
   project, so the language is in context from the first message.
-- **After every task, run a refactoring pass — architectural, not just in-file.**
+- **After every task, run a refactoring pass: architectural, not just in-file.**
   Look for the structural opportunity the task exposed, not only local cleanup.
 - **DDD means the fundamentals:** knowledge crunching and the ubiquitous language of
   the book's first chapters, not the implementation-pattern catalog (§6 is ordered
@@ -21,7 +21,7 @@ carries the section's core commitment.
 **Work in the smallest coherent increments with the fastest feedback available;
 verify each step empirically before the next.**
 
-- Small batches and iteration at every scale — TDD commit, CD deploy, product MVP —
+- Small batches and iteration at every scale (TDD commit, CD deploy, product MVP),
   because queue time and rework cost, not effort, are what to minimize, and iteration
   is what flattens the cost-of-change curve; refactoring and tests make it
   survivable (Small Batches; Small Steps & Fast Feedback; Working Iteratively;
@@ -45,20 +45,20 @@ verify each step empirically before the next.**
   Implementation by confidence, not habit; keep a visible test list (Three Laws of
   TDD; Test-Driven Development by Example; Canon TDD).
 - A hard-to-write test is design feedback about the abstraction, never a testing
-  problem — "listen to the tests" (Growing Object-Oriented Software; Test-Driven
+  problem: "listen to the tests" (Growing Object-Oriented Software; Test-Driven
   Development).
 - Only mock types you own; mocks are a design-feedback tool; distinguish state from
   behavior verification before choosing a double (Mock Objects; Mocks Aren't Stubs).
 - Hold unit tests to FIRST; see every test fail once before trusting it; select tests
   by risk and fear, not method coverage (FIRST Properties; Building Tests).
 - Use the full double taxonomy precisely (dummy/stub/spy/mock/fake); design for
-  testability up front — DI, Humble Object — rather than bolting on hooks (xUnit Test
+  testability up front (DI, Humble Object) rather than bolting on hooks (xUnit Test
   Patterns).
 - Property-based testing for the edge cases you didn't anticipate; Marick's quadrant
   to choose test grain; the exploratory quadrant stays irreducibly manual (Property-
   Based Testing; Testing Strategy).
-- Build a walking skeleton — the thinnest end-to-end slice through build, deploy, and
-  test — before feature work (Walking Skeleton).
+- Build a walking skeleton, the thinnest end-to-end slice through build, deploy, and
+  test, before feature work (Walking Skeleton).
 - Legacy code is code without tests: characterization tests to pin behavior, seams to
   break dependencies, sprout/wrap for additions, and the five-step change algorithm
   (find change points → test points → break dependencies → write tests → change)
@@ -70,17 +70,17 @@ verify each step empirically before the next.**
 **Manage by means, not results; make problems visible the moment they occur; improve
 as a daily habit through PDCA.**
 
-- Deming's four lenses together — system, variation, knowledge, psychology; never
+- Deming's four lenses together: system, variation, knowledge, psychology; never
   diagnose with one (System of Profound Knowledge). Distinguish common-cause from
   special-cause variation before reacting; tampering makes stable systems worse
   (Understanding Variation; The Red Beads Experiment). The system causes its own
-  behavior — look there before blaming a person (Systems Thinking).
-- Jidoka (stop-on-defect) plus pull-based flow as the structural pillars; poka-yoke —
-  asserts, type systems, CI gates — over operator vigilance; muda/mura/muri, with
+  behavior: look there before blaming a person (Systems Thinking).
+- Jidoka (stop-on-defect) plus pull-based flow as the structural pillars; poka-yoke
+  (asserts, type systems, CI gates) over operator vigilance; muda/mura/muri, with
   slack as a feature against overburden, not waste (Toyota Production System;
   Poka-Yoke; The Three M's).
 - Kaizen as a daily habit grounded in direct observation, not an event; visualize
-  state — what gets visualized gets managed (Kaizen; Visual Management).
+  state: what gets visualized gets managed (Kaizen; Visual Management).
 - The Improvement Kata in order: direction, current condition (measured directly, no
   averages), next target condition (a process pattern with a date, not an outcome
   number), PDCA against obstacles (Improvement Kata; Target Condition; Toyota Kata).
@@ -107,7 +107,7 @@ one build of the bytes; done means released.**
 - One deployment pipeline per system; build the binary once and promote the same
   artifact; commit stage under ~5 minutes and owned green; failing acceptance test is
   a hard gate (Deployment Pipeline; Commit Stage; Automated Acceptance Testing).
-- Everything in version control — application, environment, infrastructure as
+- Everything in version control: application, environment, infrastructure as
   declarative self-healing code, database changes as roll-forward/roll-back scripts;
   expand-contract for breaking schema changes, decoupling migration from deploy
   (Configuration Management; Managing Infrastructure; Managing Data; Evolutionary
@@ -116,14 +116,14 @@ one build of the bytes; done means released.**
   risk; daily deployment as the discipline target (Deploying and Releasing; Daily
   Deployment; Incremental Deployment).
 - Automate compliance through the pipeline (access control + audit trail), not a
-  change-advisory board — CAB correlates with worse outcomes (Managing Continuous
+  change-advisory board: CAB correlates with worse outcomes (Managing Continuous
   Delivery; Accelerate).
 - Nonfunctional requirements as quantitative stories up front; simpler code, not more
   complex code, is what achieves capacity (Testing Nonfunctional Requirements).
 - Measure delivery by the DORA four keys as outcomes, never activity proxies; speed
   and stability are complementary; invest in the technical practices as primary, with
   loosely coupled architecture and empowered teams as the strongest predictors
-  (DORA — Accelerate Metrics; Accelerate; Accelerate Architecture Findings).
+  (DORA: Accelerate Metrics; Accelerate; Accelerate Architecture Findings).
 - Painful off-hours deploys are deployability debt, not maturity (Deployment Pain
   and Burnout).
 
@@ -148,7 +148,7 @@ dependency at stability; couple deliberately, never accidentally.**
   things (cite observed change history, not shape), loosen toward uncertain things;
   strong coupling plus slow feedback is the one combination that never works
   (Coupling; and your own framing in §0).
-- Simple over easy — few interleaved concerns beats familiar; Beck's four rules in
+- Simple over easy: few interleaved concerns beats familiar; Beck's four rules in
   order (Simplicity vs. Ease; Beck's Four Rules).
 - Architecture is evolutionary and unfinished; microservices are an organizational-
   decoupling play, not free architecture; the humble object at every boundary keeps
@@ -163,7 +163,7 @@ dependency at stability; couple deliberately, never accidentally.**
 - Parse, don't validate: make illegal states unrepresentable; parse untrusted data
   once at the boundary into a precise type (Parse, Don't Validate). Wrap bare domain
   primitives in value objects that name the concept (Primitive Obsession; Money).
-- Define errors out of existence where safe — redesign the interface so the error
+- Define errors out of existence where safe: redesign the interface so the error
   case can't occur (Defining Errors Out of Existence).
 
 ## 6. Domain-driven design (your emphasis: the fundamentals)
@@ -171,9 +171,9 @@ dependency at stability; couple deliberately, never accidentally.**
 **One ubiquitous language shared by experts, developers, and code; the model is the
 language; refactor toward deeper insight as understanding grows.**
 
-- Knowledge crunching with domain experts, iteratively — never model in isolation;
+- Knowledge crunching with domain experts, iteratively: never model in isolation;
   domain experts do the modeling with you (Knowledge Crunching; Analysis Patterns).
-- The ubiquitous language lives everywhere — conversation, code, tests, diagrams —
+- The ubiquitous language lives everywhere: conversation, code, tests, diagrams,
   and per your standing directive, in a per-project glossary document loaded on
   return to the project (Ubiquitous Language; §0).
 - Model and implementation reflect each other in one loop; whoever touches the model
@@ -186,8 +186,8 @@ language; refactor toward deeper insight as understanding grows.**
   anti-corruption layers against upstream models; concentrate effort on the core
   domain, minimal investment in generic subdomains (Bounded Context; Context Map;
   Anti-Corruption Layer; Core Domain; Generic Subdomain).
-- Tactical patterns only when they earn their keep; the anemic domain model — logic
-  pushed into a thick service layer — pays both costs and reaps neither benefit
+- Tactical patterns only when they earn their keep; the anemic domain model (logic
+  pushed into a thick service layer) pays both costs and reaps neither benefit
   (Anemic Domain Model; Domain Model; Transaction Script as the legitimate cheap
   default for simple logic).
 
@@ -212,7 +212,7 @@ cleaner than found.**
   feedback (The Pragmatic Programmer; Design by Contract; Programming by
   Coincidence; Law of Demeter).
 - Never merge generated or AI-produced code without reading and understanding every
-  line — interwoven code becomes yours to own (Evil Wizards).
+  line: interwoven code becomes yours to own (Evil Wizards).
 - Isolate third-party code behind domain-named interfaces; write learning tests
   against third-party APIs (Clean Boundaries; Library and API Dependencies).
 
@@ -245,20 +245,20 @@ design for partial failure and both-direction schema compatibility.**
 speed-stability trade; design for production from the start; learn blamelessly.**
 
 - SLIs as good/total ratios, SLOs bounded on both sides, targets set by business
-  tolerance — never more reliable than needed (Service Level Objectives; Embracing
+  tolerance: never more reliable than needed (Service Level Objectives; Embracing
   Risk).
 - Toil capped and systematically eliminated; page on symptoms via the four golden
   signals; stabilize first, then root-cause; canary every change; blameless
   postmortem after every significant incident (Toil; Monitoring; Effective
   Troubleshooting; Emergency Response; Blameless Postmortem).
-- The stability patterns — timeouts, circuit breakers, bulkheads, fail fast, shed
-  load — as standard defenses; retry budgets and jittered backoff against death
+- The stability patterns (timeouts, circuit breakers, bulkheads, fail fast, shed
+  load) as standard defenses; retry budgets and jittered backoff against death
   spirals; chaos experiments with a steady-state hypothesis and bounded blast radius
   (Stability Patterns; Cascading Failures; Chaos Engineering; Release It!).
-- Business-meaningful telemetry from domain code via a probe abstraction — "logging
+- Business-meaningful telemetry from domain code via a probe abstraction: "logging
   is a feature" (Domain-Oriented Observability); T1/T2 signal separation; ops reviews
   around SLO burn-down (T1 and T2 Signals; Ops Reviews).
-- The curator's reconciliation: SRE is restated lean — error budget as andon cord,
+- The curator's reconciliation: SRE is restated lean, error budget as andon cord,
   SLO policy as jidoka, blameless postmortem as genchi genbutsu (Lean Roots of SRE).
 
 ## 10. Teams, culture, sustainability
@@ -270,8 +270,8 @@ through §13's team-facing carve-out.**
   control failure (Negotiated Scope Contract; Slack; Energized Work).
 - Technical debt named and tracked as the deliberate metaphor it is (Technical Debt;
   WyCash Story).
-- Culture and organization — generative culture and driving out fear, the Five
-  Ideals, Team Topologies, Brooks's Law and quadratic communication cost — bind
+- Culture and organization (generative culture and driving out fear, the Five
+  Ideals, Team Topologies, Brooks's Law and quadratic communication cost) bind
   team-facing work as written and serve as advice context otherwise, per §13
   (Westrum Organizational Culture; Psychological Safety; The Five Ideals; Team
   Topologies; Team Continuity; The Mythical Man-Month).
@@ -308,7 +308,7 @@ Ruled (João, 2026-08-28):
 
 - **Documentation permanence: decision and domain records earn it; excuses don't.**
   Keep ADRs, C4 architecture documents, context and domain glossaries, and their
-  kin — records of decisions and of the domain. Eliminate any documentation or
+  kin: records of decisions and of the domain. Eliminate any documentation or
   comment that exists as an excuse for bad code: the fix is the code, not the prose.
   XP's "code and tests are the only permanent artifacts" is narrowed accordingly,
   not adopted wholesale.
@@ -317,7 +317,7 @@ Ruled (João, 2026-08-28):
   Superclass with Delegate) are the expected direction of travel, and a new
   hierarchy needs a case.
 - **Security: gap acknowledged, requirements stand.** The thinness is a known weak
-  point of both the curator and the wiki — the corpus must not paper over it with
+  point of both the curator and the wiki: the corpus must not paper over it with
   invented depth. Two requirements stand regardless: security review is a standard
   part of the review process, and security shifts left into the toolchain and
   design. (The review-process half also binds the conduct brief's review machinery,
@@ -327,7 +327,7 @@ Ruled (João, 2026-08-28):
 
 **Read team-scale practices by who the work touches, not by team size.**
 
-- **Directly applicable regardless of scale:** everything in §1–§9 — method,
+- **Directly applicable regardless of scale:** everything in §1–§9: method,
   delivery, architecture, code, testing, operations.
 - **Applicable whenever the work is team-facing:** writing
   documentation others read, reviewing pull requests, replying to comments on
@@ -339,11 +339,11 @@ Ruled (João, 2026-08-28):
   stop-and-fix before new work; collective ownership becomes any-session-can-touch-
   anything with the standards holding.
 - **Context only, no compiled behavior:** org design (Team Topologies, SRE staffing,
-  transformational leadership, on-call sizing) — judgment background for advice,
+  transformational leadership, on-call sizing): judgment background for advice,
   never instructions to act out.
 
 **Split with the conduct brief:** this document owns engineering
-doctrine; the requirements brief owns agent conduct — evidence discipline, bounded
+doctrine; the requirements brief owns agent conduct: evidence discipline, bounded
 autonomy, communication shape, safety bars. Neither duplicates the other.
 
 ## 14. Lineage (context, not commitments)
@@ -351,5 +351,5 @@ autonomy, communication shape, safety bars. Neither duplicates the other.
 Deming, Ohno, and Toyoda through Spear and Rother; the XP/refactoring/DDD cluster
 (Beck, Cunningham, Fowler, Evans, Feathers); the CD/DevOps cluster (Farley, Humble,
 Kim, Forsgren); the testing and architecture voices (Freeman, Pryce, Nygard, Parnas,
-Kleppmann, Ousterhout). The wiki's syntheses reconcile these into one tradition —
+Kleppmann, Ousterhout). The wiki's syntheses reconcile these into one tradition:
 lean thinking expressed as software practice.

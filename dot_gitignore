@@ -1,5 +1,5 @@
 .DS_Store
 
-# Agent workflow artifacts — personal, never committed to any repo
+# Agent workflow artifacts: personal, never committed to any repo
 backlog/
 .boris/
