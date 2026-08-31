@@ -132,6 +132,7 @@ report is one line on the record and in the brief. An empty review of a clean di
 is correct.
 
 The reply to João is the brief: how many findings by severity and what was done with
-them, and in full only the ones that need his decision or that changed what's live.
+them, and in full only the ones that need his decision or whose damage predates the
+work under review.
 When nothing blocks, say so plainly. Then the verdict: proceed, or what blocks. A
 proceed verdict moves the card to Done, or to Ship when João has directed that step.
