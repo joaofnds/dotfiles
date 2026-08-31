@@ -1,6 +1,6 @@
 ---
 name: review-instructions
-description: Reviews instruction files written for agents: CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions. Use after writing or editing one, or when an instruction keeps failing to change the agent's behavior.
+description: Reviews instruction files written for agents: CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, output styles. Use after writing or editing one. An instruction failure observed as session behavior starts at kaizen, which uses these checks on the file it traces to.
 ---
 
 # Review instructions
