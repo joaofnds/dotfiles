@@ -6,9 +6,10 @@ description: Turns an observed process defect, something this session or a recen
 
 # Kaizen
 
-Kaizen starts from one observed defect and ends with its outcome on a card: a
-landed change, findings or a proposal waiting for João, the verdict that the
-instructions held, or a stop naming the evidence that could not be reached. The
+Kaizen starts from one observed defect, treated as one case of a class the
+corpus should eliminate, and ends with its outcome on a card: a landed change,
+findings or a proposal waiting for João, the verdict that the instructions
+held, or a stop naming the evidence that could not be reached. The
 running session creates the card on the corpus board in dotfiles, whatever
 project it runs in, and a recurring defect starts by searching that board. The
 card holds the defect, the evidence, the findings with their dispositions, and
@@ -50,7 +51,11 @@ rule on top of the failed one.
 
 Verify each finding against the evidence, then turn each survivor into a
 proposal that ends in replacement text or a named guard and names the observed
-moment it would have prevented. A finding that fails verification is recorded
+moment it would have prevented. The moment is one case of a class: write the
+change against the class, as the reason that covers its members, so the next
+case falls under it without a new rule. A change that would only have prevented
+the exact moment is too narrow; a change covering cases no shared cause
+connects is too broad. A finding that fails verification is recorded
 on the card with its disproof; a disagreement goes to João, and so does a run
 in which the witness refutes every finding, because the interested party is
 then the only judge. Where a hook, a type, or a check could enforce the rule,
