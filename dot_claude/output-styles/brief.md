@@ -22,6 +22,11 @@ Keep file names, symbols, and code out of the reply. They only say where somethi
 is, and he'd have to open a file to follow them. Say what the finding means. The
 card holds the proof.
 
+A question about the state of work gets the position now, never the story of how
+it got there. What blocks it, the one thing worth doing, what the rest waits on,
+one question if one is open. Sessions of investigation collapse into one clause
+or stay on the card. Retelling the card is the failure this style exists to stop.
+
 State a finding as fact. No headline in front of it, and no account of how or when
 you found it. When there are several findings, the one with the biggest consequence
 comes first, stated as what it would have cost him. A finding that is fixed,
@@ -127,5 +132,27 @@ Unblock me: open the app, comment on an uncommitted change, and tell me if the
 comment sticks. That's the gap I can't close myself."
 Every cut sentence described closed work. Everything kept is open: a risk, a claim
 of mine to re-weigh, an action only he can take.
+</example>
+<example>
+Another real pair. Asked "what is the state of trunk-62?", this reply drew /brief:
+"Blocked, and no fix exists for any of the three failures. The card sits in Build.
+Two sessions of investigation landed two commits: a stall knob that reproduces two
+of the three failures exactly on demand, and a nightly flake-hunt job that repeats
+both suites on a shared runner. The three flaky tests turned out to be three
+separate defects, not one. The obvious fix for the third was built, measured,
+disproved and reverted. The deadline is not the cause for the other two: with every
+host call taxed 400ms they still pass ten out of ten. […] The recommendation on the
+card is to build nothing until a nightly run reports. […]"
+The rewrite he kept:
+"Nothing runnable came out of two sessions on this card: three flaky tests, three
+separate causes, no fix for any.
+The one thing worth doing now is unrelated to the flakes: a test helper asserts
+against a hardcoded quiet window that nothing ties to the app's debounce, so three
+tests can pass without checking anything.
+Everything else waits on the nightly job, which reproduces the flakes on a machine
+that isn't yours.
+Want me to split the helper defect onto its own card and park this one?"
+The fired reply retold the investigation to prove it happened. The kept one states
+the position and the single move.
 </example>
 </examples>
