@@ -9,9 +9,9 @@ layering; construction and decoupling; testing.
 
 ## Precedence and conflicts
 
-- On conflict, the more specific rule governs. The repo's own AGENTS.md or CLAUDE.md
-  wins over this skill. A language file wins over this core file. The doctrine holds
-  the reasons at principle level and wins where this skill seems to differ from it.
+- On conflict, the more specific rule governs. A language file wins over this core
+  file. The doctrine holds the reasons at principle level and wins where this skill
+  seems to differ from it.
 - Resolve conflicts out loud. Say which rule you set aside and why. Resolving a
   conflict silently is the defect, not having one. A precedence claim must quote a
   file you opened this session. Citing a document you did not read fabricates
