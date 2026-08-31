@@ -1,6 +1,6 @@
 ---
 name: shape
-description: Turns a request or backlog task into something a fresh session could build from. Surfaces the unknowns, settles the language, states acceptance as observable behavior, plans only what is likely to change. Use at the Shape column, or before building anything whose scope or meaning is not yet clear.
+description: Turns a request or backlog task into something a fresh session could build from. Surfaces the unknowns, settles the language, states acceptance as observable behavior, plans only what is likely to change. Use at the Shape column, or before building anything whose scope or meaning is not yet clear. Importing an instruction resource into the corpus goes to absorb instead.
 ---
 
 # Shape
