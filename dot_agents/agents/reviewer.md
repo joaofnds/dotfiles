@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Independent reviewer for a change it has never seen discussed. Reads the diff and the acceptance observations, reports every finding with evidence, prescribes nothing. Dispatched by the review skill.
+description: Independent reviewer for a change it has never seen discussed. Reads the diff and the acceptance observations, reports every finding with evidence, prescribes nothing. Dispatched by skills that need an unprimed reader (review, kaizen, absorb); never self-triggered.
 tools: Read, Grep, Glob, Bash
 ---
 
