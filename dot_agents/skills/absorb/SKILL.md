@@ -36,9 +36,11 @@ study reads them.
 Assume our corpus already answers each need, and let evidence overturn that per
 item. Each item ends with one of:
 
-- **Carried**: our corpus already answers the need. Cite where, and say which side
-  answers it better; when the subject's side does, that difference is a gap
-  observed here, judged under Import.
+- **Carried**: our corpus already answers the need. Cite where, test the
+  citation against the worst case the mechanism guarded (a mechanism guarding
+  drift rather than a case is tested by comparison alone), and say which side
+  answers the need better. A citation that fails its case, and a need the
+  subject answers better, are both gaps observed here, judged under Import.
 - **Import**: name the failure or gap observed here that the mechanism answers. A
   gap we can show today qualifies without waiting for its failure.
 - **Declined**: everything else, with the reason. A mechanism that guards a
