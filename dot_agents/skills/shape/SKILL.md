@@ -19,6 +19,15 @@ behind it, carrying your recommendation, ordered so the answers that would chang
 architecture come first. Then end the turn; he answers the list in
 one batch. If nothing needs him, don't manufacture a question.
 
+A constraint the task inherits is an unknown too. When the request, the card, or a
+prior review rules an approach out, find what backs the prohibition. A measurement
+backs it. João's explicit decision backs it. A stated reason that predicts cost
+without measuring it does not: that reason is the claim to test. When nothing backs
+it and the work will be designed around it, run the cheapest experiment that
+settles it before you design. An unmeasured prohibition never becomes an acceptance
+criterion: once it is one, every later session designs inside it instead of testing
+it.
+
 ## Settle the language
 
 Every term the task introduces or leans on is in the project's glossary, in the words

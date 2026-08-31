@@ -55,6 +55,16 @@ mocks? Walk the smell and anti-pattern lists at the bottom of all three referenc
 files, and check that the test reads at the domain level, not the framework
 level.
 
+## Mutation claims
+
+Walk this only when the work claims a guard or branch is verified by mutation.
+
+- Enumerate the mutants from the diff, not from memory: every predicate, every
+  boundary constant, every ordering between statements that touch shared state.
+  Name each mutant and the test that kills it. A mutant picked from memory
+  re-checks only the guards you already had in mind. When the project has a
+  mutation tool, run it instead of enumerating by hand.
+
 ## Verdict
 
 If any applicable answer is wrong, the work is not done. "Unknown" is also not

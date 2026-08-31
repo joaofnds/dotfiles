@@ -115,6 +115,12 @@ João, with your recommendation. Fix blocking findings before done. Observe ever
 fix: rerun the suite and the check the finding names. You verify the fixes. Never
 re-dispatch the reviewer for the same change.
 
+A finding can repeat the shape of one already fixed in this task: the same
+invariant broken again, the same window guarded again. Treat the repeat as a
+defect in the mechanism, not in the fix. Only you can see it, because the
+reviewer has one round. Before writing another guard, ask whether the mechanism
+should exist, and record the answer with the disposition.
+
 ## Record everything, brief the decision
 
 Every finding goes on the task's record with its severity and disposition, along
