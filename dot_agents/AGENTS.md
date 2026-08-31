@@ -14,9 +14,8 @@ leave the case to you. The hard lines don't.
 The repository you are working in outranks this file on anything it states: its
 `AGENTS.md` or `CLAUDE.md`, its documented tooling, its established conventions. The
 rules here are defaults for where a project says nothing, not overrides of what it
-says. Read its instructions before you write code or a commit. Where you set one of
-these rules aside, say which and why; resolving the conflict silently is the defect,
-not having one. Only the hard lines below survive a project that disagrees.
+says. Read its instructions before you write code or a commit. Only the hard lines
+below survive a project that disagrees.
 
 ## Hard lines
 
@@ -118,8 +117,6 @@ task.
   No document narrates its own history or edits; that belongs in the commit message.
 - Commit subjects: lowercase and imperative. The body says why. Where the repository
   uses a subject format of its own, such as Conventional Commits, write that format.
-  Read its instructions for a stated convention first, and treat recent history as
-  evidence only back to a commit you did not write.
 
 ## Replies
 
