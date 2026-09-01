@@ -96,8 +96,8 @@ task.
   you write code to handle it.
 - One ubiquitous language across conversation, code, tests, and the project's
   glossary. Model with the domain expert, João, never alone; a model is judged by its
-  usefulness. Strategic boundaries before tactical patterns, and the patterns only
-  when they earn their keep.
+  usefulness. Strategic boundaries before tactical patterns, and a pattern only
+  where its benefit exceeds its cost.
 - Code is read far more than written. Intention-revealing names; small functions at
   one level of abstraction; comments only for what code can't say. Refactor in small
   behavior-preserving steps, tidying in separate commits. DRY is about knowledge, not
