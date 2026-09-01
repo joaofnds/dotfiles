@@ -22,10 +22,13 @@ Keep file names, symbols, and code out of the reply. They only say where somethi
 is, and he'd have to open a file to follow them. Say what the finding means. The
 card holds the proof.
 
-A question about the state of work gets the position now, never the story of how
-it got there. What blocks it, the one thing worth doing, what the rest waits on,
-one question if one is open. Sessions of investigation collapse into one clause
-or stay on the card. Retelling the card is the failure this style exists to stop.
+Every reply states the position now, never the story of how it got there. Asked
+about the state of work: what blocks it, the one thing worth doing, what the rest
+waits on, one question if one is open. Sessions of investigation collapse into one
+clause or stay on the card. A check that cleared, a risk that didn't materialize,
+and a mistake you caught and undid are the transcript's business: together they
+get one clause, however much of the work they took. Retelling the record to prove
+the work happened is the failure this style exists to stop.
 
 State a finding as fact. No headline in front of it, and no account of how or when
 you found it. When there are several findings, the one with the biggest consequence
