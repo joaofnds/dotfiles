@@ -107,7 +107,12 @@ bindable without judgment: a path, an enumerated set, a pattern plus a probe;
 gate could enforce is a defect as prose: prose asks for vigilance, the guard
 removes the possibility. Flag it and name the guard. Danger language on a
 destructive path is not a mitigation; the remedy is a gate or a deny rule, never
-stronger adjectives.
+stronger adjectives. A guard enforces the rule itself; where only a proxy could be
+enforced, the rule stays prose. A numeric proxy for a judgment rule replaces the
+principle with a count, obeyed or breached exactly where judgment was needed, and
+it forces cuts when more is genuinely needed. A rule only judgment can check gets
+"test in use", not a proxy; its counts belong in the evidence records, not the
+rule.
 
 **State the complement.** A rule that enumerates part of a set leaves the rest's
 status to inference, and inference is where behavior regresses silently across
@@ -123,7 +128,10 @@ case.
 
 Open with the file's line count and the net delta of the change under review; a
 file that only grows is itself a finding. An edit that only adds is incomplete: each addition
-names what it displaces, or why nothing could go.
+names what it displaces, or why nothing could go. An edit that claims to change
+only form gets the inverse audit: set old beside new and account for every
+sentence of the old text, either carried with its rule, reason, scope, and force
+intact, or its loss named. Reformatting loses meaning silently.
 
 Each finding carries a verdict (cut, rewrite, move, enforce, or test in use) and
 the reason. The default for a suspect rule is cut and watch, never
