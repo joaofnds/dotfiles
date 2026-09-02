@@ -147,5 +147,17 @@
   "workflowKeywordTriggerEnabled": false,
   "worktree": {
     "bgIsolation": "none"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/brief-pass.py"
+          }
+        ]
+      }
+    ]
   }
 }
