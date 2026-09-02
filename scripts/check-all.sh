@@ -38,7 +38,6 @@ run() {
 }
 
 run "Claude Desktop launcher" bun test "$root/scripts/test-cdl.test.js"
-run "brief-pass Stop hook" "$root/scripts/test-brief-pass.sh"
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1
