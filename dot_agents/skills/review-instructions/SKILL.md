@@ -73,7 +73,12 @@ register (cadence, sentence shape, length) more faithfully than it obeys any rul
 about register, and the file's own prose carries the same way: decorated
 instructions invite decorated answers. Decoration, concretely: a sentence whose
 only job is to set up the next one, a headline in front of a fact, a metaphor
-where a plain word says more, a number that proves effort instead of informing.
+where a plain word says more, a number that proves effort instead of informing,
+a colon pivot that names a thing and then explains it ("rule: reason"), and a
+balanced antithesis ("X, never Y", "not A but B"). A rule that offers the colon
+as the em-dash substitute manufactures the pivot. A file rewritten into short
+paragraphs can keep every one of these shapes, so check the sentences, not the
+paragraph lengths.
 Compression is not decoration: a dense clause that carries a rule stays, and a
 sentence is flattened only when the plain form loses nothing.
 An example whose style contradicts the
