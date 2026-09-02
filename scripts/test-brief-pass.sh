@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Checks the brief-pass Stop hook against synthetic transcripts: it asks for the /brief
 # rewrite once, only after a turn that used tools, and never when it is already the
-# continuation of its own pass.
+# continuation of its own pass. The block is exit code 2 with the reason on stderr.
 set -u
 root="$(cd "$(dirname "$0")/.." && pwd)"
 hook="$root/dot_claude/hooks/executable_brief-pass.py"
@@ -21,7 +21,7 @@ tool_result() { printf '{"type":"user","message":{"role":"user","content":[{"typ
 text() { printf '{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"%s"}]}}\n' "$1"; }
 
 run() { # transcript stop_hook_active last_message; prints stdout, then "exit=N"
-  BRIEF_SKILL="$skill" python3 "$hook" <<EOJ
+  BRIEF_SKILL="$skill" python3 "$hook" 2>&1 <<EOJ
 {"hook_event_name":"Stop","transcript_path":"$1","stop_hook_active":$2,"last_assistant_message":"$3"}
 EOJ
   printf 'exit=%s' "$?"
@@ -29,7 +29,7 @@ EOJ
 
 { user "fix it"; tool_use; tool_result; text "long report"; } > "$tmp/tools.jsonl"
 out="$(run "$tmp/tools.jsonl" false "long report")"
-check "turn with tools asks for the rewrite" '"decision": "block"' "$out"
+check "turn with tools blocks the stop (exit 2)" 'exit=2$' "$out"
 check "the reason carries the skill body" 'REWRITE TASK TEXT' "$out"
 check "the reason says what to do when nothing can be cut" 'unchanged' "$out"
 

@@ -70,7 +70,10 @@ def main():
         reason = skill_body(SKILL) + "\n\n" + CLOSING
     except Exception:
         return
-    json.dump({"decision": "block", "reason": reason}, sys.stdout, indent=2)
+    # Exit 2 blocks on every Stop event, whatever else is printed; stderr is the reason.
+    # A JSON block decision on stdout was recorded but not honored (desktop build 2.1.255).
+    sys.stderr.write(reason)
+    sys.exit(2)
 
 
 if __name__ == "__main__":
