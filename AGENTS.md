@@ -12,6 +12,7 @@ Project rules for this personal dotfiles repo, managed by
   prefix) installs to `$HOME`; keep repo-only files in `.chezmoiignore`.
 - After applying nix-darwin changes, rebuild:
   `darwin-rebuild switch --flake ~/.config/nix`.
+- Domain terms: `GLOSSARY.md`.
 
 ## Conventions
 
