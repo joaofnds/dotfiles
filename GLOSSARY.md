@@ -41,9 +41,13 @@ you introduce or lean on one; one term per concept.
 - **Iteration**: one pass of the outer loop: triage the board, pick the queue's first
   card, run it to Done, reflect. The loop repeats iterations. It never drains the
   board.
-- **Reflection doc**: the dated doc the reflect step leaves on the board: the goal
-  verdict (on track, adjust, or pivot), what the increment taught, proposed planning
-  changes, and kaizen candidates. Reflect proposes; the next triage applies.
+- **Reflection doc**: the dated doc the reflect step leaves on the board, through the
+  backlog CLI: the Coaching Kata's five questions answered, one verdict on the goal
+  (on track, adjust, or pivot), proposed planning changes, and kaizen candidates.
+  Reflect proposes; the next triage applies.
 - **Bet**: the card an iteration commits to, with what will be observable about the
   goal when it is Done and the budget it gets. Triage writes it as the queue's first
   entry and the pick step copies it onto the card. Reflect judges against it.
+- **Pick**: the iteration step that takes the first single card of the triage queue,
+  writes its bet onto it as a dated note, and starts the run. The runner does it, or
+  João by hand.
