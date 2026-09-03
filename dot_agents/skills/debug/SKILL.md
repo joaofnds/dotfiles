@@ -19,13 +19,13 @@ study and the probes stop isolating anything. A defect met mid-task follows
 build's rule, fixed now when small and a card when larger, and becomes a debug
 card whatever its size when the cause survives a direct look.
 
-Instrument and probe the system under study; on a live service, observation is
+Instrument and probe the system under study. On a live service, observation is
 read-only, and the doctrine's sections 8 and 9 govern anything more.
 
 ## The reproduction comes first
 
 Before any theory, get one command already run that goes red on this bug, with
-its exact input and output; every hypothesis is tested against that command.
+its exact input and output. Every hypothesis is tested against that command.
 When a direct reproduction is hard, any check that goes red now serves: a
 failing test, a request against the running server, a replayed trace, a
 bisection, a differential run of two configurations. Then minimize one element
@@ -39,7 +39,7 @@ cost, means the measurement lost the cause.
 
 Sensitive real input never enters version control. The committed reproduction
 uses synthesized or redacted input, re-checked to still go red at the same
-magnitude; when only the real input reproduces the symptom, the reproduction
+magnitude. When only the real input reproduces the symptom, the reproduction
 stays a recorded command naming the input's location, and no fixture is
 committed.
 
@@ -57,16 +57,17 @@ so cleanup is a single grep.
 ## Confirmed means switchable
 
 The cause is confirmed when the symptom turns on and off through it and every
-observation on the card fits it; "it works now" with no known why is
+observation on the card fits it. "It works now" with no known why is
 unconfirmed. An intermittent symptom confirms by frequency: enough runs with
-the cause present and absent to tell the two rates apart, never one toggle.
+the cause present and absent to tell the two rates apart. One toggle is not
+enough.
 Ask why past the triggering line to the cause whose fix would remove every
-observed symptom at once; multiple call sites needing the same patch share one
+observed symptom at once. Multiple call sites needing the same patch share one
 cause.
 
 ## Closing
 
-Grep the probe prefix and remove the instrumentation; a probe that must stay is
+Grep the probe prefix and remove the instrumentation. A probe that must stay is
 recorded on the card with its path and purpose. An investigation that stalls,
 with no reproduction, no discriminating observation, or no way to switch the
 cause, also closes: the card records what was established, what is missing, and
@@ -75,5 +76,5 @@ the goal, the confirmed cause with its evidence, and the reproduction as the
 acceptance observation and the first test to write, a test where the repo has a
 suite and the recorded command otherwise. Move the card in the same turn: to
 Build when one fix is settled, the session continuing into build only when the
-direction included fixing; staying at Shape otherwise, with the cause and
+direction included fixing. Otherwise the card stays at Shape, with the cause and
 whatever candidates exist recorded for João.

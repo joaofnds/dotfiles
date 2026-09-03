@@ -39,8 +39,8 @@ Which axes apply is read off the diff, like the tier. Unsure means it applies.
 - **Spec conformance**: when a spec or acceptance observations exist. When neither
   exists, record the skip and continue. Do not stop to ask.
 - **Testing**: when the diff touches a test file. Record the skip otherwise.
-- **Refactoring**: always. Its findings are advisory: they describe the surrounding
-  code, not the change.
+- **Refactoring**: always. Its findings are advisory, because they describe the
+  surrounding code rather than the change.
 
 Read [references/axes.md](references/axes.md) and dispatch the `reviewer` agent with
 the diff, the acceptance observations, and the applicable axis briefs pasted whole.
@@ -69,8 +69,8 @@ stronger evidence and the better fix.
 Two checks classify what survives:
 
 - **The revert test.** If the finding's evidence would still stand with the change
-  reverted, the finding is about the codebase, not the change. Pre-existing debt
-  cannot block this change; it becomes a note or a tracked task. The change owns
+  reverted, the finding is about the codebase rather than the change. Pre-existing debt
+  cannot block this change. It becomes a note or a tracked task. The change owns
   what it created: the duplication it introduced, the site it added to an existing
   smell's or coupling's span, the function it grew past the point the finding rests
   on. Line overlap does not decide it. A two-line edit inside a pre-existing
@@ -81,17 +81,17 @@ Two checks classify what survives:
 - **The stability probe.** When a coupling finding's weight rests on the coupled
   target changing, run one git-history check: commits touching the path in the past
   year, plus the path's age. A path older than the window that changed in at most
-  two commits is stable; drop the finding and record the count. A younger or busier
+  two commits is stable. Drop the finding and record the count. A younger or busier
   path keeps the finding, with the count as evidence. An external or historyless
   target keeps the finding, labeled with the stability assumption it rests on. An
-  empty log is not evidence of stability. Never apply this probe to temporal
-  coupling; judge that on whether the ordering or interleaving assumption can be
+  empty log is not evidence of stability. This probe does not apply to temporal
+  coupling. Judge that on whether the ordering or interleaving assumption can be
   violated.
 
 ## Severity
 
 Assign severity after verification, in the reviewer's three words: blocking (wrong
-behavior, data loss, or a security hole; fixed before done), should-fix (a real
+behavior, data loss, or a security hole, and fixed before done), should-fix (a real
 defect that doesn't block), note (an observation, no action required). The concrete
 failure picks the word. Inflating is as much a defect as under-reporting: a note
 called blocking teaches the reader to ignore the word.
@@ -104,7 +104,8 @@ called blocking teaches the reader to ignore the word.
 - A refactoring finding measures friction. It is at most should-fix, and only when
   the change created the friction. Otherwise it is a note or a tracked task.
 
-Security is part of this pass, not a separate one: what untrusted data enters, what
+Security is part of this pass, with no separate pass later: what untrusted data
+enters, what
 authority the code exercises, what a hostile input could reach.
 
 ## Dispose
@@ -117,7 +118,7 @@ re-dispatch the reviewer for the same change.
 
 A finding can repeat the shape of one already fixed in this task: the same
 invariant broken again, the same window guarded again. Treat the repeat as a
-defect in the mechanism, not in the fix. Only you can see it, because the
+defect in the mechanism rather than in the fix. Only you can see it, because the
 reviewer has one round. Before writing another guard, ask whether the mechanism
 should exist, and record the answer with the disposition.
 
@@ -126,8 +127,8 @@ should exist, and record the answer with the disposition.
 Every finding goes on the task's record with its severity and disposition, along
 with the suite output and any recorded axis skips. None are dropped or folded into
 "a few minor things". Each finding carries what a zero-context session needs to act
-on it: the place; the concrete failure, as a rule, spec clause, or attack path,
-never a preference; the trigger that reaches it (the caller, input, configuration,
+on it: the place; the concrete failure, as a rule, spec clause, or attack path
+rather than a preference; the trigger that reaches it (the caller, input, configuration,
 or action sequence; revert-test evidence stands in for a change-created smell; an
 exported surface always has a nameable trigger); the simplest viable fix, where a
 heavier fix must cite the verified reason the simpler one fails; and how to verify

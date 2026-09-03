@@ -6,7 +6,7 @@ description: Turns a request or backlog task into something a fresh session coul
 # Shape
 
 Shaping names assumptions while they're still cheap, before work builds on them. A
-task that's already clear doesn't need this; a directed one-line fix goes straight
+task that's already clear doesn't need this. A directed one-line fix goes straight
 to `build`.
 
 ## Find the unknowns
@@ -16,7 +16,7 @@ of you has considered. Most of it is answerable from the repository, the glossar
 board, and the git history, so read before you ask. What remains goes to him as one
 numbered list, each item framed as the decision it is rather than the implementation
 behind it, carrying your recommendation, ordered so the answers that would change the
-architecture come first. Then end the turn; he answers the list in
+architecture come first. Then end the turn. He answers the list in
 one batch. If nothing needs him, don't manufacture a question.
 
 A constraint the task inherits is an unknown too. When the request, the card, or a
@@ -33,7 +33,7 @@ it.
 Every term the task introduces or leans on is in the project's glossary, in the words
 João uses for it. A term with two meanings, or an awkward phrase everyone keeps working
 around, is the model asking to be made explicit: say so and propose the concept.
-Modeling is done with him, not for him.
+Modeling is done with him rather than for him.
 
 ## State acceptance as observation
 

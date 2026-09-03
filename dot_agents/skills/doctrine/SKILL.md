@@ -1,6 +1,6 @@
 ---
 name: doctrine
-description: João's full engineering doctrine. Method, testing, lean foundations, delivery, architecture, DDD, code craft, data systems, operations, and the rulings for when practices conflict. Read when designing, reviewing, or choosing between practices; read sections 8 and 9 when the task touches data stores, queues, distributed state, or a running service.
+description: João's full engineering doctrine. Method, testing, lean foundations, delivery, architecture, DDD, code craft, data systems, operations, and the rulings for when practices conflict. Read when designing, reviewing, or choosing between practices. Read sections 8 and 9 when the task touches data stores, queues, distributed state, or a running service.
 ---
 
 The doctrine is `principles.md` in this directory: fourteen numbered sections, each
@@ -16,7 +16,7 @@ you need rather than the whole file.
   translation · §14 lineage
 
 The text is addressed to João: "your" there means his. Every line names, in
-parentheses, the page of his wiki (`~/code/wiki`) it comes from; when a line reads
+parentheses, the page of his wiki (`~/code/wiki`) it comes from. When a line reads
 ambiguous, that page is the authority.
 
 The summary in your always-loaded instructions is a compression of this file. Where

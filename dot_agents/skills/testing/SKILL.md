@@ -1,6 +1,6 @@
 ---
 name: testing
-description: The house testing discipline. GOOS-style TDD, harness and driver architecture, Fakes over mocks, test aesthetics, and the done checklist. Load for any task that writes, changes, or reviews tests. The doctrine holds the principles and wins on conflict; the style skill's language files hold the Go and TypeScript spellings.
+description: The house testing discipline. GOOS-style TDD, harness and driver architecture, Fakes over mocks, test aesthetics, and the done checklist. Load for any task that writes, changes, or reviews tests. The doctrine holds the principles and wins on conflict. The style skill's language files hold the Go and TypeScript spellings.
 ---
 
 # Testing
@@ -25,7 +25,7 @@ implementation.** Every rule in this skill exists to preserve it.
 
 ## Non-negotiables
 
-- TDD is the default workflow, not a preference.
+- TDD is the default workflow rather than a preference.
 - Framework mocks on our own code are banned. We write Fakes.
 - Application-level integration and end-to-end tests reach a running application
   through a Harness and Driver. Focused adapter integration tests may exercise the
@@ -60,23 +60,23 @@ Four concepts the reference files assume and do not reintroduce.
   Example*). State a short scenario list in the active task note or progress
   update, then turn exactly one item into a runnable test. Before running it,
   predict how and why it will fail. An unexpected failure means the model, the
-  test, or the setup is wrong; reconcile it before production code. Make the
+  test, or the setup is wrong. Reconcile it before production code. Make the
   simplest change to green, then refactor with the test as safety net. Only then
   choose the next scenario. Pick the green tactic by confidence: fake it (return a
-  literal; the next test forces generalization), triangulate (a second test with
+  literal, and the next test forces generalization), triangulate (a second test with
   different inputs forces the real abstraction), or obvious implementation (when
   the answer is clear, write it directly).
 - **F.I.R.S.T.** (Martin, *Clean Code*). Fast: milliseconds for unit, sub-second
-  for integration; slow tests stop getting run. Independent: any order, in
+  for integration, since slow tests stop getting run. Independent: any order, in
   parallel, no shared mutable state. Repeatable: same input, same result,
-  everywhere; inject every non-deterministic seam (clock, random, network, IDs).
+  everywhere, so inject every non-deterministic seam (clock, random, network, IDs).
   Self-validating: pass or fail, no log inspection, no run-twice-and-diff. Timely:
-  written just before the production code it describes, not after.
+  written just before the production code it describes.
 - **The four pillars of a test** (Khorikov, *Unit Testing Principles, Practices,
   and Patterns*): protection against regressions, resistance to refactoring, fast
-  feedback, maintainability. You can max three at once; one always gives. A test
+  feedback, maintainability. You can max three at once, and one always gives. A test
   with low protection and low resistance is noise: delete it.
-- **The unit is a behavior, not a class** (Khorikov). "Unit test" does not mean
+- **The unit is a behavior rather than a class** (Khorikov). "Unit test" does not mean
   one class with all collaborators mocked. It means one behavior, isolated from
   other *tests*. A unit test may exercise a service, a value object, and a pure
   helper together when they form one cohesive behavior. What makes it a unit is

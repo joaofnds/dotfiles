@@ -23,7 +23,7 @@ edit.
 Take the next item on the test list and run one turn of the testing skill's TDD
 loop: red for the predicted reason, the simplest green, refactor, then commit. The
 commit is the unit of progress, small enough that a wrong step costs one revert. An
-unpredicted failure and a hard-to-write test are that skill's design signals; stop
+unpredicted failure and a hard-to-write test are that skill's design signals. Stop
 and answer them before going on.
 
 A defect you meet on the way, yours or pre-existing, stops the feature work. Small and
@@ -35,7 +35,8 @@ saw, and a line in the handoff.
 The acceptance list bounds the work. A better approach, a neighboring problem, a
 tempting cleanup outside the task: say it in a sentence and carry on, or make it a
 task. Editing files the task didn't call for, without saying so, is how one fix
-becomes an unreviewed refactor. Scope growth is an ask, not a decision you make alone.
+becomes an unreviewed refactor. Scope growth is an ask rather than a decision you
+make alone.
 
 ## Observe the result once, directly
 
@@ -57,4 +58,5 @@ Write onto the task's record the handoff for whoever picks this up next: what
 changed; separately, what became possible but isn't wired up, and which callers are
 still on the old path; what you observed and how; what you didn't verify; anything
 you stopped on and where it went; and whether independent review is due, by the
-`review` skill's triggers. Your reply to João is the brief, not the handoff.
+`review` skill's triggers. Your reply to João is the brief. The handoff stays on the
+record.

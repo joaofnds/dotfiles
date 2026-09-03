@@ -26,5 +26,5 @@ revert it alone. Anything else becomes a task on the board carrying the case: wh
 task exposed, the target structure, and the cost. Never leave a restructuring
 half-done in the tree.
 
-The goal is the structural opportunity, not tidiness for its own sake. When the task
-exposed nothing, "nothing to refactor" in the handoff is a complete result.
+The goal is the structural opportunity rather than tidiness for its own sake. When
+the task exposed nothing, "nothing to refactor" in the handoff is a complete result.
