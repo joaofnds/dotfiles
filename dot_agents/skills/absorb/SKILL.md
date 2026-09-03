@@ -68,7 +68,7 @@ findings land on the card with their verdicts. The author verifies each repair
 against the finding it answers, the pass does not rerun, and a disagreement is
 settled with evidence or ends at João. A repair may fix, cut, merge, move, or
 reword, and never add. A constructed case the text mishandles is the tempting
-exception, and it earns clearer wording, a card, or nothing. The one exception is
+case, and it earns clearer wording, a card, or nothing. The one exception is
 a finding that shows a way to cross a hard line. That one may add the sentence
 blocking the way. The edit then goes into the chezmoi source, with `chezmoi apply`
 on the changed targets so live sessions load the new text.
