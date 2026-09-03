@@ -28,8 +28,11 @@ which axes apply; this file carries what each axis checks.
 
 > Style axis: how the code reads at the line and declaration level. Names reveal
 > intention and use the domain's words: when the business says "order", the code
-> doesn't say "transaction record". No `Impl` suffix. Comments follow the
-> default-zero policy. Type-system escape hatches (casts, `any`, swallowed errors)
+> doesn't say "transaction record". No `Impl` suffix. A comment stays only where
+> the code would be misread or silently broken without it, after a clearer name, a
+> smaller function, and a test were tried. A doc block that restates a signature, a
+> line narrating the next one, a banner, a note about the edit, and commented-out
+> code are findings. Type-system escape hatches (casts, `any`, swallowed errors)
 > are findings. Untrusted input is parsed once at the boundary into a type that
 > can't hold an illegal state. A missing parse at a real boundary is yours; what an
 > attacker can do with input that passed one is Security's. Third-party errors are
