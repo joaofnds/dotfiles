@@ -19,8 +19,11 @@ anything a card might already answer or depend on. A board with no milestone has
 recorded goal; ask João once for it and record it before prioritizing.
 
 Follow cross-board pointers. A card that only points at another board's card is
-read there too; record the wait as a reference on both cards, since the
-dependencies field cannot cross boards.
+read there too, in that project's own repository; read access to it is a
+precondition for triaging a board that names one. Record the wait as a reference
+on both cards, since the dependencies field cannot cross boards, even when the
+pointer already checks out true: the reference is what keeps the next run from
+re-deriving it.
 
 ## Verify every premise
 
@@ -65,7 +68,7 @@ in a buildable column looking like work.
 
 ## Prioritize on one scale
 
-Set High, Medium, or Low on every open card, from consequence, not from the
+Propose High, Medium, or Low for every open card, from consequence, not from the
 writer's instinct:
 
 - **Up**: user-visible harm (a wrong commit, data loss, a wedged queue, a dead
@@ -75,8 +78,11 @@ writer's instinct:
   wrong today"), a refactor with no pending change in that file, a spike whose
   deliverable is more cards while the last batch is unbuilt.
 
-When the field and the card's own text disagree, the text wins and the field
-changes. Show every priority change as current → proposed with one line of reason.
+Set the field yourself only when the card is unset or the field plainly
+contradicts the card's own text (the text wins, in that case, without asking).
+Every other priority, and every change to a field the writer set deliberately, is a
+proposed value on the numbered list to João, shown as current → proposed with one
+line of reason: this is judgment about a card's consequence, not bookkeeping.
 
 ## Keep board state true
 
@@ -111,6 +117,13 @@ could not.
 A card João declines is not deleted silently: record it by concept, with his
 reason, somewhere card creation on that board can find it, so the same idea doesn't
 return as a new card next week.
+
+A finding that recurs across cards and traces to how they're written, not to what
+they're about (line numbers instead of symbols, a decision embedded in a work
+card, a stale Definition of Done template, dependencies used only as provenance),
+is not this board's to fix one card at a time: name it once on the triage doc and
+send it to kaizen against the card-creation rules. A run that keeps re-annotating
+the same authorship defect has found a corpus problem, not a backlog of them.
 
 ## Report
 
