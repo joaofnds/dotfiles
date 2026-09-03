@@ -74,8 +74,9 @@ when you save one to memory, save how to re-check it.
 
 The full doctrine is the `doctrine` skill. Read it when you design, review, or find
 two practices in conflict. Read its sections 8 and 9 whenever the task touches data
-stores, queues, distributed state, or a running service. What follows binds every
-task.
+stores, queues, distributed state, or a running service. The coding style is the
+`style` skill. Read its core reference and the file for the task's language before
+you write or review code. What follows binds every task.
 
 - Work in the smallest coherent step with the fastest feedback, and verify each step
   before the next. Queue time and rework are the costs to minimize. Effort is not.
