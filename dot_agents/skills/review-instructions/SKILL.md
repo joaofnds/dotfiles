@@ -20,15 +20,16 @@ over-prescriptive rule. Review for what to cut before what to add.
 Read this section before drafting a file, and again over every sentence you add
 while applying verdicts.
 
-Write the file in the register it should produce. One fact per sentence. A rule
-and its reason, in the present tense, in the words you would say to a colleague.
-The shapes to leave out: a sentence whose job is to set up the next one, a
-headline in front of a fact, a pair balanced against its opposite ("X, never Y",
-"not A but B"), a semicolon joining two clauses, a colon that names a thing and
+Write the file in the register it should produce. One fact per sentence. A rule and
+its reason, in the present tense, in the words you would say to a colleague. The
+shapes to leave out: a sentence whose job is to set up the next one, a headline in
+front of a fact, a pair balanced against its opposite where the second half adds
+nothing ("not A but B" as a flourish; a precise contrast or a prohibition such as
+"X, never Y" stays), a semicolon joining two clauses, a colon that names a thing and
 then explains it (a colon stands only before a list or a quotation), an em dash, a
-metaphor where the plain word says more, and a count that proves effort. The
-corpus around the file is not the standard. Several corpus files still carry these
-shapes, and a draft that matches them copies the defect.
+metaphor where the plain word says more, and a count that proves effort. The corpus
+around the file is not the standard. Several corpus files still carry these shapes,
+and a draft that matches them copies the defect.
 
 Two pairs, the written form and the plain form, each keeping its rule and reason:
 
@@ -43,10 +44,11 @@ Plain: "On a board with no milestone, skip priorities, the queue, and the
 no-consequence closure, since each needs a goal to be judged against."
 
 Run `scripts/register-lint.sh`, under this skill's directory, over the file after
-every edit. It matches the semicolon pivot, the common antithesis forms, and the em
-dash. The other shapes need a reader. The text you wrote this turn leaves it with
-no lint hit other than a semicolon inside a list or a quoted failure. Text you did
-not touch is outside that bound.
+every edit. It prints each semicolon, each "X, not Y" pair, and each em dash. A hit
+is a prompt to read that sentence and decide, and nothing more. A semicolon between
+list items, a precise contrast, and a prohibition stay as written. A rewrite that
+dodges the pattern by softening a rule ("rather than" for "not") is worse than the
+hit, so leave the hit.
 
 ## Ground the review first
 
@@ -145,13 +147,13 @@ bindable without judgment: a path, an enumerated set, a pattern plus a probe.
 or a CI gate could enforce is a defect as prose, because the guard removes a
 possibility that prose only asks the reader to avoid. Flag it and name the guard.
 Danger language on a destructive path is not a mitigation. The remedy is a gate or a
-deny rule. A guard enforces the rule itself. Where only a proxy could be enforced,
-the rule stays prose. A numeric proxy for a judgment rule replaces the principle
-with a count, obeyed or breached exactly where judgment was needed, and it forces
-cuts when more is genuinely needed. A rule only judgment can check gets "test in
-use". Its counts belong in the evidence records. A rule with a mechanical part and a
-judgment part gets a script for the first and prose for the second. The register
-lint is the script for the mechanical part of the register rule.
+deny rule, never stronger adjectives. A guard enforces the rule itself. Where only a
+proxy could be enforced, the rule stays prose. A numeric proxy for a judgment rule
+replaces the principle with a count, obeyed or breached exactly where judgment was
+needed, and it forces cuts when more is genuinely needed. A rule only judgment can
+check gets "test in use". Its counts belong in the evidence records. A rule with a
+mechanical part and a judgment part gets a script for the first and prose for the
+second. The register lint prints candidates for that judgment and decides nothing.
 
 **State the complement.** A rule that enumerates part of a set leaves the rest's
 status to inference, and inference is where behavior regresses silently across
@@ -173,13 +175,13 @@ for every sentence of the old text, either carried with its rule, reason, scope,
 and force intact, or its loss named. Reformatting loses meaning silently.
 
 Each finding carries a verdict (cut, rewrite, move, enforce, or test in use) and the
-reason. The default for a suspect rule is cut and watch. Restoring from git is free,
-so name the trigger for the re-check (a model swap, a count of sessions) and delete
-now. "Test in use" is the verdict for a rule whose effect prose review cannot
-establish. Reading a file can show that a rule cannot change behavior, and cannot
-show that it does. The test is a real task in a fresh session, and the review names
-it. Suggested rewrites land verbatim and are checked by the next review, so run the
-checks and the lint over the text you are about to prescribe.
+reason. The default for a suspect rule is cut and watch, never keep-just-in-case.
+Restoring from git is free, so name the trigger for the re-check (a model swap, a
+count of sessions) and delete now. "Test in use" is the verdict for a rule whose
+effect prose review cannot establish. Reading a file can show that a rule cannot
+change behavior, and cannot show that it does. The test is a real task in a fresh
+session, and the review names it. Suggested rewrites land verbatim and are checked
+by the next review, so run the checks over the text you are about to prescribe.
 
 A requested review ends as findings, nothing applied. A review of your own edit
 inside directed work applies the verdicts and ends in the commit. A file you wrote

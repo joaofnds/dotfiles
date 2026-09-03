@@ -33,7 +33,7 @@ it.
 Every term the task introduces or leans on is in the project's glossary, in the words
 João uses for it. A term with two meanings, or an awkward phrase everyone keeps working
 around, is the model asking to be made explicit: say so and propose the concept.
-Modeling is done with him rather than for him.
+Modeling is done with him, not for him.
 
 ## State acceptance as observation
 

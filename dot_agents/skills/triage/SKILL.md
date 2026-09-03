@@ -6,11 +6,11 @@ description: The board-level counterpart of shape. Reads a board's whole open se
 
 # Triage
 
-Triage reads the board whole, because each card was written with only its own
-task's context, and reports only the calls that are João's. Every board
+Each card was written with only its own task's context. Triage reads the board
+whole, shrinks the open set, and reports only the calls that are João's. Every board
 change goes through the `backlog` CLI. A small reversible fix that a card makes
-obvious is committed as it would be anywhere, and the card closes citing the
-commit. A larger fix stays a card.
+obvious is committed as it would be anywhere, and the card closes citing the commit.
+A larger fix stays a card.
 
 ## Read everything first
 
@@ -21,8 +21,9 @@ project's other records: known-issue docs, tech-debt files, anything a card
 might already answer or depend on.
 
 On a board with no milestone, skip priorities, the queue, and the no-consequence
-closure, make the goal item one on the list to João, and record his answer as the
-board's milestone. The next run prioritizes against it.
+closure, since each needs a goal to be judged against. Make the goal item one on the
+list to João, and record his answer as the board's milestone. The next run
+prioritizes against it.
 
 Follow cross-board pointers. A card that only points at another board's card is
 read there too, in that project's own repository. Read access to that repository
@@ -49,10 +50,10 @@ number carries no command gets one, since the next run re-checks the same claim.
   summary. Check the acceptance boxes the citation proves and name the rest there
   as unproven. The next run reads Done titles, and an archived card is not among
   them.
-- **Duplicate**: same symptom, same file, quoted from both bodies. Propose the
-  merge on the list to João. When he agrees, the survivor's body stays its own,
-  with one acceptance list, and the other is archived with a pointer to the
-  survivor. Its text stays in the archive folder.
+- **Duplicate**: same symptom, same file, quoted from both bodies. Propose the merge
+  on the list to João. When he agrees, the survivor's body stays its own, with one
+  acceptance list, and the other is archived with a pointer to the survivor. Its
+  text stays in the archive folder and is not copied into the survivor.
 - **Sitting** (glossary): link the cards and bundle them in the queue, each keeping
   its own card.
 - **Rule with several instances**: one design decision applied N times. Record the

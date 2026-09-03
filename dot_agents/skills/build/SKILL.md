@@ -12,11 +12,11 @@ starts by claiming its card: status Build, assignee @claude.
 Before writing code, read the style skill's core reference plus the file for the
 task's language and stack, under `~/.agents/skills/style/references/`. The house
 patterns the review's style axis checks live there. When the task touches tests,
-which building almost always does, load the testing skill too. An instruction
-file (a CLAUDE.md or AGENTS.md, a rules file, a skill, an agent definition, an
-output style) is written under the review-instructions skill. Load it first, write
-in the register its "Before you write" section states, and run its lint after every
-edit.
+which building almost always does, load the testing skill too. An instruction file
+(a CLAUDE.md or AGENTS.md, a rules file, a skill, an agent definition, an output
+style) is written under the review-instructions skill. Load it first, write in the
+register its "Before you write" section states, and read its lint's output after
+every edit.
 
 ## The loop
 
@@ -35,7 +35,7 @@ saw, and a line in the handoff.
 The acceptance list bounds the work. A better approach, a neighboring problem, a
 tempting cleanup outside the task: say it in a sentence and carry on, or make it a
 task. Editing files the task didn't call for, without saying so, is how one fix
-becomes an unreviewed refactor. Scope growth is an ask rather than a decision you
+becomes an unreviewed refactor. Scope growth is an ask. It is not a decision you
 make alone.
 
 ## Observe the result once, directly

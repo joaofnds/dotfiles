@@ -91,7 +91,7 @@ Two checks classify what survives:
 ## Severity
 
 Assign severity after verification, in the reviewer's three words: blocking (wrong
-behavior, data loss, or a security hole, and fixed before done), should-fix (a real
+behavior, data loss, or a security hole; fixed before done), should-fix (a real
 defect that doesn't block), note (an observation, no action required). The concrete
 failure picks the word. Inflating is as much a defect as under-reporting: a note
 called blocking teaches the reader to ignore the word.
@@ -126,8 +126,8 @@ should exist, and record the answer with the disposition.
 Every finding goes on the task's record with its severity and disposition, along
 with the suite output and any recorded axis skips. None are dropped or folded into
 "a few minor things". Each finding carries what a zero-context session needs to act
-on it: the place; the concrete failure, as a rule, spec clause, or attack path
-rather than a preference; the trigger that reaches it (the caller, input, configuration,
+on it: the place; the concrete failure, as a rule, spec clause, or attack path,
+never a preference; the trigger that reaches it (the caller, input, configuration,
 or action sequence; revert-test evidence stands in for a change-created smell; an
 exported surface always has a nameable trigger); the simplest viable fix, where a
 heavier fix must cite the verified reason the simpler one fails; and how to verify

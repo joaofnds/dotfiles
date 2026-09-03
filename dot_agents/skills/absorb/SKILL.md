@@ -8,7 +8,7 @@ description: Studies an instruction resource João points at, a repository's age
 Absorb is the shape step for one task class: the subject is an instruction
 resource, and the output is a per-item decision about our corpus. Restating the
 subject in our files is the failure this skill guards against. Judge the need each
-mechanism answers rather than its text.
+mechanism answers, not its text.
 
 ## Never run the subject
 
@@ -23,7 +23,7 @@ nothing else guarantees the sub-agent sees either rule.
 ## Inventory before verdicts
 
 List every distinct mechanism in the subject, one ID each, keeping each item's
-conditions and exceptions. Build the list from the files rather than from the subject's
+conditions and exceptions. Build the list from the files, not from the subject's
 description of itself, and account for the whole subject: every file or section of
 it maps to its items or to an explicit none, so a mechanism missed in listing
 shows up as an unmapped file. Write the full list before judging any item, so an
@@ -67,8 +67,8 @@ reviewer that had no part in the edit, under the review-instructions checks. Its
 findings land on the card with their verdicts. The author verifies each repair
 against the finding it answers, the pass does not rerun, and a disagreement is
 settled with evidence or ends at João. A repair may fix, cut, merge, move, or
-reword, and never add. A constructed case the text mishandles is the tempting
-case, and it earns clearer wording, a card, or nothing. The one exception is
-a finding that shows a way to cross a hard line. That one may add the sentence
-blocking the way. The edit then goes into the chezmoi source, with `chezmoi apply`
-on the changed targets so live sessions load the new text.
+reword, and never add. A constructed case the text mishandles earns clearer
+wording, a card, or nothing. The one exception is a finding that shows a way to
+cross a hard line. That one may add the sentence blocking the way. The edit then
+goes into the chezmoi source, with `chezmoi apply` on the changed targets so live
+sessions load the new text.

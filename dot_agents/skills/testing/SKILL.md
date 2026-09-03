@@ -25,7 +25,7 @@ implementation.** Every rule in this skill exists to preserve it.
 
 ## Non-negotiables
 
-- TDD is the default workflow rather than a preference.
+- TDD is the default workflow, not a preference.
 - Framework mocks on our own code are banned. We write Fakes.
 - Application-level integration and end-to-end tests reach a running application
   through a Harness and Driver. Focused adapter integration tests may exercise the
@@ -76,8 +76,8 @@ Four concepts the reference files assume and do not reintroduce.
   and Patterns*): protection against regressions, resistance to refactoring, fast
   feedback, maintainability. You can max three at once, and one always gives. A test
   with low protection and low resistance is noise: delete it.
-- **The unit is a behavior rather than a class** (Khorikov). "Unit test" does not mean
-  one class with all collaborators mocked. It means one behavior, isolated from
-  other *tests*. A unit test may exercise a service, a value object, and a pure
-  helper together when they form one cohesive behavior. What makes it a unit is
-  that it is fast, hits no I/O, and does not depend on other tests' state.
+- **The unit is a behavior, not a class** (Khorikov). "Unit test" does not mean one
+  class with all collaborators mocked. It means one behavior, isolated from other
+  *tests*. A unit test may exercise a service, a value object, and a pure helper
+  together when they form one cohesive behavior. What makes it a unit is that it is
+  fast, hits no I/O, and does not depend on other tests' state.
