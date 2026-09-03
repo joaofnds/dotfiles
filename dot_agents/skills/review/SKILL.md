@@ -141,4 +141,4 @@ The reply to João is the brief: how many findings by severity and what was done
 them, and in full only the ones that need his decision or whose damage predates the
 work under review.
 When nothing blocks, say so plainly. Then the verdict: proceed, or what blocks. A
-proceed verdict moves the card to Done, or to Ship when João has directed that step.
+proceed verdict moves the card to Done.
