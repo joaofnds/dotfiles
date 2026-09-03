@@ -58,9 +58,8 @@ so cleanup is a single grep.
 
 The cause is confirmed when the symptom turns on and off through it and every
 observation on the card fits it. "It works now" with no known why is
-unconfirmed. An intermittent symptom confirms by frequency: enough runs with
-the cause present and absent to tell the two rates apart. One toggle is not
-enough.
+unconfirmed. An intermittent symptom confirms by frequency: enough runs with the
+cause present and absent to tell the two rates apart. One toggle is not enough.
 Ask why past the triggering line to the cause whose fix would remove every
 observed symptom at once. Multiple call sites needing the same patch share one
 cause.

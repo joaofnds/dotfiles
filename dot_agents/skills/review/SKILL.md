@@ -105,8 +105,7 @@ called blocking teaches the reader to ignore the word.
   the change created the friction. Otherwise it is a note or a tracked task.
 
 Security is part of this pass, with no separate pass later: what untrusted data
-enters, what
-authority the code exercises, what a hostile input could reach.
+enters, what authority the code exercises, what a hostile input could reach.
 
 ## Dispose
 
