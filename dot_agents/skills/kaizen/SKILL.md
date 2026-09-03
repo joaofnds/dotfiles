@@ -18,15 +18,16 @@ way.
 
 ## The witness does not judge
 
-The running session is an interested party, because the corpus under judgment
-is the one steering it. Its job is evidence, and verdicts are not its to give. Collect the moment the
-defect happened (the diff, the reply, the transcript section) and the
-instruction files that were loaded at that moment, in their source form: the
-chezmoi source for corpus files, the repository's own file for project
-instructions. Several sessions run at once, so confirm a transcript is the
-right one by its content and never by recency. When the moment or what was loaded
-at it cannot be established, the run stops: the card says what was missing, and
-no verdict is recorded about instructions that went unexamined.
+The running session is an interested party, because the corpus under judgment is
+the one steering it. Its job is evidence, and verdicts are not its to give.
+Collect the moment the defect happened (the diff, the reply, the transcript
+section) and the instruction files that were loaded at that moment, in their
+source form: the chezmoi source for corpus files, the repository's own file for
+project instructions. Several sessions run at once, so recency picks the wrong
+transcript. Confirm a transcript is the right one by its content. When the
+moment or what was loaded at it cannot be established, the run stops: the card
+says what was missing, and no verdict is recorded about instructions that went
+unexamined.
 
 Hand a fresh reviewer the evidence locations and the defect in João's words,
 with the review-instructions checks as its axes, and mark the evidence as
