@@ -38,6 +38,7 @@ run() {
 }
 
 run "Claude Desktop launcher" bun test "$root/scripts/test-cdl.test.js"
+run "iterate runner" bun test "$root/scripts/test-iterate.test.js"
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1

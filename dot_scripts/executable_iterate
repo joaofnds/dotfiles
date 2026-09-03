@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# iterate [card]: one iteration of the loop on the board in the current directory.
+#
+# Without a card: triage, pick the first ready card, run it to Done, reflect.
+# With a card: run that card to Done, then reflect.
+# Each step is one fresh claude session running that step's skill.
+#
+# Exit codes: 0 done, 1 refused or failed, 2 a stage left a question for João,
+# 3 the stop file .iterate-stop is present, 4 the board has no goal.
+set -euo pipefail
+
+budget="${ITERATE_SESSION_BUDGET:-10}"
+
+say() { printf '%s\n' "$*" >&2; }
+
+session() {
+  local prompt="/$1${2:+ $2}"
+  say "== $prompt"
+  local out
+  out="$(claude -p "$prompt" --dangerously-skip-permissions --max-budget-usd "$budget" --output-format json)"
+  jq -r '.result' <<<"$out" >&2
+  jq -r '"   turns \(.num_turns) cost \(.total_cost_usd) session \(.session_id)"' <<<"$out" >&2
+  [ "$(jq -r '.is_error' <<<"$out")" = false ]
+}
+
+status_of() { backlog task view "$1" --plain | awk -F': ' '/^Status:/ {print $2}' | sed 's/^[^A-Za-z]*//'; }
+assignee_of() { backlog task view "$1" --plain | awk -F': ' '/^Assignee:/ {print $2}'; }
+
+skill_for() {
+  case "$1" in
+    "To Do" | Shape) echo shape ;;
+    Build) echo build ;;
+    Review) echo review ;;
+    Done) echo "" ;;
+    *) say "unknown status: $1"; exit 1 ;;
+  esac
+}
+
+guard_stop() { [ ! -e .iterate-stop ] || { say "stop file present"; exit 3; }; }
+
+run_card() {
+  local card="$1" before after skill
+  before="$(status_of "$card")"
+  if [ "$before" = Build ] || [ "$before" = Review ]; then
+    [ -z "$(assignee_of "$card")" ] || { say "$card is held in $before by $(assignee_of "$card")"; exit 1; }
+  fi
+  while :; do
+    before="$(status_of "$card")"
+    skill="$(skill_for "$before")"
+    [ -n "$skill" ] || { say "$card is Done"; return 0; }
+    guard_stop
+    session "$skill" "$card"
+    after="$(status_of "$card")"
+    [ "$after" != "$before" ] || { say "$card stayed in $before: a question for João"; exit 2; }
+  done
+}
+
+pick() { backlog task list --ready --sort priority --plain | grep -o -m1 '[A-Z]\+-[0-9.]\+'; }
+
+guard_stop
+[ -z "$(git status --porcelain | grep -v ' .iterate-stop$')" ] || { say "the tree is not clean"; exit 1; }
+
+card="${1:-}"
+if [ -z "$card" ]; then
+  backlog milestone list | grep -q 'Active milestones ([1-9]' || { say "the board has no goal"; exit 4; }
+  guard_stop
+  session triage
+  card="$(pick || true)"
+  [ -n "$card" ] || { say "the queue is empty"; exit 0; }
+  backlog task edit "$card" --append-notes "Bet, $(date +%F): picked first from the ready queue by iterate. The newest triage doc's queue entry for it is the bet." >/dev/null
+  say "picked $card"
+fi
+
+run_card "$card"
+guard_stop
+session reflect "$card"
