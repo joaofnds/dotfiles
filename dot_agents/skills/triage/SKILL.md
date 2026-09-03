@@ -90,9 +90,10 @@ his to decide: recommend with a reason and ask.
 ## Keep board state true
 
 Fix through the CLI any field that disagrees with the card's own text, its status,
-another card's status, or the project's config: a parent still open with every child Done, a "blocked on"
-note naming a card now Done, a Done card with an unchecked acceptance box. Note
-titles changed where the CLI can't rename the underlying file.
+another card's status, or the project's config: a parent still open with every
+child Done, a "blocked on" note naming a card now Done, a Done card with an
+unchecked acceptance box. Note titles changed where the CLI can't rename the
+underlying file.
 
 Cards in Build or Review belong to the session holding them. Their status,
 priority, acceptance, and existence are not yours to change. A reference, a dated
