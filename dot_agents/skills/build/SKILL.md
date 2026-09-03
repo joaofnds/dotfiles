@@ -12,7 +12,11 @@ starts by claiming its card: status Build, assignee @claude.
 Before writing code, read the style skill's core reference plus the file for the
 task's language and stack, under `~/.agents/skills/style/references/`. The house
 patterns the review's style axis checks live there. When the task touches tests,
-which building almost always does, load the testing skill too.
+which building almost always does, load the testing skill too. An instruction
+file (a CLAUDE.md or AGENTS.md, a rules file, a skill, an agent definition, an
+output style) is written under the review-instructions skill. Load it first, write
+in the register its "Before you write" section states, and run its lint after every
+edit.
 
 ## The loop
 
