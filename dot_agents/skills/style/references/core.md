@@ -57,6 +57,19 @@ layering; construction and decoupling; testing.
   block ends, the method has no steps yet, and that is a design finding, not a
   spacing one. Test bodies mark their boundaries the same way; the Arrange, Act,
   Assert rules are the testing skill's.
+- **Comments default to zero.** The test is not whether the comment says why instead
+  of what. A why comment is usually still noise. The test is whether the code will
+  be misread or silently broken without it. Before writing any comment, exhaust
+  three moves: a clearer name, a smaller or extracted function, and moving the
+  rationale to the design record (README, ADR, PRD). A comment survives only when
+  all three fail and the code reads as removable when it is not. Then it states the
+  consequence of removal and nothing else. When unsure, omit. Assume the reader
+  wants no comment.
+- **Never comment to explain your edit.** A note about what changed, when, what it
+  replaced, or why you chose it is about the change, not the code. It goes in the
+  commit message, where the reader looks for it. This applies to every file you
+  touch, including config, data, and YAML frontmatter. Before typing one, confirm
+  the format has comments at all. JSON does not.
 - **Move understanding from your head into the code.** Renaming and extracting are
   how the understanding persists. Your head does not.
 - **Never the `Impl` suffix.** `FooImpl` says nothing. Name a class for what it is:

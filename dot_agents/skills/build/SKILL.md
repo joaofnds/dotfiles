@@ -23,8 +23,7 @@ Take the next item on the test list and run one turn of the testing skill's TDD
 loop: red for the predicted reason, the simplest green, refactor, then commit. The
 commit is the unit of progress, small enough that a wrong step costs one revert.
 Write the message after reading the staged diff. It describes that diff and the
-reason for it. In that read, a comment stays only where the code would be misread
-or silently broken without it. The rest go before the commit. An unpredicted failure and a hard-to-write test are that skill's
+reason for it. An unpredicted failure and a hard-to-write test are that skill's
 design signals. Stop and answer them before going on.
 
 A defect you meet on the way, yours or pre-existing, stops the feature work. Small and
