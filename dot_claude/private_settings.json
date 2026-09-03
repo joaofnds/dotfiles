@@ -119,7 +119,6 @@
     "init": "off",
     "keybindings-help": "user-invocable-only",
     "loop": "user-invocable-only",
-    "review": "user-invocable-only",
     "run": "off",
     "schedule": "user-invocable-only",
     "security-review": "user-invocable-only",
