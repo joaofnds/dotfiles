@@ -34,9 +34,10 @@ from re-deriving it.
 ## Verify every premise
 
 Check every checkable claim on the card (a name, a path, a count, a resource it
-needs) against the repository, by grep, `git log`, or re-running the measurement.
-A stale premise gets a dated note with the current fact beside the writer's
-evidence, which stays as written.
+needs) against the repository, by grep, `git log`, or re-running the command the
+card records for a measured quantity. A stale premise gets a dated note with the
+current fact beside the writer's evidence, which stays as written. A card whose
+number carries no command gets one, since the next run re-checks the same claim.
 
 ## Classify overlap
 
