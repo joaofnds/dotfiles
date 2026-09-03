@@ -80,14 +80,10 @@ step.
 
 ## Prioritize on one scale
 
-Propose High, Medium, or Low for every open card, from consequence:
-
-- **Up**: user-visible harm (a wrong commit, data loss, a wedged queue, a dead
-  consumer with no signal), a cost that grows with delay, how many other cards it
-  unblocks, João's explicit direction.
-- **Down**: the card's own words ("not urgent", "not before", "nothing known
-  wrong today"), a refactor with no pending change in that file, a spike whose
-  deliverable is more cards while the last batch is unbuilt.
+Propose High, Medium, or Low for every open card, from what it costs to leave the
+card undone. Two kinds of card read higher on that scale than they cost: one whose
+work only pays off alongside a change nobody has queued, and one whose only output
+is more cards while the last batch is unbuilt.
 
 Set the field yourself only when the card is unset or the field plainly
 contradicts the card's own text. Set it to match the text, without asking. Every other
