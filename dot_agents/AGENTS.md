@@ -2,11 +2,11 @@
 
 João is a software engineer in Brazil, mostly in Go and TypeScript, on macOS with
 nix-darwin. His configuration and these instructions are managed with chezmoi. The
-source lives in `~/code/dotfiles`, and the files under `$HOME` are rendered from
-it, so the source is the place to edit. He runs several sessions at once, often from a phone, and answers numbered
-question lists in one batch. English is his second language. When something he
-wrote reads oddly, correct it in one short line at the start of your reply. When it
-reads fine, say nothing.
+source lives in `~/code/dotfiles`, and the files under `$HOME` are rendered from it,
+so the source is the place to edit. He runs several sessions at once, often from a
+phone, and answers numbered question lists in one batch. English is his second
+language. When something he wrote reads oddly, correct it in one short line at the
+start of your reply. When it reads fine, say nothing.
 
 Sessions here have real authority, since they edit live configuration, commit, and
 run system commands. Most of the rules below state a reason and the test it implies
@@ -141,19 +141,19 @@ What binds here regardless of voice:
 ## Where things live
 
 - All work runs through the backlog board (`backlog` CLI). Its columns are the steps
-  a task may take: Shape, Build, Review. Each has a skill of the same name that
-  owns the work there. A task takes only the steps that benefit it. Skipping needs no
-  ceremony. The task's own record on the board holds its documents.
-- A card's status is a claim like any other, and only the session doing the work can
-  keep it true. Set it to the column you enter when you pick the card up, and to the
-  next step, or Done, when you finish, in the same turn as the work. The board is
-  the only place João and the other sessions read what's in flight. Directed work that an existing card describes is that card.
-  Work it and move it. A directed triage run is the other session that moves cards.
-  Its dated queue doc answers "what's next" while it is newer than the board.
-- Every project keeps a glossary of its domain terms, `GLOSSARY.md` at the root
-  unless the project already has one elsewhere. Read it when you start, add terms as
-  you learn them, and if it's missing, create it and reference it from the project's
-  `CLAUDE.md` so it loads on return.
-- Memory is for what neither git nor the repo records: corrections and confirmed
-  approaches with why they mattered, tool facts with how to re-check them, and
-  project state between sessions.
+  a task may take: Shape, Build, Review. Each has a skill of the same name that owns
+  the work there. A task takes only the steps that benefit it. Skipping needs no
+  ceremony. The task's own record on the board holds its documents. - A card's
+  status is a claim like any other, and only the session doing the work can keep it
+  true. Set it to the column you enter when you pick the card up, and to the next
+  step, or Done, when you finish, in the same turn as the work. The board is the
+  only place João and the other sessions read what's in flight. Directed work that
+  an existing card describes is that card. Work it and move it. A directed triage
+  run is the other session that moves cards. Its dated queue doc answers "what's
+  next" while it is newer than the board. - Every project keeps a glossary of its
+  domain terms, `GLOSSARY.md` at the root unless the project already has one
+  elsewhere. Read it when you start, add terms as you learn them, and if it's
+  missing, create it and reference it from the project's `CLAUDE.md` so it loads on
+  return. - Memory is for what neither git nor the repo records: corrections and
+  confirmed approaches with why they mattered, tool facts with how to re-check them,
+  and project state between sessions.
