@@ -1,6 +1,13 @@
 ---
 name: debug
-description: Investigates a failure, unexpected behavior, or cost symptom (sometimes slow, occasional hang) down to a confirmed root cause and shapes the fix task, whose acceptance observation is the reproduction. Use at the start of looking into a failure, before the cause is known, including a mid-task defect whose cause survives a direct look: debug this, why is this failing, why is this sometimes slow, investigate this bug. A defect in the session's own process is kaizen; the fix itself is built by build, from the card this skill leaves.
+description: >-
+  Investigates a failure, unexpected behavior, or cost symptom (sometimes slow,
+  occasional hang) down to a confirmed root cause and shapes the fix task, whose
+  acceptance observation is the reproduction. Use at the start of looking into a
+  failure, before the cause is known, including a mid-task defect whose cause
+  survives a direct look. Requests include debug this, why is this failing, why is
+  this sometimes slow, and investigate this bug. A defect in the session's own
+  process is kaizen. Build fixes the defective code from the card this skill leaves.
 ---
 
 # Debug
