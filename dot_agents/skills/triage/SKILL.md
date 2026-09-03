@@ -18,7 +18,8 @@ Read the whole open set on the named board, Done titles, the Done cards any open
 card cites, the board's decisions (where declined ideas are recorded), the handoff
 notes on cards in Build and Review (the next cards come from them), and the
 project's other records: known-issue docs, tech-debt files, anything a card
-might already answer or depend on.
+might already answer or depend on. Read the newest reflection doc first, since
+this run applies the planning changes it proposes.
 
 On a board with no milestone, skip priorities, the queue, and the no-consequence
 closure, since each needs a goal to be judged against. Make the goal item one on the
