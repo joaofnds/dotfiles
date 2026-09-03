@@ -22,3 +22,8 @@ you introduce or lean on one; one term per concept.
 - **Fire**: one use of /brief on a reply; the signal that the reply failed.
 - **Replay**: the probe that forks a real transcript just before a fired reply and
   regenerates that reply under a style variant (doc-4).
+- **Sitting**: two or more cards one session would do together (same file, same
+  fixture, same design question). Linked and bundled in the queue, not merged: each
+  keeps its own acceptance list. Distinct from a **duplicate** (one survivor, the
+  other archived with a pointer) and a **rule with several instances** (one decision
+  card, then dependent builds).
