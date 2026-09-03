@@ -60,7 +60,8 @@ evidence, which stays as written.
 ## Record ordering and split
 
 An open card waiting on another open card goes in the dependencies field. "Came
-from" goes in references or notes. A satisfied dependency or reference stays, as provenance.
+from" goes in references or notes. A satisfied dependency or reference stays, as
+provenance.
 
 Split a card that bundles more than one independently shippable outcome, a decision
 with its build, an investigation with the fix it may not need, or a part that needs
