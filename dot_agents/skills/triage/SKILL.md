@@ -23,7 +23,8 @@ or depend on.
 
 A board with no milestone has no recorded goal. On such a board, skip priorities,
 the queue, and the no-consequence closure, make the goal item one on the list to
-João, and record his answer as the board's milestone.
+João, and record his answer as the board's milestone. The next run prioritizes
+against it.
 
 Follow cross-board pointers. A card that only points at another board's card is
 read there too, in that project's own repository; read access to it is a
@@ -35,22 +36,22 @@ cannot cross boards. The reference is what keeps the next run from re-deriving i
 
 Check every checkable claim on the card (a name, a path, a count, a resource it
 needs) against the repository, by grep, `git log`, or re-running the measurement.
-A stale premise gets a dated note with the current fact. The writer's original text
-stays as written.
+A stale premise gets a dated note with the current fact beside the writer's
+evidence, which stays as written.
 
 ## Classify overlap
 
 - **Overtaken**: a Done card resolved the same symptom under another title, a doc
   correction already landed, an acceptance criterion already void, a spike whose
-  question a later card answered. Sweep recent commit subjects against open titles
-  to catch work done and never closed. Close it as Done, citing what overtook it
-  (the Done card, the commit, or the grep result) in its final summary, with only
-  the acceptance boxes the citation proves checked. Done, not archive, because the
-  next run reads Done titles.
-- **Duplicate**: same symptom, same file, quoted from both bodies. Merge: the
-  survivor's body stays its own, with one acceptance list, and the other is
-  archived with a pointer to the survivor. Its text is reachable through the
-  pointer, not copied in.
+  question a later card answered. Sweep commit subjects since the last triage doc
+  against open titles to catch work done and never closed. Close it as Done, citing
+  what overtook it (the Done card, the commit, or the grep result) in its final
+  summary; check the acceptance boxes the citation proves and name the rest there
+  as unproven. Done, not archive, because the next run reads Done titles.
+- **Duplicate**: same symptom, same file, quoted from both bodies. Propose the
+  merge on the list to João. When he agrees, the survivor's body stays its own,
+  with one acceptance list, and the other is archived with a pointer to the
+  survivor; its text stays in the archive folder, not copied in.
 - **Sitting** (glossary): link the cards and bundle them in the queue, each keeping
   its own card.
 - **Rule with several instances**: one design decision applied N times. Record the
@@ -97,15 +98,14 @@ his to decide. Recommend with a reason and ask.
 
 Fix through the CLI any field that disagrees with the card's own text, its status,
 another card's status, or the project's config: a parent still open with every
-child Done, a "blocked on" note naming a card now Done, a card in Review naming no
-reader, a Done card with an unchecked acceptance box. Note titles changed where the
-CLI can't rename the underlying file.
+child Done, a "blocked on" note naming a card now Done, an assignee left on a
+parked card. Note titles changed where the CLI can't rename the underlying file.
 
 Cards in Build or Review belong to the session holding them. Their status,
-priority, acceptance, and archiving are that session's. Everything else you would
-write on them (a dependency, a reference, a dated note, a reader named) is
-bookkeeping the holding session would want written. One unchanged since the last
-run's doc goes on the list to João.
+priority, acceptance, archiving, and every field the writer set are that
+session's. A dependency, a reference, or a dated note may be added, without
+replacing what the holder wrote. One whose updated date is older than the last
+triage doc goes on the list to João.
 
 Clean hygiene as you go: ANSI escape codes pasted into a body, a note pointing at a
 section that no longer exists, a line-number citation where a symbol would survive
@@ -113,14 +113,16 @@ the next refactor.
 
 ## Shrink the set
 
-Every closure cites one of: overtaken (closes as Done, above), superseded by an
-open card that absorbs it, out of scope (João's own answer), or no consequence for
-the board's goal. The last three archive with the citation. A run must shrink the
+Every closure cites one of: addressed by a commit or overtaken by Done work
+(closes as Done, the citation in its final summary), superseded by an open card
+that absorbs it, out of scope (João's own answer), or no consequence for the
+board's goal. The last three archive with the citation. A run must shrink the
 open set or say, on the triage doc, why it could not.
 
-A card João declines is recorded as an accepted decision on the board (`backlog
-decision create --status accepted`), titled by the concept, with his reason. The
-next run reads decisions, so the same idea doesn't return as a new card.
+A card João declines is recorded as a decision on the board, titled by the
+concept, with his reason, and with status accepted rather than the CLI's default
+of proposed, since he decided it. The next run reads decisions, so the same idea
+doesn't return as a new card.
 
 A finding that recurs across cards and traces to how they're written, not to what
 they're about, is named once on the triage doc and goes on the numbered list to
