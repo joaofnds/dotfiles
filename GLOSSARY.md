@@ -35,3 +35,12 @@ you introduce or lean on one; one term per concept.
   the card between stages, and applies the guards.
 - **Held card**: a card in Build or Review with an assignee, belonging to the session
   that set it. Another session may add a note and never changes its status.
+- **Goal**: what a board's open work is judged against, recorded as the board's
+  milestone. Triage orders the queue by it and reflect judges each increment against
+  it. Changing it is João's call.
+- **Iteration**: one pass of the outer loop: triage the board, pick the queue's first
+  card, run it to Done, reflect. The loop repeats iterations. It never drains the
+  board.
+- **Reflection doc**: the dated doc the reflect step leaves on the board: the goal
+  verdict (on track, adjust, or pivot), what the increment taught, proposed planning
+  changes, and kaizen candidates. Reflect proposes; the next triage applies.
