@@ -44,3 +44,6 @@ you introduce or lean on one; one term per concept.
 - **Reflection doc**: the dated doc the reflect step leaves on the board: the goal
   verdict (on track, adjust, or pivot), what the increment taught, proposed planning
   changes, and kaizen candidates. Reflect proposes; the next triage applies.
+- **Bet**: the card an iteration commits to, with what will be observable about the
+  goal when it is Done and the budget it gets. Triage writes it as the queue's first
+  entry and the pick step copies it onto the card. Reflect judges against it.
