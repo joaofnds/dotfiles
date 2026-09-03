@@ -1,76 +1,132 @@
-#!/usr/bin/env bash
-# iterate [card]: one iteration of the loop on the board in the current directory.
-#
-# Without a card: triage, pick the first ready card, run it to Done, reflect.
-# With a card: run that card to Done, then reflect.
-# Each step is one fresh claude session running that step's skill.
-#
-# Exit codes: 0 done, 1 refused or failed, 2 a stage left a question for João,
-# 3 the stop file .iterate-stop is present, 4 the board has no goal.
-set -euo pipefail
+#!/usr/bin/env bun
 
-budget="${ITERATE_SESSION_BUDGET:-10}"
+import { $ } from "bun";
+import { existsSync } from "node:fs";
 
-say() { printf '%s\n' "$*" >&2; }
+const usage = `iterate [card]
 
-session() {
-  local prompt="/$1${2:+ $2}"
-  say "== $prompt"
-  local out
-  out="$(claude -p "$prompt" --dangerously-skip-permissions --max-budget-usd "$budget" --output-format json)"
-  jq -r '.result' <<<"$out" >&2
-  jq -r '"   turns \(.num_turns) cost \(.total_cost_usd) session \(.session_id)"' <<<"$out" >&2
-  [ "$(jq -r '.is_error' <<<"$out")" = false ]
+One iteration of the loop on the board in the current directory. Without a card:
+triage, pick the first ready card, run it to Done, reflect. With a card: run that
+card to Done, then reflect. Each step is one fresh claude session running that
+step's skill. ITERATE_SESSION_BUDGET caps each session in dollars (default 10).
+
+Exit codes: 0 done, 1 refused or failed, 2 a stage left a question for João,
+3 the stop file .iterate-stop is present, 4 the board has no goal.`;
+
+const budget = process.env.ITERATE_SESSION_BUDGET ?? "10";
+const stopFile = ".iterate-stop";
+const skillFor = { "To Do": "shape", Shape: "shape", Build: "build", Review: "review", Done: null };
+
+class Exit extends Error {
+  constructor(code, message) {
+    super(message);
+    this.code = code;
+  }
 }
 
-status_of() { backlog task view "$1" --plain | awk -F': ' '/^Status:/ {print $2}' | sed 's/^[^A-Za-z]*//'; }
-assignee_of() { backlog task view "$1" --plain | awk -F': ' '/^Assignee:/ {print $2}'; }
-
-skill_for() {
-  case "$1" in
-    "To Do" | Shape) echo shape ;;
-    Build) echo build ;;
-    Review) echo review ;;
-    Done) echo "" ;;
-    *) say "unknown status: $1"; exit 1 ;;
-  esac
+function say(message) {
+  console.error(message);
 }
 
-guard_stop() { [ ! -e .iterate-stop ] || { say "stop file present"; exit 3; }; }
+async function session(skill, card) {
+  const prompt = card ? `/${skill} ${card}` : `/${skill}`;
+  say(`== ${prompt}`);
 
-run_card() {
-  local card="$1" before after skill
-  before="$(status_of "$card")"
-  if [ "$before" = Build ] || [ "$before" = Review ]; then
-    [ -z "$(assignee_of "$card")" ] || { say "$card is held in $before by $(assignee_of "$card")"; exit 1; }
-  fi
-  while :; do
-    before="$(status_of "$card")"
-    skill="$(skill_for "$before")"
-    [ -n "$skill" ] || { say "$card is Done"; return 0; }
-    guard_stop
-    session "$skill" "$card"
-    after="$(status_of "$card")"
-    [ "$after" != "$before" ] || { say "$card stayed in $before: a question for João"; exit 2; }
-  done
+  const out = await $`claude -p ${prompt} --dangerously-skip-permissions --max-budget-usd ${budget} --output-format json`.json();
+
+  say(out.result);
+  say(`   turns ${out.num_turns} cost ${out.total_cost_usd} session ${out.session_id}`);
+  if (out.is_error) throw new Exit(1, `the ${skill} session failed`);
 }
 
-pick() { backlog task list --ready --sort priority --plain | grep -o -m1 '[A-Z]\+-[0-9.]\+'; }
+async function card(id) {
+  const text = await $`backlog task view ${id} --plain`.text();
+  const field = (name) =>
+    text
+      .split("\n")
+      .find((line) => line.startsWith(`${name}:`))
+      ?.slice(name.length + 1)
+      .trim() ?? "";
 
-guard_stop
-[ -z "$(git status --porcelain | grep -v ' .iterate-stop$')" ] || { say "the tree is not clean"; exit 1; }
+  return { status: field("Status").replace(/^[^A-Za-z]*/, ""), assignee: field("Assignee") };
+}
 
-card="${1:-}"
-if [ -z "$card" ]; then
-  backlog milestone list | grep -q 'Active milestones ([1-9]' || { say "the board has no goal"; exit 4; }
-  guard_stop
-  session triage
-  card="$(pick || true)"
-  [ -n "$card" ] || { say "the queue is empty"; exit 0; }
-  backlog task edit "$card" --append-notes "Bet, $(date +%F): picked first from the ready queue by iterate. The newest triage doc's queue entry for it is the bet." >/dev/null
-  say "picked $card"
-fi
+function guardStop() {
+  if (existsSync(stopFile)) throw new Exit(3, "stop file present");
+}
 
-run_card "$card"
-guard_stop
-session reflect "$card"
+async function runCard(id) {
+  const first = await card(id);
+  if ((first.status === "Build" || first.status === "Review") && first.assignee) {
+    throw new Exit(1, `${id} is held in ${first.status} by ${first.assignee}`);
+  }
+
+  for (;;) {
+    const before = (await card(id)).status;
+    const skill = skillFor[before];
+    if (skill === undefined) throw new Exit(1, `unknown status: ${before}`);
+    if (skill === null) {
+      say(`${id} is Done`);
+      return;
+    }
+
+    guardStop();
+    await session(skill, id);
+
+    const after = (await card(id)).status;
+    if (after === before) throw new Exit(2, `${id} stayed in ${before}: a question for João`);
+  }
+}
+
+async function pick() {
+  const list = await $`backlog task list --ready --sort priority --plain`.text();
+  return list.match(/[A-Z]+-[0-9.]+/)?.[0] ?? "";
+}
+
+async function boardHasGoal() {
+  const list = await $`backlog milestone list`.text();
+  return /Active milestones \([1-9]/.test(list);
+}
+
+async function treeIsClean() {
+  const status = await $`git status --porcelain`.text();
+  return status.split("\n").every((line) => line === "" || line.endsWith(` ${stopFile}`));
+}
+
+async function main(argument) {
+  if (argument === "--help" || argument === "-h") {
+    console.log(usage);
+    return;
+  }
+
+  guardStop();
+  if (!(await treeIsClean())) throw new Exit(1, "the tree is not clean");
+
+  let id = argument;
+  if (!id) {
+    if (!(await boardHasGoal())) throw new Exit(4, "the board has no goal");
+    await session("triage");
+    id = await pick();
+    if (!id) {
+      say("the queue is empty");
+      return;
+    }
+
+    const today = new Date().toISOString().slice(0, 10);
+    const bet = `Bet, ${today}: picked first from the ready queue by iterate. The newest triage doc's queue entry for it is the bet.`;
+    await $`backlog task edit ${id} --append-notes ${bet}`.quiet();
+    say(`picked ${id}`);
+  }
+
+  await runCard(id);
+  guardStop();
+  await session("reflect", id);
+}
+
+try {
+  await main(process.argv[2] ?? "");
+} catch (error) {
+  if (!(error instanceof Exit)) throw error;
+  say(error.message);
+  process.exit(error.code);
+}
