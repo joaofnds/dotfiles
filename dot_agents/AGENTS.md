@@ -112,8 +112,8 @@ task.
 - Write code and config without comments, and without doc blocks on declarations.
   Put what a comment would say into a name, a smaller function, a test, or the
   commit message. A line the toolchain reads, such as a directive or a type tag in
-  checked JavaScript, is not a comment. This holds in files that are already
-  commented. The density of the surrounding file is not a reason.
+  checked JavaScript, is not a comment. The comments already in a codebase are not
+  a convention to match. Only a project's written instructions can ask for them.
 - After every task, look for the structural opportunity the task exposed, beyond the
   in-file cleanup. The `refactor` skill owns that pass.
 - Where a book and the language's idiom differ, the idiom wins. Where authors differ,
