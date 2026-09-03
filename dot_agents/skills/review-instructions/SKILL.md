@@ -31,8 +31,7 @@ metaphor where the plain word says more, and a count that proves effort. The cor
 around the file is not the standard. Several corpus files still carry these shapes,
 and a draft that matches them copies the defect.
 
-Two pairs, the written form and the plain form, each keeping what the sentence
-carried:
+Two pairs, the written form and the plain form:
 
 Written: "Never apply this probe to temporal coupling; judge that on whether the
 ordering or interleaving assumption can be violated."
@@ -168,10 +167,10 @@ case.
 Open with the file's line count and the net delta of the change under review. A file
 that only grows is itself a finding. An edit that only adds is incomplete until each
 addition names what it displaces, or why nothing could go. An edit that claims to
-change only form gets the inverse audit, and the claim is the audit's to make. Set
-old beside new and account for every sentence of the old text, either carried with
-its rule, reason, scope, and force intact, or its loss named. Reformatting loses
-meaning silently.
+change only form gets the inverse audit. The reviewer decides whether the claim
+holds. Set old beside new and account for every sentence of the old text, either
+carried with its rule, reason, scope, and force intact, or its loss named.
+Reformatting loses meaning silently.
 
 Each finding carries a verdict (cut, rewrite, move, enforce, or test in use) and the
 reason. The default for a suspect rule is cut and watch, never keep-just-in-case.
@@ -184,10 +183,9 @@ by the next review, so run the checks over the text you are about to prescribe.
 
 A requested review ends as findings, nothing applied. A review of your own edit
 inside directed work applies the verdicts and ends in the commit. A file you wrote
-or rewrote in this session takes one pass by a reviewer that had no part in it,
-before its commit or its handoff to João. The reviewer gets this file as its axes,
-the diff, and João's words where there are any. It does not get the author's account
-of what changed or why it is safe. The pass does not rerun after the repairs. The
-repairs and any reflow are read in the staged diff before the commit, with the same
-checks as the draft, since they are the only text the pass did not see. An edit
-smaller than a paragraph gets the section above, without the pass.
+or rewrote in this session is reviewed once by a reviewer that had no part in it,
+before the commit or the handoff to João. Give the reviewer this file, the diff, and
+João's words if there are any. Do not give it your own description of the change.
+The review does not run again after the fixes. Read the fixes in the staged diff
+before the commit, with the same checks, because the reviewer did not see them. An
+edit smaller than a paragraph gets the section above and no review.
