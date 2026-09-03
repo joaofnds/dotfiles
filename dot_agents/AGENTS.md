@@ -145,6 +145,8 @@ What binds here regardless of voice:
   next step, or Done, when you finish, in the same turn as the work; the board, not
   your transcript, is where João and the other sessions read what's in flight.
   Directed work that an existing card describes is that card: work it and move it.
+  A directed triage run is the other session that moves cards. Its dated queue doc
+  answers "what's next" while it is newer than the board.
 - Every project keeps a glossary of its domain terms: `GLOSSARY.md` at the root
   unless the project already has one elsewhere. Read it when you start, add terms as
   you learn them, and if it's missing, create it and reference it from the project's
