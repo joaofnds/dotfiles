@@ -137,8 +137,8 @@ The review ends when every finding has its disposition. Nothing re-opens it. A c
 report is one line on the record and in the brief. An empty review of a clean diff
 is correct.
 
-The reply to João is the brief: what blocked and what was fixed without him, stated
-as findings rather than counts, and in full only the ones that need his decision or
-whose damage predates the work under review.
+The reply to João is the brief. It names the findings that need his decision and
+the ones whose damage predates the work under review. The `brief` output style says
+how everything else appears.
 When nothing blocks, say so plainly. Then the verdict: proceed, or what blocks. A
 proceed verdict moves the card to Done.
