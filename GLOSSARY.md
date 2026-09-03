@@ -27,3 +27,11 @@ you introduce or lean on one; one term per concept.
   keeps its own acceptance list. Distinct from a **duplicate** (one survivor, the
   other archived with a pointer) and a **rule with several instances** (one decision
   card, then dependent builds).
+- **Stage**: one column's work on one card, done by one fresh session running that
+  column's skill. Rehearsal uses the same word.
+- **Run**: one card carried through its stages until Done, a question for João, or a
+  guard.
+- **Runner**: the script outside the harness that starts each stage's session, reads
+  the card between stages, and applies the guards.
+- **Held card**: a card in Build or Review with an assignee, belonging to the session
+  that set it. Another session may add a note and never changes its status.
