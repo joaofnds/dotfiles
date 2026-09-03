@@ -1,6 +1,6 @@
 ---
 name: build
-description: Implements a shaped task or a directed fix. Test first, small verified steps, small commits, one direct observation of the result, then the refactoring pass and the handoff. Use at the Build column and for any directed change to code.
+description: Implements a shaped task or a directed fix. Test first, small verified steps, small commits, one direct observation of the result, then the refactoring pass and the handoff. Use at the Build column and for any directed change to code or to an instruction file.
 ---
 
 # Build
@@ -21,9 +21,10 @@ the register its "Before you write" section states.
 
 Take the next item on the test list and run one turn of the testing skill's TDD
 loop: red for the predicted reason, the simplest green, refactor, then commit. The
-commit is the unit of progress, small enough that a wrong step costs one revert. An
-unpredicted failure and a hard-to-write test are that skill's design signals. Stop
-and answer them before going on.
+commit is the unit of progress, small enough that a wrong step costs one revert. Its
+message is written after the staged diff is read, and describes that diff and why it
+was made. An unpredicted failure and a hard-to-write test are that skill's design
+signals. Stop and answer them before going on.
 
 A defect you meet on the way, yours or pre-existing, stops the feature work. Small and
 reversible: fix it now, in its own commit. Larger: a task on the board with what you
