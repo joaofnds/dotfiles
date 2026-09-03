@@ -43,12 +43,9 @@ priorities, the queue, and the no-consequence closure."
 Plain: "On a board with no milestone, skip priorities, the queue, and the
 no-consequence closure, since each needs a goal to be judged against."
 
-Run `scripts/register-lint.sh`, under this skill's directory, over the file after
-every edit. It prints each semicolon, each "X, not Y" pair, and each em dash. A hit
-is a prompt to read that sentence and decide, and nothing more. A semicolon between
-list items, a precise contrast, and a prohibition stay as written. A rewrite that
-dodges the pattern by softening a rule ("rather than" for "not") is worse than the
-hit, so leave the hit.
+A semicolon between list items, a precise contrast, and a prohibition stay as
+written. Softening a rule into a comparison ("rather than" for "not") is not
+flattening, and reads as a preference where the rule forbade the case.
 
 ## Ground the review first
 
@@ -151,9 +148,8 @@ deny rule, never stronger adjectives. A guard enforces the rule itself. Where on
 proxy could be enforced, the rule stays prose. A numeric proxy for a judgment rule
 replaces the principle with a count, obeyed or breached exactly where judgment was
 needed, and it forces cuts when more is genuinely needed. A rule only judgment can
-check gets "test in use". Its counts belong in the evidence records. A rule with a
-mechanical part and a judgment part gets a script for the first and prose for the
-second. The register lint prints candidates for that judgment and decides nothing.
+check gets "test in use". Its counts belong in the evidence records. A rule with a mechanical part and a judgment part gets a script for the first and
+prose for the second.
 
 **State the complement.** A rule that enumerates part of a set leaves the rest's
 status to inference, and inference is where behavior regresses silently across
@@ -187,5 +183,4 @@ A requested review ends as findings, nothing applied. A review of your own edit
 inside directed work applies the verdicts and ends in the commit. A file you wrote
 or rewrote in this session takes one pass by a reviewer that had no part in it,
 handed this file as its axes, before its commit or its handoff to João. The pass
-does not rerun after the repairs. An edit smaller than a paragraph gets the lint
-and the section above, without the pass.
+does not rerun after the repairs. An edit smaller than a paragraph gets the section above, without the pass.
