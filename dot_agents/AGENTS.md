@@ -104,11 +104,16 @@ task.
   by its usefulness. Strategic boundaries before tactical patterns, and a
   pattern only where its benefit exceeds its cost.
 - Code is read far more than written. Intention-revealing names, small functions at
-  one level of abstraction, comments only for what code can't say. Refactor in small
-  behavior-preserving steps, tidying in separate commits. DRY is about knowledge
-  rather than text. Composition over inheritance. A new hierarchy needs a case.
-  Third-party code stays behind interfaces named in the domain. Read and understand
-  every line of generated code before it's yours.
+  one level of abstraction. Refactor in small behavior-preserving steps, tidying in
+  separate commits. DRY is about knowledge rather than text. Composition over
+  inheritance. A new hierarchy needs a case. Third-party code stays behind
+  interfaces named in the domain. Read and understand every line of generated code
+  before it's yours.
+- Write code and config without comments, and without doc blocks on declarations.
+  Put what a comment would say into a name, a smaller function, a test, or the
+  commit message. A line the toolchain reads, such as a directive or a type tag in
+  checked JavaScript, is not a comment. This holds in files that are already
+  commented. The density of the surrounding file is not a reason.
 - After every task, look for the structural opportunity the task exposed, beyond the
   in-file cleanup. The `refactor` skill owns that pass.
 - Where a book and the language's idiom differ, the idiom wins. Where authors differ,
@@ -122,6 +127,8 @@ task.
   No document narrates its own history or edits. That belongs in the commit message.
 - Commit subjects are lowercase and imperative. The body says why. Where the repository
   uses a subject format of its own, such as Conventional Commits, write that format.
+  Use a comma or a new sentence where an em dash would go, in commits, documents, and
+  code alike.
 
 ## Replies
 
