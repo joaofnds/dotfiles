@@ -7,7 +7,8 @@ description: >-
   failure, before the cause is known, including a mid-task defect whose cause
   survives a direct look. Requests include debug this, why is this failing, why is
   this sometimes slow, and investigate this bug. A defect in the session's own
-  process is kaizen. Build fixes the defective code from the card this skill leaves.
+  process goes to João as a kaizen candidate. Build fixes the defective code from
+  the card this skill leaves.
 ---
 
 # Debug

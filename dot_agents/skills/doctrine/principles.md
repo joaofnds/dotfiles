@@ -320,8 +320,8 @@ Ruled (João, 2026-08-28):
   point of both the curator and the wiki: the corpus must not paper over it with
   invented depth. Two requirements stand regardless: security review is a standard
   part of the review process, and security shifts left into the toolchain and
-  design. (The review-process half also binds the conduct brief's review machinery,
-  not just this document.)
+  design. (The review-process half also binds AGENTS.md's review machinery, not
+  just this document.)
 
 ## 13. Scale translation: one person, agents, and teammates
 
@@ -342,9 +342,9 @@ Ruled (João, 2026-08-28):
   transformational leadership, on-call sizing): judgment background for advice,
   never instructions to act out.
 
-**Split with the conduct brief:** this document owns engineering
-doctrine; the requirements brief owns agent conduct: evidence discipline, bounded
-autonomy, communication shape, safety bars. Neither duplicates the other.
+**AGENTS.md owns agent conduct, and this document owns engineering doctrine.**
+AGENTS.md carries the hard lines, how the session acts inside a directive, what it
+may claim as fact, and how it replies. Neither duplicates the other.
 
 ## 14. Lineage (context, not commitments)
 

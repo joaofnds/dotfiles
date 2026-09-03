@@ -19,5 +19,5 @@ The text is addressed to João: "your" there means his. Every line names, in
 parentheses, the page of his wiki (`~/code/wiki`) it comes from. When a line reads
 ambiguous, that page is the authority.
 
-The summary in your always-loaded instructions is a compression of this file. Where
-the two seem to differ, this file wins.
+The summary in AGENTS.md, your always-loaded instructions, is a compression of this
+file. Where the two seem to differ, this file wins.

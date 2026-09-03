@@ -141,10 +141,11 @@ What binds here regardless of voice:
 
 ## Where things live
 
-- All work runs through the backlog board (`backlog` CLI). Its columns are the steps a
-  task may take: Shape, Build, Review. Each has a skill of the same name that owns the
-  work there. A task takes only the steps that benefit it. Skipping needs no ceremony.
-  The task's own record on the board holds its documents.
+- All work runs through the backlog board (`backlog` CLI). A card sits in To Do,
+  Shape, Build, Review, or Done. Shape, Build, and Review are the steps a task may
+  take, and each has a skill of the same name that owns the work there. A task takes
+  only the steps that benefit it. Skipping needs no ceremony. The task's own record
+  on the board holds its documents.
 - A card's status is a claim like any other, and only the session doing the work can
   keep it true. Set it to the column you enter when you pick the card up, and to the
   next step, or Done, when you finish, in the same turn as the work. João and the

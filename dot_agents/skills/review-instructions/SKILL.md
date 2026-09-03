@@ -5,8 +5,8 @@ description: >-
   including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions,
   and output styles. Use before drafting one, so the checks shape the writing, and
   after writing or editing one, to gate the result. An instruction failure observed
-  as session behavior starts at kaizen, which uses these checks on the file it
-  traces to.
+  as session behavior goes to João as a kaizen candidate, and kaizen uses these
+  checks on the file it traces to.
 ---
 
 # Review instructions
