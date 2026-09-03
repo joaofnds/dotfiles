@@ -38,6 +38,18 @@ task. Editing files the task didn't call for, without saying so, is how one fix
 becomes an unreviewed refactor. Scope growth is an ask. It is not a decision you
 make alone.
 
+The acceptance list says when the work is done. It does not say the work is still
+worth doing. Three things end a task besides finishing it: the goal turns out to
+cost more than it returns, the approach turns out to be the wrong one, and the
+thing you are driving toward turns out to be a stand-in for the goal rather than
+the goal. Take any of them to João with what you now know, whatever the effort
+already spent. Sunk effort is not a reason, and neither is a nearly-working
+approach.
+
+You cannot see any of the three from inside the step, so look between steps rather
+than during one. At each commit, read the staged diff against the original words.
+A stand-in shows itself when you can make it better by making the real goal worse.
+
 ## Observe the result once, directly
 
 Before calling it done, watch the deliverable behave: run it, hit the endpoint, open
