@@ -139,7 +139,115 @@ rules; the first is Go-specific and lives only here.
   directory is debt: say which you followed.
 - **One row, one named test.** In a Ginkgo suite that is `DescribeTable` plus one `Entry` per row;
   in a plain `testing` package it is `t.Run`. Either way the row's name is the test's name and the
-  failure line identifies the input (`03-test-aesthetics.md` §4.7).
+  failure line identifies the input (`testing/03-test-aesthetics.md` §4.7).
 - **Fakes of owned ports are the default double**, hand-written, with explicit seed and reset
-  per `02-mocking-roles.md` §4. `mock.go` for mockgen output is permitted only in an adapter
-  package whose subject is a third-party contract (`02-mocking-roles.md` §6).
+  per `testing/02-mocking-roles.md` §4. `mock.go` for mockgen output is permitted only in an adapter
+  package whose subject is a third-party contract (`testing/02-mocking-roles.md` §6).
+
+## 10. Modern Go
+
+Write for the Go version in the project's go.mod. Apply each rule at or below
+that version, and prefer these forms even when nearby code uses the older
+pattern. Skip a rule only when it would not compile, would change behavior, or
+clearly does not fit the code being edited. The list comes from
+JetBrains' go-modern-guidelines repository, which gains rules as Go releases
+land; refresh it from there.
+
+Go 1.27:
+
+- Generic methods instead of package-level generic helpers when the operation
+  belongs to the type; keep package-level helpers for operations that belong to
+  no single receiver type.
+- `encoding/json/v2` for new JSON code; leave existing `encoding/json` code
+  unchanged unless migration is explicitly requested.
+- Set embedded struct fields directly with promoted field names in struct
+  literals instead of constructing the embedded struct explicitly.
+- `strings.CutLast` and `bytes.CutLast` instead of `LastIndex` plus manual
+  slicing around the last separator.
+- The standard library `uuid` package instead of third-party or custom UUID
+  implementations.
+- `URL.Clone` and `Values.Clone` from `net/url` instead of manual copying.
+
+Go 1.26:
+
+- `new(value)` for a pointer to a value instead of pointer-helper functions or a
+  temporary variable used only for `&value`.
+- `errors.AsType[T](err)` when checking whether an error matches a specific
+  type.
+
+Go 1.25:
+
+- `wg.Go` when spawning goroutines tracked by a `sync.WaitGroup`.
+
+Go 1.24:
+
+- `t.Context()` when a test needs a context tied to the test lifetime.
+- `omitzero` on JSON-tagged bool, numeric, struct, and time fields whose zero
+  value should be omitted; `omitempty` stays for empty strings, slices, and
+  maps.
+- `b.Loop()` for the main loop in benchmark functions.
+- `strings.SplitSeq`, `strings.FieldsSeq`, `bytes.SplitSeq`, or
+  `bytes.FieldsSeq` when iterating over split results.
+
+Go 1.23:
+
+- `maps.Keys` or `maps.Values` directly as iterators instead of manually looping
+  over a map.
+- `slices.Collect` to build a slice from an iterator; `slices.Sorted` to collect
+  and sort iterator values in one step.
+- `time.Tick` where it fits; unreferenced tickers are garbage-collected without
+  `Stop`.
+
+Go 1.22:
+
+- `for i := range n` when iterating from 0 to n-1.
+- No redundant loop-variable copies before closures or taking addresses; each
+  iteration has its own variables.
+- `cmp.Or` to pick the first non-zero value from a fallback chain.
+- `reflect.TypeFor[T]()` instead of `reflect.TypeOf((*T)(nil)).Elem()`.
+- Method-aware `ServeMux` patterns and `r.PathValue` for path parameters.
+
+Go 1.21:
+
+- Built-in `min` and `max` instead of handwritten comparisons.
+- `clear(m)` to delete all map entries; `clear(s)` to zero slice elements.
+- `slices.Contains` instead of a manual search loop; `slices.Index` for the
+  position, returning -1 when absent; `slices.IndexFunc` to find by predicate.
+- `slices.Sort` for slices of ordered values; `slices.SortFunc` with
+  `cmp.Compare` instead of `sort.Slice`; `slices.Max` and `slices.Min` instead
+  of manual loops.
+- `slices.Reverse` instead of a manual swap loop; `slices.Compact` to remove
+  consecutive duplicates in place; `slices.Clip` to remove unused capacity;
+  `slices.Clone` to copy a slice.
+- `maps.Clone` instead of manual map iteration; `maps.Copy` to copy entries into
+  another map; `maps.DeleteFunc` to delete entries matching a predicate.
+- `sync.OnceFunc` instead of `sync.Once` plus a wrapper closure;
+  `sync.OnceValue` to memoize a computed value.
+- `context.AfterFunc` to run cleanup when a context is canceled; timeout and
+  deadline contexts with causes when callers need the cancellation reason.
+
+Go 1.20:
+
+- `strings.CutPrefix` or `strings.CutSuffix` when you need both the trimmed
+  result and whether it matched; `bytes.Clone` to copy a byte slice.
+- `errors.Join` to combine multiple errors while preserving error matching.
+- `context.WithCancelCause` and `context.Cause` when cancellation needs to carry
+  an error cause.
+
+Go 1.19:
+
+- `fmt.Appendf` when appending formatted text to a byte slice without an
+  intermediate `fmt.Sprintf` string.
+- Typed atomics (`atomic.Bool`, `atomic.Int64`, `atomic.Pointer[T]`) instead of
+  untyped atomic functions.
+
+Go 1.18:
+
+- `any` instead of `interface{}`.
+- `strings.Cut` and `bytes.Cut` instead of `Index` plus manual slicing;
+  `strings.Clone` to copy a string without retaining shared backing memory.
+
+Go 1.8 and earlier:
+
+- `time.Until(deadline)` instead of `deadline.Sub(time.Now())`;
+  `time.Since(start)` instead of `time.Now().Sub(start)`.
