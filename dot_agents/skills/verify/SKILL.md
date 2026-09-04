@@ -11,9 +11,11 @@ baseline and a treatment that differ only in the change under test.
 ## Restate the claim so it can fail
 
 Rewrite the claim as a condition, a metric, and a threshold. "The fix works" cannot
-fail. "Under concurrent writes the retry succeeds within three attempts" can. Where
-the claim does not reduce to that shape, ask João what would prove it wrong before
-gathering anything. Guessing the threshold decides the verdict in advance.
+fail, and neither can "the code is cleaner" or "this feels right". "Under concurrent
+writes the retry succeeds within three attempts" can. Where the claim does not reduce
+to that shape, ask João what would prove it wrong before gathering anything, and where
+he has no measurable form either, say so and return inconclusive. Guessing the
+threshold decides the verdict in advance.
 
 A claim about the deployed application end to end is his to check by hand. Say what
 you need him to exercise, and never let a verdict here stand in for it.
@@ -52,9 +54,10 @@ silent one reads the same as one you never looked for:
   missing capability, or a confound that could account for the delta. Say which, and
   what would settle it.
 
-Evidence too large for the reply goes under the session's temporary directory, since
-it belongs to one claim and not to the project. Keep secrets, customer data, and credentials out of anything you
-write to disk.
+Evidence too large for the reply, a screenshot, a transcript, a profile, goes under
+`$TMPDIR/verify-<claim-slug>/`. It belongs to one claim rather than to the project, so
+it never lands anywhere the repository tracks. Keep secrets, customer data, and
+credentials out of anything you write to disk.
 
 ## The failure modes this exists to catch
 

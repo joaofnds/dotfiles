@@ -30,13 +30,19 @@ next session will get wrong.
 The paths and lines that are load-bearing, and what this session learned that the
 repository does not show: an approach that failed, a constraint that surprised you.
 
-A debugging session adds the reproduction, the magnitude, the hypotheses with their
-evidence, the causes ruled out, and the next observation that would discriminate. A
-build adds the working tree's state, what is verified, and the next unchecked item.
+A debugging session adds the reproduction, the magnitude as reported, the hypotheses
+with their evidence, the causes ruled out, and the next observation that would
+discriminate. Any probe still in the working tree goes on the card with its path, since
+the handoff comes before debug's cleanup. A build adds the working tree's state, what
+is verified, and the next unchecked item.
 
-Reference a document that already exists by its path rather than restating it. Keep
-secrets and personal data out. Where the current direction looks wrong to you, say so
-in a note rather than handing the problem forward in silence.
+Reference something that already exists by its path or its URL rather than restating
+it, since a copy here goes stale where the original does not. Keep secrets and personal
+data out. Where the current direction looks wrong to you, say so in a note rather than
+handing the problem forward in silence.
+
+Write notes rather than a transcript, several where one will not hold it, and quote
+only the lines of code or output the next session must read.
 
 ## The resume line
 
@@ -46,5 +52,5 @@ End the reply with one line João can paste into a fresh session, in this form:
 
 Name a skill in that last part where one fits the move.
 
-Outside a repository, where no board exists, the flush goes in the reply itself, above
-that line.
+Outside a git repository, where no board is possible, the flush goes in the reply
+itself, above that line.

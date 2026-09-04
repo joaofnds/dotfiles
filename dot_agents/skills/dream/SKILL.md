@@ -2,19 +2,20 @@
 name: dream
 description: Consolidates this project's memory store, merging duplicate notes, surfacing contradictions for João, pruning what no longer exists, repairing links and stale paths, and rebuilding the index within its load budget. Use when the store has grown noisy or repetitive. Writing a new memory is not this, and improving the corpus is kaizen.
 disable-model-invocation: true
+argument-hint: "[--auto]"
 ---
 
 # Dream
 
 The memory store is the notes the harness loads for this project, each a markdown file
-with frontmatter, plus an index that points at them. The index is loaded whole at
-session start up to a cap, and everything past that cap is silently dropped, so detail
-parked in the index costs the entries below it their visibility. The cap's current
-value and its re-check trigger are in the review-instructions skill's external-facts
-reference.
+with frontmatter, plus `MEMORY.md`, the index that points at them. The index is loaded
+whole at session start up to a cap, and everything past that cap is silently dropped,
+so detail parked in the index costs the entries below it their visibility. The cap's
+current value and its re-check trigger are in the review-instructions skill's
+`references/external-facts.md` §Harness mechanics.
 
-Consolidation is judgment rather than retrieval, so a sub-agent doing this pass runs
-on the most capable model at high effort, by the delegation skill's model rule.
+Consolidation is judgment rather than retrieval, and no artifact settles which of two
+notes is right, so a sub-agent doing this pass runs on the parent's model.
 
 Find the store from the harness's own layout rather than from memory of it, and read
 the index and every note before proposing anything. Where the project has no store,
@@ -40,10 +41,10 @@ both and the topic.
 
 **Prunes.** A note is prunable when what it describes no longer exists, or when a
 newer note superseded it. A note whose only defect is a date nothing can anchor is
-never a prune: the knowledge is unique and the phrasing is what failed. Verify against the repository before proposing, since a file
-you failed to find may mean your search was wrong. Age alone is never grounds, and an
-old load-bearing fact stays. Where the knowledge exists nowhere else, merge it instead
-of deleting it.
+never a prune: the knowledge is unique and the phrasing is what failed. Verify against
+the repository before proposing, since a file you failed to find may mean your search
+was wrong. Age alone is never grounds, and an old load-bearing fact stays. Where the
+knowledge exists nowhere else, merge it instead of deleting it.
 
 **Links and paths.** List index entries pointing at missing files, notes missing from
 the index, and links whose target is gone. For anything you plan to merge or delete,
@@ -66,7 +67,13 @@ dropping what it says is a prune, and prunes go through the rule above.
 
 Print the proposal before changing anything: the index's current size against its cap,
 then each merge, contradiction, prune, link repair, date repair, and shortened line.
-Ask before applying. A run with nothing to propose says the store is clean and stops.
+Ask before applying, unless the run carries `--auto` below. A run with nothing to
+propose says the store is clean and stops.
+
+Run with `--auto`, apply every proposal without asking, except the contradictions, and
+report those as left alone. They are the one part that needs João, so an unattended run
+resolves none of them. The backup, the verification, and the clean-store report are the
+same as an attended run.
 
 Apply merges, then contradictions João resolved, then prunes, then the repairs, then
 rebuild the index with one line per note on disk. Resolving a contradiction keeps the
@@ -80,8 +87,9 @@ neither place.
 
 Check by running, not by asserting: every index link resolves to a file, every note
 appears in the index, no link points at a note that is gone, no corpus path you
-rewrote is still stale, and the index fits its cap. A dangling link is a miss in the
-apply step, so go back and fix it before reporting.
+rewrote is still stale, no relative date you resolved is still relative, and the index
+fits its cap. A dangling link is a miss in the apply step, so go back and fix it before
+reporting.
 
 An index that cannot be brought under its cap by any merge, prune, or shortening the
 rules allow is João's decision. Report the overflow and the notes past it rather than
