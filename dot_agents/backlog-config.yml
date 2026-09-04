@@ -8,3 +8,4 @@ filesystem_only: true
 check_active_branches: false
 auto_open_browser: true
 bypass_git_hooks: false
+backlog_directory: .boris/backlog
