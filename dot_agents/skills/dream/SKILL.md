@@ -47,9 +47,9 @@ of deleting it.
 
 **Links and paths.** List index entries pointing at missing files, notes missing from
 the index, and links whose target is gone. For anything you plan to merge or delete,
-list the inbound links that will need repointing. A corpus path a note cites can rot
-the same way, so list the ones that no longer resolve, with the replacement where a
-search finds one. Repair the pointer and never the fact it supports.
+list the inbound links that will need repointing. A corpus path a note cites goes
+stale the same way, so list the ones that no longer resolve, with the replacement
+where a search finds one. Repair the pointer and never the fact it supports.
 
 **Relative dates.** A note saying "last month" loses its meaning as soon as its
 context is gone. Where the note's own timestamp can anchor the phrase, resolve it to

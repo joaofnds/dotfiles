@@ -5,8 +5,8 @@ description: Sends work this session produced to an independent reviewer that is
 
 # Adversarial review
 
-An independent reader sees what you have stopped seeing, but only where the brief
-does not tell it where you landed.
+The brief decides whether the review is worth anything. A reader told where you
+landed confirms it. A reader told nothing forms its own view.
 
 This covers anything you produced this session that no other skill already gates. A
 change moving through the Review column belongs to the review skill, an instruction

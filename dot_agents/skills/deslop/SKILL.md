@@ -5,8 +5,8 @@ description: Removes the writing patterns that mark prose as machine-written, fr
 
 # Deslop
 
-Prose written by a model carries patterns a reader recognizes, and they survive
-rereading because they read as fluent. Two inventories hold them.
+Prose written by a model carries patterns a reader recognizes. They survive rereading
+because they read as fluent. Two inventories hold them.
 [references/phrases.md](references/phrases.md) covers the patterns that live in a
 word or a phrase, and [references/structures.md](references/structures.md) covers the
 ones that live in a sentence's shape or a paragraph's rhythm.

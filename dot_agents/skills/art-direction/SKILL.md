@@ -27,30 +27,27 @@ rather than plausible.
 
 ## The choices
 
-The hero is a thesis. Open with the most characteristic thing in the subject's world,
-in whatever form suits it: a headline, an image, a live demonstration, a moment of
-motion. A large number with a small label over a gradient is the template answer, and
-it is only right where it is genuinely the best one.
+Open with the most characteristic thing in the subject's world, in whatever form
+suits it: a headline, an image, a live demonstration, a moment of motion. A large
+number with a small label over a gradient is the template answer, and it is only
+right where it is genuinely the best one.
 
-Typography carries the personality. Pair display and body faces deliberately, not the
-pair you would reach for on any other project, and set a scale with intentional
-weights and spacing. The type treatment is part of the design rather than a neutral
-vehicle for the words.
+Pair display and body faces deliberately, not the pair you would reach for on any
+other project, and set a scale with intentional weights and spacing. The type
+treatment is part of the design rather than a neutral vehicle for the words.
 
-Structure encodes meaning. Numbering, eyebrows, dividers, and labels should say
-something true about the content. Numbered markers belong on a real sequence, and
-nowhere else.
+Numbering, eyebrows, dividers, and labels say something true about the content.
+Numbered markers belong on a real sequence and nowhere else.
 
-Motion is deliberate. One orchestrated moment lands harder than effects scattered
-across the page, and scattered animation is itself a tell.
+Use one orchestrated moment of motion rather than effects scattered across the page.
+Scattered animation is itself a tell.
 
-Complexity matches the direction. A maximalist direction needs elaborate execution. A
-minimal one needs precision in spacing, type, and detail.
+A maximalist direction needs elaborate execution. A minimal one needs precision in
+spacing, type, and detail.
 
-Copy is design material. Generic words make a design feel as templated as generic type
-does. Read [references/writing.md](references/writing.md) before writing interface
-copy, and skip it where the brief supplies the final words and you are only setting
-them.
+Generic words make a design feel as templated as generic type does. Read
+[references/writing.md](references/writing.md) before writing interface copy, and
+skip it where the brief supplies the final words and you are only setting them.
 
 ## The defaults to design against
 
@@ -84,9 +81,9 @@ without the brief asking for it.
 
 ## Write the direction down, and get it ratified
 
-A direction that exists only in this conversation dies at the context boundary, and a
-later session cites files rather than chat. Write it as a document on the feature's
-card, by the board skill's route.
+Write the direction as a document on the feature's card, by the board skill's route.
+A direction that exists only in this conversation is gone when the session ends, and
+a later session reads files rather than chat.
 
 It carries its status, draft until João approves it and the date of his approval
 after, so a later session can tell a proposal from a constraint. It carries the
