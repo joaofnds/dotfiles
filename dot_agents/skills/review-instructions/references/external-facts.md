@@ -47,10 +47,17 @@ Load limits and delivery:
   `.claude/CLAUDE.md` priority; with `paths:` it triggers on matching reads and is not
   re-injected after compaction. Whether a no-`paths` rule survives compaction is
   unrecorded: do not assert it either way.
-- A skill body enters context once and is never re-read; re-invoking an unchanged skill
-  appends an already-loaded note rather than a second copy (v2.1.202+). Compaction
+- Re-invoking an unchanged skill re-delivers the whole body. The second invocation
+  carries a header saying the instructions were previously loaded, then the full text
+  follows it *(probe, 2.1.260)*. Compaction
   re-attaches each skill's most recent invocation, first 5,000 tokens, under a combined
   25,000-token budget.
+- The `Read` tool re-delivers full file content on every call, including a second read
+  of a file unchanged since the first. No dedupe, no already-loaded note *(probe,
+  2.1.260: read a file, read it again unchanged, and read it again after editing it on
+  disk; all three returned the file in full, the third with the new content)*. A rule
+  that tells a session to reopen a file therefore delivers the words rather than a
+  pointer.
 - Auto memory is on by default, per-project, machine-local, and never loaded into a
   non-fork subagent.
 - Session transcripts live at
