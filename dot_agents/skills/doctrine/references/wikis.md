@@ -55,9 +55,9 @@ carries the licensed and not-licensed lists across papers. Then, for the specifi
   primary read; record the supersession there and name the refresh owed.
 
 **The checkable artifact is the citation, not the query.** Every such claim you land
-names its the review-instructions skill's external-facts reference entry, and that entry names the wiki page it
-came from. A cited claim naming no entry is the defect, whether or not you ran the
-query. the review-instructions skill's external-facts reference stays self-contained (a reviewer
+names its entry in the review-instructions skill's external-facts reference, and that
+entry names the wiki page it came from. A cited claim naming no entry is the defect,
+whether or not you ran the query. That reference stays self-contained (a reviewer
 has no vault access); where it and a page disagree, the page's Evidence block wins and
 the entry is re-derived from it, except a field marked *(primary read)*
 (the review-instructions skill's external-facts reference, under Cited sources).
