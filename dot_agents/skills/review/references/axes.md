@@ -73,8 +73,10 @@ which axes apply; this file carries what each axis checks.
 > two names. Do not audit SLOs, error budgets, or recovery-time priorities; a patch
 > can't violate a priority. A patch that adds a manual, repeatable step to
 > operating the system is a finding.
-> **Coupling:** sweep operational, spatial, semantic, data, and tooling coupling,
-> plus temporal in both forms. Name each type. Report only the ones that are
+> **Coupling:** sweep Nygard's five types, operational, developmental, semantic,
+> functional, and incidental, plus temporal in both its ordering and concurrency
+> forms. The doctrine skill's coupling reference defines each with its cue and its
+> cure. Name each type. Report only the ones that are
 > defects; coupling to something stable that couldn't be otherwise is a design
 > choice. Do not list the types that are absent. You may read git history for
 > stability evidence. Where you didn't, state the stability assumption the finding

@@ -125,6 +125,29 @@ João, with your recommendation. Fix blocking findings before done. Observe ever
 fix: rerun the suite and the check the finding names. You verify the fixes. Never
 re-dispatch the reviewer for the same change.
 
+A disposition covers a defect: something behaves wrongly, or a result is unverified.
+A finding that names no defect, an observation about naming, scope, or documentation,
+takes the advisory route instead, reported with its evidence and its cost and no
+trigger. A smell, a test-structure note, and a coupling finding go either way, and
+the revert test decides: verdict-bearing when the evidence would not stand with the
+change reverted, advisory when it survives. A correctness defect is never advisory,
+and neither is a test whose outcome is independent of its subject, which is false
+safety rather than friction.
+
+A blocking or should-fix finding names its trigger: the caller, input, configuration,
+or sequence that reaches the defect. A note names the probe instead, what you searched
+and over what scope. An exported surface always has a nameable trigger, so "no caller
+in this repo" does not make a finding a note. A real defect whose trigger resists cheap
+probing, a race, a production-only configuration, a third-party response you cannot
+induce, is escalated with the probe you could not run.
+
+A reviewer's severity words rank impact and say nothing about whether a finding is a
+defect. Map them: its top word always names one; its middle word names one where its
+ladder ranks defect impact, and where the ladder ranks friction instead, the revert
+test decides; its lower words name a defect only where the concrete effect is the
+system behaving wrongly. Severity does not survive the mapping. An advisory-routed
+finding is advisory, not a lesser defect, and holds no gate open.
+
 A finding can repeat the shape of one already fixed in this task: the same
 invariant broken again, the same window guarded again. Treat the repeat as a
 defect in the mechanism rather than in the fix. Only you can see it, because the
