@@ -7,11 +7,18 @@ Architecture briefs condense these rules; this file is the fine detail behind th
 Contents: precedence and conflicts; philosophy and mindset; architecture and
 layering; construction and decoupling; testing.
 
+A rule that names a wiki page carries it in parentheses. When a principle's
+background matters, or a rule reads ambiguous, that page in `~/code/wiki` is the
+authority.
+
 ## Precedence and conflicts
 
 - On conflict, the more specific rule governs. A language file wins over this core
-  file. The doctrine holds the reasons at principle level and wins where this skill
-  seems to differ from it.
+  file, which wins over the doctrine's judgment reference, which wins over its
+  coupling reference. On anything about tests, the testing skill wins over all four.
+  The repository's own instructions win over every file here, tests included. The
+  doctrine holds these rules' reasons at principle level; where this skill and the
+  doctrine seem to differ on a reason rather than a rule, the doctrine wins.
 - Resolve conflicts out loud. Say which rule you set aside and why. Resolving a
   conflict silently is the defect, not having one. A precedence claim must quote a
   file you opened this session. Citing a document you did not read fabricates
@@ -27,9 +34,9 @@ layering; construction and decoupling; testing.
 ## Philosophy and mindset
 
 - **Simplicity, by Beck's four rules, in order.** The design passes the tests,
-  contains no duplication, reveals intent, and has the fewest elements, in that
+  reveals intent, contains no duplication, and has the fewest elements, in that
   order. Minimality is the fourth rule, not the first. A system that is minimal but
-  unreadable is not simple.
+  unreadable is not simple. *(wiki: beck-s-four-rules-of-simple-design, simplicity-vs-ease, incremental-design)*
 - **Boring control flow.** Prefer plain if/else, loops, and early returns to clever
   expression-level tricks. Code that needs a comment to explain what it does is too
   clever. Rewrite it simpler.
@@ -65,14 +72,14 @@ layering; construction and decoupling; testing.
   rationale to the design record (README, ADR, PRD). A comment survives only when
   all three fail and the code reads as removable when it is not. Then it states the
   consequence of removal and nothing else. When unsure, omit. Assume the reader
-  wants no comment.
+  wants no comment. *(wiki: code-comments)*
 - **Never comment to explain your edit.** A note about what changed, when, what it
   replaced, or why you chose it is about the change, not the code. It goes in the
   commit message, where the reader looks for it. This applies to every file you
   touch, including config, data, and YAML frontmatter. Before typing one, confirm
   the format has comments at all. JSON does not.
 - **Move understanding from your head into the code.** Renaming and extracting are
-  how the understanding persists. Your head does not.
+  how the understanding persists. Your head does not. *(wiki: refactoring-fowler-2018)*
 - **Never the `Impl` suffix.** `FooImpl` says nothing. Name a class for what it is:
   the technology, strategy, or source (`SlackNotifier`, `OtelProbe`,
   `PostgresUserRepository`). If the only thing distinguishing the class from its
@@ -92,7 +99,7 @@ layering; construction and decoupling; testing.
   whose honest explanation is that a tool could not cope costs more than the larger
   change that needs no exception.
 - **Goal-driven TDD.** Tests are written before the implementation. The loop and
-  its green-step tactics are the testing skill's vocabulary.
+  its green-step tactics are the testing skill's vocabulary. *(wiki: canon-tdd, growing-object-oriented-software-guided-by-tests, test-driven-development)*
 - **Leverage the type system.** Use it to its fullest. Avoid escape hatches that
   bypass compile-time checks. Which token counts as an escape hatch is per-language,
   so take the list from the language file. Do not sniff fields on opaque values to
@@ -118,7 +125,7 @@ For applications with meaningful domain or integration complexity, use
 Domain-Driven Design and hexagonal architecture to keep boundaries explicit and
 dependencies pointing inward. The domain depends on nothing. Use cases depend on the
 domain. Adapters depend on use cases. Simpler programs may use simpler structures
-when contracts and testability remain clear.
+when contracts and testability remain clear. *(wiki: hexagonal-architecture, clean-architecture, layered-architecture-ddd, domain-driven-design)*
 
 A DI lookup key is not the type arrow these rules describe. Where a language file
 has the consumer name its adapter as a DI token, the token is a lookup key. The
@@ -132,10 +139,10 @@ developmental coupling types. A dependency cycle it produces is still reportable
 
 - Entities are pure structural types holding business logic and core data. No raw
   database schemas, framework specifics, or wire formats leak in. Lightweight
-  framework annotations are acceptable when they introduce no heavy coupling.
+  framework annotations are acceptable when they introduce no heavy coupling. *(wiki: entity-ddd, domain-model)*
 - **Behavior lives with data.** An entity that holds attributes with the real logic
   in services is the anemic domain model. Per-aggregate behavior belongs on the
-  aggregate. The repository persists. The service orchestrates.
+  aggregate. The repository persists. The service orchestrates. *(wiki: anemic-domain-model)*
 - **Explicit construction.** Entities map properties explicitly, never through bulk
   merges or reflection-based assignment. This keeps unexpected payload parameters
   and persistence-layer fields out of the domain.
@@ -144,14 +151,14 @@ developmental coupling types. A dependency cycle it produces is still reportable
   source translates into canonical properties at its boundary. Extract a
   source-specific mapper only under the mapper criteria below. Active Record fails
   in exactly this way: refactoring either the object or the schema forces the other
-  to follow.
+  to follow. *(wiki: active-record, anemic-domain-model)*
 
 ### Application layer
 
 - Services and use cases orchestrate business rules. They consume parsed and
   validated inputs, execute the core logic, and delegate I/O and side effects to
   abstracted dependencies. The application layer coordinates. It does not contain
-  domain logic.
+  domain logic. *(wiki: application-services, domain-layer)*
 - **Authorization is a boundary concern.** Whether this caller may perform this
   operation is resolved before the use case runs, in one place per route group. It
   is not re-derived inside domain logic and never left to the view. A use case that
@@ -168,20 +175,20 @@ developmental coupling types. A dependency cycle it produces is still reportable
   or a contract neither side owns, puts it in a third interface-only package.
   Re-run that test when a second consumer appears. Do not extract a port at all
   until you need to break a dependency or substitute an implementation. A test that
-  needs a Fake is that need. An interface per class is overhead, not design.
+  needs a Fake is that need. An interface per class is overhead, not design. *(wiki: separated-interface, dependency-inversion-principle)*
 - **Framework-agnostic constructors.** Constructors accept pure dependencies, parsed
   primitives or specific interfaces, never the DI framework's own types. Factory
   methods or DI module declarations adapt the container to the clean constructor.
-  Objects must be constructible in tests without the full DI container.
+  Objects must be constructible in tests without the full DI container. *(wiki: dependency-inversion-principle)*
 - **Defensive networking.** Bound external calls with deadlines or cancellation.
   Translate native failures into stable application or port errors. Use domain
-  errors only for domain outcomes.
+  errors only for domain outcomes. *(wiki: release-it-nygard-2018)*
 - **Safe parsing at boundaries.** Treat the edges as strictly untrusted. Use schema
   validation for environment configuration, incoming request payloads, and external
   responses. Raw, unvalidated external data never crosses into the domain. A value
   can satisfy its schema and still be hostile: a well-formed URL that resolves to
   link-local or internal address space, a valid relative path that escapes its
-  root. Shape is not destination. Validate both.
+  root. Shape is not destination. Validate both. *(wiki: clean-boundaries)*
 
 ### Mappers and DTOs
 
@@ -190,21 +197,22 @@ developmental coupling types. A dependency cycle it produces is still reportable
 - **Anti-corruption layer at integration boundaries.** Do not let external models
   contaminate yours. Extract a mapper when the translation is non-trivial, reused,
   independently tested, or protects the domain from an external model. A small
-  local pure conversion is fine otherwise.
+  local pure conversion is fine otherwise. *(wiki: anti-corruption-layer, data-object-anti-symmetry)*
 
 ### Error translation at boundaries
 
 - A thin translation layer sits between infrastructure and application errors.
   Repositories and adapters translate ORM, HTTP, and driver failures into stable
   port errors. Business logic never handles infrastructure-specific types. Domain
-  errors remain reserved for domain outcomes.
+  errors remain reserved for domain outcomes. *(wiki: clean-boundaries)*
 
 ## Construction and decoupling
 
 - **Tell, don't ask.** Tell objects what you want done in terms of the role the
-  neighbor plays. Do not ask for their internals and decide for them. Querying
+  neighbor plays. Do not ask for their internals and decide for them. It is the
+  corollary to the Law of Demeter and the antidote to feature envy. Querying
   values, collections, and factories is fine. The rule applies to objects with
-  identity and behavior, not to values.
+  identity and behavior, not to values. *(wiki: coupling, growing-object-oriented-software-guided-by-tests)*
 - **One shape per class.** A data structure exposes data and carries no behavior. An
   object hides data behind behavior. A class that does both is the worst of both,
   and callers split into camps that break its invariants. Field chains through
@@ -215,7 +223,7 @@ developmental coupling types. A dependency cycle it produces is still reportable
 - **Event-driven integration across domains when the requirement calls for it.** Use
   events or messaging for asynchronous delivery, independent ownership, or
   decoupled evolution. Prefer direct orchestration when immediate consistency and a
-  single owner make it simpler.
+  single owner make it simpler. *(wiki: event-sourcing, responsibility-layers)*
 - **Control non-deterministic side effects.** Pass clocks, network clients, and
   random or ID generators explicitly when tests, lifecycle, or replacement require
   control. Production wiring uses the real collaborator. Tests use a deterministic
@@ -225,13 +233,13 @@ developmental coupling types. A dependency cycle it produces is still reportable
   infrastructure telemetry stays at the adapter boundary.
 - **Put domain behavior with the model it governs.** Use a class, value object,
   module, or pure function according to the language and the required state. Avoid
-  service objects that manipulate anemic records.
+  service objects that manipulate anemic records. *(wiki: anemic-domain-model)*
 - **Generic utilities carve-out.** Truly generic utilities (`clamp`, `slugify`, pure
   math) may be shared. Domain-specific computations stay with their domain even
   when implemented as pure functions.
 - **Inject side-effecting or replaceable dependencies.** Constructor injection
   exposes I/O and runtime collaborators. Pure stateless helpers may be called
-  directly. Wrapping them adds a seam without adding control.
+  directly. Wrapping them adds a seam without adding control. *(wiki: dependency-inversion-principle)*
 - **Pass meaning-selecting options explicitly.** Where an option or flag controls
   how the callee interprets an argument (a parse or evaluation mode, a format, a
   protocol), state it at the call site even when the default is the value you
@@ -248,7 +256,7 @@ developmental coupling types. A dependency cycle it produces is still reportable
   (`clamp(v, lo, hi)`, `divCeil(n, d)`).
 - **YAGNI and orthogonality.** Design for the current need, not the hypothetical
   future. Speculative generality is a code smell. Scattered edits for one logical
-  change are a coupling signal, not an automatic defect.
+  change are a coupling signal, not an automatic defect. *(wiki: separation-of-concerns)*
 
 ## Testing
 
