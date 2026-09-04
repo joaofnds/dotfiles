@@ -50,17 +50,17 @@ carries the licensed and not-licensed lists across papers. Then, for the specifi
 - **Fails closed on outage.** If `qmd` is unavailable, do not land the claim: drop it,
   or land it marked `(unverified: vault unreachable YYYY-MM-DD)` and say so.
 - **No page is not an outage.** A reachable vault with no page for the source means:
-  read the primary text, record what it established in `references/external-facts.md`,
+  read the primary text, record what it established in the review-instructions skill's external-facts reference,
   and note the vault page owed. A stale page loses only the contradicted field to a live
   primary read; record the supersession there and name the refresh owed.
 
 **The checkable artifact is the citation, not the query.** Every such claim you land
-names its `references/external-facts.md` entry, and that entry names the wiki page it
+names its the review-instructions skill's external-facts reference entry, and that entry names the wiki page it
 came from. A cited claim naming no entry is the defect, whether or not you ran the
-query. `references/external-facts.md` stays self-contained (a reviewer
+query. the review-instructions skill's external-facts reference stays self-contained (a reviewer
 has no vault access); where it and a page disagree, the page's Evidence block wins and
 the entry is re-derived from it, except a field marked *(primary read)*
-(`references/external-facts.md` §Cited sources).
+(the review-instructions skill's external-facts reference, under Cited sources).
 
 ## How to query
 

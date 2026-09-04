@@ -32,7 +32,7 @@ Get boundaries and dependency directions right at this stage and the implementat
 
 Implementation should feel mechanical. If it's hard, go back to §2.
 
-- **Seek the simplest thing that could work.** If two approaches solve it and one is a net deletion, that one wins. Simple is Beck's four criteria in order, `the style skill` §1, where fewest elements ranks fourth. *(See: simplicity-vs-ease, Kent Beck / XP)*
+- **Seek the simplest thing that could work.** If two approaches solve it and one is a net deletion, that one wins. Simple is Beck's four criteria in order, under the style skill's core, Philosophy and mindset, where fewest elements ranks fourth. *(See: simplicity-vs-ease, Kent Beck / XP)*
 - **Work in the smallest coherent steps.** Before each change, predict the observable result; change one variable; run the check; reconcile the result before continuing. Unexpected output invalidates the current model, not the evidence. *(See: small-steps-fast-feedback, empiricism-in-software-engineering)*
 - **Code is a liability.** Every line is future maintenance, a potential bug, a thing to understand. The value is what the code does. When in doubt, delete.
 - **Make the change easy, then make the easy change.** Separate the refactor (no behavior change) from the implement (small, verifiable). *(See: Kent Beck / XP)*
@@ -66,7 +66,7 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 - **Don't fight your tools.** Working around a library at every turn = wrong tool or wrong usage.
 - **An exception is a design decision.** The moment a change needs a suppression, an ignore rule, a file exclusion, a shim, or any other special case to get past a tool, you have left "small fix" and entered design. Stop and enumerate the mechanisms that could express the intent, by reading each tool's actual interface (its options, its configuration schema, its type declarations), never your memory of it, and choose the one that needs no exception. An exception survives only with evidence that every surface that could express the intent was read and none can.
 - **A guard's refusal indicts the change, not the guard.** Linters, type checkers, and tests exist to refuse; a refusal is information about your solution's shape, and the default response is to reshape the solution. Concluding the guard is deficient carries the same evidence bar as any negative claim, and even then the remedy is fixing, upgrading, or reporting the guard, never quietly narrowing what it sees.
-- **A suppression's price is not its diff size.** One line whose honest explanation is "a tool couldn't cope" costs more than the larger change that needs none. Where the larger change widens the scope the user named, `your always-loaded instructions` §Autonomy governs the call.
+- **A suppression's price is not its diff size.** One line whose honest explanation is "a tool couldn't cope" costs more than the larger change that needs none. Where the larger change widens the scope the user named, your always-loaded instructions govern the call, under Acting.
 - **Trace the full blast radius.** List every place the change affects. Flag incomplete fixes explicitly; don't ship silently.
 - **"Tests pass" ≠ "approach is right."** Verification confirms behavior, not design. (For agent-specific verification failure modes, see §6.)
 - **Feedback speed is everything.** Every speedup compounds. TDD, CI, trunk-based, fast monitoring all exist to shorten the loop. *(See: test-driven-development, continuous-integration, trunk-based-development)*

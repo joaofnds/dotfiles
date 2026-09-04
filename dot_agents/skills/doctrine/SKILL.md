@@ -19,7 +19,7 @@ The text is addressed to João: "your" there means his. Every line names, in
 parentheses, the page of his wiki (`~/code/wiki`) it comes from. When a line reads
 ambiguous, that page is the authority.
 
-Two references sit beside it, in this directory:
+Three references sit beside it, in this directory:
 
 - [references/engineering-judgment.md](references/engineering-judgment.md), how a
   problem is understood, a solution designed, and work evaluated, with the

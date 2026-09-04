@@ -128,5 +128,5 @@ framework-agnostic constructors and DI; testing; tooling.
 
 ## Tooling
 
-- Lint and format with the project's configured tools. Always run them after
-  changes.
+- Lint and format with the project's configured tools, and Biome where a project
+  configures none. Always run them after changes.

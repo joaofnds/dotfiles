@@ -9,6 +9,15 @@ Work that is independent and sizeable goes to a sub-agent while you keep working
 Before spawning, check whether an agent you already ran holds the context;
 continuing it is often cheaper than a fresh spawn.
 
+## The two shapes
+
+Two shapes, picked per spawn. When you need the result before you can continue, spawn
+one agent in the foreground and its report arrives in that turn's tool result.
+Otherwise spawn in the background, whether it is one agent or a fan-out of several,
+and each report arrives on its own notification. The selector is needing the result
+now, not the count: a single agent you are not waiting on runs in the background,
+same as a fan-out member.
+
 ## A review spawn is read-only
 
 A general agent inherits the editing and shell tools, and the spawn call has no

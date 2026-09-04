@@ -48,6 +48,9 @@ A refusal is not an error to route around. Report the blocked operation and what
 unblocks it: check the criterion with evidence, close the dependency, create the
 file first.
 
+Given no card where the work needs one, create it in the column the work is
+entering, unless the skill running says otherwise.
+
 ## The card is the record
 
 The task's own card holds its documents. The next session reads only the card. A

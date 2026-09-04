@@ -146,6 +146,9 @@ in this repo" does not make a finding a note. A real defect whose trigger resist
 probing, a race, a production-only configuration, a third-party response you cannot
 induce, is escalated with the probe you could not run.
 
+Deferred work is not a finding, and takes the same dispositions when a closeout lists
+it, with a line of reason for the deferral in place of the trigger.
+
 A reviewer's severity words rank impact and say nothing about whether a finding is a
 defect. Map them: its top word always names one; its middle word names one where its
 ladder ranks defect impact, and where the ladder ranks friction instead, the revert

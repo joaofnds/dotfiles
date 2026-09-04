@@ -64,6 +64,12 @@ instruction file makes that is not listed there is unaudited: treat it as a mech
 argument and never cite it as measured. Recognized failure modes are named in
 [references/failure-modes.md](references/failure-modes.md).
 
+A rule is complete in place: the reader complies using only the text in front of
+them, and no rule leans on an unopened file for its justification. Two exceptions,
+material the reader must open to act, a checklist to run or a catalog to pick from,
+and a claim about outside facts, which names the entry in the external-facts
+reference where its evidence lives.
+
 Cite by heading, never by section number, since headings move and nothing updates the
 pointer. Carry the heading's own words. Where the target is a bolded rule label rather
 than a heading, name the label the same way.

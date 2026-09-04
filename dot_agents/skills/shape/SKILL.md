@@ -41,6 +41,23 @@ Write acceptance as things you will directly observe when the work is done: a te
 that fails now and will pass, a command and its expected output, a screen in a state.
 "Works" is not an observation. This list becomes `build`'s test list.
 
+## Pick the approach, then harden it
+
+Where more than one approach is viable, survey them before picking. Question the
+premise first, since the best fix is often the one that makes the problem
+irrelevant. Then set out each option with what it costs and what it buys, and say
+plainly when only one survives the evidence. Two or three is the usual number.
+
+Then pick, and interrogate the one you picked until it holds: where it fails, what
+it assumes, what it costs to reverse. A survey that leans without deciding leaves
+the choice to the session that builds, which is the session with the least context
+for it. Record the options and the reason the winner won, so a later session
+reopening the question starts from the argument rather than from scratch. When the
+build breaks an assumption the pick rested on, the approach is reopened here rather
+than pushed through.
+
+Only one sane way to build it means no survey. Say that and move on.
+
 ## Plan only what will move
 
 Plan where the decision is likely to be revisited: the data model, interfaces between
