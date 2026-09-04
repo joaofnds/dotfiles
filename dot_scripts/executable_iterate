@@ -13,9 +13,11 @@ step's skill. ITERATE_SESSION_BUDGET caps each session in dollars (default 10).
 Exit codes: 0 done, 1 refused or failed, 2 a stage left a question for João,
 3 the stop file .iterate-stop is present, 4 the board has no goal.`;
 
-const budget = process.env.ITERATE_SESSION_BUDGET ?? "10";
 const stopFile = ".iterate-stop";
-const skillFor = { "To Do": "shape", Shape: "shape", Build: "build", Review: "review", Done: null };
+const cardPattern = /^[A-Z]+-[0-9]+(\.[0-9]+)?$/;
+const queuePattern = /^\s*\[?\w*\]?\s*([A-Z]+-[0-9]+(?:\.[0-9]+)?) - /m;
+const sessionCap = 6;
+const skillFor = { "To Do": "shape", Shape: "shape", Build: "build", Review: "review" };
 
 class Exit extends Error {
   constructor(code, message) {
@@ -28,11 +30,36 @@ function say(message) {
   console.error(message);
 }
 
+function cardId(value) {
+  if (!cardPattern.test(value)) throw new Exit(1, `${value} is not a card id`);
+
+  return value;
+}
+
+function sessionBudget() {
+  const value = process.env.ITERATE_SESSION_BUDGET || "10";
+  if (!(Number(value) > 0)) throw new Exit(1, `${value} is not a session budget in dollars`);
+
+  return value;
+}
+
+async function tool(run, what) {
+  try {
+    return await run();
+  } catch (error) {
+    throw new Exit(1, `${what}: ${error.message}`);
+  }
+}
+
 async function session(skill, card) {
   const prompt = card ? `/${skill} ${card}` : `/${skill}`;
   say(`== ${prompt}`);
 
-  const out = await $`claude -p ${prompt} --dangerously-skip-permissions --max-budget-usd ${budget} --output-format json`.json();
+  const budget = sessionBudget();
+  const out = await tool(
+    () => $`claude -p ${prompt} --dangerously-skip-permissions --max-budget-usd ${budget} --output-format json`.json(),
+    `the ${skill} session failed`,
+  );
 
   say(out.result);
   say(`   turns ${out.num_turns} cost ${out.total_cost_usd} session ${out.session_id}`);
@@ -40,7 +67,7 @@ async function session(skill, card) {
 }
 
 async function card(id) {
-  const text = await $`backlog task view ${id} --plain`.text();
+  const text = await tool(() => $`backlog task view ${id} --plain`.text(), `reading ${id} failed`);
   const field = (name) =>
     text
       .split("\n")
@@ -55,20 +82,22 @@ function guardStop() {
   if (existsSync(stopFile)) throw new Exit(3, "stop file present");
 }
 
-async function runCard(id) {
-  const first = await card(id);
-  if ((first.status === "Build" || first.status === "Review") && first.assignee) {
-    throw new Exit(1, `${id} is held in ${first.status} by ${first.assignee}`);
+async function refuseHeldCard(id) {
+  const { status, assignee } = await card(id);
+  if ((status === "Build" || status === "Review") && assignee) {
+    throw new Exit(1, `${id} is held in ${status} by ${assignee}`);
   }
+}
 
-  for (;;) {
+async function runCard(id) {
+  for (let sessions = 0; ; sessions += 1) {
+    if (sessions === sessionCap) throw new Exit(1, `${id} passed the ${sessionCap} session cap without reaching Done`);
+
     const before = (await card(id)).status;
+    if (before === "Done") return sessions;
+
     const skill = skillFor[before];
-    if (skill === undefined) throw new Exit(1, `unknown status: ${before}`);
-    if (skill === null) {
-      say(`${id} is Done`);
-      return;
-    }
+    if (!skill) throw new Exit(1, `unknown status: ${before}`);
 
     guardStop();
     await session(skill, id);
@@ -79,18 +108,20 @@ async function runCard(id) {
 }
 
 async function pick() {
-  const list = await $`backlog task list --ready --sort priority --plain`.text();
-  return list.match(/[A-Z]+-[0-9.]+/)?.[0] ?? "";
+  const list = await tool(() => $`backlog task list --ready --sort priority --plain`.text(), "reading the queue failed");
+
+  return list.match(queuePattern)?.[1] ?? "";
 }
 
 async function boardHasGoal() {
-  const list = await $`backlog milestone list`.text();
+  const list = await tool(() => $`backlog milestone list --plain`.text(), "reading the board's goal failed");
+
   return /Active milestones \([1-9]/.test(list);
 }
 
 async function treeIsClean() {
-  const status = await $`git status --porcelain`.text();
-  return status.split("\n").every((line) => line === "" || line.endsWith(` ${stopFile}`));
+  const status = await tool(() => $`git status --porcelain`.text(), "reading the tree failed");
+  return status.split("\n").every((line) => line === "" || line === `?? ${stopFile}`);
 }
 
 async function main(argument) {
@@ -100,9 +131,10 @@ async function main(argument) {
   }
 
   guardStop();
+  sessionBudget();
   if (!(await treeIsClean())) throw new Exit(1, "the tree is not clean");
 
-  let id = argument;
+  let id = argument ? cardId(argument) : "";
   if (!id) {
     if (!(await boardHasGoal())) throw new Exit(4, "the board has no goal");
     await session("triage");
@@ -114,11 +146,19 @@ async function main(argument) {
 
     const today = new Date().toISOString().slice(0, 10);
     const bet = `Bet, ${today}: picked first from the ready queue by iterate. The newest triage doc's queue entry for it is the bet.`;
-    await $`backlog task edit ${id} --append-notes ${bet}`.quiet();
+    await refuseHeldCard(id);
+    await tool(() => $`backlog task edit ${id} --append-notes ${bet}`.quiet(), `writing the bet on ${id} failed`);
     say(`picked ${id}`);
+  } else {
+    await refuseHeldCard(id);
   }
 
-  await runCard(id);
+  const sessions = await runCard(id);
+  if (sessions === 0) {
+    say(`${id} was already Done`);
+    return;
+  }
+
   guardStop();
   await session("reflect", id);
 }
