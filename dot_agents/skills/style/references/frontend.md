@@ -3,7 +3,7 @@
 Stack-specific rules for building UI, on top of core.md and typescript.md.
 Framework-agnostic by default. The primary stack is Next.js with Tailwind, the
 secondary is Tauri with Svelte. When a rule is framework-specific it says so. These
-conventions are the floor under all UI work.
+conventions are the floor under all UI work, ratified direction or not.
 
 Contents: tokens; spacing; type; icons; component primitives; accessibility floor;
 responsive; framework-specific.

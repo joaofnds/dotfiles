@@ -258,7 +258,8 @@ rules, plus one Go-specific rule that lives only here.
   project's AGENTS.md wins and the directory is debt. Say which you followed.
 - **One row, one named test** (the testing skill's parameterized rule). In a
   Ginkgo suite that is `DescribeTable` plus one `Entry` per row. In a plain
-  `testing` package it is `t.Run`.
+  `testing` package it is `t.Run`. Either way the row's name is the test's name,
+  so the failure line identifies the input.
 - **Fakes of owned ports are the default double**, hand-written to the testing
   skill's Fake contract, with the interface check as a compile-time assignment.
   `mock.go` from mockgen is permitted only under that skill's mock escape hatch.

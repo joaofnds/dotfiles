@@ -120,9 +120,11 @@ framework-agnostic constructors and DI; testing; tooling.
   the runner the suite already uses wins for new tests in it. A second runner
   alongside the first is worse than either choice. Jest or Japa when the project
   mandates them.
-- **No spy or mock frameworks for domain logic dependencies.** `jest.fn()` and
-  `vi.fn()` are the testing skill's banned framework mocks; author Fakes to its
-  contract instead, reset in lifecycle hooks, one-test state local.
+- **No spy or mock frameworks for domain logic dependencies.** Never `jest.fn()`
+  or `vi.fn()` there; they are the testing skill's banned framework mocks. Author
+  an explicit Fake to its contract instead, such as a `FakeHTTPService` that
+  records the requests it received and pops predefined responses, reset in
+  lifecycle hooks, one-test state local.
 
 ## Tooling
 

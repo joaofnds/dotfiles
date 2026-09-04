@@ -253,6 +253,7 @@ developmental coupling types. A dependency cycle it produces is still reportable
 
 - Testing discipline lives in the testing skill. Load it for any task that touches
   tests, and it wins over this skill on test matters; the doctrine wins over both.
+  Its `references/checklist.md` is the pre-commit checklist.
 - Treat auto-generated files (Swagger clients, DB schema types, GraphQL codegen,
   mock files) as strictly read-only. Never modify them manually. Re-run the
   generator.
