@@ -79,7 +79,9 @@ problems; do not silence test pain with more mocks, the pain is the signal.
   row.** Never loop assertions inside one body: a failure on row three will not
   say it was row three, and the first failing row hides the rest. One row, one
   test, one name, one assertion path. The primitive comes from the project's
-  framework (the style skill's language files name the spellings).
+  framework rather than from the language: `it.each` in Jest and Vitest,
+  `DescribeTable` with one `Entry` per row in Ginkgo, `t.Run` subtests in Go's
+  `testing`.
 
 ## Assertions
 
@@ -116,7 +118,8 @@ problems; do not silence test pain with more mocks, the pain is the signal.
   repeated in three or more tests becomes a named custom assertion
   (`expectValidUser(user)`, `expectHealthOK(response)`).
 - When changing untested legacy behavior, read
-  [characterization.md](characterization.md). Not for greenfield code.
+  [characterization.md](characterization.md). Not for greenfield code, and never
+  let known-wrong behavior become the permanent contract.
 
 ## Smells at this layer
 

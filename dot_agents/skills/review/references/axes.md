@@ -115,11 +115,20 @@ which axes apply; this file carries what each axis checks.
 ## Testing
 
 > Testing axis: the test files in the diff and the production code they exercise.
+> Read the changed test files fully. The house discipline is the testing skill at
+> `~/.agents/skills/testing/`, its SKILL.md and the references it routes to; read
+> them before forming a finding, and read `references/builders.md` or
+> `references/characterization.md` before citing either. Tests are code, so the
+> style skill's core and language file apply to them too.
 > Read the subject's public API, the signatures and exported types the tests name;
 > an assertion can't be judged against observable behavior without it. List
-> harness, driver, and Fake definitions you read as support files.
-> The repo's concrete stack binds. Its runner, assertion library, layout, and
-> double technology are never findings, and neither is an existing suite's runner.
+> harness, driver, and Fake definitions you read as support files. A coverage
+> statement is static: "no test in the examined files exercises X", never "X is
+> untested" across a codebase you did not read.
+> The repo's concrete stack binds. Read its instructions' testing section when it
+> has one. Its runner, assertion library, layout, bootstrap, shared test
+> utilities, and double technology are never findings, and neither is an existing
+> suite's runner.
 > When you inferred the stack from the suite instead of reading it in the repo's
 > instructions, say so. You judge what the test says, and whether each double is
 > the right role for its collaborator; that applies to the chosen technology too.
@@ -128,14 +137,15 @@ which axes apply; this file carries what each axis checks.
 > and teardown; don't demand `reset()` on a Fake whose container is rebuilt per
 > suite, and treat arrange-in-`beforeEach` as that suite's arrange phase. The
 > license covers the mechanism, not its location: a dependency graph hand-assembled
-> in the test file is a finding.
+> in the test file is a finding, however conventional it is in that repo.
 > Settled rulings, not to be re-litigated: classical wins over mockist, so never
 > "this should mock its collaborators". The unit is a behavior, not a class, so a
 > multi-collaborator test without I/O is not under-isolated. Never demand a
 > Builder, DSL helper, or custom assertion without citing repeated setup sites
 > already present, and check the house test utilities first. Never propose an idiom
 > the repo's language conventions don't sanction. Structure inside test files is
-> yours, named in the testing vocabulary, not Fowler's.
+> yours, named in the testing vocabulary (Obscure Test, Free Ride, the fixture and
+> DSL rules), not Fowler's. Cite Test Code Duplication when no other smell fits.
 > For each behavior a test claims to cover, ask what could break in the subject
 > without changing the test's outcome. When the answer is the named behavior
 > itself, that is your strongest finding: the test reports safety it does not
@@ -156,7 +166,8 @@ which axes apply; this file carries what each axis checks.
 > Every finding names the pillar the test forfeits and the pillar the fix buys
 > back: regression protection, refactoring resistance, fast feedback,
 > maintainability. Maintainability alone earns only an aggregated entry with a site
-> list. Give the fix in the target's own framework idiom. Never chase coverage.
+> list, and a lone rename whose only cost is a reader's mild friction earns no
+> finding of its own. Give the fix in the target's own framework idiom. Never chase coverage.
 > Recommend a missing test only for a named behavior no examined test would catch
 > breaking, and state the mutation that would go unnoticed. Never recommend one for
 > a line, a branch, a percentage, or a private method.

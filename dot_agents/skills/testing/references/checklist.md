@@ -32,8 +32,8 @@ shared state reset.
 ## Architecture and harness
 
 Walk the [architecture](architecture.md) rules: Harness and Driver rather than
-hand-wiring; raw or error-returning operations with at most one success
-convenience; Fake reset and an isolation mechanism per managed dependency;
+hand-wiring; raw or error-returning operations, with a success convenience only
+where it removes repeated boilerplate; Fake reset and an isolation mechanism per managed dependency;
 `afterAll` teardown; real managed and faked unmanaged dependencies; outside-in
 for a cross-boundary slice and the narrowest observable layer for local behavior;
 whether the test earns its pyramid layer or could run one layer down.
@@ -52,8 +52,11 @@ equality with the containment escape; the protocol-boundary assertion order.
 
 Did I listen to test pain and fix a design smell, or work around it with more
 mocks? Walk the smell and anti-pattern lists at the bottom of all three reference
-files, and check that the test reads at the domain level, not the framework
-level.
+files, Test Code Duplication among them, and check that the test reads at the
+domain level, not the framework level. Am I in an anti-pattern: testing a private
+method, chasing coverage, rebuilding the DI container in every `beforeEach`,
+sleep-based waits, branching on environment inside the test, asserting on log
+output?
 
 ## Mutation claims
 
