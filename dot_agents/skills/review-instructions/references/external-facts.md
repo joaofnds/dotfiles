@@ -1,19 +1,23 @@
-# External Facts Behind Instruction Artifacts
+# Probed Facts Behind Instruction Artifacts
 
-The audited evidence store for claims instruction artifacts make about outside
-sources: the harness, vendor documentation, papers. A numeric or outcome claim in an
-instruction artifact that is not listed here is unaudited: treat it as a mechanism
-argument and never cite it as measured. Cite an entry as `references/external-facts.md` §<heading>. A reviewer has no web or vault access, so re-verification is the author's job; git history holds when each entry changed and the
-full narrative of past passes. Record an entry only with its verifying check (probe or
-source read) run in the recording session; a claim inherited from a spec, a report, or
-memory is re-checked before it enters.
+What this machine's harness and tools were observed to do, each entry with the check
+that verified it and the trigger that re-verifies it.
+
+A numeric or outcome claim an instruction artifact makes that is not listed here is
+unaudited. Treat it as a mechanism argument and never cite it as measured. Cite an entry as `references/external-facts.md` §<heading>.
+
+Record an entry only with a check you ran in the recording session, and re-check a
+claim inherited from a report or from memory before it enters. Query the `prompts`
+wiki for claims from papers and vendor documentation, since a page there carries the
+source's own words and its evidence block.
 
 ## Harness mechanics
 
 Read from the live memory, skills, sub-agents, settings, hooks, and workflows
-references at code.claude.com; last full pass on CLI 2.1.222. **Re-verify on each
-Claude Code or model release; the launch-flag fact also on a desktop app release.** Facts marked *(probe)* are local observations, not
-documentation, and re-verify the same way.
+references at code.claude.com, last full pass on CLI 2.1.222. **Re-verify on each
+Claude Code or model release, and the launch-flag fact on a desktop app release
+too.** Facts marked *(probe)* are local observations rather than documentation, and
+re-verify the same way.
 
 Load limits and delivery:
 
@@ -111,16 +115,35 @@ mid-session.
 
 ## backlog.md CLI
 
-Probes against backlog.md v1.50.1 at `/opt/homebrew/bin/backlog`; the final bullet
-is a git probe with its own trigger. **Re-verify on any backlog.md upgrade.**
+Probes against backlog.md v1.50.1 at `/opt/homebrew/bin/backlog`, with the
+directory bullets re-probed at v1.51.0. The final bullet is a git probe with its
+own trigger. **Re-verify on any backlog.md upgrade.**
 
 - `backlog init` writes a `<CRITICAL_INSTRUCTION>` workflow block into the repo's
-  `AGENTS.md`. A hand-rolled board (mkdir `backlog/{tasks,docs}` plus a config file)
+  `AGENTS.md`. A hand-rolled board (the board's `{tasks,docs}` plus a config file)
   is fully functional without init.
 - Transitions are ungated: the CLI silently accepts `-s Done` with unchecked
   acceptance criteria, forward moves while a dependency is open, and nonexistent
   `--ref`/`--doc` paths.
-- `backlog doc create` rejects paths outside `backlog/docs/`.
+- A root `backlog.config.yml` with a `backlog_directory` key moves the whole board,
+  docs and decisions included, to that path, and the CLI finds it from any
+  subdirectory. The same key inside the board's own `config.yml` is ignored, leaving
+  the board at `backlog/` *(probe, 1.51.0)*.
+- `backlog init --backlog-dir` with a custom path defaults the config to the root and
+  refuses `--config-location folder`. It also refuses `--agent-instructions none`
+  combined with `--integration-mode none` *(probe, 1.51.0)*.
+- `backlog doc create` rejects paths outside the board's `docs/` directory.
+- `backlog milestone` is a first-class object with `add`, `list`, `rename`, `remove`,
+  and `archive`, and a board holds any number of them. A milestone carries an optional
+  description and due date, and `task create -m` and `task list -m` assign and filter by
+  closest case-insensitive title match *(probe, 1.51.0)*.
+- A milestone's completion is derived from the tasks assigned to it, so it leaves the
+  active set of `milestone list` once every one of them is Done. A milestone with no
+  tasks stays active at `0/0 done` *(probe, 1.51.0)*.
+- `--append-notes`, `--append-plan`, and `--append-final-summary` accumulate within a
+  call and across calls, and `--comment` appends a discussion comment.
+  `task list --plain` lists every column, Done included. `decision create` fails with
+  ENOENT when the board has no `decisions/` directory *(probe, 1.51.0)*.
 - `task edit --notes` replaces the whole implementation-notes field, `--append-notes`
   appends; `--doc` and `--dep` likewise replace the whole field and have no additive
   sibling, so a second call drops the first call's values; `task create` without `-s`
@@ -129,7 +152,7 @@ is a git probe with its own trigger. **Re-verify on any backlog.md upgrade.**
   as a blank-titled row.
 - Doc and task IDs allocate max+1, so hand-assigned IDs are safe.
 - No global or user-level config exists; `backlog config` is project-scoped.
-- The CLI re-serializes `backlog/config.yml` during read operations (checksum and
+- The CLI re-serializes the board's config file during read operations (checksum and
   line count change on a `task list`). Raw-edited values of known keys survived
   re-serialization in fresh-board probes, but one live-board raw edit
   (`zero_padded_ids`) was later found reverted, cause unpinned: prefer
@@ -138,10 +161,20 @@ is a git probe with its own trigger. **Re-verify on any backlog.md upgrade.**
   the card fields (`title`, `description`, `status`, `labels`, `dependencies`,
   `acceptanceCriteria[].checked`, `subtasks`, `documentation`, `implementationNotes`,
   `finalSummary`, `parentTaskId`) sit under `task`.
-- Git, not backlog, but load-bearing for bootstrap: under a `backlog/` ignore
-  pattern, `git check-ignore -q backlog` exits 1 while nothing exists on disk;
-  probing the child path `backlog/config.yml` exits 0 *(probe, git 2.55.0;
-  re-verify on a git upgrade)*.
+- Git, not backlog, but load-bearing for the ignored-board check: under a `.boris/`
+  ignore pattern, `git check-ignore -q .boris` exits 1 while nothing exists on disk,
+  and probing a child path exits 0 *(probe, git 2.55.0; re-verify on a git upgrade)*.
+
+## chezmoi source resolution
+
+Probes against the dotfiles source at `~/code/dotfiles`. **Re-verify on a chezmoi
+upgrade or a change to the rendered symlinks.**
+
+- `~/.claude/skills` is a symlink to `~/.agents/skills`, and `chezmoi source-path`
+  answers `not managed` with exit 1 for a path under the symlink while resolving the
+  same file under `~/.agents/`. A session that probes the `~/.claude` path reads the
+  answer as license to edit the rendered tree, and `chezmoi apply` erases the edit
+  *(probe, chezmoi 2.72.0)*.
 
 ## Deprecated model mechanics
 
@@ -167,127 +200,3 @@ these.
 - **Show-your-thinking instructions** can trigger the `reasoning_extraction` refusal
   category on Fable 5 and Mythos 5 only, with elevated fallback to Opus 4.8; read
   structured `thinking` blocks instead. Not carried by Opus 5.
-
-## Cited sources, and what each licenses
-
-Each entry names its `prompts`-vault page; the page's Evidence block wins over the
-summary here, except a field of an entry marked *(primary read)*, taken from the primary
-text and outranking the page on that field until the page is refreshed. Every source
-below supports a mechanism argument unless its entry states a measurement.
-
-Measured nothing (vendor docs, practitioner guides: re-check per release; last
-checked against the Opus 5 / Fable 5 release pages):
-
-- *Writing Great Skills (Pocock)*: practitioner guide, pinned to a commit; upstream
-  was renamed and rewritten after the pin, so the pin holds the old text. Backs the
-  keep-side deletion test and the user-invoked description rule only; it states no
-  "skip when" rule.
-- *Anthropic Prompting Best Practices* and *Claude Code Instruction-Artifact Mechanics*
-  *(primary read)*: vendor documentation behind the Harness-mechanics list. Also: place
-  long data above the instruction that consumes it (its "30%" figure names no eval), and
-  one coherent mandate per sub-agent (raw Subagents Reference note). The vendor
-  conflicts with itself on emphasis: the prompting page says dial back "CRITICAL"/"YOU
-  MUST" on current models; the Claude Code sub-agents page still teaches "use
-  proactively" descriptions, and its best-practices page teaches "IMPORTANT"/"YOU MUST"
-  emphasis. The house follows the dial-back side (user-ratified); do not relitigate from
-  the older pages.
-- *AGENTS.md as a Cross-Agent Convention*: a convention; carries adoption only.
-- *The New Rules of Context Engineering (Anthropic 2026)*: six "then vs now"
-  reversals. Its one number (over 80% of the system prompt removed "with no measurable
-  loss") names no eval or method: it licenses "old-model guardrails the model now gets
-  right by judgment are removable", never "cut your corpus". Load-bearing reversals:
-  tool-usage examples constrain exploration (design expressive interfaces instead);
-  tool guidance belongs in tool descriptions, not the system prompt; prefer rich
-  references in code over prose descriptions.
-- *A Field Guide to Claude Fable 5 (Anthropic 2026)*: the judgment-displacement
-  mechanism (too specific → faithful compliance even when wrong; too vague → generic
-  defaults). Single-author experience, zero measurement.
-- *Prompting Claude Opus 5 (Anthropic)*: the per-model page. Its delete-list (explicit
-  verification steps, "double-check" prose, severity filters in review prompts) targets
-  redundant re-check instructions the model now performs unprompted; its "no loss in
-  quality" names no eval. A gate that demands an artifact for an observed failure is a
-  deliberate delta outside that list, and *Prompting Claude Fable 5* prescribes
-  verifier subagents for long runs. Also: lowering effort does not reliably shorten
-  the visible response, so prompt for length explicitly. Behind the subagent caps in
-  §Harness mechanics.
-- *Prompting Claude Fable 5 (Anthropic)*: the per-model page. A brief instruction
-  steers behaviors the model gets right by judgment as effectively as enumerating each
-  case (asserted equivalence, no measurement; a conditional house requirement the model
-  cannot infer is outside it). Instructing evidence-grounded progress claims "nearly
-  eliminated fabricated status reports" in vendor testing: no eval, method, or rate.
-  Fresh-context verifier subagents outperform self-critique on long runs (asserted).
-  Behind the `reasoning_extraction` fact in §Deprecated model mechanics.
-- *Effective Context Engineering for AI Agents (Anthropic 2025)*: "right altitude",
-  minimal-does-not-mean-short, canonical examples over edge-case lists. Its
-  context-rot numbers belong to Chroma's research, not this post.
-- *Building Verification Loops in Claude Code with Skills (Anthropic 2026)*: the
-  fired-probe check (invoke the skill fresh and confirm the new step runs). Stated
-  about skills; extended to sub-agent bodies by argument.
-- *Dynamic Workflows in Claude Code (Anthropic 2026)*: source of the
-  workflow-subagent `acceptEdits` fact; version-annotated and the most volatile source
-  in the vault.
-
-Measured something (papers: quote the split before resting a finding on one):
-
-- *What Prompts Don't Say (Yang et al. 2025)* *(primary read)*: an unspecified
-  requirement was met at over 98% accuracy in only 41.1% of cases; omission cost 22.6%
-  accuracy on average. Requirements followed at 98.7% individually fell to 79.7–85.0%
-  when 19 were specified together: adherence is a budget, and each added requirement
-  taxes the others. Licenses: leaving a requirement to inference is unreliable. By
-  category that same rate was 70.7% for format requirements and 22.9% for conditional
-  ones; 5.9% of unspecified requirements lost over 20% accuracy on a model update, about
-  2× the specified rate. Does not license: that authored scope statements improve
-  compliance: the remedy was never tested in that form.
-- *Coding Agents Are Guessing (Ji et al. 2026)* *(primary read)*: 55.8–67.8% of
-  *acted* runs violated a boundary (27.0–46.3% over all scored runs: quote the
-  denominator). Small/fast models only, no frontier model. Degrading the *target*
-  collapsed acted-run Safe Success 67.9% to 8.6%, while vague *intent* cost far less
-  (50.9% to 29.4%): a missing object leaves nothing to bind the action to. The nearest
-  tested intervention was null: blast-radius cues barely moved asking (42.0% vs 47.1%)
-  or action, and explicit refusal stayed at or below 2.5% in every configuration. Asking
-  does move on underspecification, monotonically with target ambiguity and
-  non-monotonically with intent, while harness and model set its level (the same model
-  asked 31.8% under one harness, 10.5% under another). Does not test explicit
-  out-of-scope declarations.
-- *Semantic Collapse (Richter and Papadakis 2026)* *(primary read)*: models collapse
-  onto a single incorrect interpretation, "coherent but behaviorally misaligned",
-  instead of surfacing ambiguity; detrimental collapse on 10–16% of MBPP, rising up to
-  5.53× under injected underspecification, where it reaches 23–55% of underspecified
-  MBPP tasks. At k=10, 50.3–73.0% of those tasks (function-level codegen; no agentic
-  claim) produced semantically indistinguishable programs across every sample, correct
-  and incorrect collapse together: regenerate-and-compare cannot tell the two apart.
-  Also licenses: inconsistency is a real signal of model uncertainty; its absence is not
-  evidence of correctness.
-- *Self-Consistency (Wang et al. 2022)*: majority voting over sampled reasoning
-  paths improves accuracy only where the final answer comes from a fixed answer set;
-  open-ended output is outside its scope.
-- *Judging LLM-as-a-Judge (Zheng et al. 2023)* *(primary read)*: a default-prompted
-  GPT-4 judge passed wrong answers 14/20; 6/20 with a chain-of-thought judge prompt,
-  3/20 reference-guided. On the similar-answer challenge set with default prompts,
-  first-position bias was 75.0% for Claude-v1, 50.0% for GPT-3.5, and 30.0% for GPT-4
-  (swap consistency 23.8%, 46.2%, 65.0%); the paper's fix is query both orders, tie on
-  disagreement. All judges 2023-era, pre-reasoning. Does not license: the 80%+ agreement
-  figure is a chat-preference rate, not a general reliability certificate for LLM
-  judges.
-
-## Rejected citations: do not restore
-
-A rule ("a schema, vocabulary, or language restriction on the reasoning step costs
-accuracy") was written from a spec's paper summaries, shipped, and reverted the same
-day: zero true positives, one costly false positive. The sources, and why each cannot
-back that rule:
-
-- *Let Me Speak Freely? (Tam et al. 2024)*: 2024 non-reasoning models; found
-  JSON-mode *helps* classification; contested by a matched-prompt re-run. The one
-  clause that holds: performance recovers when unconstrained reasoning precedes
-  constrained output.
-- *Multilingual CoT (Zhao et al. 2025)*: its collapse case is a competence effect in
-  a low-resource language; argues against nothing about English reasoning.
-- *CoT Is Not Explainability (Barez et al. 2025)*: a position paper; its 25% figure
-  is a share of surveyed papers misusing CoT, not an unfaithfulness rate, and its own
-  recommendation is to corroborate CoT, not discard it. **Still permitted:** cited only
-  for what a transcript measurement is *not*. Do not restore the 25% figure.
-- *Concise Reasoning, Big Gains (Wu et al. 2025)*: a CoT-distillation paper; makes no
-  correct-vs-incorrect length claim. The length finding belongs to *Concise Reasoning
-  via RL (Fatemi et al. 2025)*, a PPO/GRPO training artifact licensing no claim about
-  prose style.
