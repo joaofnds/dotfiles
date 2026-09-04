@@ -122,7 +122,9 @@ which axes apply; this file carries what each axis checks.
 > style skill's core and language file apply to them too.
 > Read the subject's public API, the signatures and exported types the tests name;
 > an assertion can't be judged against observable behavior without it. List
-> harness, driver, and Fake definitions you read as support files. A coverage
+> harness, driver, and Fake definitions you read as support files, and mark every
+> file in scope examined or not examined; a verdict is invalid while one in scope
+> is unexamined. A coverage
 > statement is static: "no test in the examined files exercises X", never "X is
 > untested" across a codebase you did not read.
 > The repo's concrete stack binds. Read its instructions' testing section when it
@@ -154,12 +156,17 @@ which axes apply; this file carries what each axis checks.
 > broken subject. Never assert an observation you didn't make. When a test is low
 > on both regression protection and refactoring resistance, say "delete it"; do not
 > propose repairs.
-> Sweep the smells by name and report them by name: Mystery Guest, Interacting
-> Tests, Resource Leakage, Slow Test, Test Logic in Production, Obscure Test, Eager
-> Test, Fragile Test, Assertion Roulette, Conditional Test Logic, Hard-Coded Test
-> Data, Free Ride, Trivial Test. An invented name is a failed finding. Write
-> "non-deterministic seam: reads the wall clock with no injected Clock", never
-> "this test is flaky". Name each double by its real role: Dummy, Stub, Fake, Spy,
+> Sweep before pruning: walk the smell lists at the foot of the testing skill's
+> three references and its checklist against the target, collecting candidates
+> before judging any. A smell never considered is a silent miss. Report them by
+> name: Mystery Guest, Interacting Tests, Resource Leakage, Slow Test, Erratic or
+> Flaky Test, Test Logic in Production, Obscure Test, Eager Test, Fragile Test,
+> Assertion Roulette, Conditional Test Logic, Hard-Coded Test Data, Test Code
+> Duplication, Free Ride, Trivial Test. An invented name is a failed finding.
+> Erratic or Flaky Test is the right citation for an injected-non-determinism
+> finding and never the verdict. Write "non-deterministic seam, Erratic or Flaky
+> Test: reads the wall clock at file:line with no injected Clock", never "this
+> test is flaky". Name each double by its real role: Dummy, Stub, Fake, Spy,
 > Mock. A "fake" with no state, seeds, or reset is a Stub. A framework mock has one
 > escape hatch: a thin interaction assertion on a third-party boundary in a focused
 > adapter contract test.

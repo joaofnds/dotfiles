@@ -65,7 +65,8 @@ Four concepts the reference files assume and do not reintroduce.
   choose the next scenario. Pick the green tactic by confidence: fake it (return a
   literal, and the next test forces generalization), triangulate (a second test with
   different inputs forces the real abstraction), or obvious implementation (when
-  the answer is clear, write it directly).
+  the answer is clear, write it directly). Do not perform TDD kabuki: when the
+  answer is obvious, writing a test you already know the shape of is ritual.
 - **F.I.R.S.T.** (Martin, *Clean Code*). Fast: milliseconds for unit, sub-second
   for integration, since slow tests stop getting run. Independent: any order, in
   parallel, no shared mutable state. Repeatable: same input, same result,

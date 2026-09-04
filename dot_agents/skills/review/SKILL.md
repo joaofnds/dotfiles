@@ -103,6 +103,16 @@ called blocking teaches the reader to ignore the word.
   brief.
 - A refactoring finding measures friction. It is at most should-fix, and only when
   the change created the friction. Otherwise it is a note or a tracked task.
+- A testing finding takes its severity from what the test costs. Blocking: false
+  safety, or production code contaminated by test logic. Should-fix: the test
+  obstructs change or hides defects, which covers interaction assertions on code
+  we own, coupling to implementation detail, a framework mock outside the escape
+  hatch, shared mutable fixtures, a missing reset or teardown, a sleep-based wait,
+  Mystery Guest, Interacting Tests, Resource Leakage, and Slow Test. Note: friction
+  on the next reader, which covers naming, AAA structure, Eager Test, Obscure Test,
+  Free Ride, Assertion Roulette, Hard-Coded Test Data, Trivial Test, and an
+  assertion weaker than the situation allows. Low regression value alone does not
+  block.
 
 Security is part of this pass, with no separate pass later: what untrusted data
 enters, what authority the code exercises, what a hostile input could reach.

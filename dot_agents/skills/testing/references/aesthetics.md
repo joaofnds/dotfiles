@@ -79,7 +79,8 @@ problems; do not silence test pain with more mocks, the pain is the signal.
   row.** Never loop assertions inside one body: a failure on row three will not
   say it was row three, and the first failing row hides the rest. One row, one
   test, one name, one assertion path. The primitive comes from the project's
-  framework rather than from the language: `it.each` in Jest and Vitest,
+  framework rather than from the language, which is a project fact and not a
+  language default: `it.each` in Jest and Vitest,
   `DescribeTable` with one `Entry` per row in Ginkgo, `t.Run` subtests in Go's
   `testing`.
 
@@ -136,6 +137,10 @@ problems; do not silence test pain with more mocks, the pain is the signal.
   state is already there. A new behavior is a new test, even if setup repeats;
   duplication of intent beats conflation of cases.
 - **Conditional Test Logic**: split or parameterize.
+- **Test Code Duplication**: the same setup or assertion knowledge repeated
+  across tests, so one change to the subject means editing many of them. Extract
+  a Builder, a fixture, or a named custom assertion. This is the name to cite
+  when duplication in test files fits no other smell.
 - **Trivial Test**: asserts a language-level assignment. Delete it unless the
   accessor performs behavior or protects a known regression.
 - **`should` in every name**: remove it; the name is a clause describing what
@@ -143,6 +148,9 @@ problems; do not silence test pain with more mocks, the pain is the signal.
 
 ## Anti-patterns
 
+- **Rebuilding the DI container in every `beforeEach`.** The container belongs to
+  the Harness, built once per describe block. Rebuilding it per test pays the
+  whole graph's cost on every case.
 - **Testing private methods.** The urge means the method is a collaborator
   wanting extraction: either it is an implementation detail already covered by
   the public tests, or it is a hidden object to extract and test through its own

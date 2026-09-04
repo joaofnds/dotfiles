@@ -23,8 +23,10 @@ loop is the build skill's loop.
 
 ## Structure and naming
 
-Walk the [aesthetics](aesthetics.md) rules and the SKILL.md vocabulary:
-F.I.R.S.T.; the describe subject; the name form; AAA visible or trivially
+Walk the [aesthetics](aesthetics.md) rules and the SKILL.md vocabulary. Is the
+top-level describe the symbol under test, or the route path for an HTTP endpoint?
+Are the names lowercase, declarative, third-person-present clauses, with no
+"should" and no method-name echoes? Then: F.I.R.S.T.; AAA visible or trivially
 collapsed; one behavior per test; the parameterized primitive rather than an
 assert loop; happy path first; values local unless genuinely shared, with mutable
 shared state reset.
@@ -34,7 +36,7 @@ shared state reset.
 Walk the [architecture](architecture.md) rules: Harness and Driver rather than
 hand-wiring; raw or error-returning operations, with a success convenience only
 where it removes repeated boilerplate; Fake reset and an isolation mechanism per managed dependency;
-`afterAll` teardown; real managed and faked unmanaged dependencies; outside-in
+`afterAll` teardown, since resource leakage across suites is a defect; real managed and faked unmanaged dependencies; outside-in
 for a cross-boundary slice and the narrowest observable layer for local behavior;
 whether the test earns its pyramid layer or could run one layer down.
 
@@ -43,7 +45,8 @@ whether the test earns its pyramid layer or could run one layer down.
 Walk the [doubles](doubles.md) rules and the assertion rules in
 [aesthetics](aesthetics.md): no framework mock on owned code; no third-party mock
 outside the adapter escape hatch; the Fake implements the real interface with
-seeds and reset, injected through DI; the double named for its role; the simplest
+seeds and reset, injected through DI; the double named for its role, Dummy, Stub,
+Fake, Spy, or Mock; the simplest
 verification style that expresses the contract; behavior asserted, not
 implementation; typed errors or sentinels, not message substrings; structural
 equality with the containment escape; the protocol-boundary assertion order.

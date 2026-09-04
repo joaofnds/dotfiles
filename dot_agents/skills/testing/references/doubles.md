@@ -50,7 +50,8 @@ persisted state, or the emitted event.
 
 The most load-bearing rule in this skill: application and domain tests do not
 double third-party classes directly. Wrap the third party in an interface you own
-(`HTTPClient`, `Clock`, `IDGenerator`, `TokenProvider`, `KVStore`, `Queue`), give
+(`HTTPClient`, `Clock`, `IDGenerator`, `UserProvider`, `TokenProvider`, `KVStore`,
+`Queue`), give
 it a real adapter and a Fake, and let tests see only your interface. Never patch
 the library's own function. A focused adapter contract test may use a thin
 third-party Spy when the outbound call itself is the observable contract; see the
