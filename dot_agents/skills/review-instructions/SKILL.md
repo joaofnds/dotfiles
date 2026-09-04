@@ -55,7 +55,20 @@ pages under `platform.claude.com/docs/en/build-with-claude/prompt-engineering/`,
 the skill-authoring page at
 `platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices`, and the
 CLAUDE.md guidance at `code.claude.com/docs/en/best-practices`. A model-behavior
-claim not checked this session is labeled inference in the findings. A model
+claim not checked this session is labeled inference in the findings.
+
+Facts about outside sources, the harness, the vendor's documentation, a paper, live
+in [references/external-facts.md](references/external-facts.md), each with the check
+that verified it and the trigger that re-verifies it. A numeric or outcome claim an
+instruction file makes that is not listed there is unaudited: treat it as a mechanism
+argument and never cite it as measured. Recognized failure modes are named in
+[references/failure-modes.md](references/failure-modes.md).
+
+Cite by heading, never by section number, since headings move and nothing updates the
+pointer. Carry the heading's own words. Where the target is a bolded rule label rather
+than a heading, name the label the same way.
+
+A model
 release also triggers a subtraction-only pass over the instruction files in
 `~/code/dotfiles`, with cut and merge verdicts only.
 

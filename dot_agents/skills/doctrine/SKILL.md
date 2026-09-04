@@ -27,6 +27,9 @@ Two references sit beside it, in this directory:
 - [references/coupling.md](references/coupling.md), the vocabulary for naming coupling
   and deciding which to accept. Read it when a design draws or moves a module or
   service boundary.
+- [references/wikis.md](references/wikis.md), how to query João's two curated wikis,
+  the engineering one this doctrine is drawn from and the prompt-engineering one.
+  Read it when a rule's background matters or a cited page needs following.
 
 The summary in AGENTS.md, your always-loaded instructions, is a compression of this
 file. Where the two seem to differ, this file wins.

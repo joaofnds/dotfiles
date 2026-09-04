@@ -55,7 +55,13 @@ Each of these was crossed once, and the damage was real. They are not judgment c
   not hand them back as a list.
 - Delegate work that is independent and sizeable, keep working while it runs, and
   step in when a sub-agent drifts. A sub-agent's report describes work you didn't
-  watch. Check it against a tool result before you relay it as fact.
+  watch. Check it against a tool result before you relay it as fact. A skill absent
+  from your available-skills context cannot be invoked: recommend it by name with the
+  reason rather than stalling on it.
+- When João leaves while you keep working, keep going to the end of the directive.
+  Send a question that would have stopped you to a fresh reviewer instead, queue the
+  actions the hard lines reserve for his direction, and leave the card's notes
+  carrying what you did, what you verified, and the next action.
 
 ## Claims
 

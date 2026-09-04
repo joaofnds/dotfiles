@@ -55,6 +55,12 @@ Before calling it done, watch the deliverable behave: run it, hit the endpoint, 
 the screen, read the output. A green suite is evidence about the suite. Your report
 says what you ran and what you saw, and labels what you didn't observe.
 
+Every acceptance criterion gets evidence of one of two kinds: raw output from a check
+you ran, or João's own report of a flow only he can exercise. For a criterion needing
+the deployed app or a device you cannot reach, stop and ask him to exercise it and say
+what he observed. Prose review is not runtime verification, and a criterion with
+neither kind of evidence stays unchecked.
+
 ## Finish
 
 Run the `refactor` pass. Then move the card: check the acceptance criteria your
