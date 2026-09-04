@@ -1,6 +1,6 @@
 ---
 name: review
-description: Decides whether a change needs an independent second review, runs it (one round, fresh reviewer, axis briefs read off the diff), verifies every finding against evidence, disposes of each, records them all. Use at the Review column, before shipping anything outward-facing, irreversible, or security-surfaced, and whenever João asks for a review or a full review. A change to instruction files goes to review-instructions instead.
+description: Decides whether a change needs an independent second review, runs it (one round, fresh reviewer, axis briefs read off the diff), verifies every finding against evidence, disposes of each, records them all. Use at the Review column, before work that is outward-facing, irreversible, or security-surfaced, and whenever João asks for a review or a full review. A change to instruction files goes to review-instructions instead.
 ---
 
 # Review

@@ -16,8 +16,7 @@ write that format.
 
 Small commits to main, everything in version control, and a schema change
 compatible in both directions through the transition, because a deploy is not
-atomic and a code rollback does not revert a migration. Done means released,
-and releasing is João's direction to give.
+atomic and a code rollback does not revert a migration. Done means released.
 
 ## Documents
 
