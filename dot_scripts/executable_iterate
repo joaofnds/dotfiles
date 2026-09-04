@@ -47,7 +47,9 @@ async function tool(run, what) {
   try {
     return await run();
   } catch (error) {
-    throw new Exit(1, `${what}: ${error.message}`);
+    const said = [error.stdout?.toString(), error.stderr?.toString()].join("").trim();
+
+    throw new Exit(1, `${what}: ${said || error.message}`);
   }
 }
 

@@ -31,14 +31,14 @@ echo '{"is_error":false,"result":"ok","num_turns":1,"total_cost_usd":0.1,"sessio
 
 const fakeBacklog = `#!/usr/bin/env bash
 case "$* " in
-  "task view "*) echo "Status: $FAKE_GLYPH $(cat "$FAKE_STATUS")"; if [ -n "$FAKE_ASSIGNEE" ]; then echo "Assignee: $FAKE_ASSIGNEE"; fi;;
+  "task view "*) if [ -n "$FAKE_MISSING" ]; then echo "Task $3 not found. Task lookups read only the local working copy."; exit 1; fi; echo "Status: $FAKE_GLYPH $(cat "$FAKE_STATUS")"; if [ -n "$FAKE_ASSIGNEE" ]; then echo "Assignee: $FAKE_ASSIGNEE"; fi;;
   "task list "*) echo "Tasks for MILESTONE-1 (sorted by priority):"; echo "  [HIGH] DOT-1 - a card (To Do)";;
   "task edit "*) echo "$*" >> "$FAKE_EDITS";;
   "milestone list "*) echo "Active milestones ($FAKE_GOALS):";;
 esac
 `;
 
-async function fixture({ stall = "", dirty = false, stop = false, goals = "1", assignee = "", glyph = "○", status = "To Do", budget = "" } = {}) {
+async function fixture({ stall = "", dirty = false, stop = false, goals = "1", assignee = "", glyph = "○", status = "To Do", budget = "", missing = "" } = {}) {
   const directory = await mkdtemp(join(tmpdir(), "iterate-test-"));
   directories.push(directory);
   const bin = join(directory, "bin");
@@ -67,6 +67,7 @@ async function fixture({ stall = "", dirty = false, stop = false, goals = "1", a
     FAKE_STALL: stall,
     FAKE_GOALS: goals,
     FAKE_ASSIGNEE: assignee,
+    FAKE_MISSING: missing,
     FAKE_GLYPH: glyph,
     ITERATE_SESSION_BUDGET: budget,
   };
@@ -166,4 +167,12 @@ test("an already Done card runs no session at all", async () => {
   const result = await run("DOT-1");
   expect(result.calls).toEqual([]);
   expect(result.code).toBe(0);
+});
+
+test("a card the board does not have reports what the board said", async () => {
+  const { run } = await fixture({ missing: "yes" });
+  const result = await run("DOT-1");
+  expect(result.calls).toEqual([]);
+  expect(result.stderr).toContain("not found");
+  expect(result.code).toBe(1);
 });
