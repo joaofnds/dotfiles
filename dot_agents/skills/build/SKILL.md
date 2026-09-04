@@ -7,7 +7,7 @@ description: Implements a shaped task or a directed fix. Test first, small verif
 
 You have a task with acceptance observations, or a directed fix small enough not to
 need shaping. You are turning it into committed, observed behavior. A board task
-starts by claiming its card: status Build, assignee @claude.
+starts by claiming its card, as the board skill says.
 
 Before writing code, read the style skill's core reference plus the file for the
 task's language and stack, under `~/.agents/skills/style/references/`. The house
@@ -22,8 +22,7 @@ the register its "Before you write" section states.
 Take the next item on the test list and run one turn of the testing skill's TDD
 loop: red for the predicted reason, the simplest green, refactor, then commit. The
 commit is the unit of progress, small enough that a wrong step costs one revert.
-Write the message after reading the staged diff. It describes that diff and the
-reason for it. An unpredicted failure and a hard-to-write test are that skill's
+The message is the delivery skill's. An unpredicted failure and a hard-to-write test are that skill's
 design signals. Stop and answer them before going on.
 
 A defect you meet on the way, yours or pre-existing, stops the feature work. Small and

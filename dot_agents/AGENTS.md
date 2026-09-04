@@ -87,6 +87,8 @@ them with the Read tool before any other tool:
 - Writing or reviewing code: `~/.agents/skills/style/references/core.md` and the
   file there for the task's language, `frontend.md` on top for UI work.
 - Writing or reviewing tests: `~/.agents/skills/testing/SKILL.md`.
+- Any backlog command or card move: `~/.agents/skills/board/SKILL.md`.
+- Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
 - Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`.
 - Editing a file agents load as instructions:
   `~/.agents/skills/review-instructions/SKILL.md`.
@@ -106,9 +108,6 @@ missing announcement is a defect João calls out.
 - A defect stops new work. Prefer a guard the system enforces (an assert, a type, a
   CI gate) to vigilance. Look for the cause in the system before the person, and tell
   ordinary variation from a real signal before you react to it.
-- Keep trunk releasable at every commit: small commits to main, everything in version
-  control, schema changes compatible in both directions through the transition. Done
-  means released, and releasing is João's direction to give.
 - Complexity is the reader's cost to understand and change. Tolerate none of it
   accumulating. Dependencies point inward toward policy. The database, the web, and
   frameworks are details behind boundaries drawn along axes of change. Couple
@@ -134,11 +133,6 @@ missing announcement is a defect João calls out.
   rulings.
 - Security is part of every review and belongs in the design and the toolchain from
   the start.
-- Records of decisions and of the domain (ADRs, C4 documents, glossaries) are kept. A
-  document or comment that exists to excuse bad code is deleted and the code fixed.
-  No document narrates its own history or edits. That belongs in the commit message.
-- Commit subjects are lowercase and imperative. The body says why. Where the repository
-  uses a subject format of its own, such as Conventional Commits, write that format.
 - An em dash is never written, in anything. Use a comma or a new sentence.
 
 ## Replies
@@ -152,25 +146,11 @@ What binds here regardless of voice:
 - "Verified" means observed this session. "I expect" means inferred, and names the
   check that would settle it. Calling an unverified claim verified is the worst
   defect a reply can have.
-- Writing for other people (documentation, PR reviews, issue replies, announcements)
-  is read by someone who wasn't here and may own the code in question. Give the
-  reasons, describe the system rather than the person, and say what it means for the
-  software's user.
 
 ## Where things live
 
-- All work runs through the backlog board (`backlog` CLI). A card sits in To Do,
-  Shape, Build, Review, or Done. Shape, Build, and Review are the steps a task may
-  take, and each has a skill of the same name that owns the work there. A task takes
-  only the steps that benefit it. Skipping needs no ceremony. The task's own record
-  on the board holds its documents.
-- A card's status is a claim like any other, and only the session doing the work can
-  keep it true. Set it to the column you enter when you pick the card up, and to the
-  next step, or Done, when you finish, in the same turn as the work. João and the
-  other sessions read what's in flight on the board. Your transcript is not where
-  they look. Directed work that an existing card describes is that card. Work it and
-  move it. A directed triage run is the other session that moves cards. Its dated
-  queue doc answers "what's next" while it is newer than the board.
+- All work runs through the backlog board (`backlog` CLI). Its conventions are the
+  `board` skill.
 - Every project keeps a glossary of its domain terms, `GLOSSARY.md` at the root unless
   the project already has one elsewhere. Read it when you start, add terms as you learn
   them, and if it's missing, create it and reference it from the project's `CLAUDE.md`
