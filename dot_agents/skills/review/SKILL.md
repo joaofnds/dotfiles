@@ -42,6 +42,11 @@ Which axes apply is read off the diff, like the tier. Unsure means it applies.
 - **Refactoring**: always. Its findings are advisory, because they describe the
   surrounding code rather than the change.
 
+[references/wiki-checks.md](references/wiki-checks.md) holds the wiki-sourced checks
+behind these axes, with the reasoning and the quotations. Read it when a finding needs
+its source, and paste a line into a brief when the reviewer needs the argument rather
+than the rule.
+
 Read [references/axes.md](references/axes.md) and dispatch the `reviewer` agent with
 the diff, the acceptance observations, and the applicable axis briefs pasted whole.
 One reviewer reads all axes and reports each defect once, under the axis that owns
