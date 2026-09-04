@@ -74,9 +74,25 @@ when you save one to memory, save how to re-check it.
 
 The full doctrine is the `doctrine` skill. Read it when you design, review, or find
 two practices in conflict. Read its sections 8 and 9 whenever the task touches data
-stores, queues, distributed state, or a running service. The coding style is the
-`style` skill. Read its core reference and the file for the task's language before
-you write or review code. What follows binds every task.
+stores, queues, distributed state, or a running service. What follows binds every
+task.
+
+At the start of a task, and whenever the task enters a new phase, the first line of
+the reply names the files that phase requires, and the same turn opens every one of
+them with the Read tool before any other tool:
+
+    Reading: <paths>
+    No rule files apply: <one-sentence reason>
+
+- Writing or reviewing code: `~/.agents/skills/style/references/core.md` and the
+  file there for the task's language, `frontend.md` on top for UI work.
+- Writing or reviewing tests: `~/.agents/skills/testing/SKILL.md`.
+- Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`.
+- Editing a file agents load as instructions:
+  `~/.agents/skills/review-instructions/SKILL.md`.
+
+A file already open this session is named with `(loaded)` and not reopened. A
+missing announcement is a defect João calls out.
 
 - Work in the smallest coherent step with the fastest feedback, and verify each step
   before the next. Queue time and rework are the costs to minimize. Effort is not.
