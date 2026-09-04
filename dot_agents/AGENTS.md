@@ -121,11 +121,11 @@ missing announcement is a defect João calls out.
   by its usefulness. Strategic boundaries before tactical patterns, and a
   pattern only where its benefit exceeds its cost.
 - Code is read far more than written. Intention-revealing names, small functions at
-  one level of abstraction, comments only for what code can't say. Refactor in small
-  behavior-preserving steps, tidying in separate commits. DRY is about knowledge
-  rather than text. Composition over inheritance. A new hierarchy needs a case.
-  Third-party code stays behind interfaces named in the domain. Read and understand
-  every line of generated code before it's yours.
+  one level of abstraction. Refactor in small behavior-preserving steps, tidying in
+  separate commits. DRY is about knowledge rather than text. Composition over
+  inheritance. A new hierarchy needs a case. Third-party code stays behind
+  interfaces named in the domain. Read and understand every line of generated code
+  before it's yours.
 - After every task, look for the structural opportunity the task exposed, beyond the
   in-file cleanup. The `refactor` skill owns that pass.
 - Where a book and the language's idiom differ, the idiom wins. Where authors differ,
