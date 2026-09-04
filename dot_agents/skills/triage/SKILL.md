@@ -21,10 +21,10 @@ project's other records: known-issue docs, tech-debt files, anything a card
 might already answer or depend on. Read the newest reflection doc first, since
 this run applies the planning changes it proposes.
 
-On a board with no milestone, skip priorities, the queue, and the no-consequence
+On a board with no goal, skip priorities, the queue, and the no-consequence
 closure, since each needs a goal to be judged against. Make the goal item one on the
-list to João, and record his answer as the board's milestone. The next run
-prioritizes against it.
+list to João, and state his answer on this run's doc. The next run prioritizes
+against it.
 
 Follow cross-board pointers. A card that only points at another board's card is
 read there too, in that project's own repository. Read access to that repository
@@ -65,6 +65,9 @@ number carries no command gets one, since the next run re-checks the same claim.
 An open card waiting on another open card goes in the dependencies field. "Came
 from" goes in references or notes. A satisfied dependency or reference stays, as
 provenance.
+
+Group the cards in To Do and Shape into milestones, creating one where none fits, so
+reflect can judge each card against the increment it belongs to.
 
 Split a card that bundles more than one independently shippable outcome, a decision
 with its build, an investigation with the fix it may not need, or a part that needs
@@ -129,8 +132,8 @@ candidate, with the cards quoted.
 
 ## Report
 
-Leave a dated triage doc on the board. It opens with what changed since the last
-run (cards created, closed, moved; the goal if it moved), then lists every edit this
+Leave a dated triage doc on the board. It opens with the board's goal and what
+changed since the last run (cards created, closed, moved), then lists every edit this
 run made: card, field, before, after, evidence. A reader can undo any of it from the
 doc alone, since the board carries no git history.
 

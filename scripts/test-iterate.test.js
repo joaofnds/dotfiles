@@ -116,7 +116,7 @@ test("the stop file ends the run before the next session", async () => {
   expect(result.code).toBe(3);
 });
 
-test("a board with no goal stops before triage with exit 4", async () => {
+test("a board with no active milestone stops before triage with exit 4", async () => {
   const { run } = await fixture({ goals: "0" });
   const result = await run();
   expect(result.calls).toEqual([]);

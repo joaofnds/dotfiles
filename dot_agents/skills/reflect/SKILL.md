@@ -11,8 +11,9 @@ next step. It writes one doc and nothing else on the board.
 
 ## Read before judging
 
-Read the board's milestone, which is its goal. Without one, write the reflection doc
-with only that finding and stop, since nothing else can be judged.
+Read the board's goal from the newest triage doc, and the milestone the card belongs
+to. Without a goal, write the reflection doc with only that finding and stop, since
+nothing else can be judged.
 
 Read the card whole: its description, its bet (the dated note the pick step wrote,
 or the newest triage doc's queue line for it), its acceptance list with the evidence
@@ -35,8 +36,8 @@ card that exists.
 Write the reflection doc as the Coaching Kata's questions, in order, each answered
 from the record above.
 
-1. What is the target condition? The goal, and the bet, meaning what this card was
-   expected to make observable about it.
+1. What is the target condition? The milestone this card belongs to, and the bet,
+   meaning what this card was expected to make observable about it.
 2. What is the actual condition now? What is observable, from the card's evidence
    and your own look. Where the bet and the observation differ, say how.
 3. What obstacles stand between here and the goal, and which one is next? Name what

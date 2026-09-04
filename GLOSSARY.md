@@ -35,9 +35,12 @@ you introduce or lean on one; one term per concept.
   the card between stages, and applies the guards.
 - **Held card**: a card in Build or Review with an assignee, belonging to the session
   that set it. Another session may add a note and never changes its status.
-- **Goal**: what a board's open work is judged against, recorded as the board's
-  milestone. Triage orders the queue by it and reflect judges each increment against
-  it. Changing it is João's call.
+- **Goal**: what a board's open work is judged against, stated on its newest triage
+  doc. Triage orders the queue by it and reflect judges each increment against it.
+  Changing it is João's call.
+- **Milestone**: one increment of the goal, named by what João can do when it is Done,
+  holding the cards that produce it. A board carries several, ordered by when their
+  feedback is needed.
 - **Iteration**: one pass of the outer loop: triage the board, pick the queue's first
   card, run it to Done, reflect. The loop repeats iterations. It never drains the
   board.

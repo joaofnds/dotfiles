@@ -14,7 +14,7 @@ can read what a stage did before starting the next. step prints the session's re
 on stdout. ITERATE_SESSION_BUDGET caps each session in dollars (default 10).
 
 Exit codes: 0 done, 1 refused or failed, 2 the card's column did not move,
-3 the stop file .iterate-stop is present, 4 the board has no goal.`;
+3 the stop file .iterate-stop is present, 4 the board has no active milestone.`;
 
 const stopFile = ".iterate-stop";
 const cardPattern = /^[A-Z]+-[0-9]+(\.[0-9]+)?$/;
@@ -91,7 +91,7 @@ async function step(id) {
 }
 
 async function start() {
-  if (!(await boardHasGoal())) throw new Exit(4, "the board has no goal");
+  if (!(await boardHasActiveMilestone())) throw new Exit(4, "the board has no active milestone");
 
   await session("triage");
 
@@ -155,8 +155,8 @@ async function pick() {
   return list.match(queuePattern)?.[1] ?? "";
 }
 
-async function boardHasGoal() {
-  const list = await tool(() => $`backlog milestone list --plain`.text(), "reading the board's goal failed");
+async function boardHasActiveMilestone() {
+  const list = await tool(() => $`backlog milestone list --plain`.text(), "reading the milestones failed");
 
   return /Active milestones \([1-9]/.test(list);
 }
@@ -188,7 +188,7 @@ async function main(argument, second) {
 
   let id = argument ? cardId(argument) : "";
   if (!id) {
-    if (!(await boardHasGoal())) throw new Exit(4, "the board has no goal");
+    if (!(await boardHasActiveMilestone())) throw new Exit(4, "the board has no active milestone");
     await session("triage");
     id = await pick();
     if (!id) {

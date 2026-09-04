@@ -68,7 +68,7 @@ stems, and say the doc path and the card id after attaching. A file that
 legitimately lives elsewhere in the repo attaches with `--ref` instead.
 
 A feature too big for one build session becomes a parent card with one child per
-milestone, each child carrying its own document and acceptance criteria. Park the
+session, each child carrying its own document and acceptance criteria. Park the
 parent in Build, create the children in Build, chain them in sequence with
 `--dep`, then add every child as a dependency of the parent. A unit of work stays
 a checkbox inside the plan document unless it warrants its own context,
@@ -90,7 +90,7 @@ the tasks, docs, and decisions directories under the path it names.
 
 Check `schemaVersion` on every read. A value other than 1 is a stop-and-report
 condition. Consume only these fields from `task`: `title`, `description`,
-`status`, `labels`, `dependencies`, `acceptanceCriteria`, `subtasks`,
+`status`, `labels`, `milestone`, `dependencies`, `acceptanceCriteria`, `subtasks`,
 `documentation`, `implementationNotes`, `finalSummary`, `parentTaskId`.
 
 Every value flag on `backlog task edit` replaces its field rather than extending
