@@ -122,5 +122,13 @@ than a false claim. The per-iteration form of this loop is `/build` step 4.
 - Am I reading the test at the domain level, or at the framework level? Grow the DSL.
 - Am I falling into an anti-pattern: testing a private method, chasing coverage percentages, rebuilding the DI container in every `beforeEach`, sleep-based waits, branching on environment inside the test, asserting on log output?
 
+### Mutation claims
+
+Walk this section only when the work claims a guard or branch is verified by mutation.
+
+- Did I enumerate the mutants from the diff rather than from memory: every predicate, every boundary constant, every ordering between statements that touch shared state?
+- Did I name each mutant and the test that kills it? A mutant picked from memory re-checks only the guards you already had in mind.
+- Where the project has a mutation tool, did I run it instead of enumerating by hand?
+
 If any applicable answer is wrong, the work is not done. "Unknown" is also not done; name
 the evidence that would settle it. An item that doesn't apply is neither; say which and why.

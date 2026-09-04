@@ -20,7 +20,7 @@ line of context, for a block, the routes you tried, the one ask, and your recomm
 A question that arrives without all three is not ready to ask.
 
 The hand-back routes above are about a capability block. An unclear target or scope is
-different ground: `AGENTS.md` §Autonomy owns it; settle it from evidence first, and ask
+different ground: `AGENTS.md` §Acting owns it; settle it from evidence first, and ask
 only when every reading crosses an executive line.
 
 ## A missing thing is a claim
@@ -52,7 +52,7 @@ skipping it is the user acting on a gap that is not there.
    `commit -a`): uncommitted work can be discarded by accident. Committing beyond those
    paths, pushing, deploying, filing an issue, and anything else outward-facing or that
    rewrites existing history stay asks; the instruction gate's fold-in of a reviewer fix
-   into this batch's local commits (`AGENTS.md` §Task lifecycle) is the one exception.
+   into this batch's local commits (`writing-instructions.md` §The bar) is the one exception.
 6. Distinguish scoped verification from repository health. "The targeted tests pass;
    the full suite is red because X" is honest. "Everything passes" is not.
 

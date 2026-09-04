@@ -1,10 +1,8 @@
 # Coupling
 
-A vocabulary for naming coupling and deciding which of it to accept. Loaded by the
-`panel-review` Architecture mandate; read directly when a design draws or moves a module
-or service boundary. Retirement trigger: if ten panel runs or design-phase loads pass
-without this file producing a coupling finding, delete it and fold the stability test
-into `engineering-judgment.md`.
+A vocabulary for naming coupling and deciding which of it to accept. Read it when a
+design draws or moves a module or service boundary, and when a review's architecture
+axis names coupling.
 
 **Where these cures conflict with `coding-style.md`, `coding-style.md` wins.** This file
 names the trade; it does not authorize a new default.
@@ -46,6 +44,13 @@ code alone: cite an observed change history
 (`git log --since='1 year ago' --oneline -- <path>`) or state the stability assumption
 as an assumption. It governs the five spatial types; temporal coupling is judged on
 whether the assumption can be violated.
+
+**The threshold.** A path older than that one-year window that changed in at most two
+commits is stable. Drop the coupling finding and record the count. A younger or busier
+path keeps the finding, with the count as its evidence. An external or historyless
+target keeps the finding, labeled with the stability assumption it rests on. An empty
+log is not evidence of stability. Never apply this threshold to temporal coupling. Judge
+that on whether the ordering or interleaving assumption can be violated.
 
 Golden rule: **tighten what's stable, loosen what's uncertain.** The coupling that
 actually hurts is the unstable, unintended, or invisible kind.
@@ -89,7 +94,7 @@ Coarser than a refactoring catalog; they change shape, not just structure.
 Design is only one of the two tools; the other is speed of feedback. Strong coupling
 plus slow feedback is the one combination that never works.
 
-## Before reporting this as a finding (panel-review)
+## Before reporting this as a finding
 
 During design, only the stability question above applies. Reporting into a review,
 naming a type is not automatically a finding:

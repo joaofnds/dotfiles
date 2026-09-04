@@ -57,7 +57,7 @@ carries the licensed and not-licensed lists across papers. Then, for the specifi
 **The checkable artifact is the citation, not the query.** Every such claim you land
 names its `instruction-external-facts.md` entry, and that entry names the wiki page it
 came from. A cited claim naming no entry is the defect, whether or not you ran the
-query. `instruction-external-facts.md` stays self-contained (the instructions-reviewer
+query. `instruction-external-facts.md` stays self-contained (a reviewer
 has no vault access); where it and a page disagree, the page's Evidence block wins and
 the entry is re-derived from it, except a field marked *(primary read)*
 (`instruction-external-facts.md` §Cited sources).

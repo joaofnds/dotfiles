@@ -380,6 +380,7 @@ code or let known-wrong behavior become the permanent contract.
 - **Free Ride**: piggy-backing a new assertion onto an existing test "because the state is already there." Fix: a new behavior is a new test, even if setup repeats. Duplication of intent beats conflation of cases.
 - **Conditional Test Logic**: `if`/`for`/`try`/`catch` in the test body. Fix: split or parameterize (§4.6).
 - **Trivial Test**: asserts a language-level assignment with negligible regression value. Delete it unless the accessor performs behavior or protects a known regression.
+- **Test Code Duplication**: the same setup or assertion knowledge repeated across tests, so one change to the subject means editing many of them. Fix: extract a Builder, a fixture, or a named custom assertion. This is the name to cite when duplication in test files fits no other smell.
 - **`should` in every test name.** Fix: remove the `should`. The name is a clause describing what the system does, not a wish.
 
 ---
@@ -392,3 +393,4 @@ code or let known-wrong behavior become the permanent contract.
 - **Sleep-based waits.** `sleep(500); assert ...` is a flaky test shipping itself. Wait on a condition (the event arrived, the state changed), not on wall-clock time.
 - **Branching on environment inside a test.** `if env == "CI" then assert ...` trains everyone to ignore the "other" case. Make the test deterministic or split it.
 - **Shared mutable test fixtures.** A module-level `user` mutated by one test and read by another is a pyramid scheme of test order. Each test builds its own state.
+- **Rebuilding the DI container in every `beforeEach`.** The container belongs to the Harness, built once per describe block. Rebuilding it per test pays the whole graph's cost on every case.

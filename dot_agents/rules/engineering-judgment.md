@@ -66,7 +66,7 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 - **Don't fight your tools.** Working around a library at every turn = wrong tool or wrong usage.
 - **An exception is a design decision.** The moment a change needs a suppression, an ignore rule, a file exclusion, a shim, or any other special case to get past a tool, you have left "small fix" and entered design. Stop and enumerate the mechanisms that could express the intent, by reading each tool's actual interface (its options, its configuration schema, its type declarations), never your memory of it, and choose the one that needs no exception. An exception survives only with evidence that every surface that could express the intent was read and none can.
 - **A guard's refusal indicts the change, not the guard.** Linters, type checkers, and tests exist to refuse; a refusal is information about your solution's shape, and the default response is to reshape the solution. Concluding the guard is deficient carries the same evidence bar as any negative claim, and even then the remedy is fixing, upgrading, or reporting the guard, never quietly narrowing what it sees.
-- **A suppression's price is not its diff size.** One line whose honest explanation is "a tool couldn't cope" costs more than the larger change that needs none. Where the larger change widens the scope the user named, `AGENTS.md` §Autonomy governs the call.
+- **A suppression's price is not its diff size.** One line whose honest explanation is "a tool couldn't cope" costs more than the larger change that needs none. Where the larger change widens the scope the user named, `AGENTS.md` §Acting governs the call.
 - **Trace the full blast radius.** List every place the change affects. Flag incomplete fixes explicitly; don't ship silently.
 - **"Tests pass" ≠ "approach is right."** Verification confirms behavior, not design. (For agent-specific verification failure modes, see §6.)
 - **Feedback speed is everything.** Every speedup compounds. TDD, CI, trunk-based, fast monitoring all exist to shorten the loop. *(See: test-driven-development, continuous-integration, trunk-based-development)*
@@ -77,8 +77,8 @@ Code that works on your machine is a prototype. These principles bridge it to pr
 ## 6. Agent-Specific Failure Modes
 
 Always-on risks, not edge cases. Fabricated verification, stale verification, destroyed
-evidence, and narrative continuity are mirrored in `~/.agents/skills/verify-this/SKILL.md`
-§The failure modes this guards against; edit both:
+evidence, and narrative continuity are mirrored in `~/.agents/skills/verify/SKILL.md`
+§The failure modes this exists to catch; edit both:
 
 - **Hallucinated symbols.** Confidently referenced functions, fields, flags, packages that don't exist. Grep before you trust.
 - **Plausible-but-wrong code.** Compiles, reads well, does the wrong thing. Runtime behavior needs execution evidence; types, static analysis, and review supply different evidence.

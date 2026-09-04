@@ -100,7 +100,9 @@ dependency *cycle* it produces is still reportable.
 
 ## 3. Code Construction & Decoupling Patterns
 
-- **Tell, Don't Ask.** Tell objects what you want done in terms of the *role* the neighbor plays; don't ask for their internals and decide for them. The corollary to the Law of Demeter and the antidote to feature envy. *(See: coupling, growing-object-oriented-software-guided-by-tests)*
+- **Tell, Don't Ask.** Tell objects what you want done in terms of the *role* the neighbor plays; don't ask for their internals and decide for them. The corollary to the Law of Demeter and the antidote to feature envy. Querying values, collections, and factories is fine: the rule applies to objects with identity and behavior, not to values. *(See: coupling, growing-object-oriented-software-guided-by-tests)*
+- **One shape per class.** A data structure exposes data and carries no behavior. An object hides data behind behavior. A class that does both is the worst of both, and its callers split into camps that break its invariants. Field chains through plain data structures are normal access, not a coupling violation.
+- **Don't return null, don't pass null.** When absence is normal flow, return an empty collection or a special-case object. When absence is exceptional, throw or return a domain error. A null argument is a bug at the call site.
 - **Event-driven integration across domains when the requirement calls for it.** Use events or messaging for asynchronous delivery, independent ownership, or decoupled evolution. Prefer direct orchestration when immediate consistency and one owner make it simpler. *(See: event-sourcing, responsibility-layers)*
 - **Control non-deterministic side effects.** Pass clocks, network clients, and random or
   ID generators explicitly when tests, lifecycle, or replacement require control.
