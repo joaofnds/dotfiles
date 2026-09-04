@@ -9,14 +9,6 @@ You have a task with acceptance observations, or a directed fix small enough not
 need shaping. You are turning it into committed, observed behavior. A board task
 starts by claiming its card, as the board skill says.
 
-Before writing code, read the style skill's core reference plus the file for the
-task's language and stack, under `~/.agents/skills/style/references/`. The house
-patterns the review's style axis checks live there. When the task touches tests,
-which building almost always does, load the testing skill too. An instruction file
-(a CLAUDE.md or AGENTS.md, a rules file, a skill, an agent definition, an output
-style) is written under the review-instructions skill. Load it first and write in
-the register its "Before you write" section states.
-
 ## The loop
 
 Take the next item on the test list and run one turn of the testing skill's TDD

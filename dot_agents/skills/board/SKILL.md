@@ -1,6 +1,6 @@
 ---
 name: board
-description: Governs a session's use of the backlog board, the column a card sits in, the status it claims, the record it keeps, and the CLI's refusals and replace-not-append behavior. Use before any backlog command or card move, in any project.
+description: Governs a session's use of the backlog board, the column a card sits in, the status it claims, the record it keeps, and the CLI's refusals and replace-not-append behavior. Use before reading a card, and before any backlog command or card move, in any project.
 ---
 
 # Board

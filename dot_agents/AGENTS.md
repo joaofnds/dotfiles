@@ -95,25 +95,33 @@ two practices in conflict. Read its sections 8 and 9 whenever the task touches d
 stores, queues, distributed state, or a running service. What follows binds every
 task.
 
-At the start of a task, and whenever the task enters a new phase, the first line of
-the reply names the files that phase requires, and the same turn opens every one of
-them with the Read tool before any other tool:
+Read a rule file in the turn you do the work it covers. Not before, because a file
+read early is a summary by the time you need it. Not once, because that summary is
+what you would be working from. Read it again every time you come back to that work.
+
+Name the files first, then open them, before any other tool:
 
     Reading: <paths>
     No rule files apply: <one-sentence reason>
 
+Name every file the next thing you do needs, and nothing past that. Reading a card
+is the board file alone. Writing a test is the code and testing files. A React
+component is those plus the frontend file. A build that writes code over twelve
+turns names the style files in every one of those turns.
+
+- Reading a card, or any backlog command or card move:
+  `~/.agents/skills/board/SKILL.md`.
 - Writing or reviewing code: `~/.agents/skills/style/references/core.md` and the
   file there for the task's language, `frontend.md` on top for UI work.
 - Writing or reviewing tests: `~/.agents/skills/testing/SKILL.md`.
-- Any backlog command or card move: `~/.agents/skills/board/SKILL.md`.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
 - Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`,
   which routes to its judgment and coupling references.
 - Editing a file agents load as instructions:
   `~/.agents/skills/review-instructions/SKILL.md`.
 
-A file already open this session is named with `(loaded)` and not reopened. A
-missing announcement is a defect João calls out.
+A task starts on its first job, not on all of them. For a card that is reading it.
+A missing announcement is a defect João calls out.
 
 - Work in the smallest coherent step with the fastest feedback, and verify each step
   before the next. Queue time and rework are the costs to minimize. Effort is not.
