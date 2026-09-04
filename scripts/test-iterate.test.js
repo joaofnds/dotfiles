@@ -73,8 +73,9 @@ async function fixture({ stall = "", dirty = false, stop = false, goals = "1", a
   };
   const run = async (...args) => {
     const proc = Bun.spawn([iterate, ...args], { cwd: repo, env, stdout: "pipe", stderr: "pipe" });
+    const stdout = await new Response(proc.stdout).text();
     const code = await proc.exited;
-    return { code, stderr2: "", calls: (await readFile(calls, "utf8")).trim().split("\n").filter(Boolean), edits: await readFile(edits, "utf8"), stderr: await new Response(proc.stderr).text() };
+    return { code, stdout, calls: (await readFile(calls, "utf8")).trim().split("\n").filter(Boolean), edits: await readFile(edits, "utf8"), stderr: await new Response(proc.stderr).text() };
   };
   return { run };
 }
@@ -175,4 +176,48 @@ test("a card the board does not have reports what the board said", async () => {
   expect(result.calls).toEqual([]);
   expect(result.stderr).toContain("not found");
   expect(result.code).toBe(1);
+});
+
+test("step runs the one session the card's column calls for and returns", async () => {
+  const { run } = await fixture();
+  const result = await run("step", "DOT-1");
+  expect(result.calls).toEqual(["/shape DOT-1"]);
+  expect(result.code).toBe(0);
+});
+
+test("step prints the stage's reply, so the caller reads what it said", async () => {
+  const { run } = await fixture();
+  const result = await run("step", "DOT-1");
+  expect(result.stdout).toContain("ok");
+  expect(result.code).toBe(0);
+});
+
+test("step on a card whose column did not move exits 2", async () => {
+  const { run } = await fixture({ stall: "shape" });
+  const result = await run("step", "DOT-1");
+  expect(result.calls).toEqual(["/shape DOT-1"]);
+  expect(result.code).toBe(2);
+});
+
+test("step on a Done card runs reflect and says the card is done", async () => {
+  const { run } = await fixture({ status: "Done", glyph: "✔" });
+  const result = await run("step", "DOT-1");
+  expect(result.calls).toEqual(["/reflect DOT-1"]);
+  expect(result.code).toBe(0);
+});
+
+test("step refuses a held card before any session", async () => {
+  const { run } = await fixture({ status: "Review", glyph: "◆", assignee: "@claude" });
+  const result = await run("step", "DOT-1");
+  expect(result.calls).toEqual([]);
+  expect(result.code).toBe(1);
+});
+
+test("start runs triage, picks the queue's first card, and writes its bet", async () => {
+  const { run } = await fixture();
+  const result = await run("start");
+  expect(result.calls).toEqual(["/triage"]);
+  expect(result.edits).toContain("Bet,");
+  expect(result.stdout).toContain("DOT-1");
+  expect(result.code).toBe(0);
 });

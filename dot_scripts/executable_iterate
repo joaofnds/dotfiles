@@ -3,14 +3,17 @@
 import { $ } from "bun";
 import { existsSync } from "node:fs";
 
-const usage = `iterate [card]
+const usage = `iterate [card]        one whole iteration, unattended
+iterate start           triage, pick the first ready card, write its bet, print it
+iterate step <card>     one session: the card's column, or reflect when it is Done
 
-One iteration of the loop on the board in the current directory. Without a card:
-triage, pick the first ready card, run it to Done, reflect. With a card: run that
-card to Done, then reflect. Each step is one fresh claude session running that
-step's skill. ITERATE_SESSION_BUDGET caps each session in dollars (default 10).
+The loop on the board in the current directory. An iteration is triage, pick, the
+card through its columns, reflect, each one a fresh claude session running that
+step's skill. start and step do the same work one session at a time, so a caller
+can read what a stage did before starting the next. step prints the session's reply
+on stdout. ITERATE_SESSION_BUDGET caps each session in dollars (default 10).
 
-Exit codes: 0 done, 1 refused or failed, 2 a stage left a question for João,
+Exit codes: 0 done, 1 refused or failed, 2 the card's column did not move,
 3 the stop file .iterate-stop is present, 4 the board has no goal.`;
 
 const stopFile = ".iterate-stop";
@@ -63,9 +66,46 @@ async function session(skill, card) {
     `the ${skill} session failed`,
   );
 
-  say(out.result);
+  console.log(out.result);
   say(`   turns ${out.num_turns} cost ${out.total_cost_usd} session ${out.session_id}`);
   if (out.is_error) throw new Exit(1, `the ${skill} session failed`);
+}
+
+async function step(id) {
+  await refuseHeldCard(id);
+
+  const before = (await card(id)).status;
+  if (before === "Done") {
+    await session("reflect", id);
+    say(`${id} is Done`);
+    return;
+  }
+
+  const skill = skillFor[before];
+  if (!skill) throw new Exit(1, `unknown status: ${before}`);
+
+  await session(skill, id);
+
+  const after = (await card(id)).status;
+  if (after === before) throw new Exit(2, `${id} stayed in ${before}`);
+}
+
+async function start() {
+  if (!(await boardHasGoal())) throw new Exit(4, "the board has no goal");
+
+  await session("triage");
+
+  const id = await pick();
+  if (!id) {
+    say("the queue is empty");
+    return;
+  }
+
+  await refuseHeldCard(id);
+  const today = new Date().toISOString().slice(0, 10);
+  const bet = `Bet, ${today}: picked first from the ready queue by iterate. The newest triage doc's queue entry for it is the bet.`;
+  await tool(() => $`backlog task edit ${id} --append-notes ${bet}`.quiet(), `writing the bet on ${id} failed`);
+  console.log(id);
 }
 
 async function card(id) {
@@ -126,7 +166,7 @@ async function treeIsClean() {
   return status.split("\n").every((line) => line === "" || line === `?? ${stopFile}`);
 }
 
-async function main(argument) {
+async function main(argument, second) {
   if (argument === "--help" || argument === "-h") {
     console.log(usage);
     return;
@@ -135,6 +175,16 @@ async function main(argument) {
   guardStop();
   sessionBudget();
   if (!(await treeIsClean())) throw new Exit(1, "the tree is not clean");
+
+  if (argument === "step") {
+    await step(cardId(second));
+    return;
+  }
+
+  if (argument === "start") {
+    await start();
+    return;
+  }
 
   let id = argument ? cardId(argument) : "";
   if (!id) {
@@ -166,7 +216,7 @@ async function main(argument) {
 }
 
 try {
-  await main(process.argv[2] ?? "");
+  await main(process.argv[2] ?? "", process.argv[3] ?? "");
 } catch (error) {
   if (!(error instanceof Exit)) throw error;
   say(error.message);
