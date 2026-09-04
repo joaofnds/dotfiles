@@ -19,5 +19,14 @@ The text is addressed to João: "your" there means his. Every line names, in
 parentheses, the page of his wiki (`~/code/wiki`) it comes from. When a line reads
 ambiguous, that page is the authority.
 
+Two references sit beside it, in this directory:
+
+- [references/engineering-judgment.md](references/engineering-judgment.md), how a
+  problem is understood, a solution designed, and work evaluated, with the
+  agent-specific failure modes. Read it when you design or judge an approach.
+- [references/coupling.md](references/coupling.md), the vocabulary for naming coupling
+  and deciding which to accept. Read it when a design draws or moves a module or
+  service boundary.
+
 The summary in AGENTS.md, your always-loaded instructions, is a compression of this
 file. Where the two seem to differ, this file wins.

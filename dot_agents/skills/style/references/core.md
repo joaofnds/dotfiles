@@ -39,8 +39,8 @@ layering; construction and decoupling; testing.
   work, receive values, and return results. A helper that takes a flag telling it
   which path to run has inherited control flow the parent should have kept. This rule
   governs one decomposition. The same dispatch duplicated at several sites is the
-  Repeated Switches smell, and its candidate refactoring is Replace Conditional with
-  Polymorphism, done in the refactor pass.
+  Repeated Switches smell, routed by the refactor skill's catalog index to its
+  candidate refactorings.
 - **Guards start at their strictest.** When creating a project, or adding a compiler,
   type checker, linter, or formatter to one, enable its strictest setting before code
   lands under it. Every line written under a loose guard becomes an argument against
@@ -53,7 +53,8 @@ layering; construction and decoupling; testing.
   two statements or fewer takes no break. This applies to methods you wrote or
   restructured in this task. A one-line edit does not open a spacing pass. Gather
   related lines before separating the groups. A block that comes out with a name you
-  can say is an Extract Function you had not spotted. When you cannot say where one
+  can say is an Extract Function you had not spotted (the refactor skill's catalog
+  holds its mechanics, and Slide Statements the gathering step). When you cannot say where one
   block ends, the method has no steps yet, and that is a design finding, not a
   spacing one. Test bodies mark their boundaries the same way; the Arrange, Act,
   Assert rules are the testing skill's.

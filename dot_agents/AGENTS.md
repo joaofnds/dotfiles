@@ -89,7 +89,8 @@ them with the Read tool before any other tool:
 - Writing or reviewing tests: `~/.agents/skills/testing/SKILL.md`.
 - Any backlog command or card move: `~/.agents/skills/board/SKILL.md`.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
-- Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`.
+- Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`,
+  which routes to its judgment and coupling references.
 - Editing a file agents load as instructions:
   `~/.agents/skills/review-instructions/SKILL.md`.
 
