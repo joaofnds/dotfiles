@@ -29,8 +29,7 @@ these checks is its own task, never a side effect of an unrelated edit.
 
 ## Before you write
 
-Read this section before drafting a file, and again over every sentence you add
-while applying verdicts.
+Read this section again over every sentence you add while applying verdicts.
 
 Write the file in the register it should produce. One fact per sentence. State a
 rule and its reason, in the present tense, in the words you would say to a
@@ -60,61 +59,47 @@ priorities, the queue, and the no-consequence closure."
 Plain: "On a board with no milestone, skip priorities, the queue, and the
 no-consequence closure, since each needs a goal to be judged against."
 
+Written: "An instruction file (a CLAUDE.md, a rules file, a skill, an agent
+definition, an output style) is written in the register the review-instructions
+skill's Before you write section states."
+Plain: "Write instruction files the way that skill describes."
+
 A semicolon between list items, a precise contrast, and a prohibition stay as
 written. Softening a rule into a comparison ("rather than" for "not") is not
 flattening, and reads as a preference where the rule forbade the case.
 
 Prefer the fix that is a deletion or a shorter rewording. A new rule deletes the rule
-it supersedes, in the same edit. Where an edit grows a file, the commit message names
-the action the new lines change and what they replaced, or says they replaced nothing.
-
-## Ground the review first
-
-Re-check the current model guidance before judging a rule redundant or necessary,
-because claims about what the model already does rot with every release. Read the
-model-specific pages under
-`platform.claude.com/docs/en/build-with-claude/prompt-engineering/`, the
-skill-authoring page at
-`platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices`, and the
-CLAUDE.md guidance at `code.claude.com/docs/en/best-practices`. Label a
-model-behavior claim you did not check this session as inference. Where the vendor's
-pages conflict on emphasis, follow the dial-back side, which João ratified, and do
-not relitigate it from the older pages.
-
-Read what this machine's harness and tools were observed to do in
-[references/external-facts.md](references/external-facts.md), each entry with the
-check that verified it and the trigger that re-verifies it. Query the `prompts` wiki
-with `qmd` for claims from papers and vendor documentation. A numeric or outcome
-claim that neither backs is unaudited. Treat it as a mechanism argument and never
-cite it as measured. Without vault access, mark a source claim unverified rather than unaudited,
-since unverified names what would settle it.
-
-Require a rule to be complete in place, so the reader complies using only the text in
-front of them, never leaning on an unopened file for its justification. Two exceptions: material the reader must open to act, a checklist or a
-catalog, and a claim about outside facts, which names the probed entry or the wiki
-page where its evidence lives.
-
-Cite by heading, never by section number, since headings move and nothing updates the
-pointer. Carry the heading's own words, and name a bolded rule label the same way.
-
-Run a subtraction-only pass over the instruction files in `~/code/dotfiles` on each
-model release, with cut and merge verdicts only.
-
-Verify every path, symbol, tool name, and flag before resting a finding on one,
-because a false positive asserted from memory is the review's worst failure. Label
-what you cannot verify unverified, with what would settle it. Name the case you
-probed and never generalize from it, since a probe of one case settles that case
-alone. Where an instruction tells a session to run a command, run it in a throwaway
-copy first.
+it supersedes, in the same edit. Before you move a line, cut it and see what breaks,
+since moving one feels like a decision and settles nothing. A line belongs where it
+tells the reader what to do with the text in front of them. Where an edit grows a
+file, the commit message names the action the new lines change and what they
+replaced, or says they replaced nothing.
 
 ## The checks
 
-**Earn each line.** Ask of every line whether the agent would err without it. Cut a
+**Look before you claim.** Verify every path, symbol, tool name, and flag before
+resting a finding on one, because a finding asserted from memory is the worst thing
+a review produces. Say what you did not check. Name the case you probed and never
+generalize from it. Run a command an instruction gives you in a throwaway copy
+first. What the model already does changes every release, so check the current
+guidance before calling a rule redundant, and read what this machine was observed to
+do in [references/external-facts.md](references/external-facts.md), where each entry
+carries its check and what re-triggers it.
+
+**Stand alone.** A rule has to make sense in place, so the reader obeys it without
+opening another file. Two exceptions: material they must open to act, and a claim
+about the outside world, which names where its evidence lives. Point at headings,
+never section numbers, since numbers go stale when sections move.
+
+**Earn each line, hardest on the lines you kept.** A sentence you carried out of a
+paragraph you deleted was never judged, only spared. Ask of it what you asked of the
+paragraph. Ask of every line whether the agent would err without it. Cut a
 line restating defaults, standard conventions, or what is readable from the code,
 because a bloated file buries the rules that matter. Models self-verify,
 self-correct, and delegate unprompted, so instructing what already happens only
-adds cost. Settle a disagreement about whether a line is a no-op by running the document, since
-it is a fact about the model rather than a matter of argument. Delete a failing sentence whole, never trimming its words.
+adds cost. Settle a disagreement about whether a line is a no-op by running the
+document, since it is a fact about the model rather than a matter of argument.
+Delete a failing sentence whole, never trimming its words.
 
 **Keep the house delta.** Keep a line encoding a deliberate choice a capable model
 will not make unprompted, however strict it reads. Keep the rule and cut what
@@ -134,15 +119,23 @@ well as costing tokens.
 reading forbids or causes, because the model reads literally. "Only report
 high-severity issues" reads as an instruction to find less. "Be conservative"
 suppresses real findings. Ask whether you would say the line aloud to a colleague in
-those words, and rewrite it in the words you would use. A rule written as imagery has
-no literal reading at all ("shortening is where certainty sneaks in" names no
-action). Cut a line with no plain restatement, since it was decoration.
+those words, and rewrite it in the words you would use. Say it before you draft it,
+not after, since you read your own draft as what you meant rather than as what it
+says. Where the spoken version is shorter, it is the rule. A rule written as
+imagery has no literal reading at all ("shortening is where certainty sneaks in"
+names no action). Cut a line with no plain restatement, since it was decoration.
 
 **Reason over command.** Reframe an ALL-CAPS ALWAYS or NEVER with its why, and the
 model generalizes to the edge cases the bare command would miss. Prefer a positive
 example of the wanted behavior to a prohibition, because negation puts the forbidden
 thing into context and makes it more available. Where a prohibition must stay, state
 the wanted behavior beside it. Three to five diverse examples beat a description.
+
+**Count what your examples allow.** An example teaches a bound even when the rule
+states none. "Name every file you need", shown with one file and two, teaches a cap
+of two, and the case needing four goes unnamed. "Retry a few times", shown once at
+three, becomes three. A severity ladder shown only at its top two rungs loses the
+bottom. Put the largest case the rule permits into the examples.
 
 **Read every sentence as the behavior and register it teaches.** Check every
 sentence against the shapes under "Before you write", examples and rules alike,
@@ -153,8 +146,8 @@ carries a rule. Flatten a sentence only where the plain form loses nothing. Wher
 correct rule keeps failing, look for the failure modeled in the file's own examples
 or prose before rewriting the rule. Flag a rule that offers the colon as the em-dash
 substitute, since it manufactures the pivot. Where register is the rule, quote the
-failure beside its corrected form rather than describing it. Paragraph length shows nothing, since a file rewritten
-into short paragraphs can keep every shape.
+failure beside its corrected form rather than describing it. Paragraph length shows
+nothing, since a file rewritten into short paragraphs can keep every shape.
 
 **Keep the evidence out of the rule.** Move citations, evidence hedges, version
 notes, and references to past wording out of the file, because they dilute the lines
@@ -165,17 +158,19 @@ and the state it was last checked against.
 **Check the placement.** Keep in an always-loaded file only what applies broadly
 every session, and move occasional knowledge to a skill. Put critical rules early in
 a long file, or restate them in one line at the end, because the middle is where
-rules get dropped. Write a skill description in third person, saying what the skill
-does and when to use it, since it is the sole trigger for loading. Where on-demand
-material goes unread, sharpen the trigger before inlining it. Keep a body under 500
-lines, references one level deep, one term per concept, and nothing time-sensitive.
+rules get dropped. Put a rule that constrains a list above that list. Below it the
+reader has already matched every entry before meeting the limit on matching them.
+Write a skill description in third person, saying what the skill does and when to
+use it, since it is the sole trigger for loading. Where on-demand material goes
+unread, sharpen the trigger before inlining it. Keep references one level deep, one
+term per concept, and nothing time-sensitive.
 
 **End steps on a checkable bound.** Require each workflow step to end on a condition
 the agent can test, since a vague bound invites finishing before done and a demanding
 bound drives the digging the step needs. Prefer "every
 modified file accounted for" to "understanding reached". Require a state-mutating
 rule to name an object bindable without judgment: a path, an enumerated set, or a
-pattern plus a probe. "Stale entries" is a description by role.
+pattern plus a probe. Reject "stale entries", which describes by role.
 
 **Prefer enforcement to prose.** Name the guard where a hook, a type, a template, a
 script, or a CI gate could enforce a rule, because the guard removes a possibility
@@ -262,10 +257,10 @@ survives without its "never". Audit a file merged into another and deleted the s
 way, against the deleted text git still holds.
 
 Re-read every line that survives the cut and say it more simply, in shorter words,
-one fact per sentence, in the shape you would use aloud. Give a line that keeps its
-rule and loses a metaphor, a colon pivot, or a hard word the verdict rewrite, not
-keep. Keep the clause that says why a rule exists, because the model generalizes
-from it to cases the bare command misses.
+one fact per sentence. Give a line that keeps its rule and loses a metaphor, a
+colon pivot, or a hard word the verdict rewrite, not keep. Keep the clause that says
+why a rule exists, because the model generalizes from it to cases the bare command
+misses.
 
 Give each finding a verdict, one of cut, rewrite, move, enforce, or test in use, and
 the reason. Default to cut and watch, never keep-just-in-case. Name the trigger for
@@ -273,7 +268,9 @@ the re-check, a model swap or a count of sessions, and delete now, since restori
 from git is free. Give "test in use" to a rule whose effect prose review cannot
 establish, and name the test, a real task in a fresh session. Reading a file can show
 that a rule cannot change behavior, and cannot show that it does. Run the checks over
-any text you prescribe, because a suggested rewrite lands verbatim.
+any text you prescribe, because a suggested rewrite lands verbatim. Give a rule
+broken by a session that had it open a different mechanism, never the same rule
+stated more firmly, since reading it already failed.
 
 End a requested review as findings and apply nothing. Reviewing your own edit inside
 directed work, apply the verdicts and end in the commit.
