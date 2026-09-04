@@ -1,7 +1,7 @@
 ---
 name: handoff
 argument-hint: "What will the next session focus on?"
-description: Moves in-flight work out of the conversation onto its card, so a fresh session can pick it up cold, and ends with a line João can paste to resume. Writes no file and decides nothing. Use when work pauses mid-flight. A session that keeps working while João is away uses the away skill instead.
+description: Moves in-flight work out of the conversation onto its card, so a fresh session can pick it up cold, and ends with a line João can paste to resume. Writes no file and decides nothing. Use when work pauses mid-flight. A session that keeps working while João is away uses the away skill instead, and a side finding that deserves its own session goes to the prompt skill.
 disable-model-invocation: true
 ---
 
