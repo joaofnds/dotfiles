@@ -49,6 +49,9 @@ João, and end the turn.
 ## What the iteration leaves
 
 Every step writes its own record before it returns, so a stop leaves the board true.
+The last step refuses to return while anything it wrote is uncommitted, so commit
+what it left rather than reporting the iteration complete over it.
+
 Your reply to João is the brief. It says what happened to the card, the reflection's
 verdict, and the one thing he decides next. Check that verdict against the reflection
 doc before you relay it. The records hold the rest.

@@ -16,6 +16,8 @@ prompt=""
 while [ $# -gt 0 ]; do [ "$1" = "-p" ] && prompt="$2"; shift; done
 skill=$(echo "$prompt" | cut -c2- | cut -d' ' -f1)
 echo "$prompt" >> "$FAKE_CALLS"
+if [ -n "$FAKE_LEAVES" ] && [ "$skill" = "$FAKE_LEAVES_AT" ]; then echo left > "$FAKE_LEAVES"; fi
+if [ -n "$FAKE_STOP_AFTER" ] && [ "$skill" = reflect ]; then echo > "$FAKE_STOP_AFTER"; fi
 if [ "$skill" = boom ] || [ "$FAKE_STALL" = boom ]; then echo "boom" >&2; exit 1; fi
 if [ "$FAKE_STALL" = none ]; then
   if [ "$(cat "$FAKE_STATUS")" = "To Do" ]; then echo Shape > "$FAKE_STATUS"; else echo "To Do" > "$FAKE_STATUS"; fi
@@ -38,7 +40,7 @@ case "$* " in
 esac
 `;
 
-async function fixture({ stall = "", dirty = false, stop = false, goals = "1", assignee = "", glyph = "○", status = "To Do", budget = "", missing = "" } = {}) {
+async function fixture({ stall = "", dirty = false, stop = false, goals = "1", assignee = "", glyph = "○", status = "To Do", budget = "", missing = "", leaves = "", stopAfter = false } = {}) {
   const directory = await mkdtemp(join(tmpdir(), "iterate-test-"));
   directories.push(directory);
   const bin = join(directory, "bin");
@@ -69,6 +71,9 @@ async function fixture({ stall = "", dirty = false, stop = false, goals = "1", a
     FAKE_ASSIGNEE: assignee,
     FAKE_MISSING: missing,
     FAKE_GLYPH: glyph,
+    FAKE_LEAVES: leaves ? join(repo, "left-behind") : "",
+    FAKE_LEAVES_AT: leaves,
+    FAKE_STOP_AFTER: stopAfter ? join(repo, ".iterate-stop") : "",
     ITERATE_SESSION_BUDGET: budget,
   };
   const run = async (...args) => {
@@ -219,5 +224,26 @@ test("start runs triage, picks the queue's first card, and writes its bet", asyn
   expect(result.calls).toEqual(["/triage"]);
   expect(result.edits).toContain("Bet,");
   expect(result.stdout).toContain("DOT-1");
+  expect(result.code).toBe(0);
+});
+
+test("a reflection left uncommitted ends the run with exit 1, since no later call would refuse it", async () => {
+  const { run } = await fixture({ leaves: "reflect" });
+  const result = await run("DOT-1");
+  expect(result.calls).toEqual(["/shape DOT-1", "/build DOT-1", "/review DOT-1", "/reflect DOT-1"]);
+  expect(result.code).toBe(1);
+});
+
+test("step on a Done card reports what reflect left uncommitted", async () => {
+  const { run } = await fixture({ status: "Done", glyph: "✔", leaves: "reflect" });
+  const result = await run("step", "DOT-1");
+  expect(result.calls).toEqual(["/reflect DOT-1"]);
+  expect(result.code).toBe(1);
+});
+
+test("the stop file alone does not count as work left behind", async () => {
+  const { run } = await fixture({ status: "Done", glyph: "✔", stopAfter: true });
+  const result = await run("step", "DOT-1");
+  expect(result.calls).toEqual(["/reflect DOT-1"]);
   expect(result.code).toBe(0);
 });

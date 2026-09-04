@@ -77,6 +77,7 @@ async function step(id) {
   const before = (await card(id)).status;
   if (before === "Done") {
     await session("reflect", id);
+    await refuseWorkLeftBehind();
     say(`${id} is Done`);
     return;
   }
@@ -166,6 +167,15 @@ async function treeIsClean() {
   return status.split("\n").every((line) => line === "" || line === `?? ${stopFile}`);
 }
 
+/**
+ * Reflect is the last session of an iteration, so no later call runs the guard
+ * over what it wrote. Its doc would sit untracked while the run reports itself
+ * complete.
+ */
+async function refuseWorkLeftBehind() {
+  if (!(await treeIsClean())) throw new Exit(1, "the last session left work uncommitted");
+}
+
 async function main(argument, second) {
   if (argument === "--help" || argument === "-h") {
     console.log(usage);
@@ -213,6 +223,7 @@ async function main(argument, second) {
 
   guardStop();
   await session("reflect", id);
+  await refuseWorkLeftBehind();
 }
 
 try {

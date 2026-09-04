@@ -1,7 +1,7 @@
 ---
 name: reflect
 disable-model-invocation: true
-description: The look-back after one card's run has ended, at Done or on a stop. Reads the board's goal, the bet the card carried, and the card's record whole, answers the Coaching Kata's five questions, and leaves a dated reflection doc with one verdict on the goal (on track, adjust, or pivot) and the planning changes it proposes for the next triage to apply. Use when a card's run has ended, on direction or from the iteration loop. It proposes and never moves a card. Landing a process fix is kaizen, and the code-level pass is refactor.
+description: The look-back after one card's run has ended, at Done or on a stop. Reads the board's goal, the bet the card carried, and the card's record whole, answers the Coaching Kata's five questions, and leaves a reflection doc with one verdict on the goal (on track, adjust, or pivot) and the planning changes it proposes for the next triage to apply. Use when a card's run has ended, on direction or from the iteration loop. It proposes and never moves a card. Landing a process fix is kaizen, and the code-level pass is refactor.
 ---
 
 # Reflect
@@ -73,7 +73,10 @@ ran inside build.
 
 ## The record
 
-Create the doc through the backlog CLI, dated, titled "reflection: <card id>
-<date>". A file written by hand under the docs directory has no id and the CLI does
-not list it. The reply to João is the brief: the verdict, the next bet, and what he
-can go and see. Everything else stays on the doc.
+Create the doc through the backlog CLI, titled "reflection: <card id>". A file
+written by hand under the docs directory has no id and the CLI does not list it.
+Attach it and commit it before you return, because the doc is the whole of what this
+run leaves and the session that started you may not run again.
+
+The reply to João is the brief: the verdict, the next bet, and what he can go and
+see. Everything else stays on the doc.
