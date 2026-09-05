@@ -36,7 +36,8 @@ skipping it is the user acting on a gap that is not there.
 1. Verify the requested scope and report the exact commands and outcomes.
 2. Inspect the diff and working tree; do not attribute unrelated changes to yourself.
 3. List every failure or defect observed, with its evidence. When you are the agent reporting
-   to the user, give each one a disposition (`reporting-findings.md`); a reviewer sub-agent
+   to the user, give each one a disposition
+   (`~/.agents/skills/review/SKILL.md` §Dispose); a reviewer sub-agent
    ranks by severity instead and assigns none. A missing-thing claim carries its probe:
    §A missing thing is a claim.
 4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects or
@@ -65,11 +66,11 @@ skipping it is the user acting on a gap that is not there.
   completion until resolved or explicitly deferred by the user.
 - An unrelated pre-existing failure does not erase valid scoped evidence, but it must
   remain explicit and must never be reported as a pass.
-- A **Noted** finding neither blocks completion nor becomes a deferral question
-  (`reporting-findings.md` decides which findings are Noted).
+- A finding disposed of as a note neither blocks completion nor becomes a deferral
+  question.
 - Do not derail active work for an unrelated issue. Surface it with a concrete choice:
   "I found X with evidence Y. I recommend deferring: it doesn't block this change. Fix it
-  now or defer?": a **Decide** (`reporting-findings.md`).
+  now or defer?": that is the escalation disposition, not a deferral you take alone.
 
 The failure mode this prevents is silent tolerance, not bounded scope. Never walk past
 broken state without reporting it; never seize ownership of work the user did not ask
