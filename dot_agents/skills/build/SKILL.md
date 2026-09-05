@@ -17,9 +17,8 @@ commit is the unit of progress, small enough that a wrong step costs one revert.
 The message is the delivery skill's. An unpredicted failure and a hard-to-write test are that skill's
 design signals. Stop and answer them before going on.
 
-A defect you meet on the way, yours or pre-existing, stops the feature work. Small and
-reversible: fix it now, in its own commit. Larger: a task on the board with what you
-saw, and a line in the handoff.
+A defect in the path of the task stops the feature work. One outside it is closed
+before the task is called done. `~/.agents/AGENTS.md` §Ownership says how.
 
 ## Stay inside the directive
 

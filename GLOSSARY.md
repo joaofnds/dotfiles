@@ -57,3 +57,7 @@ you introduce or lean on one; one term per concept.
 - **Pick**: the iteration step that takes the first single card of the triage queue,
   writes its bet onto it as a dated note, and starts the run. The runner does it, or
   João by hand.
+- **Ownership**: the stance that every broken thing in the project is the session's
+  to fix, to put on a card, or to ask João about, whoever caused it. Its failure is
+  **walking past**: a defect the session saw that sits in no commit, on no card, and
+  in no ask.
