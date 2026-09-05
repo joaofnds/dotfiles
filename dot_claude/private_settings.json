@@ -107,7 +107,6 @@
   "showThinkingSummaries": false,
   "showTurnDuration": false,
   "skillOverrides": {
-    "art-direction": "user-invocable-only",
     "artifact-capabilities": "off",
     "artifact-design": "off",
     "claude-api": "name-only",
@@ -123,8 +122,7 @@
     "schedule": "user-invocable-only",
     "security-review": "user-invocable-only",
     "simplify": "off",
-    "update-config": "off",
-    "verify": "off"
+    "update-config": "off"
   },
   "skipDangerousModePermissionPrompt": true,
   "skipWebFetchPreflight": true,
