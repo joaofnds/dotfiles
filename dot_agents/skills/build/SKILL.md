@@ -19,8 +19,7 @@ delivery skill's. An unpredicted failure and a hard-to-write test are design
 signals the testing rules name. Stop and answer them before going on.
 
 A defect in the path of the task stops the feature work. One outside it is closed
-before the task is called done. `~/.agents/skills/ownership/SKILL.md` §Ownership
-says how.
+before the task is called done. `~/.agents/rules/ownership.md` §Ownership says how.
 
 ## Stay inside the directive
 

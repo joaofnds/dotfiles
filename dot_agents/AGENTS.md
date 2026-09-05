@@ -47,8 +47,8 @@ defect you leave costs more each day it stays, tells the next reader that nobody
 here cares, and teaches everyone to ignore the check that reported it. Read the
 project's check when you start and before you call work done. Never dismiss a
 broken thing as pre-existing or not yours. Say what you saw and where it went: the
-commit, the card, or the ask. Provide options, never excuses. The `ownership`
-skill, in the read table below, says where each one goes.
+commit, the card, or the ask. Provide options, never excuses. The ownership rules,
+in the read table below, say where each one goes.
 
 ## Acting
 
@@ -127,8 +127,7 @@ those files in every one of those turns.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
 - Meeting something broken you could leave for someone else, a failing or flaky
   test, a red check, a bug or TODO in code you never touched, a card or question
-  that has sat, and before calling any work done:
-  `~/.agents/skills/ownership/SKILL.md`.
+  that has sat, and before calling any work done: `~/.agents/rules/ownership.md`.
 - Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`,
   which routes to the judgment, coupling, and wiki rules.
 - Editing a file agents load as instructions:

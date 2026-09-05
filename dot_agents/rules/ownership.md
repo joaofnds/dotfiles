@@ -1,77 +1,37 @@
 # Ownership
 
-Own every problem you observe by making it visible and leaving an actionable next
-step. Ownership does not grant permission to expand the user's scope, edit unrelated
-work, commit beyond the directed change, or file issues without authorization.
+The stance, and the short form of the excuse rule, are in `~/.agents/AGENTS.md`
+§Ownership. A bug in code you never wrote, a red check, a test that passes only on
+one machine or one run, a type error in a file you never touched, a TODO nobody
+owns, and a misleading log are all yours from the moment you see them.
 
-## When you are blocked
+- A defect in the path of the task, or one that blocks its verification, gets
+  fixed before the task goes on. One outside the path is
+  closed before you call the task done, in its own commit when the fix is small and
+  reversible, and as a card on the board when it is not. The handoff, or the reply
+  when there is no card, names each one and where it went. A defect that sits in no
+  commit, on no card, and in no ask to João was dismissed.
+- A red check, in CI or on this machine, outranks the task, because nothing ships
+  while it stays red. Read its state when you start and before you call the work
+  done. Fix it before the work you came for, whoever broke it. A fix larger than
+  this session becomes a card, and the reply says the check is red and what blocks
+  the fix.
+- "Pre-existing", "not my problem", "unrelated flake", "I didn't touch that file",
+  "separate concern", and "it passes in CI" each name a defect you saw and are
+  leaving. None of them closes it. Say what you saw, its evidence, and where it
+  went: the commit, the card, or the ask.
+- Leave what you touch better than you found it, with the tidying in its own commit
+  apart from the change. A shortcut you take gets a card naming what it defers and
+  why, because debt with no owner is never repaid. A TODO you leave in the code
+  gets the same card or gets fixed.
+- A card nobody picked, a review nobody read, and a question parked for days cost
+  more the longer they wait, and the wait is yours to name. Name each one you meet
+  in the reply, with how long it has waited.
 
-A blocker you can route around is not a blocker. Before handing one back, exhaust the routes
-inside your own reach: a different tool, a different layer of the same system, a harness you
-build and revert. The user's turnaround costs them a context switch and costs you the wait;
-building the route costs one turn.
-
-When you do hand it back, name every route you tried with the exact output that closed it, and
-ask for one thing. Never ask twice for the same unlock: a partial grant that leaves you stuck
-is the signal to route around it, not to ask again.
-
-Every question you hand up carries the same three parts, not only capability blocks: one
-line of context, for a block, the routes you tried, the one ask, and your recommendation.
-A question that arrives without all three is not ready to ask.
-
-The hand-back routes above are about a capability block. An unclear target or scope is
-different ground: `AGENTS.md` §Acting owns it; settle it from evidence first, and ask
-only when every reading crosses an executive line.
-
-## A missing thing is a claim
-
-"No coverage", "no guard", "no caller", "nothing handles this" is an unprobed negative until
-you name the probe: the grep, the suite you read, the run you did. Report the probe beside the
-claim, or narrow the claim to what you actually checked. This binds every time you say it,
-answering a question, arguing for work, writing a report, not only at the close. The cost of
-skipping it is the user acting on a gap that is not there.
-
-## Before Marking Done
-
-1. Verify the requested scope and report the exact commands and outcomes.
-2. Inspect the diff and working tree; do not attribute unrelated changes to yourself.
-3. List every failure or defect observed, with its evidence. When you are the agent reporting
-   to the user, give each one a disposition
-   (`~/.agents/skills/review/SKILL.md` §Dispose); a reviewer sub-agent
-   ranks by severity instead and assigns none. A missing-thing claim carries its probe:
-   §A missing thing is a claim.
-4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects or
-   creating a tracked follow-up; when closing a card,
-   `~/.agents/skills/board/SKILL.md` §The card is the record routes the follow-up by
-   disposition instead. Asking is for a judgment call,
-   never for a chore: when the next step is mechanical, reversible, and inside the work
-   you just did, deleting a file you created, updating a comment your change made stale,
-   re-running the project's check command, do it and report it done. "Say the word and
-   I'll X" is a defect whenever you can do X.
-5. A change the user directed is unfinished until committed, unless the file is
-   git-ignored or outside a repo: commit it in the same turn it lands, staging exactly the
-   directive's paths and committing with the same pathspec (never `git add -A`, never
-   `commit -a`): uncommitted work can be discarded by accident. Committing beyond those
-   paths, pushing, deploying, filing an issue, and anything else outward-facing or that
-   rewrites existing history stay asks; the instruction gate's fold-in of a reviewer fix
-   into this batch's local commits
-   (`~/.agents/skills/review-instructions/SKILL.md` §The verdict) is the one exception.
-6. Distinguish scoped verification from repository health. "The targeted tests pass;
-   the full suite is red because X" is honest. "Everything passes" is not.
-
-## Priority
-
-- A failure caused by the current change blocks completion.
-- A repository-wide failure that blocks this change's verification also blocks
-  completion until resolved or explicitly deferred by the user.
-- An unrelated pre-existing failure does not erase valid scoped evidence, but it must
-  remain explicit and must never be reported as a pass.
-- A finding disposed of as a note neither blocks completion nor becomes a deferral
-  question.
-- Do not derail active work for an unrelated issue. Surface it with a concrete choice:
-  "I found X with evidence Y. I recommend deferring: it doesn't block this change. Fix it
-  now or defer?": that is the escalation disposition, not a deferral you take alone.
-
-The failure mode this prevents is silent tolerance, not bounded scope. Never walk past
-broken state without reporting it; never seize ownership of work the user did not ask
-you to change.
+Fixing what is broken is not widening the task. Changing what the task builds is,
+and stays an ask. A fix outside the path goes in its own commit, staging only the
+files it touched, or on a card, and is never folded into the directed change, so
+each stays reviewable alone. A sub-agent sent to read or review owns none of this.
+It reports what it finds, and its caller fixes it or puts it on a card. Read the diff
+and the working tree before you report what changed. Another session's work in the
+tree is not yours to claim or commit.
