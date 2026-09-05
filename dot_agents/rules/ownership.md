@@ -40,8 +40,9 @@ skipping it is the user acting on a gap that is not there.
    ranks by severity instead and assigns none. A missing-thing claim carries its probe:
    §A missing thing is a claim.
 4. Fix defects that are within scope and low risk. Ask before fixing unrelated defects or
-   creating a tracked follow-up; inside a chain skill's closeout, `backlog-board.md`
-   §Closeout routes the follow-up by disposition instead. Asking is for a judgment call,
+   creating a tracked follow-up; when closing a card,
+   `~/.agents/skills/board/SKILL.md` §The card is the record routes the follow-up by
+   disposition instead. Asking is for a judgment call,
    never for a chore: when the next step is mechanical, reversible, and inside the work
    you just did, deleting a file you created, updating a comment your change made stale,
    re-running the project's check command, do it and report it done. "Say the word and
@@ -52,7 +53,8 @@ skipping it is the user acting on a gap that is not there.
    `commit -a`): uncommitted work can be discarded by accident. Committing beyond those
    paths, pushing, deploying, filing an issue, and anything else outward-facing or that
    rewrites existing history stay asks; the instruction gate's fold-in of a reviewer fix
-   into this batch's local commits (`writing-instructions.md` §The bar) is the one exception.
+   into this batch's local commits
+   (`~/.agents/skills/review-instructions/SKILL.md` §The verdict) is the one exception.
 6. Distinguish scoped verification from repository health. "The targeted tests pass;
    the full suite is red because X" is honest. "Everything passes" is not.
 

@@ -11,8 +11,8 @@ The memory store is the notes the harness loads for this project, each a markdow
 with frontmatter, plus `MEMORY.md`, the index that points at them. The index is loaded
 whole at session start up to a cap, and everything past that cap is silently dropped,
 so detail parked in the index costs the entries below it their visibility. The cap's
-current value and its re-check trigger are in the review-instructions skill's
-`references/external-facts.md` §Harness mechanics.
+current value and its re-check trigger are in
+`~/.agents/skills/review-instructions/references/external-facts.md` §Harness mechanics.
 
 Consolidation is judgment rather than retrieval, and no artifact settles which of two
 notes is right, so a sub-agent doing this pass runs on the parent's model.

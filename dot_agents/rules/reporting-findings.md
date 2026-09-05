@@ -24,7 +24,7 @@ trigger. A correctness defect is never advisory, and neither is a test whose out
 independent of its subject; that is false safety, not friction, and it takes a
 disposition patch or no patch.
 
-Mirrored in `~/.agents/skills/panel-review/SKILL.md` §Verdict-bearing or advisory; edit together.
+Mirrored in `~/.agents/skills/review/SKILL.md` §Dispose; edit together.
 
 Every defect you surface, yours or one relayed from a reviewer, carries exactly one
 disposition, named in the report:
@@ -45,20 +45,8 @@ third-party response you can't induce, is Decide, naming the probe you could not
 Deferred work is not a finding, but takes the same three dispositions when a closeout
 lists it, with a one-line reason for the deferral in place of the trigger.
 
-## Reading a reviewer's severity ladder
-
-A review sub-agent hands you Blocker / Major / Minor, some adding Nit; these rank impact
-and say nothing about the defect question. Map them: **Blocker** always names a defect.
-**Major** names one where the ladder ranks defect impact: the instructions, code, and
-testing reviewers, and an adversarial-review general agent; where a ladder ranks
-friction cost instead, the refactoring reviewer, and any coupling or test-smell finding
-outside those ladders, the three either-way classes above decide. **Minor and Nit** name
-a defect when their concrete effect is the agent behaving wrongly, and take the advisory
-route when the effect is only context or maintenance. Severity does not survive the
-mapping: an advisory-routed Minor is advisory, not a lesser defect, and holds no gate
-open. The general-agent rung is mirrored in `~/.agents/skills/adversarial-review/SKILL.md`
-§Send the reviewer, and the ladder itself is re-derived from
-`~/.agents/agents/instructions-reviewer.md` §How you review; edit together.
+A reviewer here reports blocking, should-fix, or note. `~/.agents/skills/review/SKILL.md`
+§Severity assigns those words, and the dispositions above route them.
 
 ## The closing sentence
 
