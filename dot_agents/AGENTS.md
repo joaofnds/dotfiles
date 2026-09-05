@@ -77,6 +77,7 @@ in the read table below, say where each one goes.
   Send a question that would have stopped you to a fresh reviewer instead, queue the
   actions the hard lines reserve for his direction, and leave the card's notes
   carrying what you did, what you verified, and the next action.
+- An em dash is never written, in anything. Use a comma or a new sentence.
 
 ## Claims
 
@@ -99,14 +100,19 @@ when you save one to memory, save how to re-check it.
 
 ## How the work is done
 
-The full doctrine is `~/.agents/rules/doctrine.md`. Read it when you design, review, or find
-two practices in conflict. Read its sections 8 and 9 whenever the task touches data
-stores, queues, distributed state, or a running service. What follows binds every
-task.
+`~/.agents/rules/doctrine.md` is how engineering is done here, from the working
+method through testing, delivery, architecture, data, operations, and the rulings
+where authors disagree. It binds every task that does engineering work, and the
+task's subject does not decide that. A task that changes a pipeline, a
+configuration, a document, an instruction file, or nothing but a decision reads it
+the same as one that changes code. A task that only reads and answers does not.
+Read it at the start of any task it binds. Its index names the section for the work
+in hand, and it routes to the judgment, coupling, and wiki rules.
 
-Read a rule file in the turn you do the work it covers. Not before, because a file
-read early is a summary by the time you need it. Not once, because that summary is
-what you would be working from. Read it again every time you come back to that work.
+Read a rule file, the doctrine included, in the turn you do the work it covers.
+Not before, because a file read early is a summary by the time you need it. Not
+once, because that summary is what you would be working from. Read it again every
+time you come back to that work.
 
 Name the files first, then open them, before any other tool:
 
@@ -114,9 +120,10 @@ Name the files first, then open them, before any other tool:
     No rule files apply: <one-sentence reason>
 
 Name every file the next thing you do needs, and nothing past that. Reading a card
-is the board file alone. Writing code is the whole code row, tests included. A React
-component adds the frontend file. A build that writes code over twelve turns names
-those files in every one of those turns.
+is the doctrine and the board file. A directed fix is the doctrine and the whole
+code row, tests included. A React component adds the frontend file. A build that
+writes code over twelve turns names the code row and the doctrine in every one of
+those turns.
 
 - Reading a card, or any backlog command or card move:
   `~/.agents/rules/backlog-board.md`.
@@ -129,8 +136,8 @@ those files in every one of those turns.
 - Meeting something broken you could leave for someone else, a failing or flaky
   test, a red check, a bug or TODO in code you never touched, a card or question
   that has sat, and before calling any work done: `~/.agents/rules/ownership.md`.
-- Designing, or choosing between practices: `~/.agents/rules/doctrine.md`, which
-  names the section to read and routes to the judgment, coupling, and wiki rules.
+- Finishing any task, before the handoff:
+  `~/.agents/rules/refactoring/after-task-pass.md`.
 - Meeting recurring or blocking friction in a task, and finishing a task that
   exposed it: `~/.agents/rules/continuous-improvement.md`.
 - Editing a file agents load as instructions:
@@ -139,44 +146,14 @@ those files in every one of those turns.
 A task starts on its first job, not on all of them. For a card that is reading it.
 A missing announcement is a defect João calls out.
 
+Two rules bind every task, whatever files it reads:
+
 - Work in the smallest coherent step with the fastest feedback, and verify each step
   before the next. Queue time and rework are the costs to minimize. Effort is not.
   Treat each change as an experiment. Predict the exact result, then measure it.
-- Write the test first and let it drive the design. A test that is hard to write is
-  feedback about the abstraction rather than a testing problem. Mock only types you
-  own. See every test fail once before trusting it. Pick tests by risk rather than
-  by coverage. A new system gets a walking skeleton before
-  features. Untested code gets characterization tests, then its dependencies broken,
-  then the change.
 - Prefer a guard the system enforces (an assert, a type, a CI gate) to vigilance.
   Look for the cause in the system before the person, and tell ordinary variation
   from a real signal before you react to it.
-- Complexity is the reader's cost to understand and change. Tolerate none of it
-  accumulating. Dependencies point inward toward policy. The database, the web, and
-  frameworks are details behind boundaries drawn along axes of change. Couple
-  deliberately, to things whose change history shows they're stable. Parse untrusted
-  data once at the boundary into a type that can't hold an illegal state. Name domain
-  concepts as value objects. Redesign the interface so an error can't occur before
-  you write code to handle it.
-- One ubiquitous language across conversation, code, tests, and the project's
-  glossary. Model with João, the domain expert, and never alone. A model is judged
-  by its usefulness. Strategic boundaries before tactical patterns, and a
-  pattern only where its benefit exceeds its cost.
-- Code is read far more than written. Intention-revealing names, small functions at
-  one level of abstraction. Refactor in small behavior-preserving steps, tidying in
-  separate commits. DRY is about knowledge rather than text. Composition over
-  inheritance. A new hierarchy needs a case. Third-party code stays behind
-  interfaces named in the domain. Read and understand every line of generated code
-  before it's yours.
-- After every task, look for the structural opportunity the task exposed, beyond the
-  in-file cleanup. `~/.agents/rules/refactoring/after-task-pass.md` owns that pass.
-- Where a book and the language's idiom differ, the idiom wins. Where authors differ,
-  the canon wins (PragProg, Clean Code, XP, Refactoring, GOOS, Release It, Clean
-  Architecture, Modern Software Engineering), and the doctrine's section 12 holds the
-  rulings.
-- Security is part of every review and belongs in the design and the toolchain from
-  the start.
-- An em dash is never written, in anything. Use a comma or a new sentence.
 
 ## Replies
 

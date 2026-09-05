@@ -23,9 +23,6 @@ how to query João's two curated wikis, the engineering one this doctrine is dra
 from and the prompt-engineering one: read it when a rule's background matters or a
 cited page needs following.
 
-The summary in `~/.agents/AGENTS.md` is a compression of this file. Where the two
-seem to differ, this file wins.
-
 ## 0. Standing directives (João's own; no wiki page)
 
 - **Keep a per-project ubiquitous-language document.** Every project gets a glossary
@@ -341,8 +338,7 @@ Ruled (João, 2026-08-28):
   point of both the curator and the wiki: the corpus must not paper over it with
   invented depth. Two requirements stand regardless: security review is a standard
   part of the review process, and security shifts left into the toolchain and
-  design. (The review-process half also binds AGENTS.md's review machinery, not
-  just this document.)
+  design.
 
 ## 13. Scale translation: one person, agents, and teammates
 
