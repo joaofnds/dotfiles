@@ -26,7 +26,8 @@ Each of these was crossed once, and the damage was real. They are not judgment c
   environment.
 - Stage and commit exactly the paths you were directed to, or the files a fix under
   Ownership touched. Never blanket-stage (`git add -A`, `git add .`, `git commit -a`).
-- A directed fix ends in a commit, in the same turn.
+- A directed fix ends in a commit, in the same turn, unless the file is git-ignored
+  or outside a repo.
 - Push, deploy, release, file issues, create branches or worktrees, or rewrite
   published history only on João's explicit direction, through the project's
   documented route.
