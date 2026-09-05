@@ -3,8 +3,9 @@
 Governs every subagent spawn, inside a workflow loop or ad hoc. Everything here is
 observed harness behavior, not documented mechanism, last checked on claude-code
 2.1.226, except the `name` behavior, whose probe is recorded in
-`instruction-external-facts.md` §Harness mechanics. Re-verify a line here after a CLI
-bump before trusting it; the shapes have reversed on a release before.
+`~/.agents/skills/review-instructions/references/external-facts.md` §Harness
+mechanics. Re-verify a line here after a CLI bump before trusting it; the shapes have
+reversed on a release before.
 
 ## The two shapes
 
@@ -26,9 +27,7 @@ often cheaper than a new spawn.
 A general agent inherits `Edit`, `Write`, and `Bash`, and the `Agent` call has no tools
 field, so the mandate is the only lever: a review, refutation, or audit brief says "read
 only: make no edits and run no mutating commands; return findings". The `*-reviewer`
-specialists carry `Read, Grep, Glob` and need no such clause. `skills/panel-review/SKILL.md`
-(§4, the kill step) and `skills/adversarial-review/SKILL.md` §Send the reviewer cite this
-heading; renaming it breaks both pointers.
+specialists carry `Read, Grep, Glob` and need no such clause.
 
 ## Model
 
@@ -63,8 +62,8 @@ travels by file.
 
 A named spawn has returned only a receipt in place of its report, and the cause is
 unsettled; no explanation may be restored as settled
-(`instruction-external-facts.md` §Harness mechanics records what is and is not
-established). Do not pass `name` on any spawn.
+(`~/.agents/skills/review-instructions/references/external-facts.md` §Harness
+mechanics records what is and is not established). Do not pass `name` on any spawn.
 
 ## Truncated reports
 
