@@ -79,9 +79,12 @@ Name the model and the effort level to run the session at, since he starts it by
 levels are low, medium, high, xhigh, and max
 (`~/.agents/skills/review-instructions/references/external-facts.md` §Harness mechanics).
 
-Then end the reply with one line João can paste into a fresh session, in this form:
+Then end the reply with the line João pastes into a fresh session, in a fenced block so
+it copies in one tap:
 
-    continue <card id>: read the card and its attached docs. next: <the first move>
+```
+continue <card id>: read the card and its attached docs. next: <the first move>
+```
 
 Name a skill in that last part where one fits the move.
 
