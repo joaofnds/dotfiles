@@ -20,9 +20,8 @@ works: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, rules, skills, slash commands, age
 definitions, output styles, the reference files those route into, and hooks that
 inject instruction text. Apply them to instruction text a plan embeds for later
 landing, as if it were already in its destination file. Do not apply them to a
-document an agent consumes as task input, however imperative it reads. Three carriers
-load and are still exempt: memory files, fixtures under `evals/`, whose defects are
-planted, and `workflows.md`, which is gated by form.
+document an agent consumes as task input, however imperative it reads. Memory files
+load and are still exempt, because a session writes them for itself.
 
 Check the text under review, not the file around it. Bringing an existing file up to
 these checks is its own task, never a side effect of an unrelated edit.
