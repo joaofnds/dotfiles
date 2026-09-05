@@ -1,6 +1,7 @@
 ---
 name: art-direction
 description: Develops a visual direction for new or substantially redesigned interface work, deciding palette, typography, layout, and the one element the page is remembered by, and checking each choice against the defaults a model reaches for unprompted. Use when the work opens a visual direction. A scoped fix inside an established system follows the frontend coding style instead.
+disable-model-invocation: true
 ---
 
 # Art direction
