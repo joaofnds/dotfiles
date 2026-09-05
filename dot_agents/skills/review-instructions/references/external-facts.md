@@ -1,10 +1,12 @@
 # Probed Facts Behind Instruction Artifacts
 
-What this machine's harness and tools were observed to do, each entry with the check
-that verified it and the trigger that re-verifies it.
+What this machine's Claude Code harness and Anthropic's models were observed to do,
+each entry with the check that verified it and the trigger that re-verifies it. A fact
+about any other tool lives with the rules that rest on it, not here.
 
-A numeric or outcome claim an instruction artifact makes that is not listed here is
-unaudited. Treat it as a mechanism argument and never cite it as measured. Cite an entry as `references/external-facts.md` §<heading>.
+A claim an instruction artifact makes about the harness or the models, and is not
+listed here, is unaudited. Treat it as a mechanism argument and never cite it as
+measured. Cite an entry as `references/external-facts.md` §<heading>.
 
 Record an entry only with a check you ran in the recording session, and re-check a
 claim inherited from a report or from memory before it enters. Query the `prompts`
@@ -128,69 +130,6 @@ edited together. The live copies are the kaizen skill's transcript layout, the r
 skill's transcript pointer, the relay and prompt skills' lists of effort levels, and the
 hard line in your always-loaded instructions that hooks and settings take effect
 mid-session.
-
-## backlog.md CLI
-
-Probes against backlog.md v1.50.1 at `/opt/homebrew/bin/backlog`, with the
-directory bullets re-probed at v1.51.0. The final bullet is a git probe with its
-own trigger. **Re-verify on any backlog.md upgrade.**
-
-- `backlog init` writes a `<CRITICAL_INSTRUCTION>` workflow block into the repo's
-  `AGENTS.md`. A hand-rolled board (the board's `{tasks,docs}` plus a config file)
-  is fully functional without init.
-- Transitions are ungated: the CLI silently accepts `-s Done` with unchecked
-  acceptance criteria, forward moves while a dependency is open, and nonexistent
-  `--ref`/`--doc` paths.
-- A root `backlog.config.yml` with a `backlog_directory` key moves the whole board,
-  docs and decisions included, to that path, and the CLI finds it from any
-  subdirectory. The same key inside the board's own `config.yml` is ignored, leaving
-  the board at `backlog/` *(probe, 1.51.0)*.
-- `backlog init --backlog-dir` with a custom path defaults the config to the root and
-  refuses `--config-location folder`. It also refuses `--agent-instructions none`
-  combined with `--integration-mode none` *(probe, 1.51.0)*.
-- `backlog doc create` rejects paths outside the board's `docs/` directory.
-- `backlog milestone` is a first-class object with `add`, `list`, `rename`, `remove`,
-  and `archive`, and a board holds any number of them. A milestone carries an optional
-  description and due date, and `task create -m` and `task list -m` assign and filter by
-  closest case-insensitive title match *(probe, 1.51.0)*.
-- A milestone's completion is derived from the tasks assigned to it, so it leaves the
-  active set of `milestone list` once every one of them is Done. A milestone with no
-  tasks stays active at `0/0 done` *(probe, 1.51.0)*.
-- `--append-notes`, `--append-plan`, and `--append-final-summary` accumulate within a
-  call and across calls, and `--comment` appends a discussion comment.
-  `task list --plain` lists every column, Done included. `decision create` fails with
-  ENOENT when the board has no `decisions/` directory *(probe, 1.51.0)*.
-- `task edit --notes` replaces the whole implementation-notes field, `--append-notes`
-  appends; `--doc` and `--dep` likewise replace the whole field and have no additive
-  sibling, so a second call drops the first call's values; `task create` without `-s`
-  lands the card in `default_status`, `--parent` included *(probe, 1.50.1)*.
-- A doc file without the four-key frontmatter (id, title, type, created_date) lists
-  as a blank-titled row.
-- Doc and task IDs allocate max+1, so hand-assigned IDs are safe.
-- No global or user-level config exists; `backlog config` is project-scoped.
-- The CLI re-serializes the board's config file during read operations (checksum and
-  line count change on a `task list`). Raw-edited values of known keys survived
-  re-serialization in fresh-board probes, but one live-board raw edit
-  (`zero_padded_ids`) was later found reverted, cause unpinned: prefer
-  `backlog config set`, and re-verify the file after a subsequent `task list`.
-- `backlog task <id> --json` wraps output as `{schemaVersion: 1, kind, task:{...}}`;
-  the card fields (`title`, `description`, `status`, `labels`, `dependencies`,
-  `acceptanceCriteria[].checked`, `subtasks`, `documentation`, `implementationNotes`,
-  `finalSummary`, `parentTaskId`) sit under `task`.
-- Git, not backlog, but load-bearing for the ignored-board check: under a `.boris/`
-  ignore pattern, `git check-ignore -q .boris` exits 1 while nothing exists on disk,
-  and probing a child path exits 0 *(probe, git 2.55.0; re-verify on a git upgrade)*.
-
-## chezmoi source resolution
-
-Probes against the dotfiles source at `~/code/dotfiles`. **Re-verify on a chezmoi
-upgrade or a change to the rendered symlinks.**
-
-- `~/.claude/skills` is a symlink to `~/.agents/skills`, and `chezmoi source-path`
-  answers `not managed` with exit 1 for a path under the symlink while resolving the
-  same file under `~/.agents/`. A session that probes the `~/.claude` path reads the
-  answer as license to edit the rendered tree, and `chezmoi apply` erases the edit
-  *(probe, chezmoi 2.72.0)*.
 
 ## Deprecated model mechanics
 
