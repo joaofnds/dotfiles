@@ -4,7 +4,11 @@ Terms of this repository's domain, in the words João uses for them. Add a term 
 you introduce or lean on one; one term per concept.
 
 - **Corpus**: the instruction files this repository renders for agents: the global
-  instructions, skills, agent definitions, output styles.
+  instructions, the rules, skills, agent definitions, output styles.
+- **Rules**: the craft knowledge under `~/.agents/rules/`: coding style, engineering
+  judgment, coupling, testing, the refactoring catalog, the wikis, ownership,
+  continuous improvement. The source for that knowledge. The global instructions
+  compress it and the skills route to it.
 - **Reply**: the final message of a turn, the only text João reliably reads.
 - **Brief**: the reply cut to what João can act on, in the register the brief output
   style sets.
