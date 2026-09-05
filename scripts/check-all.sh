@@ -40,6 +40,7 @@ run() {
 run "Claude Desktop launcher" bun test "$root/scripts/test-cdl.test.js"
 run "iterate runner" bun test "$root/scripts/test-iterate.test.js"
 run "corpus cross-references" "$root/scripts/check-corpus-refs.sh"
+run "corpus orphans" "$root/scripts/check-corpus-orphans.sh"
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1
