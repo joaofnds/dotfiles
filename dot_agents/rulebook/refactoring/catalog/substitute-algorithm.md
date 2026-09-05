@@ -20,7 +20,7 @@
 
 - The behavior is not pinned by tests. A rewrite without a safety net is a gamble,
   not a refactoring: write characterization tests first
-  (`~/.agents/rules/testing/references/characterization-tests.md`).
+  (`~/.agents/rulebook/testing/references/characterization-tests.md`).
 - You don't fully understand what the current algorithm does, including its warts:
   some caller may depend on an edge behavior the "clearly better" version drops.
   Understand first; the substitution must be an equivalence you can defend.

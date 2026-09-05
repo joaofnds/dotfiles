@@ -13,7 +13,7 @@ templated. Make choices specific to this brief, and take one real risk you can d
 A scoped fix, or work that has to preserve an established visual system, follows the
 frontend rules below and opens no new direction.
 
-`~/.agents/rules/coding-style-frontend.md` owns the floor: the tokens, the spacing scale, the
+`~/.agents/rulebook/coding-style-frontend.md` owns the floor: the tokens, the spacing scale, the
 icon set, the component primitives, the accessibility rules, the breakpoints. This
 skill decides taste and that file decides correctness, so neither restate it here nor
 relitigate it.

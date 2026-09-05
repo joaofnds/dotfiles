@@ -37,7 +37,7 @@ Implementation should feel mechanical. If it's hard, go back to §2.
 - **Code is a liability.** Every line is future maintenance, a potential bug, a thing to understand. The value is what the code does. When in doubt, delete.
 - **Make the change easy, then make the easy change.** Separate the refactor (no behavior change) from the implement (small, verifiable). *(See: Kent Beck / XP)*
 - **Refactor on green.** Clean up after each passing test. Continuous refactoring prevents "we need to stop everything and refactor." *(See: Refactoring / martin-fowler)*
-- **Code smells are design heuristics.** Structural problems, not style. The 24 named smells are in `~/.agents/rules/refactoring/00-index.md` §Smells; take the name from there before citing one.
+- **Code smells are design heuristics.** Structural problems, not style. The 24 named smells are in `~/.agents/rulebook/refactoring/00-index.md` §Smells; take the name from there before citing one.
 - **DRY is about knowledge, not code.** Two identical lines serving different purposes stay separate. Two different-looking blocks encoding the same rule should unify. *(See: Pragmatic Programmer)*
 - **Orthogonality: one change, one place.** Scattered edits for one logical change are a coupling signal. File count is evidence to inspect, not a target: protocol and schema changes may correctly cross several files.
 - **Listen to the tests.** Hard setup = too much coupling. Too many mocks = too many dependencies. Fragile tests = unstable interfaces. Don't silence the signal; fix the design. *(See: GOOS / Freeman & Pryce)*

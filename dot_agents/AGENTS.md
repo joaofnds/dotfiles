@@ -101,7 +101,7 @@ when you save one to memory, save how to re-check it.
 
 ## How the work is done
 
-`~/.agents/rules/doctrine.md` is how engineering is done here, from the working
+`~/.agents/rulebook/doctrine.md` is how engineering is done here, from the working
 method through testing, delivery, architecture, data, operations, and the rulings
 where authors disagree. It binds every task that does engineering work, and the
 task's subject does not decide that. A task that changes a pipeline, a
@@ -127,20 +127,20 @@ writes code over twelve turns names the code row and the doctrine in every one o
 those turns.
 
 - Reading a card, or any backlog command or card move:
-  `~/.agents/rules/backlog-board.md`.
-- Writing or reviewing code, tests included: `~/.agents/rules/coding-style.md`, the
+  `~/.agents/rulebook/backlog-board.md`.
+- Writing or reviewing code, tests included: `~/.agents/rulebook/coding-style.md`, the
   language file beside it where one exists (`coding-style-go.md`,
   `coding-style-typescript.md`), `coding-style-frontend.md` on top for UI work,
-  `~/.agents/rules/engineering-judgment.md`, and `~/.agents/rules/testing/00-index.md`,
+  `~/.agents/rulebook/engineering-judgment.md`, and `~/.agents/rulebook/testing/00-index.md`,
   which routes to its modules.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
 - Meeting something broken you could leave for someone else, a failing or flaky
   test, a red check, a bug or TODO in code you never touched, a card or question
-  that has sat, and before calling any work done: `~/.agents/rules/ownership.md`.
+  that has sat, and before calling any work done: `~/.agents/rulebook/ownership.md`.
 - Finishing any task, before the handoff:
-  `~/.agents/rules/refactoring/after-task-pass.md`.
+  `~/.agents/rulebook/refactoring/after-task-pass.md`.
 - Meeting recurring or blocking friction in a task, and finishing a task that
-  exposed it: `~/.agents/rules/continuous-improvement.md`.
+  exposed it: `~/.agents/rulebook/continuous-improvement.md`.
 - Editing a file agents load as instructions:
   `~/.agents/skills/review-instructions/SKILL.md`.
 
@@ -171,7 +171,7 @@ What binds here regardless of voice:
 ## Where things live
 
 - All work runs through the backlog board (`backlog` CLI). Its conventions are
-  `~/.agents/rules/backlog-board.md`.
+  `~/.agents/rulebook/backlog-board.md`.
 - Every project keeps a glossary of its domain terms, `GLOSSARY.md` at the root unless
   the project already has one elsewhere. Read it when you start, add terms as you learn
   them, and if it's missing, create it and reference it from the project's `CLAUDE.md`

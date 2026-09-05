@@ -63,11 +63,11 @@ checks.
 ## Style
 
 > Style axis: how the code reads at the line and declaration level. Your standard
-> is the coding style under `~/.agents/rules/`: `coding-style.md`, every language
+> is the coding style under `~/.agents/rulebook/`: `coding-style.md`, every language
 > file that matches the diff (`coding-style-go.md`, `coding-style-typescript.md`),
 > `coding-style.md` alone where none matches, and `coding-style-frontend.md` on top
 > when the diff builds UI, plus the "Code craft" section of the doctrine at
-> `~/.agents/rules/doctrine.md`. Names use the domain's words: when the
+> `~/.agents/rulebook/doctrine.md`. Names use the domain's words: when the
 > business says "order", the code doesn't say "transaction record". A swallowed
 > error is a type-system escape hatch and a finding. An entity constructible in an
 > invalid state is a finding, and so is untrusted input not parsed once at the
@@ -95,10 +95,10 @@ checks.
 ## Architecture
 
 > Architecture axis: structure, dependencies, and production behavior. Your
-> standard is `~/.agents/rules/engineering-judgment.md` from "Designing the
-> Solution" through "Evaluating Work", `~/.agents/rules/coupling.md` whole, the
-> "Architecture" section of the doctrine at `~/.agents/rules/doctrine.md`,
-> and in `~/.agents/rules/coding-style.md` the "Architectural Principles & Layering"
+> standard is `~/.agents/rulebook/engineering-judgment.md` from "Designing the
+> Solution" through "Evaluating Work", `~/.agents/rulebook/coupling.md` whole, the
+> "Architecture" section of the doctrine at `~/.agents/rulebook/doctrine.md`,
+> and in `~/.agents/rulebook/coding-style.md` the "Architectural Principles & Layering"
 > and "Code Construction & Decoupling Patterns" sections with every language file
 > that matches the diff. When the diff touches a data store, a queue, distributed
 > state, or a running service, read the doctrine's "Data and distributed systems"
@@ -152,11 +152,11 @@ checks.
 ## Testing
 
 > Testing axis: the test files in the diff and the production code they exercise.
-> Your standard is the testing rules at `~/.agents/rules/testing/`: `00-index.md`
+> Your standard is the testing rules at `~/.agents/rulebook/testing/`: `00-index.md`
 > with its checklist, `01-architecture-and-harness.md`, `02-mocking-roles.md`, and
 > `03-test-aesthetics.md`. Read `references/test-data-builders.md` or
 > `references/characterization-tests.md` there before citing either. Tests are
-> code, so `~/.agents/rules/coding-style.md` and its language file apply to them
+> code, so `~/.agents/rulebook/coding-style.md` and its language file apply to them
 > too. Read the changed test files fully.
 > Read the subject's public API, the signatures and exported types the tests name;
 > an assertion can't be judged against observable behavior without it. List
@@ -218,9 +218,9 @@ checks.
 
 > Refactoring axis, advisory: you describe the code the change lives in; the
 > author decides what the change itself owes. Your standard is the refactoring
-> index at `~/.agents/rules/refactoring/00-index.md`, plus the catalog document
+> index at `~/.agents/rulebook/refactoring/00-index.md`, plus the catalog document
 > under `catalog/` there for each refactoring you cite, read before you cite it.
-> `~/.agents/rules/coding-style.md` and its language file bound every remedy.
+> `~/.agents/rulebook/coding-style.md` and its language file bound every remedy.
 > Where Fowler and a house rule differ, the house rule wins. The wiki checks have
 > no Refactoring section,
 > so walk their "Not findings" section only. Read the changed files fully, then

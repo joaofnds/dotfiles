@@ -10,7 +10,7 @@
 - Application-level integration and end-to-end tests reach a running application through a Harness and Driver. Focused adapter integration tests may exercise the adapter directly. Unit tests may construct behavior with real collaborators and boundary Fakes.
 - A test without readable Arrange / Act / Assert structure, or without a declarative behavior name, is not done.
 
-This file is the gatekeeper. It routes you to the module that applies to what you're doing, and it holds the checklist for the end. The doctrine (`~/.agents/rules/doctrine.md` §TDD and the test discipline) states these principles at one line each. Where a module and the doctrine differ on a reason, the doctrine wins. Where they differ on a rule, the module wins.
+This file is the gatekeeper. It routes you to the module that applies to what you're doing, and it holds the checklist for the end. The doctrine (`~/.agents/rulebook/doctrine.md` §TDD and the test discipline) states these principles at one line each. Where a module and the doctrine differ on a reason, the doctrine wins. Where they differ on a rule, the module wins.
 
 ---
 

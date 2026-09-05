@@ -88,7 +88,7 @@ Two checks classify what survives:
   subject, which claims safety it does not provide.
 - **The stability probe.** When a coupling finding's weight rests on the coupled
   target changing, run the git-history check and apply the threshold in
-  `~/.agents/rules/coupling.md` §The threshold. Record the count with the
+  `~/.agents/rulebook/coupling.md` §The threshold. Record the count with the
   disposition.
 
 ## Severity

@@ -12,14 +12,14 @@ starts by claiming its card, as the board rules say.
 ## The loop
 
 Take the next item on the test list and run one turn of the TDD loop in
-`~/.agents/rules/testing/00-index.md` §Foundational vocabulary: red for the
+`~/.agents/rulebook/testing/00-index.md` §Foundational vocabulary: red for the
 predicted reason, the simplest green, refactor, then commit. The commit is the unit
 of progress, small enough that a wrong step costs one revert. The message is the
 delivery skill's. An unpredicted failure and a hard-to-write test are design
 signals the testing rules name. Stop and answer them before going on.
 
 A defect in the path of the task stops the feature work. One outside it is closed
-before the task is called done. `~/.agents/rules/ownership.md` §Ownership says how.
+before the task is called done. `~/.agents/rulebook/ownership.md` §Ownership says how.
 
 ## Stay inside the directive
 
@@ -54,7 +54,7 @@ neither kind of evidence stays unchecked.
 
 ## Finish
 
-Run the pass in `~/.agents/rules/refactoring/after-task-pass.md`. Then move the card: check the acceptance criteria your
+Run the pass in `~/.agents/rulebook/refactoring/after-task-pass.md`. Then move the card: check the acceptance criteria your
 evidence proves, write the final summary naming what you observed, and set the status
 to the next step the task takes: Review when the `review` skill's triggers apply,
 otherwise Done. A directed fix ends in a commit in the same turn, and its card, when

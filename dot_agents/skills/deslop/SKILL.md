@@ -58,7 +58,7 @@ or to the span for a rhythm pattern, and prefer the smallest edit that kills it.
 that passes stays as written. Your own draft has no original to protect, though
 inventing to satisfy a check is barred there the same as anywhere.
 
-Before polishing a comment, apply the test in `~/.agents/rules/coding-style.md`
+Before polishing a comment, apply the test in `~/.agents/rulebook/coding-style.md`
 §Comments default to zero, whether the code gets misread or silently broken without
 it. A comment that survives the pass and fails that test is deleted rather than
 rewritten.

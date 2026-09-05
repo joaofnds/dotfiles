@@ -5,7 +5,7 @@ you introduce or lean on one; one term per concept.
 
 - **Corpus**: the instruction files this repository renders for agents: the global
   instructions, the rules, skills, agent definitions, output styles.
-- **Rules**: the craft knowledge under `~/.agents/rules/`: the doctrine, coding
+- **Rules**: the craft knowledge under `~/.agents/rulebook/`: the doctrine, coding
   style, engineering judgment, coupling, testing, the refactoring pass and catalog,
   the wikis, the board, ownership, continuous improvement. The source for that knowledge. The global instructions
   compress it and the skills route to it.

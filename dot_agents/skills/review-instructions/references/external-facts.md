@@ -43,10 +43,15 @@ Load limits and delivery:
   and a cross-level contradiction stays live in context.
 - Nested `CLAUDE.md` files load on demand when files in their directory are read, not
   at launch.
-- `.claude/rules/`: a rule without `paths:` frontmatter loads at launch at
-  `.claude/CLAUDE.md` priority; with `paths:` it triggers on matching reads and is not
-  re-injected after compaction. Whether a no-`paths` rule survives compaction is
-  unrecorded: do not assert it either way.
+- `.claude/rules/`: every `.md` file under it loads at launch, subdirectories and
+  symlink targets included, at `.claude/CLAUDE.md` priority. A rule with `paths:`
+  frontmatter instead triggers on matching reads and is not re-injected after
+  compaction. Whether a no-`paths` rule survives compaction is unrecorded: do not
+  assert it either way. Linking `~/.agents/rulebook` there as `~/.claude/rules` put
+  its 85 files into every session, 108k input tokens at launch against 18k without
+  the link, so the harness link is named `rulebook` *(probe, 2.1.260, `claude -p`
+  usage before and after)*. Re-check on a Claude Code release that changes rule
+  loading.
 - Re-invoking an unchanged skill re-delivers the whole body. The second invocation
   carries a header saying the instructions were previously loaded, then the full text
   follows it *(probe, 2.1.260)*. Compaction
