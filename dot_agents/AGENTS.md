@@ -119,7 +119,7 @@ component adds the frontend file. A build that writes code over twelve turns nam
 those files in every one of those turns.
 
 - Reading a card, or any backlog command or card move:
-  `~/.agents/skills/board/SKILL.md`.
+  `~/.agents/rules/backlog-board.md`.
 - Writing or reviewing code, tests included: `~/.agents/rules/coding-style.md`, the
   language file beside it where one exists (`coding-style-go.md`,
   `coding-style-typescript.md`), `coding-style-frontend.md` on top for UI work,
@@ -192,8 +192,8 @@ What binds here regardless of voice:
 
 ## Where things live
 
-- All work runs through the backlog board (`backlog` CLI). Its conventions are the
-  `board` skill.
+- All work runs through the backlog board (`backlog` CLI). Its conventions are
+  `~/.agents/rules/backlog-board.md`.
 - Every project keeps a glossary of its domain terms, `GLOSSARY.md` at the root unless
   the project already has one elsewhere. Read it when you start, add terms as you learn
   them, and if it's missing, create it and reference it from the project's `CLAUDE.md`

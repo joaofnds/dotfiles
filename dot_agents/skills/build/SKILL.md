@@ -7,7 +7,7 @@ description: Implements a shaped task or a directed fix. Test first, small verif
 
 You have a task with acceptance observations, or a directed fix small enough not to
 need shaping. You are turning it into committed, observed behavior. A board task
-starts by claiming its card, as the board skill says.
+starts by claiming its card, as the board rules say.
 
 ## The loop
 

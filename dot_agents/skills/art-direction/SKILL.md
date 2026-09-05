@@ -94,7 +94,7 @@ without the brief asking for it.
 
 ## Write the direction down, and get it ratified
 
-Write the direction as a document on the feature's card, by the board skill's route.
+Write the direction as a document on the feature's card, by the board rules' route.
 A direction that exists only in this conversation is gone when the session ends, and
 a later session reads files rather than chat.
 
@@ -107,7 +107,7 @@ holds the directions you considered and dropped, each with its reason. **Tried**
 a running log of what was tried across passes, appended as you go, so the next pass
 reads it instead of rediscovering the same dead end. **Verify** holds the three checks
 under "Verify what you built" below, copied in verbatim, so a session that builds from
-this document without loading this skill still inherits them. The board skill's own
+this document without loading this skill still inherits them. The board rules' own
 document conventions apply on top of these headings.
 
 Show João the tokens and the signature, and ask for an explicit go-ahead. Keep the

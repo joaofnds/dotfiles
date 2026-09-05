@@ -49,7 +49,7 @@ confidence never unlocks a queued ask, and never a hard line.
 ## The log
 
 Write the log as you go, one entry at a time, never reconstructed at the end. It is a
-document on the card, by the board skill's route, so it survives the session that wrote
+document on the card, by the board rules' route, so it survives the session that wrote
 it. Outside a git repository it goes to `$TMPDIR/away-<YYYY-MM-DD>-<slug>.md`. Each
 entry is a line: a decision he would have weighed, with the reason and how to undo it;
 a review, with its verdict and what changed because of it; a queued ask, with the exact
