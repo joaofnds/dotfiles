@@ -60,8 +60,9 @@ the exact moment is too narrow. A change covering cases no shared cause connects
 is too broad. A finding that fails verification is recorded on the card with its
 disproof. A disagreement goes to João, and so does a run in which the witness
 refutes every finding, because the interested party is then the only judge.
-Where a type or a check can enforce the rule itself, propose that check, since
-the defect shows the sentence alone did not hold. Hooks and settings are João's.
+Rank the mechanism as `~/.agents/rules/continuous-improvement.md` §Root Cause and PDCA
+does, since the defect shows the sentence alone did not hold. Hooks and settings are
+João's.
 Propose one only when no other change answers the defect, and say that in the
 proposal.
 

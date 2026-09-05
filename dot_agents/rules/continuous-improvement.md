@@ -4,6 +4,9 @@ Improve recurring friction when evidence and task scope justify it. Do not turn 
 task into a process project: the requested outcome comes first, and a clean run needs no
 manufactured improvement. *(See: kaizen, pdca, toyota-production-system)*
 
+A broken thing, a failing check, a bug, a flaky test, is `ownership.md`'s to route.
+This file governs the friction around the work and the change that removes its cause.
+
 ## 1. Post-Task Reflection
 
 After a non-trivial task that exposed recurring or blocking friction, include a short

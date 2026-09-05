@@ -130,6 +130,8 @@ those files in every one of those turns.
   that has sat, and before calling any work done: `~/.agents/rules/ownership.md`.
 - Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`,
   which routes to the judgment, coupling, and wiki rules.
+- Meeting recurring or blocking friction in a task, and finishing a task that
+  exposed it: `~/.agents/rules/continuous-improvement.md`.
 - Editing a file agents load as instructions:
   `~/.agents/skills/review-instructions/SKILL.md`.
 
