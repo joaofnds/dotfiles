@@ -1,6 +1,6 @@
 ---
 name: review
-description: Decides whether a change needs an independent second review, runs it (one round, fresh reviewer, axis briefs read off the diff), verifies every finding against evidence, disposes of each, records them all. Use at the Review column, before work that is outward-facing, irreversible, or security-surfaced, and whenever João asks for a review or a full review. A change to instruction files goes to review-instructions instead.
+description: Decides whether a change needs an independent second review, runs it (one round, one fresh reviewer per axis, each reading the house standard for its axis against the goal and the diff), verifies every finding against evidence, disposes of each, records them all. Use at the Review column, before work that is outward-facing, irreversible, or security-surfaced, and whenever João asks for a review or a full review. A change to instruction files goes to review-instructions instead.
 ---
 
 # Review
@@ -23,36 +23,39 @@ on unease.
 
 - Materialize the diff as a patch at a readable path, with the changed-file list. A
   bare ref range can resolve to a different diff in the reviewer's context.
-- Collect the task's acceptance observations, and the spec when one exists. A
-  deferral a design doc records as spec-authorized is part of the spec. Implementing
-  less than the spec asked is not a miss when the doc records why.
+- Collect the goal: the card's description and acceptance criteria, the shaped or
+  design document attached to it, and João's own words where he stated the goal in
+  the conversation. A deferral a design doc records as spec-authorized is part of
+  the goal. Implementing less than the goal asked is not a miss when the doc records
+  why. A change with no card and no stated goal cannot be checked against anything,
+  so ask João for the goal in a line before dispatching.
 - Run the project's suite once, with the command from the project's own manifests.
-  Keep the output for the record. Do not give the reviewer the result, the reason
-  review was triggered, or what worries you. A primed reviewer repeats your reading
-  instead of making its own.
+  Keep the output for the record. The reviewers do not run it. Do not give them the
+  result, the reason review was triggered, or what worries you. A primed reviewer
+  repeats your reading instead of making its own.
 
 ## One round, fresh eyes
 
 Which axes apply is read off the diff, like the tier. Unsure means it applies.
 
-- **Style, architecture, security**: every code change.
-- **Spec conformance**: when a spec or acceptance observations exist. When neither
-  exists, record the skip and continue. Do not stop to ask.
-- **Testing**: when the diff touches a test file. Record the skip otherwise.
+- **Spec conformance, style, architecture, security**: every change.
+- **Testing**: when the diff touches a test file. Record the skip otherwise. A
+  change to behavior with no test movement is the Spec axis's finding.
 - **Refactoring**: always. Its findings are advisory, because they describe the
   surrounding code rather than the change.
 
-[references/wiki-checks.md](references/wiki-checks.md) holds the wiki-sourced checks
-behind these axes, with the reasoning and the quotations. Read it when a finding needs
-its source, and paste a line into a brief when the reviewer needs the argument rather
-than the rule.
+Read [references/axes.md](references/axes.md) and dispatch one `reviewer` agent per
+applicable axis, in parallel, each with the diff, the goal, the shared block, and its
+own axis brief pasted whole. One reviewer per axis, because each brief names a
+house standard its reviewer holds beside the diff, and a reviewer holding six reads
+none of them closely. When João names a single axis, send only that one. A reviewer
+that reports a changed file unexamined has not reviewed it, so spawn a fresh
+reviewer for that axis with the same inputs and those files named as its scope, in
+the same round.
 
-Read [references/axes.md](references/axes.md) and dispatch the `reviewer` agent with
-the diff, the acceptance observations, and the applicable axis briefs pasted whole.
-One reviewer reads all axes and reports each defect once, under the axis that owns
-it. Split into parallel reviewers, grouped by axis, only when one context cannot
-read every changed file plus the briefs. A reviewer reporting unexamined files means
-split. When João names a single axis, send only that brief.
+[references/wiki-checks.md](references/wiki-checks.md) holds further checks from
+João's engineering wiki, grouped by axis, with the reasoning and the quotations. Read
+it when a finding needs its source.
 
 One round: the reviewer advises and you own the verdict. Settle a disagreement with
 evidence, or send it to João with your recommendation. Never send it back to the
@@ -67,9 +70,9 @@ blocking claim you can neither reproduce nor disprove goes to João as escalated
 with the probe you couldn't run named. Record refuted findings as refuted, with the
 evidence. Never drop one silently. To dismiss a finding because the repo's own
 instructions allow the pattern, quote the sentence that allows it, with its path. If
-you can't quote it, the repo doesn't say it, and the finding stands. When reviewers
-were split and the same defect arrives under two names, record it once, keeping the
-stronger evidence and the better fix.
+you can't quote it, the repo doesn't say it, and the finding stands. When the same
+defect arrives from two axes, record it once, keeping the stronger evidence and the
+better fix.
 
 Two checks classify what survives:
 
@@ -128,7 +131,7 @@ Dispose of each verified finding one of four ways: fixed (small and reversible: 
 this batch); not a defect, with why; tracked as a task, with its id; escalated to
 João, with your recommendation. Fix blocking findings before done. Observe every
 fix: rerun the suite and the check the finding names. You verify the fixes. Never
-re-dispatch the reviewer for the same change.
+send the change back to a reviewer after fixing.
 
 A disposition covers a defect: something behaves wrongly, or a result is unverified.
 A finding that names no defect, an observation about naming, scope, or documentation,
@@ -165,14 +168,17 @@ should exist, and record the answer with the disposition.
 ## Record everything, brief the decision
 
 Every finding goes on the task's record with its severity and disposition, along
-with the suite output and any recorded axis skips. None are dropped or folded into
-"a few minor things". Each finding carries what a zero-context session needs to act
-on it: the place; the concrete failure, as a rule, spec clause, or attack path,
-never a preference; the trigger that reaches it (the caller, input, configuration,
-or action sequence; revert-test evidence stands in for a change-created smell; an
-exported surface always has a nameable trigger); the simplest viable fix, where a
-heavier fix must cite the verified reason the simpler one fails; and how to verify
-the fix. Order worst first. Group notes under one no-action heading, a line each.
+with the suite output, the axes that ran and the ones skipped, and for each axis the
+standard files its reviewer read and the changed files it examined. The spec
+reviewer's accounting of the goal, one line per requirement and criterion, goes on
+the record whole. None are dropped or folded into "a few minor things". Each finding
+carries what a zero-context session needs to act on it: the place; the concrete
+failure, as a rule, spec clause, or attack path, never a preference; the trigger
+that reaches it (the caller, input, configuration, or action sequence; revert-test
+evidence stands in for a change-created smell; an exported surface always has a
+nameable trigger); the simplest viable fix, where a heavier fix must cite the
+verified reason the simpler one fails; and how to verify the fix. Order worst
+first. Group notes under one no-action heading, a line each.
 
 The review ends when every finding has its disposition. Nothing re-opens it. A clean
 report is one line on the record and in the brief. An empty review of a clean diff

@@ -1,10 +1,10 @@
 # Review: the wiki-sourced checks
 
-Checks drawn from João's engineering wiki, grouped by the axis that owns them. A
-line here is a prompt to look, never the rule itself: where a line and the skill
-that owns its axis disagree, the skill is right. The review skill's axis briefs
-carry what a reviewer is told; this file carries the source material behind them,
-for the reviewer that wants the reasoning or the quotation.
+Checks drawn from João's engineering wiki, grouped by the axis that owns them, with
+the reasoning and the quotation behind each. A line here is a prompt to look. Where
+a house skill owns the axis, that skill is the rule, and it wins where a line
+disagrees with it. No house file stands behind the Security section, so it serves
+the Security axis as its standard.
 
 ## Style
 
