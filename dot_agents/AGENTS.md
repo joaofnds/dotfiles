@@ -77,7 +77,8 @@ in the read table below, say where each one goes.
   Send a question that would have stopped you to a fresh reviewer instead, queue the
   actions the hard lines reserve for his direction, and leave the card's notes
   carrying what you did, what you verified, and the next action.
-- An em dash is never written, in anything. Use a comma or a new sentence.
+- An em dash is never written, in anything, because it hides what relation the
+  two halves have. Write that relation out.
 
 ## Claims
 
