@@ -34,9 +34,10 @@ function say(message) {
 }
 
 function cardId(value) {
-  if (!cardPattern.test(value)) throw new Exit(1, `${value} is not a card id`);
+  const id = value.toUpperCase();
+  if (!cardPattern.test(id)) throw new Exit(1, `${value} is not a card id`);
 
-  return value;
+  return id;
 }
 
 function sessionBudget() {
