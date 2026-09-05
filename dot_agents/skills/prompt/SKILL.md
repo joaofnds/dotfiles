@@ -1,7 +1,7 @@
 ---
 name: prompt
 argument-hint: "What should the fresh session work on?"
-description: Writes one paste-ready prompt that sends something spotted in this session to a fresh session as its own job, carrying what that session cannot look up, and names the model and effort to run it at. Use when João asks for a prompt to paste, so a side finding gets worked without derailing the session that found it. Packaging the work this session is in the middle of is handoff instead.
+description: Writes one paste-ready prompt that sends something spotted in this session to a fresh session as its own job, carrying what that session cannot look up, and names the model and effort to run it at. Use when João asks for a prompt to paste, so a side finding gets worked without derailing the session that found it. Packaging the work this session is in the middle of is relay instead.
 disable-model-invocation: true
 ---
 

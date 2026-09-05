@@ -1,11 +1,11 @@
 ---
-name: handoff
+name: relay
 argument-hint: "What will the next session work on?"
 description: Snapshots this session onto its card, so a fresh session resumes with what this one learned and none of what it went through, and ends with a line João can paste to start it. Writes no new file and decides nothing. Use when context is running low, or when work pauses mid-flight. A session that keeps working while João is away uses the away skill instead, and a side finding that deserves its own session goes to the prompt skill.
 disable-model-invocation: true
 ---
 
-# Handoff
+# Relay
 
 Write no code, create no file, and decide nothing.
 
@@ -64,7 +64,7 @@ not show.
 Where an investigation paused, add the reproduction, the magnitude as reported, the
 hypotheses still live with their evidence, the causes ruled out, and the observation that
 would tell them apart. A probe still in the working tree goes on the card with its path,
-since the handoff comes before debug's cleanup.
+since the relay comes before debug's cleanup.
 
 Where the current direction looks wrong to you, say so in a note rather than handing the
 problem forward in silence. Write several notes where one will not hold it, and quote only

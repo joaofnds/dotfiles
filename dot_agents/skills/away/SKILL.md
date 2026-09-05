@@ -1,6 +1,6 @@
 ---
 name: away
-description: Continues the work already in flight while João is away from the keyboard, replacing the questions that would have stopped you with an independent review and a decision log, until the work is done or every line is blocked on him. Use when he says he is stepping away or to keep going without him. Packaging work for a fresh session is handoff instead.
+description: Continues the work already in flight while João is away from the keyboard, replacing the questions that would have stopped you with an independent review and a decision log, until the work is done or every line is blocked on him. Use when he says he is stepping away or to keep going without him. Packaging work for a fresh session is relay instead.
 disable-model-invocation: true
 ---
 

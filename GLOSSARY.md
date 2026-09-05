@@ -11,7 +11,7 @@ you introduce or lean on one; one term per concept.
 - **Record**: where the detail of the work lives when it leaves the reply: the commit,
   the card, or the document.
 - **Handoff**: the record on a card that lets a fresh session continue the work cold.
-  Build writes one when a task finishes. The handoff skill writes one when a session
+  Build writes one when a task finishes. The relay skill writes one when a session
   stops partway, covering the whole session rather than the phase.
 - **Position**: where the work stands now. Its opposite is the **story**, the account
   of how it got there.

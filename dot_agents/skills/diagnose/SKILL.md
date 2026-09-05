@@ -1,6 +1,6 @@
 ---
 name: diagnose
-description: Writes the durable diagnosis document for a defect whose investigation has ended, carrying the cause, the evidence, the causal chain, and what was ruled out, for a reader with no memory of the session. It reads the code and proposes no fix. Use when a cause needs to survive the session as a document others will read. A cause still being chased belongs to debug, which records its own result on the card, and pausing that chase mid-flight is handoff.
+description: Writes the durable diagnosis document for a defect whose investigation has ended, carrying the cause, the evidence, the causal chain, and what was ruled out, for a reader with no memory of the session. It reads the code and proposes no fix. Use when a cause needs to survive the session as a document others will read. A cause still being chased belongs to debug, which records its own result on the card, and pausing that chase mid-flight is relay.
 ---
 
 # Diagnose

@@ -119,10 +119,10 @@ Tool, permission, and invocation fields:
   warning, 2.1.260)*.
 
 Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two are
-edited together. The live copies are the kaizen skill's transcript layout, the handoff
-skill's transcript pointer, the handoff and prompt skills' lists of effort levels, and
-the hard line
-in your always-loaded instructions that hooks and settings take effect mid-session.
+edited together. The live copies are the kaizen skill's transcript layout, the relay
+skill's transcript pointer, the relay and prompt skills' lists of effort levels, and the
+hard line in your always-loaded instructions that hooks and settings take effect
+mid-session.
 
 ## backlog.md CLI
 
