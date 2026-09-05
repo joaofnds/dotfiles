@@ -4,7 +4,10 @@
 #
 # Checks two things for each `path.md` §Heading citation under dot_agents/:
 #   - the file exists
-#   - the heading exists in it, as a markdown heading or a bolded rule label
+#   - the heading exists in it, as a markdown heading or a bolded rule label, with a
+#     leading section number ("3. ", "4.7 ", "a. ") ignored so a heading can be cited by name
+# and that every bare `~/.agents/<path>.md` a file names exists, since the read table and
+# the skills route by such paths without a heading.
 #
 # Usage: check-corpus-refs.sh
 # Exits 0 when every citation resolves.
@@ -37,7 +40,7 @@ resolve() {
 heading_present() {
   local file="$1" heading="$2" candidate stripped
   while IFS= read -r candidate; do
-    stripped="$(printf '%s' "$candidate" | sed 's/^#\{1,6\}[[:space:]]*//; s/\*\*//g; s/[[:space:]]*$//')"
+    stripped="$(printf '%s' "$candidate" | sed 's/^#\{1,6\}[[:space:]]*//; s/\*\*//g; s/[[:space:]]*$//; s/^[0-9]\{1,2\}\(\.[0-9]\{1,2\}\)\{1,\}\.\{0,1\}[[:space:]]\{1,\}//; s/^[0-9]\{1,2\}\.[[:space:]]\{1,\}//; s/^[a-z]\.[[:space:]]\{1,\}//')"
     [ -z "$stripped" ] && continue
     cite_lc="$(printf '%s' "$heading" | tr '[:upper:]' '[:lower:]')"
     head_lc="$(printf '%s' "$stripped" | tr '[:upper:]' '[:lower:]')"
@@ -51,6 +54,10 @@ heading_present() {
 
 while IFS= read -r file; do
   from_dir="$(dirname "$file")"
+  # A bare `~/.agents/<path>.md` names a corpus file, with or without a heading after it.
+  grep -o '`~/\.agents/[^`]*\.md`' "$file" 2>/dev/null | tr -d '`' | sort -u | while IFS= read -r target; do
+    resolve "$target" "$from_dir" >/dev/null || report "MISSING FILE     ${file#$corpus/} -> $target"
+  done
   # Citations look like: `some/path.md` §Heading words
   grep -o '`[^`]*\.md`[[:space:]]*§[^;,.)]*' "$file" 2>/dev/null | while IFS= read -r citation; do
     target="$(printf '%s' "$citation" | sed 's/^`\([^`]*\)`.*/\1/')"
