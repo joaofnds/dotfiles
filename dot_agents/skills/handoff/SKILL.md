@@ -7,8 +7,7 @@ disable-model-invocation: true
 
 # Handoff
 
-Write no code, create no file, and decide nothing. What this session knows and no record
-holds is what the next one is missing, and that is what goes on the card.
+Write no code, create no file, and decide nothing.
 
 An argument names what the next session will work on. Where the work has no card, create
 one in the column the work stopped in. Where this session touched several cards, the
@@ -52,7 +51,8 @@ lock, a sub-agent whose report has not landed and where its output goes.
 Put the task and why in the description, unless it already carries them.
 
 Say where the work stands: what is done, what is in progress, what is untouched. Be exact
-about half-finished work. Check an acceptance criterion only where its evidence exists.
+about half-finished work. Name the next move. Check an acceptance criterion only where its
+evidence exists.
 
 Leave the decisions still open as open. A question you paper over as settled is the one
 the next session will get wrong.
@@ -70,8 +70,8 @@ Where the current direction looks wrong to you, say so in a note rather than han
 problem forward in silence. Write several notes where one will not hold it, and quote only
 the lines of code or output the next session must read.
 
-Before you write the resume line, check the card for the next move, every open decision as
-open, and the quoted working tree.
+Before you write the resume line, read the card back and name in the reply anything above
+that it does not answer.
 
 ## The resume line
 
