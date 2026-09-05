@@ -18,15 +18,15 @@ The message is the delivery skill's. An unpredicted failure and a hard-to-write 
 design signals. Stop and answer them before going on.
 
 A defect in the path of the task stops the feature work. One outside it is closed
-before the task is called done. `~/.agents/AGENTS.md` §Ownership says how.
+before the task is called done. `~/.agents/skills/ownership/SKILL.md` §Ownership
+says how.
 
 ## Stay inside the directive
 
-The acceptance list bounds the work. A better approach, a neighboring problem, a
-tempting cleanup outside the task: say it in a sentence and carry on, or make it a
-task. Editing files the task didn't call for, without saying so, is how one fix
-becomes an unreviewed refactor. Scope growth is an ask. It is not a decision you
-make alone.
+The acceptance list bounds the work. A better approach or a tempting cleanup
+outside the task: say it in a sentence and carry on, or make it a task. Editing
+files the task didn't call for, without saying so, is how one fix becomes an
+unreviewed refactor. Scope growth is an ask. It is not a decision you make alone.
 
 The acceptance list says when the work is done. It does not say the work is still
 worth doing. Three things end a task besides finishing it: the goal turns out to
