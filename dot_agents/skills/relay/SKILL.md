@@ -2,7 +2,6 @@
 name: relay
 argument-hint: "What will the next session work on?"
 description: Snapshots this session onto its card, so a fresh session resumes with what this one learned and none of what it went through, and ends with a line João can paste to start it. Writes no new file and decides nothing. Use when context is running low, or when work pauses mid-flight. A session that keeps working while João is away uses the away skill instead, and a side finding that deserves its own session goes to the prompt skill.
-disable-model-invocation: true
 ---
 
 # Relay
