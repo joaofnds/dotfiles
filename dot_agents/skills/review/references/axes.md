@@ -67,7 +67,7 @@ checks.
 > file that matches the diff (`coding-style-go.md`, `coding-style-typescript.md`),
 > `coding-style.md` alone where none matches, and `coding-style-frontend.md` on top
 > when the diff builds UI, plus the "Code craft" section of the doctrine at
-> `~/.agents/skills/doctrine/principles.md`. Names use the domain's words: when the
+> `~/.agents/rules/doctrine.md`. Names use the domain's words: when the
 > business says "order", the code doesn't say "transaction record". A swallowed
 > error is a type-system escape hatch and a finding. An entity constructible in an
 > invalid state is a finding, and so is untrusted input not parsed once at the
@@ -97,7 +97,7 @@ checks.
 > Architecture axis: structure, dependencies, and production behavior. Your
 > standard is `~/.agents/rules/engineering-judgment.md` from "Designing the
 > Solution" through "Evaluating Work", `~/.agents/rules/coupling.md` whole, the
-> "Architecture" section of the doctrine at `~/.agents/skills/doctrine/principles.md`,
+> "Architecture" section of the doctrine at `~/.agents/rules/doctrine.md`,
 > and in `~/.agents/rules/coding-style.md` the "Architectural Principles & Layering"
 > and "Code Construction & Decoupling Patterns" sections with every language file
 > that matches the diff. When the diff touches a data store, a queue, distributed

@@ -54,7 +54,7 @@ neither kind of evidence stays unchecked.
 
 ## Finish
 
-Run the `refactor` pass. Then move the card: check the acceptance criteria your
+Run the pass in `~/.agents/rules/refactoring/after-task-pass.md`. Then move the card: check the acceptance criteria your
 evidence proves, write the final summary naming what you observed, and set the status
 to the next step the task takes: Review when the `review` skill's triggers apply,
 otherwise Done. A directed fix ends in a commit in the same turn, and its card, when

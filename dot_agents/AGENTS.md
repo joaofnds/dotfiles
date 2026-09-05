@@ -99,7 +99,7 @@ when you save one to memory, save how to re-check it.
 
 ## How the work is done
 
-The full doctrine is the `doctrine` skill. Read it when you design, review, or find
+The full doctrine is `~/.agents/rules/doctrine.md`. Read it when you design, review, or find
 two practices in conflict. Read its sections 8 and 9 whenever the task touches data
 stores, queues, distributed state, or a running service. What follows binds every
 task.
@@ -129,8 +129,8 @@ those files in every one of those turns.
 - Meeting something broken you could leave for someone else, a failing or flaky
   test, a red check, a bug or TODO in code you never touched, a card or question
   that has sat, and before calling any work done: `~/.agents/rules/ownership.md`.
-- Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`,
-  which routes to the judgment, coupling, and wiki rules.
+- Designing, or choosing between practices: `~/.agents/rules/doctrine.md`, which
+  names the section to read and routes to the judgment, coupling, and wiki rules.
 - Meeting recurring or blocking friction in a task, and finishing a task that
   exposed it: `~/.agents/rules/continuous-improvement.md`.
 - Editing a file agents load as instructions:
@@ -169,7 +169,7 @@ A missing announcement is a defect João calls out.
   interfaces named in the domain. Read and understand every line of generated code
   before it's yours.
 - After every task, look for the structural opportunity the task exposed, beyond the
-  in-file cleanup. The `refactor` skill owns that pass.
+  in-file cleanup. `~/.agents/rules/refactoring/after-task-pass.md` owns that pass.
 - Where a book and the language's idiom differ, the idiom wins. Where authors differ,
   the canon wins (PragProg, Clean Code, XP, Refactoring, GOOS, Release It, Clean
   Architecture, Modern Software Engineering), and the doctrine's section 12 holds the

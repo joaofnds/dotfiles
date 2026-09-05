@@ -7,7 +7,7 @@ this one, which wins over `engineering-judgment.md`, which wins over `coupling.m
 `coupling.md` states its own half ("`coding-style.md` wins"). On anything about tests,
 `testing/00-index.md` and its modules win over all four, including `coupling.md`'s test-shaped
 symptoms. The repo's own `AGENTS.md` / `CLAUDE.md` wins over every file here, tests included.
-The doctrine (`~/.agents/skills/doctrine/principles.md`) holds these rules' reasons at
+The doctrine (`~/.agents/rules/doctrine.md`) holds these rules' reasons at
 principle level. Where the two differ on a reason, the doctrine wins. Where they differ
 on a rule, this file wins.
 Say which rule you set aside and why: resolving a conflict silently is the defect, not having one. **The

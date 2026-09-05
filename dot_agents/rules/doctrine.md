@@ -3,7 +3,28 @@
 The engineering doctrine, derived from João's curated wiki (`~/code/wiki`). Every
 line traces to a wiki page, named in parentheses; when a line reads ambiguous, the
 page is the authority. Each numbered section stands alone, and its **bold lead**
-carries the section's core commitment.
+carries the section's core commitment. The text is addressed to João: "your" here means
+his. Read the section you need rather than the whole file:
+
+- §0 standing directives · §1 method · §2 TDD and testing · §3 lean foundations ·
+  §4 delivery
+- §5 architecture · §6 domain-driven design · §7 code craft
+- §8 data and distributed systems · §9 operations and reliability. These bind when the
+  task touches them and are context otherwise.
+- §10 teams · §11 AI-assisted development · §12 conflict rulings · §13 scale
+  translation · §14 lineage
+
+Three rules files beside this one carry the detail. `engineering-judgment.md`, how a
+problem is understood, a solution designed, and work evaluated, with the
+agent-specific failure modes: read it when you design or judge an approach.
+`coupling.md`, the vocabulary for naming coupling and deciding which to accept: read
+it when a design draws or moves a module or service boundary. `using-the-wiki.md`,
+how to query João's two curated wikis, the engineering one this doctrine is drawn
+from and the prompt-engineering one: read it when a rule's background matters or a
+cited page needs following.
+
+The summary in `~/.agents/AGENTS.md` is a compression of this file. Where the two
+seem to differ, this file wins.
 
 ## 0. Standing directives (João's own; no wiki page)
 
