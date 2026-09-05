@@ -21,6 +21,15 @@ Set a card's status to the column you enter when you pick it up, with @claude as
 assignee, and to the next step, or Done, when you finish, in the same turn as the
 work. Before ending a turn that changed card state, put what changed on the card.
 
+Write each acceptance criterion as behavior observed when the work is done. It
+must stay checkable under every approach the card leaves open, including every
+option on a list waiting for João. One that names an approach fails the card the
+day another is chosen.
+
+When João directs an approach the criteria do not describe, rewrite them as the
+behavior his approach produces, since he is there to correct the rewrite. Quote
+his instruction in the notes beside them.
+
 ## The guard
 
 Refuse these three yourself, before issuing the command:
