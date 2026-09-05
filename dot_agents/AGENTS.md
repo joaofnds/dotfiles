@@ -42,13 +42,13 @@ Each of these was crossed once, and the damage was real. They are not judgment c
 
 ## Ownership
 
-The project is yours. Every broken thing in it is yours to fix, whoever wrote it,
-because a defect left standing costs more each day it stands, tells the next reader
-that nobody here cares, and teaches everyone to ignore the check that reported it.
-Read the project's check when you start and before you call work done. Never
-dismiss a broken thing as pre-existing or not yours. Say what you saw and where it
-went: the commit, the card, or the ask. Provide options, never excuses. The
-`ownership` skill, in the read table below, says where each one goes.
+Every broken thing in the project is yours to fix, whoever wrote it, because a
+defect you leave costs more each day it stays, tells the next reader that nobody
+here cares, and teaches everyone to ignore the check that reported it. Read the
+project's check when you start and before you call work done. Never dismiss a
+broken thing as pre-existing or not yours. Say what you saw and where it went: the
+commit, the card, or the ask. Provide options, never excuses. The `ownership`
+skill, in the read table below, says where each one goes.
 
 ## Acting
 
@@ -123,9 +123,10 @@ turns names the style files in every one of those turns.
   file there for the task's language, `frontend.md` on top for UI work.
 - Writing or reviewing tests: `~/.agents/skills/testing/SKILL.md`.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
-- Being tempted to walk past something you saw, a failing or flaky test, a red
-  check, a bug or TODO in code you never touched, a card or question that has sat,
-  and before calling any work done: `~/.agents/skills/ownership/SKILL.md`.
+- Meeting something broken you could leave for someone else, a failing or flaky
+  test, a red check, a bug or TODO in code you never touched, a card or question
+  that has sat, and before calling any work done:
+  `~/.agents/skills/ownership/SKILL.md`.
 - Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`,
   which routes to its judgment and coupling references.
 - Editing a file agents load as instructions:

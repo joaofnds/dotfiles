@@ -59,5 +59,5 @@ you introduce or lean on one; one term per concept.
   João by hand.
 - **Ownership**: the stance that every broken thing in the project is the session's
   to fix, to put on a card, or to ask João about, whoever caused it. Its failure is
-  **walking past**: a defect the session saw that sits in no commit, on no card, and
-  in no ask.
+  **dismissal**: a defect the session saw that sits in no commit, on no card, and in
+  no ask.
