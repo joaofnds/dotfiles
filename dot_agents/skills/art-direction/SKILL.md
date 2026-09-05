@@ -1,6 +1,6 @@
 ---
 name: art-direction
-description: Develops a visual direction for new or substantially redesigned interface work, deciding palette, typography, layout, and the one element the page is remembered by, and checking each choice against the defaults a model reaches for unprompted. Use when the work opens a visual direction. A scoped fix inside an established system follows the style skill's frontend rules instead.
+description: Develops a visual direction for new or substantially redesigned interface work, deciding palette, typography, layout, and the one element the page is remembered by, and checking each choice against the defaults a model reaches for unprompted. Use when the work opens a visual direction. A scoped fix inside an established system follows the frontend coding style instead.
 ---
 
 # Art direction
@@ -12,7 +12,7 @@ templated. Make choices specific to this brief, and take one real risk you can d
 A scoped fix, or work that has to preserve an established visual system, follows the
 frontend rules below and opens no new direction.
 
-The style skill's frontend file owns the floor: the tokens, the spacing scale, the
+`~/.agents/rules/coding-style-frontend.md` owns the floor: the tokens, the spacing scale, the
 icon set, the component primitives, the accessibility rules, the breakpoints. This
 skill decides taste and that file decides correctness, so neither restate it here nor
 relitigate it.

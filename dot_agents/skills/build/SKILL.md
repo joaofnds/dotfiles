@@ -11,11 +11,12 @@ starts by claiming its card, as the board skill says.
 
 ## The loop
 
-Take the next item on the test list and run one turn of the testing skill's TDD
-loop: red for the predicted reason, the simplest green, refactor, then commit. The
-commit is the unit of progress, small enough that a wrong step costs one revert.
-The message is the delivery skill's. An unpredicted failure and a hard-to-write test are that skill's
-design signals. Stop and answer them before going on.
+Take the next item on the test list and run one turn of the TDD loop in
+`~/.agents/rules/testing/00-index.md` §Foundational vocabulary: red for the
+predicted reason, the simplest green, refactor, then commit. The commit is the unit
+of progress, small enough that a wrong step costs one revert. The message is the
+delivery skill's. An unpredicted failure and a hard-to-write test are design
+signals the testing rules name. Stop and answer them before going on.
 
 A defect in the path of the task stops the feature work. One outside it is closed
 before the task is called done. `~/.agents/skills/ownership/SKILL.md` §Ownership

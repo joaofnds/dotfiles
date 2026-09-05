@@ -63,10 +63,10 @@ checks.
 ## Style
 
 > Style axis: how the code reads at the line and declaration level. Your standard
-> is the style skill's references at `~/.agents/skills/style/references/`:
-> `core.md`, every language file that matches the diff (`go.md`, `typescript.md`),
-> `core.md` alone where none matches, and `frontend.md` on top when the diff builds
-> UI, plus the "Code craft" section of the doctrine at
+> is the coding style under `~/.agents/rules/`: `coding-style.md`, every language
+> file that matches the diff (`coding-style-go.md`, `coding-style-typescript.md`),
+> `coding-style.md` alone where none matches, and `coding-style-frontend.md` on top
+> when the diff builds UI, plus the "Code craft" section of the doctrine at
 > `~/.agents/skills/doctrine/principles.md`. Names use the domain's words: when the
 > business says "order", the code doesn't say "transaction record". A swallowed
 > error is a type-system escape hatch and a finding. An entity constructible in an
@@ -76,13 +76,14 @@ checks.
 > a real boundary and whether it checks destination as well as shape, error
 > translation, entity construction and constructor shape, mapper mechanics, the
 > language files' idioms, and hand-edits to generated files. What an attacker can
-> do with input that passed a parse is Security's. Of the core's "Architecture and
-> layering" section, yours are the entity rules other than "Behavior lives with
-> data", framework-agnostic constructors, safe parsing, error translation in both
-> places it is stated (the translation half of "Defensive networking" and "Error
-> translation at boundaries"), and mapper mechanics. The rest of that section, its
-> paragraph on DI lookup keys included, and all of "Construction and decoupling"
-> are Architecture's, as is which collaborators are injected at all. Of the
+> do with input that passed a parse is Security's. Of `coding-style.md`'s
+> "Architectural Principles & Layering" section, yours are the entity rules other
+> than "Behavior lives with data", framework-agnostic constructors, safe parsing,
+> error translation in both places it is stated (the translation half of
+> "Defensive networking" and "Error Translation at Boundaries"), and mapper
+> mechanics. The rest of that section, its paragraph on DI lookup keys included,
+> and all of "Code Construction & Decoupling Patterns" are Architecture's, as is
+> which collaborators are injected at all. Of the
 > language files, yours are constructor shape (the props object and `readonly` in
 > TypeScript), interface width, and the tag-free domain struct in Go. Port
 > placement, accept-interfaces-return-structs, modeling domain concepts as types,
@@ -94,20 +95,19 @@ checks.
 ## Architecture
 
 > Architecture axis: structure, dependencies, and production behavior. Your
-> standard is the doctrine's judgment and coupling references at
-> `~/.agents/skills/doctrine/references/` (`engineering-judgment.md` from "Designing
-> the Solution" through "Evaluating Work", and `coupling.md` whole), the
+> standard is `~/.agents/rules/engineering-judgment.md` from "Designing the
+> Solution" through "Evaluating Work", `~/.agents/rules/coupling.md` whole, the
 > "Architecture" section of the doctrine at `~/.agents/skills/doctrine/principles.md`,
-> and at `~/.agents/skills/style/references/` the core's "Architecture and layering"
-> and "Construction and decoupling" sections with every language file that matches
-> the diff. When the diff touches a data store, a queue, distributed state, or a
-> running service, read the doctrine's "Data and distributed systems" and
-> "Operations and reliability" sections too. Of the style core, yours are
-> "Construction and decoupling" whole and, in "Architecture and layering", the
-> layering rule with its paragraph on DI lookup keys, "Behavior lives with data",
-> the application layer, "The client defines the contract", the deadline half of
-> "Defensive networking", and whether a boundary needs an anti-corruption layer at
-> all. Of the language files, yours are port placement and
+> and in `~/.agents/rules/coding-style.md` the "Architectural Principles & Layering"
+> and "Code Construction & Decoupling Patterns" sections with every language file
+> that matches the diff. When the diff touches a data store, a queue, distributed
+> state, or a running service, read the doctrine's "Data and distributed systems"
+> and "Operations and reliability" sections too. Of `coding-style.md`, yours are
+> "Code Construction & Decoupling Patterns" whole and, in "Architectural Principles
+> & Layering", the layering rule with its paragraph on DI lookup keys, "Behavior
+> lives with data", the application layer, "The client defines the contract", the
+> deadline half of "Defensive networking", and whether a boundary needs an
+> anti-corruption layer at all. Of the language files, yours are port placement and
 > accept-interfaces-return-structs in Go, and modeling domain concepts as types and
 > mutation by replacement in TypeScript. The rest of those files is Style's. Read
 > it, and report no defect under it.
@@ -152,13 +152,12 @@ checks.
 ## Testing
 
 > Testing axis: the test files in the diff and the production code they exercise.
-> Your standard is the testing skill at `~/.agents/skills/testing/`: `SKILL.md`,
-> `references/architecture.md`, `references/doubles.md`,
-> `references/aesthetics.md`, and `references/checklist.md`. Read
-> `references/builders.md` or `references/characterization.md` there before citing
-> either. Tests are code, so the style skill's core and language file at
-> `~/.agents/skills/style/references/` apply to them too. Read the changed test
-> files fully.
+> Your standard is the testing rules at `~/.agents/rules/testing/`: `00-index.md`
+> with its checklist, `01-architecture-and-harness.md`, `02-mocking-roles.md`, and
+> `03-test-aesthetics.md`. Read `references/test-data-builders.md` or
+> `references/characterization-tests.md` there before citing either. Tests are
+> code, so `~/.agents/rules/coding-style.md` and its language file apply to them
+> too. Read the changed test files fully.
 > Read the subject's public API, the signatures and exported types the tests name;
 > an assertion can't be judged against observable behavior without it. List
 > harness, driver, and Fake definitions you read as support files, and mark every
@@ -195,7 +194,7 @@ checks.
 > broken subject. Never assert an observation you didn't make. When a test is low
 > on both regression protection and refactoring resistance, say "delete it"; do not
 > propose repairs.
-> Name smells as the references name them: Mystery Guest, Interacting Tests,
+> Name smells as the testing rules name them: Mystery Guest, Interacting Tests,
 > Resource Leakage, Slow Test, Erratic or Flaky Test, Test Logic in Production,
 > Obscure Test, Eager Test, Fragile Test, Assertion Roulette, Conditional Test
 > Logic, Hard-Coded Test Data, Test Code Duplication, Free Ride, Trivial Test. An
@@ -218,12 +217,12 @@ checks.
 ## Refactoring (advisory)
 
 > Refactoring axis, advisory: you describe the code the change lives in; the
-> author decides what the change itself owes. Your standard is the refactor skill's
-> catalog index at `~/.agents/skills/refactor/references/catalog-index.md`, plus
-> the catalog document under `references/catalog/` there for each refactoring you
-> cite, read before you cite it. The style skill's core and language file at
-> `~/.agents/skills/style/references/` bound every remedy. Where Fowler and a house
-> rule differ, the house rule wins. The wiki checks have no Refactoring section,
+> author decides what the change itself owes. Your standard is the refactoring
+> index at `~/.agents/rules/refactoring/00-index.md`, plus the catalog document
+> under `catalog/` there for each refactoring you cite, read before you cite it.
+> `~/.agents/rules/coding-style.md` and its language file bound every remedy.
+> Where Fowler and a house rule differ, the house rule wins. The wiki checks have
+> no Refactoring section,
 > so walk their "Not findings" section only. Read the changed files fully, then
 > their direct callers and callees one hop out. A cross-file smell (Shotgun
 > Surgery, Divergent Change, Duplicated Code) may search wider; a file outside the

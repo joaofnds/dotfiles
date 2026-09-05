@@ -38,8 +38,9 @@ var (
   implementation detail: an adapter returns the port's sentinel, not the driver's error
   (`coding-style.md` §2e). `%v` instead of `%w` is the deliberate choice to stop unwrapping.
 - **`errors.Is` for identity, `errors.As` for data.** `errors.Is(err, ErrNotFound)` matches a
-  sentinel through any depth of wrapping; `errors.As(err, &pgErr)` extracts a typed error to
-  read its fields. Never match on the message string.
+  sentinel through any depth of wrapping, where `err == target` misses wrapped errors;
+  `errors.As(err, &pgErr)` extracts a typed error to read its fields. Never match on the
+  message string.
 - **Wrap once per layer.** "failed to" prefixes stack up into unreadable sentences; each `%w`
   adds only what the caller could not already know.
 
@@ -141,7 +142,8 @@ rules; the first is Go-specific and lives only here.
   in a plain `testing` package it is `t.Run`. Either way the row's name is the test's name and the
   failure line identifies the input (`testing/03-test-aesthetics.md` §4.7).
 - **Fakes of owned ports are the default double**, hand-written, with explicit seed and reset
-  per `testing/02-mocking-roles.md` §4. `mock.go` for mockgen output is permitted only in an adapter
+  per `testing/02-mocking-roles.md` §4 and the interface check as a compile-time assignment
+  (`var _ Port = (*FakePort)(nil)`). `mock.go` for mockgen output is permitted only in an adapter
   package whose subject is a third-party contract (`testing/02-mocking-roles.md` §6).
 
 ## 10. Modern Go

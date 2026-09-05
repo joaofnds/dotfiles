@@ -19,17 +19,16 @@ The text is addressed to João: "your" there means his. Every line names, in
 parentheses, the page of his wiki (`~/code/wiki`) it comes from. When a line reads
 ambiguous, that page is the authority.
 
-Three references sit beside it, in this directory:
+Three rules files carry the detail, under `~/.agents/rules/`:
 
-- [references/engineering-judgment.md](references/engineering-judgment.md), how a
-  problem is understood, a solution designed, and work evaluated, with the
-  agent-specific failure modes. Read it when you design or judge an approach.
-- [references/coupling.md](references/coupling.md), the vocabulary for naming coupling
-  and deciding which to accept. Read it when a design draws or moves a module or
-  service boundary.
-- [references/wikis.md](references/wikis.md), how to query João's two curated wikis,
-  the engineering one this doctrine is drawn from and the prompt-engineering one.
-  Read it when a rule's background matters or a cited page needs following.
+- `engineering-judgment.md`, how a problem is understood, a solution designed, and
+  work evaluated, with the agent-specific failure modes. Read it when you design or
+  judge an approach.
+- `coupling.md`, the vocabulary for naming coupling and deciding which to accept.
+  Read it when a design draws or moves a module or service boundary.
+- `using-the-wiki.md`, how to query João's two curated wikis, the engineering one
+  this doctrine is drawn from and the prompt-engineering one. Read it when a rule's
+  background matters or a cited page needs following.
 
 The summary in AGENTS.md, your always-loaded instructions, is a compression of this
 file. Where the two seem to differ, this file wins.

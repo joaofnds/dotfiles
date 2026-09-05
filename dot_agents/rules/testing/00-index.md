@@ -10,7 +10,7 @@
 - Application-level integration and end-to-end tests reach a running application through a Harness and Driver. Focused adapter integration tests may exercise the adapter directly. Unit tests may construct behavior with real collaborators and boundary Fakes.
 - A test without readable Arrange / Act / Assert structure, or without a declarative behavior name, is not done.
 
-This file is the gatekeeper. It routes you to the module that applies to what you're doing, and it holds the checklist for the end.
+This file is the gatekeeper. It routes you to the module that applies to what you're doing, and it holds the checklist for the end. The doctrine (`~/.agents/skills/doctrine/principles.md` §TDD and the test discipline) states these principles at one line each. Where a module and the doctrine differ on a reason, the doctrine wins. Where they differ on a rule, the module wins.
 
 ---
 
@@ -24,6 +24,8 @@ Before you touch a test, identify which of these situations you are in and read 
 | Introducing or modifying any test double, a Fake, Stub, Spy, or Mock, or deciding whether to use one at all | `02-mocking-roles.md` |
 | Writing the body of any test: names, structure, fixtures, assertions, readability | `03-test-aesthetics.md` |
 | Reviewing an existing test, judging quality, or refactoring a suite | All three, then walk the checklist at the bottom of this file |
+| Fixture setup obscuring the behavior, or repeating across tests | `references/test-data-builders.md` |
+| Changing untested legacy behavior | `references/characterization-tests.md` |
 
 If you're doing more than one of these, read more than one module. These are not mutually exclusive: scaffolding a new feature typically means reading all three before you start.
 
@@ -41,7 +43,7 @@ production code. Make the *simplest* change to green, then refactor with the tes
 safety net. Only then choose the next scenario. Pick the green tactic by confidence:
 - **Fake it**: return a literal. The next test forces generalization.
 - **Triangulate**: a second test with different inputs forces the real abstraction.
-- **Obvious implementation**: when the answer is clear, just write it. Don't perform TDD kabuki.
+- **Obvious implementation**: when the answer is clear, just write it. A test whose shape you already know is ritual, not feedback.
 
 **F.I.R.S.T.** (Martin, *Clean Code*).
 - **Fast**: milliseconds for unit, sub-second for integration. Slow tests stop getting run.
@@ -83,7 +85,7 @@ do not have.
 
 Point at these; don't assert them. Each one already exists as output above; cite it rather
 than recall it. If it didn't go that way, say so plainly here; an admitted skip is worth more
-than a false claim. The per-iteration form of this loop is `/build` step 4.
+than a false claim. The per-iteration form of this loop is `~/.agents/skills/build/SKILL.md` §The loop.
 
 ### Structure and naming
 - Does the test satisfy F.I.R.S.T.?

@@ -87,14 +87,9 @@ Two checks classify what survives:
   output a nameable input reaches), and a test whose outcome is independent of its
   subject, which claims safety it does not provide.
 - **The stability probe.** When a coupling finding's weight rests on the coupled
-  target changing, run one git-history check: commits touching the path in the past
-  year, plus the path's age. A path older than the window that changed in at most
-  two commits is stable. Drop the finding and record the count. A younger or busier
-  path keeps the finding, with the count as evidence. An external or historyless
-  target keeps the finding, labeled with the stability assumption it rests on. An
-  empty log is not evidence of stability. This probe does not apply to temporal
-  coupling. Judge that on whether the ordering or interleaving assumption can be
-  violated.
+  target changing, run the git-history check and apply the threshold in
+  `~/.agents/rules/coupling.md` §The threshold. Record the count with the
+  disposition.
 
 ## Severity
 

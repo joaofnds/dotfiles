@@ -19,8 +19,8 @@ a boundary the task crossed awkwardly. The doctrine's sections 5 and 7 are the
 vocabulary.
 
 Fowler's twenty-four smells and sixty-six refactorings are
-[references/catalog-index.md](references/catalog-index.md), each refactoring linked to
-its own document under `references/catalog/`. Take a smell's or a refactoring's name
+`~/.agents/rules/refactoring/00-index.md`, each refactoring linked to its own document
+under `catalog/` beside it. Take a smell's or a refactoring's name
 from the index rather than inventing one, and read the document before citing it: it
 carries the mechanics, the example, and the house rules the finding must honor.
 

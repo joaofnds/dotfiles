@@ -113,22 +113,24 @@ Name the files first, then open them, before any other tool:
     No rule files apply: <one-sentence reason>
 
 Name every file the next thing you do needs, and nothing past that. Reading a card
-is the board file alone. Writing a test is the code and testing files. A React
-component is those plus the frontend file. A build that writes code over twelve
-turns names the style files in every one of those turns.
+is the board file alone. Writing code is the whole code row, tests included. A React
+component adds the frontend file. A build that writes code over twelve turns names
+those files in every one of those turns.
 
 - Reading a card, or any backlog command or card move:
   `~/.agents/skills/board/SKILL.md`.
-- Writing or reviewing code: `~/.agents/skills/style/references/core.md` and the
-  file there for the task's language, `frontend.md` on top for UI work.
-- Writing or reviewing tests: `~/.agents/skills/testing/SKILL.md`.
+- Writing or reviewing code, tests included: `~/.agents/rules/coding-style.md`, the
+  language file beside it where one exists (`coding-style-go.md`,
+  `coding-style-typescript.md`), `coding-style-frontend.md` on top for UI work,
+  `~/.agents/rules/engineering-judgment.md`, and `~/.agents/rules/testing/00-index.md`,
+  which routes to its modules.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
 - Meeting something broken you could leave for someone else, a failing or flaky
   test, a red check, a bug or TODO in code you never touched, a card or question
   that has sat, and before calling any work done:
   `~/.agents/skills/ownership/SKILL.md`.
 - Designing, or choosing between practices: `~/.agents/skills/doctrine/SKILL.md`,
-  which routes to its judgment and coupling references.
+  which routes to the judgment, coupling, and wiki rules.
 - Editing a file agents load as instructions:
   `~/.agents/skills/review-instructions/SKILL.md`.
 
