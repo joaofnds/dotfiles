@@ -114,11 +114,15 @@ Tool, permission, and invocation fields:
   *(probe, 2.1.220–2.1.221)*. Two explanations remain open: an agent-team teammate
   mechanism, or an ordinary named background spawn; and the probes run so far cannot
   separate them. Do not restore either as settled.
+- Session effort levels are `low`, `medium`, `high`, `xhigh`, and `max`, set for a
+  session by `--effort` *(probe: `claude --effort bogus` names the valid set in its
+  warning, 2.1.260)*.
 
 Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two are
-edited together. The live copies are the kaizen skill's transcript layout and the
-hard line in your always-loaded instructions that hooks and settings take effect
-mid-session.
+edited together. The live copies are the kaizen skill's transcript layout, the handoff
+skill's transcript pointer, the handoff and prompt skills' lists of effort levels, and
+the hard line
+in your always-loaded instructions that hooks and settings take effect mid-session.
 
 ## backlog.md CLI
 

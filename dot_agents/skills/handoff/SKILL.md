@@ -1,56 +1,89 @@
 ---
 name: handoff
-argument-hint: "What will the next session focus on?"
-description: Moves in-flight work out of the conversation onto its card, so a fresh session can pick it up cold, and ends with a line João can paste to resume. Writes no file and decides nothing. Use when work pauses mid-flight. A session that keeps working while João is away uses the away skill instead, and a side finding that deserves its own session goes to the prompt skill.
+argument-hint: "What will the next session work on?"
+description: Snapshots this session onto its card, so a fresh session resumes with what this one learned and none of what it went through, and ends with a line João can paste to start it. Writes no new file and decides nothing. Use when context is running low, or when work pauses mid-flight. A session that keeps working while João is away uses the away skill instead, and a side finding that deserves its own session goes to the prompt skill.
 disable-model-invocation: true
 ---
 
 # Handoff
 
-Everything the next session needs lives in this conversation and nowhere else. Move it
-onto the card. You are preserving state, not deciding anything, so write no code and
-no new file. The card and the documents already attached to it are the handoff.
+Write no code, create no file, and decide nothing. What this session knows and no record
+holds is what the next one is missing, and that is what goes on the card.
 
-Where the work has no card, create one in the column the work is in.
+An argument names what the next session will work on. Where the work has no card, create
+one in the column the work stopped in. Where this session touched several cards, the
+snapshot goes on the one the next session resumes, and each of the others gets a note
+pointing there. Where an earlier snapshot sits on that card, say which one this replaces.
 
-An argument on the invocation names what the next session will work on. Flush the
-state that matters for that first, and trim what does not.
+## Read before you write
+
+Keep secrets and personal data off the card.
+
+Your account of a long session is a summary of it by now, so read the card before you add
+to it. In a git repository, quote `git status --short` for the paths this session touched,
+so the next session can diff the tree against what you left.
+
+Say what each uncommitted path is for: keep, probe, half-done, or another session's. Git
+holds the listing and holds none of that.
+
+Put this session's transcript path on the card, to grep rather than read whole, since it
+is the only complete copy of what the snapshot leaves out and nothing else says which
+transcript was this one
+(`~/.agents/skills/review-instructions/references/external-facts.md` §Harness mechanics).
 
 ## What goes on the card
 
-The task and why, in the description, where it is not there already.
+Carry a fact when rediscovering it would cost the next session more than reading it here.
+Everything else goes, including the order in which this session did things. Reference by
+path or by URL whatever already exists somewhere, rather than restating it.
 
-Where the work actually stands: what is done, what is in progress, what is untouched.
-Be exact about half-finished work. Check an acceptance criterion only where its
-evidence exists.
+Quote João's corrections in his own words rather than paraphrasing them, since a
+paraphrase arrives as your judgment and binds the next session as his.
 
-The decisions still open, as open. A question you paper over as settled is the one the
-next session will get wrong.
+Name every approach ruled out, who ruled it out, and why. An approach he refused never
+failed, and a fresh session will propose it again.
 
-The paths and lines that are load-bearing, and what this session learned that the
-repository does not show: an approach that failed, a constraint that surprised you.
+Carry the command that verified a thing rather than the verdict. A tool result from this
+session is not one from the next session's, so a bare "verified" is downgraded on arrival.
 
-A debugging session adds the reproduction, the magnitude as reported, the hypotheses
-with their evidence, the causes ruled out, and the next observation that would
-discriminate. Any probe still in the working tree goes on the card with its path, since
-the handoff comes before debug's cleanup. A build adds the working tree's state, what
-is verified, and the next unchecked item.
+Name anything still running that a fresh process will not inherit: a server on a port, a
+lock, a sub-agent whose report has not landed and where its output goes.
 
-Reference something that already exists by its path or its URL rather than restating
-it, since a copy here goes stale where the original does not. Keep secrets and personal
-data out. Where the current direction looks wrong to you, say so in a note rather than
-handing the problem forward in silence.
+Put the task and why in the description, unless it already carries them.
 
-Write notes rather than a transcript, several where one will not hold it, and quote
-only the lines of code or output the next session must read.
+Say where the work stands: what is done, what is in progress, what is untouched. Be exact
+about half-finished work. Check an acceptance criterion only where its evidence exists.
+
+Leave the decisions still open as open. A question you paper over as settled is the one
+the next session will get wrong.
+
+Name what is load-bearing by symbol or by path, since a line number goes stale as soon as
+anything above it moves. Add the constraints that surprised you, which the repository does
+not show.
+
+Where an investigation paused, add the reproduction, the magnitude as reported, the
+hypotheses still live with their evidence, the causes ruled out, and the observation that
+would tell them apart. A probe still in the working tree goes on the card with its path,
+since the handoff comes before debug's cleanup.
+
+Where the current direction looks wrong to you, say so in a note rather than handing the
+problem forward in silence. Write several notes where one will not hold it, and quote only
+the lines of code or output the next session must read.
+
+Before you write the resume line, check the card for the next move, every open decision as
+open, and the quoted working tree.
 
 ## The resume line
 
-End the reply with one line João can paste into a fresh session, in this form:
+Name the model and the effort level to run the session at, since he starts it by hand. The
+levels are low, medium, high, xhigh, and max
+(`~/.agents/skills/review-instructions/references/external-facts.md` §Harness mechanics).
 
-    continue TASK-N: read the card and its attached docs; next: <the first move>
+Then end the reply with one line João can paste into a fresh session, in this form:
+
+    continue <card id>: read the card and its attached docs. next: <the first move>
 
 Name a skill in that last part where one fits the move.
 
-Outside a git repository, where no board is possible, the flush goes in the reply
+Outside a git repository, where no board is possible, the snapshot goes in the reply
 itself, above that line.
