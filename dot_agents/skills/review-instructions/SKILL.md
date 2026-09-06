@@ -159,10 +159,14 @@ every session, and move occasional knowledge to a skill. Put critical rules earl
 a long file, or restate them in one line at the end, because the middle is where
 rules get dropped. Put a rule that constrains a list above that list. Below it the
 reader has already matched every entry before meeting the limit on matching them.
-Write a skill description in third person, saying what the skill does and when to
-use it, since it is the sole trigger for loading. Where on-demand material goes
-unread, sharpen the trigger before inlining it. Keep references one level deep, one
-term per concept, and nothing time-sensitive.
+Write a skill description in third person as a call to action: what the skill does
+in one clause, when to use it, and what goes elsewhere. It loads in every session, so
+it stays short, and how the skill works stays in the body, which only a session that
+invoked it reads. Where on-demand material goes unread, sharpen the trigger before
+inlining it. A skill sits inside the workflow and never says which column a card
+goes to, or when. The board rules say that, and a clause about it in a skill is a
+second copy in the wrong layer. Keep references one level deep, one term per
+concept, and nothing time-sensitive.
 
 **End steps on a checkable bound.** Require each workflow step to end on a condition
 the agent can test, since a vague bound invites finishing before done and a demanding
@@ -240,6 +244,8 @@ Name the mode when a finding matches one.
   requirement, or boundary.
 - **Instruction laundering**: the same rule appears under several headings that load
   together. The One home check settles which case it is.
+- **Layer leakage**: a skill states how the workflow around it moves, which the board
+  rules own.
 - **Decay**: a path, version, tool, or mechanism has gone stale.
 
 ## The verdict
