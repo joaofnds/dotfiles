@@ -1,6 +1,6 @@
 ---
 name: build
-description: Implements a shaped task or a directed fix. Test first, small verified steps, small commits, one direct observation of the result, then the refactoring pass and the handoff. Use at the Build column and for any directed change to code or to an instruction file.
+description: Implements a shaped task or a directed fix. Use at the Build column and for any directed change to code or to an instruction file.
 ---
 
 # Build

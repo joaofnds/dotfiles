@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Turns a claim about behavior into a verdict backed by fresh evidence, by restating the claim falsifiably, capturing a baseline and a treatment under the same conditions, and returning verified, not verified, or inconclusive. Use when a claim needs proof and you can gather it yourself in this session. A cause that is not yet known goes to debug instead.
+description: Turns a claim about behavior into a verdict backed by fresh evidence. Use when a claim needs proof and you can gather it yourself in this session. A cause that is not yet known goes to debug instead.
 ---
 
 # Verify

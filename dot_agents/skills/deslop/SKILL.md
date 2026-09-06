@@ -1,6 +1,6 @@
 ---
 name: deslop
-description: Removes the writing patterns that mark prose as machine-written, from documents, commit bodies, comments, and essays, using inventories of the phrases and the structures to cut. Use before delivering prose others will read. Standing instruction files are out of scope, and the brief output style governs replies.
+description: Removes the writing patterns that mark prose as machine-written from documents, commit bodies, comments, and essays. Use before delivering prose others will read. Standing instruction files are out of scope, and the brief output style governs replies.
 ---
 
 # Deslop

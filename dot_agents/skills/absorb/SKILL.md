@@ -1,6 +1,6 @@
 ---
 name: absorb
-description: Studies an instruction resource João points at, a repository's agent corpus, a skill or rule file, or published guidance, and decides what our corpus imports from it, recorded as an inventory with a verdict per item and landed through the normal columns. Use when directed to absorb, import, port, adopt, or learn from a named resource, or to compare one against our corpus. Reviewing our own instruction files with no external subject is review-instructions. Ordinary software tasks are shape.
+description: Decides what our corpus imports from an instruction resource João points at, a repository's agent corpus, a skill or rule file, or published guidance. Use when directed to absorb, import, port, adopt, or learn from a named resource, or to compare one against our corpus. Reviewing our own instruction files with no external subject is review-instructions. Ordinary software tasks are shape.
 ---
 
 # Absorb
