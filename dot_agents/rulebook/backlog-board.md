@@ -32,7 +32,8 @@ his instruction in the notes beside them.
 
 ## The guard
 
-Refuse these three yourself, before issuing the command:
+Refuse these three yourself, before issuing the command, because the CLI accepts
+every one of them:
 
 - A move to Done while any acceptance criterion or definition-of-done item is
   unchecked, unless the card carries a `partial` or `abandoned` label. That label
@@ -54,7 +55,8 @@ never relocate a board you find.
 Confirm a private board is ignored before the first write. `git check-ignore -q
 <board-dir>/config.yml` exits 0 when it is. Probe that child path, never the
 directory name, which exits 1 while nothing is on disk yet. On a non-zero exit,
-write nothing and tell João the pattern to add.
+write nothing and tell João the pattern to add. Re-verify this on a git upgrade,
+since it was probed at git 2.55.0.
 
 A document goes on the board, and into the repository's tracked documentation
 only at João's direction where that repository already has a documentation
@@ -67,8 +69,9 @@ The next session reads only the card.
 
 Documents live in the board's flat `docs/` directory and attach with `--doc`,
 never inlined into a task field. Create them through the CLI, which writes the
-frontmatter the board reads. Title them for their stage and feature, with no date
-stems, and say the doc path and the card id after attaching. A file that
+frontmatter the board reads. A doc missing that frontmatter lists as a blank-titled
+row. Title them for their stage and feature, with no date stems, and say the doc path
+and the card id after attaching. A file that
 legitimately lives elsewhere in the repo attaches with `--ref` instead.
 
 A feature too big for one build session becomes a parent card with one child per
@@ -103,6 +106,15 @@ it, so a command naming one value silently drops the values already there. Use
 the additive sibling where the CLI has one. Where a flag has none, read the
 current values and pass every one you are keeping in a single command.
 
+Change a board's config with `backlog config set`, whose keys are camelCase, because
+a hand edit to that file can be lost on a later read.
+
+A board holds any number of milestones. `task list -m` takes the closest title match,
+case-insensitive, so name the one you mean exactly.
+
+The CLI facts in this file were last checked against backlog.md 1.51.0. Re-check
+them on an upgrade.
+
 ## Syntax
 
     # the queue, ready cards by priority. --plain lists every column, Done included
@@ -111,7 +123,9 @@ current values and pass every one you are keeping in a single command.
     # create a card, without -s it lands in default_status
     backlog task create "<title>" -s <column> --type <type> --ac "<criterion>"
 
-    # add a note, --notes would overwrite the handoff already there
+    # add a note, --notes would overwrite the handoff already there.
+    # --append-plan and --append-final-summary are the siblings for those two fields,
+    # and --comment appends a discussion comment
     backlog task edit <id> --append-notes "<text>"
 
     # create a doc, then attach it, repeating --doc for every doc you keep
