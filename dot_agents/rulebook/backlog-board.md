@@ -7,7 +7,8 @@ CLI, never by editing a file under the board directory. Never adopt backlog's ow
 ## Columns
 
 A card sits in To Do, Shape, Build, Review, or Done. The column names the work
-the card is waiting for. A task takes only the steps that benefit it. Backward
+the card is waiting for. A task takes only the steps that benefit it, and the
+review is a step every change takes. Backward
 moves and direct creation in any column are legal. Directed work that an existing
 card describes is that card. Work it and move it. Review holds only a review in
 flight.

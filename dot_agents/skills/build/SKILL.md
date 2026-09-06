@@ -54,17 +54,15 @@ neither kind of evidence stays unchecked.
 
 ## Finish
 
-Run the pass in `~/.agents/rulebook/refactoring/after-task-pass.md`. Then move the card: check the acceptance criteria your
-evidence proves, write the final summary naming what you observed, and set the status
-to the next step the task takes: Review when the `review` skill's triggers apply,
-otherwise Done. A directed fix ends in a commit in the same turn, and its card, when
-one exists, moves with it.
+Run the pass in `~/.agents/rulebook/refactoring/after-task-pass.md`. Then check the
+acceptance criteria and definition-of-done items your evidence proves, and write the
+final summary naming what you observed. Where there is no card, the commit message
+carries which review ran.
 
 ## What the task carries forward
 
 Write onto the task's record the handoff for whoever picks this up next: what
 changed; separately, what became possible but isn't wired up, and which callers are
 still on the old path; what you observed and how; what you didn't verify; anything
-you stopped on and where it went; and whether independent review is due, by the
-`review` skill's triggers. Your reply to João is the brief. The handoff stays on the
-record.
+you stopped on and where it went. Your reply to João is the brief. The handoff stays
+on the record.

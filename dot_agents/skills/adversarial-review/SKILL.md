@@ -1,6 +1,6 @@
 ---
 name: adversarial-review
-description: Sends work this session produced to an independent reviewer that is told nothing about where the answer lands, then relays every finding in the reviewer's own words. Covers reasoning documents as well as code, red-teaming the argument where there is nothing to run. Use when work needs a second reader who has no stake in it. A change going through the Review column uses the review skill instead.
+description: Sends a document or a decision this session produced to an independent reviewer told nothing about where the answer lands, and relays every finding in the reviewer's own words. Use it on any such work before it is called done, and whenever João asks for a second reader. Code goes to review instead, and an instruction file to review-instructions.
 ---
 
 # Adversarial review
@@ -8,17 +8,17 @@ description: Sends work this session produced to an independent reviewer that is
 The brief decides whether the review is worth anything. A reader told where you
 landed confirms it. A reader told nothing forms its own view.
 
-This covers anything you produced this session that no other skill already gates. Code
-you did not write, a pull request or an outside audit, is not this skill's work, and it
-waits for João to ask for a review rather than being sent from here. A change moving
-through the Review column belongs to the review skill, an instruction file to
+This covers anything you produced this session that no other skill already gates.
+Work you did not produce, a pull request or an outside audit, is not this skill's, and
+it waits for João to ask for a review rather than being sent from here. A change to code
+or configuration belongs to the review skill, an instruction file to
 review-instructions, a corpus import to absorb, and a process defect to kaizen, each of
 which runs its own unprimed pass with its own checks. A work product stays here
 however imperative it reads, so a shaped task, a plan, or a diagnosis is this skill's,
-not review-instructions'. What is left is the work in between: a document, a decision,
-a change nobody else is reading.
+not review-instructions'. What is left is the work in between: a document or a
+decision.
 
-For code, the reviewer runs what it can. For a reasoning document, a shaped task, an
+For a reasoning document, a shaped task, an
 options survey, a diagnosis, there is nothing to run, so the mandate is to red-team
 the argument: the unstated assumption, the gap in scope, the premise nobody
 questioned, the conclusion the evidence does not reach.
@@ -53,7 +53,7 @@ terms which findings are advisory.
 
 ## What the reviewer does not get
 
-Your assessment. That the tests pass. That the tricky part is handled. Anything that
+Your assessment. That the tricky part is handled. Anything that
 says where the answer lands.
 
 Which parts you are confident in, or already checked. That steers the reader away from
@@ -87,7 +87,7 @@ gate, the redrafted document gets a fresh round of its own, and you tell João w
 An edit answering a finding that named a compile error, a command, a count, or a line
 gets that same probe re-run against the new text. Name each fix you probed and the
 command. A throwaway program in a temporary directory counts as a probe, and running
-one does not breach a producing skill's bar on changing the code it is studying.
+one does not breach a producing skill's bar on changing the system it is studying.
 
 The gate is one round. Fold the findings, probe the fixes, then say out loud whether
 you are sending it back once more or proceeding. Send it back only where a fix changed

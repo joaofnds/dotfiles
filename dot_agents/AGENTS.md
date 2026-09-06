@@ -121,10 +121,10 @@ Name the files first, then open them, before any other tool:
     No rule files apply: <one-sentence reason>
 
 Name every file the next thing you do needs, and nothing past that. Reading a card
-is the doctrine and the board file. A directed fix is the doctrine and the whole
-code row, tests included. A React component adds the frontend file. A build that
-writes code over twelve turns names the code row and the doctrine in every one of
-those turns.
+is the board file, and the doctrine too once you work it. A directed fix is the
+doctrine and the whole code row, tests included. A React component adds the
+frontend file. A build that writes code over twelve turns names the code row and
+the doctrine in every one of those turns.
 
 - Reading a card, or any backlog command or card move:
   `~/.agents/rulebook/backlog-board.md`.

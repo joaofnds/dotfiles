@@ -1,23 +1,12 @@
 ---
 name: review
-description: Decides whether a change needs an independent second review, runs it (one round, one fresh reviewer per axis, each reading the house standard for its axis against the goal and the diff), verifies every finding against evidence, disposes of each, records them all. Use at the Review column, before work that is outward-facing, irreversible, or security-surfaced, and whenever João asks for a review or a full review. A change to instruction files goes to review-instructions instead.
+description: Runs the independent second review of a change to code or configuration. Use it on any engineering work that changed code or configuration, after the build and before Done, and whenever João asks for a review. An instruction file goes to review-instructions instead, and a document or a decision to adversarial-review.
 ---
 
 # Review
 
 Every change gets author-side verification, and any defect found is fixed before
-moving on, whatever the task's size. This skill covers the independent second review:
-when it runs and how.
-
-## The tier
-
-Independent review runs when the work is outward-facing (others will read or run it),
-irreversible (data, published history, money), security-surfaced (trust boundaries,
-authentication, secrets, untrusted input), or when João asked for one. These are
-properties of the change, read off the diff. If you're unsure whether one applies, it
-applies. Otherwise the author-side verification already done is the review: say so in
-a line and move on. Widen these triggers only on evidence that defects escaped, not
-on unease.
+moving on, whatever the task's size. This skill runs the independent second review.
 
 ## Inputs
 
@@ -31,12 +20,12 @@ on unease.
   so ask João for the goal in a line before dispatching.
 - Run the project's suite once, with the command from the project's own manifests.
   Keep the output for the record. The reviewers do not run it. Do not give them the
-  result, the reason review was triggered, or what worries you. A primed reviewer
-  repeats your reading instead of making its own.
+  result or what worries you. A primed reviewer repeats your reading instead of
+  making its own.
 
 ## One round, fresh eyes
 
-Which axes apply is read off the diff, like the tier. Unsure means it applies.
+Which axes apply is read off the diff. Unsure means it applies.
 
 - **Spec conformance, style, architecture, security**: every change.
 - **Testing**: when the diff touches a test file. Record the skip otherwise. A

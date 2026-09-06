@@ -1,12 +1,6 @@
 ---
 name: review-instructions
-description: >-
-  Reviews and steers the drafting of instruction files written for agents,
-  including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions,
-  and output styles. Use before drafting one, so the checks shape the writing, and
-  after writing or editing one, to gate the result. An instruction failure observed
-  as session behavior goes to João as a kaizen candidate, and kaizen uses these
-  checks on the file it traces to.
+description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles. Use it before drafting one, so the checks shape the writing, and on any work that wrote or edited one, after the build and before the commit. An instruction failure observed as session behavior goes to João as a kaizen candidate, and kaizen uses these checks on the file it traces to.
 ---
 
 # Review instructions
@@ -284,5 +278,5 @@ Send a file you wrote or rewrote this session to a reviewer that had no part in 
 once, before the commit or the handoff to João. Give that reviewer this file, the
 diff, and João's words if there are any, and never your own description of the
 change. Do not run the review again after the fixes. Read the fixes yourself in the
-staged diff, with the same checks, because the reviewer did not see them. Skip the
-review for an edit smaller than a paragraph and apply the section above instead.
+staged diff, with the same checks, because the reviewer did not see them. Send every
+edit, a one-line one included.
