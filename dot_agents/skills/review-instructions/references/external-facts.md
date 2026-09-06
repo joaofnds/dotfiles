@@ -65,6 +65,15 @@ Load limits and delivery:
   disk; all three returned the file in full, the third with the new content)*. A rule
   that tells a session to reopen a file therefore delivers the words rather than a
   pointer.
+- A skill description's own trigger does not load the skill. Four fresh `claude -p`
+  sessions ran a build or a shaping with "use it when a task's work is finished and
+  before anything is called done" in the listing and none invoked it. A closing line
+  in the body of the skill the session was running did, five of five *(probe,
+  2.1.261, DOT-59)*. A session reads the skill it is running and the global read
+  table, and reaches on-demand material by `Read` on its path as often as by the
+  `Skill` tool. Given "the review skill" and a code change, it opened the code
+  reviewer's file by name and skipped the router, three of three. Re-check on a
+  model release.
 - Auto memory is on by default, per-project, machine-local, and never loaded into a
   non-fork subagent.
 - Session transcripts live at

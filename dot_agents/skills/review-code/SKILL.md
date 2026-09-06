@@ -1,6 +1,6 @@
 ---
 name: review-code
-description: Runs the independent code review, one unprimed reviewer per axis, and disposes of every finding. The review skill sends code and configuration here after the build.
+description: Runs the independent code review of a change to code or configuration, one unprimed reviewer per axis, and disposes of every finding. Use it on any such change before it is called done.
 ---
 
 # Code review

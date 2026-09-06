@@ -1,6 +1,6 @@
 ---
 name: review-instructions
-description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles. The review skill sends every edited instruction file here after the build. An instruction failure observed as session behavior goes to João as a kaizen candidate.
+description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles. Use it before drafting one, so the checks shape the writing, and on any edit to one before it is called done. An instruction failure observed as session behavior goes to kaizen.
 ---
 
 # Review instructions
@@ -148,19 +148,30 @@ that steer. The claim's history belongs in the commit message and the evidence
 records. Keep a re-check trigger, naming what to re-check, the event that fires it,
 and the state it was last checked against.
 
-**Check the placement.** Keep in an always-loaded file only what applies broadly
-every session, and move occasional knowledge to a skill. Put critical rules early in
-a long file, or restate them in one line at the end, because the middle is where
-rules get dropped. Put a rule that constrains a list above that list. Below it the
-reader has already matched every entry before meeting the limit on matching them.
-Write a skill description in third person as a call to action: what the skill does
-in one clause, when to use it, and what goes elsewhere. It loads in every session, so
-it stays short, and how the skill works stays in the body, which only a session that
-invoked it reads. Where on-demand material goes unread, sharpen the trigger before
-inlining it. A skill sits inside the workflow and never says which column a card
-goes to, or when. The board rules say that, and a clause about it in a skill is a
-second copy in the wrong layer. Keep references one level deep, one term per
-concept, and nothing time-sensitive.
+**Check the placement.** Keep in an always-loaded file only what applies broadly every
+session, and move occasional knowledge to a skill. Put critical rules early in a long
+file, or restate them in one line at the end, because the middle is where rules get
+dropped. Put a rule that constrains a list above that list. Below it the reader has
+already matched every entry before meeting the limit on matching them. Write a skill
+description in third person as a call to action: what the skill does in one clause,
+when to use it, and what goes elsewhere. It loads in every session, so it stays short,
+and how the skill works stays in the body, which only a session that invoked it reads.
+State when to use it as a condition in the life of the work, "before anything is
+called done", never as a hand-off from another skill or a place in the board's flow,
+"the review skill sends documents here after the build". A session reads the listing
+while doing the work, so a condition in the work matches what it is doing and a place
+in the flow does not. Where on-demand material goes unread, sharpen the trigger before
+inlining it. A skill sits inside the workflow and never says which column a card goes
+to, or when. The board rules say that, and a clause about it in a skill is a second
+copy in the wrong layer. Keep references one level deep, one term per concept, and
+nothing time-sensitive.
+
+**Write for one mind.** The corpus is one way of working that João and the sessions
+share. A trigger or a gate never waits on him asking, because "use it when João asks
+for a review" teaches the session to skip the review until asked. A rule names him
+where he is a fact it turns on, his absence, text he did not type, a decision the
+hard lines reserve for him, and never as the one who wants a step the work already
+calls for.
 
 **End steps on a checkable bound.** Require each workflow step to end on a condition
 the agent can test, since a vague bound invites finishing before done and a demanding
@@ -241,6 +252,8 @@ Name the mode when a finding matches one.
 - **Layer leakage**: a skill states how the workflow around it moves, which the board
   rules own.
 - **Decay**: a path, version, tool, or mechanism has gone stale.
+- **Deferred authority**: a trigger or a gate waits on João asking for a step the work
+  already calls for.
 
 ## The verdict
 
