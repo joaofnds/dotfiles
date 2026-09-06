@@ -21,9 +21,8 @@ you introduce or lean on one; one term per concept.
   of how it got there.
 - **Closed finding**: fixed, verified, and needing nothing from João. An **open
   finding** needs a decision, carries a risk, or waits on him.
-- **Entry point**: the review skill, the one skill a session runs when a task's work
-  is finished. It reads what the task produced and sends each product to the review
-  skill that owns it. It runs no review itself.
+- **Entry point**: the review skill, the one a session runs when a task's work is
+  finished. It sends each product to its reviewer and runs no review itself.
 - **Independent review**: a review whose reader is unprimed. The `reviewer` agent
   supplies this within a session, from its own fresh context. A project may
   additionally require a different session, as trunk's definition of done does for QA

@@ -9,7 +9,8 @@ List the changed files and read the card record with its attached documents befo
 judging any product, since a product classified from memory lands in no review or
 in two. Send each product to the first line below that names it:
 
-- A corpus import goes to absorb and a process defect to kaizen.
+- A corpus import and a process defect were reviewed inside absorb and kaizen,
+  which run their own unprimed pass, and get no second one here.
 - Any other instruction file goes to review-instructions: a CLAUDE.md, AGENTS.md, or
   GEMINI.md, a rules file, a skill, an agent definition, an output style, a slash
   command, and a hook that injects instruction text.
@@ -20,6 +21,5 @@ in two. Send each product to the first line below that names it:
   shaped a card has no diff and still produced a document, the record it wrote,
   and sends that there.
 
-A mixed change runs each review its products need, and each destination runs its
-own unprimed pass. Run each destination skill, and note on the card's record which
-skill reviewed each product.
+A mixed change runs each review its products need. Run each destination skill,
+and note in the record which skill reviewed each product.

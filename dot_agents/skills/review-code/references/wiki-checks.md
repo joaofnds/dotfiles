@@ -1,4 +1,4 @@
-# Review: the wiki-sourced checks
+# Code review: the wiki-sourced checks
 
 Checks drawn from João's engineering wiki, grouped by the axis that owns them, with
 the reasoning and the quotation behind each. A line here is a prompt to look. Where

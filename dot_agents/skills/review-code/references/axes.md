@@ -1,4 +1,4 @@
-# Review: axis briefs
+# Code review: axis briefs
 
 Blocks for the `reviewer` dispatch. Paste the shared block, then the one axis block
 that reviewer owns. Paste blocks whole, because a paraphrase drifts. The skill
