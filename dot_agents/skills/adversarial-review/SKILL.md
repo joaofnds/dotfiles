@@ -1,6 +1,6 @@
 ---
 name: adversarial-review
-description: Sends a document or a decision this session produced to an independent reviewer told nothing about where the answer lands, and relays every finding in the reviewer's own words. Use it on any such work before it is called done, and whenever João asks for a second reader. Code goes to review instead, and an instruction file to review-instructions.
+description: Sends a document or a decision this session produced to an independent reviewer told nothing about where the answer lands, and relays every finding in the reviewer's own words. Use it when João asks for a second reader, and when the review skill sends a document or a decision here after the build.
 ---
 
 # Adversarial review
@@ -8,20 +8,12 @@ description: Sends a document or a decision this session produced to an independ
 The brief decides whether the review is worth anything. A reader told where you
 landed confirms it. A reader told nothing forms its own view.
 
-This covers anything you produced this session that no other skill already gates.
-Work you did not produce, a pull request or an outside audit, is not this skill's, and
-it waits for João to ask for a review rather than being sent from here. A change to code
-or configuration belongs to the review skill, an instruction file to
-review-instructions, a corpus import to absorb, and a process defect to kaizen, each of
-which runs its own unprimed pass with its own checks. A work product stays here
-however imperative it reads, so a shaped task, a plan, or a diagnosis is this skill's,
-not review-instructions'. What is left is the work in between: a document or a
-decision.
+This covers a document or a decision you produced this session.
 
-For a reasoning document, a shaped task, an
-options survey, a diagnosis, there is nothing to run, so the mandate is to red-team
-the argument: the unstated assumption, the gap in scope, the premise nobody
-questioned, the conclusion the evidence does not reach.
+For a reasoning document, a shaped task, an options survey, a diagnosis, there is
+nothing to run, so the mandate is to red-team the argument: the unstated assumption,
+the gap in scope, the premise nobody questioned, the conclusion the evidence does not
+reach.
 
 ## What the reviewer gets
 

@@ -1,6 +1,6 @@
 ---
 name: review-instructions
-description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles. Use it before drafting one, so the checks shape the writing, and on any work that wrote or edited one, after the build and before the commit. An instruction failure observed as session behavior goes to João as a kaizen candidate.
+description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles. Use it when João asks for a review of one, and when the review skill sends an edited instruction file here after the build. An instruction failure observed as session behavior goes to João as a kaizen candidate.
 ---
 
 # Review instructions

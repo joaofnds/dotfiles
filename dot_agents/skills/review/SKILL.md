@@ -1,12 +1,34 @@
 ---
 name: review
-description: Runs the independent second review of a change to code or configuration. Use it on any engineering work that changed code or configuration, after the build and before Done, and whenever João asks for a review. An instruction file goes to review-instructions instead, and a document or a decision to adversarial-review.
+description: Reviews the work a task produced, reading what was made and sending each product to the review skill that owns it. Use it when a task's work is finished and before anything is called done, and whenever João asks for a review.
 ---
 
 # Review
 
 Every change gets author-side verification, and any defect found is fixed before
-moving on, whatever the task's size. This skill runs the independent second review.
+moving on, whatever the task's size. This skill is the entry point for the
+independent second review.
+
+## Route each product
+
+List the changed files and read the card record with its attached documents before
+judging any product, since a product classified from memory lands in no review or
+in two. Send each product to the first line below that names it:
+
+- A corpus import goes to absorb and a process defect to kaizen.
+- Any other instruction file goes to review-instructions: a CLAUDE.md, AGENTS.md, or
+  GEMINI.md, a rules file, a skill, an agent definition, an output style, a slash
+  command, and a hook that injects instruction text.
+- Any other code or configuration continues in this file.
+- Everything else, a document or a decision, goes to adversarial-review. A work
+  product stays a document however imperative it reads, so a shaped task, a plan,
+  or a diagnosis goes there and never to review-instructions. A task that only
+  shaped a card has no diff and still produced a document, the record it wrote,
+  and sends that there.
+
+A mixed change runs each review its products need, and each destination runs its
+own unprimed pass. Run each destination skill, then continue below only for code or
+configuration.
 
 ## Inputs
 
@@ -152,8 +174,9 @@ should exist, and record the answer with the disposition.
 ## Record everything, brief the decision
 
 Every finding goes on the task's record with its severity and disposition, along
-with the suite output, the axes that ran and the ones skipped, and for each axis the
-standard files its reviewer read and the changed files it examined. The spec
+with the suite output, the reviewer each product went to, the axes that ran and the
+ones skipped, and for each axis the standard files its reviewer read and the changed
+files it examined. The spec
 reviewer's accounting of the goal, one line per requirement and criterion, goes on
 the record whole. None are dropped or folded into "a few minor things". Each finding
 carries what a zero-context session needs to act on it: the place; the concrete
