@@ -14,25 +14,30 @@ under Checks that did not hold, with the moment, and why the check did not bind 
 left to the reviewer of the fix. A retroactive entry is weaker evidence than one
 written in the turn, so a rule resting only on retroactive entries says so.
 
-Four rules below have their second entry and are ready to move. No move was made,
-because each grows the skill and that growth needs its own accounting, which the
-verdict section requires and this session did not do.
+Four rules below have a second entry. None was moved into the checks. A second entry
+says the class is real, and it does not say the skill needs another line for it. The
+first was tested against the checks as they stand and rejected, because the reviewers
+caught the case either way. The other three are untested, and each needs the same
+test before it moves.
 
 ## Rules
 
-Four rules have a second entry and are ready to move into the checks. The move is
-not made here, because it grows the skill and the growth was not accounted for.
-Each carries its text and its evidence, so the move is one edit when it is taken.
+Four rules have a second entry. None was moved into the checks. Each carries its text
+and its evidence, so a move is one edit when a test earns it. The test is the skill's
+own "test in use": a real diff the rule should catch, read by fresh reviewers with the
+skill as it stands and with the rule added, on a pass mark fixed before the results.
 
 ### Account for what a rewrite replaces
 
-Read the text a rewrite replaces before writing the replacement, and set old beside
-new. Account for every rule, reason, scope, force, exception, ordering, and source in
-the old text. Name each one as kept, as moved with its new home, or as cut with the
-reason. A rewrite keeps only what its writer names, and the rest goes silently.
+Tested 2026-09-07 and rejected. Six fresh reviewers read 83071a54's rewrite of
+`dot_agents/rules/ownership.md`, which cut the ownership stance from eight mentions
+to one and reversed the survivor's force. Three had the skill as it stands and three
+had it with this rule added. All six named the loss. The rule changes nothing a
+reviewer finds, because the verdict section's audit of a form-only edit already
+covers it, and the control runs cited that audit by name.
 
-Moving this into the checks lets the verdict section's form-only audit cite it in
-place of restating it, so the skill grows by less than the rule's own length.
+Do not add this rule. The entries below are real and the class is real. The checks
+already answer it.
 
 Evidence: entries "the ownership instruction lost its stance" (e92259d4), "the
 review no longer checked the goal, the style, the architecture, or the tests"
