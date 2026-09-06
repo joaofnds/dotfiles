@@ -31,6 +31,13 @@ When João directs an approach the criteria do not describe, rewrite them as the
 behavior his approach produces, since he is there to correct the rewrite. Quote
 his instruction in the notes beside them.
 
+Each criterion ends with its source in parentheses, something outside the session
+that asked for it: his words in a note, a measurement, a failing test, the project's
+own check. A criterion nothing outside the session asked for is the session's own
+claim. Test it where an experiment can settle it, ask him where none can, and never
+write it as a criterion, because a later session designs inside a criterion instead
+of testing it.
+
 ## The guard
 
 Refuse these three yourself, before issuing the command, because the CLI accepts

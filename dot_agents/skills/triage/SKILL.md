@@ -18,8 +18,8 @@ Read the whole open set on the named board, Done titles, the Done cards any open
 card cites, the board's decisions (where declined ideas are recorded), the handoff
 notes on cards in Build and Review (the next cards come from them), and the
 project's other records: known-issue docs, tech-debt files, anything a card
-might already answer or depend on. Read the newest reflection doc first, since
-this run applies the planning changes it proposes.
+might already answer or depend on. Read every reflection doc newer than the last
+triage doc first, since this run applies the planning changes they propose.
 
 On a board with no goal, skip priorities, the queue, and the no-consequence
 closure, since each needs a goal to be judged against. Make the goal item one on the
@@ -36,10 +36,11 @@ from re-deriving it.
 ## Verify every premise
 
 Check every checkable claim on the card (a name, a path, a count, a resource it
-needs) against the repository, by grep, `git log`, or re-running the command the
-card records for a measured quantity. A stale premise gets a dated note with the
-current fact beside the writer's evidence, which stays as written. A card whose
-number carries no command gets one, since the next run re-checks the same claim.
+needs, the source a criterion names) against the repository, by grep, `git log`,
+or re-running the command the card records for a measured quantity. A stale
+premise gets a dated note with the current fact beside the writer's evidence,
+which stays as written. A card whose number carries no command gets one, since
+the next run re-checks the same claim.
 
 ## Classify overlap
 
@@ -126,9 +127,10 @@ concept, with his reason, and with status accepted rather than the CLI's default
 of proposed, since he decided it. The next run reads decisions, so the same idea
 doesn't return as a new card.
 
-A finding that recurs across cards and traces to how cards are written is named
-once on the triage doc and goes on the numbered list to João as a kaizen
-candidate, with the cards quoted.
+A kaizen candidate on a reflection doc newer than the last triage doc goes on the
+numbered list to João, since only he starts kaizen. So does a finding that recurs
+across cards and traces to how cards are written, named once on the triage doc with
+the cards quoted.
 
 ## Report
 

@@ -19,14 +19,16 @@ behind it, carrying your recommendation, ordered so the answers that would chang
 architecture come first. Then end the turn. He answers the list in
 one batch. If nothing needs him, don't manufacture a question.
 
-A constraint the task inherits is an unknown too. When the request, the card, or a
-prior review rules an approach out, find what backs the prohibition. A measurement
-backs it. João's explicit decision backs it. A stated reason that predicts cost
-without measuring it does not: that reason is the claim to test. When nothing backs
-it and the work will be designed around it, run the cheapest experiment that
-settles it before you design. An unmeasured prohibition never becomes an acceptance
-criterion: once it is one, every later session designs inside it instead of testing
-it.
+A constraint the task inherits is an unknown too, whether the request, the card, or
+a prior review rules an approach out or takes something as required. Find what
+backs it. What he said backs it, and so does a measurement of the need. A reason
+that predicts cost without measuring it backs nothing, and neither does a probe of
+a mechanism. What a session derived from his decision is that session's claim, and
+a claim is tested, never inherited. When nothing backs a constraint and the work
+will be designed around it, look first for the path on which it never arises,
+since that path settles it at no cost. Then run the cheapest experiment that
+settles what remains before you design. What no experiment can settle goes on the
+list to him as the decision it is.
 
 ## Settle the language
 
@@ -39,24 +41,33 @@ Modeling is done with him, not for him.
 
 Write acceptance as things you will directly observe when the work is done: a test
 that fails now and will pass, a command and its expected output, a screen in a state.
-"Works" is not an observation. This list becomes `build`'s test list.
+"Works" is not an observation. This list becomes `build`'s test list. Each
+criterion carries its source in the form the board rules give.
 
 ## Pick the approach, then harden it
 
-Where more than one approach is viable, survey them before picking. Question the
-premise first, since the best fix is often the one that makes the problem
-irrelevant. Then set out each option with what it costs and what it buys, and say
-plainly when only one survives the evidence. Two or three is the usual number.
+The survey opens with the option that removes the problem, the move
+`engineering-judgment.md` §Understanding the Problem names: delete the thing, drop
+the requirement, leave it undone. Say what rules it out and how you know. When
+nothing does, it is the pick. A choice that goes to him carries it the same way
+(`AGENTS.md` §Acting). Where more than one way to build it survives, set out each
+with what it costs and what it buys, and say plainly when only one survives the
+evidence. Two or three is the usual number.
 
 Then pick, and interrogate the one you picked until it holds: where it fails, what
-it assumes, what it costs to reverse. A survey that leans without deciding leaves
-the choice to the session that builds, which is the session with the least context
-for it. Record the options and the reason the winner won, so a later session
+it assumes, what it costs to reverse. Something the pick requires from outside the
+code, of its input, its caller, or its environment, that nothing on the card asked
+for is the signal to reopen the survey at the removal option before you add the
+requirement. What survives that survey joins the unknowns. A survey that leans
+without deciding leaves the choice to the session that builds, which is the
+session with the least context for it. Record the options and the reason the
+winner won, so a later session
 reopening the question starts from the argument rather than from scratch. When the
 build breaks an assumption the pick rested on, the approach is reopened here rather
 than pushed through.
 
-Only one sane way to build it means no survey. Say that and move on.
+Only one way to build it means no survey past the removal option. Say that and move
+on.
 
 ## Plan only what will move
 
