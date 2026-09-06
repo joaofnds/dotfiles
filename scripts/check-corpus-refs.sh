@@ -9,6 +9,9 @@
 # and that every bare `~/.agents/<path>.md` a file names exists, since the read table and
 # the skills route by such paths without a heading.
 #
+# The corrections log is excluded. It records which files an exchange touched on the day
+# it happened, so a citation there is history and goes stale by design when a file moves.
+#
 # Usage: check-corpus-refs.sh
 # Exits 0 when every citation resolves.
 set -u
@@ -83,7 +86,7 @@ while IFS= read -r file; do
       report "MISSING HEADING  ${file#$corpus/} -> $target §$heading"
     fi
   done
-done < <(find "$corpus" -name '*.md' -type f)
+done < <(find "$corpus" -name '*.md' -type f ! -path '*/review-instructions/references/corrections-log.md')
 
 count="$(wc -l <"$findings" | tr -d ' ')"
 if [ "$count" -eq 0 ]; then
