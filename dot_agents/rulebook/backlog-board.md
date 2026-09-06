@@ -114,11 +114,13 @@ it, so a command naming one value silently drops the values already there. Use
 the additive sibling where the CLI has one. Where a flag has none, read the
 current values and pass every one you are keeping in a single command.
 
-Change a board's config with `backlog config set`, whose keys are camelCase, because
-a hand edit to that file can be lost on a later read.
+Change the board directory's `config.yml` with `backlog config set`, whose keys are
+camelCase, because a hand edit to that file can be lost on a later read.
 
-A board holds any number of milestones. `task list -m` takes the closest title match,
-case-insensitive, so name the one you mean exactly.
+A board holds any number of milestones. `task create -m` and `task list -m` match a
+milestone title exactly, case-insensitive, and neither reports a miss. Create stores
+the typed text as the task's milestone, and list filters by it. Name the one you mean
+exactly, since a typo makes a milestone of its own.
 
 The CLI facts in this file were last checked against backlog.md 1.51.0. Re-check
 them on an upgrade.

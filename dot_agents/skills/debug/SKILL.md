@@ -6,7 +6,7 @@ description: Investigates a failure, unexpected behavior, or a cost symptom such
 # Debug
 
 Debug is the shape step for defects: it ends with the confirmed cause, the
-evidence, and the reproduction on a card, created when none exists.
+evidence, and the reproduction on a card at Shape, created when none exists.
 Land no fix during the investigation, because a fix changes the system under
 study and the probes stop isolating anything. A defect met mid-task follows
 build's rule, fixed now when small and a card when larger, and becomes a debug

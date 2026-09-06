@@ -4,9 +4,9 @@ What this machine's Claude Code harness and Anthropic's models were observed to 
 each entry with the check that verified it and the trigger that re-verifies it. A fact
 about any other tool lives with the rules that rest on it, not here.
 
-A claim an instruction artifact makes about the harness or the models, and is not
-listed here, is unaudited. Treat it as a mechanism argument and never cite it as
-measured. Cite an entry as `references/external-facts.md` §<heading>.
+A claim about the harness or the models that this file does not list is unaudited.
+Treat it as a mechanism argument and never cite it as measured. Cite an entry as
+`references/external-facts.md` §<heading>.
 
 Record an entry only with a check you ran in the recording session, and re-check a
 claim inherited from a report or from memory before it enters. Query the `prompts`

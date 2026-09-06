@@ -56,8 +56,7 @@ neither kind of evidence stays unchecked.
 Run the pass in `~/.agents/rulebook/refactoring/after-task-pass.md`. Then run the
 review skill, the one that sends each product to its reviewer, and dispose of what
 it returns. Then check the acceptance criteria and definition-of-done items your
-evidence proves, and write the final summary naming what you observed. Where there is no card, the commit
-message carries which review ran.
+evidence proves, and write the final summary naming what you observed.
 
 ## What the task carries forward
 

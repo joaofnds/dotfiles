@@ -161,10 +161,11 @@ called done", never as a hand-off from another skill or a place in the board's f
 "the review skill sends documents here after the build". A session reads the listing
 while doing the work, so a condition in the work matches what it is doing and a place
 in the flow does not. Where on-demand material goes unread, sharpen the trigger before
-inlining it. A skill sits inside the workflow and never says which column a card goes
-to, or when. The board rules say that, and a clause about it in a skill is a second
-copy in the wrong layer. Keep references one level deep, one term per concept, and
-nothing time-sensitive.
+inlining it. A skill never says when a card moves or which column it moves to. The
+board rules say that, and a clause about it in a skill is a second copy in the wrong
+layer. The board rules, under Columns, leave the column a skill creates a card in to
+the skill. Keep references one level deep, one term per concept, and nothing
+time-sensitive.
 
 **Write for one mind.** The corpus is one way of working that João and the sessions
 share. A trigger or a gate never waits on him asking or complaining, because "use it
@@ -254,7 +255,7 @@ Name the mode when a finding matches one.
   requirement, or boundary.
 - **Instruction laundering**: the same rule appears under several headings that load
   together. The One home check settles which case it is.
-- **Layer leakage**: a skill states how the workflow around it moves, which the board
+- **Layer leakage**: a skill states when a card moves or where to, which the board
   rules own.
 - **Decay**: a path, version, tool, or mechanism has gone stale.
 - **Deferred authority**: a trigger or a gate waits on João asking for a step the work
