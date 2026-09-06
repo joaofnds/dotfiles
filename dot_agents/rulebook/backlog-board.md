@@ -34,16 +34,16 @@ his instruction in the notes beside them.
 
 Refuse these three yourself, before issuing the command:
 
-- A move to Done while any acceptance criterion is unchecked, unless the card
-  carries a `partial` or `abandoned` label. That label goes on only at João's
-  direction, with the reason in the final summary.
+- A move to Done while any acceptance criterion or definition-of-done item is
+  unchecked, unless the card carries a `partial` or `abandoned` label. That label
+  goes on only at João's direction, with the reason in the final summary.
 - A move to a later column while any dependency is not Done. Backward moves are
   exempt.
 - A `--doc` or `--ref` path that does not exist on disk.
 
 These three refusals are not blockers to route around. Report the blocked
-operation and what unblocks it: check the criterion with evidence, close the
-dependency, create the file first.
+operation and what unblocks it: check the criterion or the definition-of-done item
+with evidence, close the dependency, create the file first.
 
 ## Where the board lives
 
@@ -94,8 +94,9 @@ the tasks, docs, and decisions directories under the path it names.
 
 Check `schemaVersion` on every read. A value other than 1 is a stop-and-report
 condition. Consume only these fields from `task`: `title`, `description`,
-`status`, `labels`, `milestone`, `dependencies`, `acceptanceCriteria`, `subtasks`,
-`documentation`, `implementationNotes`, `finalSummary`, `parentTaskId`.
+`status`, `labels`, `milestone`, `dependencies`, `acceptanceCriteria`,
+`definitionOfDone`, `subtasks`, `documentation`, `implementationNotes`,
+`finalSummary`, `parentTaskId`.
 
 Every value flag on `backlog task edit` replaces its field rather than extending
 it, so a command naming one value silently drops the values already there. Use
