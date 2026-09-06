@@ -1,6 +1,6 @@
 ---
 name: review-instructions
-description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles. Use it before drafting one, so the checks shape the writing, and on any edit to one before it is called done. An instruction failure observed as session behavior goes to kaizen.
+description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles, and keeps the log of what João asks changed in the corpus. Use it before drafting one, so the checks shape the writing, on any edit to one before it is called done, and on any complaint or question about a corpus file. An instruction failure observed as session behavior goes to kaizen.
 ---
 
 # Review instructions
@@ -167,11 +167,16 @@ copy in the wrong layer. Keep references one level deep, one term per concept, a
 nothing time-sensitive.
 
 **Write for one mind.** The corpus is one way of working that João and the sessions
-share. A trigger or a gate never waits on him asking, because "use it when João asks
-for a review" teaches the session to skip the review until asked. A rule names him
-where he is a fact it turns on, his absence, text he did not type, a decision the
-hard lines reserve for him, and never as the one who wants a step the work already
-calls for.
+share. A trigger or a gate never waits on him asking or complaining, because "use it
+when João asks for a review" teaches the session to skip the review until asked. A
+skill only he can invoke names him as its trigger, since nothing else fires it. A
+rule names him where he is a fact it turns on, his absence, text he did not type, a
+decision the hard lines reserve for him, and never as the one who wants a step the
+work already calls for. A gate sends him a doubt the global file's Acting section
+lists, or one no test and no removing path can settle, because the rule is for the
+session's own thinking and not for what reaches him. Failing: "an unsourced
+criterion is a question for him". Corrected: "an unsourced criterion is tested where
+an experiment can settle it and asked where none can".
 
 **End steps on a checkable bound.** Require each workflow step to end on a condition
 the agent can test, since a vague bound invites finishing before done and a demanding
@@ -293,3 +298,28 @@ diff, and João's words if there are any, and never your own description of the
 change. Do not run the review again after the fixes. Read the fixes yourself in the
 staged diff, with the same checks, because the reviewer did not see them. Send every
 edit, a one-line one included.
+
+## The corrections log
+
+Log every complaint, question, or directed change João raises about a corpus file,
+one rendered from the dotfiles repository, in that repository's source at
+`dot_agents/skills/review-instructions/references/corrections-log.md`, in the turn it
+happens, whether or not an edit follows. Quote his words. Then say what the problem
+was, in your own plain words, with the context a fresh session lacks: what you were
+doing and what the corpus file said. His words alone leave the next reader reparsing
+them. Name the file, and say what changed or that nothing did. Give the reason, his
+where he gave one, and yours marked as yours where he did not. A project's own
+instruction file is outside the log. A session defect kaizen takes stays on its card.
+
+Then file the entry once in
+`dot_agents/skills/review-instructions/references/corrections-rules.md`. Read every
+rule there before you open one, and merge two that name one class. Write a rule as it
+would stand among the checks above, with its reason, so it lands verbatim when moved.
+Where a check above already covers the entry, file it under that check's name with
+the moment, and leave why the check did not bind to the reviewer of the fix. File a
+directive for something new, or a decision that changed nothing, under No rule, with
+a line saying so. A rule moves into the checks above when a second entry repeats it,
+because one entry is an incident and a repeat is the pattern, and the move deletes it
+from the document in the same edit. A commit listed as evidence is context and never
+stands in for that second entry. Commit the entry and its filing with the change they
+record, so the diff sits beside them, and on their own where nothing changed.

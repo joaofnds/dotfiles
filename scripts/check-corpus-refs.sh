@@ -28,6 +28,7 @@ report() {
 resolve() {
   local target="$1" from_dir="$2" candidate
   target="${target#\~/.agents/}"
+  target="${target#dot_agents/}"
   for candidate in "$from_dir/$target" "$corpus/$target"; do
     [ -f "$candidate" ] && { printf '%s' "$candidate"; return 0; }
   done
