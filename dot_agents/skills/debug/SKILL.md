@@ -14,7 +14,7 @@ description: >-
 # Debug
 
 Debug is the shape step for defects: it ends with the confirmed cause, the
-evidence, and the reproduction on a card at Shape, created when none exists.
+evidence, and the reproduction on a card, created when none exists.
 Land no fix during the investigation, because a fix changes the system under
 study and the probes stop isolating anything. A defect met mid-task follows
 build's rule, fixed now when small and a card when larger, and becomes a debug
@@ -74,7 +74,6 @@ cause, also closes: the card records what was established, what is missing, and
 the options, and goes to João. Otherwise the card leaves like any shaped task:
 the goal, the confirmed cause with its evidence, and the reproduction as the
 acceptance observation and the first test to write, a test where the repo has a
-suite and the recorded command otherwise. Move the card in the same turn: to
-Build when one fix is settled, the session continuing into build only when the
-direction included fixing. Otherwise the card stays at Shape, with the cause and
-whatever candidates exist recorded for João.
+suite and the recorded command otherwise. The session continues into build only
+when one fix is settled and the direction included fixing. With no single fix
+settled, the cause and whatever candidates exist are recorded for João.

@@ -171,5 +171,4 @@ is correct.
 The reply to João is the brief. It names the findings that need his decision and
 the ones whose damage predates the work under review. The `brief` output style says
 how everything else appears.
-When nothing blocks, say so plainly. Then the verdict: proceed, or what blocks. A
-proceed verdict moves the card to Done.
+When nothing blocks, say so plainly. Then the verdict: proceed, or what blocks.
