@@ -35,7 +35,7 @@ counterexample for each finding, and drop anything you cannot substantiate by a 
 or by a stated argument. Every finding says whether a command verified it or reasoning alone did, and
 names the command. A clean report is a valid result.
 
-Rank each finding blocking, should-fix, or note, in the review skill's words under its
+Rank each finding blocking, should-fix, or note, in the review-code skill's words under its
 Severity heading, and say so where a rank has nothing in it. Those words are written
 for code, so for a document read them by what the finding costs. Blocking is a document
 that is wrong or unsafe as written. Should-fix changes the approach, the evidence, or

@@ -15,8 +15,8 @@ checks.
 > hunks. Then take the diff hunk by hunk with the standard in front of you. Walk its
 > headings, and its lists of smells and checks item by item, before you judge
 > anything, because a rule never considered is a silent miss. After the standard,
-> walk the "Not findings" section of the review skill's wiki checks at
-> `~/.agents/skills/review/references/wiki-checks.md`, and your axis's section
+> walk the "Not findings" section of the review-code skill's wiki checks at
+> `~/.agents/skills/review-code/references/wiki-checks.md`, and your axis's section
 > where the file has one. A line there is a prompt to look, and the standard wins
 > where they differ.
 > Test files are the Testing axis's to judge. Every other axis reads them as
