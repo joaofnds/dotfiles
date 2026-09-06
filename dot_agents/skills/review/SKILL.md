@@ -1,6 +1,6 @@
 ---
 name: review
-description: Sends each product a task made to the review skill that owns it. Use it when a task's work is finished and before anything is called done, and whenever João asks for a review.
+description: Sends each product a task made to the review skill that owns it. Use it when a task's work is finished and before anything is called done.
 ---
 
 # Review

@@ -1,6 +1,6 @@
 ---
 name: adversarial-review
-description: Sends a document or a decision this session produced to an independent reviewer told nothing about where the answer lands, and relays every finding in the reviewer's own words. Use it when João asks for a second reader, and when the review skill sends a document or a decision here after the build.
+description: Sends a document or a decision this session produced to an independent reviewer told nothing about where the answer lands, and relays every finding in the reviewer's own words. The review skill sends documents and decisions here after the build.
 ---
 
 # Adversarial review

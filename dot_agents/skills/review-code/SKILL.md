@@ -1,6 +1,6 @@
 ---
 name: review-code
-description: Runs the independent code review, one unprimed reviewer per axis, and disposes of every finding. Use it when João asks for a code review, and when the review skill sends code or configuration here.
+description: Runs the independent code review, one unprimed reviewer per axis, and disposes of every finding. The review skill sends code and configuration here after the build.
 ---
 
 # Code review
