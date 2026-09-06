@@ -11,7 +11,7 @@ The loop on the board in the current directory. An iteration is triage, pick, th
 card through its columns, reflect, each one a fresh claude session running that
 step's skill. start and step do the same work one session at a time, so a caller
 can read what a stage did before starting the next. step prints the session's reply
-on stdout. ITERATE_SESSION_BUDGET caps each session in dollars (default 10).
+on stdout. ITERATE_SESSION_BUDGET caps each session in dollars (default 50).
 
 Exit codes: 0 done, 1 refused or failed, 2 the card's column did not move,
 3 the stop file .iterate-stop is present, 4 the board has no active milestone.`;
@@ -41,7 +41,7 @@ function cardId(value) {
 }
 
 function sessionBudget() {
-  const value = process.env.ITERATE_SESSION_BUDGET || "10";
+  const value = process.env.ITERATE_SESSION_BUDGET || "50";
   if (!(Number(value) > 0)) throw new Exit(1, `${value} is not a session budget in dollars`);
 
   return value;
