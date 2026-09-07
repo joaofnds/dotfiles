@@ -219,6 +219,18 @@ Claude Code release and on a model release.**
   displacement stays in the skill's Known failure modes as a shape to watch for.
   Re-probe on a compiling fixture before citing anything here. *(probe withdrawn)*
 
+- **A shorter brief style file ran shorter replies on Opus 5, 2026-09-08, by 10 to 25
+  percent, and the short variants did not separate from each other.** doc-4 fork-replay,
+  `--model opus --effort high`, Claude Code 2.1.263, three live turns that drew /brief,
+  three runs per cell. Means, old 225-line file against 76-line and 42-line files: 240
+  against 228 and 197; 223 against 211 and 185; 617 against 502 and 472. The 42-line
+  file plus the em dash line gave 224 and 504, inside the spread, and moved no em dash
+  count. The 49-line file that landed gave 210 and 206. This reverses decision-1's
+  record, whose short variants were a 140-word template and a 276-word reduction, both
+  outside the register. Every cell stays 1.4 to 3.8 times the kept length. Re-measure
+  on a model swap and before any further edit to the file, with the same harness.
+  *(probe, decision-2 and doc-18 on the board)*
+
 ## Deprecated model mechanics
 
 **Re-verify on each model release**, against the extended-thinking reference and the

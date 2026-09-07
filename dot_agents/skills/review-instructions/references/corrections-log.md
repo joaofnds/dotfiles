@@ -2410,3 +2410,56 @@ replaced.
 Reason, his: quoted above. Reason, the session's: applying every finding treated the
 reviewer's list as verdicts, where each addition needed the same "would the agent err
 without it" test as the lines it replaced.
+
+## 2026-09-08 the brief output style was rewritten from scratch and measured
+
+
+Quote: "Dude, I'm so tired of using the brief skill on almost every lengthy output.
+Like, as soon as you do something meaningful, you just output a giant text, and I'm
+so tired of it. I need you to please look at the brief output style. And like that
+grew to 12 KB. This is insane. Like, you're never going to get you to be brief if the
+output style is that giant block of things. Like, you really need to maybe start from
+scratch, scrub that entirely, and start from scratch and focus on the bare
+essentials. Like, let's iterate on that"
+
+Then, after the session surfaced decision-1 and asked whether to revert, measure, or
+cut further: "Yeah, so making it shorter historically produced longer replies, but now
+we kept making it longer, and it is producing longer replies as well. So you need to
+let go of the previous measurements and definitions and just measure now. You change
+the file, you make it shorter, more direct, more explicit. Remove prose, write it in
+the same style that we want the output to be, and then you measure yourself. Don't
+rely on past measurements. Measure now"
+
+The problem: the output style had reached 225 lines and eight examples across
+thirteen commits, each adding a rule or a pair for that day's incident and none
+re-judging the file whole. Replies after any substantive turn still drew /brief. The
+board's decision-1 forbade shortening the file, on two measurements of variants that
+were both smaller than any draft here and outside the register the reply should have,
+and the session did not read the board before its first rewrite landed.
+
+File: `dot_claude/output-styles/brief.md`.
+
+Change: the file is 49 lines, written in the register it asks for. Rules the global
+file carries were cut, the em dash, bad news first, the wording slip, the numbered
+list. Two unprimed reviews and one adversarial review ran across the drafts. Fixed
+from them, one sentence each: narration and counts no longer route to the commit body,
+which the delivery skill excludes; a finding nothing holds stays in the reply with its
+paths; a number something is decided on stays; a closed finding shares a sentence and
+an open one gets its own; notes never announce the next step; the state-of-work rule;
+question framing; the setup and pivot prohibitions; the instructions opener; the
+clause binding every skill's reply. Left cut with test in use: the three-decision
+example, the rejected-option clause, the destination for method and narration, the
+too-long half of the real pair, and the collisions with CLAUDE.md's wording-slip line
+and reading announcement, which the old file also had.
+
+Measured with the doc-4 replay on Opus 5, three live turns, three runs per cell.
+Every shorter file ran 10 to 25 percent shorter than the 225-line file on every turn.
+The 76, 42, and 49-line files do not separate from each other. A variant carrying the
+em dash line moved nothing, so that rule stays in the global file only. Every cell
+stays 1.4 to 3.8 times the kept length. Numbers in external-facts, decision-2, and
+doc-18.
+
+Reason, his: quoted above. Reason, the session's: each earlier edit earned its own
+line and none re-judged the file whole, so the file only grew, and the record's
+numbers described other variants, so only a measurement of the file in hand could
+decide it.

@@ -339,6 +339,12 @@ and he judged it unnecessary (95e52961).
 A reviewer's two note-grade findings were applied as sentences the reader did not
 need, with this skill open, and he asked whether the rewrite was necessary at all
 (entry "2026-09-07 the brief skill grew with prose its rewrite did not need").
+The brief output style reached 225 lines over thirteen commits, each adding one
+rule or one pair for that day's incident, and none re-judging the file whole. A file
+edited only by addition never shrinks. The rewrite was then held on a recorded
+measurement of two other variants, and measuring the file in hand reversed the record,
+so a number measured on a variant bounds that variant and never the text in hand
+(entry "2026-09-08 the brief output style was rewritten from scratch and measured").
 
 ### State the complement
 
