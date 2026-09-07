@@ -305,3 +305,25 @@ level, above a line already carrying the reason those cases share (05d25616).
 - "overseeing between the loop's stages" (b17d8a55), a directive for a new skill.
 - "no redundant reviewers and no agent per blocking finding" (74256bbc), two
   mechanisms excluded from a restore, with no corpus text at fault.
+
+### One home
+
+Four files each routed their own content into the commit message, none of them
+bounded, while the file that owned the message said only that the body says why. A
+class with several inbound routes and no owner grows without any one rule permitting
+it (b7dc3121, this exchange).
+
+### Write for the reader who has only what the artifact carries
+
+A rule that sends a reader to a card, a transcript, or a path on the author's machine
+assumes an audience with the author's machine. Name the audience of each artifact
+before deciding where its evidence goes. The commit rules failed this twice in one
+day, first sending a commit's evidence to a card, then having a commit name the
+corrections records rather than state what it needs (this exchange).
+
+### Read the rule file in the turn, not once in the session
+
+A session that edits the same file twice reads the rules for the first edit and
+works from memory for the second. Memory of a checklist keeps the checks that
+matched the first edit and drops the ones the second needed. Re-read the file each
+time you return to the work it covers (this exchange).

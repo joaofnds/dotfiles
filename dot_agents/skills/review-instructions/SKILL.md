@@ -64,9 +64,7 @@ flattening, and reads as a preference where the rule forbade the case.
 Prefer the fix that is a deletion or a shorter rewording. A new rule deletes the rule
 it supersedes, in the same edit. Before you move a line, cut it and see what breaks,
 since moving one feels like a decision and settles nothing. A line belongs where it
-tells the reader what to do with the text in front of them. Where an edit grows a
-file, the commit message names the action the new lines change and what they
-replaced, or says they replaced nothing.
+tells the reader what to do with the text in front of them.
 
 ## The checks
 
@@ -144,9 +142,9 @@ nothing, since a file rewritten into short paragraphs can keep every shape.
 
 **Keep the evidence out of the rule.** Move citations, evidence hedges, version
 notes, and references to past wording out of the file, because they dilute the lines
-that steer. The claim's history belongs in the commit message and the evidence
-records. Keep a re-check trigger, naming what to re-check, the event that fires it,
-and the state it was last checked against.
+that steer. The claim's history belongs in the corrections log and the corrections
+rules under [references/](references/). Keep a re-check trigger, naming what to
+re-check, the event that fires it, and the state it was last checked against.
 
 **Check the placement.** Keep in an always-loaded file only what applies broadly every
 session, and move occasional knowledge to a skill. Put critical rules early in a long

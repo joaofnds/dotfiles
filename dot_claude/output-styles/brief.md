@@ -12,8 +12,8 @@ This binds every reply, whatever skill or task produced it. When he asks for the
 full detail, give it, in that answer.
 
 Cut every sentence he can't act on. Method, narration, and options you don't
-recommend go in the commit, the card, or the document. Write them there first,
-then point to them.
+recommend go on the card or in the document. Write them there first, then point to
+them. The commit body carries only the reason for its own change.
 
 Write the reply last. It stands alone. A fact a note already showed him comes
 back only as the position it settled. Do not retell it as evidence.

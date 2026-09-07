@@ -1659,3 +1659,120 @@ doing on his first reason alone, and nothing should be claimed for it on behavio
 A separate finding from the same runs is that sessions stop at a vague directive and
 apply a rule's number without checking its stated reason, neither of which the
 naming causes.
+## 2026-09-07 the corpus grew commit bodies that narrated the session
+
+João: "I don't know where in the instruction corpus is written that you should like
+dump part of your context to the git commit body but I want you to find it and report
+it to me." Then, shown a six-paragraph body on a seventeen-line diff: "yeah but like,
+look at this shit." On the fix: "the delivery skill is the one responsible for
+commits? If so we should have a heading there or a section or something for commits
+where we lay down the rules for committing. I think we have a couple of these rules
+and if they are scattered throughout the instruction corpus then I think we should
+concentrate them here and consolidate them in the delivery skill."
+
+Problem: no line ordered the dump, and the corpus produced it anyway. The delivery
+skill said only "the body says why" with no bound, while four other files each sent
+their own content to the commit message: the judgment rule's list of paths
+considered, the comment rule's edit rationale, and two review-instructions lines
+routing a claim's history and what an edit replaced. Each was narrow. Together they
+had no ceiling, so a body grew to whatever the session held. Commit b7dc3121 is the
+example he saw, six paragraphs of reviewer counts, method, and check results on a
+seventeen-line diff.
+
+File: `dot_agents/skills/delivery/SKILL.md`,
+`dot_agents/rulebook/engineering-judgment.md`,
+`dot_agents/rulebook/coding-style.md`,
+`dot_agents/skills/review-instructions/SKILL.md`.
+
+Change: the delivery skill's Commits section now states what the body is for, bounds
+it shorter than the diff it explains, lists what to leave out, and claims ownership
+of the class so the inbound routes resolve against it. The four routes were narrowed
+to match. One of them, "where an edit grows a file, the commit message names what the
+new lines replaced", moved into the delivery section and was deleted from
+review-instructions in the same edit.
+
+Reason, his: the corpus should concentrate the commit rules where a session writing a
+commit reads them. Reason, the session's: an unprimed reviewer found the first draft
+would not have stopped b7dc3121, because it forbade the categories in the body and
+left the decision's evidence unbounded, which was half that commit. The bound on
+length is what closes it.
+
+One route stays open. The brief output style sends method, narration, and rejected
+options to "the commit, the card, or the document" and tells the session to write them
+there first. It loads every session where the delivery skill loads only at commit
+time, so it wins the collision. It is a file that loads at session start, so it waits
+for his instruction.
+## 2026-09-07 the commit rules sent the reader to a card he cannot open
+
+João: "my rules for the commit is that it should be self-contained. It seldom should
+mention resources outside of the commit. That includes cards, issues, links to local
+documents, local resources on only my machine, etc. What goes into the commit title
+and body should be thought from the perspective of another developer that has
+nothing from my computer or anyone's computer, it only has a copy of the source code
+(including git): Will that person be able to understand the commit title and body
+completely without having to ask anyone for where the other resources are or having
+to open URLs, links, cards, issues, stuff like that." On what belongs in the body:
+"when a decision is taken, if we are not writing an ADR with it, the commit body
+should explain why the decision was taken. If we did benchmarks, we should include
+the benchmarks." On the exceptions: "maybe we are referencing an RFC, then we can
+link the RFC. If we're referencing a GitHub pull request, then we mention the pull
+request."
+
+Problem: the Commits section committed an hour earlier said the opposite. It sent
+long evidence to the card with the body naming that record in a line, and it barred
+how a claim was verified, which excludes benchmark numbers he wants kept. Two more
+lines pointed the same way, the judgment rule writing its list of paths on the card
+and the review-instructions line having the commit name the corrections records
+rather than state what it needs.
+
+File: `dot_agents/skills/delivery/SKILL.md`,
+`dot_agents/rulebook/engineering-judgment.md`,
+`dot_agents/skills/review-instructions/SKILL.md`.
+
+Change: the section is now written around his reader, an engineer with a clone and
+nothing else. It admits the decision's reasoning, the rejected alternative, and
+benchmark numbers with the machine, names what that reader can reach, and requires
+the body to state what a card or a local document holds instead of pointing at it.
+The two outward-pointing lines were turned around.
+
+Reason, his: a reader with only the source code should get the full picture without
+chasing anything. Reason, the session's: an unprimed reviewer found the first draft
+overstated his rule as an absolute ban with a "stable public URL" exception too
+narrow for a private forge, inverted his ADR clause into one that replaced the whole
+body, and dropped the length bound that a defect he reported an hour earlier had
+just established. All three are fixed.
+
+The brief output style still sends method, narration, and rejected options to "the
+commit, the card, or the document" and tells the session to write them there first.
+It loads every session and wins the collision. It is a file that loads at session
+start, so it waits for his instruction.
+## 2026-09-07 the commit rules were reviewed from memory of the checks
+
+João: "did you /review-instructions?" and, on the brief output style's line: "yes!!!"
+
+Problem: the session had loaded the skill for the first commit of the day and then
+edited the same section again a turn later without re-reading it, working from what
+it remembered. The corpus says to read a rule file in the turn the work happens, not
+once per session. Re-reading it surfaced two checks the session had lost, that a
+compression pass must audit what it removes and that a numeric proxy for a judgment
+rule is worse than prose. The pass under audit had cut the citable-URL examples,
+merged the Conventional Commits rule into a modifier, and kept a length bound that
+fires on commits whose bodies were right.
+
+File: `dot_agents/skills/delivery/SKILL.md`,
+`dot_claude/output-styles/brief.md`,
+`dot_agents/rulebook/engineering-judgment.md`.
+
+Change: the Commits section is restored to the wording that carries the force, with
+the citable set naming an RFC, a standard, a vendor advisory, and a pull request in
+the repository's own forge. The length bound is gone. Measured over the last 200
+commits in this repository, 37 have a body longer than their diff, including
+one-line diffs whose four-line bodies were right, so the bound was a proxy for a
+judgment and fired where judgment was needed. The body now stops when it has said
+what the diff cannot show. The brief output style no longer sends method and
+narration to the commit, which closes the collision that had made the delivery
+skill's ownership paragraph a no-op, and that paragraph is cut with it.
+
+Reason, his: he asked whether the skill had been run, and cleared the change to the
+output style. Reason, the session's: an unprimed reviewer found the compression pass
+lost force on three rules while claiming to change only form.
