@@ -1,6 +1,6 @@
 ---
 name: debug
-description: Investigates a failure, unexpected behavior, or a cost symptom such as slowness or a hang, down to a confirmed root cause and shapes the fix task. Use at the start of looking into a failure, before the cause is known, including a mid-task defect whose cause survives a direct look. A defect in the session's own process goes to João as a kaizen candidate, and build fixes the code from the card this skill leaves.
+description: Investigates a failure, unexpected behavior, or a cost symptom such as slowness or a hang, down to a confirmed root cause and shapes the fix task. Use at the start of looking into a failure, before the cause is known, including a mid-task defect whose cause survives a direct look. A defect in the session's own process is reported as a kaizen candidate, and build fixes the code from the card this skill leaves.
 ---
 
 # Debug
@@ -60,12 +60,12 @@ cause.
 ## Closing
 
 Grep the probe prefix and remove the instrumentation. A probe that must stay is
-recorded on the card with its path and purpose. An investigation that stalls,
-with no reproduction, no discriminating observation, or no way to switch the
-cause, also closes: the card records what was established, what is missing, and
-the options, and goes to João. Otherwise the card leaves like any shaped task:
+recorded on the card with its path and purpose. An investigation that stalls, with no
+reproduction, no discriminating observation, or no way to switch the cause, also
+closes: the card records what was established, what is missing, and the options, and
+the reply says the cause is unsettled. Otherwise the card leaves like any shaped task:
 the goal, the confirmed cause with its evidence, and the reproduction as the
-acceptance observation and the first test to write, a test where the repo has a
-suite and the recorded command otherwise. The session continues into build only
-when one fix is settled and the direction included fixing. With no single fix
-settled, the cause and whatever candidates exist are recorded for João.
+acceptance observation and the first test to write, a test where the repo has a suite
+and the recorded command otherwise. The session continues into build only when one fix
+is settled and the direction included fixing. With no single fix settled, the cause
+and whatever candidates exist are recorded on the card.

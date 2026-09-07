@@ -17,9 +17,10 @@ reach.
 
 ## What the reviewer gets
 
-The goal in João's terms, since a reviewer without it can only judge style rather than
-whether you solved the right problem. Where no goal was stated this session, ask him
-for it before you build the brief.
+The goal as it was stated to this session, since a reviewer without it can only
+judge style rather than whether you solved the right problem. Where no goal was
+stated this session, ask for it and end the turn before you build the brief, since
+a reviewer sent a goal you inferred reviews your inference.
 
 The artifact itself, as the diff, the files, the lines. Point at it and let it read.
 A summary of the work is your reading of it.
@@ -74,7 +75,7 @@ you.
 Fold or defer each material finding. A deferral takes a disposition and closes the
 finding for the gate, never for the report. A finding that invalidates the document's
 core reopens the work that produced it, rather than being edited around. That ends this
-gate, the redrafted document gets a fresh round of its own, and you tell João why.
+gate, the redrafted document gets a fresh round of its own, and the reply says why.
 
 An edit answering a finding that named a compile error, a command, a count, or a line
 gets that same probe re-run against the new text. Name each fix you probed and the
@@ -85,11 +86,11 @@ The gate is one round. Fold the findings, probe the fixes, then say out loud whe
 you are sending it back once more or proceeding. Send it back only where a fix changed
 a claim about how something behaves, or repaired a blocking finding in a way its probe
 cannot confirm. One rerun at most. After it, proceed, giving every open finding a
-disposition. Run a further round only where João asks for one. Where he asks for a
-clean report, tell him first what the residue will look like, because a skeptical
-reader of a long document does not return an empty list.
+disposition. Run a further round only where one is asked for. Where a clean report
+is asked for, say first what the residue will look like, because a skeptical reader
+of a long document does not return an empty list.
 
 Where the gate catches the same class of gap across two documents, or twice on one, the
 defect is in what produced them rather than in the draft. Name whether that is the
-producing skill or your own revision loop. Say so to João in that round, with both
+producing skill or your own revision loop. Say so in that round's reply, with both
 instances quoted, before fixing the document again.

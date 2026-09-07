@@ -1,6 +1,6 @@
 ---
 name: dream
-description: Consolidates this project's memory store, merging duplicate notes, surfacing contradictions for João, pruning what no longer exists, repairing links and stale paths, and rebuilding the index within its load budget. Use when the store has grown noisy or repetitive. Writing a new memory is not this, and improving the corpus is kaizen.
+description: Consolidates this project's memory store, merging duplicate notes, surfacing contradictions for a decision, pruning what no longer exists, repairing links and stale paths, and rebuilding the index within its load budget. Use when the store has grown noisy or repetitive. Writing a new memory is not this, and improving the corpus is kaizen.
 disable-model-invocation: true
 argument-hint: "[--auto]"
 ---
@@ -35,8 +35,8 @@ a survivor more complete than either, keep the better name, union the links, and
 the newer origin and timestamp. Where only one carries a key, the survivor carries it.
 Where neither does, it has none.
 
-**Contradictions.** Two notes asserting opposing facts about one topic are João's
-call, never yours. The newer note is the likely winner and that is not enough. Record
+**Contradictions.** Two notes asserting opposing facts about one topic are never
+yours to resolve. The newer note is the likely winner and that is not enough. Record
 both and the topic.
 
 **Prunes.** A note is prunable when what it describes no longer exists, or when a
@@ -60,7 +60,7 @@ this run already rewrote, since its timestamp is now the run's own.
 
 **Index lines.** Only where the index is near its cap, shorten the longest lines by
 moving what they carry into the note bodies, and stop once the projected index fits
-with room to spare. Below that, line lengths are João's business. Shortening a line by
+with room to spare. Below that, leave line lengths alone. Shortening a line by
 dropping what it says is a prune, and prunes go through the rule above.
 
 ## Propose, then apply
@@ -71,14 +71,14 @@ Ask before applying, unless the run carries `--auto` below. A run with nothing t
 propose says the store is clean and stops.
 
 Run with `--auto`, apply every proposal without asking, except the contradictions, and
-report those as left alone. They are the one part that needs João, so an unattended run
-resolves none of them. The backup, the verification, and the clean-store report are the
-same as an attended run.
+report those as left alone. They are the one part that needs a decision from outside
+the session, so an unattended run resolves none of them. The backup, the verification,
+and the clean-store report are the same as an attended run.
 
-Apply merges, then contradictions João resolved, then prunes, then the repairs, then
-rebuild the index with one line per note on disk. Resolving a contradiction keeps the
-winner, notes in its body that it was updated and what the losing claim said, and
-deletes the loser. A deleted note's inbound links are
+Apply merges, then each contradiction whose resolution is recorded in this session,
+then prunes, then the repairs, then rebuild the index with one line per note on disk.
+Resolving a contradiction keeps the winner, notes in its body that it was updated and
+what the losing claim said, and deletes the loser. A deleted note's inbound links are
 repointed to its survivor, or stripped where a prune left none. Write relocated text
 into a note body before shortening its index line, so no run can leave the detail in
 neither place.
@@ -92,8 +92,8 @@ fits its cap. A dangling link is a miss in the apply step, so go back and fix it
 reporting.
 
 An index that cannot be brought under its cap by any merge, prune, or shortening the
-rules allow is João's decision. Report the overflow and the notes past it rather than
-stretching a rule to fit.
+rules allow is not yours to settle. Report the overflow and the notes past it rather
+than stretching a rule to fit.
 
 Keep the two most recent backups and remove the older ones. Then report what changed,
 the index's size, and where the backup is.

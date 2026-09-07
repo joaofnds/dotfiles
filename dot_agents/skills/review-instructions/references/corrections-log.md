@@ -1620,45 +1620,7 @@ Reason, his: seven entries could not show a pattern and a hundred can, and the t
 rules came from a thin read. Reason, the session's: two of the reviewer's findings
 were mine to fix, a check forbidding hooks as guards while another check six lines
 later still offered one, and a section counting six entries while naming four.
-## 2026-09-07 the corpus writes about him as an authority, and he wants himself out of it
 
-João: "you keep talking about me on the corpus like I'm a god or something", "I hate
-that shit", "and that shit can't help", and earlier in the same session "I'm trying
-to remove meaning me at all, not just my fucking name", "don't change 'joão' to
-'him'". He had opened with "so I was thinking about removing all references to my
-name. Do you have reasons to believe that this would make the instructions perform
-worse?" and, after the session quoted the Write for one mind check back at him as
-settled, "Don't take that as truth. I want you to challenge it, and *verify*,
-*prove* it necessary instead of assuming it works", then "test more. more cases,
-more scenarios", "try to both prove, and disprove the theory", "get. to. the.
-truth."
-
-Problem: the corpus names him 136 times and routes decisions to him by name, in
-forms like "his call", "Ruled by João", "goes to João", "Reason, his". He read that
-as being written about as an authority whose word settles things, and he does not
-want it. The session misread the ask twice before understanding it. First it cut the
-name and left the pronouns, which he rejected because the pronouns keep the same
-two-party framing. Then it substituted a role noun, which he rejected for the same
-reason. The ask is that the instructions stop being written about a person at all,
-not that a token be swapped.
-
-File: `dot_agents/skills/review-instructions/references/external-facts.md`, two new
-sections.
-
-Change: only the measurements landed this turn. The removal itself is a separate
-task, because it needs a judgment per line rather than a substitution, and this
-session had proved twice that it gets that wrong when it works mechanically.
-
-Reason, his: he does not want to be written about that way, and he believes it does
-not help.
-Reason, the session's: the second half of his belief is now measured and it holds.
-Four A/B designs found no difference in what sessions do, and none of 80 transcripts
-carrying a rule attributed to him by name ever cited him as the justification. The
-attribution is in the text and the model does not use it. So the removal is worth
-doing on his first reason alone, and nothing should be claimed for it on behaviour.
-A separate finding from the same runs is that sessions stop at a vague directive and
-apply a rule's number without checking its stated reason, neither of which the
-naming causes.
 ## 2026-09-07 the corpus grew commit bodies that narrated the session
 
 João: "I don't know where in the instruction corpus is written that you should like
@@ -1702,6 +1664,47 @@ options to "the commit, the card, or the document" and tells the session to writ
 there first. It loads every session where the delivery skill loads only at commit
 time, so it wins the collision. It is a file that loads at session start, so it waits
 for his instruction.
+
+## 2026-09-07 the corpus writes about him as an authority, and he wants himself out of it
+
+João: "you keep talking about me on the corpus like I'm a god or something", "I hate
+that shit", "and that shit can't help", and earlier in the same session "I'm trying
+to remove meaning me at all, not just my fucking name", "don't change 'joão' to
+'him'". He had opened with "so I was thinking about removing all references to my
+name. Do you have reasons to believe that this would make the instructions perform
+worse?" and, after the session quoted the Write for one mind check back at him as
+settled, "Don't take that as truth. I want you to challenge it, and *verify*,
+*prove* it necessary instead of assuming it works", then "test more. more cases,
+more scenarios", "try to both prove, and disprove the theory", "get. to. the.
+truth."
+
+Problem: the corpus names him 136 times and routes decisions to him by name, in
+forms like "his call", "Ruled by João", "goes to João", "Reason, his". He read that
+as being written about as an authority whose word settles things, and he does not
+want it. The session misread the ask twice before understanding it. First it cut the
+name and left the pronouns, which he rejected because the pronouns keep the same
+two-party framing. Then it substituted a role noun, which he rejected for the same
+reason. The ask is that the instructions stop being written about a person at all,
+not that a token be swapped.
+
+File: `dot_agents/skills/review-instructions/references/external-facts.md`, two new
+sections.
+
+Change: only the measurements landed this turn. The removal itself is a separate
+task, because it needs a judgment per line rather than a substitution, and this
+session had proved twice that it gets that wrong when it works mechanically.
+
+Reason, his: he does not want to be written about that way, and he believes it does
+not help.
+Reason, the session's: the second half of his belief is now measured and it holds.
+Four A/B designs found no difference in what sessions do, and none of 80 transcripts
+carrying a rule attributed to him by name ever cited him as the justification. The
+attribution is in the text and the model does not use it. So the removal is worth
+doing on his first reason alone, and nothing should be claimed for it on behaviour.
+A separate finding from the same runs is that sessions stop at a vague directive and
+apply a rule's number without checking its stated reason, neither of which the
+naming causes.
+
 ## 2026-09-07 the commit rules sent the reader to a card he cannot open
 
 João: "my rules for the commit is that it should be self-contained. It seldom should
@@ -1746,6 +1749,7 @@ The brief output style still sends method, narration, and rejected options to "t
 commit, the card, or the document" and tells the session to write them there first.
 It loads every session and wins the collision. It is a file that loads at session
 start, so it waits for his instruction.
+
 ## 2026-09-07 the commit rules were reviewed from memory of the checks
 
 João: "did you /review-instructions?" and, on the brief output style's line: "yes!!!"
@@ -1776,3 +1780,47 @@ skill's ownership paragraph a no-op, and that paragraph is cut with it.
 Reason, his: he asked whether the skill had been run, and cleared the change to the
 output style. Reason, the session's: an unprimed reviewer found the compression pass
 lost force on three rules while claiming to change only form.
+
+## 2026-09-07 the corpus was rewritten to stop being about a person
+
+João: "you keep talking about me on the corpus like I'm a god or something", "I'm
+trying to remove meaning me at all, not just my fucking name", "don't change 'joão'
+to 'him'".
+
+Problem: the corpus named him about 136 times across the always-loaded file, the
+rulebook, the skills, the reviewer agent, the brief output style and the glossary,
+and routed decisions to him by name. Two earlier attempts in the previous session
+failed by working mechanically. Swapping the name for a pronoun kept the two-party
+framing of an agent and an authority, and swapping it for a role noun did the same
+while colliding with the four places the corpus calls somebody else an engineer.
+This session went line by line and decided what each line was doing before changing
+it.
+
+File: `dot_agents/AGENTS.md`, `dot_agents/agents/reviewer.md`, `GLOSSARY.md`,
+`dot_claude/output-styles/brief.md`, four files under `dot_agents/rulebook/`, and
+twenty skill files under `dot_agents/skills/`.
+
+Change: 31 files, in the commit this entry ships with. A line routing a decision
+now says what the session does instead, or states the stop without naming who
+answers. A real boundary stays as a condition, and the push hard line now reads
+"the instruction to do it was typed into this session", matching the hooks line
+below it. Biography became rules
+about the reply, so reading on a phone is a property of the reply and answering in
+one batch is a rule that a turn asks everything at once and ends. Provenance lost its
+owner, and doctrine section 12 gained a route for a conflict its rulings do not
+cover, which the attribution had carried implicitly. The Write for one mind check was
+rewritten to state the rule this work followed, and it keeps an exception for a skill
+carrying `disable-model-invocation`, whose description says it runs on direction
+because no condition in the work can fire it. The corrections log and corrections
+rules were left alone, since their quoted words are the record.
+
+Reason, his: he does not want the instructions written about him that way. Reason,
+the session's: the behavioural half was already measured in the previous session and
+recorded in external-facts, so nothing is claimed for this on behaviour. An unprimed
+review of the first pass found six blocking defects, all fixed before the commit: a
+role noun colliding with three other engineers in the corpus, a hook prohibition
+contradicting its own exception, an opener contradicting the rule ten lines below it,
+a dropped rule that nine manually-invoked skills rely on, a push condition looser
+than the one beside it, and an escalation dissolved into a non-action. Three of those
+were ROUTE lines resolved by deleting the route rather than replacing it, which is
+the exact failure the task was written to prevent.

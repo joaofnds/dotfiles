@@ -46,8 +46,8 @@ from the record above.
 4. What is the next step, and what do you expect from it? One card, existing or
    proposed, with the observation it should produce. This is the proposal for the
    next bet, which triage writes with its budget.
-5. When can João go and see? The thing he can open, run, or read to check the
-   increment himself, and whether it is there now.
+5. When can the increment be seen? The thing to open, run, or read to check it
+   from outside the session, and whether it is there now.
 
 ## The verdict
 
@@ -56,7 +56,8 @@ Close the doc with one of three words and the evidence that picked it.
 - On track: the bet held and the next step continues the goal.
 - Adjust: the goal stands and the plan changes. The proposals say how.
 - Pivot: the evidence says the goal itself should change. Say what the evidence is
-  and what goal it points to. Changing the goal is João's call, so end there.
+  and what goal it points to. Changing the goal is not the reflection's to make, so
+  end there.
 
 A card that stumbled on its approach is adjust. Pivot names evidence about the goal,
 not about the card.
@@ -78,5 +79,5 @@ written by hand under the docs directory has no id and the CLI does not list it.
 Attach it and commit it before you return, because the doc is the whole of what this
 run leaves and the session that started you may not run again.
 
-The reply to João is the brief: the verdict, the next bet, and what he can go and
-see. Everything else stays on the doc.
+The reply is the brief. It carries the verdict, the next bet, and what can be gone
+and seen. Everything else stays on the doc.

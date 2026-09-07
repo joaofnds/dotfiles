@@ -1,6 +1,6 @@
 ---
 name: absorb
-description: Decides what our corpus imports from an instruction resource João points at, a repository's agent corpus, a skill or rule file, or published guidance. Use when directed to absorb, import, port, adopt, or learn from a named resource, or to compare one against our corpus. Reviewing our own instruction files with no external subject is review-instructions. Ordinary software tasks are shape.
+description: Decides what our corpus imports from a named instruction resource, a repository's agent corpus, a skill or rule file, or published guidance. Use when directed to absorb, import, port, adopt, or learn from a named resource, or to compare one against our corpus. Reviewing our own instruction files with no external subject is review-instructions. Ordinary software tasks are shape.
 ---
 
 # Absorb
@@ -62,13 +62,13 @@ need is judged directly.
 An import lands as the principle plus the need it answers, written in our corpus's
 voice and structure. Land a mechanism only for a failure that has already happened
 here despite a stated principle. The card takes the normal steps: build writes the
-edit, and before the commit the final text takes one adversarial pass, by a
-reviewer that had no part in the edit, under the review-instructions checks. Its
-findings land on the card with their verdicts. The author verifies each repair
-against the finding it answers, the pass does not rerun, and a disagreement is
-settled with evidence or ends at João. A repair may fix, cut, merge, move, or
-reword, and never add. A constructed case the text mishandles earns clearer
-wording, a card, or nothing. The one exception is a finding that shows a way to
-cross a hard line. That one may add the sentence blocking the way. The edit then
-goes into the chezmoi source, with `chezmoi apply` on the changed targets so live
-sessions load the new text.
+edit, and before the commit the final text takes one adversarial pass, by a reviewer
+that had no part in the edit, under the review-instructions checks. Its findings land
+on the card with their verdicts. The author verifies each repair against the finding
+it answers, the pass does not rerun, and a disagreement is settled with evidence, or
+the text stays as it was and the disagreement is reported with both positions. A
+repair may fix, cut, merge, move, or reword, and never add. A constructed case the
+text mishandles earns clearer wording, a card, or nothing. The one exception is a
+finding that shows a way to cross a hard line. That one may add the sentence blocking
+the way. The edit then goes into the chezmoi source, with `chezmoi apply` on the
+changed targets so live sessions load the new text.

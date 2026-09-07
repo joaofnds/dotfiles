@@ -1,6 +1,6 @@
 # Code review: the wiki-sourced checks
 
-Checks drawn from João's engineering wiki, grouped by the axis that owns them, with
+Checks drawn from the engineering wiki, grouped by the axis that owns them, with
 the reasoning and the quotation behind each. A line here is a prompt to look. Where
 a house skill owns the axis, that skill is the rule, and it wins where a line
 disagrees with it. No house file stands behind the Security section, so it serves

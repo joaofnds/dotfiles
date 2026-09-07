@@ -1,6 +1,6 @@
 ---
 name: review-instructions
-description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles, and keeps the log of what João asks changed in the corpus. Use it before drafting one, so the checks shape the writing, on any edit to one before it is called done, and on any complaint or question about a corpus file. An instruction failure observed as session behavior goes to kaizen.
+description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles, and keeps the log of what gets corrected in the corpus. Use it before drafting one, so the checks shape the writing, on any edit to one before it is called done, and on any complaint or question about a corpus file. An instruction failure observed as session behavior goes to kaizen.
 ---
 
 # Review instructions
@@ -165,17 +165,20 @@ layer. The board rules, under Columns, leave the column a skill creates a card i
 the skill. Keep references one level deep, one term per concept, and nothing
 time-sensitive.
 
-**Write for one mind.** The corpus is one way of working that João and the sessions
-share. A trigger or a gate never waits on him asking or complaining, because "use it
-when João asks for a review" teaches the session to skip the review until asked. A
-skill only he can invoke names him as its trigger, since nothing else fires it. A
-rule names him where he is a fact it turns on, his absence, text he did not type, a
-decision the hard lines reserve for him, and never as the one who wants a step the
-work already calls for. A gate sends him a doubt the global file's Acting section
-lists, or one no test and no removing path can settle, because the rule is for the
-session's own thinking and not for what reaches him. Failing: "an unsourced
-criterion is a question for him". Corrected: "an unsourced criterion is tested where
-an experiment can settle it and asked where none can".
+**Write for one mind.** The corpus is one way of working, not an agent taking
+instruction from an authority, so it does not narrate a person. A trigger or a gate
+never waits on someone asking or complaining, because "use it when a review is asked
+for" teaches the session to skip the review until asked. State the trigger as a
+condition in the work instead. A skill carrying `disable-model-invocation` is the
+exception, since no condition in the work can fire it, and its description says it
+runs on direction. Where a rule turns on a person at all, it is the condition that
+matters and never the identity: nobody at the keyboard, text that did not arrive as
+a typed instruction, an action the hard lines reserve for an explicit direction.
+Write that condition and stop there. A gate escalates only a doubt the
+global file's Acting section lists, or one no test and no removing path can settle,
+because the rule is for the session's own thinking rather than for what gets asked.
+Failing: "an unsourced criterion is a question to raise". Corrected: "an unsourced
+criterion is tested where an experiment can settle it and asked where none can".
 
 **End steps on a checkable bound.** Require each workflow step to end on a condition
 the agent can test, since a vague bound invites finishing before done and a demanding
@@ -184,18 +187,18 @@ modified file accounted for" to "understanding reached". Require a state-mutatin
 rule to name an object bindable without judgment: a path, an enumerated set, or a
 pattern plus a probe. Reject "stale entries", which describes by role.
 
-**Prefer enforcement to prose.** Name the guard where a type, a template, a script,
-or a CI gate could enforce a rule, because the guard removes a possibility that prose
+**Prefer enforcement to prose.** Name the guard where a type, a template, a script, or
+a CI gate could enforce a rule, because the guard removes a possibility that prose
 only asks the reader to avoid. Never offer a hook or a settings change as the guard,
-because hooks and settings are João's. Put the trigger in the skill that runs the
-phase, build's Finish or shape's handoff, or leave the rule in prose. The kaizen
-skill owns the one exception, a hook proposed to him when no other change answers a
-defect. On a destructive path, require a gate or a deny rule, never stronger
-adjectives. A guard enforces the rule itself. Leave the rule as prose where only a
-proxy could be enforced, because a numeric proxy for a judgment rule replaces the
-principle with a count, obeyed or breached exactly where judgment was needed. Its
-counts belong in the evidence records. Split a rule with a mechanical part and a
-judgment part: a script for the first, prose for the second. Give a rule only
+because a session never writes hooks or settings. Put the trigger in the skill that
+runs the phase, build's Finish or shape's handoff, or leave the rule in prose. The
+kaizen skill owns the one exception, a hook proposed for an explicit go-ahead when no
+other change answers a defect. On a destructive path, require a gate or a deny rule,
+never stronger adjectives. A guard enforces the rule itself. Leave the rule as prose
+where only a proxy could be enforced, because a numeric proxy for a judgment rule
+replaces the principle with a count, obeyed or breached exactly where judgment was
+needed. Its counts belong in the evidence records. Split a rule with a mechanical part
+and a judgment part: a script for the first, prose for the second. Give a rule only
 judgment can check the verdict "test in use".
 
 **State the complement.** Leave no part of a set to inference, because inference is
@@ -261,8 +264,8 @@ Name the mode when a finding matches one.
 - **Layer leakage**: a skill states when a card moves or where to, which the board
   rules own.
 - **Decay**: a path, version, tool, or mechanism has gone stale.
-- **Deferred authority**: a trigger or a gate waits on João asking for a step the work
-  already calls for.
+- **Deferred authority**: a trigger or a gate waits on someone asking for a step the
+  work already calls for.
 
 ## The verdict
 
@@ -297,23 +300,24 @@ End a requested review as findings and apply nothing. Reviewing your own edit in
 directed work, apply the verdicts and end in the commit.
 
 Send a file you wrote or rewrote this session to a reviewer that had no part in it,
-once, before the commit or the handoff to João. Give that reviewer this file, the
-diff, and João's words if there are any, and never your own description of the
-change. Do not run the review again after the fixes. Read the fixes yourself in the
-staged diff, with the same checks, because the reviewer did not see them. Send every
-edit, a one-line one included.
+once, before the commit or the handoff. Give that reviewer this file, the diff, and
+the words the change was directed in if there are any, and never your own description
+of the change. Do not run the review again after the fixes. Read the fixes yourself
+in the staged diff, with the same checks, because the reviewer did not see them. Send
+every edit, a one-line one included.
 
 ## The corrections log
 
-Log every complaint, question, or directed change João raises about a corpus file,
-one rendered from the dotfiles repository, in that repository's source at
+Log every complaint, question, or directed change raised about a corpus file, one
+rendered from the dotfiles repository, in that repository's source at
 `dot_agents/skills/review-instructions/references/corrections-log.md`, in the turn it
-happens, whether or not an edit follows. Quote his words. Then say what the problem
-was, in your own plain words, with the context a fresh session lacks: what you were
-doing and what the corpus file said. His words alone leave the next reader reparsing
-them. Name the file, and say what changed or that nothing did. Give the reason, his
-where he gave one, and yours marked as yours where he did not. A project's own
-instruction file is outside the log. A session defect kaizen takes stays on its card.
+happens, whether or not an edit follows. Quote the words it arrived in, verbatim.
+Then say what the problem was, in your own plain words, with the context a fresh
+session lacks: what you were doing and what the corpus file said. The quote alone
+leaves the next reader reparsing it. Name the file, and say what changed or that
+nothing did. Give the reason stated in the correction where one was given, and yours
+marked as yours where none was. A project's own instruction file is outside the log. A
+session defect kaizen takes stays on its card.
 
 Then file the entry once in
 `dot_agents/skills/review-instructions/references/corrections-rules.md`. Read every

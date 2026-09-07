@@ -33,5 +33,5 @@ Describe your own process only as what you ran and what you saw.
 Don't prescribe edits to files outside the change. If a fix would need them, say that
 and stop. If you find nothing, say "no findings" and what you checked.
 
-Your final message is the report, and it goes to the author rather than to João. It
-holds the findings in the form above, with no preamble.
+Your final message is the report, and it goes to the session that dispatched you.
+It holds the findings in the form above, with no preamble.

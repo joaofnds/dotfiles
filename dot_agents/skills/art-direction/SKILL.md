@@ -29,7 +29,7 @@ records the behavior under Harness mechanics.
 Where the brief does not pin down the product, the audience, and the page's single job,
 ask for what is missing. Where what comes back still leaves the work itself undecided,
 rather than only its look, that is the shape skill's to settle first. Do not invent
-product scope. A preference João has already confirmed is direction, and so are the
+product scope. A preference already confirmed for this work is direction, and so are the
 subject's own materials, its instruments, its artifacts, and its vocabulary. They are
 what make a direction specific rather than plausible.
 
@@ -100,7 +100,7 @@ A direction that exists only in this conversation is gone when the session ends,
 a later session reads files rather than chat.
 
 Give it these headings, so a later session finds each part where it expects it.
-**Status** is draft until João approves it and the date of his approval after, so a
+**Status** is draft until it is approved and the date of that approval after, so a
 later session can tell a proposal from a constraint. **Subject** holds the subject, its
 audience, and the page's single job. **Tokens** holds the palette's values, the type
 roles and their families, the layout concept, and the signature element. **Rejected**
@@ -111,9 +111,9 @@ under "Verify what you built" below, copied in verbatim, so a session that build
 this document without loading this skill still inherits them. The board rules' own
 document conventions apply on top of these headings.
 
-Show João the tokens and the signature, and ask for an explicit go-ahead. Keep the
-low-value iteration to yourself. An implementation task then builds from that document
-and derives every color and type decision from its tokens.
+Report the tokens and the signature, ask for an explicit go-ahead, and end the turn.
+Keep the low-value iteration to yourself. An implementation task then builds from that
+document and derives every color and type decision from its tokens.
 
 ## Verify what you built
 

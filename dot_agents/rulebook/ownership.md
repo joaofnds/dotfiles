@@ -10,7 +10,7 @@ owns, and a misleading log are all yours from the moment you see them.
   closed before you call the task done, in its own commit when the fix is small and
   reversible, and as a card on the board when it is not. The handoff, or the reply
   when there is no card, names each one and where it went. A defect that sits in no
-  commit, on no card, and in no ask to João was dismissed.
+  commit, on no card, and in no ask was dismissed.
 - A red check, in CI or on this machine, outranks the task, because nothing ships
   while it stays red. Read its state when you start and before you call the work
   done. Fix it before the work you came for, whoever broke it. A fix larger than

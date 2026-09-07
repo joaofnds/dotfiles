@@ -11,31 +11,32 @@ to `build`.
 
 ## Find the unknowns
 
-Separate what João asked for, what he would recognize but didn't say, and what neither
-of you has considered. Most of it is answerable from the repository, the glossary, the
-board, and the git history, so read before you ask. What remains goes to him as one
+Separate what the request asked for, what it assumes without saying, and what nobody
+has considered yet. Most of it is answerable from the repository, the glossary, the
+board, and the git history, so read before you ask. What remains goes back as one
 numbered list, each item framed as the decision it is rather than the implementation
 behind it, carrying your recommendation, ordered so the answers that would change the
-architecture come first. Then end the turn. He answers the list in
-one batch. If nothing needs him, don't manufacture a question.
+architecture come first. Then end the turn, since the list is answered in one batch.
+Where nothing is genuinely open, don't manufacture a question.
 
 A constraint the task inherits is an unknown too, whether the request, the card, or
 a prior review rules an approach out or takes something as required. Find what
-backs it. What he said backs it, and so does a measurement of the need. A reason
+backs it. A direction backs it, and so does a measurement of the need. A reason
 that predicts cost without measuring it backs nothing, and neither does a probe of
-a mechanism. What a session derived from his decision is that session's claim, and
+a mechanism. What a session derived from a direction is that session's claim, and
 a claim is tested, never inherited. When nothing backs a constraint and the work
 will be designed around it, look first for the path on which it never arises,
 since that path settles it at no cost. Then run the cheapest experiment that
 settles what remains before you design. What no experiment can settle goes on the
-list to him as the decision it is.
+numbered list as the decision it is.
 
 ## Settle the language
 
 Every term the task introduces or leans on is in the project's glossary, in the words
-João uses for it. A term with two meanings, or an awkward phrase everyone keeps working
-around, is the model asking to be made explicit: say so and propose the concept.
-Modeling is done with him, not for him.
+the project already uses for it. A term with two meanings, or an awkward phrase
+everyone keeps working around, is the model asking to be made explicit, so say so and
+propose the concept. Never settle a naming alone. It goes on the numbered list and
+lands confirmed.
 
 ## State acceptance as observation
 
@@ -49,7 +50,7 @@ criterion carries its source in the form the board rules give.
 The survey opens with the option that removes the problem, the move
 `~/.agents/rulebook/engineering-judgment.md` §Understanding the Problem names: delete
 the thing, drop the requirement, leave it undone. Say what rules it out and how you
-know. When nothing does, it is the pick. A choice that goes to him carries it the
+know. When nothing does, it is the pick. A choice put up for decision carries it the
 same way (`AGENTS.md` §Acting). Where more than one way to build it survives, set out
 each with what it costs and what it buys, and say plainly when only one survives the
 evidence. Two or three is the usual number.

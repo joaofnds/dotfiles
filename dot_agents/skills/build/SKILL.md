@@ -31,8 +31,8 @@ The acceptance list says when the work is done. It does not say the work is stil
 worth doing. Three things end a task besides finishing it: the goal turns out to
 cost more than it returns, the approach turns out to be the wrong one, and the
 thing you are driving toward turns out to be a stand-in for the goal rather than
-the goal. Take any of them to João with what you now know, whatever the effort
-already spent. Sunk effort is not a reason, and neither is a nearly-working
+the goal. Report any of them with what you now know and end the turn, whatever the
+effort already spent. Sunk effort is not a reason, and neither is a nearly-working
 approach.
 
 You cannot see any of the three from inside the step, so look between steps rather
@@ -46,9 +46,10 @@ the screen, read the output. A green suite is evidence about the suite. Your rep
 says what you ran and what you saw, and labels what you didn't observe.
 
 Every acceptance criterion gets evidence of one of two kinds: raw output from a check
-you ran, or João's own report of a flow only he can exercise. For a criterion needing
-the deployed app or a device you cannot reach, stop and ask him to exercise it and say
-what he observed. Prose review is not runtime verification, and a criterion with
+you ran, or an outside report of a flow this session cannot exercise, never your own
+account of one. For a criterion needing
+the deployed app or a device you cannot reach, stop and ask for it to be exercised and
+for what was observed. Prose review is not runtime verification, and a criterion with
 neither kind of evidence stays unchecked.
 
 ## Finish
@@ -63,5 +64,5 @@ evidence proves, and write the final summary naming what you observed.
 Write onto the task's record the handoff for whoever picks this up next: what
 changed; separately, what became possible but isn't wired up, and which callers are
 still on the old path; what you observed and how; what you didn't verify; anything
-you stopped on and where it went. Your reply to João is the brief. The handoff stays
+you stopped on and where it went. Your reply is the brief. The handoff stays
 on the record.

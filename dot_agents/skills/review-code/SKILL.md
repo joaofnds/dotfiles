@@ -8,17 +8,16 @@ description: Runs the independent code review of a change to code or configurati
 ## Inputs
 
 - Materialize the diff as a patch at a readable path, with the changed-file list. A
-  bare ref range can resolve to a different diff in the reviewer's context.
-- Collect the goal: the card's description and acceptance criteria, the shaped or
-  design document attached to it, and João's own words where he stated the goal in
-  the conversation. A deferral a design doc records as spec-authorized is part of
-  the goal. Implementing less than the goal asked is not a miss when the doc records
-  why. A change with no card and no stated goal cannot be checked against anything,
-  so ask João for the goal in a line before dispatching.
-- Run the project's suite once, with the command from the project's own manifests.
-  Keep the output for the record. The reviewers do not run it. Do not give them the
-  result or what worries you. A primed reviewer repeats your reading instead of
-  making its own.
+  bare ref range can resolve to a different diff in the reviewer's context. - Collect
+  the goal: the card's description and acceptance criteria, the shaped or design
+  document attached to it, and the words the goal was stated in where the conversation
+  carries them. A deferral a design doc records as spec-authorized is part of the
+  goal. Implementing less than the goal asked is not a miss when the doc records why.
+  A change with no card and no stated goal cannot be checked against anything, so ask
+  for the goal in a line before dispatching. - Run the project's suite once, with the
+  command from the project's own manifests. Keep the output for the record. The
+  reviewers do not run it. Do not give them the result or what worries you. A primed
+  reviewer repeats your reading instead of making its own.
 
 ## One round, fresh eyes
 
@@ -34,17 +33,17 @@ Read [references/axes.md](references/axes.md) and dispatch one `reviewer` agent 
 applicable axis, in parallel, each with the diff, the goal, the shared block, and its
 own axis brief pasted whole. One reviewer per axis, because each brief names a
 house standard its reviewer holds beside the diff, and a reviewer holding six reads
-none of them closely. When João names a single axis, send only that one. A reviewer
-that reports a changed file unexamined has not reviewed it, so spawn a fresh
+none of them closely. When the direction names a single axis, send only that one. A
+reviewer that reports a changed file unexamined has not reviewed it, so spawn a fresh
 reviewer for that axis with the same inputs and those files named as its scope, in
 the same round.
 
 [references/wiki-checks.md](references/wiki-checks.md) holds further checks from
-João's engineering wiki, grouped by axis, with the reasoning and the quotations. Read
+the engineering wiki, grouped by axis, with the reasoning and the quotations. Read
 it when a finding needs its source.
 
 One round: the reviewer advises and you own the verdict. Settle a disagreement with
-evidence, or send it to João with your recommendation. Never send it back to the
+evidence, or report it unresolved with your recommendation. Never send it back to the
 reviewer.
 
 ## Verify, then classify
@@ -52,7 +51,7 @@ reviewer.
 Each finding is a claim. Confirm or refute it with a tool result: run the test, read
 the line, reproduce the input. Refuting requires positive disproof: the failure
 cannot occur, the cited clause doesn't say that, or the code already handles it. A
-blocking claim you can neither reproduce nor disprove goes to João as escalated,
+blocking claim you can neither reproduce nor disprove is reported as escalated,
 with the probe you couldn't run named. Record refuted findings as refuted, with the
 evidence. Never drop one silently. To dismiss a finding because the repo's own
 instructions allow the pattern, quote the sentence that allows it, with its path. If
@@ -109,8 +108,8 @@ enters, what authority the code exercises, what a hostile input could reach.
 ## Dispose
 
 Dispose of each verified finding one of four ways: fixed (small and reversible: in
-this batch); not a defect, with why; tracked as a task, with its id; escalated to
-João, with your recommendation. Fix blocking findings before done. Observe every
+this batch); not a defect, with why; tracked as a task, with its id; escalated,
+with your recommendation. Fix blocking findings before done. Observe every
 fix: rerun the suite and the check the finding names. You verify the fixes. Never
 send the change back to a reviewer after fixing.
 
@@ -165,7 +164,7 @@ The review ends when every finding has its disposition. Nothing re-opens it. A c
 report is one line on the record and in the brief. An empty review of a clean diff
 is correct.
 
-The reply to João is the brief. It names the findings that need his decision and
-the ones whose damage predates the work under review. The `brief` output style says
+The reply is the brief. It names the findings that need a decision and the ones
+whose damage predates the work under review. The `brief` output style says
 how everything else appears.
 When nothing blocks, say so plainly. Then the verdict: proceed, or what blocks.

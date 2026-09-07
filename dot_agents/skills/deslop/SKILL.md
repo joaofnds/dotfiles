@@ -22,7 +22,7 @@ A file that loads as standing instructions is not: AGENTS.md and CLAUDE.md, a sk
 everything under it, an agent definition, an output style, a rules file, a memory note,
 or any other file an agent reads as instructions rather than as work. The
 review-instructions skill governs those, and its register rules differ. Clean one only
-where João names that file and asks.
+where that file is named in the direction.
 
 ## The pass
 

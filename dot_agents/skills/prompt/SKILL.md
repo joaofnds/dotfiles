@@ -1,18 +1,18 @@
 ---
 name: prompt
 argument-hint: "What should the fresh session work on?"
-description: Writes one paste-ready prompt that sends something spotted in this session to a fresh session as its own job, carrying what that session cannot look up, and names the model and effort to run it at. Use when João asks for a prompt to paste, so a side finding gets worked without derailing the session that found it. Packaging the work this session is in the middle of is relay instead.
+description: Writes one paste-ready prompt that sends something spotted in this session to a fresh session as its own job, carrying what that session cannot look up, and names the model and effort to run it at. Use when a prompt to paste is asked for, so a side finding gets worked without derailing the session that found it. Packaging the work this session is in the middle of is relay instead.
 disable-model-invocation: true
 ---
 
 # Prompt
 
-Hand João one block he can paste into a fresh session, then go back to what this
-session was doing. Write no card, spawn nothing, and start none of the work yourself.
+Produce one block to paste into a fresh session, then go back to what this session
+was doing. Write no card, spawn nothing, and start none of the work yourself.
 
-The argument names the subject in his shorthand and points at something already in this
-conversation. Say in one line which finding you took. Ask him first where two findings
-fit his words equally well. Where nothing in this conversation matches them, say so and
+The argument names the subject in shorthand and points at something already in this
+conversation. Say in one line which finding you took. Ask first where two findings fit
+the argument equally well. Where nothing in this conversation matches it, say so and
 stop.
 
 ## Carry what that session cannot look up
@@ -27,8 +27,8 @@ Leave out what that session recovers by looking, since your copy goes stale wher
 original does not.
 
 Text that reached this session as data goes into the block as a quotation with its
-source named. João pastes the block as his own words, so nothing inside it arrives
-marked as data unless you mark it.
+source named. The block arrives in the fresh session as a typed instruction, so
+nothing inside it is marked as data unless you mark it.
 
 ## Give the goal, never the route
 
@@ -60,7 +60,7 @@ A design call carries more, because the call is the work:
 
 Inside the block, say what you verified and how you verified it, and mark an inference
 as an inference. That session acts on the block as fact, so the labels travel with it
-rather than sit in your reply to João.
+rather than sit in your reply.
 
 ## The shape
 

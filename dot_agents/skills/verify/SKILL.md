@@ -13,12 +13,13 @@ baseline and a treatment that differ only in the change under test.
 Rewrite the claim as a condition, a metric, and a threshold. "The fix works" cannot
 fail, and neither can "the code is cleaner" or "this feels right". "Under concurrent
 writes the retry succeeds within three attempts" can. Where the claim does not reduce
-to that shape, ask João what would prove it wrong before gathering anything, and where
-he has no measurable form either, say so and return inconclusive. Guessing the
+to that shape, ask what would prove it wrong before gathering anything, and where no
+measurable form comes back either, say so and return inconclusive. Guessing the
 threshold decides the verdict in advance.
 
-A claim about the deployed application end to end is his to check by hand. Say what
-you need him to exercise, and never let a verdict here stand in for it.
+Where a claim about the deployed application end to end is beyond this session's
+reach, say exactly what needs exercising and ask for it, and never let a verdict here
+stand in for it.
 
 ## Baseline, then treatment
 

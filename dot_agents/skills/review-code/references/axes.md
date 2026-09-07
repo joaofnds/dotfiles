@@ -48,8 +48,9 @@ checks.
 > Spec axis. Your standard is the goal itself. No house file stands behind this
 > axis beyond the wiki checks' Spec section, which you walk as every axis does.
 > Read the goal as a product owner and a staff engineer: the card's description and
-> acceptance criteria, the design document, and João's words where the brief
-> carries them. Account for it line by line. For each requirement and each
+> acceptance criteria, the design document, and the words the goal was stated in
+> where the brief carries them. Those set the goal, and the change author's account
+> of it does not. Account for it line by line. For each requirement and each
 > acceptance criterion, write present, partial, or absent, with the code path that
 > satisfies it and the test that pins it, or "no test" where none does. Present
 > means the behavior is there, not code that looks like it. Then look the other

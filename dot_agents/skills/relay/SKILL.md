@@ -1,7 +1,7 @@
 ---
 name: relay
 argument-hint: "What will the next session work on?"
-description: Snapshots this session onto its card, so a fresh session resumes with what this one learned and none of what it went through, and ends with a line João can paste to start it. Writes no new file and decides nothing. Use when context is running low, or when work pauses mid-flight. A session that keeps working while João is away uses the away skill instead, and a side finding that deserves its own session goes to the prompt skill.
+description: Snapshots this session onto its card, so a fresh session resumes with what this one learned and none of what it went through, and ends with a paste-ready line to start it. Writes no new file and decides nothing. Use when context is running low, or when work pauses mid-flight. A session that keeps working unattended uses the away skill instead, and a side finding that deserves its own session goes to the prompt skill.
 ---
 
 # Relay
@@ -35,10 +35,11 @@ Carry a fact when rediscovering it would cost the next session more than reading
 Everything else goes, including the order in which this session did things. Reference by
 path or by URL whatever already exists somewhere, rather than restating it.
 
-Quote João's corrections in his own words rather than paraphrasing them, since a
-paraphrase arrives as your judgment and binds the next session as his.
+Quote a correction in the words it arrived in rather than paraphrasing it, since a
+paraphrase arrives as your judgment and binds the next session as a direction.
 
-Name every approach ruled out, who ruled it out, and why. An approach he refused never
+Name every approach ruled out, what ruled it out, and why. An approach refused by a
+direction never
 failed, and a fresh session will propose it again.
 
 Carry the command that verified a thing rather than the verdict. A tool result from this
@@ -74,11 +75,12 @@ that it does not answer.
 
 ## The resume line
 
-Name the model and the effort level to run the session at, since he starts it by hand. The
+Name the model and the effort level to run the session at, since it is started by
+hand. The
 levels are low, medium, high, xhigh, and max
 (`~/.agents/skills/review-instructions/references/external-facts.md` §Harness mechanics).
 
-Then end the reply with the line João pastes into a fresh session, in a fenced block so
+Then end the reply with the line to paste into a fresh session, in a fenced block so
 it copies in one tap:
 
 ```

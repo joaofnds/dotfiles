@@ -24,17 +24,19 @@ work. Before ending a turn that changed card state, put what changed on the card
 
 Write each acceptance criterion as behavior observed when the work is done. It
 must stay checkable under every approach the card leaves open, including every
-option on a list waiting for João. One that names an approach fails the card the
-day another is chosen.
+option on a list still awaiting a decision. One that names an approach fails the
+card the day another is chosen.
 
-When João directs an approach the criteria do not describe, rewrite them as the
-behavior his approach produces, since he is there to correct the rewrite. Quote
-his instruction in the notes beside them.
+When a direction names an approach the criteria do not describe, rewrite them as
+the behavior that approach produces, and quote the direction in the notes beside
+them. The rewrite is safe to make because the quote sits next to it, so whoever gave
+the direction can correct it.
 
 Each criterion ends with its source in parentheses, something outside the session
-that asked for it: his words in a note, a measurement, a failing test, the project's
+that asked for it: the direction quoted in a note, a measurement, a failing test,
+the project's
 own check. A criterion nothing outside the session asked for is the session's own
-claim. Test it where an experiment can settle it, ask him where none can, and never
+claim. Test it where an experiment can settle it, ask where none can, and never
 write it as a criterion, because a later session designs inside a criterion instead
 of testing it.
 
@@ -45,7 +47,8 @@ every one of them:
 
 - A move to Done while any acceptance criterion or definition-of-done item is
   unchecked, unless the card carries a `partial` or `abandoned` label. That label
-  goes on only at João's direction, with the reason in the final summary.
+  goes on only when the session was directed to stop there, with the reason in the
+  final summary.
 - A move to a later column while any dependency is not Done. Backward moves are
   exempt.
 - A `--doc` or `--ref` path that does not exist on disk.
@@ -63,13 +66,13 @@ never relocate a board you find.
 Confirm a private board is ignored before the first write. `git check-ignore -q
 <board-dir>/config.yml` exits 0 when it is. Probe that child path, never the
 directory name, which exits 1 while nothing is on disk yet. On a non-zero exit,
-write nothing and tell João the pattern to add. Re-verify this on a git upgrade,
-since it was probed at git 2.55.0.
+write nothing and report the pattern that needs adding. Re-verify this on a git
+upgrade, since it was probed at git 2.55.0.
 
-A document goes on the board, and into the repository's tracked documentation
-only at João's direction where that repository already has a documentation
-convention. Where you judge a document belongs in the repository, write it to the
-board and say so in the reply.
+A document goes on the board. It goes into the repository's tracked documentation
+only on an explicit direction, and only where that repository already has a
+documentation convention. Where you judge a document belongs in the repository,
+write it to the board and say so in the reply.
 
 ## The card is the record
 
@@ -90,7 +93,7 @@ a checkbox inside the plan document unless it warrants its own context,
 acceptance criteria, or documents.
 
 The final summary carries what landed and what is next. A leftover blocking item
-becomes a card without asking, a decision becomes a card once João says yes, and
+becomes a card without asking, a decision becomes a card once it is accepted, and
 a note stays a note on the card.
 
 ## The CLI

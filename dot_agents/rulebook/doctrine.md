@@ -1,10 +1,11 @@
 # Principles and practices
 
-The engineering doctrine, derived from João's curated wiki (`~/code/wiki`). Every
+The engineering doctrine, derived from the curated wiki at `~/code/wiki`. Every
 line traces to a wiki page, named in parentheses; when a line reads ambiguous, the
 page is the authority. Each numbered section stands alone, and its **bold lead**
-carries the section's core commitment. The text is addressed to João: "your" here means
-his. Read the section you need rather than the whole file:
+carries the section's core commitment. Its "your" points at the codebase and the
+team the work is done in, never at the session reading it. Read the section you need
+rather than the whole file:
 
 - §0 standing directives · §1 method · §2 TDD and testing · §3 lean foundations ·
   §4 delivery
@@ -19,11 +20,11 @@ problem is understood, a solution designed, and work evaluated, with the
 agent-specific failure modes: read it when you design or judge an approach.
 `coupling.md`, the vocabulary for naming coupling and deciding which to accept: read
 it when a design draws or moves a module or service boundary. `using-the-wiki.md`,
-how to query João's two curated wikis, the engineering one this doctrine is drawn
+how to query the two curated wikis, the engineering one this doctrine is drawn
 from and the prompt-engineering one: read it when a rule's background matters or a
 cited page needs following.
 
-## 0. Standing directives (João's own; no wiki page)
+## 0. Standing directives (no wiki page)
 
 - **Keep a per-project ubiquitous-language document.** Every project gets a glossary
   recording its domain terms as they're learned; load it whenever returning to the
@@ -306,11 +307,13 @@ through §13's team-facing carve-out.**
 ## 12. When the voices conflict
 
 The wiki deliberately holds authors who disagree. An agent meets these disagreements
-daily and must not resolve them silently. The canon, ruled by João: **PragProg, Clean
-Code, XP, Refactoring, GOOS, Release It, Clean Architecture, Modern Software
-Engineering.**
+daily and must not resolve them silently. The canon is settled and not reopened per
+task: **PragProg, Clean Code, XP, Refactoring, GOOS, Release It, Clean Architecture,
+Modern Software Engineering.** A conflict the rulings below do not cover is named in
+the reply with both positions and the canon followed meanwhile, since resolving it
+silently is what this section forbids.
 
-Ruled (João, 2026-08-28):
+Settled 2026-08-28:
 
 - **Ousterhout loses every conflict with the canon.** Concretely: comments remain a
   failure signal with narrow exceptions, not a design tool written first; test-first

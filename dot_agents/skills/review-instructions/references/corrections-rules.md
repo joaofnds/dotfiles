@@ -234,6 +234,14 @@ verdict rule forbids, and the description case is mechanically checkable, so the
 guard is a script over model-invocable descriptions, to add once DOT-62 empties them
 of his name.
 
+Entry "2026-09-07 the corpus was rewritten to stop being about a person". The check
+allowed a rule to name him as a fact it turns on, and that allowance is what kept 136
+references alive. He asked for the person out of the instructions entirely. The check
+now says the corpus does not narrate a person, and that where a rule turns on one it
+is the condition that matters and never the identity. Its allowance for a
+manually-invoked skill is now written as a property of the skill, the
+`disable-model-invocation` field, rather than as a person only that skill answers to.
+
 ### One home
 
 The coding style rules lived in the style skill, the review axes, and
@@ -290,22 +298,6 @@ could not be met under the approach in use (0821f65c).
 The prompt skill listed the cases for choosing a model and an effort
 level, above a line already carrying the reason those cases share (05d25616).
 
-## No rule
-
-- "keep a log of corrections to the corpus", a directive for a new mechanism.
-- "consolidate the log into rules, and read the history since the swap", a directive
-  for a new mechanism. Its second half, the history unread, is evidence under
-  Account for what a rewrite replaces.
-- "the second entry moves a rule into the checks", a decision that changed nothing.
-- "split review out of the build and shape sessions", a cost he raised where the
-  drafted edit was reverted. Its measurement is evidence under Measure what a change
-  makes a session load.
-- "a paste-ready prompt for work that deserves its own run" (b6cecfc4), a directive
-  for a new skill.
-- "overseeing between the loop's stages" (b17d8a55), a directive for a new skill.
-- "no redundant reviewers and no agent per blocking finding" (74256bbc), two
-  mechanisms excluded from a restore, with no corpus text at fault.
-
 ### One home
 
 Four files each routed their own content into the commit message, none of them
@@ -327,3 +319,19 @@ A session that edits the same file twice reads the rules for the first edit and
 works from memory for the second. Memory of a checklist keeps the checks that
 matched the first edit and drops the ones the second needed. Re-read the file each
 time you return to the work it covers (this exchange).
+
+## No rule
+
+- "keep a log of corrections to the corpus", a directive for a new mechanism.
+- "consolidate the log into rules, and read the history since the swap", a directive
+  for a new mechanism. Its second half, the history unread, is evidence under
+  Account for what a rewrite replaces.
+- "the second entry moves a rule into the checks", a decision that changed nothing.
+- "split review out of the build and shape sessions", a cost he raised where the
+  drafted edit was reverted. Its measurement is evidence under Measure what a change
+  makes a session load.
+- "a paste-ready prompt for work that deserves its own run" (b6cecfc4), a directive
+  for a new skill.
+- "overseeing between the loop's stages" (b17d8a55), a directive for a new skill.
+- "no redundant reviewers and no agent per blocking finding" (74256bbc), two
+  mechanisms excluded from a restore, with no corpus text at fault.
