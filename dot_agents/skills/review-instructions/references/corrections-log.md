@@ -889,8 +889,9 @@ rather than a retry." The skill tells its reader not to pre-chew the work for
 the session it writes to. That paragraph pre-chewed a judgment call its reader
 is equally able to make. The commit says three places in the skill carried such
 a list and that he caught this one. The commit does not quote his words. The
-commit says the change first landed as 47ade63 and was dropped when another
-session reset the branch to b6cecfc, and that the working tree kept the content.
+commit says the change first landed on a branch line another session reset away
+to b6cecfc4, that the working tree kept the content, and that it landed again as
+05d25616.
 
 File: `dot_agents/skills/prompt/SKILL.md`, the paragraph after the fenced block
 on naming the model and the effort level.
@@ -1429,7 +1430,7 @@ asked for. The board rule says test or ask in place of routing every unsourced
 criterion to him.
 
 Reason, his: the rule is for the session's own thinking, not for what reaches him.
-Reason, the session's: 281786fe put "it goes on the list to him" at every gate, so a
+Reason, the session's: b08600bd put "it goes on the list to him" at every gate, so a
 session following it on ACT-34 would have escalated the absent-versus-malformed
 question instead of finding the path on which it never arises.
 
