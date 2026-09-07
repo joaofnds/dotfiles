@@ -27,7 +27,7 @@ cited page needs following.
 ## 0. Standing directives (no wiki page)
 
 - **Keep a per-project ubiquitous-language document.** Every project gets a glossary
-  recording its domain terms as they're learned; load it whenever returning to the
+  recording its domain terms as they're learned. Load it whenever returning to the
   project, so the language is in context from the first message.
 - **After every task, run a refactoring pass: architectural, not just in-file.**
   Look for the structural opportunity the task exposed, not only local cleanup.

@@ -257,6 +257,43 @@ the rulebook.
 after a fixing session every finding had changed what's live (e62866ad). "As if he
 saw none of the work" licensed retelling in the reply what the notes had already
 shown him (a9f7a321).
+||||||| parent of 1e4f0ad1 (keep the glossary to the problem domain)
+shown him (a9f7a321). "Prefer rollback when application operations share the
+transaction" read as an instruction to wire the application into the test's
+transaction, which builds a harness that leaves its rows behind, and "a path older
+than that one-year window" made every path created inside the window stable. Both
+read as ordinary prose until each reading was stated as the action it produces
+(entry "2026-09-07 a scan for ambiguous instructions found eight plain defects").
+A rule and its stated reason count different things where "two concrete
+instantiations already exist" was gated by "one caller is speculative generality",
+and a threshold reads as a floor forbidding the act below it where three tests
+triggered an extraction the smell beside it required with no count (entry
+"2026-09-07 the ambiguity scan's second pass, and three findings that were not
+defects"). A rule that routes a finding to "its own task" while confining the
+checking to the changed lines leaves nothing to create that task, and "the standard
+wins where they differ" says nothing to an axis whose only standard is the file it
+is being weighed against (entry "2026-09-07 the ambiguity scan's judgment-only
+pass").
+shown him (a9f7a321). "Prefer rollback when application operations share the
+transaction" read as an instruction to wire the application into the test's
+transaction, which builds a harness that leaves its rows behind, and "a path older
+than that one-year window" made every path created inside the window stable. Both
+read as ordinary prose until each reading was stated as the action it produces
+(entry "2026-09-07 a scan for ambiguous instructions found eight plain defects").
+A rule and its stated reason count different things where "two concrete
+instantiations already exist" was gated by "one caller is speculative generality",
+and a threshold reads as a floor forbidding the act below it where three tests
+triggered an extraction the smell beside it required with no count (entry
+"2026-09-07 the ambiguity scan's second pass, and three findings that were not
+defects"). A rule that routes a finding to "its own task" while confining the
+checking to the changed lines leaves nothing to create that task, and "the standard
+wins where they differ" says nothing to an axis whose only standard is the file it
+is being weighed against (entry "2026-09-07 the ambiguity scan's judgment-only
+pass"). "A glossary of its domain terms", with nothing beside it saying which
+domain, read as the domain of whatever the task touched, so a writer's intermediate
+value and a search index's failure state entered a track and field app's glossary.
+The fix put the test beside the wording and kept the wording (entry "2026-09-07 the
+glossary took implementation terms").
 
 ### Reason over command
 
@@ -335,3 +372,6 @@ time you return to the work it covers (this exchange).
 - "overseeing between the loop's stages" (b17d8a55), a directive for a new skill.
 - "no redundant reviewers and no agent per blocking finding" (74256bbc), two
   mechanisms excluded from a restore, with no corpus text at fault.
+- "do it for the other files where it changed domain for problem domain", a decision
+  on wording once the global file carries the test (entry "2026-09-07 the files keep
+  "domain terms"").

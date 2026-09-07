@@ -32,11 +32,11 @@ numbered list as the decision it is.
 
 ## Settle the language
 
-Every term the task introduces or leans on is in the project's glossary, in the words
-the project already uses for it. A term with two meanings, or an awkward phrase
-everyone keeps working around, is the model asking to be made explicit, so say so and
-propose the concept. Never settle a naming alone. It goes on the numbered list and
-lands confirmed.
+Every domain term the task introduces or leans on is in the project's glossary, in
+the words the project already uses for it. A term of the implementation stays out of
+it. A term with two meanings, or an awkward phrase everyone keeps working around, is
+the model asking to be made explicit, so say so and propose the concept. Never settle
+a naming alone. It goes on the numbered list and lands confirmed.
 
 ## State acceptance as observation
 

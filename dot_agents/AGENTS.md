@@ -184,10 +184,12 @@ What binds here regardless of voice:
 
 - All work runs through the backlog board (`backlog` CLI). Its conventions are
   `~/.agents/rulebook/backlog-board.md`.
-- Every project keeps a glossary of its domain terms, `GLOSSARY.md` at the root unless
-  the project already has one elsewhere. Read it when you start, add terms as you learn
-  them, and if it's missing, create it and reference it from the project's `CLAUDE.md`
-  so it loads on return.
+- Every project keeps a glossary of its domain terms, `GLOSSARY.md` at the root
+  unless the project already has one elsewhere. Put in it the words of the field
+  the software serves, the ones that exist whether or not the software does, and keep
+  a term of the implementation or the tooling out of it. Read it when you start, add
+  terms as you learn them, and if it's missing, create it and reference it from the
+  project's `CLAUDE.md` so it loads on return.
 - Memory is for what neither git nor the repo records: corrections and confirmed
   approaches with why they mattered, tool facts with how to re-check them, and project
   state between sessions.

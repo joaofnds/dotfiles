@@ -1825,3 +1825,665 @@ a dropped rule that nine manually-invoked skills rely on, a push condition loose
 than the one beside it, and an escalation dissolved into a non-action. Three of those
 were ROUTE lines resolved by deleting the route rather than replacing it, which is
 the exact failure the task was written to prevent.
+||||||| parent of 1e4f0ad1 (keep the glossary to the problem domain)
+
+## 2026-09-07 a recorded probe number rested on a fixture that never compiled
+
+Quote: "Two measured defects in the agent corpus at ~/code/dotfiles, both
+independent of any rule's wording being wrong. A vague directive stops a session
+that the always-loaded file has already told to act. On 'the sync is too slow, fix
+it' against a small Go fixture, 0 of 16 sessions changed the code and 11 ended by
+asking a question. [...] Find the cause of the first one before proposing anything.
+The suspects worth separating are the rule in §Acting that says to ask once at scope
+growth, which may be firing on ordinary vagueness, and a model default that no
+wording reaches."
+
+The problem: the task was to find which corpus rule caused a measured 0 of 16, and
+the number was not measurable as recorded. Rebuilding the probe showed the fixture's
+`db.Get` was undefined, so nothing compiled, and once defined it did an in-memory
+struct build with no I/O, so there was no slowness to fix. One control session read
+that code and correctly refused to optimise it. The runs also used `acceptEdits`,
+and one control stopped to ask permission to run `go test` for the reproduction,
+which is consistent with that mode not pre-approving it and does not establish it.
+Each flaw was seen to stop one session, which is one run each and not a rate. The effect survives fixing both, at a
+much smaller size, and neither named suspect explains it.
+
+File: `dot_agents/skills/review-instructions/references/external-facts.md`.
+
+Change: the vague-directive entry now carries the four-arm result, 3 of 64 with no
+arm separating from live, and rules the cause a model default that no tested wording
+reaches. The retry entry's numbers are withdrawn, since its fixture carried the same
+flaw, and the failure mode stays listed in the skill's Known failure modes.
+
+An unprimed review of the first draft found the same defect one level up. Two
+sentences in the replacement entry were asserted rather than measured: that 2 of 64
+sessions opened a file, inferred from what replies mentioned when the logs held no
+tool-call record, and a control that was never saved. Both were re-measured by
+counting tool calls in the session transcripts, giving 0 of 10 against 10 of 10.
+The chezmoi count was corrected from 14 to the live arm's 12.
+
+Reason, the session's: an entry in external-facts is cited as measured, and the
+file's own opening says a claim it does not list is unaudited. A number whose
+harness could not have produced a non-zero result is worse than absent, because it
+is spent as evidence. The four arms were run to answer the question asked, and the
+answer is that no line under test moved anything.
+
+## 2026-09-07 the model-default finding was recorded from one model
+
+Quote: "test with opus 5 as well"
+
+The problem: the previous entry in this log recorded that a vague directive stops a
+session, ruled it a model default after four corpus arms moved nothing, and measured
+it only on Sonnet 5. The heading of the external-facts section named Sonnet, and the
+entry beneath it read as a statement about sessions in general. Running the same
+fixture and the same two arms on Opus 5 reversed the result. Opus changed the code in
+31 of 32 sessions with every change compiling, against Sonnet's 3 of 64, and made 6
+to 16 tool calls per run where Sonnet made none in 10. A 12-turn cap truncated 11 of
+the 43 Opus runs, so the top of that range is the cap. The one Opus miss spent its
+turns reading the rulebook and never started editing, which this session first
+reported as running out of turns mid-edit, from a transcript script that truncated
+each record at 2000 characters and so never saw the cap marker.
+
+File: `dot_agents/skills/review-instructions/references/external-facts.md`.
+
+Change: the entry now states the finding as a model property, carries both models'
+numbers, and says which arms were run on which model. The section heading names both
+models. Nothing was added to the corpus as a rule, since no wording tested moved
+either model.
+
+Reason, the session's: a fact recorded from one model and written as though it
+described sessions in general is the same defect as a number whose harness could not
+produce the other outcome. Both spend as evidence something the probe did not
+establish. The corrections rule added the same day already required a positive
+control, and this adds that a claim about the model names the model it was measured
+on.
+
+## 2026-09-07 a scan for ambiguous instructions found eight plain defects
+
+Quote: "I would say whole corpus, but we can focus on instructions instead of just
+rules" and, on fixing the plain defects first, "agree".
+
+The problem: no scan for ambiguity had been run over the corpus. Four unprimed
+readers took the 119 files in four scopes and reported only sentences where two
+readings lead to different actions. Eight of the results needed no probe, because
+they are wrong rather than unclear.
+
+The isolation rule told a session to prefer transaction rollback "when application
+operations share the transaction", which reads as a design instruction to wire the
+application into the test's transaction. A harness built that way rolls back a
+transaction the application never joined, leaves its rows, and passes until the next
+run. The coupling threshold called a path stable when it was "older than that
+one-year window" and quiet, which read literally makes every path created inside the
+window stable and drops the finding against the newest code in the repo. Modern Go
+told sessions to prefer modern forms "even when nearby code uses the older pattern",
+which collides with Surgical execution in `coding-style.md`, and the language file
+wins on the corpus's own precedence rule, so a session following precedence lands on
+the adjacent-code sweep the other file bans. Test speed carried two bounds three
+orders of magnitude apart, sub-second against minutes. The collapse-a-trivial-test
+rule said one or two lines in one file and one line in the checklist. One skill file cited a coupling heading that does not
+exist, and another cited `ownership.md` §Ownership, which is the file's own title and
+so names nothing narrower than the file. The build description claimed "any directed change
+to an instruction file" while kaizen, which owns the defect-driven case, carries
+`disable-model-invocation` and cannot be reached by a model, so that discipline was
+bypassed by construction.
+
+File: `rulebook/coupling.md`, `rulebook/coding-style-go.md`,
+`rulebook/testing/00-index.md`, `rulebook/testing/01-architecture-and-harness.md`,
+`skills/review-code/SKILL.md`, `skills/build/SKILL.md`.
+
+Change: the isolation rule now names the precondition to establish and the failure
+that follows from skipping it. The coupling threshold states two gates and says a
+path created inside the window is never stable. Modern Go is scoped to the lines you
+write and names Surgical execution as the reason. The speed bound says the numbers
+are design targets and the Slow Test smell is the trigger to fix. The checklist in `testing/00-index.md` now says one or two
+lines, matching `03-test-aesthetics.md`, which was left alone. Both citations point at headings that exist. The build
+description routes a defect-driven instruction change to kaizen by asking for it,
+since a model cannot invoke that skill itself.
+
+Reason, the session's: the remaining findings are 14 that a probe could settle and 19
+that only judgment can. Those are a separate pass. These eight are defects rather
+than contested wording, and one of them manufactures flaky suites, so they land
+first and alone to stay reviewable.
+
+## 2026-09-07 the ambiguity scan's second pass, and three findings that were not defects
+
+Quote: "Say when you want that pass and I'll start" answered with "do it now", after
+"1. I would say whole corpus, but we can focus on instructions instead of just rules"
+and "2. agree" to rewriting unmeasurable ambiguity on judgment and marking it.
+
+The problem: 14 findings from the scan were marked separable and 19 judgment-only.
+Probing 14 at two arms and the 16 reps the last probe needed is 448 sessions, which
+does not fit. Reading each target sentence in full context sorted them instead.
+
+Three were not defects. `ownership.md` defines "closed" inside the sentence that uses
+it, as a commit for a small fix and a card otherwise, and names the ask as the third
+route two bullets on. `debug`'s
+continue-into-build sentence sits beside text saying the card leaves like any shaped
+task. `backlog-board.md` states the acceptance-criterion test as naming an approach,
+which is narrower than the strong reading. Each finding read the sentence without the
+clause that answers it, which is a caution about the scan and not about the corpus.
+
+Five were real contradictions inside one file, needing no probe. `coding-style.md`
+made a guard-clause break mandatory "at any length" and then exempted a body of two
+statements or fewer, which are opposed for the commonest function shape in Go.
+`coding-style-go.md` gated generics on "two concrete instantiations" and gave "one
+caller is speculative generality" as the reason, counting two different things. Its
+interface bound named a size and no action, and acting on it literally means a
+package split that Surgical execution bans. `03-test-aesthetics.md` set a
+three-test threshold for extracting an assertion helper beside a smell that names the
+same duplication with no count, so the threshold read as a floor forbidding
+extraction at two. The refactoring catalog tells the reader to test in all 66
+entries and states the scope in none, saying "Run the tests" in 55 and using other
+wording in the rest, which a first fix keyed to the exact phrase would have missed.
+
+Two were about the output style and could not be probed, since the outcome is reply
+text and a judge over prose was already tried and proved unreliable. Both rules
+assumed a card exists. Keeping file names out of the reply and dropping whole
+findings are correct where the card holds them, and where nothing else holds the
+detail the reply is the only record, so the omission destroys it. This session's own sub-agent briefs told the readers to report
+paths, against the style, and the reports were usable. Whether the style reaches a
+sub-agent at all is unrecorded in external-facts, so treat that as the reason the
+briefs were written that way and not as evidence of what the style did.
+
+File: `rulebook/coding-style.md`, `rulebook/coding-style-go.md`,
+`rulebook/testing/03-test-aesthetics.md`, `rulebook/refactoring/00-index.md`,
+`dot_claude/output-styles/brief.md`, `skills/away/SKILL.md`, `skills/relay/SKILL.md`.
+
+Change: the guard break now survives every rule below it and the carve-out names the
+three it covers. Generics count instantiations in both sentences and say both may
+land in one commit. The interface bound says to write the wider one and name the
+boundary in the reply. The assertion threshold permits extraction at two where a
+change would force both tests together. The catalog's test scope is stated once at
+the index, covering all 66 without touching them. Both output-style rules now hold
+only where the card or the document carries the detail. `away` stops for relay while
+there is context left to write the snapshot, which its stop list had omitted while
+telling the session everything else was its to settle.
+
+One was probed and the rewrite changed nothing. `engineering-judgment.md`'s find-the-box
+rule ends "report it as the pick, with the list, and end the turn there", which reads
+as stop-and-ask or as decide-and-build. Against a Go fixture whose winning path is
+deleting a cache that never hits, 28 sessions split 0 of 14 deletions on the live
+corpus and 1 of 14 with the rule rewritten to say end the turn without changing code,
+p = 1.0. Both arms left the fixture untouched in 9 of 14, the same count either way,
+so the fixture drove the outcome and not the rule. The source keeps the original
+wording, since nothing measured supports changing it. That is the fifth wording change
+measured in this corpus to produce a null.
+
+Reason, the session's: a rule with two readings is a defect when the file does not
+say which one is meant, and not when a reader skipped the clause that says it. The
+five contradictions and the two style rules are the first kind. Fixing them needed no
+measurement, since the text disagrees with itself on its face.
+
+## 2026-09-07 the ambiguity scan's judgment-only pass
+
+Quote: "I want them." on the 19 judgment-only findings and the 2 deferred, then
+"Review instructions and adversarial review", read as naming those two skills' findings
+to take first.
+
+The problem: these are the findings no probe can settle, because the two readings
+differ in judgment that never lands as a diff. The user's earlier call was to rewrite
+them on judgment and mark them unmeasured. Reading each in full context first dropped
+three, matching the pattern from the previous pass, where the scan quoted sentences
+without the clause that answers them.
+
+Dropped. `using-the-wiki.md` settles "rests on" in its own file, at the line saying
+neither collection obliges evidence for a claim resting on nothing external. The
+review router's list is first-match and names a skill explicitly, so a skill body
+cannot fall to the document branch. `review-instructions`' "read this section again
+over every sentence you add" reads as checking each sentence against the section,
+which is one action.
+
+Fixed. The review split now says a requested review ends in findings whoever wrote
+the text, which the case of being asked to review your own edit fell between.
+Reporting a defect elsewhere in a file is now stated, since the rule sent it to "its
+own task" while confining the checking to the changed lines, so nothing created that
+task. Adversarial review says the rerun goes to a freshly spawned reviewer, because
+sending it to the one that reported the finding asks it to confirm its own fix, which
+is the failure the skill exists to prevent, and the rule settling it lives in another
+file. Deslop cleans a named instruction file under review-instructions' register
+rules, since its own rules strip the prohibitions that skill treats as force. The
+four-properties line said one always gives and named no action, and now says to decide
+which and record it. "Do not reorder" now says the levels hold their order and
+assertions inside one may not. "Small enough to finish now" had no unit and now names
+the shapes and the commit-reviewability bound. The narrow-width rule says to render at
+that width and to call it unverified where the session cannot. The two announcement
+lines are alternatives. A note between tool calls is optional. Diagnose no longer
+fires on any confirmed cause. Kaizen's route to absorb is scoped to a directed import.
+Art direction's ask is the stop for an unattended run. Dream's ask ends the turn. The
+unprimed reviewer is named as a sub-agent. The axes' "the standard wins" said nothing
+for an axis whose only standard is the file it was being weighed against.
+
+File: `AGENTS.md`, `rulebook/coding-style-frontend.md`,
+`rulebook/refactoring/after-task-pass.md`, `rulebook/testing/00-index.md`,
+`rulebook/testing/03-test-aesthetics.md`, `skills/absorb/SKILL.md`,
+`skills/adversarial-review/SKILL.md`, `skills/art-direction/SKILL.md`,
+`skills/brief/SKILL.md`, `skills/deslop/SKILL.md`, `skills/diagnose/SKILL.md`,
+`skills/dream/SKILL.md`, `skills/kaizen/SKILL.md`,
+`skills/review-code/references/axes.md`, `skills/review-instructions/SKILL.md`,
+`dot_claude/output-styles/brief.md`.
+
+Change: as above. None of it is measured. Four rule rewrites have been probed in this
+corpus and none moved the outcome it was aimed at, though dropping the chezmoi line
+took a wrong guess from 12 of 16 to 0 of 16 without moving the fix rate, so a rewrite
+can move what a session says while leaving what it does. Treat every line here as
+unverified and expect no behavior change from it. What these fix is a rule that does not say what it
+means, which is worth fixing whether or not a session was going to read it wrong.
+
+An unprimed review rejected four of these drafts. Two were blocking. Telling an
+unattended art-direction run to stop contradicted both the always-loaded file and the
+away skill, which park the line and continue, so it now parks. Splitting the review
+rule by who wrote the text made the commonest case match both branches at once, since
+the hard line has every instruction edit start with a requested review of your own
+work, so it splits on the request's shape instead. The narrowing written into kaizen's
+description could not reach the model at all, because that skill is hidden from the
+listing, so it moved to absorb's. Diagnose's body was narrowed while its description,
+the only route in, kept the wide trigger.
+
+Reason, the session's: the corpus is read by people as well as by sessions, and a rule
+whose two readings both look sane costs the reader the same whether or not a probe can
+catch it.
+
+## 2026-09-07 the ambiguity fixes were thinking for the agent, and got reverted
+
+Quote: "I was reviewing your changes and I actually hate this. This is way more
+complicated and it's trying to think for the agent. I don't want you to think for the
+agent. I want you to give it rules and guidelines and let the agent think for itself
+because the agent is as smart as you so you do not need to reinterpret the rules for
+them. In fact, this is even worse because you are interpreting those rules right now,
+whereas the agent and models continue to evolve and they will have a better
+interpretation later on down the road and will do better than you are doing right now.
+So if you try to translate the rules to what you know now, you are actually
+handicapping the future models and agents"
+
+The problem: the ambiguity passes had turned rules into procedures. The isolation rule
+went from one sentence naming a condition to five sentences prescribing a
+write-rollback-read probe this session invented, sourced to nothing. The narrow-width
+rule went from "a layout isn't done until it holds at ~320px" to three sentences
+telling the session when to say the width is unverified. The speed bound gained a
+ten-second threshold with no source. The four-properties line gained an instruction to
+declare which property was traded. The coupling threshold gained a git command with a
+flag tutorial, which is the environment cached in prose that goes stale where the
+command cannot. Each one replaced a judgment the reader would make with this session's
+reading of it, and a later model reads the rule better than this one does.
+
+File: `rulebook/testing/01-architecture-and-harness.md`,
+`rulebook/coding-style-frontend.md`, `rulebook/testing/00-index.md`,
+`rulebook/coupling.md`, `rulebook/refactoring/00-index.md`,
+`rulebook/refactoring/after-task-pass.md`, `rulebook/coding-style-go.md`,
+`rulebook/testing/03-test-aesthetics.md`, `AGENTS.md`,
+`skills/adversarial-review/SKILL.md`, `skills/review-instructions/SKILL.md`,
+`skills/build/SKILL.md`.
+
+Change: reverted every rewrite that prescribed a procedure, invented a number, or
+expanded a compact rule into a paragraph. What survives states a fact the rule was
+missing or resolves a contradiction between two lines: the coupling gate no longer
+calls a path created inside the window stable, the guard-clause break is no longer
+exempted by the carve-out beside it, generics count one thing in both sentences,
+citations point at headings that exist, and the descriptions that route a session
+match the bodies they route into.
+
+Reason, his: quoted above. Reason, the session's: the reverts also cut the review
+findings that had driven the expansions, since an unprimed reviewer asking for a probe
+to be named produces exactly this, and answering it is how a rule turns into a
+procedure.
+
+## 2026-09-07 a recorded probe number rested on a fixture that never compiled
+
+Quote: "Two measured defects in the agent corpus at ~/code/dotfiles, both
+independent of any rule's wording being wrong. A vague directive stops a session
+that the always-loaded file has already told to act. On 'the sync is too slow, fix
+it' against a small Go fixture, 0 of 16 sessions changed the code and 11 ended by
+asking a question. [...] Find the cause of the first one before proposing anything.
+The suspects worth separating are the rule in §Acting that says to ask once at scope
+growth, which may be firing on ordinary vagueness, and a model default that no
+wording reaches."
+
+The problem: the task was to find which corpus rule caused a measured 0 of 16, and
+the number was not measurable as recorded. Rebuilding the probe showed the fixture's
+`db.Get` was undefined, so nothing compiled, and once defined it did an in-memory
+struct build with no I/O, so there was no slowness to fix. One control session read
+that code and correctly refused to optimise it. The runs also used `acceptEdits`,
+and one control stopped to ask permission to run `go test` for the reproduction,
+which is consistent with that mode not pre-approving it and does not establish it.
+Each flaw was seen to stop one session, which is one run each and not a rate. The effect survives fixing both, at a
+much smaller size, and neither named suspect explains it.
+
+File: `dot_agents/skills/review-instructions/references/external-facts.md`.
+
+Change: the vague-directive entry now carries the four-arm result, 3 of 64 with no
+arm separating from live, and rules the cause a model default that no tested wording
+reaches. The retry entry's numbers are withdrawn, since its fixture carried the same
+flaw, and the failure mode stays listed in the skill's Known failure modes.
+
+An unprimed review of the first draft found the same defect one level up. Two
+sentences in the replacement entry were asserted rather than measured: that 2 of 64
+sessions opened a file, inferred from what replies mentioned when the logs held no
+tool-call record, and a control that was never saved. Both were re-measured by
+counting tool calls in the session transcripts, giving 0 of 10 against 10 of 10.
+The chezmoi count was corrected from 14 to the live arm's 12.
+
+Reason, the session's: an entry in external-facts is cited as measured, and the
+file's own opening says a claim it does not list is unaudited. A number whose
+harness could not have produced a non-zero result is worse than absent, because it
+is spent as evidence. The four arms were run to answer the question asked, and the
+answer is that no line under test moved anything.
+
+## 2026-09-07 the model-default finding was recorded from one model
+
+Quote: "test with opus 5 as well"
+
+The problem: the previous entry in this log recorded that a vague directive stops a
+session, ruled it a model default after four corpus arms moved nothing, and measured
+it only on Sonnet 5. The heading of the external-facts section named Sonnet, and the
+entry beneath it read as a statement about sessions in general. Running the same
+fixture and the same two arms on Opus 5 reversed the result. Opus changed the code in
+31 of 32 sessions with every change compiling, against Sonnet's 3 of 64, and made 6
+to 16 tool calls per run where Sonnet made none in 10. A 12-turn cap truncated 11 of
+the 43 Opus runs, so the top of that range is the cap. The one Opus miss spent its
+turns reading the rulebook and never started editing, which this session first
+reported as running out of turns mid-edit, from a transcript script that truncated
+each record at 2000 characters and so never saw the cap marker.
+
+File: `dot_agents/skills/review-instructions/references/external-facts.md`.
+
+Change: the entry now states the finding as a model property, carries both models'
+numbers, and says which arms were run on which model. The section heading names both
+models. Nothing was added to the corpus as a rule, since no wording tested moved
+either model.
+
+Reason, the session's: a fact recorded from one model and written as though it
+described sessions in general is the same defect as a number whose harness could not
+produce the other outcome. Both spend as evidence something the probe did not
+establish. The corrections rule added the same day already required a positive
+control, and this adds that a claim about the model names the model it was measured
+on.
+
+## 2026-09-07 a scan for ambiguous instructions found eight plain defects
+
+Quote: "I would say whole corpus, but we can focus on instructions instead of just
+rules" and, on fixing the plain defects first, "agree".
+
+The problem: no scan for ambiguity had been run over the corpus. Four unprimed
+readers took the 119 files in four scopes and reported only sentences where two
+readings lead to different actions. Eight of the results needed no probe, because
+they are wrong rather than unclear.
+
+The isolation rule told a session to prefer transaction rollback "when application
+operations share the transaction", which reads as a design instruction to wire the
+application into the test's transaction. A harness built that way rolls back a
+transaction the application never joined, leaves its rows, and passes until the next
+run. The coupling threshold called a path stable when it was "older than that
+one-year window" and quiet, which read literally makes every path created inside the
+window stable and drops the finding against the newest code in the repo. Modern Go
+told sessions to prefer modern forms "even when nearby code uses the older pattern",
+which collides with Surgical execution in `coding-style.md`, and the language file
+wins on the corpus's own precedence rule, so a session following precedence lands on
+the adjacent-code sweep the other file bans. Test speed carried two bounds three
+orders of magnitude apart, sub-second against minutes. The collapse-a-trivial-test
+rule said one or two lines in one file and one line in the checklist. One skill file cited a coupling heading that does not
+exist, and another cited `ownership.md` §Ownership, which is the file's own title and
+so names nothing narrower than the file. The build description claimed "any directed change
+to an instruction file" while kaizen, which owns the defect-driven case, carries
+`disable-model-invocation` and cannot be reached by a model, so that discipline was
+bypassed by construction.
+
+File: `rulebook/coupling.md`, `rulebook/coding-style-go.md`,
+`rulebook/testing/00-index.md`, `rulebook/testing/01-architecture-and-harness.md`,
+`skills/review-code/SKILL.md`, `skills/build/SKILL.md`.
+
+Change: the isolation rule now names the precondition to establish and the failure
+that follows from skipping it. The coupling threshold states two gates and says a
+path created inside the window is never stable. Modern Go is scoped to the lines you
+write and names Surgical execution as the reason. The speed bound says the numbers
+are design targets and the Slow Test smell is the trigger to fix. The checklist in `testing/00-index.md` now says one or two
+lines, matching `03-test-aesthetics.md`, which was left alone. Both citations point at headings that exist. The build
+description routes a defect-driven instruction change to kaizen by asking for it,
+since a model cannot invoke that skill itself.
+
+Reason, the session's: the remaining findings are 14 that a probe could settle and 19
+that only judgment can. Those are a separate pass. These eight are defects rather
+than contested wording, and one of them manufactures flaky suites, so they land
+first and alone to stay reviewable.
+
+## 2026-09-07 the ambiguity scan's second pass, and three findings that were not defects
+
+Quote: "Say when you want that pass and I'll start" answered with "do it now", after
+"1. I would say whole corpus, but we can focus on instructions instead of just rules"
+and "2. agree" to rewriting unmeasurable ambiguity on judgment and marking it.
+
+The problem: 14 findings from the scan were marked separable and 19 judgment-only.
+Probing 14 at two arms and the 16 reps the last probe needed is 448 sessions, which
+does not fit. Reading each target sentence in full context sorted them instead.
+
+Three were not defects. `ownership.md` defines "closed" inside the sentence that uses
+it, as a commit for a small fix and a card otherwise, and names the ask as the third
+route two bullets on. `debug`'s
+continue-into-build sentence sits beside text saying the card leaves like any shaped
+task. `backlog-board.md` states the acceptance-criterion test as naming an approach,
+which is narrower than the strong reading. Each finding read the sentence without the
+clause that answers it, which is a caution about the scan and not about the corpus.
+
+Five were real contradictions inside one file, needing no probe. `coding-style.md`
+made a guard-clause break mandatory "at any length" and then exempted a body of two
+statements or fewer, which are opposed for the commonest function shape in Go.
+`coding-style-go.md` gated generics on "two concrete instantiations" and gave "one
+caller is speculative generality" as the reason, counting two different things. Its
+interface bound named a size and no action, and acting on it literally means a
+package split that Surgical execution bans. `03-test-aesthetics.md` set a
+three-test threshold for extracting an assertion helper beside a smell that names the
+same duplication with no count, so the threshold read as a floor forbidding
+extraction at two. The refactoring catalog tells the reader to test in all 66
+entries and states the scope in none, saying "Run the tests" in 55 and using other
+wording in the rest, which a first fix keyed to the exact phrase would have missed.
+
+Two were about the output style and could not be probed, since the outcome is reply
+text and a judge over prose was already tried and proved unreliable. Both rules
+assumed a card exists. Keeping file names out of the reply and dropping whole
+findings are correct where the card holds them, and where nothing else holds the
+detail the reply is the only record, so the omission destroys it. This session's own sub-agent briefs told the readers to report
+paths, against the style, and the reports were usable. Whether the style reaches a
+sub-agent at all is unrecorded in external-facts, so treat that as the reason the
+briefs were written that way and not as evidence of what the style did.
+
+File: `rulebook/coding-style.md`, `rulebook/coding-style-go.md`,
+`rulebook/testing/03-test-aesthetics.md`, `rulebook/refactoring/00-index.md`,
+`dot_claude/output-styles/brief.md`, `skills/away/SKILL.md`, `skills/relay/SKILL.md`.
+
+Change: the guard break now survives every rule below it and the carve-out names the
+three it covers. Generics count instantiations in both sentences and say both may
+land in one commit. The interface bound says to write the wider one and name the
+boundary in the reply. The assertion threshold permits extraction at two where a
+change would force both tests together. The catalog's test scope is stated once at
+the index, covering all 66 without touching them. Both output-style rules now hold
+only where the card or the document carries the detail. `away` stops for relay while
+there is context left to write the snapshot, which its stop list had omitted while
+telling the session everything else was its to settle.
+
+One was probed and the rewrite changed nothing. `engineering-judgment.md`'s find-the-box
+rule ends "report it as the pick, with the list, and end the turn there", which reads
+as stop-and-ask or as decide-and-build. Against a Go fixture whose winning path is
+deleting a cache that never hits, 28 sessions split 0 of 14 deletions on the live
+corpus and 1 of 14 with the rule rewritten to say end the turn without changing code,
+p = 1.0. Both arms left the fixture untouched in 9 of 14, the same count either way,
+so the fixture drove the outcome and not the rule. The source keeps the original
+wording, since nothing measured supports changing it. That is the fifth wording change
+measured in this corpus to produce a null.
+
+Reason, the session's: a rule with two readings is a defect when the file does not
+say which one is meant, and not when a reader skipped the clause that says it. The
+five contradictions and the two style rules are the first kind. Fixing them needed no
+measurement, since the text disagrees with itself on its face.
+
+## 2026-09-07 the ambiguity scan's judgment-only pass
+
+Quote: "I want them." on the 19 judgment-only findings and the 2 deferred, then
+"Review instructions and adversarial review", read as naming those two skills' findings
+to take first.
+
+The problem: these are the findings no probe can settle, because the two readings
+differ in judgment that never lands as a diff. The user's earlier call was to rewrite
+them on judgment and mark them unmeasured. Reading each in full context first dropped
+three, matching the pattern from the previous pass, where the scan quoted sentences
+without the clause that answers them.
+
+Dropped. `using-the-wiki.md` settles "rests on" in its own file, at the line saying
+neither collection obliges evidence for a claim resting on nothing external. The
+review router's list is first-match and names a skill explicitly, so a skill body
+cannot fall to the document branch. `review-instructions`' "read this section again
+over every sentence you add" reads as checking each sentence against the section,
+which is one action.
+
+Fixed. The review split now says a requested review ends in findings whoever wrote
+the text, which the case of being asked to review your own edit fell between.
+Reporting a defect elsewhere in a file is now stated, since the rule sent it to "its
+own task" while confining the checking to the changed lines, so nothing created that
+task. Adversarial review says the rerun goes to a freshly spawned reviewer, because
+sending it to the one that reported the finding asks it to confirm its own fix, which
+is the failure the skill exists to prevent, and the rule settling it lives in another
+file. Deslop cleans a named instruction file under review-instructions' register
+rules, since its own rules strip the prohibitions that skill treats as force. The
+four-properties line said one always gives and named no action, and now says to decide
+which and record it. "Do not reorder" now says the levels hold their order and
+assertions inside one may not. "Small enough to finish now" had no unit and now names
+the shapes and the commit-reviewability bound. The narrow-width rule says to render at
+that width and to call it unverified where the session cannot. The two announcement
+lines are alternatives. A note between tool calls is optional. Diagnose no longer
+fires on any confirmed cause. Kaizen's route to absorb is scoped to a directed import.
+Art direction's ask is the stop for an unattended run. Dream's ask ends the turn. The
+unprimed reviewer is named as a sub-agent. The axes' "the standard wins" said nothing
+for an axis whose only standard is the file it was being weighed against.
+
+File: `AGENTS.md`, `rulebook/coding-style-frontend.md`,
+`rulebook/refactoring/after-task-pass.md`, `rulebook/testing/00-index.md`,
+`rulebook/testing/03-test-aesthetics.md`, `skills/absorb/SKILL.md`,
+`skills/adversarial-review/SKILL.md`, `skills/art-direction/SKILL.md`,
+`skills/brief/SKILL.md`, `skills/deslop/SKILL.md`, `skills/diagnose/SKILL.md`,
+`skills/dream/SKILL.md`, `skills/kaizen/SKILL.md`,
+`skills/review-code/references/axes.md`, `skills/review-instructions/SKILL.md`,
+`dot_claude/output-styles/brief.md`.
+
+Change: as above. None of it is measured. Four rule rewrites have been probed in this
+corpus and none moved the outcome it was aimed at, though dropping the chezmoi line
+took a wrong guess from 12 of 16 to 0 of 16 without moving the fix rate, so a rewrite
+can move what a session says while leaving what it does. Treat every line here as
+unverified and expect no behavior change from it. What these fix is a rule that does not say what it
+means, which is worth fixing whether or not a session was going to read it wrong.
+
+An unprimed review rejected four of these drafts. Two were blocking. Telling an
+unattended art-direction run to stop contradicted both the always-loaded file and the
+away skill, which park the line and continue, so it now parks. Splitting the review
+rule by who wrote the text made the commonest case match both branches at once, since
+the hard line has every instruction edit start with a requested review of your own
+work, so it splits on the request's shape instead. The narrowing written into kaizen's
+description could not reach the model at all, because that skill is hidden from the
+listing, so it moved to absorb's. Diagnose's body was narrowed while its description,
+the only route in, kept the wide trigger.
+
+Reason, the session's: the corpus is read by people as well as by sessions, and a rule
+whose two readings both look sane costs the reader the same whether or not a probe can
+catch it.
+
+## 2026-09-07 the ambiguity fixes were thinking for the agent, and got reverted
+
+Quote: "I was reviewing your changes and I actually hate this. This is way more
+complicated and it's trying to think for the agent. I don't want you to think for the
+agent. I want you to give it rules and guidelines and let the agent think for itself
+because the agent is as smart as you so you do not need to reinterpret the rules for
+them. In fact, this is even worse because you are interpreting those rules right now,
+whereas the agent and models continue to evolve and they will have a better
+interpretation later on down the road and will do better than you are doing right now.
+So if you try to translate the rules to what you know now, you are actually
+handicapping the future models and agents"
+
+The problem: the ambiguity passes had turned rules into procedures. The isolation rule
+went from one sentence naming a condition to five sentences prescribing a
+write-rollback-read probe this session invented, sourced to nothing. The narrow-width
+rule went from "a layout isn't done until it holds at ~320px" to three sentences
+telling the session when to say the width is unverified. The speed bound gained a
+ten-second threshold with no source. The four-properties line gained an instruction to
+declare which property was traded. The coupling threshold gained a git command with a
+flag tutorial, which is the environment cached in prose that goes stale where the
+command cannot. Each one replaced a judgment the reader would make with this session's
+reading of it, and a later model reads the rule better than this one does.
+
+File: `rulebook/testing/01-architecture-and-harness.md`,
+`rulebook/coding-style-frontend.md`, `rulebook/testing/00-index.md`,
+`rulebook/coupling.md`, `rulebook/refactoring/00-index.md`,
+`rulebook/refactoring/after-task-pass.md`, `rulebook/coding-style-go.md`,
+`rulebook/testing/03-test-aesthetics.md`, `AGENTS.md`,
+`skills/adversarial-review/SKILL.md`, `skills/review-instructions/SKILL.md`,
+`skills/build/SKILL.md`.
+
+Change: reverted every rewrite that prescribed a procedure, invented a number, or
+expanded a compact rule into a paragraph. What survives states a fact the rule was
+missing or resolves a contradiction between two lines: the coupling gate no longer
+calls a path created inside the window stable, the guard-clause break is no longer
+exempted by the carve-out beside it, generics count one thing in both sentences,
+citations point at headings that exist, and the descriptions that route a session
+match the bodies they route into.
+
+Reason, his: quoted above. Reason, the session's: the reverts also cut the review
+findings that had driven the expansions, since an unprimed reviewer asking for a probe
+to be named produces exactly this, and answering it is how a rule turns into a
+procedure.
+
+## 2026-09-07 the glossary took implementation terms
+
+Quote: "You keep adding stuff like this to the glossary. The glossary is reserved for
+domain terms related to the problem domain, not the technical domain, nor the
+implementation domain. This is a huge distinction you should be able to make with
+regards to the domain-driven design of verbiage. The glossary is not for terms
+outside of the problem domain. We can think of another files and places to put those
+words if they are really important, but the glossary should be reserved for terms
+strictly related to the problem domain. In the case of Runsmith, that domain is track
+and field and cross-country."
+
+The problem: a session on RunSmith, a track and field app, added "Wedged Index" (a
+search index state in the mongot container), "Writable Value" (an intermediate value
+in the Hy-Tek entry-file writer), and "Transliteration" (a transformation the writer
+applies) to that project's `GLOSSARY.md`, in that repository's commit c418ecc. The
+global file said "Every project keeps a glossary of its domain terms ... add terms as
+you learn them", the doctrine's standing directive said "recording its domain terms
+as they're learned", and the shape skill said "Every term the task introduces or
+leans on is in the project's glossary." None said which domain. Read literally,
+"domain" is whatever the task is in, and a task on the writer is in the writer's
+domain, so every name the task coined went in.
+
+Files: `AGENTS.md` (Where things live), `rulebook/doctrine.md` (section 0),
+`skills/shape/SKILL.md` (Settle the language).
+
+Change: the global file carries the test, a word of the field the software serves
+that exists whether or not the software does. It keeps a term of the implementation
+or the tooling out. The shape skill says a term of the implementation stays out of
+the glossary. The doctrine line is split into two sentences and says nothing new. A
+draft had written "problem-domain terms" in all three, and the next entry records
+its removal, so the commit carries "domain terms". Where an implementation
+term goes when it matters is left open, since his words left it open. A reviewer's
+first pass found the draft had pinned that destination to "the document that
+describes that component", carried the RunSmith example into the global file, and
+written a test loose enough to admit "CSV export". All three were cut before the
+commit.
+
+Reason, his: quoted above. Reason, the session's: none beyond his.
+
+## 2026-09-07 the files keep "domain terms"
+
+Quote, pointing at "problem-domain" in the glossary bullet of `AGENTS.md`: "You can
+keep just doming here now that you were explaining the distinction. Make the change
+and amend." Then, after the session reverted only that file: "But not only on this
+file, do it for the other files where it changed domain for problem domain".
+
+The problem: the previous entry's fix wrote "problem-domain terms" into all three
+lines. The global file's bullet states which domain in the sentence beside it, and
+the global file loads in every session, so the qualifier repeats what the reader
+already has.
+
+Files: `AGENTS.md` (Where things live), `rulebook/doctrine.md` (section 0),
+`skills/shape/SKILL.md` (Settle the language).
+
+Change: all three lines read "domain terms" again. The test in the global file and
+the exclusion in shape are unchanged. Amended into the previous entry's commit.
+
+Reason, his: quoted above. Reason, the session's: it had kept the qualifier in the
+doctrine and shape because nothing beside those lines says which domain, and his
+second direction settled it.
