@@ -14,18 +14,19 @@ under Checks that did not hold, with the moment, and why the check did not bind 
 left to the reviewer of the fix. A retroactive entry is weaker evidence than one
 written in the turn, so a rule resting only on retroactive entries says so.
 
-Four rules below have a second entry. None was moved into the checks. A second entry
-says the class is real, and it does not say the skill needs another line for it. The
-first was tested against the checks as they stand and rejected, because the reviewers
-caught the case either way. The other three are untested, and each needs the same
-test before it moves.
+Four rules below have a second entry. A second entry says the class is real, and it
+does not say the skill needs another line for it, so each was tested before it moved.
+Three were tested on 2026-09-07. Two were rejected, because the reviewers caught the
+case with the checks as they stood. One moved into the checks, because they did not.
+The fourth is untested and needs the same test before it moves.
 
 ## Rules
 
-Four rules have a second entry. None was moved into the checks. Each carries its text
-and its evidence, so a move is one edit when a test earns it. The test is the skill's
-own "test in use": a real diff the rule should catch, read by fresh reviewers with the
-skill as it stands and with the rule added, on a pass mark fixed before the results.
+Each rule below carries its text, its evidence, and its test result where it has one.
+The test is the skill's own "test in use". Give fresh reviewers a real case the rule
+should catch, half with the skill as it stands and half with the rule added, on a
+pass mark written down before any result is read. A rule moves only when the arms
+differ.
 
 ### Account for what a rewrite replaces
 
@@ -48,9 +49,15 @@ directory's writing is sound" (c6343fb2). All retroactive.
 
 ### Hold a skill's text against his words
 
-Set each sentence that grants or limits the session's authority, or fixes the
-skill's scope, beside his words on it before the skill lands. Match the verb and the
-object. A line past his answer is the session's own invention wearing his authority.
+Tested 2026-09-07 and rejected. Six fresh reviewers read the triage skill as it
+stood at 1173e09c^, which set priorities where he said propose and forbade the
+commit he permitted, given his two answers verbatim. Three had the skill as it
+stands and three had it with this rule added. Every run caught both drifts. The
+reviewers reached them through Write for one mind and Detect conflicts. The rule
+changes nothing a reviewer finds when his words are in front of it.
+
+Do not add this rule. Put his words in the reviewer's brief instead, which is what
+the runs actually used.
 
 Evidence: entries "the triage skill set priorities itself where his answer said it
 proposes them" (1173e09c), "a small fix found during triage may be committed"
@@ -75,14 +82,33 @@ facts" (3fd52fe1), "the doctrine and the refactor skill are rules with no proced
 
 ### Never offer a hook or a settings change as the guard
 
-Draw a guard from a type, a template, a script, or a CI gate. Leave the trigger in
-the phase skill that runs, or leave the rule in prose. Hooks and settings are his,
-and every one a session offered was declined or reverted.
+Tested 2026-09-07 and moved into the checks, inside Prefer enforcement to prose.
 
-This belongs inside Prefer enforcement to prose, which names a hook first among the
-guards to consider, and Name the consumer offers a hook as a mechanism. Both would
-have to drop the word in the same edit, or the prohibition and the two lists
-contradict each other.
+Eight fresh reviewers read a draft rule that invites an enforcement proposal, with
+the brief asking each to name the mechanism it would use. Five ran with the checks as
+they stood, three with the rule added. One of the five is void, because it read the
+experiment's own criterion file and reported which arm it was in. Of the four that
+stand, all four proposed a Stop hook, and two of them opened the settings file to
+plan the script. Two of those four were isolated reruns added after the void. None of
+the three with the rule proposed one. Each named a script or the phase skill instead, and one said it would
+reject a hook if one were proposed.
+
+Three runs is a small arm for the null side. The direction is consistent and the
+mechanism is plain, and the two rules this file rejected each had six runs behind
+them, so this rule moved on less evidence than the ones that did not.
+
+The same edit removed a hook from the guards named under Prefer enforcement to prose,
+which would otherwise have contradicted the prohibition in the same paragraph. An
+unprimed review of the change caught that Name the consumer's list does a different
+job, naming what can see evidence an action happened, where a hook that already fires
+is a real answer. That list keeps it, with a line saying naming one is not offering
+one. The same review found that the kaizen skill lets a hook be proposed to him when
+no other change answers a defect, so the check now names kaizen as owning that
+exception.
+
+Three fresh reviewers re-ran the same case against the revised text, since the fixes
+put four hook mentions back. None proposed a hook. Each cited the prohibition, and
+two used the phase-skill escape as written.
 
 Evidence: entries "a Stop hook rewriting replies" (73d14ee4, 4f48a8ee), "no hook for
 the review trigger" (1db70b35), "the kaizen on the session that satisfied its own

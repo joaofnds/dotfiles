@@ -186,15 +186,19 @@ modified file accounted for" to "understanding reached". Require a state-mutatin
 rule to name an object bindable without judgment: a path, an enumerated set, or a
 pattern plus a probe. Reject "stale entries", which describes by role.
 
-**Prefer enforcement to prose.** Name the guard where a hook, a type, a template, a
-script, or a CI gate could enforce a rule, because the guard removes a possibility
-that prose only asks the reader to avoid. On a destructive path, require a gate or a
-deny rule, never stronger adjectives. A guard enforces the rule itself. Leave the
-rule as prose where only a proxy could be enforced, because a numeric proxy for a
-judgment rule replaces the principle with a count, obeyed or breached exactly where
-judgment was needed. Its counts belong in the evidence records. Split a rule
-with a mechanical part and a judgment part: a script for the first, prose for the
-second. Give a rule only judgment can check the verdict "test in use".
+**Prefer enforcement to prose.** Name the guard where a type, a template, a script,
+or a CI gate could enforce a rule, because the guard removes a possibility that prose
+only asks the reader to avoid. Never offer a hook or a settings change as the guard,
+because hooks and settings are João's. Put the trigger in the skill that runs the
+phase, build's Finish or shape's handoff, or leave the rule in prose. The kaizen
+skill owns the one exception, a hook proposed to him when no other change answers a
+defect. On a destructive path, require a gate or a deny rule, never stronger
+adjectives. A guard enforces the rule itself. Leave the rule as prose where only a
+proxy could be enforced, because a numeric proxy for a judgment rule replaces the
+principle with a count, obeyed or breached exactly where judgment was needed. Its
+counts belong in the evidence records. Split a rule with a mechanical part and a
+judgment part: a script for the first, prose for the second. Give a rule only
+judgment can check the verdict "test in use".
 
 **State the complement.** Leave no part of a set to inference, because inference is
 where behavior regresses silently across model swaps. Where a rule enumerates part
@@ -209,11 +213,12 @@ awareness or care, since it changes nothing, and record that incident in git his
 instead.
 
 **Name the consumer.** Require a rule mandating an action to name what sees the
-evidence it happened: an artifact a later step reads, a hook that fires on it,
-another rule keyed to it, or a line the rule requires in the reply. Ask whether a run
-that skipped the action is distinguishable from one that took it, because the agent's
-word that it complied is not evidence. Where nothing distinguishes them, carry the
-rule in the strongest mechanism that fits, or cut it.
+evidence it happened: an artifact a later step reads, a hook that already fires on
+it, another rule keyed to it, or a line the rule requires in the reply. Naming a hook
+that exists is not proposing one. Ask whether a run that skipped the action is
+distinguishable from one that took it, because the agent's word that it complied is
+not evidence. Where nothing distinguishes them, carry the rule in the strongest
+mechanism that fits, or cut it.
 
 **One home.** Require a rule to appear once, in the file its audience loads, and cut
 restatements. Keep one copy per co-loaded path, because a copy on a path the router
