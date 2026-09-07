@@ -24,10 +24,10 @@ For application-level tests, two consequences follow:
         server = new HTTPServer(container)
         server.start(port=3000)
 
-        response = rawHTTPClient.post("http://localhost:3000/users", body={ "name": "joao" })
+        response = rawHTTPClient.post("http://localhost:3000/users", body={ "name": "ada" })
 
         assert response.status == 201
-        assert response.body.name == "joao"
+        assert response.body.name == "ada"
 
         server.stop()
         realDB.truncate("users")
@@ -49,9 +49,9 @@ For application-level tests, two consequences follow:
         afterEach:  harness.db.rollback()
 
         test "creates user":
-            user = driver.users.create("joao")
+            user = driver.users.create("ada")
 
-            assert user.name == "joao"
+            assert user.name == "ada"
 ```
 
 ---
@@ -179,8 +179,8 @@ be isolated by a transaction visible only to the test runner.
 ```
 [BAD]: relies on manual cleanup; flakes the first time a test crashes mid-run
     test "creates user":
-        user = driver.users.create("joao")
-        assert user.name == "joao"
+        user = driver.users.create("ada")
+        assert user.name == "ada"
         driver.users.delete(user.id)                     // misses this on failure → next test breaks
 ```
 
@@ -192,7 +192,7 @@ Resource leakage, connection pools, ports, goroutines left dangling across tests
 
 ## 7. Drivers
 
-A Driver is the test's view of the application's public interface. HTTP endpoints, queue consumers, and public API calls are exposed through per-domain Driver classes; the test calls `driver.users.create("joao")`, not a raw transport call.
+A Driver is the test's view of the application's public interface. HTTP endpoints, queue consumers, and public API calls are exposed through per-domain Driver classes; the test calls `driver.users.create("ada")`, not a raw transport call.
 
 ### 7.1 Shape
 
@@ -251,7 +251,7 @@ the public contract.
 
 ### 7.4 Drivers assert transport contracts, not domain content
 
-A Driver may assert on transport-level contracts, "create returns 201 and a user shape", because that's its own contract with the test. A Driver never asserts on domain content: "the user's name was 'joao'". That's the test's job.
+A Driver may assert on transport-level contracts, "create returns 201 and a user shape", because that's its own contract with the test. A Driver never asserts on domain content: "the user's name was 'ada'". That's the test's job.
 
 ### 7.5 Must-variants for error-free flows
 

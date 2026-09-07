@@ -19,10 +19,10 @@ A test coupled to implementation is *brittle*: it breaks under refactoring even 
     test "finds the user":
         service = new UserService(repo)
 
-        service.findByEmail("joao@x.com")
+        service.findByEmail("ada@x.com")
 
         assert repo.queryBuilder.wasCalled()
-        assert repo.queryBuilder.where.wasCalledWith("email", "joao@x.com")
+        assert repo.queryBuilder.where.wasCalledWith("email", "ada@x.com")
         assert repo.queryBuilder.limit.wasCalledWith(1)
 ```
 
@@ -32,12 +32,12 @@ The moment the repository stops using a query builder, this test fails, and noth
 [GOOD]: asserts the observable outcome
     test "finds the user by email":
         users = new InMemoryUserRepository()
-        users.seed(new User("joao@x.com"))
+        users.seed(new User("ada@x.com"))
         service = new UserService(users)
 
-        found = service.findByEmail("joao@x.com")
+        found = service.findByEmail("ada@x.com")
 
-        assert found.email == "joao@x.com"
+        assert found.email == "ada@x.com"
 ```
 
 **The rule of thumb:** a test for a behavior must survive any refactoring that preserves that behavior's contract. If the test breaks, one of two things is true: you broke the behavior, or the test was coupled to implementation.
@@ -122,7 +122,7 @@ Inside every test body, mark the AAA boundaries with blank lines. Three phases, 
 
 ```
 test "finds the user that was created":
-    created = driver.users.create("joao")
+    created = driver.users.create("ada")
 
     found = driver.users.find(created.id)
 
@@ -140,7 +140,7 @@ test "starts empty":
 
 ```
 test "lists created users":
-    created = mustCreate("joao")
+    created = mustCreate("ada")
     assert service.all().contains(created)
 ```
 
@@ -153,8 +153,8 @@ A test asserts one thing: one behavior, one outcome. Multiple `assert` calls on 
 ```
 [BAD]: two unrelated behaviors in one test
     test "creates and deletes user":
-        created = driver.users.create("joao")
-        assert created.name == "joao"
+        created = driver.users.create("ada")
+        assert created.name == "ada"
 
         driver.users.delete(created.id)
 
@@ -166,12 +166,12 @@ If deletion breaks, the creation assertion is noise; if creation breaks, the del
 ```
 [GOOD]: two tests, each telling one story
     test "creates the user":
-        created = driver.users.create("joao")
+        created = driver.users.create("ada")
 
-        assert created.name == "joao"
+        assert created.name == "ada"
 
     test "forgets a deleted user":
-        created = driver.users.create("joao")
+        created = driver.users.create("ada")
 
         driver.users.delete(created.id)
 
@@ -215,7 +215,7 @@ No `if`, no `for`, no `switch`, no `try`/`catch` in the body of a test. Branches
 ```
 [GOOD]: parameterized test cases, one assertion path per case
     cases = [
-        { input: "JOAO",  expected: "joao" },
+        { input: "ADA",  expected: "ada" },
         { input: "  j ",  expected: "j" },
     ]
     for each (input, expected) in cases:
@@ -233,7 +233,7 @@ When the same behavior runs against many inputs, use the framework's parameteriz
 ```
 [GOOD]: each row is its own named, independently-reporting test
     each case in [
-        { name: "lowercases uppercase", input: "JOAO", expected: "joao" },
+        { name: "lowercases uppercase", input: "ADA", expected: "ada" },
         { name: "trims whitespace",     input: "  j ", expected: "j" },
     ]:
         test case.name:
@@ -303,12 +303,12 @@ Protocol shape first, because if the status is wrong the rest of the response is
 
 ```
 test "creates the user":
-    response = driver.users.createRaw("joao")
+    response = driver.users.createRaw("ada")
 
     assert response.status == 201
-    assert response.body containing { name: "joao" }
+    assert response.body containing { name: "ada" }
 
-    assert users.findById(response.body.id).name == "joao"
+    assert users.findById(response.body.id).name == "ada"
 
     assert emails.sent[0].subject == "Welcome"
 ```
@@ -331,24 +331,24 @@ Tests should read at the domain level, not the framework level. Every driver met
 
 ```
 [BAD]: reads like a transport log
-    response1 = agent.post("/auth/register", body={ email: "joao@x.com", password: "p4ss" })
+    response1 = agent.post("/auth/register", body={ email: "ada@x.com", password: "p4ss" })
     assert response1.status == 201
-    response2 = agent.post("/auth/login", body={ email: "joao@x.com", password: "p4ss" })
+    response2 = agent.post("/auth/login", body={ email: "ada@x.com", password: "p4ss" })
     assert response2.status == 200
     token = response2.body.access_token
     response3 = agent.get("/auth/me", headers={ authorization: "Bearer " + token })
     assert response3.status == 200
-    assert response3.body.email == "joao@x.com"
+    assert response3.body.email == "ada@x.com"
 ```
 
 ```
 [GOOD]: reads like a spec
-    api.auth.mustRegister("joao@x.com", "p4ss")
-    token = api.auth.mustLogin("joao@x.com", "p4ss")
+    api.auth.mustRegister("ada@x.com", "p4ss")
+    token = api.auth.mustLogin("ada@x.com", "p4ss")
 
     profile = api.auth.mustGetMe(token)
 
-    assert profile.email == "joao@x.com"
+    assert profile.email == "ada@x.com"
 ```
 
 The [GOOD] version reads as three clauses describing the behavior. A failure in any clause prints a domain-level error, not a transport status code.

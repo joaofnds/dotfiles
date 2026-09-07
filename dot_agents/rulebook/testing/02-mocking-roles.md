@@ -44,9 +44,9 @@ observable contract without hiding a boundary interaction that is itself the con
         mockRepo = inlineMock()
         service = new UserService(mockRepo)
 
-        service.create("joao")
+        service.create("ada")
 
-        assert mockRepo.save.wasCalledWith({ name: "joao", role: "default" })   // coupled to call shape
+        assert mockRepo.save.wasCalledWith({ name: "ada", role: "default" })   // coupled to call shape
 ```
 
 This test breaks the moment the service computes `role` differently, adds a field, or renames `save()`. None of those are changes in behavior.
@@ -57,7 +57,7 @@ This test breaks the moment the service computes `role` differently, adds a fiel
         users = new InMemoryUserRepository()             // Fake of our own repo interface
         service = new UserService(users)
 
-        created = service.create("joao")
+        created = service.create("ada")
 
         assert users.findById(created.id) == created     // verified through the public API
 ```
@@ -67,7 +67,7 @@ This test breaks the moment the service computes `role` differently, adds a fiel
     test "creates user with a defaulted role":
         service = new UserService(new InMemoryUserRepository())
 
-        created = service.create("joao")
+        created = service.create("ada")
 
         assert created.role == "default"
 ```
@@ -167,7 +167,7 @@ class FakeEmailService implements EmailService:
     test "sends a welcome email":
         service = new UserService({ send: (to, subj, body) => {} })   // not typed to interface
 
-        service.register("joao@x.com")
+        service.register("ada@x.com")
 
         // no way to verify the email was sent or what it contained
 ```
@@ -178,9 +178,9 @@ class FakeEmailService implements EmailService:
         emails = new FakeEmailService()
         service = new UserService(emails)
 
-        service.register("joao@x.com")
+        service.register("ada@x.com")
 
-        assert emails.sent[0].to == "joao@x.com"
+        assert emails.sent[0].to == "ada@x.com"
         assert emails.sent[0].subject == "Welcome"
 ```
 
@@ -224,9 +224,9 @@ The moment the mock needs `if args.x then return y`, a state machine, a queue of
         repoSpy = inlineSpy({ save: () => {} })          // ❌ our own UserRepository: must be a Fake
         service = new UserService(repoSpy)
 
-        service.create("joao")
+        service.create("ada")
 
-        assert repoSpy.save.wasCalledWith({ name: "joao" })
+        assert repoSpy.save.wasCalledWith({ name: "ada" })
 ```
 
 ---
@@ -246,12 +246,12 @@ When deciding what to fake: **fake at the I/O boundary, not at every class bound
         validatorMock = inlineSpy({ validate: () => true })
         service = new UserService(repoMock, emailMock, hasherMock, validatorMock)
 
-        service.register("joao@x.com", "password")
+        service.register("ada@x.com", "password")
 
-        assert validatorMock.validate.wasCalledWith("joao@x.com", "password")
+        assert validatorMock.validate.wasCalledWith("ada@x.com", "password")
         assert hasherMock.hash.wasCalledWith("password")
-        assert repoMock.save.wasCalledWith(matchUser({ email: "joao@x.com", passwordHash: "hashed:password" }))
-        assert emailMock.send.wasCalledWith("joao@x.com", any(), any())
+        assert repoMock.save.wasCalledWith(matchUser({ email: "ada@x.com", passwordHash: "hashed:password" }))
+        assert emailMock.send.wasCalledWith("ada@x.com", any(), any())
 ```
 
 ```
@@ -261,10 +261,10 @@ When deciding what to fake: **fake at the I/O boundary, not at every class bound
         emails = new FakeEmailService()                  // Fake at I/O boundary
         service = new UserService(users, emails, realPasswordHasher, realEmailValidator)
 
-        registered = service.register("joao@x.com", "password")
+        registered = service.register("ada@x.com", "password")
 
-        assert users.findById(registered.id).email == "joao@x.com"
-        assert emails.sent[0].to == "joao@x.com"
+        assert users.findById(registered.id).email == "ada@x.com"
+        assert emails.sent[0].to == "ada@x.com"
 ```
 
 The test breaks if and only if the behavior breaks.
