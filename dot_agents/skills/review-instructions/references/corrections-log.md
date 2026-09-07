@@ -1620,3 +1620,42 @@ Reason, his: seven entries could not show a pattern and a hundred can, and the t
 rules came from a thin read. Reason, the session's: two of the reviewer's findings
 were mine to fix, a check forbidding hooks as guards while another check six lines
 later still offered one, and a section counting six entries while naming four.
+## 2026-09-07 the corpus writes about him as an authority, and he wants himself out of it
+
+João: "you keep talking about me on the corpus like I'm a god or something", "I hate
+that shit", "and that shit can't help", and earlier in the same session "I'm trying
+to remove meaning me at all, not just my fucking name", "don't change 'joão' to
+'him'". He had opened with "so I was thinking about removing all references to my
+name. Do you have reasons to believe that this would make the instructions perform
+worse?" and, after the session quoted the Write for one mind check back at him as
+settled, "Don't take that as truth. I want you to challenge it, and *verify*,
+*prove* it necessary instead of assuming it works", then "test more. more cases,
+more scenarios", "try to both prove, and disprove the theory", "get. to. the.
+truth."
+
+Problem: the corpus names him 136 times and routes decisions to him by name, in
+forms like "his call", "Ruled by João", "goes to João", "Reason, his". He read that
+as being written about as an authority whose word settles things, and he does not
+want it. The session misread the ask twice before understanding it. First it cut the
+name and left the pronouns, which he rejected because the pronouns keep the same
+two-party framing. Then it substituted a role noun, which he rejected for the same
+reason. The ask is that the instructions stop being written about a person at all,
+not that a token be swapped.
+
+File: `dot_agents/skills/review-instructions/references/external-facts.md`, two new
+sections.
+
+Change: only the measurements landed this turn. The removal itself is a separate
+task, because it needs a judgment per line rather than a substitution, and this
+session had proved twice that it gets that wrong when it works mechanically.
+
+Reason, his: he does not want to be written about that way, and he believes it does
+not help.
+Reason, the session's: the second half of his belief is now measured and it holds.
+Four A/B designs found no difference in what sessions do, and none of 80 transcripts
+carrying a rule attributed to him by name ever cited him as the justification. The
+attribution is in the text and the model does not use it. So the removal is worth
+doing on his first reason alone, and nothing should be claimed for it on behaviour.
+A separate finding from the same runs is that sessions stop at a vague directive and
+apply a rule's number without checking its stated reason, neither of which the
+naming causes.

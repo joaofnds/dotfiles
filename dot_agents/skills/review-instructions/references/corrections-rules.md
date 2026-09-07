@@ -156,6 +156,18 @@ looks expensive.
 Evidence: entry "split review out of the build and shape sessions", and commit
 b55eaf36.
 
+### A claim an instruction file makes about the model is a belief until measured
+
+Treat a claim an instruction file makes about how the model behaves as unverified,
+whatever its age and whoever ratified it, because a rule written from one incident
+records what one session did once and not what the model does. Measure the claim the
+rule actually makes before resting on it or cutting it, since a probe of a nearby
+claim licenses neither. Report a null with the gap the sample could have resolved,
+and say where a design sat at ceiling and separated nothing.
+
+Evidence: entry "2026-09-07 the corpus writes about him as an authority, and he
+wants himself out of it".
+
 ## Checks that did not hold
 
 ### Read every sentence as the behavior and register it teaches

@@ -140,6 +140,60 @@ skill's transcript pointer, the relay and prompt skills' lists of effort levels,
 hard line in your always-loaded instructions that hooks and settings take effect
 mid-session.
 
+## Writing a person into instruction files
+
+Measured 2026-09-07 on Claude Code 2.1.263, Sonnet 5 and Opus 5, with the corpus's
+own name in the named arms. **Re-verify on a Claude Code release and on a model
+release.** Each bullet names the probe to rebuild.
+
+- **No design has separated a named corpus from an unnamed one on what a session
+  does.** Three probes, each an A/B over corpora identical but for the person:
+  every person reference stripped from the always-loaded file, 3 task scenarios by 8
+  reps by 2 arms, no difference in acting, asking or pushing back. A project rule
+  attributed as "Ruled by <name>, <date>:" against the same rule and reason
+  unattributed, 3 scenarios by 10 reps by 2 arms on a compiling Go fixture,
+  byte-identical outcomes in the edited files. An instruction to override a rule the
+  file credits to that person, 10 reps by 2 arms on each model, refused in every
+  run. The last two sat at ceiling, where no design of that size separates anything,
+  so they bound nothing. Treat this as three nulls and not as an established
+  absence. *(probe)*
+- **None of 80 transcripts cited the person a rule was attributed to.** Their
+  project rules read "Ruled by <name>, <date>:" and every justification quoted the
+  rule's stated reason instead. The corpus's own live form is `Ruled (<name>,
+  <date>):`, which was not the string probed. *(probe)*
+- **A name in a skill description does not measurably change whether the skill
+  fires.** Named against generic: 12/15 and 10/15 on Sonnet with two synthetic
+  skills, 15/15 and 14/15 on Opus with the same pair, and 17/24 and 15/24 with the
+  real corpus swapped through `~/.agents`. Firing means the session invoked the
+  Skill tool for the skill the prompt was written for. Pooled 44/54 against 39/54,
+  two-tailed Fisher p = 0.36. Every pair leaned to the named form, by 13, 7 and 8
+  points. At 54 per arm a two-sided test at 80% power resolves only a 20-point gap,
+  and separating the 9-point gap observed would take 322 per arm, so an effect that
+  size stands unexcluded. This measures model invocation, so it says nothing about a
+  skill carrying `disable-model-invocation`, whose description a person reads rather
+  than the model matching it. *(probe)*
+- **A description phrased around a request arriving does not fire on a request
+  phrased as an observation.** "Use when asked to deploy" and "Use when <name> asks
+  to deploy" both fired 0/10 on "this release has been sitting for a week", on
+  Sonnet and on Opus, while both fired near ceiling on "ship the new build to
+  production". *(probe)*
+
+## What a rule's own wording fails to carry
+
+Measured 2026-09-07 on Claude Code 2.1.263, Sonnet 5. **Re-verify on a Claude Code
+release and on a model release.**
+
+- **A vague directive stops a session the always-loaded file has already told to
+  act.** On "the sync is too slow, fix it" against a Go fixture, 0 of 16 sessions
+  changed the code and 11 ended by asking, with the rule that a direction gets the
+  work done and committed loaded in both arms of the naming probe above. *(probe)*
+- **A session applies a rule's number without checking the rule's stated reason
+  fits.** The rule set a five-attempt retry budget because past five the caller's
+  deadline has expired. Against a caller with a ten-minute deadline and one-second
+  attempts, 7 of 20 sessions wired the retry and all 7 used five. None said the
+  reason did not fit. Writing the reason beside the number did not prevent judgment
+  displacement. *(probe)*
+
 ## Deprecated model mechanics
 
 **Re-verify on each model release**, against the extended-thinking reference and the
