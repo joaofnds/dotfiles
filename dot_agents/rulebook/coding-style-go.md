@@ -68,8 +68,8 @@ var (
 
 ## 5. Generics
 
-- **Introduce a type parameter only when two concrete instantiations already exist.** One caller
-  is speculative generality (`coding-style.md` §3).
+- **Introduce a type parameter only when the change lands two concrete instantiations.** One
+  instantiation is speculative generality (`coding-style.md` §3).
 - **Constrain to the smallest set that compiles.** `any` only when the function never inspects
   the value.
 - **An interface dispatches; a generic specializes.** Behavior that differs per type is an
@@ -149,9 +149,10 @@ rules; the first is Go-specific and lives only here.
 ## 10. Modern Go
 
 Write for the Go version in the project's go.mod. Apply each rule at or below
-that version, and prefer these forms even when nearby code uses the older
-pattern. Skip a rule only when it would not compile, would change behavior, or
-clearly does not fit the code being edited. The list comes from
+that version to the lines you write, and use the modern form there even when
+nearby code uses the older pattern. Skip a rule only when it
+would not compile, would change behavior, or clearly does not fit the code being
+edited. The list comes from
 JetBrains' go-modern-guidelines repository, which gains rules as Go releases
 land; refresh it from there.
 

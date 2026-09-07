@@ -1,6 +1,6 @@
 ---
 name: absorb
-description: Decides what our corpus imports from a named instruction resource, a repository's agent corpus, a skill or rule file, or published guidance. Use when directed to absorb, import, port, adopt, or learn from a named resource, or to compare one against our corpus. Reviewing our own instruction files with no external subject is review-instructions. Ordinary software tasks are shape.
+description: Decides what the corpus takes from an outside instruction source and what it leaves, since the default is to take nothing. Use when a direction names one: another repository's agent files, a skill or rule file, or published guidance. Reviewing the corpus with no outside source in hand is review-instructions.
 ---
 
 # Absorb

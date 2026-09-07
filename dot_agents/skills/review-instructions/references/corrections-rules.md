@@ -30,6 +30,7 @@ differ.
 
 ### Account for what a rewrite replaces
 
+
 Tested 2026-09-07 and rejected. Six fresh reviewers read 83071a54's rewrite of
 `dot_agents/rules/ownership.md`, which cut the ownership stance from eight mentions
 to one and reversed the survivor's force. Three had the skill as it stands and three
@@ -49,6 +50,7 @@ directory's writing is sound" (c6343fb2). All retroactive.
 
 ### Hold a skill's text against his words
 
+
 Tested 2026-09-07 and rejected. Six fresh reviewers read the triage skill as it
 stood at 1173e09c^, which set priorities where he said propose and forbade the
 commit he permitted, given his two answers verbatim. Three had the skill as it
@@ -67,6 +69,7 @@ retroactive.
 
 ### Facts live in the rulebook, procedures in skills
 
+
 Put a file that states rules as facts, with no procedure of its own, in the rulebook
 and route to it from the read table, because a rules file loads when a task's row
 names it and a skill loads only when invoked. A skill carries a procedure a session
@@ -81,6 +84,7 @@ facts" (3fd52fe1), "the doctrine and the refactor skill are rules with no proced
 (8e7fb024), "the rules tree is canonical and the corpus refers to it" (2e113604).
 
 ### Never offer a hook or a settings change as the guard
+
 
 Tested 2026-09-07 and moved into the checks, inside Prefer enforcement to prose.
 
@@ -119,6 +123,7 @@ second entry a move needs.
 
 ### A router carries only the routing
 
+
 Keep a skill whose job is to send work elsewhere to the routing and nothing else,
 because every line past the route is paid for by a session that came only to find
 its next file.
@@ -128,6 +133,7 @@ router" (e94cb807), retroactive. One entry, so this is an incident until a secon
 repeats it.
 
 ### A review step has no applicability test
+
 
 Write a step that reviews work as one every change takes. Never give it a property
 the author reads off its own diff, because the author is the one reading it, and a
@@ -139,6 +145,7 @@ it.
 
 ### A record carries the context its reader lacks
 
+
 Where a rule has a session write a record another session reads, require it to
 carry what the session was doing and what it saw, beside any words it quotes,
 because the reader cannot reparse the moment from the words alone.
@@ -146,6 +153,7 @@ because the reader cannot reparse the moment from the words alone.
 Evidence: entry "log the problem with context, not only his words".
 
 ### Measure what a change makes a session load
+
 
 Measure the context a change adds to what a session loads, at launch or on a route,
 before it lands, and record the number in
@@ -156,21 +164,44 @@ looks expensive.
 Evidence: entry "split review out of the build and shape sessions", and commit
 b55eaf36.
 
+### Show the probe can produce the other outcome before recording its number
+
+
+Run a positive control before resting on a measured number, since a harness that
+cannot produce the other outcome reports its own defect as a finding about the
+model. Check that the fixture compiles, that the task it poses is real, that the
+permission mode approves the commands the work needs, and that the transcript
+records what you count. Record the control beside the number. One entry is an
+incident, so this stays here until a second repeats it.
+
+Evidence: entry "2026-09-07 a recorded probe number rested on a fixture that never
+compiled". Kept separate from the belief-until-measured rule below, which governs
+measuring a claim rather than validating the instrument.
+
 ### A claim an instruction file makes about the model is a belief until measured
+
 
 Treat a claim an instruction file makes about how the model behaves as unverified,
 whatever its age and whoever ratified it, because a rule written from one incident
 records what one session did once and not what the model does. Measure the claim the
 rule actually makes before resting on it or cutting it, since a probe of a nearby
 claim licenses neither. Report a null with the gap the sample could have resolved,
-and say where a design sat at ceiling and separated nothing.
+and say where a design sat at ceiling and separated nothing. Name the model every
+number was measured on. A number from one model describes that model, so record it
+named to the model and never as what sessions do, and measure a second model before
+calling any of it a model default.
 
-Evidence: entry "2026-09-07 the corpus writes about him as an authority, and he
-wants himself out of it".
+Evidence: entries "2026-09-07 the corpus writes about him as an authority, and he
+wants himself out of it" and "2026-09-07 the model-default finding was recorded from
+one model". Held here rather than moved into the checks. The two entries name
+neighbouring classes, a rule written from one incident and a number measured on one
+model, and the second came from this file's own session rather than from separate
+work. Move it on an entry from a session that did not write it.
 
 ## Checks that did not hold
 
 ### Read every sentence as the behavior and register it teaches
+
 
 The style's own prose taught the register it forbade (79b335f7).
 The setup-and-payoff cadence survived that rewrite (a9faa9c8). The triage skill
@@ -186,6 +217,7 @@ where four spots did not (4a6d1264).
 
 ### Prefer enforcement to prose
 
+
 He rejected a sentence-count ceiling for the reply register twice,
 and the check gained the sentence about a numeric proxy (1fd06a38). The numeric
 limits came out of the style the same day (79b335f7). Two days later a session
@@ -195,6 +227,7 @@ The lint was deleted on his direction (00f9d915). The kaizen on that day found t
 check's guard sentence was what the lint had been read out of (9ad4809f).
 
 ### Check the placement
+
 
 In three shapes. The review router that shared its file with 170
 lines of code-review axes is the same shape and is filed as its own rule above,
@@ -216,6 +249,7 @@ review skill sends work here after the build, and the sentence forbidding that
 landed in the same commit (0cd650b8).
 
 ### Write for one mind
+
 
 He asked for review-code's description in the shape of its siblings, which carried
 "when João asks" (85c848ce), then said the same day that those lines make a session
@@ -244,6 +278,7 @@ manually-invoked skill is now written as a property of the skill, the
 
 ### One home
 
+
 The coding style rules lived in the style skill, the review axes, and
 the global file's code-craft bullet at once, and a session quoted the global copy as
 the rule it had read and wrote a history-narrating block anyway (de9d5dba,
@@ -253,27 +288,10 @@ the rulebook.
 
 ### Read each rule literally, and write it so it can be
 
+
 "Changed what's live" licensed a paragraph per fixed finding, because
 after a fixing session every finding had changed what's live (e62866ad). "As if he
 saw none of the work" licensed retelling in the reply what the notes had already
-shown him (a9f7a321).
-||||||| parent of 1e4f0ad1 (keep the glossary to the problem domain)
-shown him (a9f7a321). "Prefer rollback when application operations share the
-transaction" read as an instruction to wire the application into the test's
-transaction, which builds a harness that leaves its rows behind, and "a path older
-than that one-year window" made every path created inside the window stable. Both
-read as ordinary prose until each reading was stated as the action it produces
-(entry "2026-09-07 a scan for ambiguous instructions found eight plain defects").
-A rule and its stated reason count different things where "two concrete
-instantiations already exist" was gated by "one caller is speculative generality",
-and a threshold reads as a floor forbidding the act below it where three tests
-triggered an extraction the smell beside it required with no count (entry
-"2026-09-07 the ambiguity scan's second pass, and three findings that were not
-defects"). A rule that routes a finding to "its own task" while confining the
-checking to the changed lines leaves nothing to create that task, and "the standard
-wins where they differ" says nothing to an axis whose only standard is the file it
-is being weighed against (entry "2026-09-07 the ambiguity scan's judgment-only
-pass").
 shown him (a9f7a321). "Prefer rollback when application operations share the
 transaction" read as an instruction to wire the application into the test's
 transaction, which builds a harness that leaves its rows behind, and "a path older
@@ -297,6 +315,7 @@ glossary took implementation terms").
 
 ### Reason over command
 
+
 A rule about the state of work was unstable alone and stable once a
 real fired reply and its kept rewrite stood beside it (5efa05df). A reply opened on
 a preamble and carried bold labels, where the old text produced the opener in three
@@ -304,12 +323,14 @@ runs of three and the text with the example produced it in none (8982ab6f).
 
 ### Detect conflicts
 
+
 The triage skill said it edits nothing outside the backlog CLI while
 the global rule said what you surface you close (15bc2eb8). The triage skill moved
 cards while the global file said only the session doing the work moves them, and the
 reviewer surfaced the collision but left the owning rule to him (d51e6b80).
 
 ### Earn each line, hardest on the lines you kept
+
 
 A line that did not belong where it stood was moved instead of cut,
 and he rejected it twice, with this skill open during the edit (fab396fc). A rule
@@ -321,6 +342,7 @@ need, with this skill open, and he asked whether the rewrite was necessary at al
 
 ### State the complement
 
+
 The shape rule covered a prohibition and left a requirement to
 inference, so a constraint derived from his decision became an acceptance criterion
 and two sessions designed inside it (b08600bd). The em-dash ban named replies and
@@ -329,23 +351,19 @@ widened it twice (e9a0af32, 4bf14374).
 
 ### End steps on a checkable bound
 
+
 Acceptance criteria named the approach a shaping session had
 recommended, he chose another, and the card stalled at Done because its criteria
 could not be met under the approach in use (0821f65c).
 
 ### Prefer the brief steer to the enumeration
 
+
 The prompt skill listed the cases for choosing a model and an effort
 level, above a line already carrying the reason those cases share (05d25616).
 
-### One home
-
-Four files each routed their own content into the commit message, none of them
-bounded, while the file that owned the message said only that the body says why. A
-class with several inbound routes and no owner grows without any one rule permitting
-it (b7dc3121, this exchange).
-
 ### Write for the reader who has only what the artifact carries
+
 
 A rule that sends a reader to a card, a transcript, or a path on the author's machine
 assumes an audience with the author's machine. Name the audience of each artifact
@@ -355,10 +373,71 @@ corrections records rather than state what it needs (this exchange).
 
 ### Read the rule file in the turn, not once in the session
 
+
 A session that edits the same file twice reads the rules for the first edit and
 works from memory for the second. Memory of a checklist keeps the checks that
 matched the first edit and drops the ones the second needed. Re-read the file each
 time you return to the work it covers (this exchange).
+
+### A fix keyed to one file's wording misses the files that say it differently
+
+
+Grep for the thing the rule governs before keying a fix to a phrase, since a
+catalog that instructs the same act in eleven wordings takes eleven misses from a
+trigger written against the twelfth. Count what the fix reaches and say the count,
+because the number that makes a one-line fix look complete is the one nobody
+checked. One entry is an incident, so this stays here until a second repeats it.
+
+Evidence: entry "2026-09-07 the ambiguity scan's second pass, and three findings
+that were not defects".
+
+### State the rule and stop, since the reader outlives your reading of it
+
+
+Write what the rule requires and leave the reader to apply it, because the models
+reading it keep improving and a rule translated into this session's procedure caps
+them at this session's understanding. A condition named in one sentence was kept over five sentences prescribing the probe
+that proves it, and the rule's own bound was kept over a number this session picked.
+Both were reverted on direction, not on a measurement.
+
+A review is where this defect enters, not where it gets caught. A check that asks for a bound, a probe, or
+a mechanism can only ever ask for more, so it carries its deferral to the judgment
+carve-out. One entry is an incident, so this stays here until a second repeats it.
+
+Evidence: entries "2026-09-07 the ambiguity fixes were thinking for the agent, and got
+reverted" and "2026-09-07 the review checks drove the over-prescription they were
+meant to catch".
+
+### Remove what a rule demands, never grant permission to refuse it
+
+
+Fix an instruction that asks for the wrong thing by changing what it asks for. Never
+add a clause letting the reader decline it, because a permission is exercised by the
+agent judging itself, so no probe can show whether it improved anything and every
+misuse looks like a judgment call. A draft that let a session reject a review finding
+as over-specification would have let any finding be dismissed that way, and removing
+the demand from the check left nothing to refuse. One entry is an incident, so this
+stays here until a second repeats it.
+
+Evidence: entry "2026-09-07 the review checks drove the over-prescription they were
+meant to catch".
+
+### Sweep the corpus for the defect a correction names
+
+
+A correction names one instance, and the corpus almost always holds more. Grep every
+sibling file for the same shape before calling the correction done, because a defect
+left in six files teaches the next reader it is the convention.
+
+A script guards the sweep only where a run settles the question whole. This one was
+written and removed: two of its three rules counted routing clauses and matched board
+column names, where whether a clause is the nearest confusion is the judgment the rule
+asks for. `check-all.sh` carries checks that fully satisfy their requirement by
+running, and a proxy for judgment there has cost this repository tests before. One
+entry is an incident, so this stays here until a second repeats it.
+
+Evidence: entry "2026-09-07 skill descriptions carried board columns and skill-to-skill
+routing".
 
 ## No rule
 

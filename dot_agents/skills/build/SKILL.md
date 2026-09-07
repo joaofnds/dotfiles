@@ -1,6 +1,6 @@
 ---
 name: build
-description: Implements a shaped task or a directed fix. Use at the Build column and for any directed change to code or to an instruction file.
+description: Implements a shaped task or a directed fix. Use when the work is settled enough to write, and for any directed change to code or to an instruction file.
 ---
 
 # Build
@@ -18,7 +18,7 @@ delivery skill's. An unpredicted failure and a hard-to-write test are design
 signals the testing rules name. Stop and answer them before going on.
 
 A defect in the path of the task stops the feature work. One outside it is closed
-before the task is called done. `~/.agents/rulebook/ownership.md` §Ownership says how.
+before the task is called done. `~/.agents/rulebook/ownership.md` says how.
 
 ## Stay inside the directive
 

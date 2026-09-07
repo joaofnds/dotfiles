@@ -1,6 +1,6 @@
 ---
 name: shape
-description: Turns a request or backlog task into something a fresh session could build from. Use at the Shape column, or before building anything whose scope or meaning is not yet clear. Importing an instruction resource into the corpus goes to absorb instead, and a failure whose cause is unknown goes to debug.
+description: Turns a request or backlog task into something a fresh session could build from. Use before building anything whose scope or meaning is not yet clear. A failure whose cause is unknown goes to debug first.
 ---
 
 # Shape

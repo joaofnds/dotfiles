@@ -143,7 +143,7 @@ test("a board with no active milestone stops before triage with exit 4", async (
 });
 
 test("a card held in Build or Review is refused before anything is written to the board", async () => {
-  const { run } = await fixture({ status: "Review", glyph: "◆", assignee: "@claude" });
+  const { run } = await fixture({ status: "Review", glyph: "◆", assignee: "@someone-else" });
   const result = await run();
   expect(result.calls).toEqual(["/triage"]);
   expect(result.edits).toBe("");
@@ -233,7 +233,7 @@ test("step on a Done card runs reflect and says the card is done", async () => {
 });
 
 test("step refuses a held card before any session", async () => {
-  const { run } = await fixture({ status: "Review", glyph: "◆", assignee: "@claude" });
+  const { run } = await fixture({ status: "Review", glyph: "◆", assignee: "@someone-else" });
   const result = await run("step", "DOT-1");
   expect(result.calls).toEqual([]);
   expect(result.code).toBe(1);

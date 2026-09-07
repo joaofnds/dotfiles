@@ -1,6 +1,6 @@
 ---
 name: away
-description: Continues the work already in flight with nobody at the keyboard, replacing the questions that would have stopped you with an independent review and a decision log, until the work is done or every remaining line needs an answer. Use when the session is told to keep going unattended. Packaging work for a fresh session is relay instead.
+description: Continues the work already in flight with nobody at the keyboard, replacing the questions that would have stopped you with an independent review and a decision log, until the work is done, every remaining line needs an answer, or the context runs short. Use when the session is told to keep going unattended. Packaging work for a fresh session with someone at the keyboard is relay, which this skill also runs on its way out.
 disable-model-invocation: true
 ---
 
@@ -34,7 +34,11 @@ Stop when every line needs an answer from outside the session: a decision that
 crosses into real money, irreversibility, an outward-facing surface, or scope growth;
 an ask already queued; or a ratification or an observation this session cannot make.
 Never supply that answer yourself. One blocked line parks in the log with the exact
-question. Stop only when every line is parked.
+question. Where a line is left unparked, keep going.
+
+Stop when the context left will not carry the work to either of those ends. Run relay
+while there is room to write the snapshot, because a session that runs out mid-work
+leaves the card holding nothing and the next one starts from the beginning.
 
 Everything else is yours to settle. A failing test, a flaky tool, a choice between two
 workable approaches: probe it, decide it, log it, keep going.
@@ -61,6 +65,6 @@ command ready to run; a parked line, with the one thing that unblocks it.
 
 Order it by rising urgency, since the report is read from the bottom up: the log's
 path first, then suggestions you did not act on, then the queued asks and parked
-questions, each one a short reply away from moving. The last line is the verdict, done
-or blocked, and where nothing is blocking and nothing waits on a decision it says both
-plainly.
+questions, each one a short reply away from moving. The last line is the verdict, done,
+blocked, or relayed where the context ran short, and where nothing is blocking and
+nothing waits on a decision it says both plainly.

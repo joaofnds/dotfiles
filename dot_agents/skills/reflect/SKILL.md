@@ -1,7 +1,7 @@
 ---
 name: reflect
 disable-model-invocation: true
-description: The look-back after one card's run has ended, at Done or on a stop. Reads the board's goal, the bet the card carried, and the card's record whole, answers the Coaching Kata's five questions, and leaves a reflection doc with one verdict on the goal (on track, adjust, or pivot) and the planning changes it proposes for the next triage to apply. Use when a card's run has ended, on direction or from the iteration loop. It proposes and never moves a card. Landing a process fix is kaizen, and the code-level pass is the refactoring rules'.
+description: The look-back after one card's run has ended, finished or stopped. Reads the board's goal, the bet the card carried, and the card's record whole, answers the Coaching Kata's five questions, and leaves a reflection doc with one verdict on the goal (on track, adjust, or pivot) and the planning changes it proposes. Use when a card's run has ended. It proposes and never moves a card. Landing a process fix is kaizen.
 ---
 
 # Reflect

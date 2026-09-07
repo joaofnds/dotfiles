@@ -38,11 +38,12 @@ ports, mappers, DI, or messaging solely to satisfy this document.
   an argument against tightening it later.
 - **Blank lines are a method's paragraph breaks.** A body reads as blocks of one thought each,
   separated by exactly one blank line; none sits inside a block. One break is mandatory at any
-  length: after a guard clause or early return. Past two statements, break also between deriving
-  values and acting on them, between two independent effects, and before the statement that
-  produces the result: a body of two statements or fewer takes none. This applies to methods you
-  wrote or restructured in this task; a one-line edit does not open a spacing pass (*Surgical
-  execution*, below). Gather related lines before separating the groups
+  length, after a guard clause or early return. Past two statements, break also between
+  deriving values and acting on them, between two independent effects, and before the
+  statement that produces the result. A body of two statements or fewer takes none of those
+  three. This applies to methods you wrote or restructured in this task; a one-line edit
+  does not open a spacing pass (*Surgical execution*, below). Gather related lines
+  before separating the groups
   (`refactoring/catalog/slide-statements.md`): a block that comes out with a name you can say is
   an Extract Function you had not spotted. When you cannot say where one block ends, the method has
   no steps yet: that is a design finding, not a spacing one. Test bodies mark the same boundaries

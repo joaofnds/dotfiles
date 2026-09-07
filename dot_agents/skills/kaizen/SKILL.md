@@ -1,7 +1,7 @@
 ---
 name: kaizen
 disable-model-invocation: true
-description: Turns an observed process defect, something this session or a recent one did that the corpus should have prevented, into a corpus improvement landed the same turn. Use when a defect is named or a process retro is directed, at any point in a session. Learning from an external resource is absorb. Reviewing a named instruction file with no behavioral incident is review-instructions. Fixing the defective code itself is build, and kaizen owns changing the instructions so the defect does not recur.
+description: Turns an observed process defect, something this session or a recent one did that the corpus should have prevented, into a corpus improvement landed the same turn. Use when a defect is named or a process retro is directed, at any point in a session.
 ---
 
 # Kaizen

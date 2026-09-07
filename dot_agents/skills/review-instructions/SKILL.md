@@ -185,7 +185,9 @@ the agent can test, since a vague bound invites finishing before done and a dema
 bound drives the digging the step needs. Prefer "every
 modified file accounted for" to "understanding reached". Require a state-mutating
 rule to name an object bindable without judgment: a path, an enumerated set, or a
-pattern plus a probe. Reject "stale entries", which describes by role.
+pattern plus a probe. Reject "stale entries", which describes by role. This binds the
+object a step acts on, never the judgment a rule asks for, so never answer "how would
+a session check that?" inside the rule.
 
 **Prefer enforcement to prose.** Name the guard where a type, a template, a script, or
 a CI gate could enforce a rule, because the guard removes a possibility that prose
@@ -219,7 +221,8 @@ it, another rule keyed to it, or a line the rule requires in the reply. Naming a
 that exists is not proposing one. Ask whether a run that skipped the action is
 distinguishable from one that took it, because the agent's word that it complied is
 not evidence. Where nothing distinguishes them, carry the rule in the strongest
-mechanism that fits, or cut it.
+mechanism that fits, or cut it. Where the rule asks for judgment, prose is that
+mechanism and the verdict is "test in use".
 
 **One home.** Require a rule to appear once, in the file its audience loads, and cut
 restatements. Keep one copy per co-loaded path, because a copy on a path the router
@@ -296,11 +299,13 @@ any text you prescribe, because a suggested rewrite lands verbatim. Give a rule
 broken by a session that had it open a different mechanism, never the same rule
 stated more firmly, since reading it already failed.
 
-End a requested review as findings and apply nothing. Reviewing your own edit inside
-directed work, apply the verdicts and end in the commit.
+Asked to assess, end in findings and apply nothing, whoever wrote the text. Asked to
+change something, apply the verdicts to your own edit and end in the commit. The
+request's shape decides it, and a review you run on yourself inside a directed change
+is the second case.
 
-Send a file you wrote or rewrote this session to a reviewer that had no part in it,
-once, before the commit or the handoff. Give that reviewer this file, the diff, and
+Send a file you wrote or rewrote this session to a sub-agent reviewer that had no part
+in it, once, before the commit or the handoff. Give that reviewer this file, the diff, and
 the words the change was directed in if there are any, and never your own description
 of the change. Do not run the review again after the fixes. Read the fixes yourself
 in the staged diff, with the same checks, because the reviewer did not see them. Send

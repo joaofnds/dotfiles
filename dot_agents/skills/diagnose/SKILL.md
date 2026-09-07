@@ -1,14 +1,15 @@
 ---
 name: diagnose
-description: Writes the durable diagnosis document for a defect whose investigation has ended, for a reader with no memory of the session. It proposes no fix. Use when a cause needs to survive the session as a document others will read. A cause still being chased belongs to debug, and pausing that chase mid-flight is relay.
+description: Writes the durable diagnosis document for a defect whose investigation has ended, for a reader with no memory of the session. It proposes no fix. Use when a cause needs to survive the session as a document others will read. A cause still being chased belongs to debug.
 ---
 
 # Diagnose
 
 The reader has no memory of this session, so the document alone has to carry the
-defect. Debug records its result on the card as it goes. This skill runs when that
-result needs to be a document: a cause others will read, a defect handed to another
-team, an investigation whose evidence is worth keeping.
+defect. Debug records its result on the card as it goes. This skill runs where the card is not
+enough: a cause someone outside this board will read, a defect handed to another
+team, or an investigation whose evidence a later session would otherwise have to
+gather again. A confirmed cause needs no document just for being confirmed.
 
 ## Describe the cause, not the remedy
 

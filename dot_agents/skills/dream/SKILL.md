@@ -1,6 +1,6 @@
 ---
 name: dream
-description: Consolidates this project's memory store, merging duplicate notes, surfacing contradictions for a decision, pruning what no longer exists, repairing links and stale paths, and rebuilding the index within its load budget. Use when the store has grown noisy or repetitive. Writing a new memory is not this, and improving the corpus is kaizen.
+description: Consolidates this project's memory store, merging duplicate notes, surfacing contradictions for a decision, pruning what no longer exists, repairing links and stale paths, and rebuilding the index within its load budget. Use when the store has grown noisy or repetitive. Improving the corpus is kaizen.
 disable-model-invocation: true
 argument-hint: "[--auto]"
 ---
@@ -67,7 +67,8 @@ dropping what it says is a prune, and prunes go through the rule above.
 
 Print the proposal before changing anything: the index's current size against its cap,
 then each merge, contradiction, prune, link repair, date repair, and shortened line.
-Ask before applying, unless the run carries `--auto` below. A run with nothing to
+Ask before applying, and end the turn on the question, unless the run carries
+`--auto` below. A run with nothing to
 propose says the store is clean and stops.
 
 Run with `--auto`, apply every proposal without asking, except the contradictions, and

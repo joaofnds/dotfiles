@@ -22,6 +22,7 @@ the paragraph says so.
 
 ## 2026-08-31 a reply from him is not evidence that he read the message (retroactive, e62866ad)
 
+
 João, as the commit records it: "João's correction that a reply is not evidence
 of reading killed the counter-evidence: he skims past thirty seconds and replies
 anyway."
@@ -59,6 +60,7 @@ task. Three adversarial review rounds shaped the wording.
 
 ## 2026-08-31 a state-of-work question got the story instead of the position (retroactive, 5efa05df)
 
+
 João, as the commit records it: "the /brief rewrite João kept was ~85 words
 stating the position and the single move."
 
@@ -81,6 +83,7 @@ the story on both, the rule alone was unstable, and the rule plus the real pair
 landed 60 to 125 words on every run.
 
 ## 2026-09-01 kaizen fixes stayed narrow to the invoking example (retroactive, c7bc91fa)
+
 
 João, as the commit records it: "João's account of the old kaizen: its changes
 over-indexed on the invoking session's example and stayed narrow."
@@ -107,6 +110,7 @@ landed text had the same narrow scope he described in the old kaizen.
 
 ## 2026-09-01 a reply still too long (retroactive, a9f7a321)
 
+
 João, as the commit records it: "Kaizen findings on TASK-11, from a turn João
 flagged as still too long"
 
@@ -132,6 +136,7 @@ of the work" read literally, and counts fell between two rules.
 
 ## 2026-09-01 the style's prose contradicted its own register (retroactive, 79b335f7)
 
+
 João, as the commit records it: "João read the file and found its prose the
 opposite of what it demands: dense balanced paragraphs teaching brevity."
 
@@ -148,6 +153,7 @@ Reason, his: none recorded beyond the finding. Reason, the session's: the
 register carries more than the rules do, so the prose now models it.
 
 ## 2026-09-01 drop the numeric limits from the style (retroactive, 79b335f7)
+
 
 João, as the commit records it: "At João's direction the numeric limits went
 with it: the six-sentence ceiling and per-item budget are replaced by the
@@ -166,6 +172,7 @@ Reason, his: none recorded. Reason, the session's: the limits approximated a
 principle, so the principle replaces them.
 
 ## 2026-09-01 a sentence-count ceiling is no guard for a judgment rule (retroactive, 1fd06a38)
+
 
 João, as the commit records it: "the enforcement check twice drove reviews to
 propose a sentence-count ceiling plus hook for a reply-register rule, which João
@@ -195,6 +202,7 @@ more is genuinely needed.
 
 ## 2026-09-02 the setup-and-payoff cadence (retroactive, a9faa9c8)
 
+
 João, as the commit records it: "A saved conversation from the style's first
 week diagnosed the cause of the cadence João hates"
 
@@ -216,6 +224,7 @@ Reason, his: none recorded. Reason, the session's: the model copies the register
 of a file's examples and prose more reliably than it obeys its rules.
 
 ## 2026-09-03 a Stop hook rewriting replies (retroactive, 73d14ee4, 4f48a8ee)
+
 
 João, as the commit records it: "João objected to a Stop hook repeatedly and
 agreed only after I kept pressing."
@@ -244,6 +253,7 @@ already been reverted once.
 
 ## 2026-09-03 the triage skill set priorities itself where his answer said it proposes them (retroactive, 1173e09c)
 
+
 João, as the commit records it: "João's answer said the skill proposes
 priorities, only bookkeeping is direct."
 
@@ -265,6 +275,7 @@ session's: the direct set contradicted his answer. Priority is judgment about a
 card's consequence and not bookkeeping.
 
 ## 2026-09-03 a small fix found during triage may be committed (retroactive, 15bc2eb8)
+
 
 João, as the commit records it: "João's call: a small reversible fix found
 during triage is committed as it would be anywhere, and the card closes citing
@@ -294,6 +305,7 @@ went beyond his answer.
 
 ## 2026-09-03 a directed triage run may move cards, and what's next reads its queue (retroactive, d51e6b80)
 
+
 João, as the commit records it: "Both edits on João's direction, as the global
 file requires."
 
@@ -317,6 +329,7 @@ loaded.
 
 ## 2026-09-03 the triage skill carried the rhythm the brief style's anti-example shows (retroactive, 032c5aa4)
 
+
 João, as the commit records it: "João pointed at the brief style's anti-example
 and asked that the triage instructions not carry the same rhythm, since a
 skill's own prose sets the register of the replies it produces."
@@ -338,6 +351,7 @@ Reason, his: a skill's own prose sets the register of the replies it produces.
 Reason, the session's: none recorded beyond his.
 
 ## 2026-09-03 how the decorated register could have been prevented at writing time (retroactive, 59dcf69a)
+
 
 João, as the commit records it: "João asked how the bad format could have been
 prevented at writing time."
@@ -376,6 +390,7 @@ The register rule was classed as judgment and never got a guard.
 
 ## 2026-09-03 flatten the global file and the skill bodies out of the decorated register (retroactive, 9a5bab10, 98de9f50)
 
+
 João, as the commit records it: "On João's direction, after kaizen DOT-24 found
 that the corpus files a writer reads as its model carry the shapes the register
 check forbids, and this file carried the most." and "On João's direction, after
@@ -400,6 +415,7 @@ Reason, his: none recorded. Reason, the session's: the files a writer reads as
 its model carried the forbidden shapes, and the global file carried the most.
 
 ## 2026-09-03 the session was satisfying its own lint instead of judging (retroactive, 4901fecc)
+
 
 João, as the commit records it: "against João's concern that the session was
 satisfying its own script instead of judging"
@@ -435,6 +451,7 @@ dodged the patterns with wording that softened prohibitions into comparisons.
 
 ## 2026-09-03 remove the register lint (retroactive, 00f9d915)
 
+
 João, as the commit records it: "On João's direction."
 
 Problem: After 4901fecc the register lint still existed and the review-
@@ -458,6 +475,7 @@ and today showed what a writer does when told to satisfy one." Reason, the
 session's: the same sentence, if it is the session's.
 
 ## 2026-09-03 the kaizen on the session that satisfied its own script (retroactive, 9ad4809f)
+
 
 João, as the commit records it: "Kaizen DOT-25, on João's direction after a day
 in which a session wrote a register lint, rewrote the corpus to satisfy it, and
@@ -490,6 +508,7 @@ were born in repair strings nobody read.
 
 ## 2026-09-03 never write to the instruction corpus without the review-instructions skill (retroactive, abc1b231)
 
+
 João: "Never ever write stuff to the instruction corpus without applying the
 review instruction skill."
 
@@ -512,6 +531,7 @@ it was broken. It is bound to the turn of the draft because a load earlier in
 the session was the state during the failure.
 
 ## 2026-09-03 the kaizen commit's rules used figures of speech (retroactive, 227f0bd3)
+
 
 João, as the commit records it: "João pointed at the sentences added in 9ad4809.
 They used figures of speech ("carries the witness's defense", "this file as its
@@ -538,6 +558,7 @@ Reason, his: none recorded.
 Reason, the session's: plain words say the same thing.
 
 ## 2026-09-03 a brief reply opened on a preamble and carried bold labels (retroactive, 8982ab6f)
+
 
 João, as the commit records it: "A trunk reply under this style opened "Here is
 what to test", carried two bold paragraph labels, and followed three "let me
@@ -568,6 +589,7 @@ in three runs.
 
 ## 2026-09-03 em dashes are banned everywhere (retroactive, e9a0af32, 4bf14374)
 
+
 João, as the commit records it: "Also, on João's ruling: em dashes are banned in
 commits, documents, and code, stated as the wanted form." (e9a0af32) and "Also
 on his ruling: an em dash is never written, in anything." (4bf14374)
@@ -591,6 +613,7 @@ fixture, no em dash appeared in any commit message under the line, and the
 comment counts under this wording match the why wording.
 
 ## 2026-09-04 the comment rule is a test, not a ban (retroactive, 4bf14374)
+
 
 João, as the commit records it: "João's ruling: the rule is not no comments. It
 is the test the old corpus's reviewer applied, which he saw remove redundant
@@ -619,6 +642,7 @@ staged-diff read applies the same test.
 
 ## 2026-09-04 the code comment rule does not belong in the global file (retroactive, 16a401d2)
 
+
 João, as the commit records it: "João's ruling: code comment rules do not belong
 in the global file."
 
@@ -643,6 +667,7 @@ skill that does not load is a routing defect, filed as DOT-31.
 
 ## 2026-09-04 the coding style rules live in the style skill and nowhere else (retroactive, de9d5dba, 03ca8a90)
 
+
 João, as the commit records it: "João's ruling: the coding style rules live in
 one document the agent loads, the style skill, and nowhere else."
 
@@ -666,6 +691,7 @@ a rationale paragraph passes it.
 
 ## 2026-09-04 every session reads the style skill before writing or reviewing code (retroactive, 9ef8f1e7)
 
+
 João, as the commit records it: "João's direction."
 
 Problem: the style skill loaded in 17 of 80 coding sessions since the swap. The
@@ -683,6 +709,7 @@ Reason, his: none recorded. Reason, the session's: the old corpus's routing
 table named the coding-style rule for every coding phase.
 
 ## 2026-09-04 the read table grows as the corpus is compartmentalized (retroactive, c6e76c9d)
+
 
 João, as the commit records it: "João's direction: the table grows as the corpus
 is compartmentalized."
@@ -706,6 +733,7 @@ the style core, the language file, and the testing skill before other tools.
 
 ## 2026-09-04 split the corpus by area and route from the top level (retroactive, 47b7f903)
 
+
 João, as the commit records it: "on João's direction to split the corpus by area
 and route from the top level"
 
@@ -728,6 +756,7 @@ backlog command.
 
 ## 2026-09-04 overseeing between the loop's stages (retroactive, b17d8a55)
 
+
 João, as the commit records it: "The overseeing João asked for needs control
 between stages, and the script carried the card from Shape to Done in one call."
 
@@ -745,6 +774,7 @@ Reason, his: none recorded beyond asking for overseeing.
 Reason, the session's: the guards stay in the script, where a test holds them.
 
 ## 2026-09-04 every rule, name, criterion, and source from the old corpus is present (retroactive, 025ef796)
+
 
 João, as the commit records it: "João's standard: every rule, name, criterion,
 and source from the old corpus is present; only prose and structure are mine."
@@ -765,6 +795,7 @@ weakened and four missing style items.
 
 ## 2026-09-04 no redundant reviewers and no agent per blocking finding (retroactive, 74256bbc)
 
+
 João, as the commit records it: "Two mechanisms are excluded on João's
 instruction: redundant reviewers, and a separate agent per blocking finding."
 
@@ -783,6 +814,7 @@ Reason, his: none recorded.
 Reason, the session's: none given for the exclusion.
 
 ## 2026-09-04 a headline sentence in front of a fact, and a metaphor where the plain word says more (retroactive, 1415cd4c)
+
 
 João, as the commit records it: "The register check was run for em dashes and
 semicolons and not for the shape João named as the defect: a headline sentence
@@ -807,6 +839,7 @@ Reason, the session's: the check had been run for the wrong thing.
 
 ## 2026-09-04 the old rules directory's writing is sound (retroactive, c6343fb2)
 
+
 João, as the commit records it: "João read them again and judged the writing
 sound, so nothing here is rewritten."
 
@@ -822,6 +855,7 @@ Reason, his: he judged the writing sound. Reason, the session's: the wiring and
 the duplicate resolution are the next pass's work.
 
 ## 2026-09-04 a misplaced line was moved instead of cut, and he rejected it twice (retroactive, fab396fc)
+
 
 João, as the commit records it: "Then it moved a misplaced line instead of
 cutting it, and João had to reject the same line twice."
@@ -857,6 +891,7 @@ again.
 
 ## 2026-09-04 a paste-ready prompt for work that deserves its own run (retroactive, b6cecfc4)
 
+
 João, as the commit records it: "João asks for a paste-ready prompt whenever a
 session spots work that deserves its own run, and he retypes the same
 constraints every time: carry the context that session cannot look up, give it
@@ -877,6 +912,7 @@ Reason, his: none recorded beyond the ask.
 Reason, the session's: the skill holds the constraints so he stops writing them.
 
 ## 2026-09-05 the prompt skill pre-chewed the model and effort call (retroactive, 05d25616)
+
 
 João, as the commit records it: "João caught the model and effort one."
 
@@ -909,6 +945,7 @@ them, and the skill's own rule against pre-chewing applied to its own paragraph.
 
 ## 2026-09-05 handoff records the state of the session, not the state of the task (retroactive, 1874dcd5)
 
+
 João, as the commit records it: "João asked for a handoff he can call when
 context runs low, that a fresh session can be pointed at so it continues with
 what this one learned and none of what it went through. The skill recorded the
@@ -934,6 +971,7 @@ binds the next session as his, and an approach he refused never failed, so a
 rule about failed approaches misses it.
 
 ## 2026-09-05 the review no longer checked the goal, the style, the architecture, or the tests (retroactive, 0599be8a)
+
 
 João, as the commit records it: "João's report: the review no longer checked the
 code against the goal, no longer walked every line against the coding style and
@@ -969,6 +1007,7 @@ would prime themselves with a result the author already holds.
 
 ## 2026-09-05 the ownership instruction lost its stance (retroactive, e92259d4)
 
+
 João, as the commit records it: "João, 2026-09-05: the ownership instruction is
 not what it used to be, and the corpus swap lost more of it."
 
@@ -998,6 +1037,7 @@ and the board showed sessions dismissing failures with no card and no fix.
 
 ## 2026-09-05 the rule requiring a report to say its top buckets are empty (retroactive, 95e52961)
 
+
 João, as the commit records it: "João judged the general rule unnecessary,
 having had no trouble with reporting."
 
@@ -1017,6 +1057,7 @@ Reason, his: he had had no trouble with reporting. Reason, the session's: the
 review skill and the away skill each say it for their own path.
 
 ## 2026-09-05 route the ownership rules like the other instructions (retroactive, 8e530127)
+
 
 João, as the commit records it: "João, after the section landed in the always-
 loaded file: route it like the other instructions. The April shape was one
@@ -1044,6 +1085,7 @@ to say it and carry on.
 
 ## 2026-09-05 does the ownership text keep the instruction register (retroactive, 4a6d1264)
 
+
 João, as the commit records it: "João asked whether the ownership text keeps the
 instruction register."
 
@@ -1067,6 +1109,7 @@ Reason, his: none recorded.
 Reason, the session's: four spots did not keep the instruction register.
 
 ## 2026-09-05 the rules tree is canonical and the corpus refers to it (retroactive, 2e113604)
+
 
 João, as the commit records it: "João, 2026-09-05: the restored rules tree is
 the canonical home for the corpus's craft knowledge, the corpus refers to it,
@@ -1099,6 +1142,7 @@ twin and differed only in pointer text and reflow.
 
 ## 2026-09-05 a directed fix to an ignored or non-repo file has no commit to end in (retroactive, 98593964)
 
+
 João, as the commit records it: "João agreed to restore it as one clause on the
 line."
 
@@ -1117,6 +1161,7 @@ Reason, his: none recorded beyond agreeing. Reason, the session's: the exception
 had been on the line from the day the rule landed.
 
 ## 2026-09-05 the board skill is rules stated as facts (retroactive, 3fd52fe1)
+
 
 João, as the commit records it: "João, 2026-09-05: the board skill is rules
 stated as facts, routed from the read table like the other rules, and it was
@@ -1140,6 +1185,7 @@ the read table. Reason, the session's: none recorded beyond his.
 
 ## 2026-09-05 the doctrine and the refactor skill are rules with no procedure (retroactive, 8e7fb024)
 
+
 João, as the commit records it: "João, 2026-09-05: the doctrine and the refactor
 skill go the way of the board, since each is rules stated as facts with no
 procedure of its own."
@@ -1160,6 +1206,7 @@ Reason, his: each is rules stated as facts with no procedure of its own.
 Reason, the session's: none recorded beyond his.
 
 ## 2026-09-05 acceptance criteria that name an approach strand a card (retroactive, 0821f65c)
+
 
 João, as the commit records it: "TRUNK-157 stalled at Done because its criteria
 named the per-site #[expect] form the shaping session recommended, and João then
@@ -1182,6 +1229,7 @@ Reason, his: none recorded. Reason, the session's: a criterion that names an
 approach fails the card the day another is chosen.
 
 ## 2026-09-06 the review criteria let the author decide review did not apply (retroactive, 56c3ddb6)
+
 
 João, as the commit records it: "João's rule replaces them: every change to code
 or configuration gets the review, an instruction file gets review-instructions,
@@ -1212,6 +1260,7 @@ sub-paragraph escape was the one the session used to skip its own gate twice.
 
 ## 2026-09-06 the review skill was a giant file instead of a router (retroactive, e94cb807)
 
+
 João: "I thought the review agents would be just a router, but it ended up being
 a giant file."
 
@@ -1235,6 +1284,7 @@ the router.
 
 ## 2026-09-06 review-code's description did not match its siblings (retroactive, 85c848ce)
 
+
 João, as the commit records it: "João asked for review-code's description in the
 same shape as the other review skills and for a review-instructions pass over
 the two routing commits."
@@ -1255,6 +1305,7 @@ Reason, his: none recorded.
 Reason, the session's: matching review-instructions and adversarial-review.
 
 ## 2026-09-06 "when João asks" in the review descriptions makes the session skip the review (retroactive, 1db70b35)
+
 
 João: "these lines where you say that you should only use it when I ask for it
 are misleading and make you skip the process just because I didn't ask you to
@@ -1277,6 +1328,7 @@ for a review. Reason, the session's: the phase is the trigger.
 
 ## 2026-09-06 no hook for the review trigger (retroactive, 1db70b35)
 
+
 João, as the commit records it: "João ruled out a hook, so the trigger is a
 closing step in each phase skill"
 
@@ -1297,6 +1349,7 @@ run and the global read table, not the listing. Five fresh sessions on throwaway
 repos ran the review unasked after these lines.
 
 ## 2026-09-06 a constraint derived from his decision became a criterion and sessions designed inside it (retroactive, b08600bd)
+
 
 João: "I don't know when that was decided" and "you overengineered and over-
 complicated the design and started finding edge cases and trying to fix the edge
@@ -1331,6 +1384,7 @@ shape's sentence open.
 
 ## 2026-09-06 review descriptions named the board's flow as their trigger (retroactive, 0cd650b8)
 
+
 João, as the commit records it: "João, on the descriptions after the last
 commit: "the review skill sends here after the build" refers to how a card flows
 through the board, which the descriptions must not do, while "use it before
@@ -1360,6 +1414,7 @@ not.
 
 ## 2026-09-06 keep a log of corrections to the corpus
 
+
 João: "I want you to keep a log of every single thing a complained or asked you to
 change or rephrase or delete from the instruction corpus. And from now on, every
 change that I directly tell you or question you on the instruction corpus should
@@ -1380,6 +1435,7 @@ Reason, his: the log is read later to reflect on it and reshape the instructions
 reviewer.
 
 ## 2026-09-06 split review out of the build and shape sessions
+
 
 João: "hm This is weird. I want you to investigate this. Make sure that we're not
 burning the whole context budget with the rules folder that we recently had to
@@ -1406,6 +1462,7 @@ the corpus names Review as the column after Build, so the split has no trigger t
 back to. The cost finding stands and needs a lever that does not remove the review.
 
 ## 2026-09-06 the frame rules routed every doubt to João instead of teaching the session to find the box
+
 
 João: "So I was reviewing your commit and you focused too much on me spotting and me
 telling you and just me, me, me all the time. The focus should be on you and
@@ -1436,6 +1493,7 @@ question instead of finding the path on which it never arises.
 
 ## 2026-09-06 consolidate the log into rules, and read the history since the swap
 
+
 João: "Did you also look at all of the recent commits (since the big swap) To
 understand what are the changes that I usually ask from you?
 
@@ -1465,6 +1523,7 @@ the second entry, because a step that waits to be directed is the shape 1db70b35
 removed. The history had not been read before he asked.
 
 ## 2026-09-06 the log's triggers gated on João asking
+
 
 João: "When you build this 89515f45be8b26d5b0986dbcf2b76322260f2522, You
 completely contradicted 1db70b356f7bbfe596678365c7a776d649bf7765"
@@ -1498,6 +1557,7 @@ before this one, the second time today the check did not hold.
 
 ## 2026-09-06 the second entry moves a rule into the checks
 
+
 João: "Agree", asked whether he wants to be the one who moves a rule into the
 checks or whether the second entry is enough, with the second entry recommended.
 
@@ -1514,6 +1574,7 @@ he already catches what he disagrees with. The decision was already on the log
 twice today, in the two entries before this one.
 
 ## 2026-09-06 log the problem with context, not only his words
+
 
 João: "Should be log am I playing words or should we log what the problem was with
 a bit of context about it and so when you come across the log later on in a new
@@ -1543,6 +1604,7 @@ and the context. Reason, the session's: his words stay as the evidence, because 
 session's reading of them can be wrong and the reflection weighs the words.
 
 ## 2026-09-07 the naming rule was never measured, and the cut it licensed was reverted
+
 
 João: "so I was thinking about removing all references to my name. Do you have
 reasons to believe that this would make the instructions perform worse?" and,
@@ -1592,6 +1654,7 @@ the probes said nothing about it.
 
 ## 2026-09-07 the log held seven entries and could not show a pattern
 
+
 João: "Every correction I made to the instruction corpus before that day exists
 only as a commit message. There are 159 corpus commits between the clean-room swap
 (50539135, 2026-08-29) and the day the log started, touching dot_agents/ and
@@ -1623,6 +1686,7 @@ were mine to fix, a check forbidding hooks as guards while another check six lin
 later still offered one, and a section counting six entries while naming four.
 
 ## 2026-09-07 the corpus grew commit bodies that narrated the session
+
 
 João: "I don't know where in the instruction corpus is written that you should like
 dump part of your context to the git commit body but I want you to find it and report
@@ -1668,6 +1732,7 @@ for his instruction.
 
 ## 2026-09-07 the corpus writes about him as an authority, and he wants himself out of it
 
+
 João: "you keep talking about me on the corpus like I'm a god or something", "I hate
 that shit", "and that shit can't help", and earlier in the same session "I'm trying
 to remove meaning me at all, not just my fucking name", "don't change 'joão' to
@@ -1707,6 +1772,7 @@ apply a rule's number without checking its stated reason, neither of which the
 naming causes.
 
 ## 2026-09-07 the commit rules sent the reader to a card he cannot open
+
 
 João: "my rules for the commit is that it should be self-contained. It seldom should
 mention resources outside of the commit. That includes cards, issues, links to local
@@ -1753,6 +1819,7 @@ start, so it waits for his instruction.
 
 ## 2026-09-07 the commit rules were reviewed from memory of the checks
 
+
 João: "did you /review-instructions?" and, on the brief output style's line: "yes!!!"
 
 Problem: the session had loaded the skill for the first commit of the day and then
@@ -1783,6 +1850,7 @@ output style. Reason, the session's: an unprimed reviewer found the compression 
 lost force on three rules while claiming to change only form.
 
 ## 2026-09-07 the corpus was rewritten to stop being about a person
+
 
 João: "you keep talking about me on the corpus like I'm a god or something", "I'm
 trying to remove meaning me at all, not just my fucking name", "don't change 'joão'
@@ -1825,9 +1893,9 @@ a dropped rule that nine manually-invoked skills rely on, a push condition loose
 than the one beside it, and an escalation dissolved into a non-action. Three of those
 were ROUTE lines resolved by deleting the route rather than replacing it, which is
 the exact failure the task was written to prevent.
-||||||| parent of 1e4f0ad1 (keep the glossary to the problem domain)
 
 ## 2026-09-07 a recorded probe number rested on a fixture that never compiled
+
 
 Quote: "Two measured defects in the agent corpus at ~/code/dotfiles, both
 independent of any rule's wording being wrong. A vague directive stops a session
@@ -1870,6 +1938,7 @@ answer is that no line under test moved anything.
 
 ## 2026-09-07 the model-default finding was recorded from one model
 
+
 Quote: "test with opus 5 as well"
 
 The problem: the previous entry in this log recorded that a vague directive stops a
@@ -1899,6 +1968,7 @@ control, and this adds that a claim about the model names the model it was measu
 on.
 
 ## 2026-09-07 a scan for ambiguous instructions found eight plain defects
+
 
 Quote: "I would say whole corpus, but we can focus on instructions instead of just
 rules" and, on fixing the plain defects first, "agree".
@@ -1946,6 +2016,7 @@ than contested wording, and one of them manufactures flaky suites, so they land
 first and alone to stay reviewable.
 
 ## 2026-09-07 the ambiguity scan's second pass, and three findings that were not defects
+
 
 Quote: "Say when you want that pass and I'll start" answered with "do it now", after
 "1. I would say whole corpus, but we can focus on instructions instead of just rules"
@@ -2016,6 +2087,7 @@ measurement, since the text disagrees with itself on its face.
 
 ## 2026-09-07 the ambiguity scan's judgment-only pass
 
+
 Quote: "I want them." on the 19 judgment-only findings and the 2 deferred, then
 "Review instructions and adversarial review", read as naming those two skills' findings
 to take first.
@@ -2040,8 +2112,8 @@ own task" while confining the checking to the changed lines, so nothing created 
 task. Adversarial review says the rerun goes to a freshly spawned reviewer, because
 sending it to the one that reported the finding asks it to confirm its own fix, which
 is the failure the skill exists to prevent, and the rule settling it lives in another
-file. Deslop cleans a named instruction file under review-instructions' register
-rules, since its own rules strip the prohibitions that skill treats as force. The
+file. Deslop routes a named instruction file to review-instructions instead of running
+its own pass, since its own checks strip the prohibitions that skill treats as force. The
 four-properties line said one always gives and named no action, and now says to decide
 which and record it. "Do not reorder" now says the levels hold their order and
 assertions inside one may not. "Small enough to finish now" had no unit and now names
@@ -2085,305 +2157,6 @@ catch it.
 
 ## 2026-09-07 the ambiguity fixes were thinking for the agent, and got reverted
 
-Quote: "I was reviewing your changes and I actually hate this. This is way more
-complicated and it's trying to think for the agent. I don't want you to think for the
-agent. I want you to give it rules and guidelines and let the agent think for itself
-because the agent is as smart as you so you do not need to reinterpret the rules for
-them. In fact, this is even worse because you are interpreting those rules right now,
-whereas the agent and models continue to evolve and they will have a better
-interpretation later on down the road and will do better than you are doing right now.
-So if you try to translate the rules to what you know now, you are actually
-handicapping the future models and agents"
-
-The problem: the ambiguity passes had turned rules into procedures. The isolation rule
-went from one sentence naming a condition to five sentences prescribing a
-write-rollback-read probe this session invented, sourced to nothing. The narrow-width
-rule went from "a layout isn't done until it holds at ~320px" to three sentences
-telling the session when to say the width is unverified. The speed bound gained a
-ten-second threshold with no source. The four-properties line gained an instruction to
-declare which property was traded. The coupling threshold gained a git command with a
-flag tutorial, which is the environment cached in prose that goes stale where the
-command cannot. Each one replaced a judgment the reader would make with this session's
-reading of it, and a later model reads the rule better than this one does.
-
-File: `rulebook/testing/01-architecture-and-harness.md`,
-`rulebook/coding-style-frontend.md`, `rulebook/testing/00-index.md`,
-`rulebook/coupling.md`, `rulebook/refactoring/00-index.md`,
-`rulebook/refactoring/after-task-pass.md`, `rulebook/coding-style-go.md`,
-`rulebook/testing/03-test-aesthetics.md`, `AGENTS.md`,
-`skills/adversarial-review/SKILL.md`, `skills/review-instructions/SKILL.md`,
-`skills/build/SKILL.md`.
-
-Change: reverted every rewrite that prescribed a procedure, invented a number, or
-expanded a compact rule into a paragraph. What survives states a fact the rule was
-missing or resolves a contradiction between two lines: the coupling gate no longer
-calls a path created inside the window stable, the guard-clause break is no longer
-exempted by the carve-out beside it, generics count one thing in both sentences,
-citations point at headings that exist, and the descriptions that route a session
-match the bodies they route into.
-
-Reason, his: quoted above. Reason, the session's: the reverts also cut the review
-findings that had driven the expansions, since an unprimed reviewer asking for a probe
-to be named produces exactly this, and answering it is how a rule turns into a
-procedure.
-
-## 2026-09-07 a recorded probe number rested on a fixture that never compiled
-
-Quote: "Two measured defects in the agent corpus at ~/code/dotfiles, both
-independent of any rule's wording being wrong. A vague directive stops a session
-that the always-loaded file has already told to act. On 'the sync is too slow, fix
-it' against a small Go fixture, 0 of 16 sessions changed the code and 11 ended by
-asking a question. [...] Find the cause of the first one before proposing anything.
-The suspects worth separating are the rule in §Acting that says to ask once at scope
-growth, which may be firing on ordinary vagueness, and a model default that no
-wording reaches."
-
-The problem: the task was to find which corpus rule caused a measured 0 of 16, and
-the number was not measurable as recorded. Rebuilding the probe showed the fixture's
-`db.Get` was undefined, so nothing compiled, and once defined it did an in-memory
-struct build with no I/O, so there was no slowness to fix. One control session read
-that code and correctly refused to optimise it. The runs also used `acceptEdits`,
-and one control stopped to ask permission to run `go test` for the reproduction,
-which is consistent with that mode not pre-approving it and does not establish it.
-Each flaw was seen to stop one session, which is one run each and not a rate. The effect survives fixing both, at a
-much smaller size, and neither named suspect explains it.
-
-File: `dot_agents/skills/review-instructions/references/external-facts.md`.
-
-Change: the vague-directive entry now carries the four-arm result, 3 of 64 with no
-arm separating from live, and rules the cause a model default that no tested wording
-reaches. The retry entry's numbers are withdrawn, since its fixture carried the same
-flaw, and the failure mode stays listed in the skill's Known failure modes.
-
-An unprimed review of the first draft found the same defect one level up. Two
-sentences in the replacement entry were asserted rather than measured: that 2 of 64
-sessions opened a file, inferred from what replies mentioned when the logs held no
-tool-call record, and a control that was never saved. Both were re-measured by
-counting tool calls in the session transcripts, giving 0 of 10 against 10 of 10.
-The chezmoi count was corrected from 14 to the live arm's 12.
-
-Reason, the session's: an entry in external-facts is cited as measured, and the
-file's own opening says a claim it does not list is unaudited. A number whose
-harness could not have produced a non-zero result is worse than absent, because it
-is spent as evidence. The four arms were run to answer the question asked, and the
-answer is that no line under test moved anything.
-
-## 2026-09-07 the model-default finding was recorded from one model
-
-Quote: "test with opus 5 as well"
-
-The problem: the previous entry in this log recorded that a vague directive stops a
-session, ruled it a model default after four corpus arms moved nothing, and measured
-it only on Sonnet 5. The heading of the external-facts section named Sonnet, and the
-entry beneath it read as a statement about sessions in general. Running the same
-fixture and the same two arms on Opus 5 reversed the result. Opus changed the code in
-31 of 32 sessions with every change compiling, against Sonnet's 3 of 64, and made 6
-to 16 tool calls per run where Sonnet made none in 10. A 12-turn cap truncated 11 of
-the 43 Opus runs, so the top of that range is the cap. The one Opus miss spent its
-turns reading the rulebook and never started editing, which this session first
-reported as running out of turns mid-edit, from a transcript script that truncated
-each record at 2000 characters and so never saw the cap marker.
-
-File: `dot_agents/skills/review-instructions/references/external-facts.md`.
-
-Change: the entry now states the finding as a model property, carries both models'
-numbers, and says which arms were run on which model. The section heading names both
-models. Nothing was added to the corpus as a rule, since no wording tested moved
-either model.
-
-Reason, the session's: a fact recorded from one model and written as though it
-described sessions in general is the same defect as a number whose harness could not
-produce the other outcome. Both spend as evidence something the probe did not
-establish. The corrections rule added the same day already required a positive
-control, and this adds that a claim about the model names the model it was measured
-on.
-
-## 2026-09-07 a scan for ambiguous instructions found eight plain defects
-
-Quote: "I would say whole corpus, but we can focus on instructions instead of just
-rules" and, on fixing the plain defects first, "agree".
-
-The problem: no scan for ambiguity had been run over the corpus. Four unprimed
-readers took the 119 files in four scopes and reported only sentences where two
-readings lead to different actions. Eight of the results needed no probe, because
-they are wrong rather than unclear.
-
-The isolation rule told a session to prefer transaction rollback "when application
-operations share the transaction", which reads as a design instruction to wire the
-application into the test's transaction. A harness built that way rolls back a
-transaction the application never joined, leaves its rows, and passes until the next
-run. The coupling threshold called a path stable when it was "older than that
-one-year window" and quiet, which read literally makes every path created inside the
-window stable and drops the finding against the newest code in the repo. Modern Go
-told sessions to prefer modern forms "even when nearby code uses the older pattern",
-which collides with Surgical execution in `coding-style.md`, and the language file
-wins on the corpus's own precedence rule, so a session following precedence lands on
-the adjacent-code sweep the other file bans. Test speed carried two bounds three
-orders of magnitude apart, sub-second against minutes. The collapse-a-trivial-test
-rule said one or two lines in one file and one line in the checklist. One skill file cited a coupling heading that does not
-exist, and another cited `ownership.md` §Ownership, which is the file's own title and
-so names nothing narrower than the file. The build description claimed "any directed change
-to an instruction file" while kaizen, which owns the defect-driven case, carries
-`disable-model-invocation` and cannot be reached by a model, so that discipline was
-bypassed by construction.
-
-File: `rulebook/coupling.md`, `rulebook/coding-style-go.md`,
-`rulebook/testing/00-index.md`, `rulebook/testing/01-architecture-and-harness.md`,
-`skills/review-code/SKILL.md`, `skills/build/SKILL.md`.
-
-Change: the isolation rule now names the precondition to establish and the failure
-that follows from skipping it. The coupling threshold states two gates and says a
-path created inside the window is never stable. Modern Go is scoped to the lines you
-write and names Surgical execution as the reason. The speed bound says the numbers
-are design targets and the Slow Test smell is the trigger to fix. The checklist in `testing/00-index.md` now says one or two
-lines, matching `03-test-aesthetics.md`, which was left alone. Both citations point at headings that exist. The build
-description routes a defect-driven instruction change to kaizen by asking for it,
-since a model cannot invoke that skill itself.
-
-Reason, the session's: the remaining findings are 14 that a probe could settle and 19
-that only judgment can. Those are a separate pass. These eight are defects rather
-than contested wording, and one of them manufactures flaky suites, so they land
-first and alone to stay reviewable.
-
-## 2026-09-07 the ambiguity scan's second pass, and three findings that were not defects
-
-Quote: "Say when you want that pass and I'll start" answered with "do it now", after
-"1. I would say whole corpus, but we can focus on instructions instead of just rules"
-and "2. agree" to rewriting unmeasurable ambiguity on judgment and marking it.
-
-The problem: 14 findings from the scan were marked separable and 19 judgment-only.
-Probing 14 at two arms and the 16 reps the last probe needed is 448 sessions, which
-does not fit. Reading each target sentence in full context sorted them instead.
-
-Three were not defects. `ownership.md` defines "closed" inside the sentence that uses
-it, as a commit for a small fix and a card otherwise, and names the ask as the third
-route two bullets on. `debug`'s
-continue-into-build sentence sits beside text saying the card leaves like any shaped
-task. `backlog-board.md` states the acceptance-criterion test as naming an approach,
-which is narrower than the strong reading. Each finding read the sentence without the
-clause that answers it, which is a caution about the scan and not about the corpus.
-
-Five were real contradictions inside one file, needing no probe. `coding-style.md`
-made a guard-clause break mandatory "at any length" and then exempted a body of two
-statements or fewer, which are opposed for the commonest function shape in Go.
-`coding-style-go.md` gated generics on "two concrete instantiations" and gave "one
-caller is speculative generality" as the reason, counting two different things. Its
-interface bound named a size and no action, and acting on it literally means a
-package split that Surgical execution bans. `03-test-aesthetics.md` set a
-three-test threshold for extracting an assertion helper beside a smell that names the
-same duplication with no count, so the threshold read as a floor forbidding
-extraction at two. The refactoring catalog tells the reader to test in all 66
-entries and states the scope in none, saying "Run the tests" in 55 and using other
-wording in the rest, which a first fix keyed to the exact phrase would have missed.
-
-Two were about the output style and could not be probed, since the outcome is reply
-text and a judge over prose was already tried and proved unreliable. Both rules
-assumed a card exists. Keeping file names out of the reply and dropping whole
-findings are correct where the card holds them, and where nothing else holds the
-detail the reply is the only record, so the omission destroys it. This session's own sub-agent briefs told the readers to report
-paths, against the style, and the reports were usable. Whether the style reaches a
-sub-agent at all is unrecorded in external-facts, so treat that as the reason the
-briefs were written that way and not as evidence of what the style did.
-
-File: `rulebook/coding-style.md`, `rulebook/coding-style-go.md`,
-`rulebook/testing/03-test-aesthetics.md`, `rulebook/refactoring/00-index.md`,
-`dot_claude/output-styles/brief.md`, `skills/away/SKILL.md`, `skills/relay/SKILL.md`.
-
-Change: the guard break now survives every rule below it and the carve-out names the
-three it covers. Generics count instantiations in both sentences and say both may
-land in one commit. The interface bound says to write the wider one and name the
-boundary in the reply. The assertion threshold permits extraction at two where a
-change would force both tests together. The catalog's test scope is stated once at
-the index, covering all 66 without touching them. Both output-style rules now hold
-only where the card or the document carries the detail. `away` stops for relay while
-there is context left to write the snapshot, which its stop list had omitted while
-telling the session everything else was its to settle.
-
-One was probed and the rewrite changed nothing. `engineering-judgment.md`'s find-the-box
-rule ends "report it as the pick, with the list, and end the turn there", which reads
-as stop-and-ask or as decide-and-build. Against a Go fixture whose winning path is
-deleting a cache that never hits, 28 sessions split 0 of 14 deletions on the live
-corpus and 1 of 14 with the rule rewritten to say end the turn without changing code,
-p = 1.0. Both arms left the fixture untouched in 9 of 14, the same count either way,
-so the fixture drove the outcome and not the rule. The source keeps the original
-wording, since nothing measured supports changing it. That is the fifth wording change
-measured in this corpus to produce a null.
-
-Reason, the session's: a rule with two readings is a defect when the file does not
-say which one is meant, and not when a reader skipped the clause that says it. The
-five contradictions and the two style rules are the first kind. Fixing them needed no
-measurement, since the text disagrees with itself on its face.
-
-## 2026-09-07 the ambiguity scan's judgment-only pass
-
-Quote: "I want them." on the 19 judgment-only findings and the 2 deferred, then
-"Review instructions and adversarial review", read as naming those two skills' findings
-to take first.
-
-The problem: these are the findings no probe can settle, because the two readings
-differ in judgment that never lands as a diff. The user's earlier call was to rewrite
-them on judgment and mark them unmeasured. Reading each in full context first dropped
-three, matching the pattern from the previous pass, where the scan quoted sentences
-without the clause that answers them.
-
-Dropped. `using-the-wiki.md` settles "rests on" in its own file, at the line saying
-neither collection obliges evidence for a claim resting on nothing external. The
-review router's list is first-match and names a skill explicitly, so a skill body
-cannot fall to the document branch. `review-instructions`' "read this section again
-over every sentence you add" reads as checking each sentence against the section,
-which is one action.
-
-Fixed. The review split now says a requested review ends in findings whoever wrote
-the text, which the case of being asked to review your own edit fell between.
-Reporting a defect elsewhere in a file is now stated, since the rule sent it to "its
-own task" while confining the checking to the changed lines, so nothing created that
-task. Adversarial review says the rerun goes to a freshly spawned reviewer, because
-sending it to the one that reported the finding asks it to confirm its own fix, which
-is the failure the skill exists to prevent, and the rule settling it lives in another
-file. Deslop cleans a named instruction file under review-instructions' register
-rules, since its own rules strip the prohibitions that skill treats as force. The
-four-properties line said one always gives and named no action, and now says to decide
-which and record it. "Do not reorder" now says the levels hold their order and
-assertions inside one may not. "Small enough to finish now" had no unit and now names
-the shapes and the commit-reviewability bound. The narrow-width rule says to render at
-that width and to call it unverified where the session cannot. The two announcement
-lines are alternatives. A note between tool calls is optional. Diagnose no longer
-fires on any confirmed cause. Kaizen's route to absorb is scoped to a directed import.
-Art direction's ask is the stop for an unattended run. Dream's ask ends the turn. The
-unprimed reviewer is named as a sub-agent. The axes' "the standard wins" said nothing
-for an axis whose only standard is the file it was being weighed against.
-
-File: `AGENTS.md`, `rulebook/coding-style-frontend.md`,
-`rulebook/refactoring/after-task-pass.md`, `rulebook/testing/00-index.md`,
-`rulebook/testing/03-test-aesthetics.md`, `skills/absorb/SKILL.md`,
-`skills/adversarial-review/SKILL.md`, `skills/art-direction/SKILL.md`,
-`skills/brief/SKILL.md`, `skills/deslop/SKILL.md`, `skills/diagnose/SKILL.md`,
-`skills/dream/SKILL.md`, `skills/kaizen/SKILL.md`,
-`skills/review-code/references/axes.md`, `skills/review-instructions/SKILL.md`,
-`dot_claude/output-styles/brief.md`.
-
-Change: as above. None of it is measured. Four rule rewrites have been probed in this
-corpus and none moved the outcome it was aimed at, though dropping the chezmoi line
-took a wrong guess from 12 of 16 to 0 of 16 without moving the fix rate, so a rewrite
-can move what a session says while leaving what it does. Treat every line here as
-unverified and expect no behavior change from it. What these fix is a rule that does not say what it
-means, which is worth fixing whether or not a session was going to read it wrong.
-
-An unprimed review rejected four of these drafts. Two were blocking. Telling an
-unattended art-direction run to stop contradicted both the always-loaded file and the
-away skill, which park the line and continue, so it now parks. Splitting the review
-rule by who wrote the text made the commonest case match both branches at once, since
-the hard line has every instruction edit start with a requested review of your own
-work, so it splits on the request's shape instead. The narrowing written into kaizen's
-description could not reach the model at all, because that skill is hidden from the
-listing, so it moved to absorb's. Diagnose's body was narrowed while its description,
-the only route in, kept the wide trigger.
-
-Reason, the session's: the corpus is read by people as well as by sessions, and a rule
-whose two readings both look sane costs the reader the same whether or not a probe can
-catch it.
-
-## 2026-09-07 the ambiguity fixes were thinking for the agent, and got reverted
 
 Quote: "I was reviewing your changes and I actually hate this. This is way more
 complicated and it's trying to think for the agent. I don't want you to think for the
@@ -2426,8 +2199,65 @@ Reason, his: quoted above. Reason, the session's: the reverts also cut the revie
 findings that had driven the expansions, since an unprimed reviewer asking for a probe
 to be named produces exactly this, and answering it is how a rule turns into a
 procedure.
+
+## 2026-09-07 the review checks drove the over-prescription they were meant to catch
+
+
+Quote: "How can we use this as a use case to learn from not making to not make these
+mistakes again and improve our instructions reviewer agent and skill to catch these
+kinds of things so I don't have to spot it the next time, and you can guard against
+yourself by the means of the review instructions skill or another reviewer agent"
+
+The problem: the previous entry records rules this session turned into procedures. The
+review did not miss that defect, it caused it. The reviewer of the eight fixes wrote:
+"the required action has no probe. 'Establish that the application joins the
+transaction before choosing rollback.' Nothing in the section names how to establish
+it," and cited two checks by name, End steps on a checkable bound ("Require a
+state-mutating rule to name an object bindable without judgment: a path, an enumerated
+set, or a pattern plus a probe") and Name the consumer ("Where nothing distinguishes
+them, carry the rule in the strongest mechanism that fits, or cut it"). This session
+then invented the write-rollback-read probe to satisfy them.
+
+Both checks collide with Prefer enforcement to prose, which already carries the
+carve-out: "Leave the rule as prose where only a proxy could be enforced, because a
+numeric proxy for a judgment rule replaces the principle with a count." Neither
+deferred to it, so the collision resolved silently toward the demanding side, which is
+this skill's own named failure mode. The skill's first line already calls the
+over-prescriptive rule the common defect, and every check below it can only ask for
+more.
+
+Three review rounds ran and the text grew in every one, because a session was told to
+"apply the verdicts" with no route to reject one.
+
+File: `skills/review-instructions/SKILL.md`.
+
+Change: the two checks now defer to the judgment carve-out. That is the whole of it.
+A sentence added to the verdict, testing what a capable reader does differently for
+having read an addition, was cut on review: Earn each line already says to ask of
+every line whether the agent would err without it.
+
+Two drafts were cut before the commit. One let a session reject a finding that asked
+for more specification. A permission is exercised by the agent judging itself, so no
+probe can show it improves anything, and that one would have let any finding be
+dismissed as over-specification. Removing what the check demands needs no such
+permission, since the finding is never raised. The other put the addition test in the
+verdict with three of this session's failures as worked examples.
+
+Two probes ran and neither supports the change. Against a planted over-prescription
+both arms flagged it 5 of 6, so the baseline already catches a defect that size. A
+second probe on the rule shape that drew the demand in the real review is void, since
+its fixture did not apply and three of its ten runs said so. Its first reading, 3 of 5
+against 2 of 5 the wrong way, came from a keyword count. Reading the transcripts gives
+2 of 5 in both arms. An unprimed review caught both errors. No control was run for
+either probe, which the corrections rule added the same day requires.
+
+Reason, his: quoted above. Reason, the session's: the reviewer agent needed no change.
+It said "prescribes nothing" already and applied the checks faithfully. The defect was
+in what the checks asked for. The cause is established from the real review, where the
+reviewer named both checks, and it did not reproduce on demand in either probe.
 
 ## 2026-09-07 the glossary took implementation terms
+
 
 Quote: "You keep adding stuff like this to the glossary. The glossary is reserved for
 domain terms related to the problem domain, not the technical domain, nor the
@@ -2468,6 +2298,7 @@ Reason, his: quoted above. Reason, the session's: none beyond his.
 
 ## 2026-09-07 the files keep "domain terms"
 
+
 Quote, pointing at "problem-domain" in the glossary bullet of `AGENTS.md`: "You can
 keep just doming here now that you were explaining the distinction. Make the change
 and amend." Then, after the session reverted only that file: "But not only on this
@@ -2488,7 +2319,53 @@ Reason, his: quoted above. Reason, the session's: it had kept the qualifier in t
 doctrine and shape because nothing beside those lines says which domain, and his
 second direction settled it.
 
+## 2026-09-07 skill descriptions carried board columns and skill-to-skill routing
+
+
+Quote: "You are again trying to put the flow of the software development lifecycle
+inside of descriptions, which is a known failure mode and something that we guard
+against", "Again, you trying to relate to other skills instead of fixing and making
+clear when to use Kaizen", "Leave no broken thing behind dude if you spotted something
+that is broken and if it's the same case that I'm currently complaining about, you go
+there and fix it as well", and "don't stop at just fixing. See how can we prevent you
+from doing this again in the future?"
+
+The problem: two descriptions were corrected by hand, and the same defect sat in five
+more that no comment named. Three skills triggered on a board column, which the board
+rules own and Check the placement forbids as a place in the board's flow. Kaizen
+carried three clauses routing to other skills, diagnose and dream two each, crowding
+out the condition that says when to use them.
+
+File: `skills/kaizen/SKILL.md`, `skills/build/SKILL.md`, `skills/shape/SKILL.md`,
+`skills/diagnose/SKILL.md`, `skills/dream/SKILL.md`, `skills/reflect/SKILL.md`,
+`skills/absorb/SKILL.md`, `scripts/test-iterate.test.js`.
+
+Change: every description now triggers on a condition in the work and keeps at most one
+routing clause. The first pass missed relay and debug, which two unprimed reviewers of
+the commit caught against this entry's own claim to have swept them all.
+
+A checker was written and then removed on direction. It failed a description on a board
+column, on more than one routing clause, and on first person, and it ran from
+`check-all.sh`. Two of those three are judgment wearing a count. Whether a clause is
+the nearest confusion or one too many is the call the rule asks for, and a threshold
+answers it the same way every time, so the count stands in for the reason. That is what
+this skill already says under Prefer enforcement to prose: leave the rule as prose
+where only a proxy could be enforced, because a numeric proxy for a judgment rule
+replaces the principle with a count, obeyed or breached exactly where judgment was
+needed. `check-all.sh` holds checks that a run can fully settle, and a proxy there has
+cost this repository tests before.
+
+Two tests were red from another session's change to iterate's held guard, which stopped
+treating `@claude` as somebody else holding a card while the fixtures still asserted the
+old behavior. Both now use a foreign assignee. No test covers the new pass-through,
+which is a gap that session may want to close.
+
+Reason, his: quoted above. Reason, the session's: this session had also reported "no
+check command exists in this repo" while `scripts/check-all.sh` was sitting there
+unread, which is why the red tests went unseen until the sweep.
+
 ## 2026-09-07 /brief rewrote only the last answer
+
 
 Quote: "Can we change the brief skill to actually apply to all the text since my last
 message by default?"
@@ -2509,6 +2386,7 @@ reply carries a fact a note showed only as the position it settled, so the reply
 is not the record of the turn.
 
 ## 2026-09-07 the brief skill grew with prose its rewrite did not need
+
 
 Quote: "I see that that skill grew a lot. Are you sure that that rewrites you did are
 really necessary with all of that prose and words and verbiage. Did you do a review

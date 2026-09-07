@@ -313,7 +313,7 @@ test "creates the user":
     assert emails.sent[0].subject == "Welcome"
 ```
 
-Skip any level that doesn't apply, a pure query endpoint has no state change; a pure command may have no meaningful response body, but do not reorder.
+Skip any level that doesn't apply, a pure query endpoint has no state change; a pure command may have no meaningful response body. Keep the levels in the order above.
 
 ---
 
@@ -353,7 +353,7 @@ Tests should read at the domain level, not the framework level. Every driver met
 
 The [GOOD] version reads as three clauses describing the behavior. A failure in any clause prints a domain-level error, not a transport status code.
 
-**Custom assertions** sit at the top end of the same gradient. When the same assertion bundle appears in three or more tests, extract it into a named helper:
+**Custom assertions** sit at the top end of the same gradient. Extract the same assertion bundle into a named helper once a change to the subject would force every test carrying it to change together. Three tests is where that is usually true, and two is enough when it already is:
 
 ```
 expectValidUser(user)        // asserts shape, id format, non-empty name, default role

@@ -171,7 +171,8 @@ Harness rules:
 ## 6. Managed-dependency isolation
 
 Use the cheapest isolation mechanism that preserves production semantics. Prefer rollback
-when application operations share the transaction and commit behavior is not under test.
+when the application under test runs its operations on the test's transaction and commit
+behavior is not under test.
 Otherwise use isolated schemas or databases, unique namespaces, disposable containers,
 or verified cleanup. A test that crosses processes or exercises commit behavior cannot
 be isolated by a transaction visible only to the test runner.

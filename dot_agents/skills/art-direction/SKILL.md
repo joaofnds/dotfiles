@@ -112,6 +112,8 @@ this document without loading this skill still inherits them. The board rules' o
 document conventions apply on top of these headings.
 
 Report the tokens and the signature, ask for an explicit go-ahead, and end the turn.
+With nobody at the keyboard, park this line with the exact question and build nothing
+from an unratified document. The away skill decides when the run itself stops.
 Keep the low-value iteration to yourself. An implementation task then builds from that
 document and derives every color and type decision from its tokens.
 

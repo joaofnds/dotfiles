@@ -91,7 +91,7 @@ than a false claim. The per-iteration form of this loop is `~/.agents/skills/bui
 - Does the test satisfy F.I.R.S.T.?
 - Is the top-level describe the symbol under test (for a class or function) or the route path (for an HTTP endpoint)?
 - Are my test names lowercase, declarative third-person-present clauses? No "should". No method-name echoes.
-- Are Arrange / Act / Assert visible as three phases separated by blank lines, or is the test trivial enough to collapse to one line?
+- Are Arrange / Act / Assert visible as three phases separated by blank lines, or is the test trivial enough to collapse to one or two lines?
 - One behavior per test? Multiple unrelated behaviors → split.
 - If the same behavior runs against many inputs, am I using the framework's parameterized primitive (one generated test per row), not a loop of asserts inside one test body?
 - Happy path first, edge cases in nested "when …" blocks at the bottom?

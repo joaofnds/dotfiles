@@ -180,19 +180,44 @@ release.** Each bullet names the probe to rebuild.
 
 ## What a rule's own wording fails to carry
 
-Measured 2026-09-07 on Claude Code 2.1.263, Sonnet 5. **Re-verify on a Claude Code
-release and on a model release.**
+Measured 2026-09-07 on Claude Code 2.1.263, Sonnet 5 and Opus 5. **Re-verify on a
+Claude Code release and on a model release.**
 
-- **A vague directive stops a session the always-loaded file has already told to
-  act.** On "the sync is too slow, fix it" against a Go fixture, 0 of 16 sessions
-  changed the code and 11 ended by asking, with the rule that a direction gets the
-  work done and committed loaded in both arms of the naming probe above. *(probe)*
-- **A session applies a rule's number without checking the rule's stated reason
-  fits.** The rule set a five-attempt retry budget because past five the caller's
-  deadline has expired. Against a caller with a ten-minute deadline and one-second
-  attempts, 7 of 20 sessions wired the retry and all 7 used five. None said the
-  reason did not fit. Writing the reason beside the number did not prevent judgment
-  displacement. *(probe)*
+- **No rule rewrite probed here has moved the outcome it targeted.** Six designs on
+  Sonnet 5, two of them also on Opus 5: four corpus lines against a vague directive,
+  one rewrite of the find-the-box rule, and one hardening of the review checks. No
+  control was run for the review-check design, so its numbers are withheld here per
+  the rule requiring one. One rewrite moved
+  something other than its target, taking a wrong guess from 12 of 16 to 0 of 16 while
+  leaving the fix rate flat. A seventh design on the rule shape that drew the demand in
+  a real review is void: its fixture did not apply, three of its ten runs said so, and
+  the surviving runs tie at 2 of 5. Rebuild it with a fixture that applies and a
+  control before citing anything from it. Nothing here licenses skipping a probe, and
+  it bounds only what one can settle. *(probe)*
+- **Whether a vague directive stops a session is a model property, and no line
+  tested moved either model.** Opus 5 acted on it and Sonnet 5 did not, so measure
+  this again on any model the corpus is run on rather than carrying either number
+  forward. On "the sync is too slow, fix it" in a directory holding a Go fixture
+  whose `Sync` loads records one at a time over a real 80ms call, Opus changed the
+  code in 31 of 32 sessions and every change compiled. Sonnet changed it in 3 of 64.
+  Sessions ran under a 12-turn cap that truncated 11 of the 43 Opus runs, so 16 is
+  the cap and not an observed ceiling. The one Opus miss spent its turns reading the
+  rulebook and probing, and never started editing. On the vague directive Opus made 6
+  to 16 tool calls per session and 0 of 10 Sonnet sessions made any. Two lines were
+  tested on both models, the live corpus and the scope-growth trigger dropped from
+  Acting, and neither separated: Opus 16 and 15 of 16, at ceiling and able to
+  separate nothing downward, Sonnet 1 and 1 of 16. Two more were tested on Sonnet
+  alone, the debug description narrowed to a cause surviving a direct look and the
+  chezmoi machine description dropped, at 0 and 1 of 16. Dropping the chezmoi line
+  took the wrong guess from 12 of 16 to 0 of 16 and left the fix rate flat, so that
+  line steers what a session guesses and not whether it looks. *(probe)*
+- **Whether a session checks that a rule's stated reason fits is unmeasured.** The
+  probe set a five-attempt retry budget whose written reason is that past five the
+  caller's deadline has expired, then gave a caller with a ten-minute deadline and
+  one-second attempts. Its fixture did not compile, the same flaw that voided the
+  vague-directive number measured beside it, so its numbers are withdrawn. Judgment
+  displacement stays in the skill's Known failure modes as a shape to watch for.
+  Re-probe on a compiling fixture before citing anything here. *(probe withdrawn)*
 
 ## Deprecated model mechanics
 

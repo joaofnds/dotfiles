@@ -45,10 +45,10 @@ code alone: cite an observed change history
 as an assumption. It governs the five spatial types; temporal coupling is judged on
 whether the assumption can be violated.
 
-**The threshold.** A path older than that one-year window that changed in at most two
-commits is stable. Drop the coupling finding and record the count. A younger or busier
-path keeps the finding, with the count as its evidence. An external or historyless
-target keeps the finding, labeled with the stability assumption it rests on. An empty
+**The threshold.** A path first committed before that one-year window and changed in at
+most two commits inside it is stable. Drop the coupling finding and record the count. A
+path failing either half keeps the finding, with the count as its evidence. An external
+or historyless target keeps the finding, labeled with the stability assumption it rests on. An empty
 log is not evidence of stability. Never apply this threshold to temporal coupling. Judge
 that on whether the ordering or interleaving assumption can be violated.
 

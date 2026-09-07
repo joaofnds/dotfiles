@@ -1,6 +1,6 @@
 ---
 name: deslop
-description: Removes the writing patterns that mark prose as machine-written from documents, commit bodies, comments, and essays. Use before delivering prose others will read. Standing instruction files are out of scope, and the brief output style governs replies.
+description: Removes the writing patterns that mark prose as machine-written from documents, commit bodies, comments, and essays. Use before delivering prose others will read. Standing instruction files go to review-instructions, and the brief output style governs replies.
 ---
 
 # Deslop
@@ -21,8 +21,9 @@ a README, a design record, a commit body, a comment.
 A file that loads as standing instructions is not: AGENTS.md and CLAUDE.md, a skill and
 everything under it, an agent definition, an output style, a rules file, a memory note,
 or any other file an agent reads as instructions rather than as work. The
-review-instructions skill governs those, and its register rules differ. Clean one only
-where that file is named in the direction.
+review-instructions skill governs those, and its register rules differ. Where the
+direction names one, run review-instructions on it instead of this pass, because this
+pass's checks strip the prohibitions that skill treats as a rule's force.
 
 ## The pass
 
