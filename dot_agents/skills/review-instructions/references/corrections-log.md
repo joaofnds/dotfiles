@@ -2487,3 +2487,48 @@ the exclusion in shape are unchanged. Amended into the previous entry's commit.
 Reason, his: quoted above. Reason, the session's: it had kept the qualifier in the
 doctrine and shape because nothing beside those lines says which domain, and his
 second direction settled it.
+
+## 2026-09-07 /brief rewrote only the last answer
+
+Quote: "Can we change the brief skill to actually apply to all the text since my last
+message by default?"
+
+The problem: the brief skill's default scope was "your most recent substantive
+answer", so on a long turn it rewrote the final reply and dropped every note written
+between tool calls. A finding those notes settled, which the reply only pointed back
+at, never reached the brief.
+
+File: `skills/brief/SKILL.md`.
+
+Change: the default scope is now everything written since the user's previous message,
+notes and final reply together, rendered as one brief. A named text still overrides
+it. The description and the argument hint say the same.
+
+Reason, his: quoted above. Reason, the session's: the output style already says a
+reply carries a fact a note showed only as the position it settled, so the reply alone
+is not the record of the turn.
+
+## 2026-09-07 the brief skill grew with prose its rewrite did not need
+
+Quote: "I see that that skill grew a lot. Are you sure that that rewrites you did are
+really necessary with all of that prose and words and verbiage. Did you do a review
+instructions pass on it? Did you do an adversarial review on it??"
+
+The problem: the previous entry's edit took the file from 17 lines to 23. The session
+had the review-instructions checks open and sent the draft to one unprimed reviewer,
+then applied all nine of its findings, including two the reviewer itself graded as
+notes. Those two added a sentence listing what the source excludes and a sentence
+giving the output style as the reason for including notes. A capable reader reaches
+the same rewrite without either. No adversarial review ran.
+
+File: `skills/brief/SKILL.md`.
+
+Change: both sentences cut, the source defined beside the rule, and "with no
+rewrite" dropped from the exit line. A second unprimed review of the cut found an
+ambiguous "or" in the source sentence and an exit line keyed to the final reply, which
+a named text has none of. Both are fixed. The file is 19 lines against the 17 it
+replaced.
+
+Reason, his: quoted above. Reason, the session's: applying every finding treated the
+reviewer's list as verdicts, where each addition needed the same "would the agent err
+without it" test as the lines it replaced.

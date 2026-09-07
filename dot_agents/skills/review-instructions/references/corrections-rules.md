@@ -315,6 +315,9 @@ A line that did not belong where it stood was moved instead of cut,
 and he rejected it twice, with this skill open during the edit (fab396fc). A rule
 requiring a report to say its top buckets are empty was carried on general grounds,
 and he judged it unnecessary (95e52961).
+A reviewer's two note-grade findings were applied as sentences the reader did not
+need, with this skill open, and he asked whether the rewrite was necessary at all
+(entry "2026-09-07 the brief skill grew with prose its rewrite did not need").
 
 ### State the complement
 
@@ -375,3 +378,6 @@ time you return to the work it covers (this exchange).
 - "do it for the other files where it changed domain for problem domain", a decision
   on wording once the global file carries the test (entry "2026-09-07 the files keep
   "domain terms"").
+- "apply to all the text since my last message by default", a changed default for
+  the /brief skill's scope, with no corpus text at fault (entry "2026-09-07 /brief
+  rewrote only the last answer").
