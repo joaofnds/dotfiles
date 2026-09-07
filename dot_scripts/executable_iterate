@@ -17,6 +17,7 @@ Exit codes: 0 done, 1 refused or failed, 2 the card's column did not move,
 3 the stop file .iterate-stop is present, 4 the board has no active milestone.`;
 
 const stopFile = ".iterate-stop";
+const ours = "@claude";
 const cardPattern = /^[A-Z]+-[0-9]+(\.[0-9]+)?$/;
 const queuePattern = /^\s*\[?\w*\]?\s*([A-Z]+-[0-9]+(?:\.[0-9]+)?) - /m;
 const sessionCap = 6;
@@ -126,9 +127,16 @@ function guardStop() {
   if (existsSync(stopFile)) throw new Exit(3, "stop file present");
 }
 
+/**
+ * The board rule has a session assign itself when it picks a card up, so an
+ * iteration's own shape session leaves @claude on every card it moves to
+ * Build. Refusing that is refusing our own bookkeeping; only somebody else's
+ * name means a card is held.
+ */
 async function refuseHeldCard(id) {
   const { status, assignee } = await card(id);
-  if ((status === "Build" || status === "Review") && assignee) {
+  const held = assignee && assignee !== ours;
+  if ((status === "Build" || status === "Review") && held) {
     throw new Exit(1, `${id} is held in ${status} by ${assignee}`);
   }
 }
