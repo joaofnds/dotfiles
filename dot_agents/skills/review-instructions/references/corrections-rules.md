@@ -215,6 +215,18 @@ generalizes".
 
 ## Checks that did not hold
 
+### Stand alone
+
+Cite a corpus file by the shortest name that identifies it. The test is whether the
+basename is unique across the corpus, which every one is except `00-index.md`, under
+both `testing/` and `refactoring/`, and `SKILL.md`, one per skill. Those two carry
+their directory and the rest are cited bare. A prefix a unique name does not need
+makes the citation longer and breaks when the file moves. I prefixed three testing
+modules with `testing/` inside `coding-style.md` and committed it as a fix, and he
+answered "if testing can be referenced like that, so does coding style" (2eb6f8c2,
+undone). The corpus cited those modules seventeen times bare and eighteen times
+prefixed across four forms, so no convention was being restored.
+
 ### Read every sentence as the behavior and register it teaches
 
 
@@ -240,6 +252,16 @@ wrote a register lint under this check, rewrote the corpus to satisfy it, and
 softened nine prohibitions into comparisons the patterns do not match (4901fecc).
 The lint was deleted on his direction (00f9d915). The kaizen on that day found the
 check's guard sentence was what the lint had been read out of (9ad4809f).
+
+A guard covers one form of a thing and reads as covering all of it. Moving the coding
+style files into a directory, since reverted, left 166 references to rewrite, and
+`scripts/check-corpus-refs.sh` reported every cross-reference resolving both before
+the sweep and after it. It resolves a citation carrying a heading and a path under
+`~/.agents/`, and never a bare backticked filename, which was the form most of the
+references took. A planted `` `totally-bogus-file.md` `` passed. The 148 relative
+paths were verified by hand instead. Read what a guard matches before resting a
+completion claim on it, since a green check over the wrong subset is more convincing
+than no check at all.
 
 ### Check the placement
 

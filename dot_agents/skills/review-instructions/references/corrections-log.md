@@ -2620,3 +2620,71 @@ language has one and `coding-style.md` alone where it does not.
 Reason, his: the question above. Reason, the session's: an enumeration of part of a
 set teaches its bound, and a reader holding a language outside the bound picks the
 nearest member rather than reading the qualifier that excludes them all.
+
+## 2026-09-08: the coding style files moved into a directory, and moved back
+
+"I renamed the files there on the screenshot. See if you agree with the renames."
+Then: "Yeah, now let's fix all of the references and please double check that all
+references are actually pointing to them now." Then, on the name: "What if we renamed
+that file from coding style to just coding? Or even better, maybe just code[?] what do
+you think?" Then, after reading the rewritten references: "Actually, now that I'm
+looking at your rewriting of the references, I think we should keep the prefix. I was
+trying to organize it into folders because it's easier for me, but being able to
+mention a file directly without having to pass the path to it has an obvious
+advantage."
+
+The problem: `coding-style.md` and its three language files were moved into a
+`coding-style/` directory as `core.md`, `go.md`, `typescript.md`, and `frontend.md`.
+The 166 references across 73 files were rewritten to match, and the shape of that
+rewrite is what settled the question. A citation resolves from the citing file, so
+the catalog had to say `../../coding-style/core.md` where it had said
+`coding-style.md`. The directory bought a tidier tree for one reader browsing it and
+charged every reference in every session. The move was reverted in the same session
+that made it.
+
+The name was the visible question and the wrong one. I first argued for `00-index.md`
+over `core.md` on the grain of `testing/` and `refactoring/`, which was wrong: those
+files route a reader to a module, while this one holds the rules the language files
+layer on top of. `coding/` drops the word that says what the files are, and
+`rulebook/code/` misdescribes rules for writing code as code. None of that mattered
+once the directory itself went.
+
+A flat name carries its own location, so it is citable from anywhere without a path.
+That is what a corpus file needs, since its readers cite it from directories they
+were not written next to. Grouping by directory is worth its cost where the files are
+opened by a person navigating a tree, and these are opened by sessions following a
+name.
+
+Cite a corpus file by the shortest name that identifies it, and the test is whether
+the basename is unique across the corpus. Every basename is, except `00-index.md`,
+which names one file under `testing/` and another under `refactoring/` and so needs
+its directory to be unambiguous, and `SKILL.md`, which is one per skill. So
+`coding-style-go.md` and `03-test-aesthetics.md` are cited bare and `testing/00-index.md`
+is not. Adding a prefix a unique name does not need makes the citation longer and
+breaks when the file moves.
+
+Two defects the reference sweep introduced, both undone by the revert.
+`coding-style.md` quotes `coupling.md`'s half of their precedence rule, and rewriting
+each file in its own relative frame broke the match, against `coding-style.md`'s own
+rule that a precedence claim be quoted from the file it cites. A line in
+`corrections-rules.md` recounts what the read table said on the day of an earlier
+incident, and the sweep had updated it to a path that did not exist then,
+contradicting this log's entry for the same incident.
+
+I called a third thing a defect and it was not. `coding-style.md` routes to
+`01-architecture-and-harness.md`, `02-mocking-roles.md`, and `03-test-aesthetics.md`
+by bare name, and I prefixed all three with `testing/` and committed it as a fix. His
+answer: "if testing can be referenced like that, so does coding style." The corpus
+cites the testing modules seventeen times bare and eighteen times prefixed, across
+four forms, so there was no convention to restore, and the three names are unique.
+The prefix came out.
+
+Files: the four style files, `AGENTS.md`, `coupling.md`, `engineering-judgment.md`,
+61 refactoring catalog files, two testing files, four skills, and this log. The
+layout ends where it started.
+
+Reason, his: the words above. Reason, the session's: `scripts/check-corpus-refs.sh`
+reported every cross-reference resolving both before the sweep and after it, because
+it never resolves a bare backticked filename, which was the form most of these
+references took. A planted bogus name passed it. The 148 relative paths were checked
+by hand instead.
