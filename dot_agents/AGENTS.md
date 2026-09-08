@@ -85,9 +85,16 @@ in the read table below, say where each one goes.
   from your available-skills context cannot be invoked: recommend it by name with the
   reason rather than stalling on it.
 - With no one at the keyboard to answer, keep going to the end of the directive.
-  Send a question that would have stopped you to a fresh reviewer instead, queue the
-  actions the hard lines reserve for an explicit direction, and leave the card's
-  notes carrying what you did, what you verified, and the next action.
+  Put a choice that would have stopped you through the decide skill and take its
+  answer. Where the sources leave it unsettled, take your recommendation and record
+  it as unsettled, the questions this section says to ask once included, since the
+  direction to go on unattended answers them. Put a document that would have
+  stopped you through the adversarial-review skill. Park a stop neither settles, an
+  observation only someone else can make or a verdict that the work should end, in
+  the card's notes with the exact question, and go on with the rest. Queue the
+  actions the hard lines reserve for an explicit direction as the exact command on
+  the card, and leave the notes carrying what you did, what you verified, and the
+  next action.
 - An em dash is never written, in anything, because it hides what relation the
   two halves have. Write that relation out.
 

@@ -133,10 +133,16 @@ Tool, permission, and invocation fields:
 - Session effort levels are `low`, `medium`, `high`, `xhigh`, and `max`, set for a
   session by `--effort` *(probe: `claude --effort bogus` names the valid set in its
   warning, 2.1.260)*.
+- Agent-definition frontmatter takes `model` as one of the aliases `sonnet`, `opus`,
+  `haiku`, `fable`, a full model id, or `inherit`, and `effort` as the session levels
+  above *(sub-agents reference read 2026-09-08 on 2.1.263, unprobed; re-check on a
+  Claude Code release by one spawn of the `advisor` agent with the model read from
+  its result)*.
 
 Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two are
 edited together. The live copies are the kaizen skill's transcript layout, the relay
-skill's transcript pointer, the relay and prompt skills' lists of effort levels, and the
+skill's transcript pointer, the relay and prompt skills' lists of effort levels, the
+advisor agent definition's model and effort pin, and the
 hard line in your always-loaded instructions that hooks and settings take effect
 mid-session.
 

@@ -13,7 +13,7 @@ step's skill. start and step do the same work one session at a time, so a caller
 can read what a stage did before starting the next. step prints the session's reply
 on stdout. ITERATE_SESSION_BUDGET caps each session in dollars (default 50).
 
-Every session is told nobody is at the keyboard, so a stage decides what it would
+Every session is told nobody is at the keyboard, so a stage settles what it would
 have asked and writes the decision on the card. A shape session that leaves a
 shaped card in Shape gets moved to Build here, since the board rule already asks
 the stage to do it. A whole iteration runs a stage again when it wrote on the card
@@ -37,7 +37,7 @@ const skillFor = new Map([
   ["Build", "build"],
   ["Review", "review"],
 ]);
-const unattended = `This session is one stage of an iteration running unattended. Nobody is at the keyboard, and a turn that ends on a question stalls the loop, since no answer reaches the next session except through the board. Decide every question yourself, on the recommendation you would have given, write the decision and its reason on the board record this stage writes, and finish this stage's work in this session. When two acceptance criteria cannot both hold, keep the one nearer the goal, rewrite or drop the other with the reason beside it, and go on. An action the hard lines reserve for a typed direction goes on the card as the exact command, and is never run.`;
+const unattended = `This session is one stage of an iteration running unattended. Nobody is at the keyboard, so the Acting section's rule for no one at the keyboard holds, and a turn that ends on a question stalls the loop. Finish this stage's work in this session, with each decision you took and its reason on the record this stage writes, since the next session reads only the board.`;
 const dirtyTree = `The tree carries uncommitted changes. Read them before anything else. Those that belong to this card are the previous session's unfinished work on it, yours to finish and commit. Leave any other change as you found it.`;
 
 class Exit extends Error {

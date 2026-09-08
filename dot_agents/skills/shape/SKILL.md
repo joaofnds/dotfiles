@@ -13,10 +13,11 @@ to `build`.
 
 Separate what the request asked for, what it assumes without saying, and what nobody
 has considered yet. Most of it is answerable from the repository, the glossary, the
-board, and the git history, so read before you ask. What remains goes back as one
-numbered list, each item framed as the decision it is rather than the implementation
-behind it, carrying your recommendation, ordered so the answers that would change the
-architecture come first. Then end the turn, since the list is answered in one batch.
+board, and the git history, so read before you ask. What remains goes to the decide
+skill. What its sources leave unsettled, or the always-loaded Acting section
+reserves, goes back as one numbered list, each item framed as the decision it is
+rather than the implementation behind it, carrying your recommendation, ordered so
+the answers that would change the architecture come first. Then end the turn, since the list is answered in one batch.
 Where nothing is genuinely open, don't manufacture a question.
 
 A constraint the task inherits is an unknown too, whether the request, the card, or
@@ -27,8 +28,8 @@ a mechanism. What a session derived from a direction is that session's claim, an
 a claim is tested, never inherited. When nothing backs a constraint and the work
 will be designed around it, look first for the path on which it never arises,
 since that path settles it at no cost. Then run the cheapest experiment that
-settles what remains before you design. What no experiment can settle goes on the
-numbered list as the decision it is.
+settles what remains before you design. What no experiment can settle joins the
+unknowns.
 
 ## Settle the language
 
