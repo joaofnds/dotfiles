@@ -10,8 +10,8 @@ task revealed, asked at the level of boundaries and dependencies: one change tha
 to be made in two places (duplicated knowledge); a dependency that runs toward
 something volatile; a module that gained a second reason to change; a primitive
 carrying domain meaning nobody named; a hierarchy that would be simpler as delegation;
-a boundary the task crossed awkwardly. The doctrine's sections 5 and 7 are the
-vocabulary.
+a boundary the task crossed awkwardly. `engineering-judgment.md` §Writing the Code,
+`coupling.md`, and `refactoring/00-index.md` §Smells are the vocabulary.
 
 Fowler's twenty-four smells and sixty-six refactorings are
 `~/.agents/rulebook/refactoring/00-index.md`, each refactoring linked to its own document

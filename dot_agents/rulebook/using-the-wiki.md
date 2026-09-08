@@ -85,6 +85,31 @@ it briefly and continue. The `prompts` gate is the exception: it fails closed, p
 own clause above. Neither collection obliges you to find evidence for a claim that
 rests on nothing external.
 
+## When pages disagree
+
+The wiki deliberately holds authors who disagree, and this section binds whenever
+two sources' guidance is weighed against each other, whether the sources were met
+in the wiki or from memory. The canon is settled
+and not reopened per task: PragProg, Clean Code, XP, Refactoring, GOOS, Release It,
+Clean Architecture, Modern Software Engineering.
+
+- **Ousterhout loses every conflict with the canon.** Comments stay a failure signal
+  with narrow exceptions, never a design tool written first. Test-first stays the
+  design method. Small intention-revealing functions beat deep-module skepticism of
+  decomposition. Design for the current need beats "somewhat general-purpose". His
+  measure of complexity by the reader's cost stands.
+- **Language idiom outranks book guidance.** Clean Code's exceptions over error
+  codes yields to Go's errors as values.
+- **Records of decisions and of the domain are kept, and XP's "code and tests are the
+  only permanent artifacts" is narrowed to that.** The rule is in the delivery skill
+  under Documents.
+- **Composition over inheritance, against Fowler's inheritance-first.** A new
+  hierarchy needs a case, and the delegate-direction refactorings are the expected
+  direction of travel.
+- **A conflict these rulings do not cover is named in the reply**, with both
+  positions, and the canon is followed meanwhile, since resolving it silently is
+  what this section forbids.
+
 ## What not to do
 
 - Don't paste wiki content wholesale: cite page titles and summarize.

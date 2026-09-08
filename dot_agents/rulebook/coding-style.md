@@ -7,9 +7,6 @@ this one, which wins over `engineering-judgment.md`, which wins over `coupling.m
 `coupling.md` states its own half ("`coding-style.md` wins"). On anything about tests,
 `testing/00-index.md` and its modules win over all four, including `coupling.md`'s test-shaped
 symptoms. The repo's own `AGENTS.md` / `CLAUDE.md` wins over every file here, tests included.
-The doctrine (`~/.agents/rulebook/doctrine.md`) holds these rules' reasons at
-principle level. Where the two differ on a reason, the doctrine wins. Where they differ
-on a rule, this file wins.
 Say which rule you set aside and why: resolving a conflict silently is the defect, not having one. **The
 rule you claim outranks it must be quoted from a file you opened this session.** A precedence claim citing
 a document you did not read is a fabricated authority, and it is worse than the silent resolution it
@@ -36,6 +33,8 @@ ports, mappers, DI, or messaging solely to satisfy this document.
   checker, linter, or formatter to one, enable its strictest setting (`"strict": true`, the
   strictest preset) before code lands under it; every line written under a loose guard becomes
   an argument against tightening it later.
+- **Own every generated line.** Read and understand every line of generated or AI-produced
+  code before it lands, because interwoven code becomes yours to maintain.
 - **Blank lines are a method's paragraph breaks.** A body reads as blocks of one thought each,
   separated by exactly one blank line; none sits inside a block. One break is mandatory at any
   length, after a guard clause or early return. Past two statements, break also between
@@ -63,7 +62,9 @@ ports, mappers, DI, or messaging solely to satisfy this document.
 
 For applications with meaningful domain or integration complexity, use **Domain-Driven
 Design** and **Hexagonal Architecture** to keep boundaries explicit and dependencies
-pointing inward: domain depends on nothing; use cases depend on domain; adapters depend
+pointing inward. DDD here means the ubiquitous language first, learned from the domain's
+experts, with the tactical patterns only where the domain's complexity earns them. Dependencies
+point inward: domain depends on nothing; use cases depend on domain; adapters depend
 on use cases. Simpler programs may use simpler structures when contracts and testability
 remain clear. *(See: hexagonal-architecture, clean-architecture, layered-architecture-ddd, domain-driven-design)*
 A DI lookup key is not the *type* arrow these describe. Where a language file has the consumer name its
@@ -91,7 +92,7 @@ dependency *cycle* it produces is still reportable.
 - **The client defines the contract.** A port is a Separated Interface: it lives with the client that declares what it needs, not with the implementation that satisfies it, which is what makes the adapter depend on the port and never the reverse. Client count and locality decide where: one client, or several inside one package, puts the interface there; several *unrelated* clients, or a contract neither side owns, puts it in a third interface-only package. That test is re-run when a second consumer appears, not answered once. Don't extract a port at all until you need to break a dependency or substitute an implementation: a test that needs a Fake is that need; an interface per class is overhead, not design. *(See: separated-interface, dependency-inversion-principle)*
 - **Framework-agnostic constructors.** Don't tie constructors to the DI framework. Constructors accept pure dependencies (parsed primitives or specific interfaces). Use factory methods or DI module declarations to adapt the framework's container into the clean constructor. You should be able to construct objects in tests without the full DI container. *(See: dependency-inversion-principle)*
 - **Defensive networking.** Bound external calls with deadlines or cancellation. Translate native failures into stable application or port errors; use domain errors only for domain outcomes. *(See: release-it-nygard-2018)*
-- **Safe parsing at boundaries.** Treat the edges as strictly untrusted. Use schema validation for environment configuration, incoming request payloads, and outgoing external responses. Never let raw, unvalidated external data cross into the domain. A value can satisfy its schema and still be hostile: a well-formed URL that resolves to link-local or internal address space, a valid relative path that escapes its root. Shape is not destination; validate both. *(See: clean-boundaries)*
+- **Safe parsing at boundaries.** Treat the edges as strictly untrusted. Use schema validation for environment configuration, incoming request payloads, and outgoing external responses. Never let raw, unvalidated external data cross into the domain. Parse external data once, at the edge, into a type that cannot hold an illegal state, so nothing inside re-checks it. A value can satisfy its schema and still be hostile: a well-formed URL that resolves to link-local or internal address space, a valid relative path that escapes its root. Shape is not destination; validate both. *(See: clean-boundaries)*
 
 ### d. Data Transformation (Mappers / DTOs)
 

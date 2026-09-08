@@ -112,16 +112,14 @@ when you save one to memory, save how to re-check it.
 
 ## How the work is done
 
-`~/.agents/rulebook/doctrine.md` is how engineering is done here, from the working
-method through testing, delivery, architecture, data, operations, and the rulings
-where authors disagree. It binds every task that does engineering work, and the
-task's subject does not decide that. A task that changes a pipeline, a
-configuration, a document, an instruction file, or nothing but a decision reads it
-the same as one that changes code. A task that only reads and answers does not.
-Read it at the start of any task it binds. Its index names the section for the work
-in hand, and it routes to the judgment, coupling, and wiki rules.
+`~/.agents/rulebook/engineering-judgment.md` is how a problem is understood, a
+solution designed, code written, and work evaluated here. It binds every task that
+does engineering work, and the task's subject does not decide that. A task that
+changes a pipeline, a configuration, a document, an instruction file, or nothing
+but a decision reads it the same as one that changes code. A task that only reads
+and answers does not.
 
-Read a rule file, the doctrine included, in the turn you do the work it covers.
+Read a rule file, the judgment file included, in the turn you do the work it covers.
 Not before, because a file read early is a summary by the time you need it. Not
 once, because that summary is what you would be working from. Read it again every
 time you come back to that work.
@@ -132,10 +130,10 @@ Name the files first, then open them, before any other tool:
     No rule files apply: <one-sentence reason>
 
 Name every file the next thing you do needs, and nothing past that. Reading a card
-is the board file, and the doctrine too once you work it. A directed fix is the
-doctrine and the whole code row, tests included. A React component adds the
-frontend file. A build that writes code over twelve turns names the code row and
-the doctrine in every one of those turns.
+is the board file, and the judgment file too once you work it. A directed fix is
+the judgment file and the whole code row, tests included. A React component adds
+the frontend file. A build that writes code over twelve turns names the code row
+and the judgment file in every one of those turns.
 
 - Reading a card, or any backlog command or card move:
   `~/.agents/rulebook/backlog-board.md`.
@@ -144,6 +142,15 @@ the doctrine in every one of those turns.
   alone where it does not, `coding-style-frontend.md` on top for UI work,
   `~/.agents/rulebook/engineering-judgment.md`, and `~/.agents/rulebook/testing/00-index.md`,
   which routes to its modules.
+- Drawing or moving a module or service boundary: `~/.agents/rulebook/coupling.md`.
+- Weighing two authors' guidance against each other:
+  `~/.agents/rulebook/using-the-wiki.md` under When pages disagree.
+- Introducing a domain concept, deciding whether one term the business uses two
+  ways is one model or two, or choosing where modeling effort goes, with or without
+  code to write: `~/.agents/rulebook/domain-modeling.md`.
+- Touching a data store, a queue, distributed state, a running service, or a
+  pipeline that builds and deploys or publishes an artifact:
+  `~/.agents/rulebook/production.md`.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.
 - Meeting something broken you could leave for someone else, a failing or flaky
   test, a red check, a bug or TODO in code you never touched, a card or question

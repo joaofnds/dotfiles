@@ -13,7 +13,7 @@ build's rule, fixed now when small and a card when larger, and becomes a debug
 card whatever its size when the cause survives a direct look.
 
 Instrument and probe the system under study. On a live service, observation is
-read-only, and the doctrine's sections 8 and 9 govern anything more.
+read-only.
 
 ## The reproduction comes first
 

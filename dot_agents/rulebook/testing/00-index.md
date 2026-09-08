@@ -10,7 +10,7 @@
 - Application-level integration and end-to-end tests reach a running application through a Harness and Driver. Focused adapter integration tests may exercise the adapter directly. Unit tests may construct behavior with real collaborators and boundary Fakes.
 - A test without readable Arrange / Act / Assert structure, or without a declarative behavior name, is not done.
 
-This file is the gatekeeper. It routes you to the module that applies to what you're doing, and it holds the checklist for the end. The doctrine (`~/.agents/rulebook/doctrine.md` §TDD and the test discipline) states these principles at one line each. Where a module and the doctrine differ on a reason, the doctrine wins. Where they differ on a rule, the module wins.
+This file is the gatekeeper. It routes you to the module that applies to what you're doing, and it holds the checklist for the end.
 
 ---
 
@@ -93,7 +93,7 @@ than a false claim. The per-iteration form of this loop is `~/.agents/skills/bui
 - Are my test names lowercase, declarative third-person-present clauses? No "should". No method-name echoes.
 - Are Arrange / Act / Assert visible as three phases separated by blank lines, or is the test trivial enough to collapse to one or two lines?
 - One behavior per test? Multiple unrelated behaviors → split.
-- If the same behavior runs against many inputs, am I using the framework's parameterized primitive (one generated test per row), not a loop of asserts inside one test body?
+- If the same behavior runs against many inputs, am I using the framework's parameterized primitive (one generated test per row) for the inputs I can list, and a property over generated inputs where the combinations outrun any list, not a loop over listed rows inside one test body?
 - Happy path first, edge cases in nested "when …" blocks at the bottom?
 - Are values local to each test unless setup is genuinely shared? If hooks share mutable state, is it reset before each test?
 

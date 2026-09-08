@@ -10,7 +10,7 @@ term when you introduce or lean on one, one term per concept.
   skill and filed into the corrections rules.
 - **Corrections rules**: the rules distilled from the corrections log, each a
   candidate check for the review-instructions skill.
-- **Rules**: the craft knowledge under `~/.agents/rulebook/`: the doctrine, coding
+- **Rules**: the craft knowledge under `~/.agents/rulebook/`: production, coding
   style, engineering judgment, coupling, testing, the refactoring pass and catalog,
   the wikis, the board, ownership, continuous improvement. The source for that knowledge. The global instructions
   compress it and the skills route to it.

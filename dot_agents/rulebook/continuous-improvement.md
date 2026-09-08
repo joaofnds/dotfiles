@@ -20,7 +20,9 @@ Every proposed improvement states:
 4. **Benefit**: the future repetition or failure it prevents.
 5. **Cost**: effort, risk, and scope.
 
-Do not propose an improvement until all five are known.
+Do not propose an improvement until all five are known. Measure the friction
+directly, never from an average, since an average hides the case that hurts.
+*(See: improvement-kata)*
 
 ## 2. During Work
 

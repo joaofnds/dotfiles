@@ -200,7 +200,7 @@ of the describe.
 
 ### 4.6 No conditional logic in the test body (Meszaros)
 
-No `if`, no `for`, no `switch`, no `try`/`catch` in the body of a test. Branches become separate tests; iteration becomes parameterized cases; expected exceptions use a rejection matcher, not `try`/`catch`.
+No `if`, no `switch`, no `try`/`catch` in the body of a test, and no `for` over listed rows. Branches become separate tests, listed rows become parameterized cases, generated inputs become a property (under Parameterized tests), and expected exceptions use a rejection matcher.
 
 ```
 [BAD]: branching logic inside the test
@@ -228,7 +228,7 @@ No `if`, no `for`, no `switch`, no `try`/`catch` in the body of a test. Branches
 
 ### 4.7 Parameterized tests
 
-When the same behavior runs against many inputs, use the framework's parameterized primitive: one generated test per row. Never loop multiple assertions inside a single test body: a failure on row three won't tell you it was row three, and the first failing row hides the rest.
+When the same behavior runs against many inputs, use the framework's parameterized primitive: one generated test per row. Never loop over listed rows inside a single test body, because a failure on row three won't tell you it was row three, and the first failing row hides the rest.
 
 ```
 [GOOD]: each row is its own named, independently-reporting test
@@ -241,6 +241,16 @@ When the same behavior runs against many inputs, use the framework's parameteriz
 ```
 
 The primitive varies by framework, `it.each` in Jest/Vitest, `DescribeTable` + `Entry` in Ginkgo, `t.Run` subtests in Go's stdlib `testing`, so take it from the project's framework rather than from the language (`coding-style-go.md` *The framework is a project fact, not a language default*). The contract is always the same: one row, one test, one name, one assertion path. The failure line tells you exactly which input broke.
+
+Where the number of input combinations is larger than any list an author would write,
+a parser, a serializer, money arithmetic, a state machine, state the rule as a property
+and generate the inputs, and keep the rows that name the behavior beside it, because
+generated cases reach the edge nobody listed and the rows say what the code is for. A
+property test is the one exception to one row, one test, and its single test reports
+the generated input that failed. Use the project's property library where it has one.
+Where it has none, write the generator and the loop by hand with a fixed seed and put
+the failing input in the assertion message, since a library for this is a dependency
+to justify like any other. *(See: property-based-testing)*
 
 ---
 
@@ -378,7 +388,7 @@ code or let known-wrong behavior become the permanent contract.
 - **Assertion Roulette**: many unlabeled assertions in one test; failure message can't tell you which fired. Fix: split, or extract a named custom assertion.
 - **Hard-Coded Test Data**: magic IDs, timestamps, names scattered through the body. Fix: named constants, or a Builder.
 - **Free Ride**: piggy-backing a new assertion onto an existing test "because the state is already there." Fix: a new behavior is a new test, even if setup repeats. Duplication of intent beats conflation of cases.
-- **Conditional Test Logic**: `if`/`for`/`try`/`catch` in the test body. Fix: split or parameterize (§4.6).
+- **Conditional Test Logic**: `if`/`switch`/`try`/`catch`, or a `for` over listed rows, in the test body. Fix: split or parameterize (§4.6).
 - **Trivial Test**: asserts a language-level assignment with negligible regression value. Delete it unless the accessor performs behavior or protects a known regression.
 - **Test Code Duplication**: the same setup or assertion knowledge repeated across tests, so one change to the subject means editing many of them. Fix: extract a Builder, a fixture, or a named custom assertion. This is the name to cite when duplication in test files fits no other smell.
 - **`should` in every test name.** Fix: remove the `should`. The name is a clause describing what the system does, not a wish.

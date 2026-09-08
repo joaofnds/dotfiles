@@ -67,8 +67,7 @@ checks.
 > is the coding style under `~/.agents/rulebook/`: `coding-style.md`, every language
 > file that matches the diff (`coding-style-go.md`, `coding-style-typescript.md`),
 > `coding-style.md` alone where none matches, and `coding-style-frontend.md` on top
-> when the diff builds UI, plus the "Code craft" section of the doctrine at
-> `~/.agents/rulebook/doctrine.md`. Names use the domain's words: when the
+> when the diff builds UI. Names use the domain's words: when the
 > business says "order", the code doesn't say "transaction record". A swallowed
 > error is a type-system escape hatch and a finding. An entity constructible in an
 > invalid state is a finding, and so is untrusted input not parsed once at the
@@ -97,13 +96,12 @@ checks.
 
 > Architecture axis: structure, dependencies, and production behavior. Your
 > standard is `~/.agents/rulebook/engineering-judgment.md` from "Designing the
-> Solution" through "Evaluating Work", `~/.agents/rulebook/coupling.md` whole, the
-> "Architecture" section of the doctrine at `~/.agents/rulebook/doctrine.md`,
+> Solution" through "Evaluating Work", `~/.agents/rulebook/coupling.md` whole,
 > and in `~/.agents/rulebook/coding-style.md` the "Architectural Principles & Layering"
 > and "Code Construction & Decoupling Patterns" sections with every language file
 > that matches the diff, and `coding-style.md` alone where none matches. When the diff
-> touches a data store, a queue, distributed state, or a running service, read the doctrine's "Data and distributed systems"
-> and "Operations and reliability" sections too. Of `coding-style.md`, yours are
+> touches a data store, a queue, distributed state, or a running service, read
+> `~/.agents/rulebook/production.md` too. Of `coding-style.md`, yours are
 > "Code Construction & Decoupling Patterns" whole and, in "Architectural Principles
 > & Layering", the layering rule with its paragraph on DI lookup keys, "Behavior
 > lives with data", the application layer, "The client defines the contract", the

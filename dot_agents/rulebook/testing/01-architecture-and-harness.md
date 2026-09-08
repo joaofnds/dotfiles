@@ -81,7 +81,7 @@ Outside-in is how GOOS starts a user-visible vertical slice that crosses applica
 For domain-local behavior, fixes, and refactors, start at the narrowest test layer that
 can observe the requirement. Do not add an end-to-end test merely to perform the ritual.
 
-Before any feature is tested this way, the project must have a **walking skeleton**: the thinnest possible end-to-end path that exercises the full stack, wiring, DI, transport, harness, CI, returning a canned value through one route. The walking skeleton verifies the plumbing before any real behavior exists. Once it walks, every feature grafts onto a known-working spine instead of pioneering infrastructure alongside logic.
+Before any feature is tested this way, the project must have a **walking skeleton**: the thinnest possible end-to-end path that exercises the full stack, wiring, DI, transport, harness, CI, and the deploy or publish step the system ships through, returning a canned value through one route. The walking skeleton verifies the plumbing before any real behavior exists. A skeleton that runs only locally and in CI leaves packaging and runtime-environment faults for the first feature to find. *(See: walking-skeleton)* Once it walks, every feature grafts onto a known-working spine instead of pioneering infrastructure alongside logic.
 
 ```
 [BAD]: feature built inside-out, no outside test until the end
@@ -111,6 +111,8 @@ For integration tests, distinguish two categories of out-of-process dependency (
 **Managed dependencies** are state we fully own and that is not visible outside our application: our database, our cache namespace, our message broker topic. Use the **real thing** in integration tests, isolated per test (see §6 below). Faking your own database in your own integration tests is how migration bugs ship to production: a mock that "works" on a schema the real database doesn't have is worse than no test at all.
 
 **Unmanaged dependencies** are external services we don't own: third-party APIs, payment gateways, email, OAuth providers, upstream webhooks. Use a **Fake** (see `02-mocking-roles.md`). They are not our contract, we can't run a real one deterministically in CI, and the network is a shared resource that violates F.I.R.S.T.'s Repeatability.
+
+Where the provider's behavior is uncertain, write a learning test that calls the real provider and asserts what the fake assumes, because a fake can only agree with what its author believed the provider does. Keep it out of the suite the pipeline gates on. Investigate a failing learning test. Correct the fake when the failure demonstrates a mismatch with the provider's behavior. *(See: clean-boundaries)*
 
 ```
 [BAD]: fake the database, real-call the third party
