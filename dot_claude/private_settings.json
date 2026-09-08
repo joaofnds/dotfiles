@@ -61,7 +61,7 @@
   "includeGitInstructions": false,
   "inputNeededNotifEnabled": true,
   "isolatePeerMachines": true,
-  "model": "sonnet",
+  "model": "opus",
   "outputStyle": "brief",
   "permissions": {
     "allow": [
