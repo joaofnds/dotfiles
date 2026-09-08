@@ -286,6 +286,13 @@ the rule it had read and wrote a history-narrating block anyway (de9d5dba,
 under the skills is the same class and is filed above, as evidence for Facts live in
 the rulebook.
 
+The /brief skill and the brief output style co-load, and the skill's "for a CEO who
+has thirty seconds" restates the style's first line. Cutting it lengthened the
+skill's output on all three replayed turns, so the copy stayed. A restatement a
+measurement shows load-bearing is the one exception the check allows, and it is
+marked here rather than in either file (entry "2026-09-08 the /brief skill shortened
+and measured the same way").
+
 ### Read each rule literally, and write it so it can be
 
 

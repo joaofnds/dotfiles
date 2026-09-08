@@ -2463,3 +2463,31 @@ Reason, his: quoted above. Reason, the session's: each earlier edit earned its o
 line and none re-judged the file whole, so the file only grew, and the record's
 numbers described other variants, so only a measurement of the file in hand could
 decide it.
+
+## 2026-09-08 the /brief skill shortened and measured the same way
+
+
+Quote: "can you make the /brief skill shorter as well? Use the same process you used
+for the output style"
+
+The problem: the skill body was 140 words, restating in its own words the register
+the co-loaded output style already carries. The same process as the style: rewrite in
+the register the output should have, one unprimed review and one adversarial review,
+then the doc-4 fork-replay on the three live turns, cut at the /brief message so the
+fired reply is in the transcript, with the variant body as the prompt.
+
+File: `dot_agents/skills/brief/SKILL.md`.
+
+Change: the body is 100 words. Cut: "plain, simple English", "like an engineer
+briefing", "keep only what the reader absolutely must know", all carried by the style.
+Kept on measurement: "for a CEO who has thirty seconds", because the variant without
+it ran longest on all three turns. Restored from the reviews: the exit condition "if
+the brief would repeat the source unchanged", since "if nothing would go" read as
+"if nothing happened", and "the exact thing that would unblock you". A variant
+restructured to define the source first and ask for "one plain sentence each" gave
+the length gain back and still produced labeled lines, so it was not landed. Numbers
+in external-facts and doc-18.
+
+Reason, his: quoted above. Reason, the session's: every variant landed near the
+length he keeps, so the skill works at any of these sizes and the shortest one that
+survives a literal reading is the one to carry.

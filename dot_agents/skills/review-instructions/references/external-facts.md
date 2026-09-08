@@ -231,6 +231,17 @@ Claude Code release and on a model release.**
   on a model swap and before any further edit to the file, with the same harness.
   *(probe, decision-2 and doc-18 on the board)*
 
+- **The /brief skill at 100 body words rewrites a turn to the same length as at 140,
+  and dropping its "CEO who has thirty seconds" clause lengthens the rewrite.** Opus 5,
+  2026-09-08, doc-4 fork-replay cut at the /brief message, variant body as the prompt,
+  three live turns whose kept rewrites were 126, 140, and 132 words. Means, old body
+  against the landed one: 154 against 114, 128 against 138, 144 not run. The same
+  body without the CEO clause: 157, 155, 174, the longest arm on every turn. A
+  restructured body asking for "one plain sentence each" gave 128, 132, 151 and still
+  produced labeled lines in 3 of 9 runs, against 1 of 6 for the landed body. Every arm
+  lands inside 30 words of the kept length. Re-measure on a model swap and before any
+  further edit, with the same harness. *(probe, doc-18 on the board)*
+
 ## Deprecated model mechanics
 
 **Re-verify on each model release**, against the extended-thinking reference and the
