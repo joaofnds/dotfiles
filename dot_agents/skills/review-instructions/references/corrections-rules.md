@@ -469,6 +469,10 @@ routing".
 
 ## No rule
 
+- "isn't this a job for ~/code/rehearsal?", a measurement rebuilt by hand because
+  the corpus names the method and never the tool. A directive for a routing line,
+  not yet given (entry "2026-09-08 the measurement harness was rebuilt by hand
+  while rehearsal existed").
 - "apply these learnings to the other documents and reduce the corpus massively at
   no loss of capabilities and performance", a hypothesis with evidence both ways.
   Contradicted on the /brief skill's own metric by the cut of its thirty-second

@@ -2557,3 +2557,28 @@ and no probe exists for what the other files govern.
 Reason, his: quoted above. Reason, the session's: the rules were written from the
 summary and not from the runs, and a reviewer holding the runs found the summary
 wrong in the direction of the conclusion.
+
+## 2026-09-08 the measurement harness was rebuilt by hand while rehearsal existed
+
+
+Quote: "isn't this a job for ~/code/rehearsal?"
+
+The problem: this session measured two corpus files with a fork-replay runner it
+wrote in `/tmp`, following decision-1's "measured with the doc-4 replay". The
+rehearsal repository at `~/code/rehearsal` already carries session cases for four
+of the same brief-reply turns, transcript prefixes captured at a cut, corpus
+variants per comparison arm, word-band and forbidden-text checks, multi-rep
+confirmation runs, and a compare command. Nothing in the rulebook, the skills, or
+the review-instructions references names rehearsal as where a corpus measurement
+runs, so a session that read every rule it was routed to rebuilt the harness and
+recorded its runs in `/tmp` and a board doc instead of as rehearsal attempts.
+
+Files: none changed. The gap is in what the corpus says about measurement, and the
+line to add is one the rehearsal repository's own instructions should own or the
+rulebook should route to. Left for a directed edit, since it names a tool outside
+this repository.
+
+Reason, his: the question above. Reason, the session's: decision-1 and
+external-facts describe the harness by its method, "the doc-4 replay", and never
+by the tool that implements it, so a reader with the method in hand builds the
+method.
