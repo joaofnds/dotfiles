@@ -63,8 +63,8 @@ describe("a citation naming a file that exists", () => {
 
   test("resolves a path anchored at the chezmoi source directory", async () => {
     const root = await corpus({
-      "skills/review-instructions/references/corrections-log.md": "# Log\n",
-      "skills/review-instructions/SKILL.md": "Log it in `dot_agents/skills/review-instructions/references/corrections-log.md` today.\n",
+      "skills/review-instructions/references/external-facts.md": "# Facts\n",
+      "skills/review-instructions/SKILL.md": "Record it in `dot_agents/skills/review-instructions/references/external-facts.md` today.\n",
     });
 
     expect(await findBrokenReferences(root)).toEqual([]);
@@ -280,22 +280,6 @@ describe("text that names no corpus file", () => {
   test("skips a fenced code block, where a name is an example and not a citation", async () => {
     const root = await corpus({
       "skills/build/SKILL.md": "Announce it:\n\n```\nReading: `gone.md`\n```\n",
-    });
-
-    expect(await findBrokenReferences(root)).toEqual([]);
-  });
-
-  test("skips the corrections log, whose citations are history", async () => {
-    const root = await corpus({
-      "skills/review-instructions/references/corrections-log.md": "It said `coding-style-go.md` that day.\n",
-    });
-
-    expect(await findBrokenReferences(root)).toEqual([]);
-  });
-
-  test("skips the corrections rules, which quote names the corpus no longer holds", async () => {
-    const root = await corpus({
-      "skills/review-instructions/references/corrections-rules.md": "The rewrite of `rules/ownership.md` cut it.\n",
     });
 
     expect(await findBrokenReferences(root)).toEqual([]);

@@ -4,13 +4,6 @@ import { basename, dirname, join, normalize, relative, sep } from "node:path";
 const HOME_PREFIX = "~/.agents/";
 const SOURCE_PREFIX = "dot_agents/";
 
-// Both correction records name files as they stood on the day of an exchange, so a citation in
-// either is history and goes stale by design when a file moves.
-const UNCHECKED = [
-  "skills/review-instructions/references/corrections-log.md",
-  "skills/review-instructions/references/corrections-rules.md",
-];
-
 // The corpus cites files it does not own: the rendered output styles, the personal wiki, a
 // project's own dot-directories, and paths a session generates at runtime. Only `~/.agents/`
 // names a corpus file.
@@ -167,8 +160,6 @@ export async function findBrokenReferences(root) {
   const findings = [];
 
   for (const path of relatives) {
-    if (UNCHECKED.includes(path)) continue;
-
     const text = await readFile(join(root, path), "utf8");
 
     for (const { target, heading, line } of citationsOutsideFences(text)) {

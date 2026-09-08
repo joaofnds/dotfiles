@@ -5,11 +5,6 @@ term when you introduce or lean on one, one term per concept.
 
 - **Corpus**: the instruction files this repository renders for agents: the global
   instructions, the rules, skills, agent definitions, output styles.
-- **Corrections log**: the record of what was complained about, questioned, or asked
-  changed in a corpus file, one entry per exchange, kept with the review-instructions
-  skill and filed into the corrections rules.
-- **Corrections rules**: the rules distilled from the corrections log, each a
-  candidate check for the review-instructions skill.
 - **Rules**: the craft knowledge under `~/.agents/rulebook/`: production, coding
   style, engineering judgment, coupling, testing, the refactoring pass and catalog,
   the wikis, the board, ownership, continuous improvement. The source for that knowledge. The global instructions

@@ -1,6 +1,6 @@
 ---
 name: review-instructions
-description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles, and keeps the log of what gets corrected in the corpus. Use it before drafting one, so the checks shape the writing, on any edit to one before it is called done, and on any complaint or question about a corpus file. An instruction failure observed as session behavior goes to kaizen.
+description: Reviews and steers the drafting of instruction files written for agents, including CLAUDE.md, AGENTS.md, skill bodies and descriptions, agent definitions, and output styles. Use it before drafting one, so the checks shape the writing, on any edit to one before it is called done, and on any complaint or question about a corpus file. An instruction failure observed as session behavior goes to kaizen.
 ---
 
 # Review instructions
@@ -142,9 +142,9 @@ nothing, since a file rewritten into short paragraphs can keep every shape.
 
 **Keep the evidence out of the rule.** Move citations, evidence hedges, version
 notes, and references to past wording out of the file, because they dilute the lines
-that steer. The claim's history belongs in the corrections log and the corrections
-rules under [references/](references/). Keep a re-check trigger, naming what to
-re-check, the event that fires it, and the state it was last checked against.
+that steer. The claim's history belongs in the commit message. Keep a re-check
+trigger, naming what to re-check, the event that fires it, and the state it was last
+checked against.
 
 **Check the placement.** Keep in an always-loaded file only what applies broadly every
 session, and move occasional knowledge to a skill. Put critical rules early in a long
@@ -199,9 +199,9 @@ other change answers a defect. On a destructive path, require a gate or a deny r
 never stronger adjectives. A guard enforces the rule itself. Leave the rule as prose
 where only a proxy could be enforced, because a numeric proxy for a judgment rule
 replaces the principle with a count, obeyed or breached exactly where judgment was
-needed. Its counts belong in the evidence records. Split a rule with a mechanical part
-and a judgment part: a script for the first, prose for the second. Give a rule only
-judgment can check the verdict "test in use".
+needed. Split a rule with a mechanical part and a judgment part: a script for the
+first, prose for the second. Give a rule only judgment can check the verdict "test in
+use".
 
 **State the complement.** Leave no part of a set to inference, because inference is
 where behavior regresses silently across model swaps. Where a rule enumerates part
@@ -293,7 +293,10 @@ Give each finding a verdict, one of cut, rewrite, move, enforce, or test in use,
 the reason. Default to cut and watch, never keep-just-in-case. Name the trigger for
 the re-check, a model swap or a count of sessions, and delete now, since restoring
 from git is free. Give "test in use" to a rule whose effect prose review cannot
-establish, and name the test, a real task in a fresh session. Reading a file can show
+establish, and name the test, a real task in fresh sessions, half with the file as it
+stands and half with the rule added, on a pass mark written down before any result is
+read. Add the rule only where the two halves differ, since a rule the standing checks
+already catch is a restatement. Reading a file can show
 that a rule cannot change behavior, and cannot show that it does. Run the checks over
 any text you prescribe, because a suggested rewrite lands verbatim. Give a rule
 broken by a session that had it open a different mechanism, never the same rule
@@ -310,29 +313,3 @@ the words the change was directed in if there are any, and never your own descri
 of the change. Do not run the review again after the fixes. Read the fixes yourself
 in the staged diff, with the same checks, because the reviewer did not see them. Send
 every edit, a one-line one included.
-
-## The corrections log
-
-Log every complaint, question, or directed change raised about a corpus file, one
-rendered from the dotfiles repository, in that repository's source at
-`dot_agents/skills/review-instructions/references/corrections-log.md`, in the turn it
-happens, whether or not an edit follows. Quote the words it arrived in, verbatim.
-Then say what the problem was, in your own plain words, with the context a fresh
-session lacks: what you were doing and what the corpus file said. The quote alone
-leaves the next reader reparsing it. Name the file, and say what changed or that
-nothing did. Give the reason stated in the correction where one was given, and yours
-marked as yours where none was. A project's own instruction file is outside the log. A
-session defect kaizen takes stays on its card.
-
-Then file the entry once in
-`dot_agents/skills/review-instructions/references/corrections-rules.md`. Read every
-rule there before you open one, and merge two that name one class. Write a rule as it
-would stand among the checks above, with its reason, so it lands verbatim when moved.
-Where a check above already covers the entry, file it under that check's name with
-the moment, and leave why the check did not bind to the reviewer of the fix. File a
-directive for something new, or a decision that changed nothing, under No rule, with
-a line saying so. A rule moves into the checks above when a second entry repeats it,
-because one entry is an incident and a repeat is the pattern, and the move deletes it
-from the document in the same edit. A commit listed as evidence is context and never
-stands in for that second entry. Commit the entry and its filing with the change they
-record, so the diff sits beside them, and on their own where nothing changed.
