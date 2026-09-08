@@ -101,8 +101,8 @@ checks.
 > "Architecture" section of the doctrine at `~/.agents/rulebook/doctrine.md`,
 > and in `~/.agents/rulebook/coding-style.md` the "Architectural Principles & Layering"
 > and "Code Construction & Decoupling Patterns" sections with every language file
-> that matches the diff. When the diff touches a data store, a queue, distributed
-> state, or a running service, read the doctrine's "Data and distributed systems"
+> that matches the diff, and `coding-style.md` alone where none matches. When the diff
+> touches a data store, a queue, distributed state, or a running service, read the doctrine's "Data and distributed systems"
 > and "Operations and reliability" sections too. Of `coding-style.md`, yours are
 > "Code Construction & Decoupling Patterns" whole and, in "Architectural Principles
 > & Layering", the layering rule with its paragraph on DI lookup keys, "Behavior
@@ -157,8 +157,9 @@ checks.
 > with its checklist, `01-architecture-and-harness.md`, `02-mocking-roles.md`, and
 > `03-test-aesthetics.md`. Read `references/test-data-builders.md` or
 > `references/characterization-tests.md` there before citing either. Tests are
-> code, so `~/.agents/rulebook/coding-style.md` and its language file apply to them
-> too. Read the changed test files fully.
+> code, so `~/.agents/rulebook/coding-style.md` applies to them too, with the language
+> file that matches the diff and `coding-style.md` alone where none matches. Read the
+> changed test files fully.
 > Read the subject's public API, the signatures and exported types the tests name;
 > an assertion can't be judged against observable behavior without it. List
 > harness, driver, and Fake definitions you read as support files, and mark every
@@ -221,7 +222,8 @@ checks.
 > author decides what the change itself owes. Your standard is the refactoring
 > index at `~/.agents/rulebook/refactoring/00-index.md`, plus the catalog document
 > under `catalog/` there for each refactoring you cite, read before you cite it.
-> `~/.agents/rulebook/coding-style.md` and its language file bound every remedy.
+> `~/.agents/rulebook/coding-style.md` bounds every remedy, with the language file that
+> matches the diff and `coding-style.md` alone where none matches.
 > Where Fowler and a house rule differ, the house rule wins. The wiki checks have
 > no Refactoring section,
 > so walk their "Not findings" section only. Read the changed files fully, then

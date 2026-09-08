@@ -2582,3 +2582,41 @@ Reason, his: the question above. Reason, the session's: decision-1 and
 external-facts describe the harness by its method, "the doc-4 replay", and never
 by the tool that implements it, so a reader with the method in hand builds the
 method.
+
+## 2026-09-08 a Rust session announced it was reading the Go coding style
+
+
+Quote: "for some reason you are reading the go coding style on a rust project. Look
+into it and see how we can prevent this. THINK. I trust you."
+
+The problem: a session working TRUNK-20, a Rust refactor, opened its turn with
+`Reading: ~/.agents/rulebook/coding-style-go.md` among its named files. The rule it
+was following, the code row of the global file's read table, said to read
+"the language file beside it where one exists (`coding-style-go.md`,
+`coding-style-typescript.md`)". That text is literally correct, since no Rust file
+exists and the correct read is `coding-style.md` alone. It fails because the
+parenthetical enumerates two of the set and leaves the rest of the set's status
+unstated, so it reads as a menu of the available options and a language absent from
+it matches the nearest listed entry. Four other sites said it the same way: the
+header of `coding-style.md`, the Testing and Refactoring axes in the review-code axes
+file, which both said "and its language file", and the Architecture axis there, which
+said "with every language file that matches the diff". None gave the case for a
+language that has none. The Style axis was the one site already stating the fallback,
+"`coding-style.md` alone where none matches", and its wording is what the other four
+now use.
+
+The first fix at these sites named Go and TypeScript as the whole set, which an
+unprimed reviewer caught as a copy of the directory listing into an always-loaded
+file, stale the day a third language file lands. It also caught the rewritten read
+table putting two unconditional reads, `engineering-judgment.md` and
+`testing/00-index.md`, under a clause reading "for UI work", and the Architecture
+axis left unfixed. The complement is stated by the condition, "where none matches",
+and never by counting the members.
+
+Files: `rulebook/coding-style.md`, `skills/review-code/references/axes.md`, and the
+global `AGENTS.md`. Each now says the language file applies where the project's
+language has one and `coding-style.md` alone where it does not.
+
+Reason, his: the question above. Reason, the session's: an enumeration of part of a
+set teaches its bound, and a reader holding a language outside the bound picks the
+nearest member rather than reading the qualifier that excludes them all.

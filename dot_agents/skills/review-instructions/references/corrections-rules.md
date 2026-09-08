@@ -375,7 +375,12 @@ The shape rule covered a prohibition and left a requirement to
 inference, so a constraint derived from his decision became an acceptance criterion
 and two sessions designed inside it (b08600bd). The em-dash ban named replies and
 instruction files and left commits, documents, and code unstated, and his ruling
-widened it twice (e9a0af32, 4bf14374).
+widened it twice (e9a0af32, 4bf14374). The code row of the read table listed
+`coding-style-go.md` and `coding-style-typescript.md` in a parenthetical and left
+every other language's case to the qualifier in front of it, and a Rust session
+announced it was reading the Go file (this exchange). The first fix stated the
+complement by naming the members, which cached the directory listing into an
+always-loaded file; state it with the condition the rule already turns on instead.
 
 ### End steps on a checkable bound
 

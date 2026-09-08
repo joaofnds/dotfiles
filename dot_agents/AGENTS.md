@@ -140,8 +140,8 @@ the doctrine in every one of those turns.
 - Reading a card, or any backlog command or card move:
   `~/.agents/rulebook/backlog-board.md`.
 - Writing or reviewing code, tests included: `~/.agents/rulebook/coding-style.md`, the
-  language file beside it where one exists (`coding-style-go.md`,
-  `coding-style-typescript.md`), `coding-style-frontend.md` on top for UI work,
+  language file beside it where the project's language has one and `coding-style.md`
+  alone where it does not, `coding-style-frontend.md` on top for UI work,
   `~/.agents/rulebook/engineering-judgment.md`, and `~/.agents/rulebook/testing/00-index.md`,
   which routes to its modules.
 - Committing, or writing a document others read: `~/.agents/skills/delivery/SKILL.md`.

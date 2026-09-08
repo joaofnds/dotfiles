@@ -1,6 +1,6 @@
 # Coding Style & Architecture Manifesto
 
-Cross-language coding style. Language-specific preferences live in `coding-style-typescript.md` / `coding-style-go.md`. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki: see `using-the-wiki.md`.
+Cross-language coding style. Language-specific preferences live beside this file, `coding-style-typescript.md` and `coding-style-go.md` today. A project whose language has no file here reads this one alone. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki: see `using-the-wiki.md`.
 
 **On conflict, the more specific rule governs.** Among the files here: the language file wins over
 this one, which wins over `engineering-judgment.md`, which wins over `coupling.md`, and
