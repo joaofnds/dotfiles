@@ -254,14 +254,15 @@ The lint was deleted on his direction (00f9d915). The kaizen on that day found t
 check's guard sentence was what the lint had been read out of (9ad4809f).
 
 A guard covers one form of a thing and reads as covering all of it. Moving the coding
-style files into a directory, since reverted, left 166 references to rewrite, and
-`scripts/check-corpus-refs.sh` reported every cross-reference resolving both before
-the sweep and after it. It resolves a citation carrying a heading and a path under
-`~/.agents/`, and never a bare backticked filename, which was the form most of the
-references took. A planted `` `totally-bogus-file.md` `` passed. The 148 relative
-paths were verified by hand instead. Read what a guard matches before resting a
-completion claim on it, since a green check over the wrong subset is more convincing
-than no check at all.
+style files into a directory, since reverted, left 166 references to rewrite, and the
+shell cross-reference checker reported every one resolving both before the sweep and
+after it. It resolved a citation carrying a heading and a path under `~/.agents/`,
+and never a bare backticked filename, which was the form most of the references took.
+A planted bogus name passed. The 148 relative paths were verified by hand instead.
+Read what a guard matches before resting a completion claim on it, since a green
+check over the wrong subset is more convincing than no check at all. The checker was
+rewritten in Bun the same day and now resolves a bare name by unique basename, so
+these citations are covered.
 
 ### Check the placement
 

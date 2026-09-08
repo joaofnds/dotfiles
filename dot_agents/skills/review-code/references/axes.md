@@ -153,7 +153,7 @@ checks.
 ## Testing
 
 > Testing axis: the test files in the diff and the production code they exercise.
-> Your standard is the testing rules at `~/.agents/rulebook/testing/`: `00-index.md`
+> Your standard is the testing rules at `~/.agents/rulebook/testing/`: `testing/00-index.md`
 > with its checklist, `01-architecture-and-harness.md`, `02-mocking-roles.md`, and
 > `03-test-aesthetics.md`. Read `references/test-data-builders.md` or
 > `references/characterization-tests.md` there before citing either. Tests are
