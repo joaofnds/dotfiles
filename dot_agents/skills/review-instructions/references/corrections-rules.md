@@ -192,11 +192,26 @@ named to the model and never as what sessions do, and measure a second model bef
 calling any of it a model default.
 
 Evidence: entries "2026-09-07 the corpus writes about him as an authority, and he
-wants himself out of it" and "2026-09-07 the model-default finding was recorded from
-one model". Held here rather than moved into the checks. The two entries name
+wants himself out of it", "2026-09-07 the model-default finding was recorded from
+one model", and "2026-09-08 what the two measured cuts teach, and whether it
+generalizes", where three rules were drafted from a length-only measurement and an
+adversarial review with the runs in hand broke two of them. Held here rather than
+moved into the checks. The two entries name
 neighbouring classes, a rule written from one incident and a number measured on one
 model, and the second came from this file's own session rather than from separate
 work. Move it on an entry from a session that did not write it.
+
+### Write a number into a record from the runs, never from the summary
+
+
+Recompute a number from the raw outputs before it enters a record, state it for
+the variant that landed, and say what the spread at that sample can separate,
+because a figure read off a glance at means reached six records and a commit body
+before a recount showed the landed file at half of it. One entry is an incident, so
+this stays here until a second repeats it.
+
+Evidence: entry "2026-09-08 what the two measured cuts teach, and whether it
+generalizes".
 
 ## Checks that did not hold
 
@@ -346,12 +361,12 @@ and he judged it unnecessary (95e52961).
 A reviewer's two note-grade findings were applied as sentences the reader did not
 need, with this skill open, and he asked whether the rewrite was necessary at all
 (entry "2026-09-07 the brief skill grew with prose its rewrite did not need").
-The brief output style reached 225 lines over thirteen commits, each adding one
-rule or one pair for that day's incident, and none re-judging the file whole. A file
-edited only by addition never shrinks. The rewrite was then held on a recorded
-measurement of two other variants, and measuring the file in hand reversed the record,
-so a number measured on a variant bounds that variant and never the text in hand
-(entry "2026-09-08 the brief output style was rewritten from scratch and measured").
+The brief output style reached 225 lines over thirteen commits and grew through the
+six that rewrote or cut it as well as the seven that added. The rewrite was then held
+on a recorded measurement of two other variants, and measuring the file in hand
+reversed the record, so a number measured on a variant bounds that variant and never
+the text in hand (entry "2026-09-08 the brief output style was rewritten from
+scratch and measured").
 
 ### State the complement
 
@@ -454,6 +469,13 @@ routing".
 
 ## No rule
 
+- "apply these learnings to the other documents and reduce the corpus massively at
+  no loss of capabilities and performance", a hypothesis with evidence both ways.
+  Contradicted on the /brief skill's own metric by the cut of its thirty-second
+  frame, supported on length by the style cut, and the prior record on the style went
+  the other way twice, unexplained. A length probe cannot settle it, and no probe
+  exists for what the other files govern (entry "2026-09-08 what the two measured
+  cuts teach, and whether it generalizes").
 - "keep a log of corrections to the corpus", a directive for a new mechanism.
 - "consolidate the log into rules, and read the history since the swap", a directive
   for a new mechanism. Its second half, the history unread, is evidence under

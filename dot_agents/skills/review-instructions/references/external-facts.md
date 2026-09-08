@@ -219,8 +219,10 @@ Claude Code release and on a model release.**
   displacement stays in the skill's Known failure modes as a shape to watch for.
   Re-probe on a compiling fixture before citing anything here. *(probe withdrawn)*
 
-- **A shorter brief style file ran shorter replies on Opus 5, 2026-09-08, by 10 to 25
-  percent, and the short variants did not separate from each other.** doc-4 fork-replay,
+- **A shorter brief style file ran shorter replies on Opus 5, 2026-09-08, the landed
+  file by 7 and 13 percent on the two turns it ran, and at three runs per cell the
+  short variants do not separate from each other or, on two turns, from the old
+  file.** doc-4 fork-replay,
   `--model opus --effort high`, Claude Code 2.1.263, three live turns that drew /brief,
   three runs per cell. Means, old 225-line file against 76-line and 42-line files: 240
   against 228 and 197; 223 against 211 and 185; 617 against 502 and 472. The 42-line

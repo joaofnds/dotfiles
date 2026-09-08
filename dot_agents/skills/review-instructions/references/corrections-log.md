@@ -2431,8 +2431,8 @@ the same style that we want the output to be, and then you measure yourself. Don
 rely on past measurements. Measure now"
 
 The problem: the output style had reached 225 lines and eight examples across
-thirteen commits, each adding a rule or a pair for that day's incident and none
-re-judging the file whole. Replies after any substantive turn still drew /brief. The
+thirteen commits, seven adding a rule or a pair for that day's incident and six
+rewriting or cutting, two of those whole-file, and it grew through all of them. Replies after any substantive turn still drew /brief. The
 board's decision-1 forbade shortening the file, on two measurements of variants that
 were both smaller than any draft here and outside the register the reply should have,
 and the session did not read the board before its first rewrite landed.
@@ -2453,16 +2453,17 @@ too-long half of the real pair, and the collisions with CLAUDE.md's wording-slip
 and reading announcement, which the old file also had.
 
 Measured with the doc-4 replay on Opus 5, three live turns, three runs per cell.
-Every shorter file ran 10 to 25 percent shorter than the 225-line file on every turn.
-The 76, 42, and 49-line files do not separate from each other. A variant carrying the
+The landed file ran 7 and 13 percent shorter than the 225-line file on the two turns
+it was run on, and the variants ranged 5 to 24 percent. At this sample the 76, 42,
+and 49-line files do not separate from each other or, on two turns, from the old
+file. A variant carrying the
 em dash line moved nothing, so that rule stays in the global file only. Every cell
 stays 1.4 to 3.8 times the kept length. Numbers in external-facts, decision-2, and
 doc-18.
 
-Reason, his: quoted above. Reason, the session's: each earlier edit earned its own
-line and none re-judged the file whole, so the file only grew, and the record's
-numbers described other variants, so only a measurement of the file in hand could
-decide it.
+Reason, his: quoted above. Reason, the session's: the file grew through rewrites as
+well as additions, and the record's numbers described other variants, so only a
+measurement of the file in hand could decide it.
 
 ## 2026-09-08 the /brief skill shortened and measured the same way
 
@@ -2491,3 +2492,68 @@ in external-facts and doc-18.
 Reason, his: quoted above. Reason, the session's: every variant landed near the
 length he keeps, so the skill works at any of these sizes and the shortest one that
 survives a literal reading is the one to carry.
+
+## 2026-09-08 what the two measured cuts teach, and whether it generalizes
+
+
+Quote: "So what did you learn from this session that would be worth adding to the
+corrections log and rules? You just reduce massively the size of two instruction
+document, And if we take these learnings and apply them to the other documents we
+would be able to reduce massively the size of the instruction corpus, At no loss of
+capabilities and performance. Would you like to document your learnings and then do
+an adversarial review to see if what you think you learned is really true"
+
+The problem: two files were cut this session, the brief output style from 225 lines
+to 49 and the /brief skill body from 140 words to 100, each with reviews and a
+replay measurement. The session drafted six observations and three rules from them,
+and an adversarial review with the raw runs in hand broke most of it. What follows
+is the version that survived the recount.
+
+Files: `dot_agents/skills/review-instructions/references/corrections-rules.md`,
+this log, decision-2 and doc-18 on the board, external-facts.
+
+What the numbers support:
+
+1. The measurement was length only, on Opus 5, on three turns of one shape. It says
+   nothing about the behaviors the cut rules govern. "No loss of capabilities" is
+   unmeasured for both files.
+2. The style's length is a small lever. The landed file ran 7 and 13 percent shorter
+   than the 225-line one on the two turns it was run on. Across all variants the
+   range was 5 to 24 percent, and only the variant that did not land reached the top
+   of it. At three runs per cell with a within-cell spread of 6 to 82 words, the 76-line
+   file does not separate from the old one, and nothing separates on the long
+   dotfiles turn.
+3. One restatement was load-bearing and the other was unmeasurable. Cutting the
+   skill's thirty-second frame put all six runs above all six with it, a real
+   separation. The style's em dash line was judged on em dash counts that sat at
+   zero in nearly every arm, so "changed nothing" means the harness had no power
+   there, not that the line does nothing.
+4. Compressing a file opens literal readings, and reviewers found seventeen in the
+   style draft and two in the skill draft. The fixes took the style draft from 286
+   words to 405, and on the trunk turn the fixed files ran longer than their drafts,
+   the skill's by 14 percent and above the uncut file. So the fixes cost, and
+   "measured the same" was the reading that favored the conclusion.
+5. The session wrote "10 to 25 percent" from a glance at means, and it reached the
+   log, the rules, external-facts, decision-2, doc-18, and the commit body of
+   f0499751 before the recount. The commit body stands as written and this entry
+   corrects it.
+6. The claim that the style grew by "thirteen additive commits, none re-judging the
+   file whole" was wrong. Six of the thirteen were rewrites or cuts, two of them
+   whole-file. The earlier entry and the rules moment that carried it are corrected
+   in this commit.
+
+What did not survive: a rule to measure every restatement before cutting it, since
+it rested on one real separation and one null with no power and would have made
+every duplicate outside these two files cost a harness build; a rule to fix
+compression defects in one sentence and never with the paragraph back, since the
+paragraph-back arm was never run; a rule that a length measurement licenses only a
+length claim, which the belief-until-measured rule already carries.
+
+The corpus-wide claim: contradicted on one metric in one file, the skill's frame,
+supported on one metric in the other, the style's length, and the prior record on
+the style went the other way twice, unexplained. A length probe cannot settle it,
+and no probe exists for what the other files govern.
+
+Reason, his: quoted above. Reason, the session's: the rules were written from the
+summary and not from the runs, and a reviewer holding the runs found the summary
+wrong in the direction of the conclusion.
