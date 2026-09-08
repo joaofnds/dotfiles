@@ -16,9 +16,10 @@ iterate start           # triage, pick the queue's first card, write its bet, pr
 iterate step <card>     # one session: the card's column, or reflect when it is Done
 ```
 
-Start with `iterate start`, which prints the card. Then call `iterate step <card>`
-until it says the card is Done, overseeing between the calls. Reflect runs on the
-last step, after Done.
+Start with `iterate start`, which prints the card. Rename this session to that card
+id, so the session list says which card is running rather than which skill started
+it. Then call `iterate step <card>` until it says the card is Done, overseeing
+between the calls. Reflect runs on the last step, after Done.
 
 Each call prints the session's reply on stdout and its cost on stderr. Read both.
 
