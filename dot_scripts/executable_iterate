@@ -13,15 +13,32 @@ step's skill. start and step do the same work one session at a time, so a caller
 can read what a stage did before starting the next. step prints the session's reply
 on stdout. ITERATE_SESSION_BUDGET caps each session in dollars (default 50).
 
-Exit codes: 0 done, 1 refused or failed, 2 the card's column did not move,
-3 the stop file .iterate-stop is present, 4 the board has no active milestone.`;
+Every session is told nobody is at the keyboard, so a stage decides what it would
+have asked and writes the decision on the card. A shape session that leaves a
+shaped card in Shape gets moved to Build here, since the board rule already asks
+the stage to do it. A whole iteration runs a stage again when it wrote on the card
+without moving its column, up to the session cap, and stops when a stage wrote
+nothing at all, since the next run would see the same card. A dirty tree is handed
+to the stage as the previous session's unfinished work when the card is assigned
+to @claude, and refused otherwise.
+
+Exit codes: 0 done, 1 refused or failed, 2 the column did not move and nothing on
+the card let iterate advance it, 3 the stop file .iterate-stop is present, 4 the
+board has no active milestone.`;
 
 const stopFile = ".iterate-stop";
 const ours = "@claude";
 const cardPattern = /^[A-Z]+-[0-9]+(\.[0-9]+)?$/;
 const queuePattern = /^\s*\[?\w*\]?\s*([A-Z]+-[0-9]+(?:\.[0-9]+)?) - /m;
 const sessionCap = 6;
-const skillFor = { "To Do": "shape", Shape: "shape", Build: "build", Review: "review" };
+const skillFor = new Map([
+  ["To Do", "shape"],
+  ["Shape", "shape"],
+  ["Build", "build"],
+  ["Review", "review"],
+]);
+const unattended = `This session is one stage of an iteration running unattended. Nobody is at the keyboard, and a turn that ends on a question stalls the loop, since no answer reaches the next session except through the board. Decide every question yourself, on the recommendation you would have given, write the decision and its reason on the board record this stage writes, and finish this stage's work in this session. When two acceptance criteria cannot both hold, keep the one nearer the goal, rewrite or drop the other with the reason beside it, and go on. An action the hard lines reserve for a typed direction goes on the card as the exact command, and is never run.`;
+const dirtyTree = `The tree carries uncommitted changes. Read them before anything else. Those that belong to this card are the previous session's unfinished work on it, yours to finish and commit. Leave any other change as you found it.`;
 
 class Exit extends Error {
   constructor(code, message) {
@@ -63,8 +80,11 @@ async function session(skill, card) {
   say(`== ${prompt}`);
 
   const budget = sessionBudget();
+  const systemPrompt = (await treeIsClean()) ? unattended : `${unattended}\n\n${dirtyTree}`;
+
   const out = await tool(
-    () => $`claude -p ${prompt} --dangerously-skip-permissions --max-budget-usd ${budget} --output-format json`.json(),
+    () =>
+      $`claude -p ${prompt} --dangerously-skip-permissions --max-budget-usd ${budget} --output-format json --append-system-prompt ${systemPrompt}`.json(),
     `the ${skill} session failed`,
   );
 
@@ -84,13 +104,15 @@ async function step(id) {
     return;
   }
 
-  const skill = skillFor[before];
+  const skill = skillFor.get(before);
   if (!skill) throw new Exit(1, `unknown status: ${before}`);
 
   await session(skill, id);
 
   const after = (await card(id)).status;
-  if (after === before) throw new Exit(2, `${id} stayed in ${before}`);
+  if (after === before && !(await advanceShapedCard(id, before))) {
+    throw new Exit(2, `${id} stayed in ${before}`);
+  }
 }
 
 async function start() {
@@ -120,7 +142,52 @@ async function card(id) {
       ?.slice(name.length + 1)
       .trim() ?? "";
 
-  return { status: field("Status").replace(/^[^A-Za-z]*/, ""), assignee: field("Assignee") };
+  return { text, status: field("Status").replace(/^[^A-Za-z]*/, ""), assignee: field("Assignee"), criteria: countCriteria(text) };
+}
+
+/**
+ * Only the Acceptance Criteria section counts. Every card carries a Definition
+ * of Done whose items are checkbox lines of the same shape, so counting the
+ * whole view reports five or more criteria on a card that has none, and the
+ * shaped test below passes on every card the board holds.
+ */
+function countCriteria(text) {
+  const lines = text.split("\n");
+  const start = lines.findIndex((line) => line.startsWith("Acceptance Criteria:"));
+  if (start === -1) return 0;
+
+  const rest = lines.slice(start + 1);
+  const end = rest.findIndex((line) => /^[A-Z][A-Za-z ]*:$/.test(line));
+
+  return (end === -1 ? rest : rest.slice(0, end)).filter((line) => /^- \[[ x]\] #/.test(line)).length;
+}
+
+/**
+ * A shape session finishes by writing the card and stops, because nothing in
+ * the shape skill claims the column. The board rule already says to set the
+ * status to the next step in the same turn as the work, so a shaped card left
+ * in Shape is that rule unkept. Advance it here, so the column rule stays in
+ * one place instead of in every stage.
+ *
+ * Shaped is read off the card, never off the session's reply: the reply is
+ * prose the stage wrote about itself, and acceptance criteria are what the
+ * shape skill says shaping produces. A card with none of them stays where it
+ * is, for the stage to run again. Build and Review have no such definition of
+ * done to read, so they are never advanced here.
+ *
+ * It lands in Build rather than To Do because To Do is mapped to the shape
+ * skill, for the unshaped cards triage picks. Moving a card we just proved
+ * shaped into that column hands it back to shape, which refuses it, and the
+ * column never moves again.
+ */
+async function advanceShapedCard(id, before) {
+  if (before !== "Shape") return false;
+  if ((await card(id)).criteria === 0) return false;
+
+  await tool(() => $`backlog task edit ${id} --status ${"Build"}`.quiet(), `moving ${id} to Build failed`);
+  say(`${id} was shaped and left in Shape, so iterate moved it to Build`);
+
+  return true;
 }
 
 function guardStop() {
@@ -143,19 +210,21 @@ async function refuseHeldCard(id) {
 
 async function runCard(id) {
   for (let sessions = 0; ; sessions += 1) {
+    const before = await card(id);
+    if (before.status === "Done") return sessions;
     if (sessions === sessionCap) throw new Exit(1, `${id} passed the ${sessionCap} session cap without reaching Done`);
 
-    const before = (await card(id)).status;
-    if (before === "Done") return sessions;
-
-    const skill = skillFor[before];
-    if (!skill) throw new Exit(1, `unknown status: ${before}`);
+    const skill = skillFor.get(before.status);
+    if (!skill) throw new Exit(1, `unknown status: ${before.status}`);
 
     guardStop();
     await session(skill, id);
 
-    const after = (await card(id)).status;
-    if (after === before) throw new Exit(2, `${id} stayed in ${before}: a question for João`);
+    const after = await card(id);
+    if (after.status !== before.status || (await advanceShapedCard(id, before.status))) continue;
+    if (after.text === before.text) throw new Exit(2, `${id} stayed in ${before.status} and the ${skill} stage wrote nothing on it`);
+
+    say(`${id} stayed in ${before.status}`);
   }
 }
 
@@ -177,12 +246,25 @@ async function treeIsClean() {
 }
 
 /**
+ * A dirty tree is the previous session's unfinished work only on a card one of
+ * our sessions picked up, which the board rule marks by assigning @claude. On
+ * any other card the changes are somebody else's, and a stage told to finish
+ * them would commit them under this card.
+ */
+async function refuseDirtyTree(id) {
+  if (await treeIsClean()) return;
+  if (id && (await card(id)).assignee === ours) return;
+
+  throw new Exit(1, "the tree is not clean");
+}
+
+/**
  * Reflect is the last session of an iteration, so no later call runs the guard
  * over what it wrote. Its doc would sit untracked while the run reports itself
  * complete.
  */
 async function refuseWorkLeftBehind() {
-  if (!(await treeIsClean())) throw new Exit(1, "the last session left work uncommitted");
+  if (!(await treeIsClean())) throw new Exit(1, "the tree still holds uncommitted work");
 }
 
 async function main(argument, second) {
@@ -193,20 +275,23 @@ async function main(argument, second) {
 
   guardStop();
   sessionBudget();
-  if (!(await treeIsClean())) throw new Exit(1, "the tree is not clean");
 
   if (argument === "step") {
-    await step(cardId(second));
+    const id = cardId(second);
+    await refuseDirtyTree(id);
+    await step(id);
     return;
   }
 
   if (argument === "start") {
+    await refuseDirtyTree();
     await start();
     return;
   }
 
   let id = argument ? cardId(argument) : "";
   if (!id) {
+    await refuseDirtyTree();
     if (!(await boardHasActiveMilestone())) throw new Exit(4, "the board has no active milestone");
     await session("triage");
     id = await pick();
@@ -221,6 +306,7 @@ async function main(argument, second) {
     await tool(() => $`backlog task edit ${id} --append-notes ${bet}`.quiet(), `writing the bet on ${id} failed`);
     say(`picked ${id}`);
   } else {
+    await refuseDirtyTree(id);
     await refuseHeldCard(id);
   }
 
