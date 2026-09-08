@@ -26,7 +26,8 @@ paru
 {{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
-update-brew
+brew upgrade --yes
+brew cleanup
 {{- end }}
 
 tmux wait-for "$CHAN_DOOM"

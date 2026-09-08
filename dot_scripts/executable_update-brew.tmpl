@@ -1,8 +1,0 @@
-{{- if eq .chezmoi.os "darwin" }}
-#!/usr/bin/env zsh
-
-brew update
-brew upgrade --yes
-brew upgrade --cask --yes
-brew cleanup
-{{- end }}
