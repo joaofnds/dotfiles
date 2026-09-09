@@ -107,15 +107,17 @@ request reports that no board exists and creates nothing. Copy
 the tasks, docs, and decisions directories under the path it names.
 
 Check `schemaVersion` on every read. A value other than 1 is a stop-and-report
-condition. Consume only these fields from `task`: `title`, `description`,
-`status`, `labels`, `milestone`, `dependencies`, `acceptanceCriteria`,
-`definitionOfDone`, `subtasks`, `documentation`, `implementationNotes`,
+condition. Consume only these fields from `task`: `id`, `title`, `description`,
+`status`, `priority`, `ordinal`, `assignees`, `createdAt`, `updatedAt`, `dueDate`, `labels`,
+`milestone`, `dependencies`, `references`, `acceptanceCriteria`, `definitionOfDone`,
+`subtasks`, `documentation`, `implementationPlan`, `implementationNotes`, `comments`,
 `finalSummary`, `parentTaskId`.
 
 Every value flag on `backlog task edit` replaces its field rather than extending
 it, so a command naming one value silently drops the values already there. Use
 the additive sibling where the CLI has one. Where a flag has none, read the
-current values and pass every one you are keeping in a single command.
+current values and pass every one you are keeping in a single command. A title
+edit leaves the card's file name as it was.
 
 Change the board directory's `config.yml` with `backlog config set`, whose keys are
 camelCase, because a hand edit to that file can be lost on a later read.
@@ -130,7 +132,9 @@ them on an upgrade.
 
 ## Syntax
 
-    # the queue, ready cards by priority. --plain lists every column, Done included
+    # the queue, ready cards by priority, Build and Review included. Ties within a
+    # priority run in card ID order, and --ordinal does not change this sort.
+    # --plain lists every column, Done included
     backlog task list --ready --sort priority
 
     # create a card, without -s it lands in default_status
