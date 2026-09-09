@@ -14,10 +14,12 @@ target="$HOME/.agents"
 
 managed="$(mktemp)"
 rendered="$(mktemp)"
-trap 'rm -f "$managed" "$rendered"' EXIT
+ignored="$(mktemp)"
+trap 'rm -f "$managed" "$rendered" "$ignored"' EXIT
 
 chezmoi managed | grep '^\.agents/' | sed 's|^\.agents/||' | sort >"$managed"
-(cd "$target" && find . -type f | sed 's|^\./||') | sort >"$rendered"
+chezmoi ignored | grep '^\.agents/' | sed 's|^\.agents/||; s|$|/|' >"$ignored"
+(cd "$target" && find . -type f | sed 's|^\./||') | grep -v -F -f "$ignored" | sort >"$rendered"
 
 orphans="$(comm -13 "$managed" "$rendered")"
 
