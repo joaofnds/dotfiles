@@ -57,10 +57,10 @@ class Shipment {
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: code is a liability: a structure whose only content
+- `engineering.md`: code is a liability: a structure whose only content
   is structure is pure carrying cost; deletion is the feature.
-- `engineering-judgment.md`: YAGNI: the class built for the future that never
+- `engineering.md`: YAGNI: the class built for the future that never
   came is this rule's textbook exhibit, and inlining is its enforcement.
-- `coding-style.md`: Beck's ordering: removal is a fewest-elements win that costs
+- `core.md`: Beck's ordering: removal is a fewest-elements win that costs
   no intent; when the class *was* carrying intent (a named domain concept), see
   "When not to apply" instead.

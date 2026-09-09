@@ -20,7 +20,7 @@
 
 - The type code only labels: it is displayed, stored, compared, but never branches
   behavior. A validated value (Replace Primitive with Object) suffices; a hierarchy
-  for a label is the class `coding-style.md` bars introducing "solely to satisfy this
+  for a label is the class `core.md` bars introducing "solely to satisfy this
   document".
 - The kind must change at runtime: objects cannot re-class. Use Replace Subclass
   with Delegate's shape instead: a swappable kind-delegate.
@@ -62,11 +62,11 @@ class Commissioned extends Employee {
 
 ## House-rule interactions
 
-- `coding-style.md`: subclasses are introduced elements: the demonstrated need is
+- `core.md`: subclasses are introduced elements: the demonstrated need is
   behavior branching on the code in multiple places; a single label field never
   qualifies.
-- `coding-style.md`: leverage the type system: the refactored form lets the
+- `core.md`: leverage the type system: the refactored form lets the
   compiler own kind-dispatch (exhaustive unions, sealed interfaces) instead of
   string comparison at runtime.
-- `engineering-judgment.md`: encapsulate what varies: the kinds are the varying
+- `engineering.md`: encapsulate what varies: the kinds are the varying
   thing; this refactoring builds the enclosure around them.

@@ -65,8 +65,8 @@ function firstMatch(people, wanted) {
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: never program by coincidence: substituting an
+- `engineering.md`: never program by coincidence: substituting an
   algorithm you haven't fully understood is that rule's named time bomb.
-- `engineering-judgment.md`: prefer removing the cause over compensating: where
+- `engineering.md`: prefer removing the cause over compensating: where
   incremental cleanups would each compensate for the algorithm's shape, substitution
   removes the shape.

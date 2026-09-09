@@ -49,7 +49,7 @@ criterion carries its source in the form the board rules give.
 ## Pick the approach, then harden it
 
 The survey opens with the option that removes the problem, the move
-`~/.agents/rulebook/engineering-judgment.md` §Understanding the Problem names: delete
+`~/.agents/rulebook/engineering.md` §Understanding the Problem names: delete
 the thing, drop the requirement, leave it undone. Say what rules it out and how you
 know. When nothing does, it is the pick. A choice put up for decision carries it the
 same way (`AGENTS.md` §Acting). Where more than one way to build it survives, set out

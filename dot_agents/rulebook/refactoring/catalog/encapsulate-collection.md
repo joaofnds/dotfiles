@@ -58,10 +58,10 @@ class Course {
 
 ## House-rule interactions
 
-- `coding-style.md`: behavior lives with data: scattered `push` calls on an
+- `core.md`: behavior lives with data: scattered `push` calls on an
   exposed list are the anemic-model pattern in miniature; the add/remove methods bring
   the behavior home.
-- `coding-style.md`: Tell, Don't Ask: `course.enroll(student)` tells;
+- `core.md`: Tell, Don't Ask: `course.enroll(student)` tells;
   `course.roster.push(student)` asks for internals and decides for them.
-- `engineering-judgment.md`: narrows future bugs: returning copies makes the
+- `engineering.md`: narrows future bugs: returning copies makes the
   whole bypass class unrepresentable rather than merely discouraged.

@@ -51,9 +51,9 @@ for (const sub of expiringSoon) sendRenewalOffer(sub);
 
 ## House-rule interactions
 
-- `coding-style.md`: move understanding from your head into the code: "renaming
+- `core.md`: move understanding from your head into the code: "renaming
   ... is how the persistence happens." This refactoring is that rule's primary verb.
-- `coding-style.md`: comments default to zero, and a clearer name is move 1 of the
+- `core.md`: comments default to zero, and a clearer name is move 1 of the
   three moves to exhaust before writing one; many comments are renames in disguise.
-- `coding-style.md`: preserve established idioms: the rule that protects `i`, `e`,
+- `core.md`: preserve established idioms: the rule that protects `i`, `e`,
   and the codebase's existing conventions from well-meaning expansion.

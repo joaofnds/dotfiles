@@ -7,7 +7,7 @@ description: Settles a question the session would otherwise put up for decision,
 
 A question handed back costs a round trip and lands on the person with the least
 context for it. Most of what a session asks is already answered, in
-`~/.agents/rulebook/engineering-judgment.md`, the rest of the rulebook, the
+`~/.agents/rulebook/engineering.md`, the rest of the rulebook, the
 project's documents, and the wiki the rulebook's using-the-wiki file describes.
 Read those first.
 

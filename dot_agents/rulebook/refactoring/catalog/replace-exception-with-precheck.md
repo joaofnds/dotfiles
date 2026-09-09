@@ -58,9 +58,9 @@ const conn = pool.hasAvailable()
 
 ## House-rule interactions
 
-- `coding-style.md`: boring control flow: an expected branch dressed as
+- `core.md`: boring control flow: an expected branch dressed as
   exception handling is control flow by clever mechanism; the precheck restores the
   plain `if`.
-- `coding-style.md`: defensive networking still governs the racy cases: for
+- `core.md`: defensive networking still governs the racy cases: for
   remote or concurrent resources, bounded attempts with failure translation remain
   correct, per "When not to apply."

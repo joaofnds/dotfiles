@@ -119,7 +119,7 @@ when you save one to memory, save how to re-check it.
 
 ## How the work is done
 
-`~/.agents/rulebook/engineering-judgment.md` is how a problem is understood, a
+`~/.agents/rulebook/engineering.md` is how a problem is understood, a
 solution designed, code written, and work evaluated here. It binds every task that
 does engineering work, and the task's subject does not decide that. A task that
 changes a pipeline, a configuration, a document, an instruction file, or nothing
@@ -144,10 +144,10 @@ and the judgment file in every one of those turns.
 
 - Reading a card, or any backlog command or card move:
   `~/.agents/rulebook/backlog-board.md`.
-- Writing or reviewing code, tests included: `~/.agents/rulebook/coding-style.md`, the
-  language file beside it where the project's language has one and `coding-style.md`
-  alone where it does not, `coding-style-frontend.md` on top for UI work,
-  `~/.agents/rulebook/engineering-judgment.md`, and `~/.agents/rulebook/testing/00-index.md`,
+- Writing or reviewing code, tests included: `~/.agents/rulebook/coding-style/core.md`, the
+  language file beside it where the project's language has one and `core.md`
+  alone where it does not, `frontend.md` on top for UI work,
+  `~/.agents/rulebook/engineering.md`, and `~/.agents/rulebook/testing/00-index.md`,
   which routes to its modules.
 - Drawing or moving a module or service boundary: `~/.agents/rulebook/coupling.md`.
 - Weighing two authors' guidance against each other:

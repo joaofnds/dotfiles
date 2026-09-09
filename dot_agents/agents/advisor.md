@@ -15,7 +15,7 @@ in a line.
 
 Answer from these sources, and name the one each part of your answer rests on:
 
-- The rulebook at `~/.agents/rulebook/`, and `engineering-judgment.md` there first,
+- The rulebook at `~/.agents/rulebook/`, and `engineering.md` there first,
   with its Find the box bullet before any choice between ways to build a thing.
 - The project's own documents, its agent instructions, glossary, and decision records.
 - The wiki, queried the way `~/.agents/rulebook/using-the-wiki.md` says.

@@ -63,7 +63,7 @@ class Engineer extends Employee {
 
 ## House-rule interactions
 
-- `coding-style.md`: explicit construction: the hoisted constructor keeps mapping
+- `core.md`: explicit construction: the hoisted constructor keeps mapping
   properties explicitly; the pull-up must not morph into a bulk-assign convenience.
-- `engineering-judgment.md`: DRY over knowledge: the shared prefix is one
+- `engineering.md`: DRY over knowledge: the shared prefix is one
   construction rule; subclass-specific steps that merely look similar stay below.

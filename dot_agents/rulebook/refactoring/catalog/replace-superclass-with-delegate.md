@@ -55,11 +55,11 @@ class Stack {
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: composition over inheritance: this is the recovery
+- `engineering.md`: composition over inheritance: this is the recovery
   move for inheritance adopted as a shortcut; the house default would not have taken
   the shortcut.
-- `coding-style.md`: leverage the type system: the shrunken public surface turns
+- `core.md`: leverage the type system: the shrunken public surface turns
   "callers shouldn't use `splice`" from a convention into a checked fact.
-- `coding-style.md`: Tell, Don't Ask: forwarding only meaningful operations is
+- `core.md`: Tell, Don't Ask: forwarding only meaningful operations is
   interface design by role: the delegate's API is what the role offers, not what the
   implementation happens to contain.

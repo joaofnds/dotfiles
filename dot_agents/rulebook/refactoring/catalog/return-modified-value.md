@@ -60,7 +60,7 @@ function ascentOf(points) {
 
 ## House-rule interactions
 
-- `coding-style.md`: the never-modify-in-place discipline of translators, applied
+- `core.md`: the never-modify-in-place discipline of translators, applied
   one function at a time; each conversion moves a mutation out of hiding.
-- `coding-style.md`: move understanding into the code: "this call updates
+- `core.md`: move understanding into the code: "this call updates
   `totalAscent`" was head-knowledge; the assignment at the call site writes it down.

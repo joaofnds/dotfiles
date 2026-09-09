@@ -63,8 +63,8 @@ class Order {
 
 ## House-rule interactions
 
-- `coding-style.md`: move understanding out of your head: the named query
+- `core.md`: move understanding out of your head: the named query
   persists what the temp only held locally.
-- `engineering-judgment.md`: make the change easy, then make the easy change:
+- `engineering.md`: make the change easy, then make the easy change:
   this refactoring is usually the "make it easy" half performed so Extract Function
   can follow.

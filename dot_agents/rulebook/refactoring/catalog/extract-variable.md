@@ -59,11 +59,11 @@ function total(booking) {
 
 ## House-rule interactions
 
-- `coding-style.md`: boring control flow: expression-level cleverness is exactly
+- `core.md`: boring control flow: expression-level cleverness is exactly
   what this refactoring dismantles, and a rewrite into named steps is the sanctioned fix
   for code that would otherwise need a *what* comment.
-- `coding-style.md`: comments default to zero; a clearer name is move 1 of the
+- `core.md`: comments default to zero; a clearer name is move 1 of the
   three moves to exhaust before writing one, and this refactoring is how an expression
   gets that name.
-- `coding-style.md`: Beck's ordering: the added element is bought by
+- `core.md`: Beck's ordering: the added element is bought by
   intent-revelation at the point of use.

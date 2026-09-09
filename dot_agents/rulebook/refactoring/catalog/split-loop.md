@@ -60,9 +60,9 @@ for (const member of members) {
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: facts before theories: the performance objection to a
+- `engineering.md`: facts before theories: the performance objection to a
   second traversal is a hypothesis; splitting is reverted only on a measured regression
   in a workload that represents the real caller, not on instinct.
-- `coding-style.md`: Beck's ordering: two simple loops beat one entangled loop on
+- `core.md`: Beck's ordering: two simple loops beat one entangled loop on
   reveals-intent, and no duplication is created: the iterations repeat, the knowledge
   does not.

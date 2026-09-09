@@ -3,8 +3,8 @@
 Rules that bind when a task touches a data store, a queue, distributed state, a
 running service, or a pipeline that builds and deploys or publishes an artifact. The
 general production rules, deadlines, retries, convergence, deploy compatibility, and
-related writes, are in `engineering-judgment.md` under "Making It Work in Production"
-and apply to every task.
+related writes, are in `engineering.md` under "Making It Work in Production" and
+apply to every task.
 
 ## Data and distributed systems
 
@@ -32,7 +32,7 @@ and apply to every task.
   to it, never above it.** The failures the target allows are the error budget,
   spent on releases and experiments. Reliability above the target leaves that
   budget unspent, and callers come to depend on what nobody promised. The velocity
-  decision the budget governs is in `engineering-judgment.md` under Making It Work
+  decision the budget governs is in `engineering.md` under Making It Work
   in Production. *(See: service-level-objectives, embracing-risk)*
 - **Page on symptoms, through the four golden signals.** *(See: monitoring-sre)*
 - **Stabilize first, then root-cause.** *(See: emergency-response,

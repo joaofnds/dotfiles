@@ -1,8 +1,8 @@
 # Domain modeling
 
-Naming things in the domain's language is in `engineering-judgment.md` under
+Naming things in the domain's language is in `engineering.md` under
 Understanding the Problem. The project glossary is in `AGENTS.md` under Where things
-live. The clause on domain-driven design for code is in `coding-style.md` under
+live. The clause on domain-driven design for code is in `coding-style/core.md` under
 Architectural Principles & Layering.
 
 - **Model with whoever answers for the domain, in rounds, never alone.** Bring the

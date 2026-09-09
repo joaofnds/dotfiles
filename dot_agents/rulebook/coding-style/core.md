@@ -1,10 +1,10 @@
 # Coding Style & Architecture Manifesto
 
-Cross-language coding style. Language-specific preferences live beside this file, `coding-style-typescript.md` and `coding-style-go.md` today. A project whose language has no file here reads this one alone. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki: see `using-the-wiki.md`.
+Cross-language coding style. Language-specific preferences live beside this file, `typescript.md` and `go.md` today. A project whose language has no file here reads this one alone. Testing rules live in `testing/00-index.md`. When a principle's background matters, query the wiki: see `using-the-wiki.md`.
 
 **On conflict, the more specific rule governs.** Among the files here: the language file wins over
-this one, which wins over `engineering-judgment.md`, which wins over `coupling.md`, and
-`coupling.md` states its own half ("`coding-style.md` wins"). On anything about tests,
+this one, which wins over `engineering.md`, which wins over `coupling.md`, and
+`coupling.md` states its own half ("`core.md` wins"). On anything about tests,
 `testing/00-index.md` and its modules win over all four, including `coupling.md`'s test-shaped
 symptoms. The repo's own `AGENTS.md` / `CLAUDE.md` wins over every file here, tests included.
 Say which rule you set aside and why: resolving a conflict silently is the defect, not having one. **The
@@ -43,20 +43,20 @@ ports, mappers, DI, or messaging solely to satisfy this document.
   three. This applies to methods you wrote or restructured in this task; a one-line edit
   does not open a spacing pass (*Surgical execution*, below). Gather related lines
   before separating the groups
-  (`refactoring/catalog/slide-statements.md`): a block that comes out with a name you can say is
+  (`slide-statements.md`): a block that comes out with a name you can say is
   an Extract Function you had not spotted. When you cannot say where one block ends, the method has
   no steps yet: that is a design finding, not a spacing one. Test bodies mark the same boundaries
   under their Arrange/Act/Assert names, with their own collapse rule
-  (`testing/03-test-aesthetics.md` §4.1–4.2).
+  (`03-test-aesthetics.md` §4.1–4.2).
 - **Comments default to zero.** The test is *not* "is this a *why* or a *what*": a *why* comment is usually still noise. The test is: **will this code be misread or silently broken without it?** Before writing any `//`, exhaust three moves: (1) a clearer name, (2) a smaller/extracted function, (3) move the rationale to the design record (README / ADR / PRD). A comment survives only when all three fail *and* the code reads as removable-but-isn't: then it states the consequence of removal, nothing else. When unsure, omit; assume the reader wants no comment. **Never comment to explain your edit.** A note about what the code replaced or why you chose it is about the change, not the code. It goes in the commit message, which is where the reader looks for it. This applies to every file you touch, not just source: config, data, and YAML frontmatter get no explanatory comment either, and before typing one, confirm the format even has comments: JSON does not. *(See: code-comments)*
 - **Move understanding from your head into the code.** Renaming and extracting are how the persistence happens: your head is volatile storage. *(See: refactoring-fowler-2018)*
 - **Never the `Impl` suffix.** `FooImpl` is forbidden: a non-name that says nothing. Name a class for what it *is*: the technology, strategy, or source (`SlackNotifier`, `OtelProbe`, `PostgresUserRepository`). If the only thing distinguishing the class from its interface is "the implementation," you haven't yet understood what makes it distinct.
 - **Surgical execution.** Only touch what is directly relevant to the user's intent. Do not "fix" adjacent code, refactor for aesthetic reasons, or leave dead imports behind from your changes.
-- **An exception is a design decision.** A suppression, ignore rule, lint or file exclusion, shim, or any other special case needed to get past a tool mid-change routes to `engineering-judgment.md` §5: not a judgment call to make inline.
+- **An exception is a design decision.** A suppression, ignore rule, lint or file exclusion, shim, or any other special case needed to get past a tool mid-change routes to `engineering.md` §5: not a judgment call to make inline.
 - **Goal-driven TDD.** Tests are written *before* the implementation. Red → simplest green → refactor. Beck's three green-step tactics: **fake it** (return a literal, let the next test force generalization), **triangulate** (a second test forces the abstraction), **obvious implementation** (just write it when the answer is clear), picked by confidence. *(See: canon-tdd, growing-object-oriented-software-guided-by-tests, test-driven-development)*
 - **Leverage the type system.** Use it to its fullest. Avoid escape hatches that bypass compile-time checks: which token is an escape hatch is per-language, so take the list from the language file rather than assuming it transfers. Don't sniff fields on opaque values to guess the type: that is a runtime cast in disguise. Use real classes with `instanceof` (or the language's equivalent), or parse with a schema validator at the boundary. If the compiler is unhappy, the upstream type is wrong: fix it there.
 - **Don't defend against your own code.** When you control both the producer and the consumer of a contract, enforce it at the type/schema level: don't add fallback branches that "handle the case where X is missing" when *you* decide whether X is provided. Iterative design leaves these branches behind ("schema is optional for now"); they become the silent path where bugs hide as the code evolves around them. Make the contract mandatory and delete the fallback.
-- **Changing a shared contract routes to `engineering-judgment.md` §4.** Schema, API response, event payload, queue message: the deploy-compatibility constraint lives there, and it applies whether or not the task was framed as design.
+- **Changing a shared contract routes to `engineering.md` §4.** Schema, API response, event payload, queue message: the deploy-compatibility constraint lives there, and it applies whether or not the task was framed as design.
 
 ## 2. Architectural Principles & Layering
 
@@ -68,7 +68,7 @@ point inward: domain depends on nothing; use cases depend on domain; adapters de
 on use cases. Simpler programs may use simpler structures when contracts and testability
 remain clear. *(See: hexagonal-architecture, clean-architecture, layered-architecture-ddd, domain-driven-design)*
 A DI lookup key is not the *type* arrow these describe. Where a language file has the consumer name its
-adapter as a DI token (`coding-style-typescript.md` §4), the token is a lookup key: the consumer touches
+adapter as a DI token (`typescript.md` §4), the token is a lookup key: the consumer touches
 no member of the adapter, and the compiler checks only the port. Report a backward arrow when the type
 points the wrong way, not when the container's lookup key does: the load-time module edge this creates
 is an accepted cost, recorded there. That edge is a deliberate accepted coupling, not a defect: report it

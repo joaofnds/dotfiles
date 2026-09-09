@@ -1,6 +1,6 @@
 # Go Coding Style
 
-Language-specific preferences for Go projects. Read the generic `coding-style.md` first for universal principles.
+Language-specific preferences for Go projects. Read the generic `core.md` first for universal principles.
 
 ## 1. Domain Modeling
 
@@ -15,7 +15,7 @@ Language-specific preferences for Go projects. Read the generic `coding-style.md
 - Separate from entities -- they represent operation inputs, not persisted state.
 
 ### Repository Interfaces
-- Defined in the package that owns the contract, which `coding-style.md` §2c picks by where the
+- Defined in the package that owns the contract, which `core.md` §2c picks by where the
   consumers live: beside the entity when the domain service is the only client, in the
   capability's own interface-only package when several domains share it.
 - Methods accept `context.Context` as first parameter.
@@ -36,7 +36,7 @@ var (
 - **Wrap within a layer, translate across one.** `fmt.Errorf("loading order %s: %w", id, err)`
   adds context while keeping the cause reachable. At a boundary the cause is an
   implementation detail: an adapter returns the port's sentinel, not the driver's error
-  (`coding-style.md` §2e). `%v` instead of `%w` is the deliberate choice to stop unwrapping.
+  (`core.md` §2e). `%v` instead of `%w` is the deliberate choice to stop unwrapping.
 - **`errors.Is` for identity, `errors.As` for data.** `errors.Is(err, ErrNotFound)` matches a
   sentinel through any depth of wrapping, where `err == target` misses wrapped errors;
   `errors.As(err, &pgErr)` extracts a typed error to read its fields. Never match on the
@@ -69,7 +69,7 @@ var (
 ## 5. Generics
 
 - **Introduce a type parameter only when the change lands two concrete instantiations.** One
-  instantiation is speculative generality (`coding-style.md` §3).
+  instantiation is speculative generality (`core.md` §3).
 - **Constrain to the smallest set that compiles.** `any` only when the function never inspects
   the value.
 - **An interface dispatches; a generic specializes.** Behavior that differs per type is an
@@ -79,7 +79,7 @@ var (
 
 - **Accept interfaces, return structs.** A constructor returns its concrete type; the consumer
   declares the narrow interface it needs. Go packages are small enough that the consumer is
-  usually a single package, so this lands where `coding-style.md` §2c does: the same principle
+  usually a single package, so this lands where `core.md` §2c does: the same principle
   at finer grain, not a competing one. It still decides something: once several packages consume
   one contract, a narrow per-consumer interface and one shared port differ in width and owner,
   and §2c's count-and-locality test is what picks. An interface sitting next to its single
@@ -88,7 +88,7 @@ var (
   been drawn yet.
 - **Type assertions use the comma-ok form.** `v, ok := x.(T)`, never bare `v := x.(T)`: the
   bare form panics at runtime on the wrong dynamic type. A type switch is the multi-case
-  spelling. **The bare form is the escape hatch** `coding-style.md` §1 means in Go; the checked
+  spelling. **The bare form is the escape hatch** `core.md` §1 means in Go; the checked
   forms are this language's `instanceof` and are the sanctioned move. `any` is not an escape
   hatch at all: it is the current spelling of `interface{}`, required only for a genuinely
   unconstrained type parameter, and governed by §5.
@@ -140,11 +140,11 @@ rules; the first is Go-specific and lives only here.
   directory is debt: say which you followed.
 - **One row, one named test.** In a Ginkgo suite that is `DescribeTable` plus one `Entry` per row;
   in a plain `testing` package it is `t.Run`. Either way the row's name is the test's name and the
-  failure line identifies the input (`testing/03-test-aesthetics.md` §4.7).
+  failure line identifies the input (`03-test-aesthetics.md` §4.7).
 - **Fakes of owned ports are the default double**, hand-written, with explicit seed and reset
-  per `testing/02-mocking-roles.md` §4 and the interface check as a compile-time assignment
+  per `02-mocking-roles.md` §4 and the interface check as a compile-time assignment
   (`var _ Port = (*FakePort)(nil)`). `mock.go` for mockgen output is permitted only in an adapter
-  package whose subject is a third-party contract (`testing/02-mocking-roles.md` §6).
+  package whose subject is a third-party contract (`02-mocking-roles.md` §6).
 
 ## 10. Modern Go
 

@@ -58,8 +58,8 @@ function cartTotal(cart) {
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: a good change narrows the space of future bugs: the
+- `engineering.md`: a good change narrows the space of future bugs: the
   entire class "update site forgot the derived value" is eliminated, not patched.
-- `engineering-judgment.md`: facts before theories: the performance case for
+- `engineering.md`: facts before theories: the performance case for
   keeping the stored value must be measured under a representative workload, never
   assumed from the shape of the loop.

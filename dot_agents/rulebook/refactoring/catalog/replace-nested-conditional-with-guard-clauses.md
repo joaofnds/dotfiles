@@ -59,7 +59,7 @@ function payout(employee) {
 
 ## House-rule interactions
 
-- `coding-style.md`: boring control flow names "early returns" as the house
+- `core.md`: boring control flow names "early returns" as the house
   default; this refactoring is that clause applied to inherited nesting.
-- `coding-style.md`: Beck's ordering: no elements added: pure intent-revelation
+- `core.md`: Beck's ordering: no elements added: pure intent-revelation
   through structure, the cheapest win in the catalog.

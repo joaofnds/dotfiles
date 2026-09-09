@@ -59,8 +59,8 @@ function reserveStandardSeat(p) { assignCabin(p, "standard"); }
 
 ## House-rule interactions
 
-- `coding-style.md`: comments default to zero: `book(customer, true /* premium */)`
+- `core.md`: comments default to zero: `book(customer, true /* premium */)`
   is the flag argument confessing; the explicit function name replaces the comment.
-- `coding-style.md`: leverage the type system: where variants must stay one
+- `core.md`: leverage the type system: where variants must stay one
   entry point, a union of named option values beats a bare boolean: the compiler
   then documents and checks what `true` never could.

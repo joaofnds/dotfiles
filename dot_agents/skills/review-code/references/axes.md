@@ -64,9 +64,9 @@ checks.
 ## Style
 
 > Style axis: how the code reads at the line and declaration level. Your standard
-> is the coding style under `~/.agents/rulebook/`: `coding-style.md`, every language
-> file that matches the diff (`coding-style-go.md`, `coding-style-typescript.md`),
-> `coding-style.md` alone where none matches, and `coding-style-frontend.md` on top
+> is the coding style under `~/.agents/rulebook/coding-style/`: `core.md`, every language
+> file that matches the diff (`go.md`, `typescript.md`),
+> `core.md` alone where none matches, and `frontend.md` on top
 > when the diff builds UI. Names use the domain's words: when the
 > business says "order", the code doesn't say "transaction record". A swallowed
 > error is a type-system escape hatch and a finding. An entity constructible in an
@@ -76,7 +76,7 @@ checks.
 > a real boundary and whether it checks destination as well as shape, error
 > translation, entity construction and constructor shape, mapper mechanics, the
 > language files' idioms, and hand-edits to generated files. What an attacker can
-> do with input that passed a parse is Security's. Of `coding-style.md`'s
+> do with input that passed a parse is Security's. Of `core.md`'s
 > "Architectural Principles & Layering" section, yours are the entity rules other
 > than "Behavior lives with data", framework-agnostic constructors, safe parsing,
 > error translation in both places it is stated (the translation half of
@@ -95,13 +95,13 @@ checks.
 ## Architecture
 
 > Architecture axis: structure, dependencies, and production behavior. Your
-> standard is `~/.agents/rulebook/engineering-judgment.md` from "Designing the
+> standard is `~/.agents/rulebook/engineering.md` from "Designing the
 > Solution" through "Evaluating Work", `~/.agents/rulebook/coupling.md` whole,
-> and in `~/.agents/rulebook/coding-style.md` the "Architectural Principles & Layering"
+> and in `~/.agents/rulebook/coding-style/core.md` the "Architectural Principles & Layering"
 > and "Code Construction & Decoupling Patterns" sections with every language file
-> that matches the diff, and `coding-style.md` alone where none matches. When the diff
+> that matches the diff, and `core.md` alone where none matches. When the diff
 > touches a data store, a queue, distributed state, or a running service, read
-> `~/.agents/rulebook/production.md` too. Of `coding-style.md`, yours are
+> `~/.agents/rulebook/production.md` too. Of `core.md`, yours are
 > "Code Construction & Decoupling Patterns" whole and, in "Architectural Principles
 > & Layering", the layering rule with its paragraph on DI lookup keys, "Behavior
 > lives with data", the application layer, "The client defines the contract", the
@@ -155,8 +155,8 @@ checks.
 > with its checklist, `01-architecture-and-harness.md`, `02-mocking-roles.md`, and
 > `03-test-aesthetics.md`. Read `references/test-data-builders.md` or
 > `references/characterization-tests.md` there before citing either. Tests are
-> code, so `~/.agents/rulebook/coding-style.md` applies to them too, with the language
-> file that matches the diff and `coding-style.md` alone where none matches. Read the
+> code, so `~/.agents/rulebook/coding-style/core.md` applies to them too, with the language
+> file that matches the diff and `core.md` alone where none matches. Read the
 > changed test files fully.
 > Read the subject's public API, the signatures and exported types the tests name;
 > an assertion can't be judged against observable behavior without it. List
@@ -220,8 +220,8 @@ checks.
 > author decides what the change itself owes. Your standard is the refactoring
 > index at `~/.agents/rulebook/refactoring/00-index.md`, plus the catalog document
 > under `catalog/` there for each refactoring you cite, read before you cite it.
-> `~/.agents/rulebook/coding-style.md` bounds every remedy, with the language file that
-> matches the diff and `coding-style.md` alone where none matches.
+> `~/.agents/rulebook/coding-style/core.md` bounds every remedy, with the language file that
+> matches the diff and `core.md` alone where none matches.
 > Where Fowler and a house rule differ, the house rule wins. The wiki checks have
 > no Refactoring section,
 > so walk their "Not findings" section only. Read the changed files fully, then

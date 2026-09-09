@@ -10,7 +10,7 @@ task revealed, asked at the level of boundaries and dependencies: one change tha
 to be made in two places (duplicated knowledge); a dependency that runs toward
 something volatile; a module that gained a second reason to change; a primitive
 carrying domain meaning nobody named; a hierarchy that would be simpler as delegation;
-a boundary the task crossed awkwardly. `engineering-judgment.md` §Writing the Code,
+a boundary the task crossed awkwardly. `engineering.md` §Writing the Code,
 `coupling.md`, and `refactoring/00-index.md` §Smells are the vocabulary.
 
 Fowler's twenty-four smells and sixty-six refactorings are

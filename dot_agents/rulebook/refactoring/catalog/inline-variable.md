@@ -53,8 +53,8 @@ function canCheckout(cart) {
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: code is a liability: a variable that explains nothing
+- `engineering.md`: code is a liability: a variable that explains nothing
   is a line of maintenance with no value. Delete it.
-- `coding-style.md`: Beck's ordering: the removal is a fewest-elements win, valid
+- `core.md`: Beck's ordering: the removal is a fewest-elements win, valid
   precisely because no intent is lost; when intent would be lost, the case belongs to
   Extract Variable instead.

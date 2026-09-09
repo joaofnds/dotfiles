@@ -57,9 +57,9 @@ class Recruiter extends Employee {}
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: YAGNI: the speculatively-generalized method is
+- `engineering.md`: YAGNI: the speculatively-generalized method is
   flexibility for a future that never came; the push-down is its retirement.
-- `coding-style.md`: leverage the type system: after the move, code that still
+- `core.md`: leverage the type system: after the move, code that still
   wants the method on a general reference will be tempted into type-sniffing;
   restructure the callers (or the hierarchy) rather than casting around the honesty
   you just bought.

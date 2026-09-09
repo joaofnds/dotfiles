@@ -57,8 +57,8 @@ notifyPicker(order);
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: work in the smallest coherent steps: the hop-by-hop
+- `engineering.md`: work in the smallest coherent steps: the hop-by-hop
   slide with a test after each move is this rule applied literally.
-- `coding-style.md`: comments default to zero: a section comment labelling
+- `core.md`: comments default to zero: a section comment labelling
   scattered code ("// pricing") is usually a slide that hasn't happened yet: gather
   the lines and the label becomes unnecessary or becomes a function name.

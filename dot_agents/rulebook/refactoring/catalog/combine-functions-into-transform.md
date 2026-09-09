@@ -57,11 +57,11 @@ function invoiceTax(u) { return u.tax; }
 
 ## House-rule interactions
 
-- `coding-style.md`: transformations are "stateless, non-mutating translators …
+- `core.md`: transformations are "stateless, non-mutating translators …
   input objects are never modified in place." The deep copy in step 1 is what keeps
   this refactoring inside that rule; enriching the input in place violates it.
-- `coding-style.md`: where this refactoring and Combine Functions into Class both
+- `core.md`: where this refactoring and Combine Functions into Class both
   fit, the transform wins by default: it delivers the single change site without
   introducing a class.
-- `engineering-judgment.md`: complexity carries the burden of proof: the transform
+- `engineering.md`: complexity carries the burden of proof: the transform
   is justified by demonstrated duplication of derivations, never by anticipated ones.

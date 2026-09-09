@@ -52,8 +52,8 @@ display(label);
 
 ## House-rule interactions
 
-- `coding-style.md`: move understanding from your head into the code: tracking
+- `core.md`: move understanding from your head into the code: tracking
   which meaning a reused variable currently holds is exactly the volatile head-state
   that renaming into distinct constants persists.
-- `coding-style.md`: Beck's ordering: three honest names beat one lying name on
+- `core.md`: Beck's ordering: three honest names beat one lying name on
   reveals-intent; the extra declarations are elements well spent.

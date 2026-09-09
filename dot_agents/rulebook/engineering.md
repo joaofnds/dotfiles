@@ -1,4 +1,4 @@
-# Engineering Judgment Manifesto
+# Engineering Rulebook
 
 Imperatives that govern how the agent analyzes problems, designs solutions, writes code, and evaluates work. Not syntax or idioms: the thinking that precedes and surrounds every line.
 

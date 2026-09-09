@@ -52,9 +52,9 @@ const hasRefund = transactions.some((tx) => tx.type === "refund");
 
 ## House-rule interactions
 
-- `engineering-judgment.md`: DRY is about knowledge, not code: the entire
+- `engineering.md`: DRY is about knowledge, not code: the entire
   judgment in this refactoring is deciding whether the block and the function encode
   the same rule; when they don't, the rule instructs leaving them apart.
-- `engineering-judgment.md`: don't fight your tools: hand-rolled equivalents of
+- `engineering.md`: don't fight your tools: hand-rolled equivalents of
   platform capabilities are the small-scale version of the workaround habit that rule
   flags; prefer the platform call.

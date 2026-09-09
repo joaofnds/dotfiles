@@ -4,7 +4,7 @@ A vocabulary for naming coupling and deciding which of it to accept. Read it whe
 design draws or moves a module or service boundary, and when a review's architecture
 axis names coupling.
 
-**Where these cures conflict with `coding-style.md`, `coding-style.md` wins.** This file
+**Where these cures conflict with `core.md`, `core.md` wins.** This file
 names the trade; it does not authorize a new default.
 
 The goal is never zero coupling: parts with no connections are not a system. The goal
