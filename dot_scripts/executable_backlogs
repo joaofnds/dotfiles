@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+BACKLOG_HOME="$HOME/code/backlog/boards"
+RESTIC_HOME="$HOME/.config/restic"
+
+set_restic_vars() {
+	if [[ -z $RESTIC_REPOSITORY ]]; then
+		export RESTIC_REPOSITORY="rclone:drive:/backlog-boards"
+	fi
+
+	if [[ -z $RESTIC_PASSWORD_COMMAND ]]; then
+		export RESTIC_PASSWORD_COMMAND="gpg -d \"$RESTIC_HOME/resticpass.gpg\""
+	fi
+}
+
+backup() {
+	if [[ ! -d "$BACKLOG_HOME" || -L "$BACKLOG_HOME" ]]; then
+		echo "Backup source must be a real directory: $BACKLOG_HOME" >&2
+		return 1
+	fi
+
+	set_restic_vars
+	restic backup --verbose "$BACKLOG_HOME"
+}
+
+restore() {
+	set_restic_vars
+	restic restore latest --path "$BACKLOG_HOME" --target /
+}
+
+help() {
+	cat <<__EOF__
+usage: backlogs [backup | restore]
+__EOF__
+}
+
+case $1 in
+backup)
+	backup
+	;;
+restore)
+	restore
+	;;
+*)
+	help
+	;;
+esac

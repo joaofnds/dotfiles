@@ -59,15 +59,14 @@ with evidence, close the dependency, create the file first.
 
 ## Where the board lives
 
-A board sits at `backlog/` in the repository root, or at the path a root
-`backlog.config.yml` names in `backlog_directory`. Never assume the path, and
-never relocate a board you find.
+Personal boards live in `~/code/backlog/boards/<name>/`. Each project links
+`backlog` to its board.
+Run the CLI from the project directory. Reuse the same board for its worktrees.
 
-Confirm a private board is ignored before the first write. `git check-ignore -q
-<board-dir>/config.yml` exits 0 when it is. Probe that child path, never the
-directory name, which exits 1 while nothing is on disk yet. On a non-zero exit,
-write nothing and report the pattern that needs adding. Re-verify this on a git
-upgrade, since it was probed at git 2.55.0.
+Confirm a private board is ignored before the first write. Run
+`git check-ignore -q backlog` from the project root. The global `/backlog`
+pattern matches the link, while `/backlog/` does not. On a non-zero exit, write
+nothing and report the pattern that needs adding.
 
 A document goes on the board. It goes into the repository's tracked documentation
 only on an explicit direction, and only where that repository already has a
@@ -98,13 +97,20 @@ a note stays a note on the card.
 
 ## The CLI
 
-Never run `backlog init`, which writes backlog's own workflow-instruction block
-into the repository's agent instructions, a second source of process truth. Where
-a repository has no board and the work needs one, create it by hand. A read-only
-request reports that no board exists and creates nothing. Copy
-`~/.agents/backlog-config.yml` to a root `backlog.config.yml`, where alone the
-`backlog_directory` key is read, naming the project for its directory, and make
-the tasks, docs, and decisions directories under the path it names.
+Never run `backlog init`, which writes a second workflow-instruction source into
+the repository. A read-only request reports a missing board and creates nothing.
+
+When work needs a new board, ask for its name before creating it, unless the
+name was already supplied in the session. Use that name as one directory under
+`~/code/backlog/boards/`. Do not derive a name from the project path. If the name
+is already taken, ask whether to link that board or use another name.
+
+For a new board, create its tasks, docs, and decisions directories. Copy
+`~/.agents/backlog-config.yml` to its `config.yml`, setting `project_name` to the
+chosen name. Keep configuration in the board so the central backup includes it.
+
+For a new or existing board, link the project's `backlog` to it without
+overwriting an existing path. Leave an existing board's contents intact.
 
 Check `schemaVersion` on every read. A value other than 1 is a stop-and-report
 condition. Consume only these fields from `task`: `id`, `title`, `description`,
