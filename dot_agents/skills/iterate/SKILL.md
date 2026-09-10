@@ -2,19 +2,23 @@
 name: iterate
 disable-model-invocation: true
 argument-hint: "[stage=provider:model ...]"
-description: Runs one iteration of the loop on the board in the current directory: triage, pick the queue's first card, carry it through its columns one session at a time, reflect. Reads what each stage did before starting the next, and answers what a stage left open. Use when directed to run an iteration on a board. It runs one iteration and ends, so the next one is a separate direction.
+description: Runs intake, selects accepted work, and carries one card through its stages and reflection. Reads each stage's result before continuing. Runs only on direction, one iteration per invocation. Full-board planning belongs to triage.
 ---
 
 # Iterate
 
 You run one iteration on the board in the current directory, one session at a time,
 and you answer between sessions what a stage left open, so the iteration reaches
-its end without a question going out. The `iterate` script starts the sessions and
+its end within the card's accepted scope. Inbox admission requires a typed user
+decision unless a recorded policy explicitly delegates it, including during
+unattended work. Apply the board's Capture and admission policy. Leave pending
+intake decisions for that review and continue accepted work.
+The `iterate` script starts the sessions and
 holds the guards, so run it rather than checking the tree, the goal, or the card's
 status yourself.
 
 ```
-iterate start           # triage, pick the queue's first card, write its bet, print it
+iterate start           # intake, pick an accepted card, write its bet, print it
 iterate step <card>     # one session: the card's column, or reflect when it is Done
 ```
 

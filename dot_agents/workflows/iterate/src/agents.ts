@@ -1,6 +1,6 @@
 import { Exit } from "./exit.ts";
 
-export const stages = ["triage", "shape", "build", "review", "reflect"] as const;
+export const stages = ["triage", "shape", "debug", "verify", "build", "review", "reflect"] as const;
 export type Stage = (typeof stages)[number];
 
 const claudeEfforts = ["low", "medium", "high", "xhigh", "max"] as const;

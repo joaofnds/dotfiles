@@ -5,12 +5,11 @@ description: Investigates a failure, unexpected behavior, or a cost symptom such
 
 # Debug
 
-Debug is the shape step for defects: it ends with the confirmed cause, the
-evidence, and the reproduction on a card at Shape, created when none exists.
+Debug establishes a defect's cause, evidence, and reproduction within authorized work.
 Land no fix during the investigation, because a fix changes the system under
-study and the probes stop isolating anything. A defect met mid-task follows
-build's rule, fixed now when small and a card when larger, and becomes a debug
-card whatever its size when the cause survives a direct look.
+study and the probes stop isolating anything. A defect required by the active task
+becomes a debug card when its cause survives a direct look. Capture an independent
+finding under the board's Capture and admission policy before investigating it.
 
 Instrument and probe the system under study. On a live service, observation is
 read-only.
@@ -61,11 +60,11 @@ cause.
 
 Grep the probe prefix and remove the instrumentation. A probe that must stay is
 recorded on the card with its path and purpose. An investigation that stalls, with no
-reproduction, no discriminating observation, or no way to switch the cause, also
-closes: the card records what was established, what is missing, and the options, and
-the reply says the cause is unsettled. Otherwise the card leaves like any shaped task:
-the goal, the confirmed cause with its evidence, and the reproduction as the
-acceptance observation and the first test to write, a test where the repo has a suite
-and the recorded command otherwise. The session continues into build only when one fix
-is settled and the direction included fixing. With no single fix settled, the cause
-and whatever candidates exist are recorded on the card.
+reproduction, no discriminating observation, or no way to switch the cause, records
+what was established, what is missing, and the next observation needed. The reply
+says the cause is unsettled. Finish the card under the board's investigation policy.
+
+When the direction authorizes only finding the cause, record the answer against
+that question's acceptance. Keep proposed fixes separate. When it includes fixing,
+shape the fix with the confirmed cause, evidence, and reproduction as its first
+test. Continue into build only when the fix is settled and authorized.

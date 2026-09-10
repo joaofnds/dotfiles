@@ -44,15 +44,22 @@ term when you introduce or lean on one, one term per concept.
   the card between stages, and applies the guards.
 - **Held card**: a card in Build or Review with an assignee, belonging to the session
   that set it. Another session may add a note and never changes its status.
+- **Inbox**: captured observations and proposed work awaiting an admission decision.
+- **Admission**: acceptance of an outcome and its scope into the delivery queue,
+  recorded from a typed direction or an explicitly delegated policy.
+- **Intake**: screening incoming work and returning deferrals against evidence and
+  the goal, with proposed admissions presented as one batch.
+- **Deferred work**: work withheld from execution until reconsideration, with a
+  recorded next check date and, where relevant, an observable return event.
 - **Goal**: what a board's open work is judged against, stated on its newest triage
   doc. Triage orders the queue by it and reflect judges each increment against it.
   Changing it is a decision the loop does not make for itself.
 - **Milestone**: one increment of the goal, named by what becomes possible when it
   is Done, holding the cards that produce it. A board carries several, ordered by
   when their feedback is needed.
-- **Iteration**: one pass of the outer loop: triage the board, pick the queue's first
-  card, run it to Done, reflect. The loop repeats iterations. It never drains the
-  board.
+- **Iteration**: one pass of the outer loop: screen intake, pick accepted work,
+  run it to Done, reflect. Full-board planning runs separately when replanning is
+  needed. The loop repeats iterations. It never drains the board.
 - **Reflection doc**: the dated doc the reflect step leaves on the board, through the
   backlog CLI: the Coaching Kata's five questions answered, one verdict on the goal
   (on track, adjust, or pivot), proposed planning changes, and kaizen candidates.

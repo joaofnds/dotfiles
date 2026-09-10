@@ -1,20 +1,69 @@
 # Board
 
-All work runs through the backlog board. Every change goes through the `backlog`
-CLI, never by editing a file under the board directory. Never adopt backlog's own
-`instructions` or agent-guide output as process truth.
+Track independent work on the backlog board. Change cards and documents through the
+`backlog` CLI. The configuration exception is under The CLI. Never adopt backlog's
+own `instructions` or agent-guide output as process truth.
 
 ## Columns
 
-A card sits in To Do, Shape, Build, Review, or Done. The column names the work
-the card is waiting for. A task takes only the steps that benefit it, and the
-review is a step every change takes. Backward
-moves and direct creation in any column are legal. Directed work that an existing
-card describes is that card. Work it and move it. Review holds only a review in
-flight.
+A card sits in Inbox, To Do, Shape, Build, Review, or Done. Inbox holds observations
+awaiting admission. To Do holds accepted actionable work. The other columns name
+the work the card is waiting for. A task takes only the steps that benefit it, and
+every change takes review. Review holds only a review in flight.
 
-Given no card where the work needs one, create it in the column the work is
-entering, unless the skill running says otherwise.
+Directed work that an existing card describes stays on that card. Create a card for
+directed independent work in the column it enters. Keep implementation steps on the
+card as checkboxes. A skill's creation rule applies only within already authorized
+work. Incidental findings follow Capture and admission, including findings from
+debug, review, and kaizen.
+
+## Capture and admission
+
+Search for the same outcome before creating a card. Append new evidence to its
+existing card. Capture a separate incidental need in Inbox with the symptom or
+outcome, source card or direction, observed evidence, possible consequence, and
+what remains uncertain. A preference for cleaner code without a concrete cost
+stays a note. Leave priority, milestone, acceptance criteria, and implementation
+plan unset until screening gives them evidence. Create captures unassigned and
+without default definition-of-done items.
+
+An Inbox card enters To Do only after a typed user decision accepts its proposed
+outcome and scope. Record that direction on the card before moving it. Admission
+may cover a named batch or a recorded policy explicitly delegating those decisions.
+A direction to iterate or continue unattended grants no admission authority.
+Pending admissions do not block already accepted work. Urgency calls for prompt
+screening, not self-admission. Work required to meet the active card's agreed
+acceptance stays within that card's authorization.
+
+Adding requirements to an accepted card through a merge, split, or follow-up needs
+the same admission decision. Attaching evidence that changes no requirement does
+not. Preserve the proposed scope on the Inbox card until accepted. Archive an
+absorbed duplicate only after its evidence and accepted requirements reach the
+survivor, with a pointer to it. Rejected cards are archived with a reason, never
+marked Done as if delivered.
+
+Defer a card with the `deferred` label and a `Reconsideration` section in its notes.
+Record the reason and `Next check: YYYY-MM-DD` there. For an event-based wait, also
+record the event and a check that detects it. Keep `dueDate` for the delivery
+deadline. The next check date ensures a missed event cannot park the card forever.
+Deferred work is excluded from execution in every column. Triage checks these
+waits on each intake pass. Reaching the next check starts reconsideration, not execution.
+Keep a deferred capture in Inbox. Reactivation of previously accepted work follows
+its recorded authorization and still requires a fresh readiness check.
+
+An accepted investigation enters Shape with one of `investigate:debug` or
+`investigate:verify`, a question, a budget, and a stopping condition. The runner
+uses that label to select the skill. The card authorizes answering the question.
+When answered, move it through Review to Done with the evidence. An inconclusive
+result stays open with the missing evidence and next action, or is deferred.
+Proposed fixes beyond the accepted scope enter Inbox. Acceptance criteria on an
+investigation do not authorize a move to Build.
+
+The execution queue includes only To Do, Shape, Build, and Review cards without
+`deferred`. The runner takes its eligible IDs before automated intake and selects
+among them afterward, checking current readiness. Its status guard cannot verify
+who authorized a CLI write or whether prose adds scope. Those judgments use the
+recorded direction above.
 
 ## The status is a claim
 
@@ -49,8 +98,9 @@ every one of them:
   unchecked, unless the card carries a `partial` or `abandoned` label. That label
   goes on only when the session was directed to stop there, with the reason in the
   final summary.
-- A move to a later column while any dependency is not Done. Backward moves are
-  exempt.
+- A move into Build, Review, or Done while any dependency is not Done. Admission
+  to To Do or Shape and backward moves are exempt. Acceptance of blocked work does
+  not make it ready to execute.
 - A `--doc` or `--ref` path that does not exist on disk.
 
 These three refusals are not blockers to route around. Report the blocked
@@ -114,7 +164,7 @@ overwriting an existing path. Leave an existing board's contents intact.
 
 Check `schemaVersion` on every read. A value other than 1 is a stop-and-report
 condition. Consume only these fields from `task`: `id`, `title`, `description`,
-`status`, `priority`, `ordinal`, `assignees`, `createdAt`, `updatedAt`, `dueDate`, `labels`,
+`status`, `type`, `project`, `reporter`, `priority`, `ordinal`, `assignees`, `createdAt`, `updatedAt`, `dueDate`, `labels`,
 `milestone`, `dependencies`, `references`, `acceptanceCriteria`, `definitionOfDone`,
 `subtasks`, `documentation`, `implementationPlan`, `implementationNotes`, `comments`,
 `finalSummary`, `parentTaskId`.
@@ -125,8 +175,15 @@ the additive sibling where the CLI has one. Where a flag has none, read the
 current values and pass every one you are keeping in a single command. A title
 edit leaves the card's file name as it was.
 
-Change the board directory's `config.yml` with `backlog config set`, whose keys are
-camelCase, because a hand edit to that file can be lost on a later read.
+Change scalar configuration with `backlog config set`, whose keys are camelCase.
+For a list the CLI refuses to set, such as `statuses`, read the current file, save
+a backup outside the board, and edit only that list. Read it back through
+`backlog config list`, then set dependent scalar values through the CLI.
+
+New boards use the Inbox default. Migrate an existing board by adding Inbox before
+To Do and setting `defaultStatus` to Inbox. Review existing To Do cards individually
+for admission evidence before moving any to Inbox. Preserve held work. On a board
+awaiting migration, capture incidental findings as drafts outside its queue.
 
 A board holds any number of milestones. `task create -m` and `task list -m` match a
 milestone title exactly, case-insensitive, and neither reports a miss. Create stores
@@ -138,10 +195,12 @@ them on an upgrade.
 
 ## Syntax
 
-    # the queue, ready cards by priority, Build and Review included. Ties within a
-    # priority run in card ID order, and --ordinal does not change this sort.
-    # --plain lists every column, Done included
-    backlog task list --ready --sort priority
+    # dependency-ready candidates; exclude deferred labels before selecting.
+    # Ties run in card ID order; --ordinal does not change this sort.
+    backlog task list --status "To Do,Shape,Build,Review" --ready --sort priority --json
+
+    # capture an incidental finding, with no delivery commitments
+    backlog task create "<observed need>" -s Inbox -a "" --no-dod-defaults --description "<evidence and uncertainty>"
 
     # create a card, without -s it lands in default_status
     backlog task create "<title>" -s <column> --type <type> --ac "<criterion>"

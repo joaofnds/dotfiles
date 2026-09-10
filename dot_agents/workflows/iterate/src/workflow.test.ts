@@ -23,7 +23,7 @@ describe("iterate", () => {
 
     expect(result.code).toBe(0);
     expect(result.calls).toEqual([
-      "/triage",
+      "/triage inbox",
       "/shape DOT-1",
       "/build DOT-1",
       "/review DOT-1",
@@ -32,13 +32,155 @@ describe("iterate", () => {
     expect(result.edits).toContain("Bet,");
   });
 
+  test("skips an Inbox candidate admitted during intake and picks existing work", async () => {
+    const { run } = await harness.seed({ status: "Inbox", triageStatus: "To Do" });
+
+    const result = await run("start");
+
+    expect(result.code).toBe(0);
+    expect(result.calls).toEqual(["/triage inbox"]);
+    expect(result.stdout).toContain("DOT-2");
+    expect(result.edits).not.toContain("DOT-1");
+    expect(result.systems[0]).toContain("user's batch decision");
+  });
+
+  test("skips accepted work withdrawn to Inbox during intake", async () => {
+    const { run } = await harness.seed({ status: "To Do", triageStatus: "Inbox" });
+
+    const result = await run("start");
+
+    expect(result.code).toBe(0);
+    expect(result.stdout).toContain("DOT-2");
+    expect(result.edits).not.toContain("DOT-1");
+  });
+
+  test("skips deferred cards in the ready queue", async () => {
+    const { run } = await harness.seed({ labels: ["deferred"] });
+
+    const result = await run("start");
+
+    expect(result.code).toBe(0);
+    expect(result.stdout).toContain("DOT-2");
+    expect(result.edits).not.toContain("DOT-1");
+  });
+
+  test("continues accepted work that becomes ready during intake", async () => {
+    const { run } = await harness.seed({ ready: false, triageUnblocks: true });
+
+    const result = await run("start");
+
+    expect(result.code).toBe(0);
+    expect(result.stdout).toContain("DOT-1");
+  });
+
+  test("skips accepted work that remains blocked after intake", async () => {
+    const { run } = await harness.seed({ ready: false });
+
+    const result = await run("start");
+
+    expect(result.code).toBe(0);
+    expect(result.stdout).toContain("DOT-2");
+  });
+
+  test.each(["debug", "verify"])(
+    "runs the %s investigation without promoting a card with criteria",
+    async (stage) => {
+      const { run } = await harness.seed({
+        status: "Shape",
+        labels: [`investigate:${stage}`],
+        shaped: true,
+      });
+
+      const result = await run("step", "DOT-1");
+
+      expect(result.code).toBe(2);
+      expect(result.calls).toEqual([`/${stage} DOT-1`]);
+      expect(result.edits).not.toContain("--status Build");
+    },
+  );
+
+  test.each(["debug", "verify"])(
+    "reflects after the %s stage explicitly completes its investigation",
+    async (stage) => {
+      const { run } = await harness.seed({
+        status: "Shape",
+        labels: [`investigate:${stage}`],
+        investigationStatus: "Done",
+      });
+
+      const result = await run("DOT-1");
+
+      expect(result.code).toBe(0);
+      expect(result.calls).toEqual([`/${stage} DOT-1`, "/reflect DOT-1"]);
+    },
+  );
+
+  test("skips a nested Inbox candidate without blocking accepted work", async () => {
+    const { run } = await harness.seed({ firstId: "DOT-2.1.1", status: "Inbox" });
+
+    const result = await run("start");
+
+    expect(result.code).toBe(0);
+    expect(result.stdout).toContain("DOT-2");
+    expect(result.edits).not.toContain("DOT-2.1.1");
+  });
+
+  test("runs an explicitly selected nested accepted card", async () => {
+    const { run } = await harness.seed({ firstId: "DOT-2.1.1" });
+
+    const result = await run("step", "DOT-2.1.1");
+
+    expect(result.code).toBe(0);
+    expect(result.calls).toEqual(["/shape DOT-2.1.1"]);
+  });
+
+  test.each(["debug", "verify"])(
+    "keeps a newly requested %s investigation in Shape and dispatches it next",
+    async (stage) => {
+      const { run } = await harness.seed({
+        status: "Shape",
+        shaped: true,
+        stall: "shape",
+        shapeInvestigation: `investigate:${stage}`,
+      });
+
+      const shaped = await run("step", "DOT-1");
+      const investigated = await run("step", "DOT-1");
+
+      expect(shaped.code).toBe(2);
+      expect(investigated.code).toBe(2);
+      expect(investigated.calls).toEqual(["/shape DOT-1", `/${stage} DOT-1`]);
+      expect(investigated.edits).not.toContain("--status Build");
+    },
+  );
+
+  test.each(["type", "project", "reporter"] as const)(
+    "continues after a stage changes only the card's %s",
+    async (field) => {
+      const { run } = await harness.seed({ stall: "shape", mute: true, shapeMetadata: field });
+
+      const result = await run("DOT-1");
+
+      expect(result.code).toBe(2);
+      expect(result.calls).toEqual(["/shape DOT-1", "/shape DOT-1"]);
+    },
+  );
+
+  test("never starts a stage from a deferred snapshot already returned by the board", async () => {
+    const { run } = await harness.seed({ status: "Build", deferOnRead: 2 });
+
+    const result = await run("step", "DOT-1");
+
+    expect(result.deferredDispatches).toEqual([]);
+  });
+
   test("a stage that wrote on the card but left it in its column runs again, until the session cap", async () => {
     const { run } = await harness.seed({ stall: "shape" });
 
     const result = await run();
 
     expect(result.code).toBe(1);
-    expect(result.calls).toEqual(["/triage", ...Array(6).fill("/shape DOT-1")]);
+    expect(result.calls).toEqual(["/triage inbox", ...Array(6).fill("/shape DOT-1")]);
     expect(result.stderr).toContain("stayed in To Do");
     expect(result.stderr).toContain("session cap");
   });
@@ -49,7 +191,7 @@ describe("iterate", () => {
     const result = await run();
 
     expect(result.code).toBe(2);
-    expect(result.calls).toEqual(["/triage", "/shape DOT-1"]);
+    expect(result.calls).toEqual(["/triage inbox", "/shape DOT-1"]);
     expect(result.stderr).toContain("wrote nothing");
   });
 
@@ -219,7 +361,7 @@ describe("iterate", () => {
     const result = await run();
 
     expect(result.code).toBe(1);
-    expect(result.calls).toEqual(["/triage"]);
+    expect(result.calls).toEqual(["/triage inbox"]);
     expect(result.edits).toBe("");
     expect(result.stderr).toContain("held in Review");
   });
@@ -342,7 +484,7 @@ describe("iterate", () => {
     const result = await run("start");
 
     expect(result.code).toBe(0);
-    expect(result.calls).toEqual(["/triage"]);
+    expect(result.calls).toEqual(["/triage inbox"]);
     expect(result.edits).toContain("Bet,");
     expect(result.stdout).toContain("DOT-1");
   });
@@ -434,6 +576,69 @@ describe("iterate", () => {
       expect(first.code).toBe(0);
       expect(result.code).toBe(1);
       expect(result.calls).toEqual(["/shape DOT-1"]);
+    });
+  });
+  describe("when work is ineligible", () => {
+    test.each(["Inbox", "Waiting"])("refuses explicit work in %s", async (status) => {
+      const { run } = await harness.seed({ status });
+
+      const result = await run("step", "DOT-1");
+
+      expect(result.code).toBe(1);
+      expect(result.calls).toEqual([]);
+    });
+
+    test.each(["To Do", "Shape", "Build", "Review", "Done"])(
+      "refuses deferred work in %s",
+      async (status) => {
+        const { run } = await harness.seed({ status, labels: ["deferred"] });
+
+        const result = await run("DOT-1");
+
+        expect(result.code).toBe(1);
+        expect(result.calls).toEqual([]);
+        expect(result.stderr).toContain("deferred");
+      },
+    );
+
+    test.each(["Inbox", "Waiting", "Done"])("excludes %s from the queue", async (status) => {
+      const { run } = await harness.seed({ status, secondStatus: "Done" });
+
+      const result = await run("start");
+
+      expect(result.code).toBe(0);
+      expect(result.calls).toEqual(["/triage inbox"]);
+      expect(result.stderr).toContain("the queue is empty");
+      expect(result.edits).toBe("");
+    });
+  });
+
+  describe("when the board schema is unsupported", () => {
+    test.each([{ args: ["start"] }, { args: ["step", "DOT-1"] }])(
+      "refuses an unsupported board schema for %j",
+      async ({ args }) => {
+        const { run } = await harness.seed({ schemaVersion: 2 });
+
+        const result = await run(...args);
+
+        expect(result.code).toBe(1);
+        expect(result.calls).toEqual([]);
+        expect(result.stderr).toContain("schemaVersion");
+      },
+    );
+  });
+
+  describe("when investigation labels conflict", () => {
+    test("refuses conflicting investigation labels before launching a stage", async () => {
+      const { run } = await harness.seed({
+        status: "Shape",
+        labels: ["investigate:debug", "investigate:verify"],
+      });
+
+      const result = await run("step", "DOT-1");
+
+      expect(result.code).toBe(1);
+      expect(result.calls).toEqual([]);
     });
   });
 });

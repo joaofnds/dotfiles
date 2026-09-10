@@ -1,7 +1,8 @@
 ---
 name: triage
 disable-model-invocation: true
-description: Audits every open card against current evidence and the product goal, decides what remains worth doing, organizes milestones, merges and splits work, and orders the next iteration. Runs only on direction, per board. Detailed design belongs to shape.
+description: Screens incoming work or audits the full board against evidence and the product goal, consolidates cards, and orders accepted work. Runs only on direction, per board. Detailed design belongs to shape.
+argument-hint: "[inbox|full]"
 ---
 
 # Triage
@@ -9,10 +10,10 @@ description: Audits every open card against current evidence and the product goa
 Leave a backlog whose cards describe the current need and whose first action can
 start with the evidence and resources it requires. Work through the `backlog` CLI
 under `~/.agents/rulebook/backlog-board.md`, which owns card creation and movement.
-Apply evidence-backed planning decisions within the recorded goal and the current
-directive. Ask only about a missing or changed goal, an unresolved product tradeoff,
-or a choice the always-loaded Acting section reserves. Record a recommendation
-for each.
+Apply planning decisions within the recorded goal, directive, and board admission
+policy. Prepare new admissions and added scope for one batch decision. Ask also
+about a missing or changed goal or an unresolved product tradeoff, with a
+recommendation for each. Screening does not authorize implementing a discovered fix.
 
 A held card, in Build or Review with an assignee, belongs to that session. Append
 the triage verdict and add references or dependencies, keeping the holder's text and
@@ -20,7 +21,16 @@ values, since rewriting the notes field can drop a note the holder writes meanwh
 Propose other changes on the triage doc. An old update is a reason to check ownership,
 never proof that the session has released the card.
 
-## Establish the scope
+## Choose the scope
+
+`inbox` screens incoming work and returning deferrals. Read
+[Inbox screening](references/inbox.md) for its audit set and handoff.
+`full`, or an invocation without an argument, audits the whole board. Read
+[Full-board planning](references/full-board.md) for its audit set and handoff.
+Both modes use the evidence, disposition, and scope accounting below. The audit
+set is the fixed set of IDs recorded at entry. New arrivals wait for the next pass.
+
+## Establish the goal
 
 Read the newest triage doc for the goal, then every newer reflection and the board's
 accepted decisions. Apply reflection proposals only where current evidence supports
@@ -30,11 +40,9 @@ priority, milestone commitments, and goal-based removals unsettled until it is a
 When an answer arrives, record it on this run's doc and finish the ordering.
 Until then, mark the handoff incomplete even when the factual audit is complete.
 
-List every open card before editing any. Read their complete bodies, acceptance,
-definition of done, notes, attached records, and dependencies, including held cards.
-Read Done titles and the completed or archived records that may have answered an
-open need. Search recent changes by behavior and domain concept as well as title.
-Read the project's other work registers so an unfiled blocker is not missed.
+Read the complete bodies, acceptance, definition of done, notes, attached records,
+and dependencies for the audit set before editing it. Related cards outside that
+set supply context without acquiring a full audit.
 
 Follow cross-board pointers into the owning repository. If it is unavailable, mark
 the affected claims and waits unverified and continue the independent work. Reading
@@ -43,8 +51,8 @@ local card, with a reciprocal reference only where that board is also in scope.
 
 ## Establish what is true
 
-Check every checkable claim against the thing that owns the fact. Read current code
-and callers for implementation claims, inspect the original record for a reported
+Check the claims that support each disposition against the thing that owns the
+fact. Read current code and callers for implementation claims, inspect the original record for a reported
 decision, and reproduce behavior or measurements with a focused check. A matching
 symbol or commit title alone proves neither behavior nor completion. For an absence
 claim, record the search scope that would have found a counterexample.
@@ -54,7 +62,7 @@ contradicted, or unverified findings. Include the command or source, observed re
 repository revision, and relevant local changes. Check resources the next step needs as well as
 code, since an unavailable fixture or service can invalidate an otherwise clear card.
 A check that cannot run stays unverified with the reason and the action that would
-settle it. Low priority never exempts a card from the sweep.
+settle it. Low priority never exempts a card in the audit set from checking.
 
 Bring each editable card's description, acceptance, definition of done, and
 dependencies to the present need, and leave a current field as it is. Keep every
@@ -77,40 +85,42 @@ newest is current.
 
 ## Decide what deserves work
 
-For each card, record who benefits, what observable outcome serves the goal, and
-what happens if it is left undone. Test the proposed solution against that need.
+For each card in the audit set, record who benefits, what observable outcome serves
+the goal, and what happens if it is left undone. Test the proposed solution against that need.
 A simpler change, an existing capability, or removing the need can replace the
 proposal. Age, author emphasis, technical elegance, and effort already spent do not
 establish value. Maintenance earns its place through a concrete risk or cost.
 
-Give every card a disposition with its evidence and destination:
+Give every audited card a disposition with its evidence and destination:
 
-- Keep work with a justified outcome. Name whether its next action is implementation,
-  shaping, or investigation, and what each unresolved question prevents.
+- Keep accepted work with a justified outcome, or propose acceptance of a capture.
+  Name whether its next action is implementation, shaping, or investigation, and
+  what each unresolved question prevents. An investigation needs a question,
+  resource budget, and stopping condition. Its proposed outcome is an answer.
 - Defer a valid need whose timing or prerequisite is absent. Record what would make
-  it worth taking up and when or on what event to reconsider it.
+  it worth taking up and the next check required by the board deferral policy.
 - Complete work only when current evidence proves all remaining acceptance and
   definition of done under the board guard. A partial fix leaves the remainder open.
-  A small reversible defect fix a card makes obvious lands under Ownership, and the
-  card closes citing the commit. A larger fix stays a card.
+  Record a newly discovered fix for admission without implementing it during screening.
 - Merge or split work through the scope accounting below.
 - Archive a duplicate after absorption, a superseded proposal, or a need contradicted
   by evidence or excluded by the recorded goal. Cite the survivor or the reason.
   Uncertainty alone does not justify removal. Preserve the record rather than deleting it.
 
-Record a settled rejection as an accepted board decision, named for the concept and
-carrying the reason and evidence that would justify reconsidering it. A smaller
-backlog is not a success measure. Explain net growth when necessary work or splits
-add cards. A missing outcome needed for a milestone gets a card with its evidence.
+Record a rejection and what evidence would justify reconsidering it on the card.
+A rejection that settles a recurring product choice also becomes a board decision.
+A smaller backlog is not a success measure. Explain net growth when necessary work or splits
+add cards. A newly discovered outcome needed for a milestone is captured for admission.
 
 ## Consolidate and split without losing scope
 
-Compare outcomes, symptoms, and acceptance across the whole set. Shared files alone
-justify neither a merge nor a dependency.
+Compare outcomes, symptoms, and acceptance across the audit set and related cards.
+Shared files alone justify neither a merge nor a dependency.
 
 Merge cards that represent the same outcome or cannot be accepted independently.
-Choose a survivor and give it one coherent description and acceptance list containing
-all still-valid unique requirements, source references, and constraints from the
+Propose any added scope under the board admission policy before changing an accepted
+card. Once authorized, give the survivor one coherent description and acceptance
+list containing all still-valid unique requirements, source references, and constraints from the
 absorbed cards. Map those requirements to the survivor and update incoming dependencies
 before archiving the originals with pointers. Resolve self-links and cycles.
 If a required dependency replacement affects a held card or another board outside
@@ -132,27 +142,11 @@ Keep distinct outcomes that benefit from one sitting as linked cards. Name the
 shared setup and whether doing them together delays a useful result. Record a shared
 design decision once and make the builds that need it depend on its resolution.
 
-## Organize milestones and order
+## Set priorities
 
-Make each milestone an observable increment of the goal. Record what becomes
-possible, how completion will be demonstrated, the required cards, and what remains
-outside it. Reuse or reshape existing milestones before creating another. Order them
-by the feedback or outcome needed next, respecting actual commitments and constraints.
-
-Distinguish the smallest set needed for that increment from optional follow-ups.
-Assign retained planned work to the increment it serves. Keep deferred work outside
-the committed set. Detail the next increment enough to execute while leaving later
-ones at the outcome and dependency level.
-
-Record real prerequisites as dependencies and historical relationships as references.
-Recheck waits whose blockers are Done and detect missing targets and cycles after
-merges and splits. Keep a Done dependency on the card, since the next session reads
-only the card. Point a dependency on an archived card at the card that absorbed it,
-or remove it where none did, and record the change on the triage doc. A blocked
-valuable card keeps its priority while the feasible prerequisite comes first.
-
-Use one consequence scale for every open card, including a recommendation for held
-cards. Set priorities on editable cards with the reason in the current triage verdict:
+Use one consequence scale for audited cards and related queue comparisons. Set
+priorities on accepted editable cards and propose them for captures and held cards,
+with the reason in the current triage verdict:
 
 - High means delay causes material current harm, misses a substantiated time window,
   or blocks the next necessary increment. Name the consequence and its timing.
@@ -170,31 +164,13 @@ blocking valuable work, with the question, budget, and stopping condition on its
 When two outcomes need a product preference the sources do not settle,
 recommend one and name what it displaces. Continue ordering the independent work.
 
-## Prepare the next iteration
+## Reconcile selection
 
-Write one ordered queue of feasible next actions, separating implementation from
-shaping or investigation. A queue entry names its card, milestone, next action, why
-it precedes the next entry, and what it unlocks. Keep deferred, externally blocked,
-held, and unresolved product decisions out of the selectable queue with a reason
-for each exclusion. A runnable investigation may remain when its purpose is to
-resolve a named unknown. A build entry needs observable acceptance, checked premises,
-available resources, and no unresolved decision that changes its scope.
-
-Put the first card's bet on the triage doc with the goal observation it should
-produce, how to observe it, and the budget it gets. Use the recorded budget or state
-a proposed bound without inventing spending authority. Identify sitting companions
-separately, since the next iteration picks one card. Name shared files or owned trees
-that prevent parallel work. Account for capacity by naming work displaced from the
-previous queue when new work moves ahead of it.
-
-The iterate script picks the first card of the ready list sorted by priority, reads
-no triage doc, and stops when that card is held. The list includes Build and Review
-cards and orders ties by card ID, so the queue's first card has to be the lowest-ID
-card at the top priority in use, held cards included. Set the priority the scale
-gives, then read the list back before the handoff. Where the list and the queue
-disagree, keep the fields truthful, say in the reply which card the script will
-pick, and give the manual next action. Re-check this paragraph when the script reads
-the triage doc.
+The runner selects dependency-ready, non-deferred work from the accepted statuses,
+ordered by priority and then card ID. Automated intake cannot add IDs to that run's
+selection set. Compare the proposed first action with that actual selection before
+handoff. Where they differ, keep priorities truthful, report the runner's pick and
+give the manual next action. Never treat a written queue as enforcement.
 
 ## Apply and check the sweep
 
@@ -204,18 +180,18 @@ including complete replaced text and newly created IDs. Read the result back so 
 successful command with an incomplete write cannot pass unnoticed. The record must
 support recovery even when the board has no git history.
 
-Re-list the board after editing. Account for every initially open and newly created
-card in the doc with its evidence verdict, disposition, milestone or deferral,
-priority rationale, and readiness or blocker. Audit cards arriving during the sweep
-or list their IDs as unreviewed and mark the sweep incomplete. Check that references
-resolve and each retained requirement has a home. At the end of the sweep no card in
-To Do has a question as its next step. Recheck the first action against the current
+Re-list the board after editing. Account for every ID in the audit set and every
+card created by a merge or split, with evidence verdict, disposition, milestone or
+deferral, priority rationale, and readiness or blocker. List unrelated arrivals as
+pending the next pass. They do not make this batch incomplete. Check that references
+resolve and each retained requirement has a home. Every audited To Do card has an
+accepted actionable outcome. Investigations follow the board route for answering a question. Recheck the first action against the current
 tree and resources before handing it off.
 
 The dated triage doc opens with the goal, what changed since the last run, the next
 card and its bet or the blocker, and whether the sweep and handoff are complete.
-It carries the milestone sequence, ordered queue, coverage audit, reversible change
-record, and unsettled decisions with recommendations. When there is a first card,
+It names the mode and carries its handoff, coverage audit, reversible change record,
+and unsettled decisions with recommendations. When there is a first card,
 attach the doc so its next session can find it. Record recurring card-writing defects
 and reflection kaizen candidates there without starting a corpus change during triage.
 

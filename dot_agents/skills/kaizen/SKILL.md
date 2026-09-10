@@ -10,8 +10,10 @@ Kaizen starts from one observed defect, treated as one case of a class the
 corpus should eliminate, and ends with its outcome on a card: a landed change,
 findings or a proposal awaiting a decision, the verdict that the instructions
 held, or a stop naming the evidence that could not be reached. The
-running session creates the card on the corpus board in dotfiles, whatever
-project it runs in, and a recurring defect starts by searching that board. The
+running session uses the corpus board in dotfiles, whatever project it runs in,
+and a recurring defect starts by searching that board. An incidental finding follows
+the board's Capture and admission policy. A directed kaizen creates its card in the
+column the authorized work enters. The
 card holds the defect, the evidence, the findings with their dispositions, and
 the outcome. Instructions the defect does not trace to are not audited on the
 way.

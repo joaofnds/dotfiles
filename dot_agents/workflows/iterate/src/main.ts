@@ -1,13 +1,22 @@
 import { existsSync } from "node:fs";
 import process from "node:process";
 import { agentsFromSpec, agentsHelp, defaultAgent, type Stage, type StageAgent } from "./agents.ts";
-import { appendNote, boardHasActiveMilestone, card, cardId, pick, setStatus } from "./board.ts";
+import {
+  acceptedQueue,
+  appendNote,
+  boardHasActiveMilestone,
+  type Card,
+  card,
+  cardId,
+  pick,
+  setStatus,
+} from "./board.ts";
 import { Exit, say } from "./exit.ts";
 import { idleMinutes, session } from "./session.ts";
 import { stopFile, treeIsClean } from "./tree.ts";
 
 const usage = `iterate [card]        one whole iteration, unattended
-iterate start           triage, pick the first ready card, write its bet, print it
+iterate start          screen Inbox, pick accepted ready work, write its bet, print it
 iterate step <card>     one session: the card's column, or reflect when it is Done
 
 The loop on the board in the current directory. An iteration is triage, pick, the
@@ -20,11 +29,17 @@ ${idleMinutes} minutes is stopped and counts as failed.
 
 ${agentsHelp}
 
-Every session is told nobody is at the keyboard, so a stage settles what it would
-have asked and writes the decision on the card. A shape session that leaves a
-shaped card in Shape gets moved to Build here, since the board rule already asks
-the stage to do it. A whole iteration runs a stage again when it wrote on the card
-without moving its column, up to the session cap, and stops when a stage wrote
+Every session is told nobody is at the keyboard. Admissions follow the board's
+recorded policy: require the user's batch decision unless explicitly delegated.
+A direction to iterate or continue unattended does not delegate admission.
+Intake screens Inbox and due or triggered deferrals; pick
+considers only cards accepted before intake and ready afterward, in To Do, Shape,
+Build, or Review, excluding deferred labels. Pending intake does not stop accepted
+work. Explicit card arguments and step also refuse Inbox, unknown columns, and
+deferred cards. A normal shape session that leaves criteria on a card in Shape
+gets moved to Build here. Shape cards labeled investigate:debug or investigate:verify
+run that skill; their explicit verdict controls the next column. A whole iteration
+runs a stage again when it wrote on the card without moving its column, up to the session cap, and stops when a stage wrote
 nothing at all, since the next run would see the same card. A dirty tree is handed
 to the stage as the previous session's unfinished work when the card is assigned
 to @claude, and refused otherwise.
@@ -41,7 +56,7 @@ const stageFor = new Map<string, Stage>([
   ["Build", "build"],
   ["Review", "review"],
 ]);
-const unattended = `This session is one stage of an iteration running unattended. Nobody is at the keyboard, so the Acting section's rule for no one at the keyboard holds, and a turn that ends on a question stalls the loop. Finish this stage's work in this session, with each decision you took and its reason on the record this stage writes, since the next session reads only the board.`;
+const unattended = `This session is one stage of an iteration running unattended. Nobody is at the keyboard, so the Acting section's rule for no one at the keyboard holds, and a turn that ends on a question stalls the loop. Finish this stage's work in this session, with each decision you took and its reason on the record this stage writes, since the next session reads only the board. New Inbox admissions and scope-expanding merges follow the board's admission policy: require the user's batch decision unless a recorded policy explicitly delegates those decisions. Reactivation of deferred work follows its recorded admission/reactivation policy; without recorded authorization, propose reactivation for the user's batch decision. A direction to iterate or continue unattended does not delegate admission. An unattended iteration cannot supply the user's decision. Record a proposed batch, leave pending candidates outside the accepted queue, and continue already accepted work.`;
 const dirtyTree = `The tree carries uncommitted changes. Read them before anything else. Those that belong to this card are the previous session's unfinished work on it, yours to finish and commit. Leave any other change as you found it.`;
 
 function agentFor(stage: Stage): StageAgent {
@@ -66,7 +81,19 @@ async function runStage(stage: Stage, id: string): Promise<void> {
   });
 }
 
-function stageForColumn(status: string): Stage {
+function stageForCard({ status, labels }: Card): Stage {
+  if (status === "Shape") {
+    const investigations = labels.filter(
+      (label) => label === "investigate:debug" || label === "investigate:verify",
+    );
+    if (investigations.length > 1)
+      throw new Exit(1, "a card cannot request both debug and verify investigations");
+
+    if (investigations[0] === "investigate:debug") return "debug";
+
+    if (investigations[0] === "investigate:verify") return "verify";
+  }
+
   const stage = stageFor.get(status);
   if (!stage) throw new Exit(1, `unknown status: ${status}`);
 
@@ -85,9 +112,10 @@ type Progress =
 
 async function advance(id: string): Promise<Progress> {
   guardStop();
-  await refuseHeldCard(id);
 
   const before = await card(id);
+
+  refuseUnrunnableCard(id, before);
   if (before.status === "Done") {
     await runStage("reflect", id);
     await refuseWorkLeftBehind();
@@ -96,11 +124,14 @@ async function advance(id: string): Promise<Progress> {
     return { kind: "reflected" };
   }
 
-  const stage = stageForColumn(before.status);
+  const stage = stageForCard(before);
   await runStage(stage, id);
 
   const after = await card(id);
-  if (after.status !== before.status || (await advanceShapedCard(id, before.status))) {
+  if (
+    after.status !== before.status ||
+    (stage === "shape" && (await advanceShapedCard(id, after)))
+  ) {
     return { kind: "advanced" };
   }
 
@@ -110,25 +141,27 @@ async function advance(id: string): Promise<Progress> {
 async function triageAndPick(): Promise<string> {
   if (!(await boardHasActiveMilestone())) throw new Exit(4, "the board has no active milestone");
 
-  await runStage("triage", "");
+  const accepted = new Set(await acceptedQueue("all"));
 
-  const id = await pick();
+  await runStage("triage", "inbox");
+
+  const id = await pick(accepted);
   if (!id) return "";
 
-  await refuseHeldCard(id);
+  refuseUnrunnableCard(id, await card(id));
   const today = new Date().toISOString().slice(0, 10);
   await appendNote(
     id,
-    `Bet, ${today}: picked first from the ready queue by iterate. The newest triage doc's queue entry for it is the bet.`,
+    `Bet, ${today}: picked first from work accepted before this intake pass and still ready afterward. The card's recorded outcome is the bet.`,
   );
 
   return id;
 }
 
-async function advanceShapedCard(id: string, before: string): Promise<boolean> {
-  if (before !== "Shape") return false;
+async function advanceShapedCard(id: string, after: Card): Promise<boolean> {
+  if (after.status !== "Shape") return false;
 
-  if ((await card(id)).criteria === 0) return false;
+  if (stageForCard(after) !== "shape" || after.criteria === 0) return false;
 
   // To Do maps to the shape skill, which refuses a shaped card, so a shaped card
   // sent there never moves again.
@@ -144,8 +177,12 @@ function guardStop(): void {
 
 // Our own shape session assigns @claude when it moves a card to Build, so only
 // another name means the card is held.
-async function refuseHeldCard(id: string): Promise<void> {
-  const { status, assignee } = await card(id);
+function refuseUnrunnableCard(id: string, { status, assignee, labels }: Card): void {
+  if (labels.includes("deferred")) throw new Exit(1, `${id} is deferred and cannot run`);
+
+  if (status !== "Done" && !stageFor.has(status))
+    throw new Exit(1, `unknown or unaccepted status: ${status}`);
+
   const held = assignee && assignee !== ours;
   if ((status === "Build" || status === "Review") && held) {
     throw new Exit(1, `${id} is held in ${status} by ${assignee}`);
@@ -230,7 +267,7 @@ async function main(argument: string, second: string): Promise<void> {
   let id = argument ? cardId(argument) : "";
   if (id) {
     await refuseDirtyTree(id);
-    await refuseHeldCard(id);
+    refuseUnrunnableCard(id, await card(id));
   } else {
     await refuseDirtyTree("");
     id = await triageAndPick();

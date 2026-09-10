@@ -6,6 +6,17 @@ import { type Subprocess, spawn } from "bun";
 import { fakeBacklog, fakeClaude } from "./workflow-fakes.ts";
 
 type Scenario = {
+  firstId?: string;
+  deferOnRead?: number;
+  shapeInvestigation?: string;
+  shapeMetadata?: "type" | "project" | "reporter";
+  labels?: string[];
+  secondStatus?: string;
+  ready?: boolean;
+  triageUnblocks?: boolean;
+  schemaVersion?: number;
+  triageStatus?: string;
+  investigationStatus?: string;
   stall?: string;
   dirty?: boolean;
   stop?: boolean;
@@ -115,10 +126,16 @@ export class WorkflowHarness {
     await Promise.all([mkdir(bin), mkdir(repo)]);
     await Promise.all([
       writeFile(join(bin, "claude"), fakeClaude),
-      writeFile(join(bin, "backlog"), fakeBacklog),
+      writeFile(join(bin, "backlog"), `#!${process.execPath}\n${fakeBacklog}`),
       writeFile(join(directory, "status"), `${scenario.status ?? "To Do"}\n`),
       writeFile(join(directory, "assignee"), scenario.assignee ?? ""),
-      ...["notes", "calls", "edits", "systems"].map((name) => writeFile(join(directory, name), "")),
+      writeFile(join(directory, "ready"), String(scenario.ready ?? true)),
+      writeFile(join(directory, "labels"), JSON.stringify(scenario.labels ?? [])),
+      writeFile(join(directory, "metadata"), ""),
+      writeFile(join(directory, "reads"), "0"),
+      ...["notes", "calls", "edits", "systems", "observed-deferred", "deferred-dispatches"].map(
+        (name) => writeFile(join(directory, name), ""),
+      ),
     ]);
     await Promise.all([chmod(join(bin, "claude"), 0o755), chmod(join(bin, "backlog"), 0o755)]);
 
@@ -129,6 +146,21 @@ export class WorkflowHarness {
       GIT_CONFIG_NOSYSTEM: "1",
       GIT_CONFIG_GLOBAL: "/dev/null",
       FAKE_STATUS: join(directory, "status"),
+      FAKE_LABELS: join(directory, "labels"),
+      FAKE_FIRST_ID: scenario.firstId ?? "DOT-1",
+      FAKE_DEFER_ON_READ: String(scenario.deferOnRead ?? 0),
+      FAKE_READS: join(directory, "reads"),
+      FAKE_OBSERVED_DEFERRED: join(directory, "observed-deferred"),
+      FAKE_DEFERRED_DISPATCHES: join(directory, "deferred-dispatches"),
+      FAKE_SHAPE_INVESTIGATION: scenario.shapeInvestigation ?? "",
+      FAKE_PROGRESS_FIELD: scenario.shapeMetadata ?? "",
+      FAKE_PROGRESS_VALUE: join(directory, "metadata"),
+      FAKE_SECOND_STATUS: scenario.secondStatus ?? "To Do",
+      FAKE_READY: join(directory, "ready"),
+      FAKE_TRIAGE_UNBLOCKS: scenario.triageUnblocks ? "yes" : "",
+      FAKE_SCHEMA_VERSION: String(scenario.schemaVersion ?? 1),
+      FAKE_TRIAGE_STATUS: scenario.triageStatus ?? "",
+      FAKE_INVESTIGATION_STATUS: scenario.investigationStatus ?? "",
       FAKE_CALLS: join(directory, "calls"),
       FAKE_EDITS: join(directory, "edits"),
       FAKE_SYSTEMS: join(directory, "systems"),
@@ -172,8 +204,10 @@ class WorkflowDriver {
 
   run = async (...args: string[]) => {
     const { stdout, stderr, code } = await this.harness.run(this.repo, this.env, args);
-    const [calls, edits, systems] = await Promise.all(
-      ["calls", "edits", "systems"].map((name) => readFile(join(this.directory, name), "utf8")),
+    const [calls, edits, systems, deferredDispatches] = await Promise.all(
+      ["calls", "edits", "systems", "deferred-dispatches"].map((name) =>
+        readFile(join(this.directory, name), "utf8"),
+      ),
     );
 
     return {
@@ -183,6 +217,7 @@ class WorkflowDriver {
       calls: (calls ?? "").trim().split("\n").filter(Boolean),
       edits: edits ?? "",
       systems: (systems ?? "").split("\n---\n").filter(Boolean),
+      deferredDispatches: (deferredDispatches ?? "").trim().split("\n").filter(Boolean),
     };
   };
 }

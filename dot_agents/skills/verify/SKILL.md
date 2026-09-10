@@ -8,6 +8,10 @@ description: Turns a claim about behavior into a verdict backed by fresh evidenc
 A claim about behavior is settled by evidence you produced in this session, from a
 baseline and a treatment that differ only in the change under test.
 
+When the claim is an admitted investigation card, write the verdict and evidence
+on that card and finish under the board's investigation policy. An inconclusive
+verdict preserves the missing observation as the next action.
+
 ## Restate the claim so it can fail
 
 Rewrite the claim as a condition, a metric, and a threshold. "The fix works" cannot

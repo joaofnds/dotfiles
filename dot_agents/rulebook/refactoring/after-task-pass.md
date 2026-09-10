@@ -21,11 +21,11 @@ carries the mechanics, the example, and the house rules the finding must honor.
 
 ## Do or file
 
-Behavior-preserving and small enough to finish now, tests green before and after: do
-it, in its own commit, apart from the feature commits, so a reader can skip it or
-revert it alone. Anything else becomes a task on the board carrying the case: what the
-task exposed, the target structure, and the cost. Never leave a restructuring
-half-done in the tree.
+Within the active task's authorized scope, finish a small behavior-preserving
+refactoring with tests green before and after, in its own commit. Capture an
+independent structural opportunity under the board's Capture and admission policy
+with the observed cost and proposed outcome. Never leave a restructuring half-done
+in the tree.
 
 The goal is the structural opportunity rather than tidiness for its own sake. When
 the task exposed nothing, "nothing to refactor" in the handoff is a complete result.
