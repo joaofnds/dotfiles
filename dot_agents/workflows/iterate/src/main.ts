@@ -10,6 +10,7 @@ import {
   cardId,
   pick,
   setStatus,
+  stageForStatus,
 } from "./board.ts";
 import { Exit, say } from "./exit.ts";
 import { idleMinutes, session } from "./session.ts";
@@ -50,12 +51,6 @@ board has no active milestone.`;
 
 const ours = "@claude";
 const sessionCap = 6;
-const stageFor = new Map<string, Stage>([
-  ["To Do", "shape"],
-  ["Shape", "shape"],
-  ["Build", "build"],
-  ["Review", "review"],
-]);
 const unattended = `This session is one stage of an iteration running unattended. Nobody is at the keyboard, so the Acting section's rule for no one at the keyboard holds, and a turn that ends on a question stalls the loop. Finish this stage's work in this session, with each decision you took and its reason on the record this stage writes, since the next session reads only the board. New Inbox admissions and scope-expanding merges follow the board's admission policy: require the user's batch decision unless a recorded policy explicitly delegates those decisions. Reactivation of deferred work follows its recorded admission/reactivation policy; without recorded authorization, propose reactivation for the user's batch decision. A direction to iterate or continue unattended does not delegate admission. An unattended iteration cannot supply the user's decision. Record a proposed batch, leave pending candidates outside the accepted queue, and continue already accepted work.`;
 const dirtyTree = `The tree carries uncommitted changes. Read them before anything else. Those that belong to this card are the previous session's unfinished work on it, yours to finish and commit. Leave any other change as you found it.`;
 
@@ -94,7 +89,7 @@ function stageForCard({ status, labels }: Card): Stage {
     if (investigations[0] === "investigate:verify") return "verify";
   }
 
-  const stage = stageFor.get(status);
+  const stage = stageForStatus(status);
   if (!stage) throw new Exit(1, `unknown status: ${status}`);
 
   return stage;
@@ -180,7 +175,7 @@ function guardStop(): void {
 function refuseUnrunnableCard(id: string, { status, assignee, labels }: Card): void {
   if (labels.includes("deferred")) throw new Exit(1, `${id} is deferred and cannot run`);
 
-  if (status !== "Done" && !stageFor.has(status))
+  if (status !== "Done" && stageForStatus(status) === undefined)
     throw new Exit(1, `unknown or unaccepted status: ${status}`);
 
   const held = assignee && assignee !== ours;

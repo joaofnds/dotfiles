@@ -1,9 +1,15 @@
 import { $ } from "bun";
 import { z } from "zod";
+import type { Stage } from "./agents.ts";
 import { Exit } from "./exit.ts";
 
 const cardPattern = /^[A-Z]+-[0-9]+(\.[0-9]+)*$/;
-const workingStatuses = ["To Do", "Shape", "Build", "Review"];
+const stagesByStatus = new Map<string, Stage>([
+  ["To Do", "shape"],
+  ["Shape", "shape"],
+  ["Build", "build"],
+  ["Review", "review"],
+]);
 const checklistItem = z.object({ index: z.number(), text: z.string(), checked: z.boolean() });
 const taskFields = z.object({ status: z.string(), labels: z.array(z.string()) });
 const taskView = z.object({
@@ -84,11 +90,15 @@ export async function card(id: string): Promise<Card> {
   };
 }
 
+export function stageForStatus(status: string): Stage | undefined {
+  return stagesByStatus.get(status);
+}
+
 function isAccepted(task: {
   readonly status: string;
   readonly labels: readonly string[];
 }): boolean {
-  return workingStatuses.includes(task.status) && !task.labels.includes("deferred");
+  return stageForStatus(task.status) !== undefined && !task.labels.includes("deferred");
 }
 
 export async function acceptedQueue(readiness: "all" | "ready"): Promise<string[]> {
