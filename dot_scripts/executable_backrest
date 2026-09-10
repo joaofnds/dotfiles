@@ -43,7 +43,7 @@ restore() {
 
 help() {
 	cat <<-__EOF__
-		usage: restic-backup <project> [backup | restore]
+		usage: backrest <project> [backup | restore]
 
 		projects: ${(k)PROJECT_SOURCE}
 	__EOF__
