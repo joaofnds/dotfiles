@@ -1,0 +1,71 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+RESTIC_HOME="$HOME/.config/restic"
+
+typeset -A PROJECT_SOURCE=(
+	elfeed "$HOME/.config/emacs/.local/elfeed"
+	backlogs "$HOME/code/backlog/boards"
+)
+
+typeset -A PROJECT_REPOSITORY=(
+	elfeed "rclone:drive:restic"
+	backlogs "rclone:drive:/backlog-boards"
+)
+
+set_restic_vars() {
+	local project=$1
+
+	export RESTIC_REPOSITORY="$PROJECT_REPOSITORY[$project]"
+	export RESTIC_PASSWORD_COMMAND="gpg -d \"$RESTIC_HOME/resticpass.gpg\""
+}
+
+backup() {
+	local project=$1
+	local source="$PROJECT_SOURCE[$project]"
+
+	if [[ ! -d $source || -L $source ]]; then
+		echo "backup source must be a real directory: $source" >&2
+		return 1
+	fi
+
+	set_restic_vars "$project"
+	restic backup --verbose "$source"
+}
+
+restore() {
+	local project=$1
+
+	set_restic_vars "$project"
+	restic restore latest --path "$PROJECT_SOURCE[$project]" --target /
+}
+
+help() {
+	cat <<-__EOF__
+		usage: restic-backup <project> [backup | restore]
+
+		projects: ${(k)PROJECT_SOURCE}
+	__EOF__
+}
+
+project=${1:-}
+command=${2:-}
+
+if [[ -z ${PROJECT_SOURCE[$project]:-} ]]; then
+	help >&2
+	exit 1
+fi
+
+case $command in
+backup)
+	backup "$project"
+	;;
+restore)
+	restore "$project"
+	;;
+*)
+	help >&2
+	exit 1
+	;;
+esac
