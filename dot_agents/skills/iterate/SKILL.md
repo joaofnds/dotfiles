@@ -1,6 +1,7 @@
 ---
 name: iterate
 disable-model-invocation: true
+argument-hint: "[stage=provider:model ...]"
 description: Runs one iteration of the loop on the board in the current directory: triage, pick the queue's first card, carry it through its columns one session at a time, reflect. Reads what each stage did before starting the next, and answers what a stage left open. Use when directed to run an iteration on a board. It runs one iteration and ends, so the next one is a separate direction.
 ---
 
@@ -17,12 +18,17 @@ iterate start           # triage, pick the queue's first card, write its bet, pr
 iterate step <card>     # one session: the card's column, or reflect when it is Done
 ```
 
+Pass the agents the invocation names for stages, in the form `iterate --help`
+describes under ITERATE_AGENTS, as that variable on `iterate start` and on every
+`iterate step`.
+
 Start with `iterate start`, which prints the card. Rename this session to that card
 id, so the session list says which card is running rather than which skill started
 it. Then call `iterate step <card>` until it says the card is Done, overseeing
 between the calls. Reflect runs on the last step, after Done.
 
-Each call prints the session's reply on stdout and its cost on stderr. Read both.
+Each call prints the session's reply on stdout, and on stderr the agent each stage ran
+on and its cost. Read both.
 
 ## When a step stops
 

@@ -12,3 +12,5 @@ backlog.config.yml
 
 scripts
 sweep
+
+**/node_modules

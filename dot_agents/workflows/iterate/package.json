@@ -1,0 +1,16 @@
+{
+  "name": "iterate",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "bun test && tsc --noEmit && biome check ."
+  },
+  "dependencies": {
+    "zod": "^4.6.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@types/bun": "^1.2.0",
+    "typescript": "^5.8.0"
+  }
+}
