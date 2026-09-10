@@ -60,3 +60,6 @@
 
 [includeIf "gitdir:~/code/livefire/"]
   path = ~/.gitconfig-livefire
+
+[includeIf "gitdir:~/code/runsmith/"]
+  path = ~/.gitconfig-runsmith
