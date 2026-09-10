@@ -1,6 +1,6 @@
 ---
 name: adversarial-review
-description: Sends a document or a decision this session produced to an independent reviewer told nothing about where the answer lands, and relays every finding in the reviewer's own words. Use it on any document a task produced, a shaped card, a plan, a diagnosis, before it is called done.
+description: Governs independent skeptical review, evidence, and finding dispositions. Use when a document or decision needs an adversarial review before it is called done. Documentation criteria belong to review-docs.
 ---
 
 # Adversarial review
@@ -10,10 +10,12 @@ landed confirms it. A reader told nothing forms its own view.
 
 This covers a document or a decision you produced this session.
 
-For a reasoning document, a shaped task, an options survey, a diagnosis, there is
-nothing to run, so the mandate is to red-team the argument: the unstated assumption,
-the gap in scope, the premise nobody questioned, the conclusion the evidence does not
-reach.
+For a document, load the Document criteria in review-docs before building the
+brief and include them in this review's mandate. Loading those criteria does not
+start a separate review.
+
+For a decision, challenge its unstated assumptions, gaps in scope, unquestioned
+premises, and conclusions the evidence does not support.
 
 ## What the reviewer gets
 
@@ -36,10 +38,18 @@ counterexample for each finding, and drop anything you cannot substantiate by a 
 or by a stated argument. Every finding says whether a command verified it or reasoning alone did, and
 names the command. A clean report is a valid result.
 
+Include these instructions in every reviewer mandate:
+
+Independently discover the context needed to judge the artifact and its claims.
+Treat author-supplied references as starting points, since the author's selection
+can omit the context that challenges the change. Bound discovery to sources needed
+for that judgment. Name the context sources examined and any material gaps in the
+review report.
+
 Rank each finding blocking, should-fix, or note, in the review-code skill's words under its
 Severity heading, and say so where a rank has nothing in it. Those words are written
-for code, so for a document read them by what the finding costs. Blocking is a document
-that is wrong or unsafe as written. Should-fix changes the approach, the evidence, or
+for code, so read them by what the finding costs. Blocking means the artifact
+is wrong or unsafe as written. Should-fix changes the approach, the evidence, or
 what the next stage does with it. A note carries a bounded cost. Turn each rank into a
 disposition by the mapping under that skill's Dispose heading, which decides on its own
 terms which findings are advisory.
