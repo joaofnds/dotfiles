@@ -13,13 +13,16 @@ the criteria for that same review.
 ## Document criteria
 
 Determine whether each document serves the task, readers beyond it, or both.
-Review task records against their task and source contract. For documentation
+Review a task record against the direction that created it and current project
+sources. Treat a requirement the direction does not state as a premise to verify.
+If it conflicts with an explicit current design decision, correct the record instead
+of requiring the product to implement it. For documentation
 maintained beyond the task, discover the project guidance and neighboring
 documents that establish its audience, purpose, and conventions. Read the complete
 affected documents. Check whether guidance belongs there, whether its prominence
 fits their purpose, whether it duplicates other guidance, and whether readers can
-use it without the task record. Retain the task contract and technical verification
-for the changed behavior. Apply both scopes where both roles occur.
+use it without the task record. Retain source-backed requirements and technical
+verification for changed behavior. Apply both scopes where both roles occur.
 
 For reasoning documents, including shaped tasks, options surveys, and diagnoses,
 challenge the unstated assumptions, gaps in scope, unquestioned premises, and
