@@ -29,7 +29,6 @@
       "spotify"
       "tailscale-app"
       "the-unarchiver"
-      "visual-studio-code"
       "vlc"
       "zed"
     ];

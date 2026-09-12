@@ -48,7 +48,6 @@
         "/Applications/Brave Browser.app"
         "/Applications/Ghostty.app"
         "/System/Volumes/Data/Applications/Nix Apps/Emacs.app"
-        "/Applications/Visual Studio Code.app"
         "/Applications/Zed.app"
         "/Applications/Obsidian.app"
         "/System/Applications/Messages.app"

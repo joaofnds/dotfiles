@@ -29,7 +29,6 @@ if [[
 	-z "$TMUX" &&
 	-z "$CLAUDE_AGENT_SDK_VERSION" &&
 	-z "$INSIDE_EMACS" &&
-	"$TERM_PROGRAM" != "vscode" &&
 	"$TERM_PROGRAM" != "zed" ]]; then
 	tat
 fi
