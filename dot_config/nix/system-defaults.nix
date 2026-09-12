@@ -49,6 +49,7 @@
         "/Applications/Ghostty.app"
         "/System/Volumes/Data/Applications/Nix Apps/Emacs.app"
         "/Applications/Zed.app"
+        "/Applications/Trunk.app"
         "/Applications/Obsidian.app"
         "/System/Applications/Messages.app"
         "/System/Applications/Mail.app"
