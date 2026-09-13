@@ -6,6 +6,8 @@
 
     taps = [ "joaofnds/tap" ];
 
+    brews = [ "ruby" ];
+
     casks = [
       "appcleaner"
       "brave-browser"
