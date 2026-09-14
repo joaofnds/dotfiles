@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="634" viewBox="0 0 680 634" role="img" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<title>Review pipeline</title>
+<desc>A finished task goes through the review skill, which routes each product to the skill that owns it. For code and configuration, review-code dispatches a screener that decides per axis how much review runs and on what model and effort.</desc>
+<style>
+  .box { fill: #F5F6F7; stroke: #BDC1C6; stroke-width: 1; }
+  .teal { fill: #DAF0EC; stroke: #7FC4B8; stroke-width: 1; }
+  .amber { fill: #FBEEDA; stroke: #DDB160; stroke-width: 1; }
+  .blue { fill: #E6F1FB; stroke: #8AB4E0; stroke-width: 1; }
+  .purple { fill: #EDE7F8; stroke: #A990DC; stroke-width: 1; }
+  .th { font-size: 14px; font-weight: 500; fill: #1A1C1E; }
+  .ts { font-size: 12px; font-weight: 400; fill: #5E6368; }
+  .arr { stroke: #8A8F94; stroke-width: 1.5; fill: none; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8A8F94" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<rect class="box" x="210" y="40" width="260" height="56" rx="8"/>
+<text class="th" x="340" y="58" text-anchor="middle" dominant-baseline="central">Session runs the review skill</text>
+<text class="ts" x="340" y="78" text-anchor="middle" dominant-baseline="central">session model and effort, routes only</text>
+
+<path class="arr" d="M210 68 L90 68 L90 148" marker-end="url(#arrow)"/>
+<rect class="box" x="20" y="148" width="140" height="72" rx="8"/>
+<text class="th" x="90" y="166" text-anchor="middle" dominant-baseline="central">No review here</text>
+<text class="ts" x="90" y="186" text-anchor="middle" dominant-baseline="central">absorb and kaizen</text>
+<text class="ts" x="90" y="204" text-anchor="middle" dominant-baseline="central">reviewed inside</text>
+
+<line class="arr" x1="340" y1="96" x2="95" y2="264" marker-end="url(#arrow)"/>
+<line class="arr" x1="340" y1="96" x2="281" y2="264" marker-end="url(#arrow)"/>
+<line class="arr" x1="340" y1="96" x2="447" y2="264" marker-end="url(#arrow)"/>
+<line class="arr" x1="340" y1="96" x2="589" y2="264" marker-end="url(#arrow)"/>
+
+<rect class="blue" x="20" y="264" width="150" height="56" rx="8"/>
+<text class="th" x="95" y="282" text-anchor="middle" dominant-baseline="central">Instructions</text>
+<text class="ts" x="95" y="302" text-anchor="middle" dominant-baseline="central">review-instructions</text>
+
+<rect class="blue" x="186" y="264" width="190" height="56" rx="8"/>
+<text class="th" x="281" y="282" text-anchor="middle" dominant-baseline="central">Code and config</text>
+<text class="ts" x="281" y="302" text-anchor="middle" dominant-baseline="central">review-code</text>
+
+<rect class="blue" x="392" y="264" width="110" height="56" rx="8"/>
+<text class="th" x="447" y="282" text-anchor="middle" dominant-baseline="central">Documents</text>
+<text class="ts" x="447" y="302" text-anchor="middle" dominant-baseline="central">review-docs</text>
+
+<rect class="blue" x="518" y="264" width="142" height="56" rx="8"/>
+<text class="th" x="589" y="282" text-anchor="middle" dominant-baseline="central">Decisions</text>
+<text class="ts" x="589" y="302" text-anchor="middle" dominant-baseline="central">adversarial-review</text>
+
+<line class="arr" x1="281" y1="320" x2="281" y2="356" marker-end="url(#arrow)"/>
+<rect class="teal" x="186" y="356" width="190" height="56" rx="8"/>
+<text class="th" x="281" y="374" text-anchor="middle" dominant-baseline="central">Screener agent</text>
+<text class="ts" x="281" y="394" text-anchor="middle" dominant-baseline="central">opus, effort low, read only</text>
+
+<line class="arr" x1="376" y1="384" x2="440" y2="384" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+<rect class="amber" x="440" y="348" width="150" height="72" rx="8"/>
+<text class="th" x="515" y="366" text-anchor="middle" dominant-baseline="central">Axis marked none</text>
+<text class="ts" x="515" y="386" text-anchor="middle" dominant-baseline="central">no reviewer runs</text>
+<text class="ts" x="515" y="404" text-anchor="middle" dominant-baseline="central">reason on the record</text>
+
+<line class="arr" x1="95" y1="320" x2="95" y2="448" marker-end="url(#arrow)"/>
+<line class="arr" x1="281" y1="412" x2="281" y2="448" marker-end="url(#arrow)"/>
+<path class="arr" d="M447 320 L447 334 L526 334 L526 448" marker-end="url(#arrow)"/>
+<path class="arr" d="M589 320 L589 334 L526 334" />
+
+<rect class="purple" x="20" y="448" width="150" height="90" rx="8"/>
+<text class="th" x="95" y="466" text-anchor="middle" dominant-baseline="central">Reviewer</text>
+<text class="ts" x="95" y="486" text-anchor="middle" dominant-baseline="central">one per edited file</text>
+<text class="ts" x="95" y="504" text-anchor="middle" dominant-baseline="central">session model</text>
+<text class="ts" x="95" y="522" text-anchor="middle" dominant-baseline="central">effort high</text>
+
+<rect class="purple" x="186" y="448" width="190" height="90" rx="8"/>
+<text class="th" x="281" y="466" text-anchor="middle" dominant-baseline="central">Reviewers</text>
+<text class="ts" x="281" y="486" text-anchor="middle" dominant-baseline="central">one per dedicated axis</text>
+<text class="ts" x="281" y="504" text-anchor="middle" dominant-baseline="central">one holding all bundled</text>
+<text class="ts" x="281" y="522" text-anchor="middle" dominant-baseline="central">opus or fable, low to high</text>
+
+<rect class="purple" x="392" y="448" width="268" height="90" rx="8"/>
+<text class="th" x="526" y="466" text-anchor="middle" dominant-baseline="central">Reviewer</text>
+<text class="ts" x="526" y="486" text-anchor="middle" dominant-baseline="central">one, via adversarial-review</text>
+<text class="ts" x="526" y="504" text-anchor="middle" dominant-baseline="central">session model</text>
+<text class="ts" x="526" y="522" text-anchor="middle" dominant-baseline="central">effort high</text>
+
+<path class="arr" d="M95 538 L95 562 L340 562"/>
+<path class="arr" d="M281 538 L281 562"/>
+<path class="arr" d="M526 538 L526 562 L340 562"/>
+<line class="arr" x1="340" y1="562" x2="340" y2="586" marker-end="url(#arrow)"/>
+
+<rect class="box" x="160" y="586" width="360" height="40" rx="8"/>
+<text class="th" x="340" y="600" text-anchor="middle" dominant-baseline="central">Session verifies and disposes every finding</text>
+<text class="ts" x="340" y="616" text-anchor="middle" dominant-baseline="central">on the card, then the brief</text>
+</svg>
