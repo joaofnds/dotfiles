@@ -1,0 +1,18 @@
+{
+  "kind": "repair",
+  "request": "request.txt",
+  "original_failure": "original-failure.txt",
+  "criteria": {"path": "criteria.txt", "sha256": ""},
+  "baseline": {"path": "baseline.md", "sha256": ""},
+  "candidate": {"path": "candidate.md", "sha256": ""},
+  "targets": [""],
+  "runs": [
+    {
+      "target": "",
+      "harness": "",
+      "input": "recorded-input.json",
+      "baseline_output": "baseline-output.json",
+      "candidate_output": "candidate-output.json"
+    }
+  ]
+}

@@ -24,15 +24,16 @@ these checks is its own task, never a side effect of an unrelated edit.
 
 Read this section again over every sentence you add while applying verdicts.
 
-Write the file in the register it should produce. One fact per sentence. State a
-rule and its reason, in the present tense, in the words you would say to a
-colleague. Prefer an imperative addressed to the reader over a statement about how
-things are.
+Write the file in the register it should produce, using complete sentences. Keep
+a rule with its necessary reason or consequence so the relation stays clear. Use
+the present tense and the words you would say to a colleague. Prefer an imperative
+addressed to the reader over a statement about how things are.
 
 Leave out these shapes: a sentence whose job is to set up the next one, a headline
 in front of a fact, a pair balanced against its opposite where the second half adds
 nothing ("not A but B" as a flourish; a precise contrast or a prohibition such as
-"X, never Y" stays), a semicolon joining two clauses, a colon that names a thing and
+"X, never Y" stays), a phrase announcing importance without stating its consequence,
+a semicolon joining two clauses, a colon that names a thing and
 then explains it (a colon stands only before a list or a quotation), an em dash, an
 en dash used as an aside, a metaphor where the plain word says more, and a count
 that proves effort.
@@ -40,7 +41,7 @@ that proves effort.
 Do not take the corpus around the file as the standard. Several corpus files still
 carry these shapes, and a draft that matches them copies the defect.
 
-Two pairs, the written form and the plain form:
+Examples of the written form and the plain form:
 
 Written: "Never apply this probe to temporal coupling; judge that on whether the
 ordering or interleaving assumption can be violated."
@@ -52,10 +53,9 @@ priorities, the queue, and the no-consequence closure."
 Plain: "On a board with no milestone, skip priorities, the queue, and the
 no-consequence closure, since each needs a goal to be judged against."
 
-Written: "An instruction file (a CLAUDE.md, a rules file, a skill, an agent
-definition, an output style) is written in the register the review-instructions
-skill's Before you write section states."
-Plain: "Write instruction files the way that skill describes."
+Written: "The backup date was a week off, and it matters. The backup is from
+Thursday, so it does not include Friday's edits."
+Plain: "The backup is from Thursday, so it does not include Friday's edits."
 
 A semicolon between list items, a precise contrast, and a prohibition stay as
 written. Softening a rule into a comparison ("rather than" for "not") is not
@@ -128,17 +128,15 @@ of two, and the case needing four goes unnamed. "Retry a few times", shown once 
 three, becomes three. A severity ladder shown only at its top two rungs loses the
 bottom. Put the largest case the rule permits into the examples.
 
-**Read every sentence as the behavior and register it teaches.** Check every
-sentence against the shapes under "Before you write", examples and rules alike,
-whether or not any rule has been seen to fail. The agent copies an example's
-cadence, sentence shape, and length more faithfully than it obeys any rule about
-register, and the file's own prose carries the same way. Keep a dense clause that
-carries a rule. Flatten a sentence only where the plain form loses nothing. Where a
-correct rule keeps failing, look for the failure modeled in the file's own examples
-or prose before rewriting the rule. Flag a rule that offers the colon as the em-dash
-substitute, since it manufactures the pivot. Where register is the rule, quote the
-failure beside its corrected form rather than describing it. Paragraph length shows
-nothing, since a file rewritten into short paragraphs can keep every shape.
+**Read every sentence as the behavior and register it teaches.** Check examples and
+rules against "Before you write". For each example, identify what it includes and
+omits under the content rules. An example that narrates reviews or routine checks
+cannot teach a reply that excludes them. Judge the whole reply as well as its
+sentences, since plain wording can still carry an unwanted report of the work.
+Where a rule keeps failing, look for the failure modeled in the file's examples or
+prose before rewriting it.
+Flag a rule that offers the colon as the em-dash substitute, since it manufactures
+the pivot. Where register is the rule, quote the failure beside its corrected form.
 
 **Keep the evidence out of the rule.** Move citations, evidence hedges, version
 notes, and references to past wording out of the file, because they dilute the lines
@@ -283,24 +281,43 @@ rule's prohibition as part of its force, so name the loss where a description
 survives without its "never". Audit a file merged into another and deleted the same
 way, against the deleted text git still holds.
 
-Re-read every line that survives the cut and say it more simply, in shorter words,
-one fact per sentence. Give a line that keeps its rule and loses a metaphor, a
-colon pivot, or a hard word the verdict rewrite, not keep. Keep the clause that says
-why a rule exists, because the model generalizes from it to cases the bare command
-misses.
+Apply "Before you write" to every surviving line. Give a retained rule that needs
+plainer wording the verdict rewrite.
 
 Give each finding a verdict, one of cut, rewrite, move, enforce, or test in use, and
-the reason. Default to cut and watch, never keep-just-in-case. Name the trigger for
-the re-check, a model swap or a count of sessions, and delete now, since restoring
-from git is free. Give "test in use" to a rule whose effect prose review cannot
-establish, and name the test, a real task in fresh sessions, half with the file as it
-stands and half with the rule added, on a pass mark written down before any result is
-read. Add the rule only where the two halves differ, since a rule the standing checks
-already catch is a restatement. Reading a file can show
-that a rule cannot change behavior, and cannot show that it does. Run the checks over
-any text you prescribe, because a suggested rewrite lands verbatim. Give a rule
-broken by a session that had it open a different mechanism, never the same rule
-stated more firmly, since reading it already failed.
+the reason. Run the checks over any text you prescribe, because a suggested rewrite
+lands verbatim. Give a rule broken by a session that had it open a different
+mechanism, never the same rule stated more firmly.
+
+For a behavioral change, fill [assets/evidence.json](assets/evidence.json) on the
+task's record with the requested outcome and fixed pass criteria before drafting.
+Paths resolve from that manifest. Use `repair` with the original failure, or
+`convention` for a new requirement. Compare the exact candidate
+with the current instructions under the target models and harness. Inspect the
+recorded request to confirm which instructions and input reached the model, since
+a launch command does not prove what it received. Preserve the condition that
+produced the failure.
+A long-turn reply needs the preceding work in context, not only a short prompt
+asking for a sample answer. Judge the first reply without a corrective prompt or
+editing pass. Preserve required facts, uncertainty, and decisions while checking
+content selection and natural wording. Word count and cleaner instructions alone
+do not establish improvement. Keep the pass criteria fixed across revisions and
+retain the raw outputs, including failures. Repeat cases when variation could
+change the verdict, and rerun affected cases after editing the tested candidate.
+
+Run `python3 <skill-directory>/scripts/evidence_handoff.py <manifest> <current-instructions>`
+and send its emitted handoff with the diff, so required evidence cannot disappear
+while the brief is rewritten. A failed check leaves behavior unverified and source
+review can proceed with the missing evidence named. The reviewer records pass,
+fail, or unverified for each criterion and cites the output that settles it.
+Accept a behavioral change only when the
+candidate meets the criteria on each target. A repair also improves the rejected
+behavior against a baseline that reproduces it on affected targets, while
+preserving behavior on targets that already pass. Missing,
+mixed, or failing evidence leaves the repair unproved. Keep an unproved candidate
+out of the live instructions unless an explicit direction authorizes a trial.
+"Test in use" names that trial and its re-check trigger, never a passing verdict.
+Do not relabel a failed repair as a wording cleanup to bypass this decision.
 
 Asked to assess, end in findings and apply nothing, whoever wrote the text. Asked to
 change something, apply the verdicts to your own edit and end in the commit. The
@@ -308,8 +325,8 @@ request's shape decides it, and a review you run on yourself inside a directed c
 is the second case.
 
 Send a file you wrote or rewrote this session to a sub-agent reviewer that had no part
-in it, once, before the commit or the handoff. Give that reviewer this file, the diff, and
-the words the change was directed in if there are any, and never your own description
-of the change. Do not run the review again after the fixes. Read the fixes yourself
-in the staged diff, with the same checks, because the reviewer did not see them. Send
-every edit, a one-line one included.
+in it, once, before the commit or the handoff. Give that reviewer this file, the diff, the
+words the change was directed in, and the evidence required above. Never substitute
+your own description of the change for that evidence. Do not run the review again
+after the fixes. Read the fixes yourself in the staged diff, with the same checks,
+because the reviewer did not see them. Send every edit, a one-line one included.
