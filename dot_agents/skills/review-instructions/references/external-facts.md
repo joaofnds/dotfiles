@@ -135,14 +135,21 @@ Tool, permission, and invocation fields:
   warning, 2.1.260)*.
 - Agent-definition frontmatter takes `model` as one of the aliases `sonnet`, `opus`,
   `haiku`, `fable`, a full model id, or `inherit`, and `effort` as the session levels
-  above *(sub-agents reference read 2026-09-08 on 2.1.263, unprobed; re-check on a
-  Claude Code release by one spawn of the `advisor` agent with the model read from
-  its result)*.
+  above *(model alias probed 2026-09-14 on 2.1.270: the screener definition pinned
+  `model: opus` ran on `claude-opus-5`, read from its transcript, only when the call
+  also passed the model; a definition created in a session is spawnable in that
+  session, but a change to its model or body after that kept the first-loaded text
+  and model for later spawns, so an edit to a definition is verified only from a
+  fresh session. Effort is unprobed, since the transcript does not record it.
+  Re-check model selection and definition reload behavior from a fresh session
+  after a Claude Code release. Verify effort separately through runtime evidence
+  that records it)*.
 
 Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two are
 edited together. The live copies are the kaizen skill's transcript layout, the relay
 skill's transcript pointer, the relay and prompt skills' lists of effort levels, the
-advisor agent definition's model and effort pin, and the
+advisor and screener agent definitions' model and effort pins, the reviewer,
+reviewer-medium, and reviewer-low definitions' effort pins, and the
 hard line in your always-loaded instructions that hooks and settings take effect
 mid-session.
 

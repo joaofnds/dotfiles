@@ -1,15 +1,15 @@
 # Code review: axis briefs
 
-Blocks for the `reviewer` dispatch. Paste the shared block, then the one axis block
-that reviewer owns. Paste blocks whole, because a paraphrase drifts. The skill
+Blocks for the `reviewer` dispatch. Paste the shared block, then the axis block for
+each axis that reviewer holds. Paste blocks whole, because a paraphrase drifts. The skill
 decides which axes run, and this file carries what each axis reads and what it
 checks.
 
 ## Shared (always pasted)
 
 > This brief contains no assessment of the work. Form your own view from the code.
-> Your axis block names the house standard for your axis. Read every file it names
-> whole before forming a finding, and judge against those rules, never against
+> Each axis block you hold names the house standard for that axis. Read every file
+> it names whole before forming a finding, and judge against those rules, never against
 > general practice, because they encode choices a capable reader would not make
 > unprompted. Then read the goal. Then read every changed file whole, not only its
 > hunks. Then take the diff hunk by hunk with the standard in front of you. Walk its
@@ -19,6 +19,7 @@ checks.
 > `~/.agents/skills/review-code/references/wiki-checks.md`, and your axis's section
 > where the file has one. A line there is a prompt to look, and your axis's
 > stated standard wins where they differ.
+> When reviewing several axes, report a finding under the axis whose brief owns it.
 > Test files are the Testing axis's to judge. Every other axis reads them as
 > evidence, and reports a defect in one only when it is [correctness].
 > Correctness comes before your axis. A concrete wrong output a nameable input

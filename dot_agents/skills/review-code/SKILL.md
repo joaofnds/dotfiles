@@ -1,6 +1,6 @@
 ---
 name: review-code
-description: Runs the independent code review of a change to code or configuration, one unprimed reviewer per axis, and disposes of every finding. Use it on any such change before it is called done.
+description: Runs independent review of code or configuration and disposes of every finding. Use before calling such a change done.
 ---
 
 # Code review
@@ -8,35 +8,36 @@ description: Runs the independent code review of a change to code or configurati
 ## Inputs
 
 - Materialize the diff as a patch at a readable path, with the changed-file list. A
-  bare ref range can resolve to a different diff in the reviewer's context. - Collect
-  the goal: the card's description and acceptance criteria, the shaped or design
-  document attached to it, and the words the goal was stated in where the conversation
+  bare ref range can resolve to a different diff in the reviewer's context.
+- Collect the goal: the card's description and acceptance criteria, the documents
+  attached to it, and the words the goal was stated in where the conversation
   carries them. A deferral a design doc records as spec-authorized is part of the
-  goal. Implementing less than the goal asked is not a miss when the doc records why.
-  A change with no card and no stated goal cannot be checked against anything, so ask
-  for the goal in a line before dispatching. - Run the project's suite once, with the
-  command from the project's own manifests. Keep the output for the record. The
-  reviewers do not run it. Do not give them the result or what worries you. A primed
-  reviewer repeats your reading instead of making its own.
+  goal. Implementing less than the goal asked is not a miss when the doc records
+  why. A change with no card and no stated goal cannot be checked against anything,
+  so ask for the goal in a line before dispatching.
+- Dispatch one `screener` agent on opus, passing the model on the call, with the patch
+  path, changed-file list, and goal. Pass any requested single-axis scope so it
+  assigns that axis a dedicated reviewer with a model and effort, even when its
+  checks would not otherwise apply.
+- Run the project's suite once, with the command from the project's own manifests.
+  Keep the output for the record. The reviewers do not run it. Do not give them the
+  result or what worries you. A primed reviewer repeats your reading instead of
+  making its own.
 
 ## One round, fresh eyes
 
-Which axes apply is read off the diff. Unsure means it applies.
-
-- **Spec conformance, style, architecture, security**: every change.
-- **Testing**: when the diff touches a test file. Record the skip otherwise. A
-  change to behavior with no test movement is the Spec axis's finding.
-- **Refactoring**: always. Its findings are advisory, because they describe the
-  surrounding code rather than the change.
-
-Read [references/axes.md](references/axes.md) and dispatch one `reviewer` agent per
-applicable axis, in parallel, each with the diff, the goal, the shared block, and its
-own axis brief pasted whole. One reviewer per axis, because each brief names a
-house standard its reviewer holds beside the diff, and a reviewer holding six reads
-none of them closely. When the direction names a single axis, send only that one. A
-reviewer that reports a changed file unexamined has not reviewed it, so spawn a fresh
-reviewer for that axis with the same inputs and those files named as its scope, in
-the same round.
+Treat the screener's axis, model, and effort assignments as minimums because the
+author may miss risks an independent reader sees. Record a reason for any increase.
+Read [references/axes.md](references/axes.md). Dispatch one reviewer per dedicated
+axis and one for all bundled axes, in parallel, with the patch, goal, shared brief,
+and assigned axis briefs pasted whole. Pass the selected model on the call. Use
+`reviewer`, `reviewer-medium`, or `reviewer-low` for high, medium, or low effort.
+A bundled reviewer uses the highest selected effort and fable if any assigned axis
+selected it. These assignments replace delegation's model selection for this review.
+Record each skipped axis with the screener's reason. For a requested single-axis
+review, dispatch only that axis. A reviewer that reports a changed file unexamined
+has not reviewed it, so spawn a fresh reviewer with the same axes and inputs and
+those files as its scope, in the same round.
 
 [references/wiki-checks.md](references/wiki-checks.md) holds further checks from
 the engineering wiki, grouped by axis, with the reasoning and the quotations. Read
@@ -149,9 +150,10 @@ should exist, and record the answer with the disposition.
 
 Every finding goes on the task's record with its severity and disposition, along
 with the suite output, the axes that ran and the ones skipped, and for each axis the
-standard files its reviewer read and the changed files it examined. The spec
-reviewer's accounting of the goal, one line per requirement and criterion, goes on
-the record whole. None are dropped or folded into "a few minor things". Each finding
+model and effort its reviewer ran at, the standard files it read, and the changed
+files it examined. The spec reviewer's accounting of the goal, one line per
+requirement and criterion, goes on the record whole. None are dropped or folded
+into "a few minor things". Each finding
 carries what a zero-context session needs to act on it: the place; the concrete
 failure, as a rule, spec clause, or attack path, never a preference; the trigger
 that reaches it (the caller, input, configuration, or action sequence; revert-test
