@@ -44,6 +44,7 @@ run "corpus cross-references" "$root/scripts/check-corpus-refs.js"
 run "corpus orphans" "$root/scripts/check-corpus-orphans.sh"
 run "visual-diff image diff" bash \
   "$root/dot_agents/skills/visual-diff/tests/image_diff_test.sh"
+run "instruction frontmatter" bun test "$root/scripts/instruction-frontmatter.test.js"
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1

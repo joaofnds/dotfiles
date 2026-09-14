@@ -1,6 +1,11 @@
 ---
 name: absorb
-description: Decides what the corpus takes from an outside instruction source and what it leaves, since the default is to take nothing. Use when a direction names one: another repository's agent files, a skill or rule file, or published guidance. Reviewing the corpus with no outside source in hand is review-instructions.
+description: >-
+  Decides what the corpus takes from an outside instruction source and what
+  it leaves, since the default is to take nothing. Use when a direction names
+  one: another repository's agent files, a skill or rule file, or published
+  guidance. Reviewing the corpus with no outside source in hand is
+  review-instructions.
 ---
 
 # Absorb
