@@ -42,6 +42,8 @@ run "iterate project" bun run --cwd "$root/dot_agents/workflows/iterate" check
 run "corpus reference resolver" bun test "$root/scripts/corpus-refs.test.js"
 run "corpus cross-references" "$root/scripts/check-corpus-refs.js"
 run "corpus orphans" "$root/scripts/check-corpus-orphans.sh"
+run "visual-diff image diff" bash \
+  "$root/dot_agents/skills/visual-diff/tests/image_diff_test.sh"
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1
