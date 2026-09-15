@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 import { $ } from "bun";
-import { mkdtemp, readdir, rm, stat } from "node:fs/promises";
+import { glob, mkdtemp, readdir, rm, stat } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -23,18 +23,29 @@ const FIELDS = [
 // Solarized Dark and Light and reloads it, so these follow the palette; pinned hex would not.
 const STYLE = {
   reset: "\x1b[0m",
+  waiting: "\x1b[35m",
   busy: "\x1b[33m",
   idle: "\x1b[2m",
   origin: "\x1b[32m",
   session: "\x1b[36m",
+  age: "\x1b[2m",
 };
 
 function paint(role, text) {
   return `${STYLE[role]}${text}${STYLE.reset}`;
 }
 
-// Filled against hollow, so the two states still read apart in grayscale.
-const STATE_MARKS = { busy: paint("busy", "●"), idle: paint("idle", "○") };
+// Filled against hollow against half, so the three states still read apart in grayscale.
+const STATE_MARKS = {
+  waiting: paint("waiting", "◐"),
+  busy: paint("busy", "●"),
+  idle: paint("idle", "○"),
+};
+
+// A waiting agent is blocked on you, so it sorts above everything; a busy one needs nothing
+// and sinks. An unrecognised status sits between the two rather than claiming either end.
+const RANKS = { waiting: 0, idle: 1, busy: 3 };
+const UNRANKED = 2;
 
 async function claudePanes() {
   const filter = "#{==:#{pane_current_command},claude}";
@@ -67,13 +78,17 @@ async function configStores() {
 }
 
 // claude agents --json reports a pid and a live status; tmux knows each pane's tty. ps joins them.
-async function statusByTty() {
+async function agentsByTty() {
   const stores = await configStores();
 
   const [lists, processes] = await Promise.all([
     Promise.all(
       stores.map((dir) =>
-        $`claude agents --json`.env({ ...process.env, CLAUDE_CONFIG_DIR: dir }).nothrow().text(),
+        $`claude agents --json`
+          .env({ ...process.env, CLAUDE_CONFIG_DIR: dir })
+          .nothrow()
+          .text()
+          .then((raw) => ({ dir, raw })),
       ),
     ),
     $`ps -axo pid=,tty=`.nothrow().text(),
@@ -85,8 +100,8 @@ async function statusByTty() {
     if (match && match[2] !== "??") ttys.set(Number(match[1]), `/dev/${match[2]}`);
   }
 
-  const states = new Map();
-  for (const raw of lists) {
+  const found = new Map();
+  for (const { dir, raw } of lists) {
     let agents = [];
     try {
       agents = JSON.parse(raw);
@@ -96,14 +111,44 @@ async function statusByTty() {
 
     for (const agent of agents) {
       const tty = ttys.get(agent.pid);
-      if (tty && agent.status) states.set(tty, agent.status);
+      if (tty) {
+        found.set(tty, { status: agent.status, pid: agent.pid, store: dir, id: agent.sessionId });
+      }
     }
   }
 
-  return states;
+  return found;
 }
 
-// Two values are verified live, idle and busy. Anything else renders as its own word rather
+// claude agents --json carries a start time but never a last-activity one, so the transcript's
+// mtime stands in for it. The path encodes the cwd in a scheme this would otherwise have to
+// reproduce, so the session id is matched by glob instead. An absent file leaves the age unknown.
+async function lastActivity(agent) {
+  if (!agent?.id) return null;
+
+  const projects = join(agent.store, "projects");
+  for await (const match of glob(`*/${agent.id}.jsonl`, { cwd: projects })) {
+    const info = await stat(join(projects, match)).catch(() => null);
+    if (info) return info.mtimeMs;
+  }
+
+  return null;
+}
+
+// Minutes up to the hour, then hours: two characters carry the only question the column
+// answers, which is whether this agent has been sitting there long enough to look at. Each
+// unit truncates, so the figure is time definitely elapsed rather than time rounded up to.
+function formatAge(mtime, now) {
+  if (mtime === null) return "-";
+
+  const minutes = Math.max(0, Math.floor((now - mtime) / 60_000));
+  if (minutes < 60) return `${minutes}m`;
+
+  const hours = Math.floor(minutes / 60);
+  return hours < 24 ? `${hours}h` : `${Math.floor(hours / 24)}d`;
+}
+
+// Three values are known, waiting, idle and busy. Anything else renders as its own word rather
 // than collapsing into a symbol that would hide it.
 function stateMark(status) {
   if (!status) return " ";
@@ -150,12 +195,15 @@ async function pickPane(rows) {
   try {
     await Bun.write(rowsFile, `${rows.join("\n")}\n`);
 
-    // Field 1 is the pane id. --with-nth hides it from the list, and from what fzf matches on,
-    // so anything the user should be able to search has to live in field 2.
+    // Field 1 is the pane id and field 3 the agent's pid. --with-nth hides both from the list,
+    // and from what fzf matches on, so anything the user should be able to search lives in
+    // field 2. ctrl-x kills the agent process; the reload waits for it to leave the agent list.
     const fzf = [
-      "fzf --ansi --reverse --delimiter '\\t' --with-nth 2 --header 'claude sessions'",
+      "fzf --ansi --reverse --delimiter '\\t' --with-nth 2",
+      "--header 'enter: jump · ctrl-x: kill'",
       `--preview '${Bun.main} --preview {1}'`,
       "--preview-window right:65%",
+      `--bind 'ctrl-x:execute-silent(kill {3})+reload(sleep 0.3; ${Bun.main} --rows)'`,
     ].join(" ");
 
     // fzf returns 130 on cancel and display-popup passes that straight through. Every non-zero
@@ -180,33 +228,75 @@ async function focus(paneId) {
   await $`tmux display-message -d 2000 ${message}`.nothrow();
 }
 
+// Rank first so whatever is blocked on you floats up, then age ascending so the one that just
+// went quiet leads its group. Session and pane order only break a tie the clock left.
+function compareRows(a, b) {
+  return (
+    a.rank - b.rank ||
+    a.age - b.age ||
+    a.pane.session.localeCompare(b.pane.session) ||
+    a.pane.window - b.pane.window ||
+    a.pane.index - b.pane.index
+  );
+}
+
+async function buildRows(origin) {
+  const panes = await claudePanes();
+  if (panes.length === 0) return [];
+
+  const [host, agents] = await Promise.all([
+    $`tmux display-message -p ${"#{host}"}`.nothrow().text(),
+    agentsByTty(),
+  ]);
+
+  const now = Date.now();
+  const mtimes = await Promise.all(panes.map((pane) => lastActivity(agents.get(pane.tty))));
+
+  const entries = panes.map((pane, position) => {
+    const agent = agents.get(pane.tty);
+    const mtime = mtimes[position];
+
+    return {
+      pane,
+      agent,
+      mtime,
+      rank: RANKS[agent?.status] ?? UNRANKED,
+      age: mtime === null ? Number.POSITIVE_INFINITY : now - mtime,
+    };
+  });
+
+  entries.sort(compareRows);
+
+  const sessionWidth = Math.max(...entries.map((entry) => entry.pane.session.length));
+  const ages = entries.map((entry) => formatAge(entry.mtime, now));
+  const ageWidth = Math.max(...ages.map((age) => age.length));
+
+  return entries.map((entry, position) => {
+    const marker = entry.pane.id === origin ? `${paint("origin", "*")} ` : "  ";
+    const state = stateMark(entry.agent?.status);
+    const session = paint("session", entry.pane.session.padEnd(sessionWidth));
+    const age = paint("age", ages[position].padStart(ageWidth));
+    const pid = entry.agent?.pid ?? "";
+    const display = `${marker}${state} ${age}  ${session}  ${label(entry.pane, host.trim())}`;
+
+    return `${entry.pane.id}\t${display}\t${pid}`;
+  });
+}
+
 const [first, second] = process.argv.slice(2);
 
 if (first === "--preview") {
   await renderPreview(second);
+} else if (first === "--rows") {
+  const rows = await buildRows("");
+  if (rows.length > 0) console.log(rows.join("\n"));
 } else {
-  const origin = first ?? "";
-  const panes = await claudePanes();
+  const rows = await buildRows(first ?? "");
 
-  if (panes.length === 0) {
+  if (rows.length === 0) {
     await $`tmux display-message -d 2000 ${"no claude sessions"}`.nothrow();
     process.exit(0);
   }
-
-  const [host, states] = await Promise.all([
-    $`tmux display-message -p ${"#{host}"}`.nothrow().text(),
-    statusByTty(),
-  ]);
-
-  const width = Math.max(...panes.map((pane) => pane.session.length));
-
-  const rows = panes.map((pane) => {
-    const marker = pane.id === origin ? `${paint("origin", "*")} ` : "  ";
-    const state = stateMark(states.get(pane.tty));
-    const session = paint("session", pane.session.padEnd(width));
-
-    return `${pane.id}\t${marker}${state} ${session}  ${label(pane, host.trim())}`;
-  });
 
   const picked = await pickPane(rows);
   if (picked) await focus(picked);

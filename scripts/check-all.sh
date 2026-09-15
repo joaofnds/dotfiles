@@ -47,6 +47,7 @@ run "visual-diff image diff" bash \
 run "instruction evidence handoff" python3 \
   "$root/dot_agents/skills/review-instructions/tests/evidence_handoff_test.py"
 run "instruction frontmatter" bun test "$root/scripts/instruction-frontmatter.test.js"
+run "tmux claude switcher" bun test "$root/scripts/tmux-claude-switcher.test.js"
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1
