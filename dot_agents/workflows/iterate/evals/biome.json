@@ -1,0 +1,22 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+  "root": false,
+  "files": {
+    "includes": ["*.ts", "cases/**/*.json", "*.json"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
+  "javascript": {
+    "globals": ["Bun"]
+  },
+  "linter": {
+    "domains": {
+      "qwik": "none"
+    },
+    "rules": {
+      "preset": "all"
+    }
+  }
+}

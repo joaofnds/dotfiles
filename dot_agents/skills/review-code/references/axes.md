@@ -89,7 +89,7 @@ checks.
 > TypeScript), interface width, and the tag-free domain struct in Go. Port
 > placement, accept-interfaces-return-structs, modeling domain concepts as types,
 > and mutation by replacement are Architecture's. Read what is Architecture's, and
-> report no defect under it. Do not name Fowler catalog smells, because the
+> report only [correctness] defects under it. Do not name Fowler catalog smells, because the
 > refactoring axis owns them. Name the concrete defect a structure causes, when
 > there is one. Match the surrounding file's conventions.
 
@@ -110,7 +110,7 @@ checks.
 > anti-corruption layer at all. Of the language files, yours are port placement and
 > accept-interfaces-return-structs in Go, and modeling domain concepts as types and
 > mutation by replacement in TypeScript. The rest of those files is Style's. Read
-> it, and report no defect under it.
+> it, and report only [correctness] defects under it.
 > **Modules:** a patch that works while adding structural complexity is a finding
 > even when nothing is broken. Where an authorization check lives is yours. Whether
 > it can be reached past is Security's. **Objects:** direct orchestration is the

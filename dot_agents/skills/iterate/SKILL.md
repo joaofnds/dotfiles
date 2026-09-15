@@ -1,38 +1,35 @@
 ---
 name: iterate
 disable-model-invocation: true
-argument-hint: "[stage=provider:model ...]"
-description: Runs intake, selects accepted work, and carries one card through its stages and reflection. Reads each stage's result before continuing. Runs only on direction, one iteration per invocation. Full-board planning belongs to triage.
+argument-hint: "<card> [--<stage>-agent provider:model[:effort] ...]"
+description: Supervises one accepted card through its required stages in fresh sessions, reading each result before continuing. Runs only on direction with a card ID. Planning and reflection run separately.
 ---
 
 # Iterate
 
-You run one iteration on the board in the current directory, one session at a time,
+You carry the named card to Done on the board in the current directory, one session at a time,
 and you answer between sessions what a stage left open, so the iteration reaches
-its end within the card's accepted scope. Inbox admission requires a typed user
-decision unless a recorded policy explicitly delegates it, including during
-unattended work. Apply the board's Capture and admission policy. Leave pending
-intake decisions for that review and continue accepted work.
-The `iterate` script starts the sessions and
-holds the guards, so run it rather than checking the tree, the goal, or the card's
-status yourself.
+its end within the card's accepted scope. If the invocation has no card ID, ask for
+one. Intake, selecting work, writing a bet, and reflection are outside this run.
+The `iterate` script starts the sessions and holds the guards, so use it for each
+stage. The stage skills own their work and required reviews.
 
-```
-iterate start           # intake, pick an accepted card, write its bet, print it
-iterate step <card>     # one session: the card's column, or reflect when it is Done
-```
+Pass every `--<stage>-agent provider:model[:effort]` option from the invocation
+unchanged to each `step` or `resume`. The runner applies only the option for the
+stage it is about to run. A stage with no option uses the Claude CLI defaults.
+The supported stage names are shape, debug, verify, build, and review.
+Unqualified `--provider`, `--model`, and `--effort` belong to one direct runner
+call and cannot be mixed with stage options.
 
-Pass the agents the invocation names for stages, in the form `iterate --help`
-describes under ITERATE_AGENTS, as that variable on `iterate start` and on every
-`iterate step`.
-
-Start with `iterate start`, which prints the card. Rename this session to that card
+Rename this session to the card
 id, so the session list says which card is running rather than which skill started
 it. Then call `iterate step <card>` until it says the card is Done, overseeing
-between the calls. Reflect runs on the last step, after Done.
+between the calls. Call each step separately so you can read its result before
+starting another. After a stage reaches Done, call step once more to check the tree
+and close the run without starting a session.
 
-Each call prints the session's reply on stdout, and on stderr the agent each stage ran
-on and its cost. Read both.
+Each call prints the session's reply on stdout, and on stderr the stage and its
+cost. Read both.
 
 ## When a step stops
 
@@ -40,16 +37,18 @@ Exit 2 means the card's column did not move, and the stage's reply says why. A
 question in it is yours to answer, the ones the Acting section says to ask once
 included, because the direction to run the iteration is the direction to run it
 to its end. Decide it on the recommendation the stage gave, or on your own where
-it gave none, write the decision and its reason on the card as a note, and step
-again. An action the hard lines reserve for a typed direction is the exception.
+it gave none, write the decision and its reason on the card as a note, and continue through the
+runner's resume policy for the same stage and agent options. Refresh changed state
+and steering. Keep independent reviewers fresh. Use a fresh step when resume is
+unsupported or stale. An action the hard lines reserve for a typed direction is the exception.
 Write its exact command on the card and go on without it. A card that stalls on
 the same question after your answer is one the loop cannot move. Say so and end
 the iteration. When the reply instead says the work is not worth doing, that is a
 verdict. Say it and end the iteration.
 
-Exit 1, 3, or 4 ends the iteration. Say what the script said. A session cap or a
-budget stop is not a failure. The card keeps its column, and whether to bet on it
-again is decided outside the iteration.
+Exit 1 or 3 ends the iteration. Say what the script said. A session cap or a
+budget stop is not a failure. The card keeps its column, and whether to resume the
+work is decided outside the iteration.
 
 ## Oversee between the steps
 
@@ -71,7 +70,5 @@ Every step writes its own record before it returns, so a stop leaves the board t
 The last step refuses to return while anything it wrote is uncommitted, so commit
 what it left rather than reporting the iteration complete over it.
 
-Your reply is the brief. It says what happened to the card, the reflection's
-verdict, each decision the iteration made on its own, and the one the reflection
-leaves open. Check that verdict against the reflection doc before you relay it.
-The records hold the rest.
+Your reply is the brief. It says what happened to the card, each decision the
+iteration made on its own, and what remains unresolved. The records hold the rest.

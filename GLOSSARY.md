@@ -55,21 +55,19 @@ term when you introduce or lean on one, one term per concept.
   doc. Triage orders the queue by it and reflect judges each increment against it.
   Changing it is a decision the loop does not make for itself.
 - **Milestone**: one increment of the goal, named by what becomes possible when it
-  is Done, holding the cards that produce it. A board carries several, ordered by
-  when their feedback is needed.
-- **Iteration**: one pass of the outer loop: screen intake, pick accepted work,
-  run it to Done, reflect. Full-board planning runs separately when replanning is
-  needed. The loop repeats iterations. It never drains the board.
+  is Done, holding only the cards that produce it. A board carries several, ordered
+  by due date, and the one due soonest is current.
+- **Iteration**: one accepted card carried through its required stages by a
+  supervisor. Intake, selection, and reflection are separate activities.
 - **Reflection doc**: the dated doc the reflect step leaves on the board, through the
   backlog CLI: the Coaching Kata's five questions answered, one verdict on the goal
   (on track, adjust, or pivot), proposed planning changes, and kaizen candidates.
   Reflect proposes; the next triage applies.
-- **Bet**: the card an iteration commits to, with what will be observable about the
-  goal when it is Done and the budget it gets. Triage writes it as the queue's first
-  entry and the pick step copies it onto the card. Reflect judges against it.
-- **Pick**: the iteration step that takes the first single card of the triage queue,
-  writes its bet onto it as a dated note, and starts the run. The runner does it, or
-  it is done by hand.
+- **Bet**: a planning commitment to a card, with what will be observable about the
+  goal when it is Done and the budget it gets. Triage records it and reflect judges
+  against it.
+- **Pick**: selection of the next card, informed by triage's recommendation or a
+  direct decision. The iterate invocation names that card.
 - **Ownership**: the stance that every broken thing in the project is the session's
   to fix, to put on a card, or to ask about, whoever caused it. Its failure is
   **dismissal**: a defect the session saw that sits in no commit, on no card, and in

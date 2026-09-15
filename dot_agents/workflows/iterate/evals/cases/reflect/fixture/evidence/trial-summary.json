@@ -1,0 +1,16 @@
+{
+  "attempts": [
+    {
+      "case": "triage",
+      "configuredModel": "opus",
+      "configuredEffort": "medium",
+      "effectiveModel": "claude-opus-5",
+      "deterministicChecks": "PASS",
+      "providerListCostUsd": 0.18
+    }
+  ],
+  "semanticReview": "missing",
+  "highArm": "missing",
+  "reflectCase": "missing",
+  "repetitions": 1
+}

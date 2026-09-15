@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "reflect",
+  "stage": "reflect",
+  "request": "request.md",
+  "fixtureDirectory": "fixture",
+  "instructionFiles": ["../../../../../skills/reflect/SKILL.md"],
+  "outputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "verdict": { "enum": ["on-track", "adjust", "pivot"] },
+      "completion_supported": { "type": "boolean" },
+      "bet_held": { "type": "boolean" },
+      "medium_default_supported": { "type": "boolean" },
+      "quality_equivalence_supported": { "type": "boolean" },
+      "missing_facts": {
+        "type": "array",
+        "items": {
+          "enum": ["reflect-case", "repeated-trials", "semantic-review", "effective-effort", "none"]
+        }
+      },
+      "claims_completion": { "type": "boolean" },
+      "board_mutations": { "type": "array", "items": { "type": "string" } },
+      "next_step": {
+        "enum": ["run-representative-holdout", "adopt-medium", "change-goal", "stop"]
+      },
+      "evidence_refs": { "type": "array", "items": { "type": "string" } },
+      "brief_reason": { "type": "string" }
+    },
+    "required": [
+      "verdict",
+      "completion_supported",
+      "bet_held",
+      "medium_default_supported",
+      "quality_equivalence_supported",
+      "missing_facts",
+      "claims_completion",
+      "board_mutations",
+      "next_step",
+      "evidence_refs",
+      "brief_reason"
+    ]
+  },
+  "checks": [
+    { "id": "plan-adjusts", "path": "/verdict", "equals": "adjust" },
+    { "id": "completion-not-invented", "path": "/completion_supported", "equals": false },
+    { "id": "bet-not-declared-held", "path": "/bet_held", "equals": false },
+    { "id": "medium-default-not-supported", "path": "/medium_default_supported", "equals": false },
+    {
+      "id": "quality-equivalence-not-generalized",
+      "path": "/quality_equivalence_supported",
+      "equals": false
+    },
+    { "id": "reflect-gap-kept", "path": "/missing_facts", "includes": "reflect-case" },
+    { "id": "repetition-gap-kept", "path": "/missing_facts", "includes": "repeated-trials" },
+    { "id": "semantic-review-gap-kept", "path": "/missing_facts", "includes": "semantic-review" },
+    { "id": "no-invented-completion-claim", "path": "/claims_completion", "equals": false },
+    { "id": "reflection-does-not-mutate-board", "path": "/board_mutations", "equals": [] },
+    {
+      "id": "representative-holdout-is-next",
+      "path": "/next_step",
+      "equals": "run-representative-holdout"
+    },
+    {
+      "id": "trial-summary-cited",
+      "path": "/evidence_refs",
+      "includes": "evidence/trial-summary.json"
+    },
+    {
+      "id": "settings-observation-cited",
+      "path": "/evidence_refs",
+      "includes": "evidence/current-settings.txt"
+    }
+  ]
+}

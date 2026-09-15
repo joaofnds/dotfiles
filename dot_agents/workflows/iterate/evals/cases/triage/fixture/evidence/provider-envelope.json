@@ -1,0 +1,13 @@
+{
+  "modelUsage": {
+    "claude-opus-5": {
+      "inputTokens": 1200,
+      "outputTokens": 180,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 900,
+      "costUSD": 0.18
+    }
+  },
+  "total_cost_usd": 0.18,
+  "note": "One successful medium-effort triage attempt; no repetition or reflection attempt is attached."
+}

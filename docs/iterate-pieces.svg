@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" role="img" aria-labelledby="title description" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">
+<title id="title">Who runs an iteration</title>
+<desc id="description">The user names one accepted card. The supervisor calls the runner once per stage. The runner reads the card, enforces guards and journals the attempt. The stage works from the card and linked records. Its result returns to the supervisor before another call. Triage and reflection run separately.</desc>
+<style>
+  .box { fill: #F5F6F7; stroke: #BDC1C6; }
+  .teal { fill: #DAF0EC; stroke: #7FC4B8; }
+  .blue { fill: #E6F1FB; stroke: #8AB4E0; }
+  .purple { fill: #EDE7F8; stroke: #A990DC; }
+  .amber { fill: #FBEEDA; stroke: #DDB160; }
+  .red { fill: #FAE7E5; stroke: #DC9A92; }
+  .title { font-size: 14px; font-weight: 500; fill: #1A1C1E; }
+  .head { font-size: 14px; font-weight: 500; fill: #1A1C1E; }
+  .body { font-size: 12px; font-weight: 400; fill: #5E6368; }
+  .arr { stroke: #8A8F94; stroke-width: 1.5; fill: none; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8A8F94" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<text class="title" x="450" y="34" text-anchor="middle">One card, one supervisor</text>
+<rect class="teal" x="270" y="62" width="360" height="72" rx="8"/>
+<text class="head" x="450.0" y="90" text-anchor="middle">You name an accepted card</text>
+<text class="body" x="450.0" y="114" text-anchor="middle">Optionally select an agent for each stage.</text>
+<path class="arr" d="M450 134 V164" marker-end="url(#arrow)"/>
+<rect class="teal" x="270" y="164" width="360" height="112" rx="8"/>
+<text class="head" x="450.0" y="192" text-anchor="middle">Supervisor: the iterate skill</text>
+<text class="body" x="450.0" y="216" text-anchor="middle">Reads each reply and checks new claims.</text>
+<text class="body" x="450.0" y="237" text-anchor="middle">Records decisions on the card.</text>
+<text class="body" x="450.0" y="258" text-anchor="middle">Chooses the next call.</text>
+<path class="arr" d="M450 316 V330" marker-end="url(#arrow)"/>
+<text class="body" x="450" y="309" text-anchor="middle">step CARD [stage selectors | direct options], or matching resume</text>
+<rect class="blue" x="270" y="330" width="360" height="112" rx="8"/>
+<text class="head" x="450.0" y="358" text-anchor="middle">Runner: iterate</text>
+<text class="body" x="450.0" y="382" text-anchor="middle">Reads status and checks guards.</text>
+<text class="body" x="450.0" y="403" text-anchor="middle">Starts at most one Claude session.</text>
+<text class="body" x="450.0" y="424" text-anchor="middle">Keeps attempts, limits and raw logs.</text>
+<path class="arr" d="M450 476 V488" marker-end="url(#arrow)"/>
+<text class="body" x="450" y="470" text-anchor="middle">Fresh Claude session for an ordinary step</text>
+<rect class="purple" x="270" y="488" width="360" height="92" rx="8"/>
+<text class="head" x="450.0" y="516" text-anchor="middle">The stage skill</text>
+<text class="body" x="450.0" y="540" text-anchor="middle">shape · debug · verify · build · review</text>
+<text class="body" x="450.0" y="561" text-anchor="middle">Does the work and its required reviews.</text>
+<rect class="box" x="24" y="350" width="190" height="112" rx="8"/>
+<text class="head" x="119.0" y="378" text-anchor="middle">Card and records</text>
+<text class="body" x="119.0" y="402" text-anchor="middle">Read and written through</text>
+<text class="body" x="119.0" y="423" text-anchor="middle">the backlog CLI.</text>
+<text class="body" x="119.0" y="444" text-anchor="middle">Evidence links carry context.</text>
+<path class="arr" d="M270 386 H214" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<path class="arr" d="M270 534 H119 V462" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<path class="arr" d="M630 534 H864 V220 H630" marker-end="url(#arrow)"/>
+<text class="body" x="740" y="282" text-anchor="middle">Reply, progress,</text>
+<text class="body" x="740" y="303" text-anchor="middle">evidence and costs</text>
+<text class="body" x="740" y="324" text-anchor="middle">back to the supervisor</text>
+<text class="body" x="450" y="620" text-anchor="middle">Triage and reflection are separate invocations. A Done check starts no session.</text>
+</svg>

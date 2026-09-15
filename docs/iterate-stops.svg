@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="700" viewBox="0 0 960 700" role="img" aria-labelledby="title description" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">
+<title id="title">How the supervisor handles a step result</title>
+<desc id="description">Exit 0 means progress or completed final checks. Exit 2 means unchanged status and requires the supervisor to interpret the reply, record an answer when appropriate, and continue a compatible author session or use a fresh step. The same question after an answer, or a verdict that the work is not worth doing, ends the run. Exits 1 and 3 end this invocation. Recovery is a separate decision and journal history is preserved.</desc>
+<style>
+  .box { fill: #F5F6F7; stroke: #BDC1C6; }
+  .teal { fill: #DAF0EC; stroke: #7FC4B8; }
+  .blue { fill: #E6F1FB; stroke: #8AB4E0; }
+  .purple { fill: #EDE7F8; stroke: #A990DC; }
+  .amber { fill: #FBEEDA; stroke: #DDB160; }
+  .red { fill: #FAE7E5; stroke: #DC9A92; }
+  .title { font-size: 14px; font-weight: 500; fill: #1A1C1E; }
+  .head { font-size: 14px; font-weight: 500; fill: #1A1C1E; }
+  .body { font-size: 12px; font-weight: 400; fill: #5E6368; }
+  .arr { stroke: #8A8F94; stroke-width: 1.5; fill: none; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8A8F94" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<text class="title" x="480" y="34" text-anchor="middle">Read the result before the next call</text>
+<rect class="teal" x="320" y="64" width="320" height="72" rx="8"/>
+<text class="head" x="480.0" y="92" text-anchor="middle">A step or resume returns</text>
+<text class="body" x="480.0" y="116" text-anchor="middle">Supervisor reads stdout and stderr.</text>
+<path class="arr" d="M480 136 V168 H160 V204" marker-end="url(#arrow)"/>
+<path class="arr" d="M480 168 V204" marker-end="url(#arrow)"/>
+<path class="arr" d="M480 168 H800 V204" marker-end="url(#arrow)"/>
+<rect class="blue" x="24" y="204" width="272" height="292" rx="8"/>
+<text class="head" x="160.0" y="232" text-anchor="middle">Exit 0</text>
+<text class="body" x="160.0" y="256" text-anchor="middle">Column advanced, or the final</text>
+<text class="body" x="160.0" y="277" text-anchor="middle">Done check passed.</text>
+<text class="body" x="160.0" y="298" text-anchor="middle"></text>
+<text class="body" x="160.0" y="319" text-anchor="middle">Read the reply and probe new claims.</text>
+<text class="body" x="160.0" y="340" text-anchor="middle"></text>
+<text class="body" x="160.0" y="361" text-anchor="middle">Card still open: call step again.</text>
+<text class="body" x="160.0" y="382" text-anchor="middle">Card just reached Done: final step.</text>
+<text class="body" x="160.0" y="403" text-anchor="middle">Final check passed: finish.</text>
+<rect class="amber" x="344" y="204" width="272" height="292" rx="8"/>
+<text class="head" x="480.0" y="232" text-anchor="middle">Exit 2</text>
+<text class="body" x="480.0" y="256" text-anchor="middle">Card stayed in its column.</text>
+<text class="body" x="480.0" y="277" text-anchor="middle"></text>
+<text class="body" x="480.0" y="298" text-anchor="middle">Answerable question: record the</text>
+<text class="body" x="480.0" y="319" text-anchor="middle">decision and reason on the card,</text>
+<text class="body" x="480.0" y="340" text-anchor="middle">then resume a compatible author.</text>
+<text class="body" x="480.0" y="361" text-anchor="middle">Use a fresh step if resume is stale</text>
+<text class="body" x="480.0" y="382" text-anchor="middle">or unsupported; keep review fresh.</text>
+<text class="body" x="480.0" y="403" text-anchor="middle"></text>
+<text class="body" x="480.0" y="424" text-anchor="middle">Same question after the answer,</text>
+<text class="body" x="480.0" y="445" text-anchor="middle">or work judged not worth doing:</text>
+<text class="body" x="480.0" y="466" text-anchor="middle">end the run.</text>
+<rect class="red" x="664" y="204" width="272" height="292" rx="8"/>
+<text class="head" x="800.0" y="232" text-anchor="middle">Exit 1 or 3</text>
+<text class="body" x="800.0" y="256" text-anchor="middle">1: refusal, failure or a limit.</text>
+<text class="body" x="800.0" y="277" text-anchor="middle">3: .iterate-stop is present.</text>
+<text class="body" x="800.0" y="298" text-anchor="middle"></text>
+<text class="body" x="800.0" y="319" text-anchor="middle">End this invocation and report</text>
+<text class="body" x="800.0" y="340" text-anchor="middle">what the runner said.</text>
+<text class="body" x="800.0" y="361" text-anchor="middle"></text>
+<text class="body" x="800.0" y="382" text-anchor="middle">Inspect stderr and the journal.</text>
+<text class="body" x="800.0" y="403" text-anchor="middle">Decide recovery outside this run.</text>
+<text class="body" x="800.0" y="424" text-anchor="middle">Keep attempts and costs intact.</text>
+<rect class="box" x="24" y="534" width="912" height="134" rx="8"/>
+<text class="head" x="480.0" y="562" text-anchor="middle">What can refuse or stop a call</text>
+<text class="body" x="480.0" y="586" text-anchor="middle">Inbox, deferred or unknown state; Build/Review held by another assignee; invalid inputs.</text>
+<text class="body" x="480.0" y="607" text-anchor="middle">Dirty tree unless the card is assigned to @claude; Done always requires a clean tree.</text>
+<text class="body" x="480.0" y="628" text-anchor="middle">Unsettled attempts, spending or time limits, six stage attempts, or a session failure.</text>
+<text class="body" x="480.0" y="649" text-anchor="middle">A stop file is checked before dispatch; it does not cancel a currently running session.</text>
+</svg>

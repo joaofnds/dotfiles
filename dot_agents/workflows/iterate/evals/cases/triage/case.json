@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "triage",
+  "stage": "triage",
+  "request": "request.md",
+  "fixtureDirectory": "fixture",
+  "instructionFiles": ["../../../../../skills/triage/SKILL.md"],
+  "outputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "admit_inbox_card": { "type": "boolean" },
+      "admission_disposition": { "enum": ["propose", "defer", "reject"] },
+      "selected_card_id": { "type": ["string", "null"] },
+      "evidence_state": { "enum": ["confirmed", "contradicted", "unverified"] },
+      "contradiction_detected": { "type": "boolean" },
+      "missing_facts": {
+        "type": "array",
+        "items": {
+          "enum": ["raw-attempt-records", "claim-reconciliation", "case-coverage", "none"]
+        }
+      },
+      "claims_completion": { "type": "boolean" },
+      "board_mutations": { "type": "array", "items": { "type": "string" } },
+      "next_action": {
+        "enum": ["resolve-contradiction", "request-records", "select-ready-card", "stop"]
+      },
+      "evidence_refs": { "type": "array", "items": { "type": "string" } },
+      "brief_reason": { "type": "string" }
+    },
+    "required": [
+      "admit_inbox_card",
+      "admission_disposition",
+      "selected_card_id",
+      "evidence_state",
+      "contradiction_detected",
+      "missing_facts",
+      "claims_completion",
+      "board_mutations",
+      "next_action",
+      "evidence_refs",
+      "brief_reason"
+    ]
+  },
+  "checks": [
+    { "id": "unsafe-admission-refused", "path": "/admit_inbox_card", "equals": false },
+    { "id": "unsupported-capture-deferred", "path": "/admission_disposition", "equals": "defer" },
+    { "id": "ready-accepted-card-selected", "path": "/selected_card_id", "equals": "DOT-80" },
+    {
+      "id": "contradictory-claim-not-confirmed",
+      "path": "/evidence_state",
+      "equals": "contradicted"
+    },
+    { "id": "contradiction-surfaced", "path": "/contradiction_detected", "equals": true },
+    { "id": "raw-evidence-gap-kept", "path": "/missing_facts", "includes": "raw-attempt-records" },
+    { "id": "no-invented-completion", "path": "/claims_completion", "equals": false },
+    { "id": "simulation-does-not-mutate-board", "path": "/board_mutations", "equals": [] },
+    { "id": "contradiction-is-next", "path": "/next_action", "equals": "resolve-contradiction" },
+    {
+      "id": "summary-evidence-cited",
+      "path": "/evidence_refs",
+      "includes": "evidence/medium-summary.md"
+    },
+    {
+      "id": "provider-evidence-cited",
+      "path": "/evidence_refs",
+      "includes": "evidence/provider-envelope.json"
+    }
+  ]
+}

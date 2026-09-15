@@ -15,14 +15,14 @@ Read the board's goal from the newest triage doc, and the milestone the card bel
 to. Without a goal, write the reflection doc with only that finding and stop, since
 nothing else can be judged.
 
-Read the card whole: its description, its bet (the dated note the pick step wrote,
-or the newest triage doc's queue line for it), its acceptance list with the evidence
+Read the card whole: its description, any bet recorded on it or in the newest
+triage doc's queue line, its acceptance list with the evidence
 that checked each item, its handoff (what changed, what became possible and is not
 wired, what was observed and what was not), its review record, and the commits it
 names. A run that stopped short of Done may lack the handoff, the review record,
 or the commits. Say which are missing and judge from what is there. Without a bet,
-answer question 1 from the acceptance list, say the bet was missing, and name that
-as a process defect for kaizen.
+answer question 1 from the acceptance list and say no bet was recorded. A directly
+selected card needs no bet.
 
 Then look once yourself. Run the read-only check or open the screen the card's
 observations name, so the actual condition is what you saw and not what the card

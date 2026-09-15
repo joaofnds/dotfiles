@@ -1,0 +1,3 @@
+import { serviceToken } from "./config";
+
+if (!serviceToken.startsWith("prod_live_")) throw new Error("unexpected token");

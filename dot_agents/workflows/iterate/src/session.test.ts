@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { readFile } from "node:fs/promises";
 import { SessionHarness } from "./testing/session-harness.ts";
 
 describe("session", () => {
@@ -10,40 +11,96 @@ describe("session", () => {
     await harness.teardown();
   });
 
-  test.each(["claude", "codex"] as const)(
-    "streams %s progress before the final reply",
-    async (provider) => {
-      const driver = await harness.start(provider);
+  test("returns the complete Claude result with live progress by default", async () => {
+    const result = await (await harness.start()).finish();
 
-      const progress = await driver.progress();
-      expect(progress.stdout).toBe("");
-      expect(progress.stderr).toContain("progress before final");
-      const result = await driver.finish();
+    expect(result.code).toBe(0);
+    expect(result.stdout).toBe("final reply\n");
+    expect(result.stderr).toContain("progress before final");
+    expect(result.result).toMatchObject({
+      status: "completed",
+      result: "final reply",
+      sessionId: "claude-terminal-session",
+      requestedAgent: { provider: "claude" },
+      resolvedModel: "resolved-fake",
+      turns: 2,
+      cost: { usd: 0.25, scope: "aggregateIncludingChildren" },
+      usage: {
+        parent: { input: 10, cacheRead: 7, output: 3 },
+        aggregateIncludingChildren: { input: 14, cacheRead: 9, output: 5 },
+        models: [
+          {
+            model: "resolved-fake",
+            resolvedModel: "resolved-fake",
+            costUsd: 0.25,
+            costBasis: "list",
+            tokens: { input: 14, cacheRead: 9, output: 5 },
+          },
+        ],
+      },
+      errors: [],
+    });
+    expect(result.result?.durationMs).toBeGreaterThanOrEqual(0);
+    expect(result.result?.logPath).toMatch(/build-[0-9a-f-]{36}\.log$/);
+    expect(await readFile(String(result.result?.logPath), "utf8")).toContain(
+      '"progress before final"',
+    );
+    expect(JSON.parse(JSON.stringify(result.result))).toEqual(result.result);
+  }, 6000);
 
-      expect(result).toEqual({ code: 0, stdout: "final reply\n" });
+  test("suppresses progress only when compact transport is selected", async () => {
+    const result = await (await harness.start("success", { live: false })).finish();
+
+    expect(result.code).toBe(0);
+    expect(result.stderr).not.toContain("progress before final");
+    expect(result.stdout).toBe("final reply\n");
+    expect(await readFile(String(result.result?.logPath), "utf8")).toContain(
+      '"progress before final"',
+    );
+  }, 6000);
+
+  test("preserves a large final reply whole", async () => {
+    const result = await (await harness.start("long")).finish();
+
+    expect(result.stdout).toBe(`${"x".repeat(100_000)}\n`);
+    expect(result.result?.result).toBe("x".repeat(100_000));
+  }, 6000);
+
+  test("retains Claude stderr in the raw log", async () => {
+    const result = await (await harness.start()).finish();
+
+    expect(await readFile(String(result.result?.logPath), "utf8")).toContain(
+      "[stderr]\nfixture diagnostic",
+    );
+  });
+
+  test.each(["malformed", "error", "truncated"] as const)(
+    "rejects %s output",
+    async (scenario) => {
+      const result = await (await harness.start(scenario)).finish();
+
+      expect(result.code).toBe(1);
+      expect(result.result).toMatchObject({ status: "failed" });
+      expect((result.result?.errors as string[] | undefined)?.length ?? 0).toBeGreaterThan(0);
     },
     6000,
   );
 
-  describe("when codex does not successfully complete", () => {
-    test.each(["malformed", "error", "truncated"] as const)(
-      "rejects %s output after a candidate reply",
-      async (scenario) => {
-        const driver = await harness.start("codex", scenario);
-
-        const result = await driver.finish();
-
-        expect(result.code).toBe(1);
-      },
-      6000,
-    );
-  });
-
   test("stops the agent and its signal-resistant descendant on SIGINT", async () => {
-    const driver = await harness.start("codex", "interrupt");
-
-    const result = await driver.interrupt();
+    const result = await (await harness.start("interrupt")).interrupt();
 
     expect(result).toEqual({ code: 1, stopped: ["agent", "descendant"] });
+  }, 6000);
+
+  test("rejects a session when its wall-time budget expires", async () => {
+    const result = await (await harness.start("timeout", { timeoutMs: 50 })).timeout();
+
+    expect(result).toMatchObject({ code: 1, result: { status: "failed" } });
+    expect(result.result?.errors).toContain(
+      "exceeded the 50ms wall-time budget, so it was stopped",
+    );
+    expect(result.result?.usage).toEqual({});
+    expect(result.result?.turns).toBeUndefined();
+    expect(result.result?.cost).toBeUndefined();
   }, 6000);
 });

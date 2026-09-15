@@ -1,5 +1,12 @@
 import { z } from "zod";
 import type { Stage, StageAgent } from "./agents.ts";
+import {
+  addTokens,
+  type ModelUsage,
+  type SessionCost,
+  type TokenUsage,
+  type UsageReport,
+} from "./usage.ts";
 
 export type SessionInput = {
   readonly agent: StageAgent;
@@ -7,6 +14,9 @@ export type SessionInput = {
   readonly card: string;
   readonly systemPrompt: string;
   readonly budget: string;
+  readonly logDirectory?: string;
+  readonly resumeSessionId?: string;
+  readonly timeoutMs?: number;
 };
 
 export type ProviderEvent =
@@ -14,63 +24,29 @@ export type ProviderEvent =
   | { readonly type: "tool_call"; readonly name: string; readonly args: string }
   | { readonly type: "result"; readonly result: string }
   | { readonly type: "session_id"; readonly sessionId: string }
+  | { readonly type: "resolved_model"; readonly model: string }
   | { readonly type: "error"; readonly message: string }
   | {
       readonly type: "usage";
-      readonly turns: number | undefined;
-      readonly cost: number | undefined;
+      readonly turns?: number;
+      readonly cost?: SessionCost;
+      readonly usage: UsageReport;
     }
   | { readonly type: "complete" };
 
-export function commandFor(input: SessionInput): {
-  readonly argv: readonly string[];
-  readonly stdin?: string;
-} {
-  const { agent, stage, card, systemPrompt, budget } = input;
-  if (agent.provider === "claude") {
-    const argv = [
-      "claude",
-      "--print",
-      "--verbose",
-      "--output-format",
-      "stream-json",
-      "--model",
-      agent.model,
-      "--max-budget-usd",
-      budget,
-      "--append-system-prompt",
-      systemPrompt,
-    ];
-    if (agent.effort) argv.push("--effort", agent.effort);
-    argv.push("--dangerously-skip-permissions", card ? `/${stage} ${card}` : `/${stage}`);
-
-    return { argv };
-  }
-
-  const ask = card ? `Use the $${stage} skill on ${card}.` : `Use the $${stage} skill.`;
-  const prompt = `${ask}\n\n${systemPrompt}`;
-  if (agent.provider === "codex") {
-    const argv = [
-      "codex",
-      "exec",
-      "--json",
-      "--dangerously-bypass-approvals-and-sandbox",
-      "-m",
-      agent.model,
-    ];
-    if (agent.effort) argv.push("-c", `model_reasoning_effort="${agent.effort}"`);
-
-    return { argv, stdin: prompt };
-  }
-
-  const argv = ["opencode", "run", "--format", "json", "--model", agent.model];
-  if (agent.effort) argv.push("--variant", agent.effort);
-  argv.push("--dangerously-skip-permissions", prompt);
+export function commandFor(input: SessionInput): { readonly argv: readonly string[] } {
+  const { agent, stage, card, systemPrompt, budget, resumeSessionId } = input;
+  const argv = ["claude", "--print", "--verbose", "--output-format", "stream-json"];
+  if (agent.model) argv.push("--model", agent.model);
+  if (agent.effort) argv.push("--effort", agent.effort);
+  argv.push("--max-budget-usd", budget, "--append-system-prompt", systemPrompt);
+  if (resumeSessionId) argv.push("--resume", resumeSessionId);
+  argv.push("--dangerously-skip-permissions", card ? `/${stage} ${card}` : `/${stage}`);
 
   return { argv };
 }
 
-export function eventsFrom(provider: StageAgent["provider"], line: string): ProviderEvent[] {
+export function eventsFrom(line: string): ProviderEvent[] {
   if (!line.trimStart().startsWith("{")) return [];
 
   try {
@@ -78,13 +54,9 @@ export function eventsFrom(provider: StageAgent["provider"], line: string): Prov
     const { type } = z.object({ type: z.string() }).parse(raw);
     if (type === "error") return [errorFrom(raw)];
 
-    if (provider === "claude") return claudeEvents(type, raw);
-
-    if (provider === "codex") return codexEvents(type, raw);
-
-    return opencodeEvents(type, raw);
+    return claudeEvents(type, raw);
   } catch (cause) {
-    throw new Error(`invalid ${provider} stream event`, { cause });
+    throw new Error("invalid Claude stream event", { cause });
   }
 }
 
@@ -106,11 +78,39 @@ const error = z.object({
     .optional(),
 });
 const claudeResult = z.object({
+  session_id: z.string().optional(),
   result: z.string().optional(),
   is_error: z.boolean().default(false),
   errors: z.array(z.string()).default([]),
   num_turns: z.number().int().nonnegative().optional(),
   total_cost_usd: z.number().nonnegative().optional(),
+  usage: z
+    .object({
+      input_tokens: z.number().int().nonnegative().optional(),
+      cache_creation_input_tokens: z.number().int().nonnegative().optional(),
+      cache_read_input_tokens: z.number().int().nonnegative().optional(),
+      output_tokens: z.number().int().nonnegative().optional(),
+      output_tokens_details: z
+        .object({ thinking_tokens: z.number().int().nonnegative().optional() })
+        .optional(),
+    })
+    .optional(),
+  modelUsage: z
+    .record(
+      z.string(),
+      z.object({
+        inputTokens: z.number().int().nonnegative().optional(),
+        cacheCreationInputTokens: z.number().int().nonnegative().optional(),
+        cacheReadInputTokens: z.number().int().nonnegative().optional(),
+        outputTokens: z.number().int().nonnegative().optional(),
+        thinkingTokens: z.number().int().nonnegative().optional(),
+        costUSD: z.number().nonnegative().optional(),
+        canonicalModel: z.string().optional(),
+        provider: z.string().optional(),
+        costBasis: z.string().optional(),
+      }),
+    )
+    .optional(),
 });
 
 function errorFrom(raw: unknown): ProviderEvent {
@@ -131,8 +131,13 @@ function claudeEvents(type: string, raw: unknown): ProviderEvent[] {
     const event = z.object({ subtype: z.string() }).parse(raw);
     if (event.subtype !== "init") return [];
 
-    const { session_id } = z.object({ session_id: z.string() }).parse(raw);
-    return [{ type: "session_id", sessionId: session_id }];
+    const { session_id, model } = z
+      .object({ session_id: z.string(), model: z.string().optional() })
+      .parse(raw);
+    return [
+      { type: "session_id", sessionId: session_id },
+      ...(model === undefined ? [] : ([{ type: "resolved_model", model }] as const)),
+    ];
   }
 
   if (type === "assistant") {
@@ -151,84 +156,106 @@ function claudeEvents(type: string, raw: unknown): ProviderEvent[] {
 
   const event = claudeResult.parse(raw);
   const events: ProviderEvent[] = [];
+  if (event.session_id !== undefined)
+    events.push({ type: "session_id", sessionId: event.session_id });
   if (event.result !== undefined) events.push({ type: "result", result: event.result });
   for (const message of event.errors) events.push({ type: "error", message });
   if (event.is_error && event.errors.length === 0) {
     events.push({ type: "error", message: event.result || "the provider reported an error" });
   }
-  if (event.num_turns !== undefined || event.total_cost_usd !== undefined) {
-    events.push({ type: "usage", turns: event.num_turns, cost: event.total_cost_usd });
+  const usage = claudeUsage(event.usage, event.modelUsage);
+  if (
+    event.num_turns !== undefined ||
+    event.total_cost_usd !== undefined ||
+    Object.keys(usage).length > 0
+  ) {
+    events.push({
+      type: "usage",
+      ...(event.num_turns === undefined ? {} : { turns: event.num_turns }),
+      ...(event.total_cost_usd === undefined
+        ? {}
+        : { cost: { usd: event.total_cost_usd, scope: "aggregateIncludingChildren" as const } }),
+      usage,
+    });
   }
   events.push({ type: "complete" });
 
   return events;
 }
 
-function codexEvents(type: string, raw: unknown): ProviderEvent[] {
-  if (type === "thread.started") {
-    const { thread_id } = z.object({ thread_id: z.string() }).parse(raw);
-    return [{ type: "session_id", sessionId: thread_id }];
-  }
+function claudeUsage(
+  parent:
+    | {
+        input_tokens?: number | undefined;
+        cache_creation_input_tokens?: number | undefined;
+        cache_read_input_tokens?: number | undefined;
+        output_tokens?: number | undefined;
+        output_tokens_details?: { thinking_tokens?: number | undefined } | undefined;
+      }
+    | undefined,
+  rawModels:
+    | Record<
+        string,
+        {
+          inputTokens?: number | undefined;
+          cacheCreationInputTokens?: number | undefined;
+          cacheReadInputTokens?: number | undefined;
+          outputTokens?: number | undefined;
+          thinkingTokens?: number | undefined;
+          costUSD?: number | undefined;
+          canonicalModel?: string | undefined;
+          provider?: string | undefined;
+          costBasis?: string | undefined;
+        }
+      >
+    | undefined,
+): UsageReport {
+  const models = Object.entries(rawModels ?? {}).map(
+    ([model, item]): ModelUsage => ({
+      model,
+      ...(item.canonicalModel === undefined ? {} : { resolvedModel: item.canonicalModel }),
+      ...(item.provider === undefined ? {} : { provider: item.provider }),
+      ...(item.costBasis === undefined ? {} : { costBasis: item.costBasis }),
+      ...(item.costUSD === undefined ? {} : { costUsd: item.costUSD }),
+      tokens: compactTokens({
+        input: item.inputTokens,
+        cacheWrite: item.cacheCreationInputTokens,
+        cacheRead: item.cacheReadInputTokens,
+        output: item.outputTokens,
+        reasoning: item.thinkingTokens,
+      }),
+    }),
+  );
+  const aggregate = models.reduce<TokenUsage | undefined>(
+    (total, model) => addTokens(total, model.tokens),
+    undefined,
+  );
 
-  if (type === "turn.failed") return [errorFrom(raw)];
-
-  if (type === "turn.completed") return [{ type: "complete" }];
-
-  if (type !== "item.completed" && type !== "item.started") return [];
-
-  const { item } = z.object({ item: envelope }).parse(raw);
-  if (type === "item.completed" && item.type === "agent_message") {
-    const value = text.parse(item).text;
-    return [
-      { type: "text", text: value },
-      { type: "result", result: value },
-    ];
-  }
-
-  if (type === "item.started" && item.type === "command_execution") {
-    const { command } = z.object({ command: z.string() }).parse(item);
-    return [{ type: "tool_call", name: "Bash", args: command }];
-  }
-
-  return [];
+  return {
+    ...(parent === undefined
+      ? {}
+      : {
+          parent: compactTokens({
+            input: parent.input_tokens,
+            cacheWrite: parent.cache_creation_input_tokens,
+            cacheRead: parent.cache_read_input_tokens,
+            output: parent.output_tokens,
+            reasoning: parent.output_tokens_details?.thinking_tokens,
+          }),
+        }),
+    ...(aggregate === undefined ? {} : { aggregateIncludingChildren: aggregate }),
+    ...(models.length === 0 ? {} : { models }),
+  };
 }
 
-function opencodeEvents(type: string, raw: unknown): ProviderEvent[] {
-  if (type === "step_start") {
-    const { sessionID } = z.object({ sessionID: z.string() }).parse(raw);
-    return [{ type: "session_id", sessionId: sessionID }];
-  }
-
-  if (type === "text") {
-    const { part } = z.object({ part: text.extend({ type: z.literal("text") }) }).parse(raw);
-    return [
-      { type: "text", text: part.text },
-      { type: "result", result: part.text },
-    ];
-  }
-
-  if (type === "step_finish") {
-    const { part } = z
-      .object({ part: z.object({ type: z.literal("step-finish"), reason: z.string() }) })
-      .parse(raw);
-    return part.reason === "stop" ? [{ type: "complete" }] : [];
-  }
-
-  if (type !== "tool_use") return [];
-
-  const { part } = z
-    .object({
-      part: z.object({
-        type: z.literal("tool"),
-        tool: z.string(),
-        state: z.object({ status: z.string() }).passthrough(),
-      }),
-    })
-    .parse(raw);
-  if (part.state.status !== "completed") return [];
-
-  const { input } = z.object({ input: toolInput }).parse(part.state);
-  return [{ type: "tool_call", name: part.tool, args: toolArgs(part.tool, input) }];
+function compactTokens(tokens: Record<keyof TokenUsage, number | undefined>): TokenUsage {
+  return {
+    ...(tokens.input === undefined ? {} : { input: tokens.input }),
+    ...(tokens.cacheRead === undefined ? {} : { cacheRead: tokens.cacheRead }),
+    ...(tokens.cacheWrite === undefined ? {} : { cacheWrite: tokens.cacheWrite }),
+    ...(tokens.output === undefined ? {} : { output: tokens.output }),
+    ...(tokens.reasoning === undefined ? {} : { reasoning: tokens.reasoning }),
+  };
 }
 
 function toolArgs(name: string, input: Record<string, unknown>): string {
@@ -237,9 +264,6 @@ function toolArgs(name: string, input: Record<string, unknown>): string {
     WebSearch: "query",
     WebFetch: "url",
     Agent: "description",
-    bash: "command",
-    webfetch: "url",
-    task: "description",
   };
   const field = fields[name];
   const value = field === undefined ? undefined : input[field];

@@ -38,13 +38,9 @@ const taskView = z.object({
     comments: z.array(z.unknown()),
   }),
 });
-const taskList = z.object({
-  schemaVersion: z.literal(1),
-  tasks: z.array(taskFields.extend({ id: z.string().regex(cardPattern) })),
-});
+export const ours = "@claude";
 
 export type Card = {
-  readonly text: string;
   readonly status: string;
   readonly assignee: string;
   readonly criteria: number;
@@ -82,7 +78,6 @@ export async function card(id: string): Promise<Card> {
   );
 
   return {
-    text: JSON.stringify(task),
     status: task.status,
     assignee: task.assignees.join(", "),
     criteria: task.acceptanceCriteria.length,
@@ -94,41 +89,8 @@ export function stageForStatus(status: string): Stage | undefined {
   return stagesByStatus.get(status);
 }
 
-function isAccepted(task: {
-  readonly status: string;
-  readonly labels: readonly string[];
-}): boolean {
-  return stageForStatus(task.status) !== undefined && !task.labels.includes("deferred");
-}
-
-export async function acceptedQueue(readiness: "all" | "ready"): Promise<string[]> {
-  const ready = readiness === "ready" ? ["--ready"] : [];
-  const { tasks } = await tool(
-    async () => taskList.parse(await $`backlog task list ${ready} --sort priority --json`.json()),
-    "reading the queue failed",
-  );
-
-  return tasks.filter(isAccepted).map((task) => task.id);
-}
-
-export async function pick(accepted: ReadonlySet<string>): Promise<string> {
-  return (await acceptedQueue("ready")).find((id) => accepted.has(id)) ?? "";
-}
-
-export async function boardHasActiveMilestone(): Promise<boolean> {
-  const list = await tool(
-    () => $`backlog milestone list --plain`.text(),
-    "reading the milestones failed",
-  );
-
-  return /Active milestones \([1-9]/.test(list);
-}
-
-export async function appendNote(id: string, note: string): Promise<void> {
-  await tool(
-    () => $`backlog task edit ${id} --append-notes ${note}`.quiet(),
-    `writing on ${id} failed`,
-  );
+export function inProgress(status: string): boolean {
+  return status === "Build" || status === "Review";
 }
 
 export async function setStatus(id: string, status: string): Promise<void> {

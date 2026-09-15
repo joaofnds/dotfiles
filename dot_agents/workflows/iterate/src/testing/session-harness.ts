@@ -7,8 +7,7 @@ import { dirname, join } from "node:path";
 import process from "node:process";
 import { z } from "zod";
 
-type Provider = "claude" | "codex";
-type Scenario = "success" | "malformed" | "error" | "truncated" | "interrupt";
+type Scenario = "success" | "malformed" | "error" | "truncated" | "interrupt" | "timeout" | "long";
 const registration = z.object({
   role: z.enum(["agent", "descendant"]),
   pid: z.number().int().positive(),
@@ -22,10 +21,13 @@ export class SessionHarness {
     return new SessionHarness();
   }
 
-  async start(provider: Provider, scenario: Scenario = "success"): Promise<SessionDriver> {
+  async start(
+    scenario: Scenario = "success",
+    options: { readonly live?: boolean; readonly timeoutMs?: number } = {},
+  ): Promise<SessionDriver> {
     const driver = new SessionDriver();
     this.runs.push(driver);
-    await driver.start(provider, scenario);
+    await driver.start(scenario, options);
     return driver;
   }
 
@@ -48,13 +50,16 @@ class SessionDriver {
   stdout = "";
   stderr = "";
 
-  async start(provider: Provider, scenario: Scenario): Promise<void> {
+  async start(
+    scenario: Scenario,
+    options: { readonly live?: boolean; readonly timeoutMs?: number },
+  ): Promise<void> {
     const controlPath = join(this.directory, "control.sock");
     await new Promise<void>((resolve, reject) => {
       this.server.once("error", reject);
       this.server.listen(controlPath, resolve);
     });
-    const executable = join(this.directory, provider);
+    const executable = join(this.directory, "claude");
     copyFileSync(join(import.meta.dir, "session-fake.ts"), executable);
     chmodSync(executable, 0o700);
     this.child = spawn(process.execPath, [join(import.meta.dir, "session-entry.ts")], {
@@ -64,9 +69,13 @@ class SessionDriver {
         ...process.env,
         PATH: `${this.directory}:${dirname(process.execPath)}`,
         TMPDIR: this.directory,
-        SESSION_PROVIDER: provider,
         SESSION_SCENARIO: scenario,
         SESSION_CONTROL: controlPath,
+        SESSION_LOG_DIRECTORY: this.directory,
+        ITERATE_LIVE: options.live === undefined ? undefined : options.live ? "1" : "0",
+        ...(options.timeoutMs === undefined
+          ? {}
+          : { SESSION_TIMEOUT_MS: String(options.timeoutMs) }),
       },
       stdio: ["ignore", "pipe", "pipe"],
     });
@@ -82,18 +91,28 @@ class SessionDriver {
       this.child?.once("error", reject);
       this.child?.once("close", resolve);
     });
-    await this.waitFor(() => this.peers.get("agent")?.ready === true);
+    if (scenario !== "timeout") await this.waitFor(() => this.peers.get("agent")?.ready === true);
   }
 
-  async progress(): Promise<{ stdout: string; stderr: string }> {
-    await this.waitFor(() => this.stderr.includes("progress before final"));
-    return { stdout: this.stdout, stderr: this.stderr };
-  }
-
-  async finish(): Promise<{ code: number | null; stdout: string }> {
+  async finish(): Promise<{
+    code: number | null;
+    stdout: string;
+    stderr: string;
+    result: Record<string, unknown> | undefined;
+  }> {
     this.peers.get("agent")?.socket.write("finish\n");
     const code = await bounded(this.exited);
-    return { code, stdout: this.stdout };
+    return { code, stdout: this.stdout, stderr: this.stderr, result: this.sessionResult() };
+  }
+
+  async timeout(): Promise<{
+    code: number | null;
+    stopped: string[];
+    result: Record<string, unknown> | undefined;
+  }> {
+    const code = await bounded(this.exited);
+    await this.waitFor(() => [...this.peers.values()].every((peer) => peer.closed));
+    return { code, stopped: [...this.peers.keys()].sort(), result: this.sessionResult() };
   }
 
   async interrupt(): Promise<{ code: number | null; stopped: string[] }> {
@@ -163,6 +182,13 @@ class SessionDriver {
     } finally {
       this.changes.off("change", changed);
     }
+  }
+
+  private sessionResult(): Record<string, unknown> | undefined {
+    const line = this.stderr
+      .split("\n")
+      .find((candidate) => candidate.startsWith("SESSION_RESULT "));
+    return line === undefined ? undefined : JSON.parse(line.slice("SESSION_RESULT ".length));
   }
 }
 

@@ -172,8 +172,6 @@ and the judgment file in every one of those turns.
   `~/.agents/skills/review-instructions/SKILL.md`.
 
 A task starts on its first job, not on all of them. For a card that is reading it.
-The announcement is the evidence the read happened, so a turn that does the work
-without it has skipped the file.
 
 Two rules bind every task, whatever files it reads:
 

@@ -67,13 +67,11 @@ deliberately contains no assessment of correctness. Form your own from the artif
 
 ## Relay it in the reviewer's words
 
-Quote each finding rather than summarizing it. Condensing is where softening enters.
-Order them worst first, and state a finding that kills the approach plainly, before
-any defense of it.
-
-Every finding is listed, including the ones that invalidate what you just did. The
-disposition is yours and the words are the reviewer's, so keep your own view in its
-own section, after the findings, marked as yours.
+Keep each finding verbatim with its raw evidence in the review artifact, worst
+first, including findings that invalidate the work. Link the artifact once from the
+task record. Keep your dispositions separate from the reviewer's words. The reply
+states an approach-killing finding before any defense and carries decisions still
+needed, without duplicating the artifact.
 
 ## As a gate on your own draft
 

@@ -59,11 +59,18 @@ result stays open with the missing evidence and next action, or is deferred.
 Proposed fixes beyond the accepted scope enter Inbox. Acceptance criteria on an
 investigation do not authorize a move to Build.
 
-The execution queue includes only To Do, Shape, Build, and Review cards without
-`deferred`. The runner takes its eligible IDs before automated intake and selects
-among them afterward, checking current readiness. Its status guard cannot verify
-who authorized a CLI write or whether prose adds scope. Those judgments use the
-recorded direction above.
+Triage recommends a Build or Review card before it selects new work. A
+card in either column is in flight and takes precedence across milestones. If
+another assignee holds that card, report the blocker. Name other cards in flight
+so the overlap can be resolved. Otherwise the queue contains the current
+milestone's dependency-ready To Do, Shape, Build, and Review cards without
+`deferred`. The current milestone is the active milestone due soonest. A
+milestone without a due date holds no newly selectable work. A card in another
+milestone or in none is not selected as new work, whatever its priority, because
+a queue that spans milestones lets the highest-priority card open a new one. The
+iterate runner takes a named accepted card and checks its status and ownership.
+Its status guard cannot verify who authorized a CLI write or whether prose adds
+scope. Those judgments use the recorded direction above.
 
 ## The status is a claim
 
@@ -185,19 +192,17 @@ To Do and setting `defaultStatus` to Inbox. Review existing To Do cards individu
 for admission evidence before moving any to Inbox. Preserve held work. On a board
 awaiting migration, capture incidental findings as drafts outside its queue.
 
-A board holds any number of milestones. `task create -m` and `task list -m` match a
-milestone title exactly, case-insensitive, and neither reports a miss. Create stores
-the typed text as the task's milestone, and list filters by it. Name the one you mean
-exactly, since a typo makes a milestone of its own.
+`task create -m` stores the typed text as the task's milestone, so a typo makes
+a milestone of its own. `task list -m` matches loosely and reports no miss, so a
+partial name can list another milestone's cards. Name the one you mean exactly,
+or filter the `milestone` field of the JSON list. To date an existing milestone,
+find its file under the board's `milestones/` by the frontmatter `id` and edit
+only `due_date`.
 
-The CLI facts in this file were last checked against backlog.md 1.51.0. Re-check
-them on an upgrade.
+Recheck the [CLI assumptions](references/backlog-cli-facts.md) on a backlog.md
+upgrade.
 
 ## Syntax
-
-    # dependency-ready candidates; exclude deferred labels before selecting.
-    # Ties run in card ID order; --ordinal does not change this sort.
-    backlog task list --status "To Do,Shape,Build,Review" --ready --sort priority --json
 
     # capture an incidental finding, with no delivery commitments
     backlog task create "<observed need>" -s Inbox -a "" --no-dod-defaults --description "<evidence and uncertainty>"

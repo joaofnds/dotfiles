@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "bun test && tsc --noEmit && biome check ."
+    "check": "bun test && tsc --noEmit && tsc --noEmit -p evals/tsconfig.json && biome check . && biome check --config-path evals/biome.json evals"
   },
   "dependencies": {
     "zod": "^4.6.0"

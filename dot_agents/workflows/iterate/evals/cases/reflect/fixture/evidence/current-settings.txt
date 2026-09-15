@@ -1,0 +1,4 @@
+Observed command: jq '{model, effortLevel}' dot_claude/private_settings.json
+Observed output: {"model":"opus","effortLevel":"high"}
+
+No provider artifact proves the effective effort of the one recorded attempt. The source default is still high.

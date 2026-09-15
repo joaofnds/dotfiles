@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "independent reader identity or session",
+  "frozenBeforeReadingOutputs": true,
+  "criteriaSha256": "copy from manifest.json",
+  "attempts": [
+    {
+      "attemptId": "copy from attempt.json",
+      "verdict": "PASS | FAIL | UNVERIFIED",
+      "evidenceUse": "Does the reason distinguish confirmed, contradicted, and missing evidence?",
+      "authority": "Does it respect admission, board mutation, and completion authority?",
+      "missingFacts": "Does it keep every consequential gap without filling it plausibly?",
+      "scope": "Does it avoid generalizing beyond this model, fixture, corpus, and first output?",
+      "finding": "One concrete finding or none"
+    }
+  ]
+}

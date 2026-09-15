@@ -1,82 +1,142 @@
+import { z } from "zod";
 import { Exit } from "./exit.ts";
 
-export const stages = ["triage", "shape", "debug", "verify", "build", "review", "reflect"] as const;
+export const stages = ["shape", "debug", "verify", "build", "review"] as const;
 export type Stage = (typeof stages)[number];
 
-const claudeEfforts = ["low", "medium", "high", "xhigh", "max"] as const;
-const codexEfforts = ["low", "medium", "high", "xhigh", "max"] as const;
-type ClaudeEffort = (typeof claudeEfforts)[number];
-type CodexEffort = (typeof codexEfforts)[number];
+const efforts = ["low", "medium", "high", "xhigh", "max"] as const;
+const effortSchema = z.enum(efforts);
+const agentSchema = z.object({
+  provider: z.literal("claude"),
+  model: z.string().optional(),
+  effort: effortSchema.optional(),
+});
+const stageRequestSchema = z.object({
+  provider: z.string().min(1),
+  model: z.string().min(1),
+  effort: z.string().min(1).optional(),
+});
+export type StageAgent = z.infer<typeof agentSchema>;
+type StageRequest = z.infer<typeof stageRequestSchema>;
 
-export type StageAgent =
-  | { readonly provider: "claude"; readonly model: string; readonly effort?: ClaudeEffort }
-  | { readonly provider: "codex"; readonly model: string; readonly effort?: CodexEffort }
-  | { readonly provider: "opencode"; readonly model: string; readonly effort?: string };
+export type AgentPlan = {
+  readonly direct?: StageAgent;
+  readonly stages: ReadonlyMap<Stage, StageRequest>;
+};
 
-export const defaultAgent: StageAgent = { provider: "claude", model: "opus" };
+export const defaultAgent: StageAgent = { provider: "claude" };
 
-export const agentsHelp = `ITERATE_AGENTS names the agent for each stage, separated by commas or spaces, as
-stage=provider:model[:effort]. Stages are ${stages.join(", ")}; providers are claude, codex,
-and opencode; a stage left out runs on ${defaultAgent.provider}:${defaultAgent.model}. For example
-ITERATE_AGENTS=shape=claude:opus:high,build=codex:gpt-6-astra,review=claude:sonnet`;
+export function agentPlanFromArgs(args: readonly string[]): AgentPlan {
+  const direct: string[] = [];
+  const selected = new Map<Stage, StageRequest>();
 
-export function agentsFromSpec(spec: string): Map<Stage, StageAgent> {
-  const agents = new Map<Stage, StageAgent>();
-  for (const entry of spec.split(/[\s,]+/).filter(Boolean)) {
-    const [stage, agent] = entryFrom(entry);
-    agents.set(stage, agent);
+  for (let index = 0; index < args.length; index += 2) {
+    const flag = args[index];
+    const value = args[index + 1];
+    if (!flag?.startsWith("--") || !value || value.startsWith("--")) {
+      throw new Exit(
+        1,
+        "agent options need a value; see iterate --help for direct and stage options",
+      );
+    }
+
+    const stage = stageFromFlag(flag);
+    if (stage === undefined) {
+      direct.push(flag, value);
+      continue;
+    }
+
+    if (selected.has(stage)) throw new Exit(1, `${flag} was supplied more than once`);
+
+    selected.set(stage, stageRequest(value, flag));
   }
 
-  return agents;
+  if (direct.length > 0 && selected.size > 0) {
+    throw new Exit(1, "direct agent options cannot be combined with stage agent options");
+  }
+
+  return {
+    ...(direct.length === 0 ? {} : { direct: agentFromArgs(direct) }),
+    stages: selected,
+  };
 }
 
-function entryFrom(entry: string): [Stage, StageAgent] {
-  const [stage, agent, ...rest] = entry.split("=");
-  if (!(oneOf(stages, stage) && agent) || rest.length > 0) {
-    throw new Exit(1, `${entry} is not stage=provider:model[:effort]`);
+export function agentForStage(plan: AgentPlan, stage: Stage): StageAgent {
+  if (plan.direct) return plan.direct;
+
+  const requested = plan.stages.get(stage);
+  if (!requested) return defaultAgent;
+
+  if (requested.provider !== "claude") {
+    throw new Exit(1, `${requested.provider} is not implemented; provider is claude`);
   }
 
-  return [stage, agentFrom(agent, entry)];
+  const effort = optionalEffort(requested.effort);
+  return agentSchema.parse({
+    provider: "claude",
+    model: requested.model,
+    ...(effort === undefined ? {} : { effort }),
+  });
 }
 
-function oneOf<const T extends readonly string[]>(
-  list: T,
-  value: string | undefined,
-): value is T[number] {
-  return list.some((item) => item === value);
+export function agentFromArgs(args: readonly string[]): StageAgent {
+  let model: string | undefined;
+  let effort: z.infer<typeof effortSchema> | undefined;
+  const seen = new Set<string>();
+
+  for (let index = 0; index < args.length; index += 2) {
+    const flag = args[index];
+    const value = args[index + 1];
+    if (!flag?.startsWith("--") || !value || value.startsWith("--")) {
+      throw new Exit(1, "agent options are --provider VALUE, --model VALUE or --effort VALUE");
+    }
+
+    if (seen.has(flag)) throw new Exit(1, `${flag} was supplied more than once`);
+
+    seen.add(flag);
+
+    if (flag === "--provider") {
+      if (value !== "claude") throw new Exit(1, `${value} is not implemented; provider is claude`);
+    } else if (flag === "--model") {
+      model = value;
+    } else if (flag === "--effort") {
+      const parsed = effortSchema.safeParse(value);
+      if (!parsed.success) {
+        throw new Exit(1, `effort is one of ${efforts.join(", ")}`);
+      }
+
+      effort = parsed.data;
+    } else {
+      throw new Exit(1, `unknown option ${flag}; see iterate --help`);
+    }
+  }
+
+  return agentSchema.parse({
+    provider: "claude",
+    ...(model === undefined ? {} : { model }),
+    ...(effort === undefined ? {} : { effort }),
+  });
 }
 
-function agentFrom(text: string, entry: string): StageAgent {
-  const [provider, model, effort, ...rest] = text.split(":");
-  if (!model || rest.length > 0) throw new Exit(1, `${entry} is not stage=provider:model[:effort]`);
-
-  if (provider === "claude") {
-    return effort === undefined
-      ? { provider, model }
-      : { provider, model, effort: effortIn(claudeEfforts, effort, entry) };
-  }
-
-  if (provider === "codex") {
-    return effort === undefined
-      ? { provider, model }
-      : { provider, model, effort: effortIn(codexEfforts, effort, entry) };
-  }
-
-  if (provider === "opencode") {
-    return effort === undefined ? { provider, model } : { provider, model, effort };
-  }
-
-  throw new Exit(1, `${entry}: provider is one of claude, codex, opencode`);
+function stageFromFlag(flag: string): Stage | undefined {
+  return stages.find((stage) => flag === `--${stage}-agent`);
 }
 
-function effortIn<const T extends readonly string[]>(
-  efforts: T,
-  effort: string,
-  entry: string,
-): T[number] {
-  if (!oneOf(efforts, effort)) {
-    throw new Exit(1, `${entry}: effort is one of ${efforts.join(", ")}`);
+function stageRequest(value: string, flag: string): StageRequest {
+  const [provider, model, effort, ...rest] = value.split(":");
+  const parsed = stageRequestSchema.safeParse({ provider, model, effort });
+  if (!parsed.success || rest.length > 0) {
+    throw new Exit(1, `${flag} must be provider:model[:effort]`);
   }
 
-  return effort;
+  return parsed.data;
+}
+
+function optionalEffort(value: string | undefined): z.infer<typeof effortSchema> | undefined {
+  if (value === undefined) return undefined;
+
+  const parsed = effortSchema.safeParse(value);
+  if (!parsed.success) throw new Exit(1, `effort is one of ${efforts.join(", ")}`);
+
+  return parsed.data;
 }

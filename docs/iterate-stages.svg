@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="690" viewBox="0 0 1040 690" role="img" aria-labelledby="title description" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">
+<title id="title">How card status selects the next stage</title>
+<desc id="description">Each supervisor call reads the named card again. To Do or ordinary Shape runs shape; labeled Shape runs debug or verify. Build runs build and Review runs fresh review. Results return to the supervisor, which checks claims and follows the resulting column, including backward moves. Build may finish its required reviews and reach Done. A final step on Done checks settled attempts and a clean tree, then closes the journal without an agent.</desc>
+<style>
+  .box { fill: #F5F6F7; stroke: #BDC1C6; }
+  .teal { fill: #DAF0EC; stroke: #7FC4B8; }
+  .blue { fill: #E6F1FB; stroke: #8AB4E0; }
+  .purple { fill: #EDE7F8; stroke: #A990DC; }
+  .amber { fill: #FBEEDA; stroke: #DDB160; }
+  .red { fill: #FAE7E5; stroke: #DC9A92; }
+  .title { font-size: 14px; font-weight: 500; fill: #1A1C1E; }
+  .head { font-size: 14px; font-weight: 500; fill: #1A1C1E; }
+  .body { font-size: 12px; font-weight: 400; fill: #5E6368; }
+  .arr { stroke: #8A8F94; stroke-width: 1.5; fill: none; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8A8F94" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<text class="title" x="540" y="34" text-anchor="middle">Follow the card’s current status</text>
+<rect class="teal" x="310" y="60" width="460" height="72" rx="8"/>
+<text class="head" x="540.0" y="88" text-anchor="middle">Supervisor calls step CARD</text>
+<text class="body" x="540.0" y="112" text-anchor="middle">One named card; one call at a time.</text>
+<path class="arr" d="M540 132 V172" marker-end="url(#arrow)"/>
+<rect class="box" x="68" y="172" width="944" height="52" rx="8"/>
+<text class="head" x="540.0" y="200" text-anchor="middle">Runner reads the current card</text>
+<path class="arr" d="M540 224 V250 H177 V278" marker-end="url(#arrow)"/>
+<path class="arr" d="M540 250 H419 V278" marker-end="url(#arrow)"/>
+<path class="arr" d="M540 250 H661 V278" marker-end="url(#arrow)"/>
+<path class="arr" d="M540 250 H903 V278" marker-end="url(#arrow)"/>
+<rect class="blue" x="68" y="278" width="218" height="178" rx="8"/>
+<text class="head" x="177.0" y="306" text-anchor="middle">To Do / Shape</text>
+<text class="body" x="177.0" y="330" text-anchor="middle">shape</text>
+<text class="body" x="177.0" y="351" text-anchor="middle">Shape + investigate:debug</text>
+<text class="body" x="177.0" y="372" text-anchor="middle">runs debug instead.</text>
+<text class="body" x="177.0" y="393" text-anchor="middle">Shape + investigate:verify</text>
+<text class="body" x="177.0" y="414" text-anchor="middle">runs verify instead.</text>
+<rect class="blue" x="310" y="278" width="218" height="178" rx="8"/>
+<text class="head" x="419.0" y="306" text-anchor="middle">Build</text>
+<text class="body" x="419.0" y="330" text-anchor="middle">build</text>
+<text class="body" x="419.0" y="351" text-anchor="middle">Implements and verifies.</text>
+<text class="body" x="419.0" y="372" text-anchor="middle">Runs required independent</text>
+<text class="body" x="419.0" y="393" text-anchor="middle">reviews within the stage.</text>
+<text class="body" x="419.0" y="414" text-anchor="middle">May reach Done directly.</text>
+<rect class="purple" x="552" y="278" width="218" height="178" rx="8"/>
+<text class="head" x="661.0" y="306" text-anchor="middle">Review</text>
+<text class="body" x="661.0" y="330" text-anchor="middle">review</text>
+<text class="body" x="661.0" y="351" text-anchor="middle">Routes each product to</text>
+<text class="body" x="661.0" y="372" text-anchor="middle">its independent reviewer.</text>
+<text class="body" x="661.0" y="393" text-anchor="middle">Always starts fresh.</text>
+<rect class="teal" x="794" y="278" width="218" height="178" rx="8"/>
+<text class="head" x="903.0" y="306" text-anchor="middle">Done</text>
+<text class="body" x="903.0" y="330" text-anchor="middle">No agent session.</text>
+<text class="body" x="903.0" y="351" text-anchor="middle">Require settled attempts</text>
+<text class="body" x="903.0" y="372" text-anchor="middle">and a clean working tree.</text>
+<text class="body" x="903.0" y="393" text-anchor="middle">Save completion in</text>
+<text class="body" x="903.0" y="414" text-anchor="middle">the run journal.</text>
+<path class="arr" d="M177 456 V508" marker-end="url(#arrow)"/>
+<path class="arr" d="M419 456 V508" marker-end="url(#arrow)"/>
+<path class="arr" d="M661 456 V508" marker-end="url(#arrow)"/>
+<rect class="amber" x="68" y="508" width="702" height="92" rx="8"/>
+<text class="head" x="419.0" y="536" text-anchor="middle">Supervisor reads the result and probes new claims</text>
+<text class="body" x="419.0" y="560" text-anchor="middle">If the card moved, follow its new column, including an earlier one.</text>
+<text class="body" x="419.0" y="581" text-anchor="middle">If it reached Done, call step once more. Stops follow the exit-code flow.</text>
+<path class="arr" d="M68 554 H30 V96 H310" marker-end="url(#arrow)"/>
+<path class="arr" d="M903 456 V508" marker-end="url(#arrow)"/>
+<rect class="teal" x="794" y="508" width="218" height="92" rx="8"/>
+<text class="head" x="903.0" y="536" text-anchor="middle">Run closed</text>
+<text class="body" x="903.0" y="560" text-anchor="middle">Exit 0.</text>
+<text class="body" x="903.0" y="581" text-anchor="middle">No reflection launched.</text>
+<text class="body" x="540" y="639" text-anchor="middle">Ordinary shape left in the same Shape column with acceptance criteria is promoted to Build.</text>
+<text class="body" x="540" y="663" text-anchor="middle">Investigations need their own verdict and column change; criteria alone do not promote them.</text>
+</svg>

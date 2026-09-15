@@ -40,12 +40,11 @@ reason you can state.
 
 ## Continuing an agent
 
-A completed agent stays continuable by the session that spawned it, from the id its
-result carried, resuming with its context intact. Choose that when the follow-up
-trades on what the agent already read: a clarification, a re-check, recovering work
-an error cut short. Spawn fresh when the point is an unprimed read, and never
-continue an agent into a role that needs one. Continuation is session-local, so
-cross-session work travels by file.
+Continue a completed agent for clarification or recovery within the same role when
+the harness supports it. Refresh changed code, card state, and user steering before
+it acts. Use the runner's resume policy for stage sessions. Start fresh when context
+is stale or continuation is unsupported. An independent assessment needs a fresh
+reviewer, so never resume the author into that role.
 
 Never pass a name on a spawn. A named spawn has returned a receipt in place of its
 report, and the cause is unsettled.

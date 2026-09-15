@@ -22,7 +22,7 @@ these checks is its own task, never a side effect of an unrelated edit.
 
 ## Before you write
 
-Read this section again over every sentence you add while applying verdicts.
+Apply this section to every sentence you add while applying verdicts.
 
 Write the file in the register it should produce, using complete sentences. Keep
 a rule with its necessary reason or consequence so the relation stays clear. Use

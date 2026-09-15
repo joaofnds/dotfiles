@@ -4,7 +4,7 @@ import process from "node:process";
 import { spawn } from "bun";
 
 const descendant = process.argv.includes("--descendant");
-const interrupted = process.env.SESSION_SCENARIO === "interrupt";
+const interrupted = ["interrupt", "timeout"].includes(process.env.SESSION_SCENARIO ?? "");
 const control = connect(process.env.SESSION_CONTROL ?? "");
 let child: ReturnType<typeof spawn> | undefined;
 const deadline = setTimeout(() => process.exit(2), 10_000);
@@ -42,30 +42,50 @@ control.on("data", (bytes) => {
       }
     }
     if (!descendant) {
-      emit(
-        process.env.SESSION_PROVIDER === "claude"
-          ? {
-              type: "assistant",
-              message: { content: [{ type: "text", text: "progress before final" }] },
-            }
-          : {
-              type: "item.completed",
-              item: { type: "agent_message", text: "progress before final" },
-            },
-      );
+      emit({
+        type: "system",
+        subtype: "init",
+        session_id: "claude-session",
+        model: "resolved-fake",
+      });
+      emit({
+        type: "assistant",
+        message: { content: [{ type: "text", text: "progress before final" }] },
+      });
     }
     control.write("ready\n");
   }
   if (command === "finish") {
-    if (process.env.SESSION_PROVIDER === "claude") {
-      emit({ type: "result", result: "final reply", is_error: false });
-    } else {
-      emit({ type: "item.completed", item: { type: "agent_message", text: "final reply" } });
-      if (process.env.SESSION_SCENARIO === "malformed") console.log('{"type":');
-      if (process.env.SESSION_SCENARIO === "error")
-        emit({ type: "error", message: "provider failed" });
-      if (process.env.SESSION_SCENARIO !== "truncated") emit({ type: "turn.completed", usage: {} });
+    const final = process.env.SESSION_SCENARIO === "long" ? "x".repeat(100_000) : "final reply";
+    if (process.env.SESSION_SCENARIO === "truncated") {
+      emit({
+        type: "assistant",
+        message: { content: [{ type: "text", text: final }] },
+      });
+      stop();
     }
+    console.error("fixture diagnostic");
+    emit({
+      type: "result",
+      session_id: "claude-terminal-session",
+      result: final,
+      is_error: process.env.SESSION_SCENARIO === "error",
+      errors: process.env.SESSION_SCENARIO === "error" ? ["provider failed"] : [],
+      num_turns: 2,
+      total_cost_usd: 0.25,
+      usage: { input_tokens: 10, cache_read_input_tokens: 7, output_tokens: 3 },
+      modelUsage: {
+        "resolved-fake": {
+          inputTokens: 14,
+          cacheReadInputTokens: 9,
+          outputTokens: 5,
+          costUSD: 0.25,
+          canonicalModel: "resolved-fake",
+          costBasis: "list",
+        },
+      },
+    });
+    if (process.env.SESSION_SCENARIO === "malformed") console.log('{"type":');
     stop();
   }
 });

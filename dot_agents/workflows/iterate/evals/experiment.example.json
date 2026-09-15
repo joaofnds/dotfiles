@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "iterate-effort-holdout-YYYYMMDD",
+  "provider": {
+    "executable": "/opt/homebrew/bin/claude"
+  },
+  "totalBudgetUsd": 5,
+  "perRunBudgetUsd": 1.25,
+  "repetitions": 1,
+  "timeoutMs": 300000,
+  "criteriaSnapshot": "criteria.txt",
+  "criteriaSha256": "REPLACE_WITH_SHA256",
+  "arms": [
+    {
+      "id": "high",
+      "model": "opus",
+      "effort": "high",
+      "instructionSnapshot": "candidate.md",
+      "instructionSha256": "REPLACE_WITH_SHA256"
+    },
+    {
+      "id": "medium",
+      "model": "opus",
+      "effort": "medium",
+      "instructionSnapshot": "candidate.md",
+      "instructionSha256": "REPLACE_WITH_SHA256"
+    }
+  ],
+  "cases": [
+    {
+      "id": "triage",
+      "manifest": "cases/triage/case.json",
+      "sha256": "REPLACE_WITH_CASE_FINGERPRINT"
+    },
+    {
+      "id": "reflect",
+      "manifest": "cases/reflect/case.json",
+      "sha256": "REPLACE_WITH_CASE_FINGERPRINT"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+import { enabled } from "./enabled";
+
+// The public contract says enabled returns false until activation.
+if (enabled() !== false) throw new Error("not yet activated");

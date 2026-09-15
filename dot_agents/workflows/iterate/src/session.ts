@@ -1,83 +1,153 @@
-import { appendFileSync, mkdirSync } from "node:fs";
+import { randomUUID } from "node:crypto";
+import { appendFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import process from "node:process";
 import { spawn } from "bun";
 import { z } from "zod";
-import type { Stage, StageAgent } from "./agents.ts";
+import type { StageAgent } from "./agents.ts";
 import { Exit, say } from "./exit.ts";
 import { commandFor, eventsFrom, type SessionInput } from "./provider.ts";
+import {
+  addTokens,
+  type ModelUsage,
+  type SessionCost,
+  type TokenUsage,
+  type UsageReport,
+} from "./usage.ts";
 
 export const idleMinutes = 10;
 const shutdownGraceMs = 1000;
 const missingProcess = z.object({ code: z.literal("ESRCH") });
 
+export type SessionResult = {
+  readonly status: "completed" | "failed";
+  readonly durationMs: number;
+  readonly result: string;
+  readonly sessionId?: string;
+  readonly logPath: string;
+  readonly requestedAgent: StageAgent;
+  readonly resolvedModel?: string;
+  readonly usage: UsageReport;
+  readonly cost?: SessionCost;
+  readonly turns?: number;
+  readonly errors: readonly string[];
+};
+
+export class SessionFailure extends Exit {
+  readonly result: SessionResult;
+
+  constructor(message: string, result: SessionResult) {
+    super(1, message);
+    this.result = result;
+  }
+}
+
 type Stream = {
   result: string;
   errors: string[];
   sessionId: string;
+  resolvedModel: string;
+  parentUsage: TokenUsage | undefined;
+  aggregateUsage: TokenUsage | undefined;
+  models: ModelUsage[];
   turns: number | undefined;
-  cost: number | undefined;
+  cost: SessionCost | undefined;
   complete: boolean;
 };
 
-export async function session(input: SessionInput): Promise<void> {
+export async function session(input: SessionInput): Promise<SessionResult> {
   const { agent, stage, card } = input;
   say(`== ${stage}${card ? ` ${card}` : ""} on ${agentName(agent)}`);
 
-  const command = commandFor(input);
-  const logPath = logFile(stage);
+  const startedAt = Date.now();
+  const logPath = logFile(input);
   say(`   log ${logPath}`);
-  const stream = await runCommand(command, agent.provider, logPath).catch((error: unknown) => {
-    throw new Exit(1, `the ${stage} session failed: ${message(error)}`);
-  });
-
-  console.log(stream.result);
-  say(`   turns ${stream.turns ?? "n/a"} cost ${stream.cost ?? "n/a"} session ${stream.sessionId}`);
-  if (stream.errors.length > 0) {
-    const said = stream.errors.join("\n");
-    throw new Exit(1, `the ${stage} session failed: ${said}`);
+  let stream: Stream;
+  try {
+    stream = await runCommand(commandFor(input), logPath, input.timeoutMs);
+  } catch (error) {
+    stream = emptyStream();
+    stream.errors.push(message(error));
   }
 
-  if (!(stream.complete && stream.result)) {
-    throw new Exit(1, `the ${stage} session ended without a completed result`);
+  if (!(stream.complete && stream.result) && stream.errors.length === 0) {
+    stream.errors.push(`the ${stage} session ended without a completed result`);
   }
+
+  const result = sessionResult(input, stream, logPath, Date.now() - startedAt);
+  if (stream.result) console.log(stream.result);
+  say(summary(result));
+  if (result.status === "failed") {
+    throw new SessionFailure(`the ${stage} session failed: ${result.errors.join("\n")}`, result);
+  }
+
+  return result;
+}
+
+function sessionResult(
+  input: SessionInput,
+  stream: Stream,
+  logPath: string,
+  durationMs: number,
+): SessionResult {
+  const usage: UsageReport = {
+    ...(stream.parentUsage === undefined ? {} : { parent: stream.parentUsage }),
+    ...(stream.aggregateUsage === undefined
+      ? {}
+      : { aggregateIncludingChildren: stream.aggregateUsage }),
+    ...(stream.models.length === 0 ? {} : { models: stream.models }),
+  };
+
+  return {
+    status: stream.errors.length === 0 ? "completed" : "failed",
+    durationMs,
+    result: stream.result,
+    ...(stream.sessionId ? { sessionId: stream.sessionId } : {}),
+    logPath,
+    requestedAgent: input.agent,
+    ...(stream.resolvedModel ? { resolvedModel: stream.resolvedModel } : {}),
+    usage,
+    ...(stream.cost === undefined ? {} : { cost: stream.cost }),
+    ...(stream.turns === undefined ? {} : { turns: stream.turns }),
+    errors: stream.errors,
+  };
+}
+
+function summary(result: SessionResult): string {
+  return `   status ${result.status} duration ${result.durationMs}ms turns ${result.turns ?? "n/a"} cost ${result.cost?.usd ?? "n/a"} session ${result.sessionId ?? "n/a"}`;
 }
 
 function agentName(agent: StageAgent): string {
-  return `${agent.provider}:${agent.model}${agent.effort ? `:${agent.effort}` : ""}`;
+  return [agent.provider, agent.model, agent.effort].filter(Boolean).join(":");
 }
 
 async function runCommand(
-  command: { readonly argv: readonly string[]; readonly stdin?: string },
-  provider: StageAgent["provider"],
+  command: { readonly argv: readonly string[] },
   logPath: string,
+  timeoutMs: number | undefined,
 ): Promise<Stream> {
   const child = spawn([...command.argv], {
     detached: true,
     cwd: process.cwd(),
     env: process.env,
-    stdin: command.stdin === undefined ? "ignore" : new Blob([command.stdin]),
+    stdin: "ignore",
     stdout: "pipe",
     stderr: "pipe",
   });
   const pid = child.pid;
-  const stream: Stream = {
-    result: "",
-    errors: [],
-    sessionId: "",
-    turns: undefined,
-    cost: undefined,
-    complete: false,
-  };
+  const stream = emptyStream();
   const stderr = new Response(child.stderr).text();
   const idleMs = idleMinutes * 60 * 1000;
   let shutdown: Promise<void> | undefined;
+  let idle: ReturnType<typeof setTimeout>;
+  let wall: ReturnType<typeof setTimeout> | undefined;
   const stop = (reason: string, signal: NodeJS.Signals) => {
     if (shutdown) return;
 
     stream.errors.push(reason);
     clearTimeout(idle);
+    clearTimeout(wall);
     signalGroup(pid, signal, stream);
     shutdown = new Promise((resolve) => {
       setTimeout(() => {
@@ -89,7 +159,13 @@ async function runCommand(
   const onIdle = () => stop(`silent for ${idleMinutes} minutes, so it was stopped`, "SIGTERM");
   const onInterrupt = () => stop("received SIGINT", "SIGINT");
   const onTerminate = () => stop("received SIGTERM", "SIGTERM");
-  let idle = setTimeout(onIdle, idleMs);
+  idle = setTimeout(onIdle, idleMs);
+  if (timeoutMs !== undefined) {
+    wall = setTimeout(
+      () => stop(`exceeded the ${timeoutMs}ms wall-time budget, so it was stopped`, "SIGTERM"),
+      Math.max(0, timeoutMs),
+    );
+  }
   process.on("SIGINT", onInterrupt);
   process.on("SIGTERM", onTerminate);
 
@@ -103,7 +179,7 @@ async function runCommand(
 
         appendFileSync(logPath, `${line}\n`);
         try {
-          take(stream, line, provider);
+          take(stream, line, process.env.ITERATE_LIVE !== "0");
         } catch (error) {
           stream.errors.push(message(error));
         }
@@ -114,6 +190,7 @@ async function runCommand(
 
     const exitCode = await child.exited;
     const diagnostic = (await stderr).trim();
+    if (diagnostic) appendFileSync(logPath, `[stderr]\n${diagnostic}\n`);
     if (exitCode !== 0 && !shutdown) {
       stream.errors.push(`exit ${exitCode}: ${diagnostic || "no stderr output"}`);
     }
@@ -121,10 +198,26 @@ async function runCommand(
     return stream;
   } finally {
     clearTimeout(idle);
+    clearTimeout(wall);
     await shutdown;
     process.off("SIGINT", onInterrupt);
     process.off("SIGTERM", onTerminate);
   }
+}
+
+function emptyStream(): Stream {
+  return {
+    result: "",
+    errors: [],
+    sessionId: "",
+    resolvedModel: "",
+    parentUsage: undefined,
+    aggregateUsage: undefined,
+    models: [],
+    turns: undefined,
+    cost: undefined,
+    complete: false,
+  };
 }
 
 function signalGroup(pid: number, signal: NodeJS.Signals, stream: Stream): void {
@@ -137,19 +230,47 @@ function signalGroup(pid: number, signal: NodeJS.Signals, stream: Stream): void 
   }
 }
 
-function take(stream: Stream, line: string, provider: StageAgent["provider"]): void {
-  for (const event of eventsFrom(provider, line)) {
-    if (event.type === "text") say(event.text);
-    if (event.type === "tool_call") say(`> ${event.name}: ${event.args}`);
+function take(stream: Stream, line: string, live: boolean): void {
+  for (const event of eventsFrom(line)) {
+    if (live && event.type === "text") say(event.text);
+    if (live && event.type === "tool_call") say(`> ${event.name}: ${event.args}`);
     if (event.type === "result") stream.result = event.result;
     if (event.type === "session_id") stream.sessionId = event.sessionId;
+    if (event.type === "resolved_model") stream.resolvedModel = event.model;
     if (event.type === "complete") stream.complete = true;
     if (event.type === "error") stream.errors.push(event.message);
     if (event.type === "usage") {
-      stream.turns = event.turns ?? stream.turns;
-      stream.cost = event.cost ?? stream.cost;
+      if (event.turns !== undefined) {
+        stream.turns = (stream.turns ?? 0) + event.turns;
+      }
+      stream.parentUsage = mergeUsage(stream.parentUsage, event.usage.parent);
+      stream.aggregateUsage = mergeUsage(
+        stream.aggregateUsage,
+        event.usage.aggregateIncludingChildren,
+      );
+      if (event.usage.models) stream.models.push(...event.usage.models);
+      stream.cost = mergeCost(stream.cost, event.cost, stream.errors);
     }
   }
+}
+
+function mergeUsage(current: TokenUsage | undefined, next: TokenUsage | undefined) {
+  return next === undefined ? current : addTokens(current, next);
+}
+
+function mergeCost(
+  current: SessionCost | undefined,
+  next: SessionCost | undefined,
+  errors: string[],
+): SessionCost | undefined {
+  if (next === undefined) return current;
+  if (current === undefined) return next;
+  if (current.scope !== next.scope) {
+    errors.push(`provider mixed ${current.scope} and ${next.scope} cost scopes`);
+    return current;
+  }
+
+  return { usd: current.usd + next.usd, scope: current.scope };
 }
 
 async function* lines(stdout: ReadableStream<Uint8Array>): AsyncGenerator<string> {
@@ -167,11 +288,17 @@ async function* lines(stdout: ReadableStream<Uint8Array>): AsyncGenerator<string
   if (rest) yield rest;
 }
 
-function logFile(stage: Stage): string {
-  const directory = join(tmpdir(), "iterate");
+function logFile(input: SessionInput): string {
+  const directory = input.logDirectory ?? join(tmpdir(), "iterate");
   mkdirSync(directory, { recursive: true, mode: 0o700 });
 
-  return join(directory, `${new Date().toISOString().replace(/[:.]/g, "-")}-${stage}.log`);
+  const path = join(
+    directory,
+    `${new Date().toISOString().replace(/[:.]/g, "-")}-${input.stage}-${randomUUID()}.log`,
+  );
+  writeFileSync(path, "", { flag: "wx", mode: 0o600 });
+
+  return path;
 }
 
 function message(error: unknown): string {

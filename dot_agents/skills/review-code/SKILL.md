@@ -162,7 +162,7 @@ nameable trigger); the simplest viable fix, where a heavier fix must cite the
 verified reason the simpler one fails; and how to verify the fix. Order worst
 first. Group notes under one no-action heading, a line each.
 
-The review ends when every finding has its disposition. Nothing re-opens it. A clean
+The review ends when every finding has its disposition. A clean
 report is one line on the record and in the brief. An empty review of a clean diff
 is correct.
 

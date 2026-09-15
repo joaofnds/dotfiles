@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "review-style-no-exception",
+  "stage": "review",
+  "request": "request.md",
+  "fixtureDirectory": "fixture",
+  "instructionFiles": [],
+  "outputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "axis": { "enum": ["style"] },
+      "read_changed_files": { "type": "array", "items": { "type": "string" } },
+      "loads_unrelated_test_modules": { "type": "boolean" },
+      "loads_applicable_exception": { "type": "boolean" },
+      "cross_axis_correctness_reported": { "type": "boolean" },
+      "unexamined_files": { "type": "array", "items": { "type": "string" } },
+      "finding": { "enum": ["boolean-contract-mismatch", "none"] },
+      "brief_reason": { "type": "string" }
+    },
+    "required": [
+      "axis",
+      "read_changed_files",
+      "loads_unrelated_test_modules",
+      "loads_applicable_exception",
+      "cross_axis_correctness_reported",
+      "unexamined_files",
+      "finding",
+      "brief_reason"
+    ]
+  },
+  "checks": [
+    { "id": "source-read", "path": "/read_changed_files", "includes": "src/enabled.ts.fixture" },
+    { "id": "test-read", "path": "/read_changed_files", "includes": "src/enabled.test.ts.fixture" },
+    {
+      "id": "test-authoring-modules-scoped-out",
+      "path": "/loads_unrelated_test_modules",
+      "equals": false
+    },
+    { "id": "no-exception-invented", "path": "/loads_applicable_exception", "equals": false },
+    {
+      "id": "concrete-correctness-kept",
+      "path": "/cross_axis_correctness_reported",
+      "equals": true
+    },
+    { "id": "all-changed-files-accounted", "path": "/unexamined_files", "equals": [] },
+    { "id": "mismatch-reported", "path": "/finding", "equals": "boolean-contract-mismatch" }
+  ]
+}

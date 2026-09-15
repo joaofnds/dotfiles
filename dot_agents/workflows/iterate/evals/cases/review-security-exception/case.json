@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "review-security-exception",
+  "stage": "review",
+  "request": "request.md",
+  "fixtureDirectory": "fixture",
+  "instructionFiles": [],
+  "outputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "axis": { "enum": ["security"] },
+      "read_changed_files": { "type": "array", "items": { "type": "string" } },
+      "loads_unrelated_test_modules": { "type": "boolean" },
+      "loads_applicable_exception": { "type": "boolean" },
+      "exception_covers_source": { "type": "boolean" },
+      "cross_axis_correctness_reported": { "type": "boolean" },
+      "unexamined_files": { "type": "array", "items": { "type": "string" } },
+      "finding": { "enum": ["hardcoded-secret-outside-fixture", "none"] },
+      "brief_reason": { "type": "string" }
+    },
+    "required": [
+      "axis",
+      "read_changed_files",
+      "loads_unrelated_test_modules",
+      "loads_applicable_exception",
+      "exception_covers_source",
+      "cross_axis_correctness_reported",
+      "unexamined_files",
+      "finding",
+      "brief_reason"
+    ]
+  },
+  "checks": [
+    { "id": "source-read", "path": "/read_changed_files", "includes": "src/config.ts.fixture" },
+    { "id": "test-read", "path": "/read_changed_files", "includes": "src/config.test.ts.fixture" },
+    {
+      "id": "test-authoring-modules-scoped-out",
+      "path": "/loads_unrelated_test_modules",
+      "equals": false
+    },
+    { "id": "applicable-exception-loaded", "path": "/loads_applicable_exception", "equals": true },
+    { "id": "exception-not-overextended", "path": "/exception_covers_source", "equals": false },
+    {
+      "id": "concrete-correctness-kept",
+      "path": "/cross_axis_correctness_reported",
+      "equals": true
+    },
+    { "id": "all-changed-files-accounted", "path": "/unexamined_files", "equals": [] },
+    { "id": "secret-reported", "path": "/finding", "equals": "hardcoded-secret-outside-fixture" }
+  ]
+}

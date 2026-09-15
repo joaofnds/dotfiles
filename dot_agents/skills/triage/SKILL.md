@@ -166,11 +166,10 @@ recommend one and name what it displaces. Continue ordering the independent work
 
 ## Reconcile selection
 
-The runner selects dependency-ready, non-deferred work from the accepted statuses,
-ordered by priority and then card ID. Automated intake cannot add IDs to that run's
-selection set. Compare the proposed first action with that actual selection before
-handoff. Where they differ, keep priorities truthful, report the runner's pick and
-give the manual next action. Never treat a written queue as enforcement.
+Record the recommended next card or stop reason in the handoff without changing
+consequence-based priorities. If the pick can proceed, put it first and explain
+any departure from priority order. Otherwise record the blocker and leave it
+outside the selectable queue.
 
 ## Apply and check the sweep
 

@@ -9,25 +9,22 @@ type Scenario = {
   firstId?: string;
   deferOnRead?: number;
   shapeInvestigation?: string;
-  shapeMetadata?: "type" | "project" | "reporter";
   labels?: string[];
-  secondStatus?: string;
-  ready?: boolean;
-  triageUnblocks?: boolean;
   schemaVersion?: number;
-  triageStatus?: string;
   investigationStatus?: string;
   stall?: string;
   dirty?: boolean;
   stop?: boolean;
-  goals?: string;
+  stopOnRead?: number;
   assignee?: string;
-  glyph?: string;
   status?: string;
   budget?: string;
+  runBudget?: string;
+  runMinutes?: string;
+  unknownCost?: boolean;
+  failedResult?: boolean;
   missing?: string;
   leaves?: string;
-  stopAfter?: boolean;
   stopDuring?: string;
   shaped?: boolean;
   mute?: boolean;
@@ -129,13 +126,17 @@ export class WorkflowHarness {
       writeFile(join(bin, "backlog"), `#!${process.execPath}\n${fakeBacklog}`),
       writeFile(join(directory, "status"), `${scenario.status ?? "To Do"}\n`),
       writeFile(join(directory, "assignee"), scenario.assignee ?? ""),
-      writeFile(join(directory, "ready"), String(scenario.ready ?? true)),
       writeFile(join(directory, "labels"), JSON.stringify(scenario.labels ?? [])),
-      writeFile(join(directory, "metadata"), ""),
       writeFile(join(directory, "reads"), "0"),
-      ...["notes", "calls", "edits", "systems", "observed-deferred", "deferred-dispatches"].map(
-        (name) => writeFile(join(directory, name), ""),
-      ),
+      ...[
+        "notes",
+        "calls",
+        "edits",
+        "systems",
+        "arguments",
+        "observed-deferred",
+        "deferred-dispatches",
+      ].map((name) => writeFile(join(directory, name), "")),
     ]);
     await Promise.all([chmod(join(bin, "claude"), 0o755), chmod(join(bin, "backlog"), 0o755)]);
 
@@ -153,33 +154,30 @@ export class WorkflowHarness {
       FAKE_OBSERVED_DEFERRED: join(directory, "observed-deferred"),
       FAKE_DEFERRED_DISPATCHES: join(directory, "deferred-dispatches"),
       FAKE_SHAPE_INVESTIGATION: scenario.shapeInvestigation ?? "",
-      FAKE_PROGRESS_FIELD: scenario.shapeMetadata ?? "",
-      FAKE_PROGRESS_VALUE: join(directory, "metadata"),
-      FAKE_SECOND_STATUS: scenario.secondStatus ?? "To Do",
-      FAKE_READY: join(directory, "ready"),
-      FAKE_TRIAGE_UNBLOCKS: scenario.triageUnblocks ? "yes" : "",
       FAKE_SCHEMA_VERSION: String(scenario.schemaVersion ?? 1),
-      FAKE_TRIAGE_STATUS: scenario.triageStatus ?? "",
       FAKE_INVESTIGATION_STATUS: scenario.investigationStatus ?? "",
       FAKE_CALLS: join(directory, "calls"),
+      FAKE_ARGUMENTS: join(directory, "arguments"),
+      FAKE_UNKNOWN_COST: scenario.unknownCost ? "yes" : "",
+      FAKE_FAILED_RESULT: scenario.failedResult ? "yes" : "",
       FAKE_EDITS: join(directory, "edits"),
       FAKE_SYSTEMS: join(directory, "systems"),
       FAKE_NOTES: join(directory, "notes"),
       FAKE_STALL: scenario.stall ?? "",
-      FAKE_GOALS: scenario.goals ?? "1",
       FAKE_ASSIGNEE: join(directory, "assignee"),
       FAKE_REASSIGN_AT: scenario.reassignAt ?? "",
       FAKE_MISSING: scenario.missing ?? "",
-      FAKE_GLYPH: scenario.glyph ?? "○",
       FAKE_SHAPED: scenario.shaped ? "yes" : "",
       FAKE_MUTE: scenario.mute ? "yes" : "",
       FAKE_LEAVES: scenario.leaves ? join(repo, "left-behind") : "",
       FAKE_LEAVES_AT: scenario.leaves ?? "",
-      FAKE_STOP_AFTER: scenario.stopAfter ? join(repo, ".iterate-stop") : "",
       FAKE_STOP_DURING: scenario.stopDuring ?? "",
+      FAKE_STOP_ON_READ: String(scenario.stopOnRead ?? 0),
       FAKE_STOP_FILE: join(repo, ".iterate-stop"),
       ITERATE_SESSION_BUDGET: scenario.budget ?? "",
-      ITERATE_AGENTS: "",
+      ITERATE_RUN_BUDGET: scenario.runBudget ?? "",
+      ITERATE_RUN_MINUTES: scenario.runMinutes ?? "",
+      ITERATE_LIVE: "",
     };
     const git = spawn(["git", "-c", "init.defaultBranch=main", "init", "-q", repo], {
       env,
@@ -202,10 +200,86 @@ class WorkflowDriver {
     private readonly harness: WorkflowHarness,
   ) {}
 
+  setStatus = (status: string) => writeFile(join(this.directory, "status"), status);
+  clearWork = () => rm(join(this.repo, "left-behind"), { force: true });
+  loseCardIndex = (id: string) => rm(join(this.repo, ".git", "iterate", `${id}.json`));
+  async holdRunLock(): Promise<void> {
+    const directory = join(this.repo, ".git", "iterate");
+    await mkdir(directory, { recursive: true });
+    await writeFile(join(directory, "lock"), String(process.pid));
+  }
+
+  async interruptRecordedAttempt(id: string): Promise<void> {
+    const root = join(this.repo, ".git", "iterate");
+    const runId = JSON.parse(await readFile(join(root, `${id}.json`), "utf8"));
+    const path = join(root, runId, "run.json");
+    const record = JSON.parse(await readFile(path, "utf8"));
+    record.attempts.at(-1).status = "running";
+    await writeFile(path, JSON.stringify(record));
+  }
+
+  async replaceRecordedAgent(
+    id: string,
+    requestedAgent: { provider: string; model: string; effort?: string },
+  ): Promise<void> {
+    const root = join(this.repo, ".git", "iterate");
+    const runId = JSON.parse(await readFile(join(root, `${id}.json`), "utf8"));
+    const path = join(root, runId, "run.json");
+    const record = JSON.parse(await readFile(path, "utf8"));
+    record.attempts.at(-1).requestedAgent = requestedAgent;
+    await writeFile(path, JSON.stringify(record));
+  }
+
+  async seedLegacyRun(card: string, dollars: number): Promise<void> {
+    const root = join(this.repo, ".git", "iterate");
+    const id = "00000000-0000-4000-8000-000000000001";
+    const directory = join(root, id);
+    const record = {
+      schemaVersion: 1,
+      id,
+      startedAt: "2026-09-14T00:00:00.000Z",
+      card,
+      acceptedIds: [card],
+      completed: false,
+      bet: "Historical bet",
+      betRecorded: true,
+      reflectionCheck: "passed",
+      reflectedFrom: "before reflection",
+      reflectedTo: "after reflection",
+      limits: { dollars },
+      attempts: ["triage", "reflect"].map((stage, index) => ({
+        id: `00000000-0000-4000-8000-00000000000${index + 2}`,
+        stage,
+        card: stage === "triage" ? "inbox" : card,
+        startedAt: "2026-09-14T00:00:00.000Z",
+        status: "completed",
+        requestedAgent:
+          stage === "triage"
+            ? { provider: "claude", model: "opus" }
+            : { provider: "opencode", model: "openai/gpt-6", effort: "high" },
+        durationMs: 10,
+        costUsd: (index + 1) / 10,
+        costScope: "aggregateIncludingChildren",
+      })),
+    };
+
+    await mkdir(directory, { recursive: true });
+    await writeFile(join(directory, "run.json"), JSON.stringify(record));
+    await writeFile(join(root, "current.json"), JSON.stringify(id));
+    await writeFile(join(root, `${card}.json`), JSON.stringify(id));
+  }
+  setRunBudget = (value: string) => {
+    this.env.ITERATE_RUN_BUDGET = value;
+  };
+
+  async steps(card: string, count: number): Promise<void> {
+    for (let index = 0; index < count; index += 1) await this.run("step", card);
+  }
+
   run = async (...args: string[]) => {
     const { stdout, stderr, code } = await this.harness.run(this.repo, this.env, args);
-    const [calls, edits, systems, deferredDispatches] = await Promise.all(
-      ["calls", "edits", "systems", "deferred-dispatches"].map((name) =>
+    const [calls, edits, systems, deferredDispatches, argsSeen] = await Promise.all(
+      ["calls", "edits", "systems", "deferred-dispatches", "arguments"].map((name) =>
         readFile(join(this.directory, name), "utf8"),
       ),
     );
@@ -218,6 +292,7 @@ class WorkflowDriver {
       edits: edits ?? "",
       systems: (systems ?? "").split("\n---\n").filter(Boolean),
       deferredDispatches: (deferredDispatches ?? "").trim().split("\n").filter(Boolean),
+      argsSeen: argsSeen ?? "",
     };
   };
 }
