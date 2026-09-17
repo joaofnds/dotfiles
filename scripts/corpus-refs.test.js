@@ -232,6 +232,14 @@ describe("a citation carrying a heading", () => {
 });
 
 describe("text that names no corpus file", () => {
+  test("skips a board planning record owned by each project", async () => {
+    const root = await corpus({
+      "AGENTS.md": "Read `backlog/PRIORITY.md` alongside the current card.\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
   test("skips a citation by section number, which names no heading text", async () => {
     const root = await corpus({
       "rulebook/coding-style.md": "# Style\n\n## 2. Layering\n",

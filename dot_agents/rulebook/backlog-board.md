@@ -1,8 +1,33 @@
 # Board
 
 Track independent work on the backlog board. Change cards and documents through the
-`backlog` CLI. The configuration exception is under The CLI. Never adopt backlog's
-own `instructions` or agent-guide output as process truth.
+`backlog` CLI, except the planning file below. The configuration exception is under
+The CLI. Never adopt backlog's own `instructions` or agent-guide output as process truth.
+
+## Project direction
+
+Read `backlog/PRIORITY.md` alongside the card before selecting, proposing, resuming,
+or working on backlog tasks. It owns the current goal and agreed milestone and card
+sequence. Keep it concise, leaving task details and history on their existing records.
+Record verified progress and blockers before handing off, preserving concurrent edits.
+When a card is complete, advance to the next already-agreed card. These updates do
+not authorize adding, skipping, or reordering work.
+Milestone completion requires observing its outcome.
+
+Changes to the North Star, current focus, milestone commitments, or card sequence
+require the user's explicit approval of the specific change before editing the plan.
+Keep proposals outside `PRIORITY.md`, on the card or a separate planning document,
+with evidence, expected benefit, and what they delay or displace. Preserve the agreed
+plan until approved, then link the
+approval when applying it. A named-card direction changes only that pick. If the
+sequence is exhausted, propose the next step.
+
+During authorized planning or execution, create a missing file from
+[the template](references/priority-template.md) and edit it directly. Recover accepted
+decisions and mark gaps or conflicts unresolved without seeking permission merely to
+record them. Missing direction prevents an inferred pick, not an explicitly directed
+accepted card. Read-only and record-only phases report missing or stale priorities
+without writing the file. The next planning or execution phase reconciles those gaps.
 
 ## Columns
 
@@ -59,16 +84,14 @@ result stays open with the missing evidence and next action, or is deferred.
 Proposed fixes beyond the accepted scope enter Inbox. Acceptance criteria on an
 investigation do not authorize a move to Build.
 
-Triage recommends a Build or Review card before it selects new work. A
-card in either column is in flight and takes precedence across milestones. If
-another assignee holds that card, report the blocker. Name other cards in flight
-so the overlap can be resolved. Otherwise the queue contains the current
-milestone's dependency-ready To Do, Shape, Build, and Review cards without
-`deferred`. The current milestone is the active milestone due soonest. A
-milestone without a due date holds no newly selectable work. A card in another
-milestone or in none is not selected as new work, whatever its priority, because
-a queue that spans milestones lets the highest-priority card open a new one. The
-iterate runner takes a named accepted card and checks its status and ownership.
+Resume the active planned card before starting another. Report other cards in
+Build or Review and their owners without taking over their work. Select new work
+from the agreed sequence in `backlog/PRIORITY.md`, within its current milestone.
+Check admission, dependencies, resources, ownership, and `deferred` before starting.
+If the next card is blocked, skip it only with the user's explicit approval of that
+bypass. A general delegation to plan or work unattended does not supply that approval.
+Due dates record real deadlines and never substitute for milestone order.
+The iterate runner takes a named accepted card and checks its status and ownership.
 Its status guard cannot verify who authorized a CLI write or whether prose adds
 scope. Those judgments use the recorded direction above.
 
@@ -132,8 +155,6 @@ write it to the board and say so in the reply.
 
 ## The card is the record
 
-The next session reads only the card.
-
 Documents live in the board's flat `docs/` directory and attach with `--doc`,
 never inlined into a task field. Create them through the CLI, which writes the
 frontmatter the board reads. A doc missing that frontmatter lists as a blank-titled
@@ -162,7 +183,8 @@ name was already supplied in the session. Use that name as one directory under
 `~/code/backlog/boards/`. Do not derive a name from the project path. If the name
 is already taken, ask whether to link that board or use another name.
 
-For a new board, create its tasks, docs, and decisions directories. Copy
+For a new board, create its tasks, docs, and decisions directories and initialize
+`backlog/PRIORITY.md` under Project direction after linking the board. Copy
 `~/.agents/backlog-config.yml` to its `config.yml`, setting `project_name` to the
 chosen name. Keep configuration in the board so the central backup includes it.
 

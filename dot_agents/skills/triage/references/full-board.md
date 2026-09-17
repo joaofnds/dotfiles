@@ -16,9 +16,8 @@ classifications together.
 
 Make each milestone an observable increment of the goal. Record what becomes
 possible, how completion will be demonstrated, the required cards, and what remains
-outside it. Reuse or reshape existing milestones before creating another. Order them
-by the feedback or outcome needed next, respecting actual commitments and constraints.
-Give each active milestone a distinct due date in that order.
+outside it. Reuse existing milestones before proposing another. Propose changes by
+the feedback or outcome needed next, respecting actual commitments and constraints.
 
 Assign accepted planned work to the increment it serves. Keep optional captures in
 Inbox and defer optional accepted work with its next check until an increment
@@ -27,30 +26,24 @@ enough to execute while leaving later ones at the outcome and dependency level.
 
 Record real prerequisites as dependencies and historical relationships as references.
 Recheck waits whose blockers are Done and detect missing targets and cycles after
-merges and splits. Keep a Done dependency on the card, since the next session reads
-only the card. Point a dependency on an archived card at the card that absorbed it,
+merges and splits. Keep a Done dependency on the card so its execution context stays
+complete. Point a dependency on an archived card at the card that absorbed it,
 or remove it where none did, and record the change on the triage doc. A blocked
 valuable card keeps its priority while the feasible prerequisite comes first.
 
 ## Prepare the next iteration
 
-Write one ordered queue of feasible next actions under the board's selection
-policy, separating implementation from shaping or investigation. Record
-later-milestone plans in the milestone sequence. A queue entry names its card,
-milestone, next action, why it precedes the next entry, and what it unlocks.
-Keep deferred or externally blocked work, cards held by another session, and
-unresolved product decisions out of the selectable queue with a reason for each
-exclusion. A runnable investigation may remain when its purpose is to resolve a
-named unknown. A build entry needs observable acceptance, checked premises,
-available resources, and no unresolved decision that changes its scope.
+In the next action, distinguish implementation from shaping or investigation.
+Each planned card names its milestone and what it unlocks. A build entry needs
+observable acceptance, checked premises, available resources, and no unresolved
+decision that changes its scope. An investigation names the unknown it will resolve.
 
 Put the first card's bet on the triage doc with the goal observation it should
 produce, how to observe it, and the budget it gets. Use the recorded budget or state
 a proposed bound without inventing spending authority. Identify sitting companions
 separately, since the next iteration picks one card. Name shared files or owned trees
-that prevent parallel work. Account for capacity by naming work displaced from the
-previous queue when new work moves ahead of it.
+that prevent parallel work.
 
-The handoff carries the milestone sequence and ordered queue. Account for each
-initially open card and each card created during the audit. A full audit checks every
+The handoff links the current milestone and card sequence in `backlog/PRIORITY.md`.
+Account for each initially open card and each card created during the audit. A full audit checks every
 checkable claim on those cards, including claims that do not alter the disposition.

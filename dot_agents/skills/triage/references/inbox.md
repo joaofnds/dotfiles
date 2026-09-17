@@ -27,12 +27,8 @@ decision on the affected cards before applying it. Re-read changed premises firs
 when the decision arrives later. A decision approves the displayed scope, not
 requirements added afterward.
 
-Check the next accepted action against current code, resources, and dependencies.
-Keep the accepted order unless new evidence changes readiness or priority. If it
-cannot proceed, record the deferral under the board policy and inspect the next accepted candidate until one is feasible or the
-accepted queue is exhausted. Write that card's bet with the goal observation,
-check, and authorized budget, and attach the intake doc for its next session.
-Pending admissions do not prevent that handoff.
+For a ready next action, write its bet with the goal observation, check, and authorized
+budget, and attach the intake doc for its next session.
 
 Recommend full-board planning when a changed goal, milestone, or reflection requires
 replanning. Do not silently expand this intake pass into a full audit. With no
@@ -41,7 +37,7 @@ pending a decision.
 
 The intake doc records its frozen audit set, applied changes, pending batch,
 returning and future deferrals, new arrivals, and next accepted action. Carry the
-goal forward so the next triage or reflection can recover it. Record the number of
-pending captures and oldest capture date, and any repeated duplicate or rewriting
+goal as audit context and link `backlog/PRIORITY.md` for the current direction.
+Record the number of pending captures and oldest capture date, and any repeated duplicate or rewriting
 problem. Use these observations and the user's correction burden to judge whether
 intake is helping. Fewer cards alone is not evidence of success.

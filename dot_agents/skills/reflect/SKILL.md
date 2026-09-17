@@ -11,9 +11,9 @@ next step. It writes one doc and nothing else on the board.
 
 ## Read before judging
 
-Read the board's goal from the newest triage doc, and the milestone the card belongs
-to. Without a goal, write the reflection doc with only that finding and stop, since
-nothing else can be judged.
+Read the board's goal and current sequence from `backlog/PRIORITY.md`, and the
+milestone the card belongs to. Without a goal, write the reflection doc with only
+that finding and stop, since nothing else can be judged.
 
 Read the card whole: its description, any bet recorded on it or in the newest
 triage doc's queue line, its acceptance list with the evidence
@@ -28,8 +28,8 @@ Then look once yourself. Run the read-only check or open the screen the card's
 observations name, so the actual condition is what you saw and not what the card
 claims.
 
-Read the open board and the newest triage doc, so a proposal does not re-derive a
-card that exists.
+Read the open board and the planning records linked from `backlog/PRIORITY.md`, so
+a proposal does not re-derive an existing card or overtake an agreed next step.
 
 ## Answer the five questions
 
@@ -43,8 +43,9 @@ from the record above.
 3. What obstacles stand between here and the goal, and which one is next? Name what
    the run met (a stopped step, a budget that ran out, a stand-in for the goal, a
    defect found) and what the handoff says became possible.
-4. What is the next step, and what do you expect from it? One card, existing or
-   proposed, with the observation it should produce. This is the proposal for the
+4. What is the next step, and what do you expect from it? Start with the agreed
+   next card and the observation it should produce. A proposed departure names the
+   evidence that warrants it and the work it displaces. This is a proposal for the
    next bet, which triage writes with its budget.
 5. When can the increment be seen? The thing to open, run, or read to check it
    from outside the session, and whether it is there now.

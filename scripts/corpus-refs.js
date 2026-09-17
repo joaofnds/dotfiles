@@ -7,7 +7,7 @@ const SOURCE_PREFIX = "dot_agents/";
 // The corpus cites files it does not own: the rendered output styles, the personal wiki, a
 // project's own dot-directories, and paths a session generates at runtime. Only `~/.agents/`
 // names a corpus file.
-const OUTSIDE = [/^~\/(?!\.agents\/)/, /^\$/, /^raw\//, /^\.[a-z]/];
+const OUTSIDE = [/^~\/(?!\.agents\/)/, /^\$/, /^raw\//, /^backlog\//, /^\.[a-z]/];
 
 // A project's own instruction files are named by the corpus and never owned by it.
 const PROJECT_FILES = ["AGENTS.md", "CLAUDE.md", "GEMINI.md", "SKILL.md", "MEMORY.md", "GLOSSARY.md"];

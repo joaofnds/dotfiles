@@ -82,7 +82,7 @@ When the acceptance list is the plan, stop there.
 
 When shaping is done, write onto the task's record the goal in one sentence, the
 acceptance observations, the unknowns and how each was resolved, the glossary terms
-added, and the first test to write. The next session reads only the card.
+added, and the first test to write.
 
 A number the card takes from the repository is written with the command that
 produced it and the date you ran it, so a later reader re-runs the command instead

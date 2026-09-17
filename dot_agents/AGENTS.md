@@ -144,8 +144,8 @@ the judgment file and the whole code row, tests included. A React component adds
 the frontend file. A build that writes code over twelve turns names the code row
 and the judgment file in every one of those turns.
 
-- Reading a card, or any backlog command or card move:
-  `~/.agents/rulebook/backlog-board.md`.
+- Reading a card, selecting or proposing backlog work, or any backlog command or
+  card move: `~/.agents/rulebook/backlog-board.md`.
 - Writing or reviewing code, tests included: `~/.agents/rulebook/coding-style/core.md`, the
   language file beside it where the project's language has one and `core.md`
   alone where it does not, `frontend.md` on top for UI work,

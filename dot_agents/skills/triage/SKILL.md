@@ -32,13 +32,10 @@ set is the fixed set of IDs recorded at entry. New arrivals wait for the next pa
 
 ## Establish the goal
 
-Read the newest triage doc for the goal, then every newer reflection and the board's
-accepted decisions. Apply reflection proposals only where current evidence supports
-them. Recover a missing goal from an explicit direction or an accepted project
-record. If none states one, propose it and continue the factual audit, leaving
-priority, milestone commitments, and goal-based removals unsettled until it is answered.
-When an answer arrives, record it on this run's doc and finish the ordering.
-Until then, mark the handoff incomplete even when the factual audit is complete.
+Read reflections and accepted decisions newer than the planning decision linked from
+`backlog/PRIORITY.md`. Reconcile them under the board's Project direction policy.
+Continue the factual audit while the goal or order remains unresolved, and mark the
+planning handoff incomplete.
 
 Read the complete bodies, acceptance, definition of done, notes, attached records,
 and dependencies for the audit set before editing it. Related cards outside that
@@ -155,8 +152,8 @@ with the reason in the current triage verdict:
 - Low means a valid improvement with little present cost of delay. Speculative work
   whose need is unproven needs clarification or deferral before a build slot.
 
-Order within that scale by cost of delay, the value of the outcomes unlocked, and
-the effort and uncertainty of the smallest useful result. State the evidence behind
+Propose order changes within that scale by cost of delay, the value of the outcomes
+unlocked, and the effort and uncertainty of the smallest useful result. State the evidence behind
 estimates. Do not rank by the number of dependent cards or invent numerical scores
 from missing inputs. A short investigation can lead when it resolves a decision
 blocking valuable work, with the question, budget, and stopping condition on its card.
@@ -166,10 +163,9 @@ recommend one and name what it displaces. Continue ordering the independent work
 
 ## Reconcile selection
 
-Record the recommended next card or stop reason in the handoff without changing
-consequence-based priorities. If the pick can proceed, put it first and explain
-any departure from priority order. Otherwise record the blocker and leave it
-outside the selectable queue.
+Check the planned next action against card readiness under the board's selection
+policy. Record blockers in `backlog/PRIORITY.md` and proposed changes on the triage doc.
+Keep consequence-based priorities independent of the pick.
 
 ## Apply and check the sweep
 
@@ -187,8 +183,10 @@ resolve and each retained requirement has a home. Every audited To Do card has a
 accepted actionable outcome. Investigations follow the board route for answering a question. Recheck the first action against the current
 tree and resources before handing it off.
 
-The dated triage doc opens with the goal, what changed since the last run, the next
-card and its bet or the blocker, and whether the sweep and handoff are complete.
+The dated triage doc opens with a link to `backlog/PRIORITY.md`, the goal at the time
+of the audit, what changed, the next card and its bet or blocker, and whether the
+sweep and handoff are complete. It retains the decision evidence for planning changes
+and proposals. The current sequence and next action live only in the priority file.
 It names the mode and carries its handoff, coverage audit, reversible change record,
 and unsettled decisions with recommendations. When there is a first card,
 attach the doc so its next session can find it. Record recurring card-writing defects

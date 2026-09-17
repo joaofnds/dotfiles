@@ -62,7 +62,7 @@ refusals and failures. The runner makes no automatic retry after a stage result.
 
 `resume` requires the immediately preceding session to be in the same author stage,
 to resolve to the same provider, model and effort, and to have a recorded session
-ID. Pass the same stage selectors again. The author must refresh the card and check
+ID. Pass the same stage selectors again. The author must refresh the card and `backlog/PRIORITY.md` and check
 source/environment drift. Review requires a fresh session. Claude's session history
 must still be available.
 
