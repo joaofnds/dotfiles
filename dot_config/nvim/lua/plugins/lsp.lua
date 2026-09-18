@@ -1,7 +1,7 @@
 return {
 	"williamboman/mason.nvim",
 	event = "BufReadPost",
-	cmd = { "Mason", "MasonUpdate" },
+	cmd = { "Mason", "MasonUpdate", "MasonUpdateAll" },
 	keys = {
 		{ "<leader>cls", "<cmd>LspStart<cr>", desc = "start" },
 		{ "<leader>clS", "<cmd>LspStop<cr>", desc = "stop" },
@@ -110,6 +110,8 @@ return {
 		})
 
 		require("mason").setup()
+		vim.api.nvim_create_user_command("MasonUpdateAll", require("util.mason").update_all, {})
+
 		require("mason-lspconfig").setup({
 			ensure_installed = {
 				"biome",
