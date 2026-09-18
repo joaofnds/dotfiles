@@ -8,7 +8,7 @@ continuation or supervision. Those behaviors need separate trials with observabl
 actions and the exact production prompts. A bundle comparison cannot attribute an
 effect to each policy changed within it.
 
-The record shape follows the local Rehearsal harness: frozen context, a provider envelope, raw per-model usage, exact checks, and explicit failures. This harness stays small and local to iterate because Rehearsal currently discovers cases under its own repository and copying this corpus into that control tree would make the experiment harder to reproduce.
+The record shape follows the local Rehearse harness: frozen context, a provider envelope, raw per-model usage, exact checks, and explicit failures. This harness stays small and local to iterate because Rehearse currently discovers cases under its own repository and copying this corpus into that control tree would make the experiment harder to reproduce.
 
 ## What the cases test
 

@@ -37,7 +37,7 @@ term when you introduce or lean on one, one term per concept.
   other archived with a pointer) and a **rule with several instances** (one decision
   card, then dependent builds).
 - **Stage**: one column's work on one card, done by one fresh session running that
-  column's skill. Rehearsal uses the same word.
+  column's skill. Rehearse uses the same word.
 - **Run**: one card carried through its stages until Done, an open question, or a
   guard.
 - **Runner**: the script outside the harness that starts each stage's session, reads
