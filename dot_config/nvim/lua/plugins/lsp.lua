@@ -37,7 +37,10 @@ return {
 				if client and client:supports_method("textDocument/inlayHint") then
 					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 					map("n", "<leader>th", function()
-						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+						vim.lsp.inlay_hint.enable(
+							not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),
+							{ bufnr = bufnr }
+						)
 					end, "inlay hints")
 				end
 
@@ -46,8 +49,12 @@ return {
 				map("n", "gr", "<cmd>FzfLua lsp_references<cr>", "references")
 				map("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", "implementations")
 				map("n", "gy", "<cmd>FzfLua lsp_typedefs<cr>", "type definition")
-				map("n", "]e", function() vim.diagnostic.jump({ count = 1 }) end, "next diagnostic")
-				map("n", "[e", function() vim.diagnostic.jump({ count = -1 }) end, "prev diagnostic")
+				map("n", "]e", function()
+					vim.diagnostic.jump({ count = 1 })
+				end, "next diagnostic")
+				map("n", "[e", function()
+					vim.diagnostic.jump({ count = -1 })
+				end, "prev diagnostic")
 
 				map("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", "action")
 				map("n", "<leader>cs", "<cmd>FzfLua lsp_document_symbols<cr>", "document symbols")

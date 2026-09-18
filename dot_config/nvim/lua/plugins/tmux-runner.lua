@@ -17,7 +17,11 @@ return {
 	},
 	keys = {
 		{ "<leader>x-", ':VtrOpenRunner { "orientation": "v", "percentage": 50 }<cr>', desc = "open vertical runner" },
-		{ "<leader>x=", ':VtrOpenRunner { "orientation": "h", "percentage": 50  }<cr>', desc = "open horizontal runner" },
+		{
+			"<leader>x=",
+			':VtrOpenRunner { "orientation": "h", "percentage": 50  }<cr>',
+			desc = "open horizontal runner",
+		},
 		{ "<leader>xC", "<cmd>VtrSendCtrlC<cr>", desc = "send ctrl-c" },
 		{ "<leader>xD", "<cmd>VtrSendCtrlD<cr>", desc = "send ctrl-d" },
 		{ "<leader>xF", "<cmd>VtrFlushCommand<cr>", desc = "flush command" },

@@ -85,4 +85,3 @@ vim.opt.timeout = true
 vim.opt.timeoutlen = 500
 
 vim.cmd.filetype("plugin indent on")
-
