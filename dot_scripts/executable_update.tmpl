@@ -6,6 +6,7 @@ CHAN_MISE="sync_mise_${UUID}"
 CHAN_NIX="sync_nix_${UUID}"
 CHAN_LAZY="sync_lazy_${UUID}"
 CHAN_MASON="sync_mason_${UUID}"
+CHAN_BACKLOGS="sync_backlogs_${UUID}"
 
 cleanup() {
   tmux set-hook -uw after-split-window
@@ -21,6 +22,7 @@ tmux split-window -v -d "zsh -c '{ mise upgrade; mise prune --yes } ; tmux wait-
 tmux split-window -v -d "zsh -c '{ cd ~/.config/nix; nix flake update; chezmoi add ~/.config/nix/flake.lock } ; tmux wait-for -S $CHAN_NIX'"
 tmux split-window -v -d "zsh -c '{ nvim -c \"lua require(\\\"lazy\\\").update({ wait = true })\" -c \"qa\" } ; tmux wait-for -S $CHAN_LAZY'"
 tmux split-window -v -d "zsh -c '{ nvim -c \"autocmd User MasonUpdateAllComplete quitall\" -c \"MasonUpdateAll\" } ; tmux wait-for -S $CHAN_MASON'"
+tmux split-window -v -d "zsh -c 'backrest backlogs backup; tmux wait-for -S $CHAN_BACKLOGS'"
 
 
 {{- if eq .chezmoi.os "linux" }}
@@ -37,3 +39,4 @@ tmux wait-for "$CHAN_MISE"
 tmux wait-for "$CHAN_NIX"
 tmux wait-for "$CHAN_LAZY"
 tmux wait-for "$CHAN_MASON"
+tmux wait-for "$CHAN_BACKLOGS"
