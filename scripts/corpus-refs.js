@@ -9,6 +9,11 @@ const SOURCE_PREFIX = "dot_agents/";
 // names a corpus file.
 const OUTSIDE = [/^~\/(?!\.agents\/)/, /^\$/, /^raw\//, /^backlog\//, /^\.[a-z]/];
 
+// A list item naming what a run writes describes output, not a document to open. Its siblings
+// with other extensions are already unchecked, so the `.md` ones are not a different kind of
+// name; only the pattern that finds citations stops at `.md`.
+const GENERATED_SIBLING = /`[^`\n]+\.(?:json|txt|ya?ml|log|csv)`/;
+
 // A project's own instruction files are named by the corpus and never owned by it.
 const PROJECT_FILES = ["AGENTS.md", "CLAUDE.md", "GEMINI.md", "SKILL.md", "MEMORY.md", "GLOSSARY.md"];
 
@@ -141,15 +146,31 @@ function resolve(target, from, line, { byName, paths }) {
   return { candidates: [...named].sort() };
 }
 
-function skips(target, heading) {
+function skips(target, heading, line) {
   if (target === PLACEHOLDER) return true;
   // Bare, these name the project's own files. Carrying a path, they name a corpus file:
   // every skill is a `SKILL.md` and the corpus routes to them by path.
   if (!target.includes(sep) && PROJECT_FILES.includes(target)) return true;
   if (OUTSIDE.some((pattern) => pattern.test(target))) return true;
+  if (GENERATED_SIBLING.test(line)) return true;
   // A numbered citation names a section by number, and those files head their sections with it.
   if (heading && /^[0-9<]/.test(heading)) return true;
   return false;
+}
+
+// A citation is the shortest name that identifies its file, so a file that already wrote a
+// path the rules skip may shorten it afterwards. Collect those bare names once per file: the
+// shortened citation names that same skipped file, not a corpus file gone missing.
+function namesAnchoredOutside(citations) {
+  const anchored = new Set();
+
+  for (const { target } of citations) {
+    if (!target.includes(sep)) continue;
+    if (!OUTSIDE.some((pattern) => pattern.test(target))) continue;
+    anchored.add(basename(target));
+  }
+
+  return anchored;
 }
 
 export async function findBrokenReferences(root) {
@@ -161,9 +182,12 @@ export async function findBrokenReferences(root) {
 
   for (const path of relatives) {
     const text = await readFile(join(root, path), "utf8");
+    const citations = citationsOutsideFences(text);
+    const anchored = namesAnchoredOutside(citations);
 
-    for (const { target, heading, line } of citationsOutsideFences(text)) {
-      if (skips(target, heading)) continue;
+    for (const { target, heading, line } of citations) {
+      if (skips(target, heading, line)) continue;
+      if (anchored.has(target)) continue;
 
       const { path: resolved, candidates } = resolve(target, path, line, corpus);
 

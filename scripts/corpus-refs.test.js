@@ -355,3 +355,48 @@ describe("a name two files share", () => {
     expect(finding.reason).toBe("ambiguous name");
   });
 });
+
+describe("a name the corpus does not cite as a document", () => {
+  test("skips a generated file a list describes as output, beside its unchecked siblings", async () => {
+    const root = await corpus({
+      "workflows/iterate/evals/README.md":
+        "Each attempt contains:\n\n" +
+        "- `instruction-payload.md` and `request-payload.md`, which are the intended snapshots.\n" +
+        "- `invocation.json`, which records hashes.\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("still reports a missing document in a list that names generated files elsewhere", async () => {
+    const root = await corpus({
+      "workflows/iterate/evals/README.md":
+        "Each attempt contains:\n\n- `attempt.json`, which keeps the results.\n\nRead `gone.md` before running.\n",
+    });
+
+    const [finding] = await findBrokenReferences(root);
+
+    expect(finding.target).toBe("gone.md");
+  });
+});
+
+describe("a citation shortened to a bare name", () => {
+  test("resolves a bare name the same section already anchored to a skipped path", async () => {
+    const root = await corpus({
+      "rulebook/backlog-board.md":
+        "Read `backlog/PRIORITY.md` alongside the card.\n\nKeep proposals outside `PRIORITY.md`, on the card.\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("reports a bare name no citation in the file anchored", async () => {
+    const root = await corpus({
+      "rulebook/backlog-board.md": "Keep proposals outside `PRIORITY.md`, on the card.\n",
+    });
+
+    const [finding] = await findBrokenReferences(root);
+
+    expect(finding.target).toBe("PRIORITY.md");
+  });
+});
