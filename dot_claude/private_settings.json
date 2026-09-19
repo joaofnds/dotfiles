@@ -64,9 +64,7 @@
   "model": "opus",
   "outputStyle": "brief",
   "permissions": {
-    "allow": [
-      "mcp__claude-in-chrome"
-    ],
+    "allow": ["mcp__claude-in-chrome"],
     "defaultMode": "bypassPermissions",
     "deny": [
       "Agent(isolation:worktree)",
@@ -97,6 +95,13 @@
       "Bash(git switch -c *)",
       "Bash(git worktree add *)"
     ]
+  },
+  "pluginConfigs": {
+    "agents-md@builtin": {
+      "options": {
+        "instructionFiles": "claude-md-or-agents-md"
+      }
+    }
   },
   "preferredNotifChannel": "notifications_disabled",
   "prefersReducedMotion": true,
