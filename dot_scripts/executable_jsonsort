@@ -1,0 +1,149 @@
+#!/usr/bin/env sh
+
+set -eu
+
+usage() {
+	cat <<'USAGE'
+usage: jsonsort [--depth N] [jq options] [file...]
+
+Sorts object keys in JSON documents. Reads stdin when no file is given, or
+when a file is "-".
+
+  --depth N   sort keys down to nesting level N; keys deeper than N keep the
+              position they came in with. Omitted means every level. 0 is a
+              no-op. Arrays are containers, not levels: an object inside an
+              array sorts at the depth of the array that holds it.
+
+Any other option is handed to jq, so -c, -S, --tab and friends work. Options
+go before the files. A file whose name begins with a dash goes after a "--".
+
+  jsonsort --depth 1 myfile.json
+  jsonsort --depth 2 myfile.json myotherfile.json
+  jsonsort --depth 1 ./**/*.json
+USAGE
+}
+
+die() {
+	printf 'jsonsort: %s\n' "$1" >&2
+	exit "$2"
+}
+
+depth=0
+depth_given=false
+jq_options=""
+
+# Options are shifted off the front until only files are left, so that "$@"
+# carries each file as one argument however its name is spelled.
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+	--help | -h)
+		usage
+		exit 0
+		;;
+	--depth)
+		[ "$#" -ge 2 ] || die '--depth needs a value' 2
+		depth="$2"
+		depth_given=true
+		shift 2
+		;;
+	--depth=*)
+		depth="${1#--depth=}"
+		depth_given=true
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	-)
+		break
+		;;
+	--indent | -f | --jsonargs | --args)
+		[ "$#" -ge 2 ] || die "$1 needs a value" 2
+		jq_options="$jq_options $1 $2"
+		shift 2
+		;;
+	--arg | --argjson | --slurpfile | --rawfile)
+		[ "$#" -ge 3 ] || die "$1 needs a name and a value" 2
+		jq_options="$jq_options $1 $2 $3"
+		shift 3
+		;;
+	-*)
+		jq_options="$jq_options $1"
+		shift
+		;;
+	*)
+		break
+		;;
+	esac
+done
+
+if [ "$depth_given" = true ]; then
+	case "$depth" in
+	'' | *[!0-9]*) die "depth must be a non-negative integer, got '$depth'" 2 ;;
+	esac
+fi
+
+# jq walks until the limit hits zero, so "every level" is expressed as a limit
+# no document can exhaust rather than as a negative sentinel, which would
+# collide with the --depth values the validation above rejects.
+limit="$depth"
+[ "$depth_given" = true ] || limit=1e9
+
+program='
+def sorted($limit):
+  if $limit <= 0 then .
+  elif type == "object" then
+    to_entries | sort_by(.key) | from_entries | map_values(sorted($limit - 1))
+  elif type == "array" then map(sorted($limit))
+  else .
+  end;
+
+sorted($limit)
+'
+
+# Each caller below turns a jq failure into status 1, so that a caller of
+# jsonsort reads 0, 1 and 2 rather than jq's own codes (5 for malformed input)
+# through a wrapper.
+run_jq() {
+	# Globbing is off while $jq_options is split into words, so an option
+	# holding *, ? or [ reaches jq as written instead of being rewritten from
+	# the current directory. The caller's arguments are appended after the
+	# split, which is why they are saved first.
+	saved_file="${1-}"
+	set -f
+	# shellcheck disable=SC2086 # jq_options is a deliberately split option list
+	set -- $jq_options
+	set +f
+
+	if [ -n "$saved_file" ]; then
+		jq "$@" --argjson limit "$limit" "$program" -- "$saved_file"
+	else
+		jq "$@" --argjson limit "$limit" "$program"
+	fi
+}
+
+if [ "$#" -eq 0 ]; then
+	run_jq || exit 1
+	exit 0
+fi
+
+status=0
+for file do
+	if [ "$file" = "-" ]; then
+		run_jq || status=1
+	elif [ -d "$file" ]; then
+		printf 'jsonsort: %s: is a directory\n' "$file" >&2
+		status=1
+	elif [ -e "$file" ]; then
+		run_jq "$file" || status=1
+	else
+		case "$file" in
+		-*) printf 'jsonsort: %s: options go before files\n' "$file" >&2 ;;
+		*) printf 'jsonsort: %s: no such file\n' "$file" >&2 ;;
+		esac
+		status=1
+	fi
+done
+
+exit "$status"
