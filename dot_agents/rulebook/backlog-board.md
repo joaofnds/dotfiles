@@ -198,11 +198,20 @@ condition. Consume only these fields from `task`: `id`, `title`, `description`,
 `subtasks`, `documentation`, `implementationPlan`, `implementationNotes`, `comments`,
 `finalSummary`, `parentTaskId`.
 
-Every value flag on `backlog task edit` replaces its field rather than extending
-it, so a command naming one value silently drops the values already there. Use
-the additive sibling where the CLI has one. Where a flag has none, read the
-current values and pass every one you are keeping in a single command. A title
-edit leaves the card's file name as it was.
+Read `--help` for a flag on `backlog task edit` before you pass it, because some
+flags replace the field and others add to it, and a wrong guess either drops the
+values already there or duplicates them. `--notes` and `--final-summary` replace
+even when the value is an empty string, which is how a card loses a field. `--ac`
+adds where its name suggests replacement, and `--acceptance-criteria` is the one
+that replaces. Where a flag only replaces, read the current values and pass every
+one you are keeping in a single command. A title edit leaves the card's file name
+as it was.
+
+The board is not version controlled, so a field a flag overwrote is gone from disk.
+`~/.scripts/backrest` backs the boards up to a restic repository, which is where an
+overwritten field is recovered from. Read one path out of a snapshot with
+`restic dump`, never with that script's `restore`, which restores the latest
+snapshot over the whole live board.
 
 Change scalar configuration with `backlog config set`, whose keys are camelCase.
 For a list the CLI refuses to set, such as `statuses`, read the current file, save
