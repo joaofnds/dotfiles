@@ -105,6 +105,9 @@
   "prefersReducedMotion": true,
   "promptSuggestionEnabled": false,
   "remoteControlAtStartup": true,
+  "remoteTools": {
+    "allowUnattendedServing": false
+  },
   "respondToBashCommands": false,
   "showClearContextOnPlanAccept": false,
   "showThinkingSummaries": false,
@@ -127,7 +130,6 @@
     "simplify": "off",
     "update-config": "off"
   },
-  "skipDangerousModePermissionPrompt": true,
   "skipWebFetchPreflight": true,
   "skipWorkflowUsageWarning": true,
   "spinnerTipsEnabled": false,
