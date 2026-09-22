@@ -302,6 +302,10 @@ with the current instructions under the target models and harness. Inspect the
 recorded request to confirm which instructions and input reached the model, since
 a launch command does not prove what it received. Preserve the condition that
 produced the failure.
+Run the comparison through rehearse, the local harness for this, reading its runbook
+for the recipe and its status document for what it refuses, and name it as the
+manifest's `harness`. Where it cannot carry the case, name the limitation it stated
+in that field beside the harness you built instead.
 A long-turn reply needs the preceding work in context, not only a short prompt
 asking for a sample answer. Judge the first reply without a corrective prompt or
 editing pass. Preserve required facts, uncertainty, and decisions while checking

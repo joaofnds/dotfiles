@@ -133,7 +133,9 @@ Tool, permission, and invocation fields:
 - `claude -p --output-format json` puts only the final assistant message in `result`,
   so a measurement that reads `result` cannot see an earlier message the same turn
   left in the transcript *(probe, 2.1.278, the headless turn above)*. Measure a
-  turn's visible reply from the transcript's assistant text records. Re-check on a
+  turn's visible reply from the transcript's assistant text records. Rehearse reads
+  this same field, so its verdict is over the last message and not over everything
+  the reader saw *(read 2026-09-22 in its `session-attempt.ts`)*. Re-check on a
   Claude Code release.
 - Workflow-spawned subagents run in `acceptEdits` and inherit the session's tool
   allowlist regardless of permission mode.
@@ -177,8 +179,9 @@ skill's transcript pointer, the relay and prompt skills' lists of effort levels,
 advisor and screener agent definitions' model and effort pins, the reviewer,
 reviewer-medium, and reviewer-low definitions' effort pins, the
 hard line in your always-loaded instructions that hooks and settings take effect
-mid-session, and the review-instructions skill's rule under Prefer enforcement to
-prose against proposing a Stop hook that rewrites the reply.
+mid-session, the review-instructions skill's rule under Prefer enforcement to
+prose against proposing a Stop hook that rewrites the reply, and its rule under the
+behavioral-change evidence to run the comparison through rehearse.
 
 ## Writing a person into instruction files
 
