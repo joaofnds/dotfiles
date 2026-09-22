@@ -124,12 +124,38 @@ Tool, permission, and invocation fields:
   subagents never fire; a `PostToolUse` hook injects model-visible text through
   `hookSpecificOutput.additionalContext` instead *(probe, 2.1.221)*; whether
   `PreToolUse` shares the channel is unrecorded.
+- A `Stop` hook that blocks with exit 2 appends its stderr as a user message and the
+  session writes a second assistant message. The first message stays in the transcript
+  and on screen, and no `Stop` output field in the hooks reference edits, hides, or
+  removes it, so a rewrite driven from `Stop` doubles the reply instead of replacing it
+  *(probe, 2.1.278, one live desktop turn and one headless turn)*. Re-check on a
+  Claude Code release, against the hooks reference's `Stop` output fields.
+- `claude -p --output-format json` puts only the final assistant message in `result`,
+  so a measurement that reads `result` cannot see an earlier message the same turn
+  left in the transcript *(probe, 2.1.278, the headless turn above)*. Measure a
+  turn's visible reply from the transcript's assistant text records. Re-check on a
+  Claude Code release.
 - Workflow-spawned subagents run in `acceptEdits` and inherit the session's tool
   allowlist regardless of permission mode.
 - `Agent` tool `name`: a named spawn has returned only a receipt in place of its report
   *(probe, 2.1.220–2.1.221)*. Two explanations remain open: an agent-team teammate
   mechanism, or an ordinary named background spawn; and the probes run so far cannot
   separate them. Do not restore either as settled.
+- A custom output style registers under its frontmatter `name` when that field is
+  present and under its filename otherwise, and `--settings '{"outputStyle":"<x>"}'`
+  with a name no file registers loads no style at all, silently. Which file wins when
+  two share a `name` is unrecorded, so do not assert it either way *(probe, 2.1.278: a
+  variant file carrying `name: brief` was invisible under its own filename and the
+  run landed with no output style, and with the `name` line removed all three models
+  named the variant and quoted a sentence that exists only in it)*. Re-check on a
+  Claude Code release, with a quote probe whose sentence the live style lacks.
+- `claude -p --resume <id>` appends the new turn to the resumed transcript, so a second
+  replay of the same fork sees the first replay's prompt and reply. `--fork-session`
+  leaves the fork untouched and writes the continuation to a new session id, named by
+  the `session_id` field of the `--output-format json` result *(probe, 2.1.278: every
+  run without the flag returned the fork's own id and the forks filled with injected
+  prompts, and every run with it returned a new id and left the forks at zero)*.
+  Re-check on a Claude Code release.
 - Session effort levels are `low`, `medium`, `high`, `xhigh`, and `max`, set for a
   session by `--effort` *(probe: `claude --effort bogus` names the valid set in its
   warning, 2.1.260)*.
@@ -149,9 +175,10 @@ Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two
 edited together. The live copies are the kaizen skill's transcript layout, the relay
 skill's transcript pointer, the relay and prompt skills' lists of effort levels, the
 advisor and screener agent definitions' model and effort pins, the reviewer,
-reviewer-medium, and reviewer-low definitions' effort pins, and the
+reviewer-medium, and reviewer-low definitions' effort pins, the
 hard line in your always-loaded instructions that hooks and settings take effect
-mid-session.
+mid-session, and the review-instructions skill's rule under Prefer enforcement to
+prose against proposing a Stop hook that rewrites the reply.
 
 ## Writing a person into instruction files
 
