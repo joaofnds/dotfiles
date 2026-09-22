@@ -22,7 +22,8 @@ describe(commandFor.name, () => {
         "12.50",
         "--append-system-prompt",
         "Use $rules; `literal`",
-        "--dangerously-skip-permissions",
+        "--permission-mode",
+        "auto",
         "/shape cards/a 'quoted'.md",
       ],
     });
@@ -65,7 +66,8 @@ describe(commandFor.name, () => {
       "rules",
       "--resume",
       "session-1",
-      "--dangerously-skip-permissions",
+      "--permission-mode",
+      "auto",
       "/build card",
     ]);
   });

@@ -1,7 +1,6 @@
 {
   "agentPushNotifEnabled": true,
   "allowedMcpServers": [],
-  "alwaysThinkingEnabled": false,
   "attribution": {
     "commit": "",
     "pr": "",
@@ -18,7 +17,6 @@
   "disableAgentView": false,
   "disableAllHooks": false,
   "disableArtifact": true,
-  "disableAutoMode": "disable",
   "disableBundledSkills": true,
   "disableClaudeAiConnectors": true,
   "disableDeepLinkRegistration": "disable",
@@ -65,7 +63,7 @@
   "outputStyle": "brief",
   "permissions": {
     "allow": ["mcp__claude-in-chrome"],
-    "defaultMode": "bypassPermissions",
+    "defaultMode": "auto",
     "deny": [
       "Agent(isolation:worktree)",
       "Artifact",

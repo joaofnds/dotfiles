@@ -41,7 +41,7 @@ export function commandFor(input: SessionInput): { readonly argv: readonly strin
   if (agent.effort) argv.push("--effort", agent.effort);
   argv.push("--max-budget-usd", budget, "--append-system-prompt", systemPrompt);
   if (resumeSessionId) argv.push("--resume", resumeSessionId);
-  argv.push("--dangerously-skip-permissions", card ? `/${stage} ${card}` : `/${stage}`);
+  argv.push("--permission-mode", "auto", card ? `/${stage} ${card}` : `/${stage}`);
 
   return { argv };
 }
