@@ -193,7 +193,12 @@ only asks the reader to avoid. Never offer a hook or a settings change as the gu
 because a session never writes hooks or settings. Put the trigger in the skill that
 runs the phase, build's Finish or shape's handoff, or leave the rule in prose. The
 kaizen skill owns the one exception, a hook proposed for an explicit go-ahead when no
-other change answers a defect. On a destructive path, require a gate or a deny rule,
+other change answers a defect. Never propose a Stop hook that rewrites the reply or
+an agent that rewrites it, whatever the defect, and leave the rewrite to the typed
+/brief pass. A blocked stop appends the rewrite under a draft the reader has already
+seen (`references/external-facts.md` §Harness mechanics), and an agent never sees the
+request, so it cut detail the reader had asked for. On a destructive path, require a
+gate or a deny rule,
 never stronger adjectives. A guard enforces the rule itself. Leave the rule as prose
 where only a proxy could be enforced, because a numeric proxy for a judgment rule
 replaces the principle with a count, obeyed or breached exactly where judgment was
