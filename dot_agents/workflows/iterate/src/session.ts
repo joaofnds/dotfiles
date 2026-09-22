@@ -28,6 +28,7 @@ export type SessionResult = {
   readonly logPath: string;
   readonly requestedAgent: StageAgent;
   readonly resolvedModel?: string;
+  readonly permissionDenials?: number;
   readonly usage: UsageReport;
   readonly cost?: SessionCost;
   readonly turns?: number;
@@ -48,6 +49,8 @@ type Stream = {
   errors: string[];
   sessionId: string;
   resolvedModel: string;
+  permissionMode: string;
+  permissionDenials: number;
   parentUsage: TokenUsage | undefined;
   aggregateUsage: TokenUsage | undefined;
   models: ModelUsage[];
@@ -107,6 +110,7 @@ function sessionResult(
     logPath,
     requestedAgent: input.agent,
     ...(stream.resolvedModel ? { resolvedModel: stream.resolvedModel } : {}),
+    ...(stream.permissionDenials === 0 ? {} : { permissionDenials: stream.permissionDenials }),
     usage,
     ...(stream.cost === undefined ? {} : { cost: stream.cost }),
     ...(stream.turns === undefined ? {} : { turns: stream.turns }),
@@ -115,7 +119,7 @@ function sessionResult(
 }
 
 function summary(result: SessionResult): string {
-  return `   status ${result.status} duration ${result.durationMs}ms turns ${result.turns ?? "n/a"} cost ${result.cost?.usd ?? "n/a"} session ${result.sessionId ?? "n/a"}`;
+  return `   status ${result.status} duration ${result.durationMs}ms turns ${result.turns ?? "n/a"} denials ${result.permissionDenials ?? 0} cost ${result.cost?.usd ?? "n/a"} session ${result.sessionId ?? "n/a"}`;
 }
 
 function agentName(agent: StageAgent): string {
@@ -123,7 +127,7 @@ function agentName(agent: StageAgent): string {
 }
 
 async function runCommand(
-  command: { readonly argv: readonly string[] },
+  command: { readonly argv: readonly string[]; readonly permissionMode: string },
   logPath: string,
   timeoutMs: number | undefined,
 ): Promise<Stream> {
@@ -183,6 +187,13 @@ async function runCommand(
         } catch (error) {
           stream.errors.push(message(error));
         }
+
+        if (stream.permissionMode && stream.permissionMode !== command.permissionMode) {
+          stop(
+            `the session started in ${stream.permissionMode} permission mode instead of ${command.permissionMode}, so it was stopped`,
+            "SIGTERM",
+          );
+        }
       }
     } catch (error) {
       stop(message(error), "SIGTERM");
@@ -211,6 +222,8 @@ function emptyStream(): Stream {
     errors: [],
     sessionId: "",
     resolvedModel: "",
+    permissionMode: "",
+    permissionDenials: 0,
     parentUsage: undefined,
     aggregateUsage: undefined,
     models: [],
@@ -237,6 +250,8 @@ function take(stream: Stream, line: string, live: boolean): void {
     if (event.type === "result") stream.result = event.result;
     if (event.type === "session_id") stream.sessionId = event.sessionId;
     if (event.type === "resolved_model") stream.resolvedModel = event.model;
+    if (event.type === "permission_mode") stream.permissionMode = event.mode;
+    if (event.type === "permission_denials") stream.permissionDenials += event.count;
     if (event.type === "complete") stream.complete = true;
     if (event.type === "error") stream.errors.push(event.message);
     if (event.type === "usage") {

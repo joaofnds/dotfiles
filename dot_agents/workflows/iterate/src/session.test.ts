@@ -93,7 +93,7 @@ describe("session", () => {
   }, 6000);
 
   test("rejects a session when its wall-time budget expires", async () => {
-    const result = await (await harness.start("timeout", { timeoutMs: 50 })).timeout();
+    const result = await (await harness.start("timeout", { timeoutMs: 50 })).stopped();
 
     expect(result).toMatchObject({ code: 1, result: { status: "failed" } });
     expect(result.result?.errors).toContain(
@@ -102,5 +102,21 @@ describe("session", () => {
     expect(result.result?.usage).toEqual({});
     expect(result.result?.turns).toBeUndefined();
     expect(result.result?.cost).toBeUndefined();
+  }, 6000);
+
+  test("stops a session that starts in another permission mode", async () => {
+    const result = await (await harness.start("default-mode")).stopped();
+
+    expect(result).toMatchObject({ code: 1, result: { status: "failed" } });
+    expect(result.result?.errors).toContain(
+      "the session started in default permission mode instead of auto, so it was stopped",
+    );
+  }, 6000);
+
+  test("reports the permission denials the session met", async () => {
+    const result = await (await harness.start("denials")).finish();
+
+    expect(result.result).toMatchObject({ status: "completed", permissionDenials: 2 });
+    expect(result.stderr).toContain("denials 2");
   }, 6000);
 });

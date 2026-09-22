@@ -56,6 +56,13 @@ assigned to `@claude`; the stage is told to inspect changes, finish and commit t
 card's work, and preserve other changes. Done requires a clean tree. An untracked
 `.iterate-stop` is excluded from that check but stops dispatch with exit 3.
 
+Every stage asks Claude for auto permission mode, so its tool calls pass Claude
+Code's classifier rather than skipping permission checks. A session that starts in
+any other mode is stopped and fails, because in print mode nobody can answer a
+permission prompt. Claude falls back that way on models without auto mode, Haiku
+among them on CLI 2.1.280. The status line counts the tool calls Claude denied, and
+the attempt report carries the count as `permissionDenials`.
+
 Exit 0 means the stage advanced or the Done check passed. Exit 2 means the card
 stayed in its column and the supervisor must interpret the result. Exit 1 covers
 refusals and failures. The runner makes no automatic retry after a stage result.

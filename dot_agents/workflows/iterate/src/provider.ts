@@ -25,6 +25,8 @@ export type ProviderEvent =
   | { readonly type: "result"; readonly result: string }
   | { readonly type: "session_id"; readonly sessionId: string }
   | { readonly type: "resolved_model"; readonly model: string }
+  | { readonly type: "permission_mode"; readonly mode: string }
+  | { readonly type: "permission_denials"; readonly count: number }
   | { readonly type: "error"; readonly message: string }
   | {
       readonly type: "usage";
@@ -34,16 +36,20 @@ export type ProviderEvent =
     }
   | { readonly type: "complete" };
 
-export function commandFor(input: SessionInput): { readonly argv: readonly string[] } {
+export function commandFor(input: SessionInput): {
+  readonly argv: readonly string[];
+  readonly permissionMode: string;
+} {
   const { agent, stage, card, systemPrompt, budget, resumeSessionId } = input;
   const argv = ["claude", "--print", "--verbose", "--output-format", "stream-json"];
   if (agent.model) argv.push("--model", agent.model);
   if (agent.effort) argv.push("--effort", agent.effort);
   argv.push("--max-budget-usd", budget, "--append-system-prompt", systemPrompt);
   if (resumeSessionId) argv.push("--resume", resumeSessionId);
-  argv.push("--permission-mode", "auto", card ? `/${stage} ${card}` : `/${stage}`);
+  const permissionMode = "auto";
+  argv.push("--permission-mode", permissionMode, card ? `/${stage} ${card}` : `/${stage}`);
 
-  return { argv };
+  return { argv, permissionMode };
 }
 
 export function eventsFrom(line: string): ProviderEvent[] {
@@ -82,6 +88,7 @@ const claudeResult = z.object({
   result: z.string().optional(),
   is_error: z.boolean().default(false),
   errors: z.array(z.string()).default([]),
+  permission_denials: z.array(z.unknown()).default([]),
   num_turns: z.number().int().nonnegative().optional(),
   total_cost_usd: z.number().nonnegative().optional(),
   usage: z
@@ -131,12 +138,19 @@ function claudeEvents(type: string, raw: unknown): ProviderEvent[] {
     const event = z.object({ subtype: z.string() }).parse(raw);
     if (event.subtype !== "init") return [];
 
-    const { session_id, model } = z
-      .object({ session_id: z.string(), model: z.string().optional() })
+    const { session_id, model, permissionMode } = z
+      .object({
+        session_id: z.string(),
+        model: z.string().optional(),
+        permissionMode: z.string().optional(),
+      })
       .parse(raw);
     return [
       { type: "session_id", sessionId: session_id },
       ...(model === undefined ? [] : ([{ type: "resolved_model", model }] as const)),
+      ...(permissionMode === undefined
+        ? []
+        : ([{ type: "permission_mode", mode: permissionMode }] as const)),
     ];
   }
 
@@ -160,6 +174,9 @@ function claudeEvents(type: string, raw: unknown): ProviderEvent[] {
     events.push({ type: "session_id", sessionId: event.session_id });
   if (event.result !== undefined) events.push({ type: "result", result: event.result });
   for (const message of event.errors) events.push({ type: "error", message });
+  if (event.permission_denials.length > 0) {
+    events.push({ type: "permission_denials", count: event.permission_denials.length });
+  }
   if (event.is_error && event.errors.length === 0) {
     events.push({ type: "error", message: event.result || "the provider reported an error" });
   }

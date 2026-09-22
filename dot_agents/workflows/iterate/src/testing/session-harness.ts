@@ -7,7 +7,16 @@ import { dirname, join } from "node:path";
 import process from "node:process";
 import { z } from "zod";
 
-type Scenario = "success" | "malformed" | "error" | "truncated" | "interrupt" | "timeout" | "long";
+type Scenario =
+  | "success"
+  | "malformed"
+  | "error"
+  | "truncated"
+  | "interrupt"
+  | "timeout"
+  | "long"
+  | "default-mode"
+  | "denials";
 const registration = z.object({
   role: z.enum(["agent", "descendant"]),
   pid: z.number().int().positive(),
@@ -91,7 +100,9 @@ class SessionDriver {
       this.child?.once("error", reject);
       this.child?.once("close", resolve);
     });
-    if (scenario !== "timeout") await this.waitFor(() => this.peers.get("agent")?.ready === true);
+    if (scenario !== "timeout" && scenario !== "default-mode") {
+      await this.waitFor(() => this.peers.get("agent")?.ready === true);
+    }
   }
 
   async finish(): Promise<{
@@ -105,7 +116,7 @@ class SessionDriver {
     return { code, stdout: this.stdout, stderr: this.stderr, result: this.sessionResult() };
   }
 
-  async timeout(): Promise<{
+  async stopped(): Promise<{
     code: number | null;
     stopped: string[];
     result: Record<string, unknown> | undefined;

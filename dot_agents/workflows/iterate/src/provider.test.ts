@@ -26,9 +26,24 @@ describe(commandFor.name, () => {
         "auto",
         "/shape cards/a 'quoted'.md",
       ],
+      permissionMode: "auto",
     });
     expect(command.argv).not.toContain("--model");
     expect(command.argv).not.toContain("--effort");
+  });
+
+  test("starts the session in the auto permission mode it reports", () => {
+    const command = commandFor({
+      agent: { provider: "claude" },
+      stage: "build",
+      card: "card",
+      systemPrompt: "rules",
+      budget: "50",
+    });
+
+    expect(command.permissionMode).toBe("auto");
+    expect(command.argv[command.argv.indexOf("--permission-mode") + 1]).toBe("auto");
+    expect(command.argv).not.toContain("--dangerously-skip-permissions");
   });
 
   test("passes an explicit model and effort to Claude", () => {
@@ -191,6 +206,34 @@ describe(eventsFrom.name, () => {
     expect(eventsFrom(JSON.stringify(record)).filter((event) => event.type === "error")).toEqual([
       { type: "error", message: diagnostic },
     ]);
+  });
+
+  test("reports the permission mode a Claude session started in", () => {
+    const events = eventsFrom(
+      JSON.stringify({
+        type: "system",
+        subtype: "init",
+        session_id: "claude-session",
+        permissionMode: "default",
+      }),
+    );
+
+    expect(events).toContainEqual({ type: "permission_mode", mode: "default" });
+  });
+
+  test("counts the permission denials a Claude result reports", () => {
+    const denials = eventsFrom(
+      JSON.stringify({
+        type: "result",
+        is_error: false,
+        permission_denials: [
+          { tool_name: "Bash", tool_use_id: "denied-1", tool_input: {} },
+          { tool_name: "Edit", tool_use_id: "denied-2", tool_input: {} },
+        ],
+      }),
+    ).filter((event) => event.type === "permission_denials");
+
+    expect(denials).toEqual([{ type: "permission_denials", count: 2 }]);
   });
 
   test("ignores diagnostics and unknown event types", () => {

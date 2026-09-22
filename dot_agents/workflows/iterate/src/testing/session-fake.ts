@@ -47,6 +47,7 @@ control.on("data", (bytes) => {
         subtype: "init",
         session_id: "claude-session",
         model: "resolved-fake",
+        permissionMode: process.env.SESSION_SCENARIO === "default-mode" ? "default" : "auto",
       });
       emit({
         type: "assistant",
@@ -71,6 +72,13 @@ control.on("data", (bytes) => {
       result: final,
       is_error: process.env.SESSION_SCENARIO === "error",
       errors: process.env.SESSION_SCENARIO === "error" ? ["provider failed"] : [],
+      permission_denials:
+        process.env.SESSION_SCENARIO === "denials"
+          ? [
+              { tool_name: "Bash", tool_use_id: "denied-1", tool_input: {} },
+              { tool_name: "Edit", tool_use_id: "denied-2", tool_input: {} },
+            ]
+          : [],
       num_turns: 2,
       total_cost_usd: 0.25,
       usage: { input_tokens: 10, cache_read_input_tokens: 7, output_tokens: 3 },
