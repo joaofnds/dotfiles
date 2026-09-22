@@ -184,15 +184,7 @@ Two rules bind every task, whatever files it reads:
 
 ## Replies
 
-How a reply reads (register, length, question framing) is the `brief` output
-style, rendered at `~/.claude/output-styles/brief.md`. In one line, an engineer
-briefing a CEO. Outcome first, plain words, only what changes the next decision.
-What binds here regardless of voice:
-
-- Bad news first, unsoftened. Name the verdict: proceed or stop.
-- "Verified" means observed this session. "I expect" means inferred, and names the
-  check that would settle it. Calling an unverified claim verified is the worst
-  defect a reply can have.
+Bad news first, unsoftened. Name the verdict: proceed or stop.
 
 ## Where things live
 
