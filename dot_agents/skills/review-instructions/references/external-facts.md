@@ -433,9 +433,9 @@ model release.**
   overlap. Every cell ran 1.1 to 3.8 times the kept length. The 76-line, 42-line, and
   42-line plus em dash files were not re-run, because the re-check's plan took their
   texts as lost. The 42-line text has since been recovered from the 2026-09-08 driving
-  session (`fixtures/child5/style-v2.md` under the DOT-101 evidence root), and one arm
-  cost about $6. Each run replied in one message, so counting its text measures what
-  the 2026-09-08 result field did. The runs forked each source with
+  session into the DOT-101 evidence on the board, and one arm cost about $6. Each run
+  replied in one message, so counting its text measures what the 2026-09-08 result
+  field did. The runs forked each source with
   `--resume-session-at` and `--fork-session`, where the 2026-09-08 script copied the
   first lines into a new session file. On trunk and dotfiles the CLI added a notice at
   resume that a background task in the source had not finished. The runs loaded
