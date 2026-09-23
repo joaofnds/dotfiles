@@ -23,6 +23,10 @@ const PLACEHOLDER = "file.md";
 // A citation wraps onto the next line when the paragraph does, so the heading may sit past a
 // newline the sentence did not intend.
 const CITATION = /`([^`\n]+\.md)`(?:\s*§[ \t]*([^;,.)\n]+))?/g;
+const LINK = /\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)/g;
+const REFERENCE_DEFINITION = /\[[^\]]+\]:\s*<?([^\s>]+)>?/g;
+const CODE_SPAN = /`[^`]*`/g;
+const URL_SCHEME = /^[a-z][a-z0-9+.-]*:/i;
 const FENCE = /^```/;
 const HEADING = /^#{1,6}\s+(.+)$/;
 const BOLD_LABEL = /\*\*([^*]+)\*\*/g;
@@ -33,6 +37,8 @@ async function markdownFiles(root) {
 
   async function walk(directory) {
     for (const entry of await readdir(directory, { withFileTypes: true })) {
+      if (entry.name === "node_modules") continue;
+
       const path = join(directory, entry.name);
       if (entry.isDirectory()) {
         await walk(path);
@@ -48,7 +54,7 @@ async function markdownFiles(root) {
 
 // A name inside a fenced block is an example the reader types, not a citation to resolve. Prose
 // outside the fences is joined back into paragraphs, so a citation that wraps stays whole.
-function citationsOutsideFences(text) {
+function paragraphsOutsideFences(text) {
   const paragraphs = [];
   let prose = [];
   let fenced = false;
@@ -70,12 +76,30 @@ function citationsOutsideFences(text) {
   }
 
   paragraphs.push(prose.join(" "));
+  return paragraphs;
+}
 
+function citationsIn(paragraphs) {
   const found = [];
 
   for (const paragraph of paragraphs) {
     for (const [, target, heading] of paragraph.matchAll(CITATION)) {
       found.push({ target, heading: heading?.trim(), line: paragraph });
+    }
+  }
+
+  return found;
+}
+
+function linksIn(paragraphs) {
+  const found = [];
+
+  for (const paragraph of paragraphs) {
+    const prose = paragraph.replace(CODE_SPAN, "");
+
+    for (const [, destination] of [...prose.matchAll(LINK), ...prose.matchAll(REFERENCE_DEFINITION)]) {
+      const [target] = destination.split("#");
+      if (target.endsWith(".md") && !URL_SCHEME.test(target)) found.push(target);
     }
   }
 
@@ -181,8 +205,8 @@ export async function findBrokenReferences(root) {
   const findings = [];
 
   for (const path of relatives) {
-    const text = await readFile(join(root, path), "utf8");
-    const citations = citationsOutsideFences(text);
+    const paragraphs = paragraphsOutsideFences(await readFile(join(root, path), "utf8"));
+    const citations = citationsIn(paragraphs);
     const anchored = namesAnchoredOutside(citations);
 
     for (const { target, heading, line } of citations) {
@@ -206,6 +230,14 @@ export async function findBrokenReferences(root) {
       const headings = headingsOf(await readFile(join(root, resolved), "utf8"));
       if (!holdsHeading(headings, heading)) {
         findings.push({ file: path, target, heading, reason: "no heading with this name" });
+      }
+    }
+
+    // A link resolves against the linking file's directory, the way a renderer and a reading
+    // agent follow it, so unlike a citation it never falls back to a basename.
+    for (const target of linksIn(paragraphs)) {
+      if (!corpus.paths.has(normalize(join(dirname(path), target)))) {
+        findings.push({ file: path, target, reason: "no file at this path" });
       }
     }
   }

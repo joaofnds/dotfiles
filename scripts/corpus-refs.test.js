@@ -380,6 +380,112 @@ describe("a name the corpus does not cite as a document", () => {
   });
 });
 
+describe("a markdown link", () => {
+  test("resolves a target at the path relative to the linking file", async () => {
+    const root = await corpus({
+      "rulebook/refactoring/catalog/extract-function.md": "# Extract Function\n",
+      "rulebook/refactoring/00-index.md": "- **[Extract Function](catalog/extract-function.md)**: name a fragment.\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("resolves a target that carries a fragment", async () => {
+    const root = await corpus({
+      "rulebook/coupling.md": "# Coupling\n\n## Temporal coupling\n",
+      "AGENTS.md": "The probe is in [coupling](rulebook/coupling.md#temporal-coupling).\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("skips a link in a fenced block, where it is an example", async () => {
+    const root = await corpus({
+      "skills/build/SKILL.md": "Write it as:\n\n```\n[name](gone.md)\n```\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("skips a link in an inline code span, where it shows the syntax", async () => {
+    const root = await corpus({
+      "skills/build/SKILL.md": "Write a link as `[name](gone.md)` in prose.\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("skips a web address, which names no corpus file", async () => {
+    const root = await corpus({
+      "rulebook/using-the-wiki.md": "See [the guide](https://github.com/org/repo/blob/main/CONTRIBUTING.md).\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  describe("when the target is missing", () => {
+    test.each([
+      ["inline", "[the phrase list](references/phrases.md)"],
+      ["with a fragment", "[the phrase list](references/phrases.md#lists)"],
+      ["with a title", '[the phrase list](references/phrases.md "Phrases")'],
+      ["in angle brackets", "[the phrase list](<references/phrases.md>)"],
+      ["as a reference definition", "[the phrase list][phrases]\n\n[phrases]: references/phrases.md"],
+    ])("reports it when written %s", async (_form, link) => {
+      const root = await corpus({
+        "skills/deslop/SKILL.md": `Read ${link}\n`,
+      });
+
+      expect(await findBrokenReferences(root)).toEqual([
+        { file: "skills/deslop/SKILL.md", target: "references/phrases.md", reason: "no file at this path" },
+      ]);
+    });
+
+    test("reports it when the name exists only under another path", async () => {
+      const root = await corpus({
+        "skills/deslop/references/phrases.md": "# Phrases\n",
+        "skills/deslop/SKILL.md": "Read [the phrase list](phrases.md) first.\n",
+      });
+
+      expect(await findBrokenReferences(root)).toEqual([
+        { file: "skills/deslop/SKILL.md", target: "phrases.md", reason: "no file at this path" },
+      ]);
+    });
+
+    test("reports every missing target in a paragraph, not only the first", async () => {
+      const root = await corpus({
+        "rulebook/refactoring/00-index.md":
+          "- **[Extract Function](catalog/extract-function.md)**: name a fragment.\n" +
+          "- **[Inline Function](catalog/inline-function.md)**: remove an indirection.\n",
+      });
+
+      expect(await findBrokenReferences(root)).toEqual([
+        { file: "rulebook/refactoring/00-index.md", target: "catalog/extract-function.md", reason: "no file at this path" },
+        { file: "rulebook/refactoring/00-index.md", target: "catalog/inline-function.md", reason: "no file at this path" },
+      ]);
+    });
+  });
+});
+
+describe("installed dependencies", () => {
+  test("take no part in the check, since the corpus never renders them", async () => {
+    const root = await corpus({
+      "workflows/iterate/node_modules/some-package/README.md": "See [the docs](docs/gone.md) and `gone.md`.\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("do not make a bare citation ambiguous", async () => {
+    const root = await corpus({
+      "rulebook/coupling.md": "# Coupling\n",
+      "workflows/iterate/node_modules/some-package/coupling.md": "# Theirs\n",
+      "AGENTS.md": "The probe is in `coupling.md`.\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+});
+
 describe("a citation shortened to a bare name", () => {
   test("resolves a bare name the same section already anchored to a skipped path", async () => {
     const root = await corpus({

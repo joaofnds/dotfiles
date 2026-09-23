@@ -6,7 +6,7 @@
 // basename, and only a name two files share needs a path to disambiguate it.
 //
 // Usage: check-corpus-refs.js
-// Exits 0 when every citation resolves.
+// Exits 0 when every citation and markdown link resolves.
 
 import { join } from "node:path";
 
