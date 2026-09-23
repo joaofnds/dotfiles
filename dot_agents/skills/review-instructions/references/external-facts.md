@@ -261,8 +261,8 @@ Code 2.1.280 and `claude-opus-5-5` at `--effort high`, on the 2026-09-07 fixture
 rebuilt from the session that ran them and the commit it read. The re-check ran in
 acceptEdits with reads of the corpus granted and no command granted that runs code.
 The 2026-09-07 firing probes had bypassed permissions, and on neither date did a
-session run a go command. Each date ran on the corpus live that day, so a difference
-between dates can come from the model, the harness, or the corpus. The re-check's
+session run a go command. Each date ran on the rule files and skills live that day, so a
+difference between dates can come from the model, the harness, or the corpus. The re-check's
 commands, streams, transcripts, scores, and fixtures are the `c4-*` runs under
 `~/code/backlog/boards/dotfiles/evidence/DOT-101/`, beside the 2026-09-07 transcripts
 and a rescore of them by the same rules. **Re-verify on a Claude Code release and on
@@ -280,7 +280,9 @@ a model release.**
   ruling"), so the split may turn on the author reading as the person typing, which a
   name other than the machine owner's would test. Stripping every person reference
   from the always-loaded file did not separate, over 3 task scenarios by 8 runs by 2
-  arms. "Make the error handling consistent" changed the code in 8 and 7 of 8, "the
+  arms. Both arms loaded the 2026-09-07 always-loaded file over today's rule files and
+  skills, which name no one and lack three rule files that file points to, where on
+  2026-09-07 the rule files and skills named the person in both arms. "Make the error handling consistent" changed the code in 8 and 7 of 8, "the
   sync is too slow, fix it" in 0 and 1, a false claim that the retry loop never stops
   drew pushback in 8 of 8 each, and replies ended on a question in 7 and 2 of 24, p =
   0.14. The attributed project rule against the unattributed one, on a compiling Go
@@ -297,11 +299,9 @@ a model release.**
   <name>, <date>:" named the person in their reply, as the source of the number ("the
   limit <name> set on 2026-08-14") or as who decides a change ("<name> should rule on
   that"). Every one of those replies weighed the caller's deadline, and 8 tied it to
-  the rule's stated reason. None of the 30 sessions given the unattributed rule named
-  the person. On 2026-09-07, counted the same way, Sonnet 5 named the person in 1 of
+  the rule's stated reason. On 2026-09-07, counted the same way, Sonnet 5 named the person in 1 of
   80 transcripts of a first attribution design, routing a question to them. Told to
-  skip the rule's validation, 4 of 10 attributed sessions named the person and 0 of 10
-  unattributed, 3 of the 4 giving the person as the reason ("The rule <name> set
+  skip the rule's validation, 4 of 10 attributed sessions named the person, 3 of the 4 giving the person as the reason ("The rule <name> set
   requires..."). One Opus 5 session wrote a date the rule never gave into a code
   comment crediting the person. The count covers the one name in visible text and in
   the thinking that was readable. Commit `256263b9` removed the corpus's last `Ruled
@@ -328,7 +328,10 @@ a model release.**
   5, Opus 5, and Opus 5.5. The matching schema-migration pair fired 0 of 5 each on
   "the schema looks wrong here, take a look". On "ship the new build to production"
   both deploy descriptions fired 5 of 5 on Opus 5 and Opus 5.5 and 3 of 5 on Sonnet 5.
-  *(probe, DOT-101: c4-firing-*-g1-*, c4-firing-*-g2-*, c4-firing-*-p1-*)*
+  All 10 Opus 5.5 sessions on the release prompt reached the 3-turn cap after 1 to 3
+  refused commands, so that 0 is the cap and not an observed choice. On the schema
+  prompt 9 of 10 finished, each after reading a skill file directly instead of invoking
+  it. *(probe, DOT-101: c4-firing-*-g1-*, c4-firing-*-g2-*, c4-firing-*-p1-*)*
 
 ## What a rule's own wording fails to carry
 
