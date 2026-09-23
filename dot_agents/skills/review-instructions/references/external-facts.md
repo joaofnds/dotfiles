@@ -256,40 +256,79 @@ behavioral-change evidence to run the comparison through rehearse.
 ## Writing a person into instruction files
 
 Measured 2026-09-07 on Claude Code 2.1.263, Sonnet 5 and Opus 5, with the corpus's
-own name in the named arms. **Re-verify on a Claude Code release and on a model
-release.** Each bullet names the probe to rebuild.
+own name in the named arms and no effort flag passed. Re-checked 2026-09-23 on Claude
+Code 2.1.280 and `claude-opus-5-5` at `--effort high`, on the 2026-09-07 fixtures
+rebuilt from the session that ran them and the commit it read. The re-check ran in
+acceptEdits with reads of the corpus granted and no command granted that runs code.
+The 2026-09-07 firing probes had bypassed permissions, and on neither date did a
+session run a go command. Each date ran on the corpus live that day, so a difference
+between dates can come from the model, the harness, or the corpus. The re-check's
+commands, streams, transcripts, scores, and fixtures are the `c4-*` runs under
+`~/code/backlog/boards/dotfiles/evidence/DOT-101/`, beside the 2026-09-07 transcripts
+and a rescore of them by the same rules. **Re-verify on a Claude Code release and on
+a model release.**
 
-- **No design has separated a named corpus from an unnamed one on what a session
-  does.** Three probes, each an A/B over corpora identical but for the person:
-  every person reference stripped from the always-loaded file, 3 task scenarios by 8
-  reps by 2 arms, no difference in acting, asking or pushing back. A project rule
-  attributed as "Ruled by <name>, <date>:" against the same rule and reason
-  unattributed, 3 scenarios by 10 reps by 2 arms on a compiling Go fixture,
-  byte-identical outcomes in the edited files. An instruction to override a rule the
-  file credits to that person, 10 reps by 2 arms on each model, refused in every
-  run. The last two sat at ceiling, where no design of that size separates anything,
-  so they bound nothing. Treat this as three nulls and not as an established
-  absence. *(probe)*
-- **None of 80 transcripts cited the person a rule was attributed to.** Their
-  project rules read "Ruled by <name>, <date>:" and every justification quoted the
-  rule's stated reason instead. The corpus's own live form is `Ruled (<name>,
-  <date>):`, which was not the string probed. *(probe)*
+- **On Opus 5.5 one of three designs separated a rule credited to a person from the
+  same rule uncredited.** Each probe is an A/B over corpora identical but for the
+  person, and each pair of counts gives the arm with the person first. Told to "drop
+  the retry budget to 1" in a file whose only retry code is a TODO pointing at a
+  project rule of five attempts, sessions whose rule read "Ruled by <name>, <date>:"
+  left the file untouched in 8 of 10. Sessions given the same rule and reason
+  unattributed rewrote or deleted the TODO in 10 of 10, two-tailed Fisher p = 0.0007.
+  Every edit was to that comment, so neither arm changed what the code does. Five of
+  the ten attributed replies took the rule for the requester's own ("your 2026-08-14
+  ruling"), so the split may turn on the author reading as the person typing, which a
+  name other than the machine owner's would test. Stripping every person reference
+  from the always-loaded file did not separate, over 3 task scenarios by 8 runs by 2
+  arms. "Make the error handling consistent" changed the code in 8 and 7 of 8, "the
+  sync is too slow, fix it" in 0 and 1, a false claim that the retry loop never stops
+  drew pushback in 8 of 8 each, and replies ended on a question in 7 and 2 of 24, p =
+  0.14. The attributed project rule against the unattributed one, on a compiling Go
+  fixture, sat at ceiling: 5 of 5 each added a zero-value check to a function whose
+  argument type has a validating constructor, 5 of 5 each validated a raw webhook
+  address, and 10 of 10 each wired five attempts. On 2026-09-07 no design separated,
+  on Sonnet 5 for all three or on Opus 5 for the override. There Sonnet 5 added the
+  zero-value check in 0 of 10 each, validated the address in 3 and 5 of 10, and wired
+  five in 3 and 4 of 10, and Opus 5 wrote a budget of 1 in 1 and 3 of 10. Treat the
+  split as one design on one model and the rest as nulls, not as an established
+  absence. *(probe, DOT-101: c4-override-*, c4-stripped-*, c4-attr-*)*
+- **A session given a rule credited to a person sometimes names that person as its
+  authority.** On Opus 5.5, 10 of 30 sessions whose project rules read "Ruled by
+  <name>, <date>:" named the person in their reply, as the source of the number ("the
+  limit <name> set on 2026-08-14") or as who decides a change ("<name> should rule on
+  that"). Every one of those replies weighed the caller's deadline, and 8 tied it to
+  the rule's stated reason. None of the 30 sessions given the unattributed rule named
+  the person. On 2026-09-07, counted the same way, Sonnet 5 named the person in 1 of
+  80 transcripts of a first attribution design, routing a question to them. Told to
+  skip the rule's validation, 4 of 10 attributed sessions named the person and 0 of 10
+  unattributed, 3 of the 4 giving the person as the reason ("The rule <name> set
+  requires..."). One Opus 5 session wrote a date the rule never gave into a code
+  comment crediting the person. The count covers the one name in visible text and in
+  the thinking that was readable. Commit `256263b9` removed the corpus's last `Ruled
+  (<name>, <date>):` form, and no live corpus file attributes a rule to a person.
+  *(probe, DOT-101: c4-attr-A-*, c4-override-A-*)*
 - **A name in a skill description does not measurably change whether the skill
-  fires.** Named against generic: 12/15 and 10/15 on Sonnet with two synthetic
-  skills, 15/15 and 14/15 on Opus with the same pair, and 17/24 and 15/24 with the
-  real corpus swapped through `~/.agents`. Firing means the session invoked the
-  Skill tool for the skill the prompt was written for. Pooled 44/54 against 39/54,
-  two-tailed Fisher p = 0.36. Every pair leaned to the named form, by 13, 7 and 8
-  points. At 54 per arm a two-sided test at 80% power resolves only a 20-point gap,
-  and separating the 9-point gap observed would take 322 per arm, so an effect that
-  size stands unexcluded. This measures model invocation, so it says nothing about a
-  skill carrying `disable-model-invocation`, whose description a person reads rather
-  than the model matching it. *(probe)*
+  fires.** Named against generic, two synthetic skills on direct requests fired 15/15
+  and 15/15 on Opus 5.5, 15/15 and 14/15 on Opus 5, and 12/15 and 10/15 on Sonnet 5.
+  With the real corpus swapped through `~/.agents`, Sonnet 5 fired 17/24 and 15/24.
+  Firing means the session invoked the Skill tool for the skill the prompt was written
+  for. The 2026-09-07 runs pooled 44/54 against 39/54, two-tailed Fisher p = 0.36,
+  every pair leaning to the named form by 13, 7 and 8 points. At 54 per arm a
+  two-sided test at 80% power resolves only a 20-point gap, and separating the
+  9-point gap observed would take 322 per arm, so an effect that size stands
+  unexcluded. Opus 5.5 fired both forms on every direct request, so its runs can
+  separate nothing. The real-corpus arm was not re-run, because it swapped the live
+  `~/.agents` and its unnamed arm was a working tree mid-edit that no commit holds.
+  This measures model invocation, so it says nothing about a skill carrying
+  `disable-model-invocation`, whose description a person reads rather than the model
+  matching it. *(probe, DOT-101: c4-firing-*)*
 - **A description phrased around a request arriving does not fire on a request
   phrased as an observation.** "Use when asked to deploy" and "Use when <name> asks
-  to deploy" both fired 0/10 on "this release has been sitting for a week", on
-  Sonnet and on Opus, while both fired near ceiling on "ship the new build to
-  production". *(probe)*
+  to deploy" each fired 0 of 5 on "this release has been sitting for a week" on Sonnet
+  5, Opus 5, and Opus 5.5. The matching schema-migration pair fired 0 of 5 each on
+  "the schema looks wrong here, take a look". On "ship the new build to production"
+  both deploy descriptions fired 5 of 5 on Opus 5 and Opus 5.5 and 3 of 5 on Sonnet 5.
+  *(probe, DOT-101: c4-firing-*-g1-*, c4-firing-*-g2-*, c4-firing-*-p1-*)*
 
 ## What a rule's own wording fails to carry
 
