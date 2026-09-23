@@ -16,21 +16,28 @@ source's own words and its evidence block.
 ## Harness mechanics
 
 Read from the live memory, skills, sub-agents, settings, hooks, and workflows
-references at code.claude.com, last full pass on CLI 2.1.222. **Re-verify on each
-Claude Code or model release, and the launch-flag fact on a desktop app release
-too.** Facts marked *(probe)* are local observations rather than documentation, and
-re-verify the same way.
+references at code.claude.com, with the model-config, CLI, and SDK pages, last full
+pass on CLI 2.1.280 on 2026-09-23. **Re-verify on each Claude Code or model release,
+and the launch-flag fact on a desktop app release too.** Facts marked *(probe)* are
+local observations rather than documentation, and re-verify the same way. A
+*(DOT-101: name)* tag marks a 2026-09-23 re-check on CLI 2.1.280 and
+`claude-opus-5-5`, one `claude -p` session per name, whose command, stream,
+transcript, and the reference pages read are under
+`~/code/backlog/boards/dotfiles/evidence/DOT-101/`.
 
 Load limits and delivery:
 
 - `MEMORY.md`: first 200 lines or 25KB, whichever comes first; content past the cap is
   silently dropped. Frontmatter and block-level HTML comments are stripped before
-  measuring (v2.1.211+).
+  measuring (v2.1.211+), a clause the 2.1.280 memory reference no longer states.
 - A memory write past 80% of either `MEMORY.md` cap injects a compaction instruction
   through an internal `PostToolUse` callback, naming 70% of that cap as the target and
   prescribing one line per entry with the detail moved into the topic files. A per-note
   size cap exists in the same code and did not fire on a 47KB note, so its value is
-  unestablished *(bundle read plus write probe, CLI 2.1.247)*.
+  unestablished *(bundle read plus write probe, CLI 2.1.247)*. The 2.1.280 memory
+  reference documents the reminder near a limit and an error past one without naming
+  either threshold. The 80% and 70% figures came from reading the CLI bundle and were
+  not re-read on 2.1.280.
 - Skill listing: 1,536 characters per entry (`skillListingMaxDescChars`); the listing
   overall gets 1% of the context window (`skillListingBudgetFraction`, or
   `SLASH_COMMAND_TOOL_CHAR_BUDGET` for a fixed count).
@@ -39,32 +46,43 @@ Load limits and delivery:
 - `CLAUDE.md` is delivered as a user message after the system prompt and loads in full up
   to 4 MiB; a larger file is skipped entirely *(memory reference, CLI 2.1.238)*. The
   200-line target is a recommendation, not a cap.
-- `CLAUDE.md`/`AGENTS.md` reach every subagent except the built-in Explore and Plan.
+- `CLAUDE.md`/`AGENTS.md` reach every subagent except the built-in Explore and Plan and
+  a custom subagent whose definition sets `omitClaudeMd: true`, which still gets managed
+  policy files.
 - Discovered `CLAUDE.md` files are concatenated, not overridden, loaded managed
   policy → user → project → local, so a project file does not supersede the user file
   and a cross-level contradiction stays live in context.
 - Nested `CLAUDE.md` files load on demand when files in their directory are read, not
   at launch.
 - `.claude/rules/`: every `.md` file under it loads at launch, subdirectories and
-  symlink targets included, at `.claude/CLAUDE.md` priority. A rule with `paths:`
-  frontmatter instead triggers on matching reads and is not re-injected after
+  symlink targets included except the project case below, at `.claude/CLAUDE.md`
+  priority. A rule with `paths:` frontmatter instead triggers on matching reads and is
+  not re-injected after
   compaction. Whether a no-`paths` rule survives compaction is unrecorded: do not
   assert it either way. Linking `~/.agents/rulebook` there as `~/.claude/rules` put
-  its 85 files into every session, 108k input tokens at launch against 18k without
-  the link, so the harness link is named `rulebook` *(probe, 2.1.260, `claude -p`
-  usage before and after)*. Re-check on a Claude Code release that changes rule
-  loading.
-- Re-invoking an unchanged skill re-delivers the whole body. The second invocation
-  carries a header saying the instructions were previously loaded, then the full text
-  follows it *(probe, 2.1.260)*. Compaction
-  re-attaches each skill's most recent invocation, first 5,000 tokens, under a combined
-  25,000-token budget.
+  its 88 files into every session, 124,085 input tokens at launch against 2,007
+  without the link, so the harness link is named `rulebook` *(DOT-101: home-rules,
+  home-baseline, each with `HOME` pointed at a copy of `~/.claude` holding a one-line
+  `CLAUDE.md`)*. A project `.claude/rules` linked to a directory outside the working
+  directory loaded nothing, while a real directory there loaded *(DOT-101:
+  rules-link, rules-real)*. The memory reference treats such a link as an external
+  import that loads only after approval, and asks for that approval only for an
+  `@path` import, never for a link alone. Re-check on a Claude Code release that
+  changes rule loading.
+- Re-invoking a skill whose rendered content is unchanged returns "Skill /<name> is
+  already loaded above; instructions unchanged." with no body. After the file changed,
+  the full new body came back under a header saying the instructions were previously
+  loaded *(DOT-101: skill-redelivery, skill-changed)*, and the skills reference says
+  changed arguments or new dynamic output re-deliver it too. Compaction re-attaches
+  each skill's most recent invocation, first 5,000 tokens, under a combined
+  25,000-token budget, and the reference says a re-invocation after compaction
+  restores the full content.
 - The `Read` tool re-delivers full file content on every call, including a second read
-  of a file unchanged since the first. No dedupe, no already-loaded note *(probe,
-  2.1.260: read a file, read it again unchanged, and read it again after editing it on
-  disk; all three returned the file in full, the third with the new content)*. A rule
-  that tells a session to reopen a file therefore delivers the words rather than a
-  pointer.
+  of a file unchanged since the first. No dedupe, no already-loaded note *(DOT-101:
+  read-redelivery, which read a file, read it again unchanged, and read it again after
+  editing it on disk, and all three returned the file in full, the third with the
+  new content)*. A rule that tells a session to reopen a file therefore delivers the
+  words rather than a pointer.
 - A skill description's own trigger does not load the skill. Four fresh `claude -p`
   sessions ran a build or a shaping with "use it when a task's work is finished and
   before anything is called done" in the listing and none invoked it. A closing line
@@ -78,89 +96,116 @@ Load limits and delivery:
   non-fork subagent.
 - Session transcripts live at
   `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/projects/<slug>/<session-id>.jsonl`, where
-  `<slug>` is the cwd with `/`, `.`, spaces, and `~` collapsed to `-` *(probe,
-  2.1.226)*.
-- `$CLAUDE_CODE_SESSION_ID` is set in Claude Code sessions *(probe, 2.1.226)*.
-- The desktop app launches the CLI with `--permission-mode auto
-  --allow-dangerously-skip-permissions` *(probe: `ps` on a live session, desktop app
-  1.32352.1, CLI 2.1.229)*.
+  `<slug>` is the cwd with `/`, `.`, spaces, and `~` collapsed to `-` *(DOT-101:
+  init-listing turned `/private/tmp/dot101/a.b c` into `-private-tmp-dot101-a-b-c`,
+  with `~` not exercised)*.
+- `$CLAUDE_CODE_SESSION_ID` is set in Claude Code sessions, and a Bash tool call reads
+  the same id the stream reports *(DOT-101: session-id)*.
+- The desktop app launches the CLI with `--allow-dangerously-skip-permissions` and a
+  `--permission-mode` flag. Eight live sessions carried `bypassPermissions` in seven
+  and `auto` in one, while the user settings set `defaultMode` to `bypassPermissions`,
+  so whether the flag follows that setting or a choice made per session is unsettled
+  *(probe: `ps`, desktop app 2.7032.0, CLI 2.1.280, DOT-101 `runs/desktop-ps.txt`)*.
 
 Tool, permission, and invocation fields:
 
 - A skill's `allowed-tools` pre-approves for the invoking turn; it does not restrict.
   `disallowed-tools` restricts. Both lapse at the next user message, so neither is a
   durable boundary; treating either as one is a false boundary.
-- `user-invocable: false` is Claude-only menu hiding; the description stays in context.
-  `disable-model-invocation: true` blocks programmatic invocation, and *(probe)*
-  removes the skill from the model's skill listing.
+- `user-invocable: false` hides the skill from the `/` menu and ignores a typed
+  `/name`, and the description stays in context.
+  `disable-model-invocation: true` blocks programmatic invocation and removes the
+  skill from the model's skill listing, while the stream's init record still lists
+  it among skills and slash commands *(DOT-101: dmi)*.
 - A skill's `context: fork` inherits no caller context: the opposite of a
   conversation fork, which inherits the entire conversation. The two share a word and
   invert the behavior.
-- A background subagent keeps every MCP tool but only these built-in tools: `Read`,
-  `Grep`, `Glob`, `Bash`, `PowerShell`, `Edit`, `Write`, `NotebookEdit`, `WebFetch`,
-  `WebSearch`, `TodoWrite`, `Skill`, `ToolSearch`, `EnterWorktree`, `ExitWorktree`,
-  `Monitor`, `TaskStop`, `SendMessage`, `Artifact` *(sub-agents reference, 2026-08-06
-  pass)*. The narrowing subtracts from the `tools` field and never adds to it, and a
-  `tools` list resolving to nothing usually fails the agent at launch.
+- A background subagent keeps every MCP tool, `Agent` and `ExitPlanMode` under the
+  conditions every subagent gets them, and only these other built-in tools: `Read`,
+  `Grep`, `Glob`, `LSP`, `Bash`, `PowerShell`, `Edit`, `Write`, `NotebookEdit`,
+  `WebFetch`, `WebSearch`, `TodoWrite`, `Skill`, `ToolSearch`, `EnterWorktree`,
+  `ExitWorktree`, `Monitor`, `TaskStop`, `SendMessage`, `Artifact`, and
+  `SubagentHandback` for a subagent that reports through it *(sub-agents reference)*.
+  The narrowing subtracts from the `tools` field and never adds to it, and a `tools`
+  list resolving to nothing usually fails the agent at launch.
 - A sub-agent's `tools` restricts; `disallowedTools` subtracts from inherited or
   specified tools.
 - Deterministic subagent caps: `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` and
-  `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` (CLI 2.1.217+; SDK `max_budget_usd`). Claude
-  Code adds its own delegation instruction only under the `claude_code` system-prompt
-  preset.
+  `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` (CLI 2.1.217+; SDK `max_budget_usd`). A
+  session with ultracode active is exempt from the concurrency cap. The
+  SDK's default system prompt covers tool calling only. Claude Code's own instructions
+  arrive with the `claude_code` preset, which `claude -p` uses by default.
 - Permission rules evaluate deny → ask → allow; the first match wins and specificity
   does not reorder, so a broad deny cannot carry allowlist exceptions. A bare tool name
   in `deny` removes the tool from context entirely; a scoped rule only blocks matching
   calls.
 - `skillOverrides` has four states: `on`, `name-only`, `user-invocable-only`, `off`;
-  absent means `on`. Keys match the skill name, so two skills sharing a name share one
-  entry *(probe, 2.1.226)*. It does not apply to plugin skills.
+  absent means `on` *(DOT-101: override-name-only, override-user-invocable-only,
+  override-off)*. Keys match the skill name, so two skills sharing a name share one
+  entry, and a project skill named like a user skill is the only one listed
+  *(DOT-101: samename-on, samename-off)*. It does not apply to plugin skills.
 - Settings changes reload mid-session (documented for `permissions`, `hooks`,
-  credential helpers). A hook script body also takes effect mid-session *(probe,
-  2.1.221)*.
+  credential helpers). A hook script body also takes effect mid-session *(DOT-101:
+  hook-body, where a `PostToolUse` script edited between two calls returned the new
+  text on the next call)*.
 - Hook reach is per event, not main-thread-only: tool events like `PreToolUse` and
   `PostToolUse` fire inside subagents too. Plain hook stdout becomes model-visible
-  context only for `UserPromptSubmit`, `UserPromptExpansion`, and `SessionStart`, which
-  subagents never fire; a `PostToolUse` hook injects model-visible text through
-  `hookSpecificOutput.additionalContext` instead *(probe, 2.1.221)*; whether
-  `PreToolUse` shares the channel is unrecorded.
+  context only for `UserPromptSubmit`, `UserPromptExpansion`, and `SessionStart`,
+  which subagents never fire, and for `PostModelSwitch`. A `PostToolUse` hook injects
+  model-visible text through `hookSpecificOutput.additionalContext` instead *(DOT-101:
+  hook-body)*, and the 2.1.280 hooks reference gives `PreToolUse` the same field,
+  unprobed.
 - A `Stop` hook that blocks with exit 2 appends its stderr as a user message and the
   session writes a second assistant message. The first message stays in the transcript
   and on screen, and no `Stop` output field in the hooks reference edits, hides, or
   removes it, so a rewrite driven from `Stop` doubles the reply instead of replacing it
-  *(probe, 2.1.278, one live desktop turn and one headless turn)*. Re-check on a
-  Claude Code release, against the hooks reference's `Stop` output fields.
+  *(DOT-101: stop-hook)*. `Stop` also accepts `additionalContext`, which continues the
+  turn the same way. A `MessageDisplay` hook's `displayContent` replaces text on screen
+  only, and the transcript and what the model sees keep the original *(hooks
+  reference, unprobed)*. Re-check on a Claude Code release, against the hooks
+  reference's `Stop` and `MessageDisplay` output fields.
 - `claude -p --output-format json` puts only the final assistant message in `result`,
   so a measurement that reads `result` cannot see an earlier message the same turn
-  left in the transcript *(probe, 2.1.278, the headless turn above)*. Measure a
-  turn's visible reply from the transcript's assistant text records. Rehearse reads
+  left in the transcript *(DOT-101: stop-hook, whose result held only the second
+  message)*. Measure a turn's visible reply from the transcript's assistant text
+  records. Rehearse reads
   this same field, so its verdict is over the last message and not over everything
   the reader saw *(read 2026-09-22 in its `session-attempt.ts`)*. Re-check on a
   Claude Code release.
-- Workflow-spawned subagents run in `acceptEdits` and inherit the session's tool
-  allowlist regardless of permission mode.
+- Workflow agents use the session's permission rules and get their permission mode
+  by the rules for any subagent, and in `claude -p` the `Workflow` call itself goes
+  through permission evaluation without a prompt *(workflows reference, unprobed,
+  since `disableWorkflows` is on here)*.
 - `Agent` tool `name`: a named spawn has returned only a receipt in place of its report
   *(probe, 2.1.220–2.1.221)*. Two explanations remain open: an agent-team teammate
   mechanism, or an ordinary named background spawn; and the probes run so far cannot
-  separate them. Do not restore either as settled.
+  separate them. Do not restore either as settled. Not re-run on 2.1.280, since no
+  probe designed so far separates the two.
 - A custom output style registers under its frontmatter `name` when that field is
   present and under its filename otherwise, and `--settings '{"outputStyle":"<x>"}'`
   with a name no file registers loads no style at all, silently. Which file wins when
-  two share a `name` is unrecorded, so do not assert it either way *(probe, 2.1.278: a
-  variant file carrying `name: brief` was invisible under its own filename and the
-  run landed with no output style, and with the `name` line removed all three models
-  named the variant and quoted a sentence that exists only in it)*. Re-check on a
-  Claude Code release, with a quote probe whose sentence the live style lacks.
+  two share a `name` is unrecorded, so do not assert it either way *(DOT-101: with
+  `name: brief`, style-named asked for the variant by filename and answered that it had
+  no style, and with the `name` line removed style-plain quoted a sentence that exists
+  only in the variant)*. The stream's init record names the requested style in both
+  cases, so it does not show whether a style loaded. Re-check on a Claude Code
+  release, with a quote probe whose
+  sentence the live style lacks.
 - `claude -p --resume <id>` appends the new turn to the resumed transcript, so a second
   replay of the same fork sees the first replay's prompt and reply. `--fork-session`
   leaves the fork untouched and writes the continuation to a new session id, named by
-  the `session_id` field of the `--output-format json` result *(probe, 2.1.278: every
-  run without the flag returned the fork's own id and the forks filled with injected
-  prompts, and every run with it returned a new id and left the forks at zero)*.
-  Re-check on a Claude Code release.
+  the `session_id` field of the `--output-format json` result *(DOT-101: resume-plain,
+  which resumed a fork, returned the fork's id, and grew it from 19 to 29 lines, and
+  resume-fork, which returned a new id and left it at 29)*. Re-check on a Claude Code
+  release.
 - Session effort levels are `low`, `medium`, `high`, `xhigh`, and `max`, set for a
-  session by `--effort` *(probe: `claude --effort bogus` names the valid set in its
-  warning, 2.1.260)*.
+  session by `--effort` *(DOT-101: effort-bogus, whose warning names that set and says
+  it uses the default)*. `--effort ultracode` is also accepted without a warning, and
+  the CLI reference describes it as `xhigh` with workflow orchestration *(DOT-101:
+  effort-ultracode-2)*. Opus 5.5 starts at `medium` unless the environment, a flag,
+  `/effort`, or a per-model setting sets a level, and a top-level `effortLevel` in the
+  user settings does not count for it. Other current models default to `high`
+  *(model-config reference)*.
 - Agent-definition frontmatter takes `model` as one of the aliases `sonnet`, `opus`,
   `haiku`, `fable`, a full model id, or `inherit`, and `effort` as the session levels
   above *(model alias probed 2026-09-14 on 2.1.270: the screener definition pinned
@@ -174,7 +219,8 @@ Tool, permission, and invocation fields:
   that records it)*.
 
 Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two are
-edited together. The live copies are the kaizen skill's transcript layout, the relay
+edited together. The live copies are the always-loaded rule to read a rule file
+again each time the work returns to it, which rests on the `Read` entry, the relay
 skill's transcript pointer, the relay and prompt skills' lists of effort levels, the
 advisor and screener agent definitions' model and effort pins, the reviewer,
 reviewer-medium, and reviewer-low definitions' effort pins, the
