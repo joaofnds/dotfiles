@@ -347,8 +347,9 @@ release and on a model release.**
 
 Measured 2026-09-07 on Claude Code 2.1.263, Sonnet 5 and Opus 5. The vague-directive
 bullet was re-checked on 2026-09-23 on Claude Code 2.1.280 and `claude-opus-5-5`, and
-the rewrite bullet says why none of its designs was re-run. The re-check's commands,
-streams, transcripts, scores, and fixture are under
+the rewrite bullet says why none of its designs was re-run. The brief output style and
+/brief skill bullets were re-checked on 2026-09-24 on the same release and model. The
+re-checks' commands, streams, transcripts, scores, and fixture are under
 `~/code/backlog/boards/dotfiles/evidence/DOT-101/`, beside the 2026-09-07 transcripts
 and the fixture recovered from them. **Re-verify on a Claude Code release and on a
 model release.**
@@ -423,6 +424,22 @@ model release.**
   outside the register. Every cell stays 1.4 to 3.8 times the kept length. Re-measure
   on a model swap and before any further edit to the file, with the same harness.
   *(probe, decision-2 and doc-18 on the board)*
+  On Opus 5.5, 2026-09-24, Claude Code 2.1.280, at the same three cuts and three runs
+  per cell, the landed file ran shorter than the old one on two turns and not on the
+  third. The old file's means against the landed file's were 199 against 173, 216
+  against 157, and 482 against 500. On the first two turns every landed run was
+  shorter than every old run, and on the third the arms overlap. Every cell stays 1.1
+  to 3.8 times the kept length. The 76-line and 42-line files were not re-run, since
+  the re-check compared only the old and landed files. Each run replied in one message,
+  so counting its text measures what the 2026-09-08 result field did. Three conditions
+  differ from 2026-09-08. The runs forked each source with `--resume-session-at` and
+  `--fork-session`, where the 2026-09-08 script copied the first lines into a new
+  session file. On two turns the CLI added a notice at resume that a background task
+  in the source had not finished. The resumed sessions loaded the always-loaded
+  instructions as they stand now, eight commits after 2026-09-08. The first three runs
+  per cell on the third turn auto-compacted under a live setting before replying and
+  were re-run with compaction off, as the 2026-09-08 settings had it.
+  *(probe, DOT-101, 2026-09-24: c5-style-*)*
 
 - **The /brief skill at 100 body words rewrites a turn to the same length as at 140,
   and dropping its "CEO who has thirty seconds" clause lengthens the rewrite.** Opus 5,
@@ -432,8 +449,21 @@ model release.**
   body without the CEO clause: 157, 155, 174, the longest arm on every turn. A
   restructured body asking for "one plain sentence each" gave 128, 132, 151 and still
   produced labeled lines in 3 of 9 runs, against 1 of 6 for the landed body. Every arm
-  lands inside 30 words of the kept length. Re-measure on a model swap and before any
-  further edit, with the same harness. *(probe, doc-18 on the board)*
+  but the one without the CEO clause lands inside 30 words of the kept length, and
+  that one ran 31 and 42 words over it on two turns. Re-measure on a model swap and
+  before any further edit, with the same harness. *(probe, doc-18 on the board)*
+  On Opus 5.5, 2026-09-24, Claude Code 2.1.280, at the same three cuts and three runs
+  per cell, forked and counted as in the style re-check above, the landed body and the
+  old one still did not separate. The runs were pinned to the landed style, which the
+  2026-09-08 driving session had applied before its skill runs. The old body's means
+  against the landed body's were 144 against 161, 116 against 116, and 134 against 144.
+  The body without the CEO clause ran longer by mean than the same body with it on
+  every turn, 145 against 133, 107 against 100, and 131 against 117, but the two arms'
+  runs overlap on every turn, and the landed body was the longest arm on two turns. No
+  run had a labeled line. Three cells fall outside 30 words of the kept length, one 35
+  over and two 40 and 33 under. Two runs whose first response had no visible text drew
+  a corrective prompt from the CLI and were replaced. The restructured body was not
+  re-run. *(probe, DOT-101, 2026-09-24: c5-skill-*)*
 
 ## Deprecated model mechanics
 
