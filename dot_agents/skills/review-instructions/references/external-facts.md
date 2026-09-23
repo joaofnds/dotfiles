@@ -292,9 +292,10 @@ Claude Code release and on a model release.**
 **Re-verify on each model release**, against the extended-thinking reference and the
 newest model's prompting page at platform.claude.com. Last checked against the Opus 5.5
 release pages (What's new, Prompting, and Migrating), fetched 2026-09-22. The Fable 5
-and Mythos 5 claims, the prefill claim, and the tiers before Claude 4.7 rest on
-Prompting Claude Fable 5 and Prompting best practices, fetched 2026-08-27. The old
-prefill documentation path redirects and states none of these.
+and Mythos 5 claims, the prefill claim, the tiers before Claude 4.7, and the entry on
+rules telling the model not to think rest on Prompting Claude Fable 5, Prompting
+Claude Opus 5, and Prompting best practices, fetched 2026-08-27. The old prefill
+documentation path redirects and states none of these.
 
 - **Prefilled last-assistant-turn responses** return 400 starting with Claude 4.6 and
   Claude Mythos Preview. Only the last assistant turn is refused; earlier assistant
@@ -315,15 +316,14 @@ prefill documentation path redirects and states none of these.
   thinking on at low effort.
 - **Show-your-thinking instructions**, which push the model to reproduce its internal
   reasoning in the response text, can be declined under the `reasoning_extraction`
-  refusal category, and the request then returns no model output. A prompt asking for
-  the reasoning verbatim was declined this way on Opus 5.5 and on Opus 5, although the
-  Opus 5.5 pages call the category new against Opus 5 *(probe on 2.1.280, one `claude
-  -p` stream-json call per model with a prompt asking for its reasoning word for word,
-  category read from `stop_details`)*. Re-run that probe on each model release, since
-  the pages disagree with it. The vendor also names Fable 5 and Mythos 5, and other
-  models are unchecked. Remove such instructions and read summarized `thinking` blocks
+  refusal category. A prompt asking for the reasoning verbatim was declined this way,
+  with no model output, on Opus 5.5 and on Opus 5, although the Opus 5.5 pages call the
+  category new against Opus 5 *(probe on 2.1.280, one `claude -p` stream-json call per
+  model with a prompt asking for its reasoning word for word, category read from
+  `stop_details`)*. The vendor also names Fable 5 and Mythos 5, and other models are
+  unchecked. Remove such instructions and read summarized `thinking` blocks
   (`display: "summarized"`) instead.
 - **Forced tool use**, `tool_choice` of `any` or `tool`, returns 400 on Opus 5.5 and
-  Fable 5.1. Opus 5 accepts it, and other models are unchecked. Replace it with `auto`
-  plus strict tool use or structured outputs, and say in the prompt when the tool
-  applies.
+  Fable 5.1. The pages list it as a breaking change from Opus 5, and other models are
+  unchecked. Replace it with `auto` plus strict tool use or structured outputs, and
+  say in the prompt when the tool applies.
