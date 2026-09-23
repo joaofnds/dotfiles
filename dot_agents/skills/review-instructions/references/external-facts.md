@@ -294,11 +294,12 @@ release.** Each bullet names the probe to rebuild.
 ## What a rule's own wording fails to carry
 
 Measured 2026-09-07 on Claude Code 2.1.263, Sonnet 5 and Opus 5. The vague-directive
-bullet was re-checked on 2026-09-23 on Claude Code 2.1.280 and `claude-opus-5-5`,
-with the commands, streams, transcripts, scores, and fixture under
-`~/code/backlog/boards/dotfiles/evidence/DOT-101/`, and the rewrite bullet says why
-none of its designs was re-run. **Re-verify on a Claude Code release and on a model
-release.**
+bullet was re-checked on 2026-09-23 on Claude Code 2.1.280 and `claude-opus-5-5`, and
+the rewrite bullet says why none of its designs was re-run. The re-check's commands,
+streams, transcripts, scores, and fixture are under
+`~/code/backlog/boards/dotfiles/evidence/DOT-101/`, beside the 2026-09-07 transcripts
+and the fixture recovered from them. **Re-verify on a Claude Code release and on a
+model release.**
 
 - **No rule rewrite probed here has moved the outcome it targeted.** Six designs on
   Sonnet 5, two of them also on Opus 5: four corpus lines against a vague directive,
@@ -313,11 +314,12 @@ release.**
   it bounds only what one can settle. *(probe)* None of these designs was re-run on
   Opus 5.5. The three edited corpus lines were tested as causes of a session
   stopping, and no Opus 5.5 session stopped on the live corpus (the next bullet), so
-  they have nothing to move. The chezmoi line's effect on the wrong guess was not
-  re-checked, because the record does not say what the guess was. The fixtures of
-  the find-the-box, review-check, and seventh designs were not kept. Commit
-  `30645173` names each in a phrase and records no prompt, so a rebuild is a new
-  design that needs its own control.
+  they have nothing to move. The chezmoi line's wrong guess was a session's output
+  naming chezmoi, and no Opus 5.5 session on the live corpus named it anywhere in its
+  text or thinking, so that effect has nothing to move either. Commit `30645173` names
+  the find-the-box and review-check fixtures in a phrase each and records no prompt.
+  Their 2026-09-07 transcripts are kept under the same evidence root, and whether a
+  complete fixture can be rebuilt from them is unchecked.
 - **Whether a vague directive stops a session is a model property, and no line
   tested moved either model.** Opus 5 acted on it and Sonnet 5 did not, so measure
   this again on any model the corpus is run on rather than carrying either number
@@ -334,17 +336,20 @@ release.**
   alone, the debug description narrowed to a cause surviving a direct look and the
   chezmoi machine description dropped, at 0 and 1 of 16. Dropping the chezmoi line
   took the wrong guess from 12 of 16 to 0 of 16 and left the fix rate flat, so that
-  line steers what a session guesses and not whether it looks. *(probe)* The
-  2026-09-07 fixture was not kept, and an Opus 5.5 re-check rebuilt one to the same
-  description, with a command that times a 50-record sync at 4.09s. On the live
-  corpus, Opus 5.5 changed the code in 16 of 16 sessions. The 12-turn cap ended all
-  16 while they were still working, so none stopped to ask and none was seen
-  finishing. In 14 the change reached `Sync` and cut that sync to between 0.08s and
-  0.41s, though one of them still dropped upstream errors. The other 2 had changed
-  only the test file. The non-test code built in all 16, and one session's test file
-  did not. Each session made 15 to 28 tool calls and invoked the debug skill.
-  The runs used acceptEdits with named grants at `--effort high`, and the 2026-09-07
-  effort is unrecorded. *(probe, DOT-101: r3-live-01 to r3-live-16)*
+  line steers what a session guesses and not whether it looks. *(probe)* An Opus 5.5
+  re-check ran on a fixture rebuilt to the same description, with a test, a command
+  that times a 50-record sync at 4.09s, and a git repository, none of which the
+  2026-09-07 fixture had. That one also had four record loaders, a retry helper, and a
+  comment in `Sync` saying a README calls it fast enough, though no README exists.
+  Counted as the 2026-09-07 runs were, by a change to a source file other than a
+  test, Opus 5.5 changed the code in 14 of 16 sessions on the live corpus, and the
+  other 2 had changed only the test file. The 12-turn cap ended all 16 while they
+  were still working, so none stopped to ask and none was seen finishing.
+  All 14 changes compiled and cut that sync to between 0.08s and 0.41s, though one
+  still dropped upstream errors. Each session made 15 to 28 tool calls and invoked the
+  debug skill. The Opus 5 runs bypassed permissions and passed no effort flag. These
+  used acceptEdits with named grants, which refused 2 to 4 commands per session, at
+  `--effort high`. *(probe, DOT-101: r3-live-01 to r3-live-16)*
 - **Whether a session checks that a rule's stated reason fits is unmeasured.** The
   probe set a five-attempt retry budget whose written reason is that past five the
   caller's deadline has expired, then gave a caller with a ten-minute deadline and
