@@ -6,7 +6,8 @@
     "pr": "",
     "sessionUrl": false
   },
-  "autoCompactEnabled": false,
+  "autoCompactEnabled": true,
+  "autoCompactWindow": 200000,
   "autoContinueAtUsageLimit": false,
   "autoDreamEnabled": false,
   "autoMemoryEnabled": false,
