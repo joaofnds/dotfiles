@@ -20,8 +20,9 @@ references at code.claude.com, with the model-config, CLI, and SDK pages, last f
 pass on CLI 2.1.280 on 2026-09-23. **Re-verify on each Claude Code or model release,
 and the launch-flag fact on a desktop app release too.** Facts marked *(probe)* are
 local observations rather than documentation, and re-verify the same way. A
-*(DOT-101: name)* tag marks a 2026-09-23 re-check on CLI 2.1.280 and
-`claude-opus-5-5`, one `claude -p` session per name, whose command, stream,
+*(DOT-101: name)* tag marks a 2026-09-23 re-check on CLI 2.1.280, on
+`claude-opus-5-5` unless the entry names another model, one `claude -p` session per
+name, whose command, stream,
 transcript, and the reference pages read are under
 `~/code/backlog/boards/dotfiles/evidence/DOT-101/`.
 
@@ -83,15 +84,30 @@ Load limits and delivery:
   editing it on disk, and all three returned the file in full, the third with the
   new content)*. A rule that tells a session to reopen a file therefore delivers the
   words rather than a pointer.
-- A skill description's own trigger does not load the skill. Four fresh `claude -p`
-  sessions ran a build or a shaping with "use it when a task's work is finished and
-  before anything is called done" in the listing and none invoked it. A closing line
-  in the body of the skill the session was running did, five of five *(probe,
-  2.1.261, DOT-59)*. A session reads the skill it is running and the global read
-  table, and reaches on-demand material by `Read` on its path as often as by the
-  `Skill` tool. Given "the review skill" and a code change, it opened the code
-  reviewer's file by name and skipped the router, three of three. Re-check on a
-  model release.
+- A skill description's own trigger did not load the skill on Sonnet 5. Four fresh
+  `claude -p` sessions ran a build or a shaping with "use it when a task's work is
+  finished and before anything is called done" in the listing and none invoked it,
+  while a closing line in the body of the skill the session was running did, five of
+  five *(probe, `claude-sonnet-5` on 2.1.261, DOT-59)*. On Opus 5.5, launched at
+  `--effort high`, the review ran in each of the four sessions that reached that line:
+  two code builds, a code and skill-file build, and a shaping *(DOT-101: fire-code-2,
+  fire-code-3, fire-mixed-2, fire-shape-2)*. A code build that could not read the board
+  rules ran it too, naming the build skill's next step as its reason *(DOT-101:
+  fire-code-1)*. With the closing line cut from the build skill, both code builds still
+  ran the review before Done, one quoting the board rules' "every change takes review"
+  and one moving the card to Review "per the board rules" *(DOT-101: nolines-code-1,
+  nolines-code-2)*, so the description alone is unmeasured on Opus 5.5. A build whose
+  only change was a skill file stopped before the closing line, at review-instructions'
+  evidence gate, which needs `claude` runs the probe's permissions refused *(DOT-101:
+  fire-skill-2)*. Every Opus 5.5 session that ran the review invoked the router with
+  the `Skill` tool and then the skill it routed to, seven of seven, while DOT-59's code
+  builds went straight to the code reviewer's skill, three of three. The corpus
+  changed between the two runs, so the model is not the only difference. The delivery
+  skill, which the global read table names by path, was opened with `Read` in all
+  seven runs that used it. review-instructions, which the table names by path and a
+  hard line names as a skill, was invoked with the `Skill` tool in all four. Re-check
+  on a model release, with the board rules' review sentence also cut from the
+  description-only arm.
 - Auto memory is on by default, per-project, machine-local, and never loaded into a
   non-fork subagent.
 - Session transcripts live at
@@ -208,15 +224,22 @@ Tool, permission, and invocation fields:
   *(model-config reference)*.
 - Agent-definition frontmatter takes `model` as one of the aliases `sonnet`, `opus`,
   `haiku`, `fable`, a full model id, or `inherit`, and `effort` as the session levels
-  above *(model alias probed 2026-09-14 on 2.1.270: the screener definition pinned
-  `model: opus` ran on `claude-opus-5`, read from its transcript, only when the call
-  also passed the model; a definition created in a session is spawnable in that
-  session, but a change to its model or body after that kept the first-loaded text
-  and model for later spawns, so an edit to a definition is verified only from a
-  fresh session. Effort is unprobed, since the transcript does not record it.
-  Re-check model selection and definition reload behavior from a fresh session
-  after a Claude Code release. Verify effort separately through runtime evidence
-  that records it)*.
+  above. The pins hold with no model passed. The screener, pinned `model: opus` and
+  `effort: low`, ran on `claude-opus-5-5` from a `claude-sonnet-5` parent, the same as
+  when the call passed `opus` *(DOT-101: alias-sonnet-nomodel, alias-sonnet-opus)*. A
+  `PreToolUse` hook inside it read effort `low` in those runs and under a
+  `claude-opus-5-5` parent, while each parent ran at `high` or `xhigh` *(DOT-101:
+  alias-opus-nomodel, the model read from the subagent transcript and the effort from
+  the hook input's `effort` field)*. A call passing a model other than the pin was not
+  run, and the sub-agents reference ranks the call's model above the definition's. The
+  advisor, pinned `fable`, ran on `claude-fable-5-1` *(DOT-101: fire-shape-1)*. In
+  `claude -p` at `medium` effort, a definition a Bash script wrote during the session
+  was still unknown to the `Agent` tool 20 seconds later, and one it rewrote kept its
+  first-loaded model and body, while a fresh session spawned the rewrite *(DOT-101:
+  reload-insession, reload-slow, reload-edit, reload-fresh)*. The sub-agents reference
+  says the next spawn picks up an edit within seconds, which these runs did not show,
+  so verify an edit to a definition from a fresh session. Re-check on a Claude Code
+  release, from fresh sessions.
 
 Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two are
 edited together. The live copies are the always-loaded rule to read a rule file
