@@ -22,8 +22,7 @@ and the launch-flag fact on a desktop app release too.** Facts marked *(probe)* 
 local observations rather than documentation, and re-verify the same way. A
 *(DOT-101: name)* tag marks a 2026-09-23 re-check on CLI 2.1.280, on
 `claude-opus-5-5` unless the entry names another model, one `claude -p` session per
-name, whose command, stream,
-transcript, and the reference pages read are under
+name, whose command, stream, transcript, and the reference pages read are under
 `~/code/backlog/boards/dotfiles/evidence/DOT-101/`.
 
 Load limits and delivery:
@@ -89,10 +88,10 @@ Load limits and delivery:
   finished and before anything is called done" in the listing and none invoked it,
   while a closing line in the body of the skill the session was running did, five of
   five *(probe, `claude-sonnet-5` on 2.1.261, DOT-59)*. On Opus 5.5, launched at
-  `--effort high`, the review ran in each of the four sessions that reached that line:
-  two code builds, a code and skill-file build, and a shaping *(DOT-101: fire-code-2,
-  fire-code-3, fire-mixed-2, fire-shape-2)*. A code build that could not read the board
-  rules ran it too, naming the build skill's next step as its reason *(DOT-101:
+  `--effort high`, the review ran in each of the five sessions that reached that line:
+  two code builds, a code and skill-file build, a shaping *(DOT-101: fire-code-2,
+  fire-code-3, fire-mixed-2, fire-shape-2)*, and a code build that could not read the
+  board rules and gave the build skill's next step as its reason *(DOT-101:
   fire-code-1)*. With the closing line cut from the build skill, both code builds still
   ran the review before Done, one quoting the board rules' "every change takes review"
   and one moving the card to Review "per the board rules" *(DOT-101: nolines-code-1,
@@ -104,10 +103,12 @@ Load limits and delivery:
   builds went straight to the code reviewer's skill, three of three. The corpus
   changed between the two runs, so the model is not the only difference. The delivery
   skill, which the global read table names by path, was opened with `Read` in all
-  seven runs that used it. review-instructions, which the table names by path and a
-  hard line names as a skill, was invoked with the `Skill` tool in all four. Re-check
-  on a model release, with the board rules' review sentence also cut from the
-  description-only arm.
+  seven builds that used it *(DOT-101: fire-code-2, fire-code-3, fire-mixed-1,
+  fire-mixed-2, fire-skill-1, nolines-code-1, nolines-code-2)*. review-instructions,
+  which the table names by path and a hard line names as a skill, was invoked with the
+  `Skill` tool in all four builds that used it *(DOT-101: fire-mixed-1, fire-mixed-2,
+  fire-skill-1, fire-skill-2)*. Re-check on a model release, with the board rules'
+  review sentence also cut from the description-only arm.
 - Auto memory is on by default, per-project, machine-local, and never loaded into a
   non-fork subagent.
 - Session transcripts live at
