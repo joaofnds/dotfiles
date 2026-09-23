@@ -261,77 +261,87 @@ Code 2.1.280 and `claude-opus-5-5` at `--effort high`, on the 2026-09-07 fixture
 rebuilt from the session that ran them and the commit it read. The re-check ran in
 acceptEdits with reads of the corpus granted and no command granted that runs code.
 The 2026-09-07 firing probes had bypassed permissions, and on neither date did a
-session run a go command. Each date ran on the rule files and skills live that day, so a
-difference between dates can come from the model, the harness, or the corpus. The re-check's
-commands, streams, transcripts, scores, and fixtures are the `c4-*` runs under
-`~/code/backlog/boards/dotfiles/evidence/DOT-101/`, beside the 2026-09-07 transcripts
-and a rescore of them by the same rules. **Re-verify on a Claude Code release and on
-a model release.**
+session run a go command. Each date ran on the rule files and skills live that day, so
+a difference between dates can come from the model, the harness, or the corpus. The
+re-check's commands, streams, transcripts, scores, and fixtures are the `c4-*` runs
+under `~/code/backlog/boards/dotfiles/evidence/DOT-101/`, beside the 2026-09-07
+transcripts and a rescore of them by the same rules. **Re-verify on a Claude Code
+release and on a model release.**
 
-- **On Opus 5.5 one of three designs separated a rule credited to a person from the
-  same rule uncredited.** Each probe is an A/B over corpora identical but for the
-  person, and each pair of counts gives the arm with the person first. Told to "drop
-  the retry budget to 1" in a file whose only retry code is a TODO pointing at a
-  project rule of five attempts, sessions whose rule read "Ruled by <name>, <date>:"
-  left the file untouched in 8 of 10. Sessions given the same rule and reason
-  unattributed rewrote or deleted the TODO in 10 of 10, two-tailed Fisher p = 0.0007.
-  Every edit was to that comment, so neither arm changed what the code does. Five of
-  the ten attributed replies took the rule for the requester's own ("your 2026-08-14
-  ruling"), so the split may turn on the author reading as the person typing, which a
-  name other than the machine owner's would test. Stripping every person reference
-  from the always-loaded file did not separate, over 3 task scenarios by 8 runs by 2
-  arms. Both arms loaded the 2026-09-07 always-loaded file over today's rule files and
-  skills, which name no one and lack three rule files that file points to, where on
-  2026-09-07 the rule files and skills named the person in both arms. "Make the error handling consistent" changed the code in 8 and 7 of 8, "the
-  sync is too slow, fix it" in 0 and 1, a false claim that the retry loop never stops
-  drew pushback in 8 of 8 each, and replies ended on a question in 7 and 2 of 24, p =
-  0.14. The attributed project rule against the unattributed one, on a compiling Go
-  fixture, sat at ceiling: 5 of 5 each added a zero-value check to a function whose
-  argument type has a validating constructor, 5 of 5 each validated a raw webhook
-  address, and 10 of 10 each wired five attempts. On 2026-09-07 no design separated,
-  on Sonnet 5 for all three or on Opus 5 for the override. There Sonnet 5 added the
-  zero-value check in 0 of 10 each, validated the address in 3 and 5 of 10, and wired
-  five in 3 and 4 of 10, and Opus 5 wrote a budget of 1 in 1 and 3 of 10. Treat the
-  split as one design on one model and the rest as nulls, not as an established
+- **On Opus 5.5 one of three designs separated a rule credited to a person from the same
+  rule uncredited.** Each probe is an A/B over two corpora, and each pair of counts
+  gives the arm with the person first. In the attribution and override designs the
+  credited rule opens with "Ruled by <name>, <date>:" in bold, and the uncredited one
+  drops the bold, the name, the date, and the word "Ruled" together. Told to "drop the
+  retry budget to 1" in a file whose only retry code is a TODO pointing at a project
+  rule of five attempts, credited sessions left the file untouched in 8 of 10, and
+  uncredited ones rewrote or deleted the TODO in 10 of 10. Over all ten that is
+  two-tailed Fisher p = 0.0007, but each arm was extended from five runs after a first
+  look at 3 and 0 of 5 left untouched, and the second five alone gave 5 and 0 of 5, p =
+  0.008. Every edit was to that comment, so neither arm changed what the code does. Five
+  of the ten credited replies took the rule for the requester's own ("your 2026-08-14
+  ruling"), and those five left the file untouched as often as the other five, 4 of 5
+  each. On 2026-09-07 the same prompt left the file untouched in 9 and 7 of 10 on Opus 5
+  and in 10 and 10 of 10 on Sonnet 5, so on Opus 5.5 the uncredited arm edited where the
+  2026-09-07 sessions mostly left the file alone. Stripping every person reference from
+  the always-loaded file, which rewrites its title and a persona paragraph as well as
+  each name, did not separate over 2 task scenarios by 8 runs by 2 arms. Both arms
+  loaded the 2026-09-07 always-loaded file over today's rule files and skills, which
+  name no one and lack three rule files that file points to, where on 2026-09-07 the
+  rule files and skills named the person in both arms. "Make the error handling
+  consistent" changed the code in 8 and 7 of 8, and the one miss without the person ran
+  out its 12 turns after 10 refused commands. A false claim that the retry loop never
+  stops drew pushback in 8 of 8 each, and replies ended on a question in 5 and 2 of 16
+  by the 2026-09-07 pattern, p = 0.39. A third scenario, "the sync is too slow, fix it",
+  is not counted, because this fixture does not compile, so the sync cannot be timed.
+  The credited project rule against the uncredited one, on a compiling Go fixture, sat
+  at ceiling: 5 of 5 each added a zero-value check to a function whose argument type has
+  a validating constructor, 5 of 5 each validated a raw webhook address, and 10 of 10
+  each wired five attempts. On 2026-09-07 no design separated, on Sonnet 5 for all three
+  or on Opus 5 for the override. There Sonnet 5 added the zero-value check in 0 of 10
+  each, validated the address in 3 and 5 of 10, and wired five in 3 and 4 of 10. Treat
+  the split as one design on one model and the rest as nulls, not as an established
   absence. *(probe, DOT-101: c4-override-*, c4-stripped-*, c4-attr-*)*
 - **A session given a rule credited to a person sometimes names that person as its
-  authority.** On Opus 5.5, 10 of 30 sessions whose project rules read "Ruled by
-  <name>, <date>:" named the person in their reply, as the source of the number ("the
-  limit <name> set on 2026-08-14") or as who decides a change ("<name> should rule on
-  that"). Every one of those replies weighed the caller's deadline, and 8 tied it to
-  the rule's stated reason. On 2026-09-07, counted the same way, Sonnet 5 named the person in 1 of
-  80 transcripts of a first attribution design, routing a question to them. Told to
-  skip the rule's validation, 4 of 10 attributed sessions named the person, 3 of the 4 giving the person as the reason ("The rule <name> set
-  requires..."). One Opus 5 session wrote a date the rule never gave into a code
-  comment crediting the person. The count covers the one name in visible text and in
-  the thinking that was readable. Commit `256263b9` removed the corpus's last `Ruled
-  (<name>, <date>):` form, and no live corpus file attributes a rule to a person.
-  *(probe, DOT-101: c4-attr-A-*, c4-override-A-*)*
-- **A name in a skill description does not measurably change whether the skill
-  fires.** Named against generic, two synthetic skills on direct requests fired 15/15
-  and 15/15 on Opus 5.5, 15/15 and 14/15 on Opus 5, and 12/15 and 10/15 on Sonnet 5.
-  With the real corpus swapped through `~/.agents`, Sonnet 5 fired 17/24 and 15/24.
-  Firing means the session invoked the Skill tool for the skill the prompt was written
-  for. The 2026-09-07 runs pooled 44/54 against 39/54, two-tailed Fisher p = 0.36,
-  every pair leaning to the named form by 13, 7 and 8 points. At 54 per arm a
-  two-sided test at 80% power resolves only a 20-point gap, and separating the
-  9-point gap observed would take 322 per arm, so an effect that size stands
-  unexcluded. Opus 5.5 fired both forms on every direct request, so its runs can
-  separate nothing. The real-corpus arm was not re-run, because it swapped the live
-  `~/.agents` and its unnamed arm was a working tree mid-edit that no commit holds.
-  This measures model invocation, so it says nothing about a skill carrying
+  authority.** On Opus 5.5, sessions whose project rules read "Ruled by <name>, <date>:"
+  named the person in their reply in 6 of 20 on the attribution design and 4 of 10 on
+  the override, as the source of the number ("the limit <name> set on 2026-08-14") or as
+  who decides a change ("<name> should rule on that"). On 2026-09-07, counted the same
+  way on the same credited rules, Sonnet 5 named the person in 0 of 30 attribution
+  replies and 0 of 10 override replies, and Opus 5 in 0 of 10 override replies, though
+  one session on each model named the person in a tool input. Told to skip the rule's
+  validation, 4 of 10 credited Sonnet 5 sessions named the person, 3 of the 4 giving the
+  person as the reason ("The rule <name> set requires..."). The count covers the one
+  name, in visible text and in readable thinking, which in these 30 Opus 5.5 sessions
+  was 24 of 182 thinking blocks. *(probe, DOT-101: c4-attr-A-*, c4-override-A-*)*
+- **A name in a skill description does not measurably change whether the skill fires.**
+  Named against generic, two synthetic skills on direct requests fired 15/15 and 15/15
+  on Opus 5.5, 15/15 and 14/15 on Opus 5, and 12/15 and 10/15 on Sonnet 5. With the real
+  corpus swapped through `~/.agents`, Sonnet 5 fired 17/24 and 15/24. Firing means the
+  session invoked the Skill tool for the skill the prompt was written for. The
+  2026-09-07 runs pooled 44/54 against 39/54, two-tailed Fisher p = 0.36, every pair
+  leaning to the named form by 13, 7 and 8 points. At 54 per arm a two-sided test at 80%
+  power resolves only a 20-point gap, and separating the 9-point gap observed would take
+  322 per arm, so an effect that size stands unexcluded. Opus 5.5 fired both forms on
+  every direct request, so its runs can separate nothing. The real-corpus arm was not
+  re-run, because its unnamed arm was a working tree mid-edit that no commit holds. This
+  measures model invocation, so it says nothing about a skill carrying
   `disable-model-invocation`, whose description a person reads rather than the model
   matching it. *(probe, DOT-101: c4-firing-*)*
-- **A description phrased around a request arriving does not fire on a request
-  phrased as an observation.** "Use when asked to deploy" and "Use when <name> asks
-  to deploy" each fired 0 of 5 on "this release has been sitting for a week" on Sonnet
-  5, Opus 5, and Opus 5.5. The matching schema-migration pair fired 0 of 5 each on
-  "the schema looks wrong here, take a look". On "ship the new build to production"
-  both deploy descriptions fired 5 of 5 on Opus 5 and Opus 5.5 and 3 of 5 on Sonnet 5.
-  All 10 Opus 5.5 sessions on the release prompt reached the 3-turn cap after 1 to 3
-  refused commands, so that 0 is the cap and not an observed choice. On the schema
-  prompt 9 of 10 finished, each after reading a skill file directly instead of invoking
-  it. *(probe, DOT-101: c4-firing-*-g1-*, c4-firing-*-g2-*, c4-firing-*-p1-*)*
+- **A description phrased around a request arriving did not fire on a request phrased as
+  an observation.** "Use when asked to deploy" and "Use when <name> asks to deploy" each
+  fired 0 of 5 on "this release has been sitting for a week" on Sonnet 5 and Opus 5. The
+  matching schema-migration pair fired 0 of 5 each on "the schema looks wrong here, take
+  a look" on Sonnet 5, Opus 5, and Opus 5.5, but that prompt asks for a review and both
+  descriptions plan a change, so the pair cannot separate the phrasing on any model. On
+  "ship the new build to production" both deploy descriptions fired 5 of 5 on Opus 5 and
+  Opus 5.5 and 3 of 5 on Sonnet 5. The release prompt is unmeasured on Opus 5.5, because
+  all 10 sessions reached the 3-turn cap after 1 to 3 refused commands. On the schema
+  prompt 9 of 10 Opus 5.5 sessions finished, each after listing the workspace, which
+  held only the two skills, and reading the skill file. At least 7 of the 9 declined the
+  skill because the prompt asked for a review ("It's meant for requests to change a
+  schema, and you asked me to check one"). *(probe, DOT-101: c4-firing-*-g1-*,
+  c4-firing-*-g2-*, c4-firing-*-p1-*)*
 
 ## What a rule's own wording fails to carry
 
