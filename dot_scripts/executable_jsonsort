@@ -4,7 +4,7 @@ set -eu
 
 usage() {
 	cat <<'USAGE'
-usage: jsonsort [--depth N] [jq options] [file...]
+usage: jsonsort [--depth N] [--blocks] [jq options] [file...]
 
 Sorts object keys in JSON documents. Reads stdin when no file is given, or
 when a file is "-".
@@ -13,6 +13,11 @@ when a file is "-".
               position they came in with. Omitted means every level. 0 is a
               no-op. Arrays are containers, not levels: an object inside an
               array sorts at the depth of the array that holds it.
+  --blocks    sort each block of an object on its own and keep the blank
+              lines between blocks. A blank line between two members ends a
+              block; blank lines anywhere else are dropped, as they are
+              without --blocks. Its output is never colored, and it cannot
+              be combined with -S, -C, -R or --stream.
 
 Any other option is handed to jq, so -c, -S, --tab and friends work. Options
 go before the files. A file whose name begins with a dash goes after a "--".
@@ -20,6 +25,7 @@ go before the files. A file whose name begins with a dash goes after a "--".
   jsonsort --depth 1 myfile.json
   jsonsort --depth 2 myfile.json myotherfile.json
   jsonsort --depth 1 ./**/*.json
+  jsonsort --blocks settings.json
 USAGE
 }
 
@@ -30,6 +36,8 @@ die() {
 
 depth=0
 depth_given=false
+blocks=false
+blocks_conflict=""
 jq_options=""
 
 # Options are shifted off the front until only files are left, so that "$@"
@@ -51,6 +59,10 @@ while [ "$#" -gt 0 ]; do
 		depth_given=true
 		shift
 		;;
+	--blocks)
+		blocks=true
+		shift
+		;;
 	--)
 		shift
 		break
@@ -70,6 +82,11 @@ while [ "$#" -gt 0 ]; do
 		;;
 	-*)
 		jq_options="$jq_options $1"
+		case "$1" in
+		--sort-keys | --color-output | --raw-input | --stream | --stream-errors) blocks_conflict="$1" ;;
+		--*) ;;
+		*S* | *C* | *R*) blocks_conflict="$1" ;;
+		esac
 		shift
 		;;
 	*)
@@ -84,23 +101,108 @@ if [ "$depth_given" = true ]; then
 	esac
 fi
 
+if [ "$blocks" = true ] && [ -n "$blocks_conflict" ]; then
+	die "--blocks cannot be combined with -S, -C, -R or --stream, got '$blocks_conflict'" 2
+fi
+
 # jq walks until the limit hits zero, so "every level" is expressed as a limit
 # no document can exhaust rather than as a negative sentinel, which would
 # collide with the --depth values the validation above rejects.
 limit="$depth"
 [ "$depth_given" = true ] || limit=1e9
 
+# jq's parser drops blank lines, so under --blocks this pass carries each blank
+# line that separates two members into the document as a marker member placed
+# before the second one. The sort rebuilds the markers between the blocks it
+# keeps, and the unmarking script turns each back into a blank line. Lines are
+# split into characters once because macOS awk's substr measures the whole line
+# on every call, which makes a long minified line take quadratic time.
+marking_program='
+/^[ \t\r]*$/ {
+	blank = 1
+	print
+	next
+}
+
+{
+	n = split($0, chars, "")
+	start = 1
+	for (i = 1; i <= n; i++) {
+		c = chars[i]
+		if (in_string) {
+			if (escaped) escaped = 0
+			else if (c == "\\") escaped = 1
+			else if (c == "\"") in_string = 0
+			continue
+		}
+		if (c == " " || c == "\t" || c == "\r") continue
+
+		if (c == "\"" && substr(open, length(open)) == "{" && (previous == "{" || previous == ",")) {
+			if (chars[i + 1] chars[i + 2] chars[i + 3] chars[i + 4] chars[i + 5] chars[i + 6] == "\\u0000") {
+				print "jsonsort: keys that begin with \\u0000 are reserved by --blocks" >"/dev/stderr"
+				exit 1
+			}
+			if (blank) {
+				printf "%s\"\\u0000jsonsort-blank-%d\": null, ", substr($0, start, i - start), count++
+				start = i
+			}
+		}
+
+		if (c == "\"") in_string = 1
+		else if (c == "{" || c == "[") open = open c
+		else if (c == "}" || c == "]") open = substr(open, 1, length(open) - 1)
+
+		blank = blank && c == ","
+		previous = c
+	}
+	print substr($0, start)
+}
+'
+
 program='
+def marker_prefix: "\u0000jsonsort-blank-";
+
+def is_marker: $blocks and startswith(marker_prefix);
+
+def split_blocks:
+  [foreach to_entries[] as $entry (0;
+    if $entry.key | is_marker then . + 1 else . end;
+    {block: ., $entry})]
+  | group_by(.block)
+  | map(map(.entry | select(.key | is_marker | not)) | select(length > 0));
+
+def join_blocks:
+  [foreach .[] as $block (0; . + 1;
+    (if . > 1 then {key: (marker_prefix + "\(.)"), value: null} else empty end),
+    $block[])];
+
 def sorted($limit):
-  if $limit <= 0 then .
-  elif type == "object" then
-    to_entries | sort_by(.key) | from_entries | map_values(sorted($limit - 1))
+  if type == "object" then
+    split_blocks
+    | if $limit > 0 then map(sort_by(.key)) else . end
+    | join_blocks
+    | from_entries
+    | map_values(sorted($limit - 1))
   elif type == "array" then map(sorted($limit))
   else .
   end;
 
 sorted($limit)
 '
+
+# A marker prints on a line of its own in pretty output, where it becomes the
+# blank line, and after a comma in compact output, where it is deleted.
+unmarking_script='s/^[[:space:]]*"\\u0000jsonsort-blank-[0-9]+": null,$//
+s/,"\\u0000jsonsort-blank-[0-9]+":null,/,/g'
+
+if [ "$blocks" = true ]; then
+	scratch=$(mktemp -d "${TMPDIR:-/tmp}/jsonsort.XXXXXX")
+	trap 'rm -rf "$scratch"' EXIT
+	# Dying of the signal, rather than exiting, tells a calling loop to stop.
+	for signal in HUP INT TERM; do
+		trap "rm -rf \"\$scratch\"; trap - $signal; kill -s $signal \$\$" "$signal"
+	done
+fi
 
 # Each caller below turns a jq failure into status 1, so that a caller of
 # jsonsort reads 0, 1 and 2 rather than jq's own codes (5 for malformed input)
@@ -117,26 +219,40 @@ run_jq() {
 	set +f
 
 	if [ -n "$saved_file" ]; then
-		jq "$@" --argjson limit "$limit" "$program" -- "$saved_file"
+		jq "$@" --argjson limit "$limit" --argjson blocks "$blocks" "$program" -- "$saved_file"
 	else
-		jq "$@" --argjson limit "$limit" "$program"
+		jq "$@" --argjson limit "$limit" --argjson blocks "$blocks" "$program"
+	fi
+}
+
+mark_blank_lines() {
+	LC_ALL=C awk "$marking_program" <"${1:-/dev/stdin}"
+}
+
+sort_input() {
+	if [ "$blocks" = true ]; then
+		mark_blank_lines "$@" >"$scratch/marked" &&
+			run_jq "$scratch/marked" >"$scratch/sorted" &&
+			sed -E "$unmarking_script" "$scratch/sorted"
+	else
+		run_jq "$@"
 	fi
 }
 
 if [ "$#" -eq 0 ]; then
-	run_jq || exit 1
+	sort_input || exit 1
 	exit 0
 fi
 
 status=0
 for file do
 	if [ "$file" = "-" ]; then
-		run_jq || status=1
+		sort_input || status=1
 	elif [ -d "$file" ]; then
 		printf 'jsonsort: %s: is a directory\n' "$file" >&2
 		status=1
 	elif [ -e "$file" ]; then
-		run_jq "$file" || status=1
+		sort_input "$file" || status=1
 	else
 		case "$file" in
 		-*) printf 'jsonsort: %s: options go before files\n' "$file" >&2 ;;

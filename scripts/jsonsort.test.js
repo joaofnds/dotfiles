@@ -1,5 +1,5 @@
 import { afterEach, expect, test } from "bun:test";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -24,9 +24,19 @@ async function withFiles(documents) {
   return { directory, paths };
 }
 
-function run(args, stdin = "", cwd = undefined) {
+async function untilMarking(scratchParent) {
+  for (let attempt = 0; attempt < 500; attempt++) {
+    const [scratch] = await readdir(scratchParent);
+    if (scratch && (await readdir(join(scratchParent, scratch))).includes("marked")) return;
+    await Bun.sleep(10);
+  }
+  throw new Error("jsonsort never started marking");
+}
+
+function run(args, stdin = "", cwd = undefined, env = process.env) {
   const result = Bun.spawnSync([jsonsort, ...args], {
     cwd,
+    env,
     stderr: "pipe",
     stdin: new TextEncoder().encode(stdin),
     stdout: "pipe",
@@ -224,6 +234,158 @@ test("says a directory is a directory rather than a missing file", async () => {
 
   expect(result.status).toBe(1);
   expect(result.stderr).toContain("is a directory");
+});
+
+test("sorts each block of members between blank lines on its own under --blocks", () => {
+  const input = '{\n  "b": 1,\n  "a": 2,\n\n  "d": 3,\n  "c": 4\n}';
+
+  expect(run(["--blocks"], input).stdout).toBe('{\n  "a": 2,\n  "b": 1,\n\n  "c": 4,\n  "d": 3\n}');
+});
+
+test("keeps three blocks of one object apart", () => {
+  const input = '{\n  "b": 1,\n\n  "a": 2,\n\n  "d": 3,\n  "c": 4\n}';
+
+  expect(run(["--blocks"], input).stdout).toBe('{\n  "b": 1,\n\n  "a": 2,\n\n  "c": 4,\n  "d": 3\n}');
+});
+
+test("sorts the blocks of a nested object on their own", () => {
+  const input = '{\n  "z": {\n    "b": 1,\n    "a": 2,\n\n    "d": 3,\n    "c": 4\n  },\n  "y": 0\n}';
+
+  expect(run(["--blocks"], input).stdout).toBe('{\n  "y": 0,\n  "z": {\n    "a": 2,\n    "b": 1,\n\n    "c": 4,\n    "d": 3\n  }\n}');
+});
+
+test("keeps the blocks below the depth in the order they came in", () => {
+  const input = '{\n  "z": {\n    "b": 1,\n\n    "d": 3,\n    "c": 4\n  },\n  "y": 0\n}';
+
+  expect(run(["--blocks", "--depth", "1"], input).stdout).toBe('{\n  "y": 0,\n  "z": {\n    "b": 1,\n\n    "d": 3,\n    "c": 4\n  }\n}');
+});
+
+test.each([["spaces", "    "], ["a tab", "\t"], ["a carriage return", "\r"]])("treats a line holding only %s as blank", (_, body) => {
+  expect(run(["--blocks", "-c"], `{"b":1,\n${body}\n"a":2}`).stdout).toBe('{"b":1,"a":2}');
+});
+
+test("keeps an empty key below the blank line that opens its block", () => {
+  expect(run(["--blocks"], '{\n  "b": 1,\n\n  "a": 2,\n  "": 3\n}').stdout).toBe('{\n  "b": 1,\n\n  "": 3,\n  "a": 2\n}');
+});
+
+test("sorts a key spelled like the blank-line marker as an ordinary key without --blocks", () => {
+  expect(run(["-c"], '{"b":1,"\\u0000jsonsort-blank-0":2,"a":3}').stdout).toBe('{"\\u0000jsonsort-blank-0":2,"a":3,"b":1}');
+});
+
+test("drops the break before a block that a repeated key emptied", () => {
+  expect(run(["--blocks"], '{\n  "a": 1,\n\n  "a": 2,\n\n  "b": 3\n}').stdout).toBe('{\n  "a": 2,\n\n  "b": 3\n}');
+});
+
+test("drops the break after the last block when a repeated key emptied it", () => {
+  expect(run(["--blocks"], '{\n  "a": 1,\n\n  "a": 2\n}').stdout).toBe('{\n  "a": 2\n}');
+});
+
+test("drops the break of an emptied block below the depth too", () => {
+  expect(run(["--blocks", "--depth", "1", "-c"], '{"z":{"a":1,\n\n"a":2}}').stdout).toBe('{"z":{"a":2}}');
+});
+
+test("merges consecutive blank lines into one break", () => {
+  expect(run(["--blocks"], '{\n  "b": 1,\n\n\n  "a": 2\n}').stdout).toBe('{\n  "b": 1,\n\n  "a": 2\n}');
+});
+
+test("counts a blank line before the comma as a break", () => {
+  expect(run(["--blocks"], '{\n  "b": 1\n\n  , "a": 2\n}').stdout).toBe('{\n  "b": 1,\n\n  "a": 2\n}');
+});
+
+test("drops a blank line that separates no two members", () => {
+  const input = '{\n\n  "b": [\n    "y",\n\n    "x"\n  ],\n  "a": 0\n\n}';
+
+  expect(run(["--blocks"], input).stdout).toBe('{\n  "a": 0,\n  "b": [\n    "y",\n    "x"\n  ]\n}');
+});
+
+test("sorts within blocks in compact output, which has no line to leave blank", () => {
+  expect(run(["--blocks", "-c"], '{"d":1,"b":2,\n\n"c":3,"a":4}').stdout).toBe('{"b":2,"d":1,"a":4,"c":3}');
+});
+
+test("leaves the blank line empty under tab indentation", () => {
+  expect(run(["--blocks", "--tab"], '{\n  "b": 1,\n\n  "a": 2\n}').stdout).toBe('{\n\t"b": 1,\n\n\t"a": 2\n}');
+});
+
+test("keeps the blocks of each file apart", async () => {
+  const { paths } = await withFiles({ "one.json": '{"n":0,"m":1,\n\n"a":2}', "two.json": '{"z":0,\n\n"c":1,"b":2}' });
+
+  expect(run(["--blocks", "-c", ...paths]).stdout).toBe('{"m":1,"n":0,"a":2}\n{"z":0,"b":2,"c":1}');
+});
+
+test("keeps the blocks of each document in a stream apart", () => {
+  expect(run(["--blocks", "-c"], '{"n":0,"m":1,\n\n"a":2}\n{"z":0,\n\n"c":1,"b":2}').stdout).toBe('{"m":1,"n":0,"a":2}\n{"z":0,"b":2,"c":1}');
+});
+
+test("fails on a document that is not json under --blocks", () => {
+  const result = run(["--blocks"], '{"a":1,\n\n"b"}');
+
+  expect(result.status).toBe(1);
+  expect(result.stdout).toBe("");
+});
+
+test.each([
+  ["first", '{"\\u0000jsonsort-blank-0":7,\n\n"a":1}'],
+  ["after a comma", '{"a":1,\n\n"\\u0000jsonsort-blank-0":null,"b":2}'],
+])("refuses a key spelled like the marker it puts at blank lines when it comes %s", (_, input) => {
+  const result = run(["--blocks"], input);
+
+  expect(result.status).toBe(1);
+  expect(result.stderr).toContain("reserved");
+});
+
+test("reads past an escaped quote inside a string", () => {
+  expect(run(["--blocks", "-c"], '{"b":"x \\" y",\n\n"a":1}').stdout).toBe('{"b":"x \\" y","a":1}');
+});
+
+test("accepts a value that begins with the marker text", () => {
+  expect(run(["--blocks", "-c"], '{"a":"\\u0000jsonsort-blank-0"}').stdout).toBe('{"a":"\\u0000jsonsort-blank-0"}');
+});
+
+test("keeps a key that holds the marker text after an escaped quote", () => {
+  const input = '{"x\\"\\u0000jsonsort-blank-0":null,"y":1}';
+
+  expect(run(["--blocks", "-c"], input).stdout).toBe(input);
+});
+
+test("reads stdin under --blocks for a file named dash", () => {
+  expect(run(["--blocks", "-c", "-"], '{"b":1,\n\n"a":2}').stdout).toBe('{"b":1,"a":2}');
+});
+
+test("reads a file whose name begins with a dash under --blocks when it follows a double dash", async () => {
+  const { directory } = await withFiles({ "-c": '{"b":1,\n\n"a":2}' });
+  const result = run(["--blocks", "-c", "--", "-c"], "", directory);
+
+  expect(result.stdout).toBe('{"b":1,"a":2}');
+  expect(result.status).toBe(0);
+});
+
+test("leaves no scratch files behind", async () => {
+  const { directory } = await withFiles({});
+
+  const result = run(["--blocks"], '{"b":1,\n\n"a":2}', undefined, { ...process.env, TMPDIR: directory });
+
+  expect(result.status).toBe(0);
+  expect(await readdir(directory)).toEqual([]);
+});
+
+test("dies of the interrupt that stops it and leaves no scratch files", async () => {
+  const { directory } = await withFiles({});
+  const child = Bun.spawn([jsonsort, "--blocks"], { env: { ...process.env, TMPDIR: directory }, stdin: "pipe", stdout: "pipe" });
+  await untilMarking(directory);
+
+  child.kill("SIGINT");
+  child.stdin.end();
+  await child.exited;
+
+  expect(child.signalCode).toBe("SIGINT");
+  expect(await readdir(directory)).toEqual([]);
+});
+
+test.each(["-S", "--sort-keys", "-C", "--color-output", "-cS", "-R", "--raw-input", "--stream", "--stream-errors"])("refuses %s alongside --blocks", (option) => {
+  const result = run(["--blocks", option], '{"a":1}');
+
+  expect(result.status).toBe(2);
+  expect(result.stderr).toContain("cannot be combined");
 });
 
 test("prints usage for --help", () => {
