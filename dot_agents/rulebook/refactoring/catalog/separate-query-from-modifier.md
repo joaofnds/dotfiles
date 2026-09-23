@@ -28,10 +28,14 @@
 
 1. Copy the function; name the copy as a pure query for the value it returns.
 2. Strip every side effect from the query. Run the tests.
-3. In the original, strip the return value; it is now the modifier, named as a
-   command.
-4. Migrate each caller: queries where only the value was wanted, modifier where only
-   the effect, both (query then modifier) where genuinely both. Test per caller.
+3. At each call that uses the return value, call the query for the value and keep the
+   call to the original for its effect, in the order the original computed the value
+   and made the effect. Test per caller.
+4. Once no caller uses the return value, strip it from the original, which is now the
+   modifier, named as a command. Run the tests.
+
+Dropping the modifier call at a caller that wants only the value changes behavior, so
+make it a separate change after the refactoring.
 
 ## Example
 
@@ -44,7 +48,7 @@ function totalOutstanding(customer) {
 }
 ```
 
-After: reading is free; recording is a choice:
+After: reading is free, and recording is its own call:
 
 ```js
 function totalOutstanding(customer) {

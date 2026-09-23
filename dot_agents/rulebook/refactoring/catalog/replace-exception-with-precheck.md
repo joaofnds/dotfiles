@@ -31,8 +31,11 @@
 1. Identify or create the query that answers what the catch was discovering.
 2. At one call site, add the precheck and put the catch block's logic in its branch;
    keep the try/catch temporarily. Run the tests.
-3. Remove the try/catch: the exception path should now be unreachable there; if the
-   callee throws for other reasons, let those propagate as real failures.
+3. If the catch absorbed only the condition the precheck now tests, remove the
+   try/catch, whose exception path is now unreachable there. If it also absorbed other
+   failures, removing it would let them propagate, which changes behavior. Keep a catch
+   for them, and let them propagate as real failures in a separate change after the
+   refactoring.
 4. Repeat per call site.
 
 ## Example
@@ -48,7 +51,7 @@ try {
 }
 ```
 
-After:
+After, where `acquire` throws only when no connection is available:
 
 ```js
 const conn = pool.hasAvailable()

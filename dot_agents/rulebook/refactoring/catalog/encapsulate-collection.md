@@ -24,22 +24,28 @@
 
 ## Mechanics
 
-1. Add `add` and `remove` (and other mutating) methods on the owning class, carrying
-   whatever invariants apply.
+1. Add `add` and `remove` (and other mutating) methods on the owning class. Move a
+   check or side effect into them only where every mutating client performs it the
+   same way, its reaction included. Moving one that some client skips or handles
+   differently changes what that client sees, so make it a separate change after the
+   refactoring.
 2. Find every client that mutates the collection through the getter; migrate each to
    the new methods, testing as you go.
-3. Change the getter to return a copy or read-only view, so remaining references
-   cannot mutate the original. Run the tests.
+3. If the getter will return a copy, first make every client that holds the
+   collection across a change call the getter again, since a copy misses later
+   changes. Then change the getter to return a copy or read-only view, so remaining
+   references cannot mutate the original. Run the tests.
 
 ## Example
 
-Before: anyone can push past the limit:
+Before: every client checks the limit before it pushes:
 
 ```js
 class Course {
   students = [];
   get roster() { return this.students; }
 }
+if (course.roster.length >= 30) throw new Error("course full");
 course.roster.push(student);
 ```
 
@@ -54,6 +60,7 @@ class Course {
   }
   get roster() { return [...this.#students]; }
 }
+course.enroll(student);
 ```
 
 ## House-rule interactions

@@ -27,8 +27,11 @@
 2. Replace each direct reference with the function calls, testing as you go.
 3. Restrict direct access: module-privatize the variable so the compiler or module
    system rejects stragglers.
-4. Consider having the getter return a copy or frozen view when callers must not
-   mutate the innards through the reference.
+4. When callers must not mutate the innards through the reference, migrate its users
+   in this order, testing as you go. Make every caller that holds it across an update
+   call the getter again, since the setter may replace the object it holds. Move every
+   caller that writes through it onto the setter, since a copy loses the write. Then
+   have the getter return a copy or frozen view.
 
 ## Example
 

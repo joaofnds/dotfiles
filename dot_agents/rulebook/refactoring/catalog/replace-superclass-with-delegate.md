@@ -2,7 +2,7 @@
 
 **Smells:** Refused Bequest, Insider Trading
 **Inverse:** none
-**Improves:** resilience: the class exposes only what it means, so no caller can lean on inherited operations that never applied
+**Improves:** resilience: the class exposes only what it means, so no new caller can lean on inherited operations that never applied
 
 ## When to apply
 
@@ -26,12 +26,16 @@
 ## Mechanics
 
 1. Add a field holding an instance of the former superclass.
-2. For each superclass feature the class *legitimately* uses (internally or via
-   callers), create a forwarding method to the field. Test as each group lands.
-3. Remove the `extends`; construction now creates the delegate instance. Run the
+2. Find every use of a superclass feature, by the class itself or by any caller,
+   implicit ones such as iteration and property writes included, and create a
+   forwarding method to the field for each feature used. Test as each group lands.
+3. Find code that relies on the class being its superclass, such as a parameter of the
+   superclass type, a type check (`instanceof`, `Array.isArray`), or indexing.
+   Removing `extends` breaks each, so change it to use the forwards first, or stop.
+4. Remove the `extends`; construction now creates the delegate instance. Run the
    tests.
-4. The operations you chose *not* to forward are the payoff: calls to them are now
-   compile/runtime errors instead of silent misuse; fix any caller that surfaces.
+5. Retiring a forward some caller uses changes that caller's behavior, so make it a
+   separate change after the refactoring.
 
 ## Example
 
@@ -39,7 +43,7 @@ Before: a stack that is accidentally a full array:
 
 ```js
 class Stack extends Array {}
-stack.splice(1, 2); // callers can do this, and one will
+// no caller splices yet, but stack.splice(1, 2) would work
 ```
 
 After: the interface tells the truth:
@@ -47,9 +51,9 @@ After: the interface tells the truth:
 ```js
 class Stack {
   #items = [];
-  push(item) { this.#items.push(item); }
+  push(...items) { return this.#items.push(...items); }
   pop() { return this.#items.pop(); }
-  get size() { return this.#items.length; }
+  get length() { return this.#items.length; }
 }
 ```
 
@@ -60,6 +64,6 @@ class Stack {
   the shortcut.
 - `core.md`: leverage the type system: the shrunken public surface turns
   "callers shouldn't use `splice`" from a convention into a checked fact.
-- `core.md`: Tell, Don't Ask: forwarding only meaningful operations is
-  interface design by role: the delegate's API is what the role offers, not what the
+- `core.md`: Tell, Don't Ask: once the separate change retires the forwards the
+  role never meant, the delegate's API is what the role offers, not what the
   implementation happens to contain.

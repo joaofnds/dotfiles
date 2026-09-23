@@ -28,9 +28,12 @@
 1. For one or two callers: cut the edge statements from the function and paste them at
    each call site. Run the tests.
 2. For more: extract the statements that stay into a new function, so the original
-   becomes "statements + call". Migrate every caller from the original to the new
-   function, adding the hoisted statements only where wanted, testing per caller.
+   becomes "statements + call". Inline the original at every caller (Inline
+   Function), so each caller gains the hoisted statements, testing per caller.
 3. Delete the original function and rename the new one to take its name.
+
+Removing the hoisted statements from a caller that does not want them changes
+behavior, so make it a separate change after the refactoring.
 
 ## Example
 
@@ -41,9 +44,12 @@ function notify(user, message) {
   channel.send(user.address, message);
   activityLog.record(user.id, "notified");
 }
+notify(user, alertText);
+notify(user, digestText);
 ```
 
-After: the digest job wants no activity entries:
+After: each caller records its own entry, and the digest job, which wants none, drops
+its entry in a separate change:
 
 ```js
 function notify(user, message) {
@@ -53,6 +59,7 @@ notify(user, alertText);
 activityLog.record(user.id, "notified");
 
 notify(user, digestText);
+activityLog.record(user.id, "notified");
 ```
 
 ## House-rule interactions

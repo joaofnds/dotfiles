@@ -25,11 +25,18 @@
 
 1. If the repeated statements are not adjacent to the call, use Slide Statements to
    bring them next to it at each call site.
-2. If the target function is called by anything that must not gain the statements,
-   stop: the move is wrong, or the function needs splitting first.
-3. Move the statements into the function body (when the change is non-trivial, extract
-   call-plus-statements into a fresh function, migrate callers to it, then rename).
-4. Run the tests after each call site is migrated.
+2. If any caller of the target function does not already run the statements, stop,
+   since the move would add them to that caller. The move is wrong, or the function
+   needs splitting first.
+3. With a single call site, cut the statements from it, paste them into the body, run
+   the tests, and skip the remaining steps.
+4. With several, extract the statements plus the call at one site into a new function
+   with a temporary, greppable name (Extract Function). Replace the statements plus
+   the call at every other site with a call to it, testing after each. Moving the
+   statements straight into the body would run them twice at every site not yet
+   migrated.
+5. Inline the original function into the new one (Inline Function) and rename the new
+   one to the original's name. Run the tests.
 
 ## Example
 

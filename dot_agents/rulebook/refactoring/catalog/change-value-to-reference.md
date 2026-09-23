@@ -27,9 +27,14 @@
 
 1. Create a repository: a lookup that returns the single instance for a given
    identity, creating it on first request.
-2. Route constructors that used to build copies through the repository: the holder's
+2. Read every place that builds, updates, or compares a copy. Where copies of one
+   identity can be built from different data, one copy is updated without the others,
+   or copies are compared with `===`, sharing one instance changes what some holder
+   sees, so treat the change as a behavior change with its own tests, not a
+   refactoring.
+3. Route constructors that used to build copies through the repository: the holder's
    constructor asks for the instance by id instead of building one.
-3. Decide the repository's ownership and pass it explicitly; test after each holder
+4. Decide the repository's ownership and pass it explicitly; test after each holder
    migrates.
 
 ## Example

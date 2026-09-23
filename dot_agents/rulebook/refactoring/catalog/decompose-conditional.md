@@ -27,8 +27,6 @@
    Function). Run the tests.
 2. Extract the then-branch into a function named for its outcome; repeat for the
    else-branch. Test after each.
-3. If the result is a value selection, consider collapsing to a ternary over the two
-   named calls.
 
 ## Example
 
@@ -45,7 +43,11 @@ if (date.month >= 6 && date.month <= 9 && !holidays.includes(date)) {
 After:
 
 ```js
-charge = isSummer(date) ? summerCharge(quantity) : regularCharge(quantity);
+if (isSummer(date)) {
+  charge = summerCharge(quantity);
+} else {
+  charge = regularCharge(quantity);
+}
 ```
 
 ## House-rule interactions

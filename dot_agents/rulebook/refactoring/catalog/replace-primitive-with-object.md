@@ -26,12 +26,14 @@
 ## Mechanics
 
 1. Encapsulate the variable or field holding the primitive (Encapsulate Variable).
-2. Create a small value class: constructor validates, value is immutable, equality is
-   by content.
+2. Create a small value class: value is immutable, equality is by content.
 3. Change the holder to store the object while accessors still return the primitive:
    consumers are undisturbed. Run the tests.
 4. Migrate consumers that want behavior onto the object's methods; move the duplicated
    logic in as you reach each consumer.
+
+A validating constructor rejects values the primitive accepted, so add validation as a
+separate change after the refactoring.
 
 ## Example
 
@@ -47,8 +49,8 @@ After: the concept owns its rules:
 class Priority {
   static #order = ["low", "normal", "high", "rush"];
   constructor(value) {
-    if (!Priority.#order.includes(value)) throw new Error(`bad priority: ${value}`);
     this.value = value;
+    Object.freeze(this);
   }
   higherThan(other) {
     return Priority.#order.indexOf(this.value) > Priority.#order.indexOf(other.value);
@@ -64,6 +66,6 @@ if (order.priority.higherThan(new Priority("normal"))) expedite(order);
   the sanctioned shape.
 - `core.md`: the class must be earned by demonstrated duplicated behavior
   or invalid states, never introduced for taxonomy.
-- `core.md`: safe parsing at boundaries: the value object's validating
-  constructor is where "never let raw external data cross into the domain" gets
-  enforced for this concept.
+- `core.md`: safe parsing at boundaries: the validating constructor, added in
+  the separate change after the refactoring, is where "never let raw external data
+  cross into the domain" gets enforced for this concept.

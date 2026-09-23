@@ -31,10 +31,16 @@
 
 1. Give the host an `isUnknown`-style property returning `false`; create the
    special-case object (class or literal) returning `true`.
-2. Return the special-case object wherever the special value was produced.
-3. Migrate consumers: replace each check-plus-default with a plain call, moving the
+2. Extract the comparison against the special value into one function (Extract
+   Function) and route every consumer's check through it, including code that stores,
+   serializes, or compares the value, which would otherwise see the object. Test per
+   consumer.
+3. Return the special-case object wherever the special value was produced, and in the
+   same step make the comparison function test `isUnknown`, since a comparison that
+   tests only one form misreads the other. Run the tests.
+4. Migrate consumers: replace each check-plus-default with a plain call, moving the
    default into the special-case object when it is common. Test per consumer.
-4. Checks that remain mark genuinely divergent reactions: leave them, now visibly
+5. Checks that remain mark genuinely divergent reactions: leave them, now visibly
    exceptional.
 
 ## Example
