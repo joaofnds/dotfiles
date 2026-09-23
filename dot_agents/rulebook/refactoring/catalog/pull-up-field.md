@@ -1,6 +1,5 @@
 # Pull Up Field
 
-**Smells:** Duplicated Code
 **Inverse:** Push Down Field
 **Improves:** maintainability: one declaration carries the shared datum, and behavior on it can follow upward
 

@@ -1,6 +1,5 @@
 # Replace Constructor with Factory Function
 
-**Smells:** Mysterious Name
 **Inverse:** none
 **Improves:** maintainability: creation gets a describable name and the freedom to evolve behind it
 

@@ -1,6 +1,5 @@
 # Replace Exception with Precheck
 
-**Smells:** Duplicated Code
 **Inverse:** none
 **Improves:** readability: an expected condition reads as a decision, not as recovered failure
 

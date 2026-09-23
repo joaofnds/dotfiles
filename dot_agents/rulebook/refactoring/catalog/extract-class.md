@@ -1,6 +1,5 @@
 # Extract Class
 
-**Smells:** Large Class, Divergent Change, Data Clumps, Temporary Field
 **Inverse:** Inline Class
 **Improves:** maintainability: each class carries one responsibility, so each kind of change lands in one place
 

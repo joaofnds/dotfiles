@@ -1,6 +1,5 @@
 # Replace Superclass with Delegate
 
-**Smells:** Refused Bequest, Insider Trading
 **Inverse:** none
 **Improves:** resilience: the class exposes only what it means, so no new caller can lean on inherited operations that never applied
 

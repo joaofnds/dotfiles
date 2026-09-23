@@ -1,6 +1,5 @@
 # Consolidate Conditional Expression
 
-**Smells:** Duplicated Code
 **Inverse:** none
 **Improves:** readability: one named check replaces a scatter of tests that were secretly one question
 

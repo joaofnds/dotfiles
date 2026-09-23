@@ -1,6 +1,5 @@
 # Replace Loop with Pipeline
 
-**Smells:** Loops
 **Inverse:** none
 **Improves:** readability: the transformation reads as named stages instead of accumulated bookkeeping
 

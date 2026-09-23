@@ -1,6 +1,5 @@
 # Inline Variable
 
-**Smells:** Lazy Element
 **Inverse:** Extract Variable
 **Improves:** readability: deletes a name that only echoes its expression
 

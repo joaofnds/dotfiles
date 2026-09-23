@@ -1,6 +1,5 @@
 # Split Phase
 
-**Smells:** Divergent Change, Shotgun Surgery
 **Inverse:** none
 **Improves:** maintainability: each phase changes for its own reason and can be exercised alone
 

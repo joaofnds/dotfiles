@@ -1,6 +1,5 @@
 # Extract Function
 
-**Smells:** Long Function, Duplicated Code, Comments
 **Inverse:** Inline Function
 **Improves:** readability: replaces a block you must read with a name you can trust
 

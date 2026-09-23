@@ -1,6 +1,5 @@
 # Remove Dead Code
 
-**Smells:** Speculative Generality
 **Inverse:** none
 **Improves:** maintainability: readers stop spending attention on code that never runs
 

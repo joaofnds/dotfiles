@@ -1,6 +1,5 @@
 # Change Reference to Value
 
-**Smells:** Mutable Data
 **Inverse:** Change Value to Reference
 **Improves:** resilience: an immutable value can be shared, copied, and compared with no aliasing surprises
 

@@ -1,6 +1,5 @@
 # Change Value to Reference
 
-**Smells:** Duplicated Code, Shotgun Surgery
 **Inverse:** Change Reference to Value
 **Improves:** maintainability: one entity, one instance, so an update happens once and is seen everywhere
 

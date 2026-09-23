@@ -1,6 +1,5 @@
 # Pull Up Constructor Body
 
-**Smells:** Duplicated Code
 **Inverse:** none
 **Improves:** maintainability: shared construction happens in one place, so a new invariant is enforced once
 

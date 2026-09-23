@@ -1,6 +1,5 @@
 # Change Function Declaration
 
-**Smells:** Mysterious Name, Alternative Classes with Different Interfaces, Speculative Generality, Comments
 **Inverse:** none
 **Improves:** readability: makes the most-read line of a function, its signature, say what it does
 

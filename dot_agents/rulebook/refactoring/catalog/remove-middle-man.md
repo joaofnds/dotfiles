@@ -1,6 +1,5 @@
 # Remove Middle Man
 
-**Smells:** Middle Man
 **Inverse:** Hide Delegate
 **Improves:** maintainability: the server stops mirroring its delegate's API, so the delegate can grow without dragging the server along
 

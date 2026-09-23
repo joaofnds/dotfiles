@@ -1,6 +1,5 @@
 # Replace Primitive with Object
 
-**Smells:** Primitive Obsession, Duplicated Code
 **Inverse:** none
 **Improves:** maintainability: behavior about the concept accretes on its type instead of scattering across consumers
 

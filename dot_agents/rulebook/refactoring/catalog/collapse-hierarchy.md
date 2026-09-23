@@ -1,6 +1,5 @@
 # Collapse Hierarchy
 
-**Smells:** Lazy Element, Speculative Generality
 **Inverse:** Extract Superclass
 **Improves:** maintainability: one class replaces a parent-child pair whose distinction stopped mattering
 

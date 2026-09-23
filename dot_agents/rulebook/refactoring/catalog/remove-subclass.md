@@ -1,6 +1,5 @@
 # Remove Subclass
 
-**Smells:** Lazy Element, Speculative Generality
 **Inverse:** Replace Type Code with Subclasses
 **Improves:** maintainability: a variation too small for a class becomes a field, and the hierarchy's cost disappears
 

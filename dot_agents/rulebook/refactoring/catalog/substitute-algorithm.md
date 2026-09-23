@@ -1,6 +1,5 @@
 # Substitute Algorithm
 
-**Smells:** Long Function
 **Inverse:** none
 **Improves:** maintainability: a clearer algorithm is one future readers can modify without archaeology
 

@@ -1,6 +1,5 @@
 # Replace Query with Parameter
 
-**Smells:** Global Data, Mutable Data
 **Inverse:** Replace Parameter with Query
 **Improves:** testability: the function's inputs become its signature, so it can be exercised with plain values
 

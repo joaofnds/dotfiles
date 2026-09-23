@@ -1,6 +1,5 @@
 # Replace Subclass with Delegate
 
-**Smells:** Refused Bequest, Insider Trading
 **Inverse:** none
 **Improves:** maintainability: variation moves to a composed object, freeing the single inheritance axis and allowing change at runtime
 

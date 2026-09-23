@@ -1,6 +1,5 @@
 # Inline Class
 
-**Smells:** Lazy Element, Speculative Generality
 **Inverse:** Extract Class
 **Improves:** maintainability: a class that stopped earning its keep stops charging rent
 

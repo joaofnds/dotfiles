@@ -1,6 +1,5 @@
 # Encapsulate Variable
 
-**Smells:** Global Data, Mutable Data
 **Inverse:** none
 **Improves:** maintainability: every access runs through a function, giving one point to observe, validate, or redirect
 

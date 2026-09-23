@@ -1,6 +1,5 @@
 # Parameterize Function
 
-**Smells:** Duplicated Code
 **Inverse:** none
 **Improves:** maintainability: one implementation carries the shared logic; the variants shrink to arguments
 

@@ -1,6 +1,5 @@
 # Combine Functions into Transform
 
-**Smells:** Shotgun Surgery, Duplicated Code
 **Inverse:** none
 **Improves:** maintainability: every derivation lives in one transform instead of at each consumer
 

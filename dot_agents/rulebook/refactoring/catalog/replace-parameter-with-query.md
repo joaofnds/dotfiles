@@ -1,6 +1,5 @@
 # Replace Parameter with Query
 
-**Smells:** Long Parameter List
 **Inverse:** Replace Query with Parameter
 **Improves:** maintainability: callers stop supplying what the callee can determine, shrinking every call site
 

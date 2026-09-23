@@ -1,6 +1,5 @@
 # Separate Query from Modifier
 
-**Smells:** Mutable Data
 **Inverse:** none
 **Improves:** testability: a pure query can be called anywhere, any number of times, with nothing to undo
 
@@ -13,7 +12,7 @@
 - A caller has appeared that needs the value *without* the effect (or the effect
   without the value): the demand that proves the bundling wrong.
 - The side effect is the surprising kind: a getter that increments, a check that
-  logs, a find that marks. Surprise in a query is the smell at its strongest.
+  logs, a find that marks. Surprise in a query is Mutable Data at its strongest.
 
 ## When not to apply
 
@@ -62,7 +61,7 @@ function recordBalanceCheck(customer) {
 ## House-rule interactions
 
 - `engineering.md`: listen to the tests: a value assertion that cannot
-  run without stubbing a side effect is this smell speaking through the harness; the
+  run without stubbing a side effect is Mutable Data speaking through the harness; the
   split is the design fix, not more mocking.
 - `core.md`: Beck's ordering: the second function is an added element
   bought by intent-revelation: each name now tells the whole truth about what calling

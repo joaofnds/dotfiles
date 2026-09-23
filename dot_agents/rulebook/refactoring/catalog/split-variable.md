@@ -1,6 +1,5 @@
 # Split Variable
 
-**Smells:** Mutable Data
 **Inverse:** none
 **Improves:** readability: one name means one thing for its whole life
 

@@ -1,6 +1,5 @@
 # Replace Function with Command
 
-**Smells:** Long Function
 **Inverse:** Replace Command with Function
 **Improves:** maintainability: a function too tangled to decompose in place gains fields for its locals and methods for its steps
 

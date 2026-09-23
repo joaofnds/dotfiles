@@ -1,6 +1,5 @@
 # Replace Error Code with Exception
 
-**Smells:** Duplicated Code, Shotgun Surgery
 **Inverse:** none
 **Improves:** resilience: a failure cannot be silently ignored, and propagation stops being every caller's manual duty
 

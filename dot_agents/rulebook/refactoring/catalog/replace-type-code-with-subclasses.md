@@ -1,6 +1,5 @@
 # Replace Type Code with Subclasses
 
-**Smells:** Primitive Obsession, Repeated Switches
 **Inverse:** Remove Subclass
 **Improves:** maintainability: behavior that varies by kind attaches to the kind, so a new kind is an addition, not an edit spree
 

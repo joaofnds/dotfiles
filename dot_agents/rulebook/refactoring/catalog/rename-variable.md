@@ -1,6 +1,5 @@
 # Rename Variable
 
-**Smells:** Mysterious Name
 **Inverse:** none
 **Improves:** readability: the name answers the question the reader would otherwise chase through the code
 

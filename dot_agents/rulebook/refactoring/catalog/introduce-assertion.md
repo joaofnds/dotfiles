@@ -1,6 +1,5 @@
 # Introduce Assertion
 
-**Smells:** Comments
 **Inverse:** none
 **Improves:** resilience: an assumed invariant becomes a checked one, so violations surface at the cause instead of downstream
 

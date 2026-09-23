@@ -1,6 +1,5 @@
 # Preserve Whole Object
 
-**Smells:** Data Clumps, Long Parameter List
 **Inverse:** none
 **Improves:** maintainability: the signature stops enumerating fields, so the callee can need more without every caller changing
 

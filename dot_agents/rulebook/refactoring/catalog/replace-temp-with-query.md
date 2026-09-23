@@ -1,6 +1,5 @@
 # Replace Temp with Query
 
-**Smells:** Long Function, Mutable Data
 **Inverse:** none
 **Improves:** readability: the computation gets a name callable from anywhere, unblocking further extraction
 

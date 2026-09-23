@@ -1,6 +1,5 @@
 # Hide Delegate
 
-**Smells:** Message Chains, Insider Trading
 **Inverse:** Remove Middle Man
 **Improves:** maintainability: clients stop knowing the server's object graph, so the graph can change without touching them
 

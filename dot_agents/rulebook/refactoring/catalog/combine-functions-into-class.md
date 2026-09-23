@@ -1,6 +1,5 @@
 # Combine Functions into Class
 
-**Smells:** Long Parameter List, Shotgun Surgery, Data Clumps
 **Inverse:** none
 **Improves:** maintainability: shared data and its derived values get one home and one change site
 

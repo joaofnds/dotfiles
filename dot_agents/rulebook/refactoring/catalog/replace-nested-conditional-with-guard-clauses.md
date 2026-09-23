@@ -1,6 +1,5 @@
 # Replace Nested Conditional with Guard Clauses
 
-**Smells:** Long Function
 **Inverse:** none
 **Improves:** readability: special cases exit at the top, and the main path runs unindented as the function's story
 

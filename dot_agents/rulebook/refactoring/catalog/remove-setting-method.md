@@ -1,6 +1,5 @@
 # Remove Setting Method
 
-**Smells:** Mutable Data
 **Inverse:** none
 **Improves:** resilience: a field that cannot change after construction cannot be corrupted after construction
 

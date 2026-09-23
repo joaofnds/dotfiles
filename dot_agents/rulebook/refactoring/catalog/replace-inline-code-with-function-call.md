@@ -1,6 +1,5 @@
 # Replace Inline Code with Function Call
 
-**Smells:** Duplicated Code
 **Inverse:** none
 **Improves:** maintainability: one implementation of the behavior remains, and every caller inherits its fixes
 

@@ -1,6 +1,5 @@
 # Slide Statements
 
-**Smells:** Duplicated Code, Mutable Data
 **Inverse:** none
 **Improves:** readability: related lines sit together, so the reader holds one idea at a time
 

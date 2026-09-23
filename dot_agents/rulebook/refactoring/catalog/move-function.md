@@ -1,6 +1,5 @@
 # Move Function
 
-**Smells:** Feature Envy, Shotgun Surgery, Insider Trading, Divergent Change
 **Inverse:** none
 **Improves:** maintainability: the function lives with the data and neighbors it actually works with, so changes stay local
 

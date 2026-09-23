@@ -1,6 +1,5 @@
 # Replace Command with Function
 
-**Smells:** Lazy Element, Speculative Generality
 **Inverse:** Replace Function with Command
 **Improves:** maintainability: an operation that needs no lifecycle sheds the class that pretended it did
 

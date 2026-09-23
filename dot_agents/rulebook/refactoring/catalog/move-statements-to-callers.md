@@ -1,6 +1,5 @@
 # Move Statements to Callers
 
-**Smells:** Divergent Change
 **Inverse:** Move Statements into Function
 **Improves:** maintainability: behavior that no longer belongs to every call stops being imposed on every caller
 

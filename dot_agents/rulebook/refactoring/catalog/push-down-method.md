@@ -1,6 +1,5 @@
 # Push Down Method
 
-**Smells:** Refused Bequest, Speculative Generality
 **Inverse:** Pull Up Method
 **Improves:** maintainability: the superclass stops promising behavior most of its children disown
 

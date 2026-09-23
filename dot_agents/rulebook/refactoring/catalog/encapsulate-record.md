@@ -1,6 +1,5 @@
 # Encapsulate Record
 
-**Smells:** Data Class, Mutable Data
 **Inverse:** none
 **Improves:** maintainability: consumers depend on an interface, so the stored shape can evolve behind it
 

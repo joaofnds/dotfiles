@@ -1,6 +1,5 @@
 # Return Modified Value
 
-**Smells:** Mutable Data
 **Inverse:** none
 **Improves:** readability: the call site shows that data flows out, instead of hiding the update inside
 

@@ -1,6 +1,5 @@
 # Extract Superclass
 
-**Smells:** Duplicated Code, Alternative Classes with Different Interfaces
 **Inverse:** Collapse Hierarchy
 **Improves:** maintainability: the shared behavior of sibling classes gets one implementation and one contract
 

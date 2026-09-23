@@ -1,6 +1,5 @@
 # Introduce Parameter Object
 
-**Smells:** Data Clumps, Long Parameter List, Primitive Obsession
 **Inverse:** none
 **Improves:** maintainability: the traveling clump gets one name, one shape, and one place to grow behavior
 

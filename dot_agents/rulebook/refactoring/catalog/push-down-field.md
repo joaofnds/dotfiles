@@ -1,6 +1,5 @@
 # Push Down Field
 
-**Smells:** Refused Bequest, Temporary Field
 **Inverse:** Pull Up Field
 **Improves:** maintainability: data lives only where it means something, so no subclass carries dead weight
 

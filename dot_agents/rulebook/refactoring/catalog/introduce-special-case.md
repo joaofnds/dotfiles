@@ -1,6 +1,5 @@
 # Introduce Special Case
 
-**Smells:** Duplicated Code, Repeated Switches, Temporary Field
 **Inverse:** none
 **Improves:** maintainability: one object answers for the special value, replacing the same check scattered across every consumer
 

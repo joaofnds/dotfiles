@@ -1,6 +1,5 @@
 # Replace Control Flag with Break
 
-**Smells:** Mutable Data
 **Inverse:** none
 **Improves:** readability: control flow reads from the control statements, not from a variable's life story
 

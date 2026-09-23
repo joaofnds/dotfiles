@@ -1,6 +1,5 @@
 # Replace Magic Literal
 
-**Smells:** Mysterious Name
 **Inverse:** none
 **Improves:** readability: the code states the meaning, not just the number that happens to encode it
 

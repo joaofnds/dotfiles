@@ -1,6 +1,5 @@
 # Pull Up Method
 
-**Smells:** Duplicated Code
 **Inverse:** Push Down Method
 **Improves:** maintainability: one implementation serves all subclasses, so a fix lands once
 

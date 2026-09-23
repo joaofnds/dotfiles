@@ -1,6 +1,5 @@
 # Move Field
 
-**Smells:** Shotgun Surgery, Insider Trading, Data Clumps
 **Inverse:** none
 **Improves:** maintainability: data sits on the record whose changes it follows, so one edit reaches it
 

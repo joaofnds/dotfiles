@@ -1,6 +1,5 @@
 # Encapsulate Collection
 
-**Smells:** Data Class, Mutable Data
 **Inverse:** none
 **Improves:** resilience: no client can bypass the owner's invariants by mutating the collection behind its back
 
@@ -12,8 +11,8 @@
   bypassable.
 - Add/remove logic for the collection is scattered across clients instead of living
   with the owner.
-- A bug already occurred where the collection changed "by itself"; that is this
-  smell's signature incident.
+- A bug already occurred where the collection changed "by itself"; that is Mutable
+  Data's signature incident.
 
 ## When not to apply
 

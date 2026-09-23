@@ -1,6 +1,5 @@
 # Decompose Conditional
 
-**Smells:** Long Function, Comments
 **Inverse:** none
 **Improves:** readability: the conditional states *why* it branches and *what* each branch means, not how
 

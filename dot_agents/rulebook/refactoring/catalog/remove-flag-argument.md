@@ -1,6 +1,5 @@
 # Remove Flag Argument
 
-**Smells:** Mysterious Name, Long Parameter List
 **Inverse:** none
 **Improves:** readability: the call site says which behavior it wants instead of encoding it as a bare literal
 

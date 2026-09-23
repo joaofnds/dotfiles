@@ -1,6 +1,5 @@
 # Inline Function
 
-**Smells:** Lazy Element, Middle Man, Speculative Generality, Shotgun Surgery
 **Inverse:** Extract Function
 **Improves:** readability: removes a hop that costs the reader a jump and reveals nothing
 

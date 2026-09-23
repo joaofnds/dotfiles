@@ -1,6 +1,5 @@
 # Extract Variable
 
-**Smells:** Comments, Long Function
 **Inverse:** Inline Variable
 **Improves:** readability: names the steps of a dense expression at the point of use
 

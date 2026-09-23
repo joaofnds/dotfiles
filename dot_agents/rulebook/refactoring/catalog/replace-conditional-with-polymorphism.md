@@ -1,6 +1,5 @@
 # Replace Conditional with Polymorphism
 
-**Smells:** Repeated Switches, Long Function
 **Inverse:** none
 **Improves:** maintainability: adding a case becomes adding a type, not editing every switch that dispatches on it
 

@@ -1,6 +1,5 @@
 # Replace Derived Variable with Query
 
-**Smells:** Mutable Data
 **Inverse:** none
 **Improves:** maintainability: a computed value cannot be stale, so no update site can forget it
 

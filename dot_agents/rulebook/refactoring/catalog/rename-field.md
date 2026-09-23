@@ -1,6 +1,5 @@
 # Rename Field
 
-**Smells:** Mysterious Name
 **Inverse:** none
 **Improves:** readability: the record's most-visible surface, its field names, speaks the domain's language
 

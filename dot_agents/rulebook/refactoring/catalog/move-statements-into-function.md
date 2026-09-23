@@ -1,6 +1,5 @@
 # Move Statements into Function
 
-**Smells:** Duplicated Code
 **Inverse:** Move Statements to Callers
 **Improves:** maintainability: code that always accompanies a call gets one home inside it
 

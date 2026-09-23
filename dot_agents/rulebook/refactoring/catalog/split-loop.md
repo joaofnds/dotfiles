@@ -1,6 +1,5 @@
 # Split Loop
 
-**Smells:** Long Function, Divergent Change
 **Inverse:** none
 **Improves:** readability: each loop answers one question instead of braiding several
 
