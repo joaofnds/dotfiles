@@ -16,7 +16,11 @@ type Scenario =
   | "timeout"
   | "long"
   | "default-mode"
-  | "denials";
+  | "denials"
+  | "killed-at-exit"
+  | "killed-unseen"
+  | "killed-mid-turn"
+  | "killed-between-results";
 const registration = z.object({
   role: z.enum(["agent", "descendant"]),
   pid: z.number().int().positive(),

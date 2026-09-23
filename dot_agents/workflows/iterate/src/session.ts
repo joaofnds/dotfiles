@@ -29,6 +29,7 @@ export type SessionResult = {
   readonly requestedAgent: StageAgent;
   readonly resolvedModel?: string;
   readonly permissionDenials?: number;
+  readonly killedAtExit?: readonly string[];
   readonly usage: UsageReport;
   readonly cost?: SessionCost;
   readonly turns?: number;
@@ -51,6 +52,9 @@ type Stream = {
   resolvedModel: string;
   permissionMode: string;
   permissionDenials: number;
+  taskDescriptions: Map<string, string>;
+  afterResult: boolean;
+  killedAtExit: string[];
   parentUsage: TokenUsage | undefined;
   aggregateUsage: TokenUsage | undefined;
   models: ModelUsage[];
@@ -81,6 +85,7 @@ export async function session(input: SessionInput): Promise<SessionResult> {
   const result = sessionResult(input, stream, logPath, Date.now() - startedAt);
   if (stream.result) console.log(stream.result);
   say(summary(result));
+  for (const description of stream.killedAtExit) say(`   killed at exit: ${description}`);
   if (result.status === "failed") {
     throw new SessionFailure(`the ${stage} session failed: ${result.errors.join("\n")}`, result);
   }
@@ -111,6 +116,7 @@ function sessionResult(
     requestedAgent: input.agent,
     ...(stream.resolvedModel ? { resolvedModel: stream.resolvedModel } : {}),
     ...(stream.permissionDenials === 0 ? {} : { permissionDenials: stream.permissionDenials }),
+    ...(stream.killedAtExit.length === 0 ? {} : { killedAtExit: stream.killedAtExit }),
     usage,
     ...(stream.cost === undefined ? {} : { cost: stream.cost }),
     ...(stream.turns === undefined ? {} : { turns: stream.turns }),
@@ -224,6 +230,9 @@ function emptyStream(): Stream {
     resolvedModel: "",
     permissionMode: "",
     permissionDenials: 0,
+    taskDescriptions: new Map(),
+    afterResult: false,
+    killedAtExit: [],
     parentUsage: undefined,
     aggregateUsage: undefined,
     models: [],
@@ -252,7 +261,18 @@ function take(stream: Stream, line: string, live: boolean): void {
     if (event.type === "resolved_model") stream.resolvedModel = event.model;
     if (event.type === "permission_mode") stream.permissionMode = event.mode;
     if (event.type === "permission_denials") stream.permissionDenials += event.count;
-    if (event.type === "complete") stream.complete = true;
+    if (event.type === "text" || event.type === "tool_call") {
+      stream.afterResult = false;
+      stream.killedAtExit = [];
+    }
+    if (event.type === "task_started") stream.taskDescriptions.set(event.taskId, event.description);
+    if (event.type === "task_killed" && stream.afterResult) {
+      stream.killedAtExit.push(stream.taskDescriptions.get(event.taskId) ?? event.taskId);
+    }
+    if (event.type === "complete") {
+      stream.complete = true;
+      stream.afterResult = true;
+    }
     if (event.type === "error") stream.errors.push(event.message);
     if (event.type === "usage") {
       if (event.turns !== undefined) {

@@ -119,4 +119,37 @@ describe("session", () => {
     expect(result.result).toMatchObject({ status: "completed", permissionDenials: 2 });
     expect(result.stderr).toContain("denials 2");
   }, 6000);
+
+  test("names each task Claude killed after the session's final result", async () => {
+    const result = await (await harness.start("killed-at-exit")).finish();
+
+    expect(result.result).toMatchObject({ status: "completed", killedAtExit: ["Full gate rerun"] });
+    expect(result.stderr).toContain("killed at exit: Full gate rerun");
+    expect(result.stderr).not.toContain("killed at exit: Stopped by the stage");
+  }, 6000);
+
+  describe("when Claude kills a task whose start it never reported", () => {
+    test("names the task by its id", async () => {
+      const result = await (await harness.start("killed-unseen")).finish();
+
+      expect(result.result).toMatchObject({ status: "completed", killedAtExit: ["b-unseen"] });
+    }, 6000);
+  });
+
+  describe("when a turn starts after a result", () => {
+    test("names no task killed before or during that turn", async () => {
+      const result = await (await harness.start("killed-mid-turn")).finish();
+
+      expect(result.result?.killedAtExit).toBeUndefined();
+      expect(result.stderr).not.toContain("killed at exit");
+    }, 6000);
+  });
+
+  describe("when results arrive back to back", () => {
+    test("names a task killed between them", async () => {
+      const result = await (await harness.start("killed-between-results")).finish();
+
+      expect(result.result).toMatchObject({ status: "completed", killedAtExit: ["b-gate"] });
+    }, 6000);
+  });
 });

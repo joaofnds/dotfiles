@@ -9,6 +9,8 @@ const control = connect(process.env.SESSION_CONTROL ?? "");
 let child: ReturnType<typeof spawn> | undefined;
 const deadline = setTimeout(() => process.exit(2), 10_000);
 const emit = (event: unknown) => console.log(JSON.stringify(event));
+const killed = (taskId: string) =>
+  emit({ type: "system", subtype: "task_updated", task_id: taskId, patch: { status: "killed" } });
 
 function stop() {
   clearTimeout(deadline);
@@ -66,6 +68,16 @@ control.on("data", (bytes) => {
       stop();
     }
     console.error("fixture diagnostic");
+    const killedAtExit = process.env.SESSION_SCENARIO === "killed-at-exit";
+    if (killedAtExit) {
+      for (const [taskId, description] of [
+        ["b-gate", "Full gate rerun"],
+        ["b-stopped", "Stopped by the stage"],
+      ]) {
+        emit({ type: "system", subtype: "task_started", task_id: taskId, description });
+      }
+      killed("b-stopped");
+    }
     emit({
       type: "result",
       session_id: "claude-terminal-session",
@@ -93,6 +105,17 @@ control.on("data", (bytes) => {
         },
       },
     });
+    if (killedAtExit) killed("b-gate");
+    if (process.env.SESSION_SCENARIO === "killed-unseen") killed("b-unseen");
+    if (process.env.SESSION_SCENARIO === "killed-mid-turn") {
+      killed("b-monitor");
+      emit({ type: "assistant", message: { content: [{ type: "text", text: "next turn" }] } });
+      killed("b-late");
+    }
+    if (process.env.SESSION_SCENARIO === "killed-between-results") {
+      killed("b-gate");
+      emit({ type: "result", result: final, is_error: false });
+    }
     if (process.env.SESSION_SCENARIO === "malformed") console.log('{"type":');
     stop();
   }

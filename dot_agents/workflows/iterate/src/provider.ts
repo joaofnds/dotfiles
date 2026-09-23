@@ -27,6 +27,8 @@ export type ProviderEvent =
   | { readonly type: "resolved_model"; readonly model: string }
   | { readonly type: "permission_mode"; readonly mode: string }
   | { readonly type: "permission_denials"; readonly count: number }
+  | { readonly type: "task_started"; readonly taskId: string; readonly description: string }
+  | { readonly type: "task_killed"; readonly taskId: string }
   | { readonly type: "error"; readonly message: string }
   | {
       readonly type: "usage";
@@ -136,6 +138,21 @@ function errorFrom(raw: unknown): ProviderEvent {
 function claudeEvents(type: string, raw: unknown): ProviderEvent[] {
   if (type === "system") {
     const event = z.object({ subtype: z.string() }).parse(raw);
+
+    if (event.subtype === "task_started") {
+      const { task_id, description } = z
+        .object({ task_id: z.string(), description: z.string() })
+        .parse(raw);
+      return [{ type: "task_started", taskId: task_id, description }];
+    }
+
+    if (event.subtype === "task_updated") {
+      const { task_id, patch } = z
+        .object({ task_id: z.string(), patch: z.object({ status: z.string().optional() }) })
+        .parse(raw);
+      return patch.status === "killed" ? [{ type: "task_killed", taskId: task_id }] : [];
+    }
+
     if (event.subtype !== "init") return [];
 
     const { session_id, model, permissionMode } = z

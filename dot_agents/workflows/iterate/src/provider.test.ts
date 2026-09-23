@@ -236,6 +236,38 @@ describe(eventsFrom.name, () => {
     expect(denials).toEqual([{ type: "permission_denials", count: 2 }]);
   });
 
+  test("reports a task Claude started with its description", () => {
+    const events = eventsFrom(
+      JSON.stringify({
+        type: "system",
+        subtype: "task_started",
+        task_id: "bobk3blhs",
+        description: "Full gate rerun",
+        task_type: "local_bash",
+        is_backgrounded: true,
+      }),
+    );
+
+    expect(events).toEqual([
+      { type: "task_started", taskId: "bobk3blhs", description: "Full gate rerun" },
+    ]);
+  });
+
+  test.each([
+    ["killed", { status: "killed", end_time: 1 }, [{ type: "task_killed", taskId: "bobk3blhs" }]],
+    ["completed", { status: "completed", end_time: 1 }, []],
+    ["moved to the background", { is_backgrounded: true }, []],
+  ] as const)(
+    "reports a task update as a kill only when it says killed: %s",
+    (_, patch, expected) => {
+      const events = eventsFrom(
+        JSON.stringify({ type: "system", subtype: "task_updated", task_id: "bobk3blhs", patch }),
+      );
+
+      expect(events).toEqual([...expected]);
+    },
+  );
+
   test("ignores diagnostics and unknown event types", () => {
     expect(eventsFrom("loading configuration...")).toEqual([]);
     expect(eventsFrom('{"type":"future.event","payload":{"anything":42}}')).toEqual([]);

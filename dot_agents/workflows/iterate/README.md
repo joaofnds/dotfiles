@@ -63,6 +63,12 @@ permission prompt. Claude falls back that way on models without auto mode, Haiku
 among them on CLI 2.1.280. The status line counts the tool calls Claude denied, and
 the attempt report carries the count as `permissionDenials`.
 
+Claude kills a background shell command still running when a print-mode session
+ends (CLI 2.1.280), so a check the stage started in the background and never saw
+finish produces no result. The runner names each task Claude killed after a result
+and before the stage wrote anything more, on stderr as `killed at exit` and in the
+attempt report as `killedAtExit`.
+
 Exit 0 means the stage advanced or the Done check passed. Exit 2 means the card
 stayed in its column and the supervisor must interpret the result. Exit 1 covers
 refusals and failures. The runner makes no automatic retry after a stage result.
