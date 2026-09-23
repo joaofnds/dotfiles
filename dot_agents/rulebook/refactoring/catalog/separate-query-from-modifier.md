@@ -27,9 +27,11 @@
 
 1. Copy the function; name the copy as a pure query for the value it returns.
 2. Strip every side effect from the query. Run the tests.
-3. At each call that uses the return value, call the query for the value and keep the
-   call to the original for its effect, in the order the original computed the value
-   and made the effect. Test per caller.
+3. At each call that uses the return value, replace the call with a call to the query
+   followed by a call to the original. Where the original's effect changes state its
+   value is computed from, call the original first if it computes the value after the
+   effect, and stop if it computes it from that state both before and after the
+   effect, since no order of the two calls reproduces the value. Test per caller.
 4. Once no caller uses the return value, strip it from the original, which is now the
    modifier, named as a command. Run the tests.
 

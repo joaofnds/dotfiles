@@ -28,8 +28,11 @@
 2. Create a small value class: value is immutable, equality is by content.
 3. Change the holder to store the object while accessors still return the primitive:
    consumers are undisturbed. Run the tests.
-4. Migrate consumers that want behavior onto the object's methods; move the duplicated
-   logic in as you reach each consumer.
+4. Rename the accessor that returns the primitive to say so (Rename Function), as in
+   `priorityString`, and add an accessor that returns the object, so no consumer still
+   comparing the primitive receives the object. Migrate consumers that want behavior
+   onto the new accessor, moving the duplicated logic into the class as you reach each
+   consumer.
 
 A validating constructor rejects values the primitive accepted, so add validation as a
 separate change after the refactoring.

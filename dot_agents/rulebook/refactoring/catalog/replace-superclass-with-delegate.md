@@ -27,7 +27,9 @@
 1. Add a field holding an instance of the former superclass.
 2. Find every use of a superclass feature, by the class itself or by any caller,
    implicit ones such as iteration and property writes included, and create a
-   forwarding method to the field for each feature used. Test as each group lands.
+   forwarding method to the field for each feature used. Forward features that share
+   state together, such as `push` and `pop`, and test after each such group, since
+   forwarding one alone splits the state between the field and the inherited object.
 3. Find code that relies on the class being its superclass, such as a parameter of the
    superclass type, a type check (`instanceof`, `Array.isArray`), or indexing.
    Removing `extends` breaks each, so change it to use the forwards first, or stop.
