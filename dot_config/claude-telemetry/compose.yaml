@@ -1,0 +1,73 @@
+name: claude-telemetry
+
+services:
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.161.0
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes:
+      - ./otelcol.yaml:/etc/otelcol/config.yaml:ro
+    ports:
+      - "127.0.0.1:4327:4317"
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    restart: unless-stopped
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:26.9.1.1629
+    environment:
+      CLICKHOUSE_DB: otel
+      CLICKHOUSE_USER: otel
+      CLICKHOUSE_PASSWORD: otel
+    volumes:
+      - clickhouse:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "-u", "otel", "--password", "otel", "-q", "SELECT 1"]
+      interval: 2s
+      retries: 30
+    restart: unless-stopped
+
+  schema:
+    image: clickhouse/clickhouse-server:26.9.1.1629
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        for attempt in $$(seq 60); do
+          exists=$$(clickhouse-client -h clickhouse -u otel --password otel -q "EXISTS TABLE otel.otel_logs")
+          if [ "$$exists" = 1 ]; then
+            exec clickhouse-client -h clickhouse -u otel --password otel --multiquery --queries-file /schema.sql
+          fi
+          sleep 2
+        done
+        echo "the collector never created otel.otel_logs" >&2
+        exit 1
+    volumes:
+      - ./schema.sql:/schema.sql:ro
+    depends_on:
+      - collector
+
+  grafana:
+    image: grafana/grafana:13.2.2
+    environment:
+      GF_PLUGINS_PREINSTALL_SYNC: grafana-clickhouse-datasource@4.21.3
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_SERVER_DOMAIN: localhost
+      GF_SERVER_ENFORCE_DOMAIN: "true"
+      GF_SERVER_ROOT_URL: http://localhost:3030/
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/dashboards/claude-usage.json
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/etc/grafana/dashboards:ro
+      - grafana:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3030:3000"
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  clickhouse:
+  grafana:
