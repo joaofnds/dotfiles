@@ -57,8 +57,8 @@
 
 <line class="arr" x1="95" y1="320" x2="95" y2="448" marker-end="url(#arrow)"/>
 <line class="arr" x1="281" y1="412" x2="281" y2="448" marker-end="url(#arrow)"/>
-<path class="arr" d="M447 320 L447 334 L526 334 L526 448" marker-end="url(#arrow)"/>
-<path class="arr" d="M589 320 L589 334 L526 334" />
+<path class="arr" d="M447 320 L447 334 L625 334 L625 448" marker-end="url(#arrow)"/>
+<path class="arr" d="M589 320 L589 334" />
 
 <rect class="purple" x="20" y="448" width="150" height="90" rx="8"/>
 <text class="th" x="95" y="466" text-anchor="middle" dominant-baseline="central">Reviewer</text>
