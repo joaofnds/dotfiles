@@ -72,7 +72,7 @@
   "outputStyle": "brief",
   "permissions": {
     "allow": ["mcp__claude-in-chrome"],
-    "defaultMode": "auto",
+    "defaultMode": "bypassPermissions",
     "deny": [
       "Agent(isolation:worktree)",
       "Artifact",
