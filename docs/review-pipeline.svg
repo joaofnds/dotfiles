@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="634" viewBox="0 0 680 634" role="img" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
 <title>Review pipeline</title>
-<desc>A finished task goes through the review skill, which routes each product to the skill that owns it. For code and configuration, review-code dispatches a screener that decides per axis how much review runs and on what model and effort.</desc>
+<desc>A finished task goes through the review skill, which routes each product to the skill that owns it. For code and configuration, review-code dispatches a screener that decides per axis how much review runs and at what effort.</desc>
 <style>
   .box { fill: #F5F6F7; stroke: #BDC1C6; stroke-width: 1; }
   .teal { fill: #DAF0EC; stroke: #7FC4B8; stroke-width: 1; }
@@ -63,19 +63,19 @@
 <rect class="purple" x="20" y="448" width="150" height="90" rx="8"/>
 <text class="th" x="95" y="466" text-anchor="middle" dominant-baseline="central">Reviewer</text>
 <text class="ts" x="95" y="486" text-anchor="middle" dominant-baseline="central">one per edited file</text>
-<text class="ts" x="95" y="504" text-anchor="middle" dominant-baseline="central">session model</text>
+<text class="ts" x="95" y="504" text-anchor="middle" dominant-baseline="central">opus</text>
 <text class="ts" x="95" y="522" text-anchor="middle" dominant-baseline="central">effort high</text>
 
 <rect class="purple" x="186" y="448" width="190" height="90" rx="8"/>
 <text class="th" x="281" y="466" text-anchor="middle" dominant-baseline="central">Reviewers</text>
 <text class="ts" x="281" y="486" text-anchor="middle" dominant-baseline="central">one per dedicated axis</text>
 <text class="ts" x="281" y="504" text-anchor="middle" dominant-baseline="central">one holding all bundled</text>
-<text class="ts" x="281" y="522" text-anchor="middle" dominant-baseline="central">opus or fable, low to high</text>
+<text class="ts" x="281" y="522" text-anchor="middle" dominant-baseline="central">opus, low to high</text>
 
 <rect class="purple" x="392" y="448" width="268" height="90" rx="8"/>
 <text class="th" x="526" y="466" text-anchor="middle" dominant-baseline="central">Reviewer</text>
 <text class="ts" x="526" y="486" text-anchor="middle" dominant-baseline="central">one, via adversarial-review</text>
-<text class="ts" x="526" y="504" text-anchor="middle" dominant-baseline="central">session model</text>
+<text class="ts" x="526" y="504" text-anchor="middle" dominant-baseline="central">opus</text>
 <text class="ts" x="526" y="522" text-anchor="middle" dominant-baseline="central">effort high</text>
 
 <path class="arr" d="M95 538 L95 562 L340 562"/>
