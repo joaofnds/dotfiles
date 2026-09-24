@@ -17,7 +17,13 @@ reapplies `schema.sql` on every start.
 - SQL: `docker compose -f ~/.config/claude-telemetry/compose.yaml exec clickhouse clickhouse-client -u otel --password otel -d otel`
 
 `schema.sql` defines the views to query (`api_requests`, `prompts`,
-`tool_results`) and keeps 90 days of events. ClickHouse publishes no port to the
-host, because its HTTP interface answers any web page; reach it through Grafana
-or `docker compose exec`. The collector listens on 4327 rather than 4317 so it
-does not collide with an application's own OpenTelemetry collector.
+`tool_results`, `session_first_prompts`) and keeps 90 days of events.
+`api_requests` splits each request's cost into input, cache reads, cache
+writes and output using the per-model prices in `model_prices`. A request
+whose model is missing from that list, or that ran at a speed other than
+normal, shows all its spend as "Other" on the dashboard.
+
+ClickHouse publishes no port to the host, because its HTTP interface answers
+any web page; reach it through Grafana or `docker compose exec`. The collector
+listens on 4327 rather than 4317 so it does not collide with an application's
+own OpenTelemetry collector.

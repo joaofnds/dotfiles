@@ -9,8 +9,9 @@
   "schemaVersion": 41,
   "panels": [
     {
-      "title": "API-equivalent cost",
+      "id": 1,
       "type": "stat",
+      "title": "Spend",
       "datasource": {
         "type": "grafana-clickhouse-datasource",
         "uid": "clickhouse"
@@ -18,185 +19,8 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 6,
+        "w": 4,
         "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "clickhouse"
-          },
-          "editorType": "sql",
-          "format": 1,
-          "rawSql": "SELECT sum(cost_usd) FROM otel.api_requests WHERE $__timeFilter(ts)"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "currencyUSD",
-          "decimals": 2,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          }
-        },
-        "overrides": []
-      }
-    },
-    {
-      "title": "Tokens",
-      "type": "stat",
-      "datasource": {
-        "type": "grafana-clickhouse-datasource",
-        "uid": "clickhouse"
-      },
-      "gridPos": {
-        "x": 6,
-        "y": 0,
-        "w": 6,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "clickhouse"
-          },
-          "editorType": "sql",
-          "format": 1,
-          "rawSql": "SELECT sum(context_tokens + output_tokens) FROM otel.api_requests WHERE $__timeFilter(ts)"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          }
-        },
-        "overrides": []
-      }
-    },
-    {
-      "title": "Requests",
-      "type": "stat",
-      "datasource": {
-        "type": "grafana-clickhouse-datasource",
-        "uid": "clickhouse"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 6,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "clickhouse"
-          },
-          "editorType": "sql",
-          "format": 1,
-          "rawSql": "SELECT count() FROM otel.api_requests WHERE $__timeFilter(ts)"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          }
-        },
-        "overrides": []
-      }
-    },
-    {
-      "title": "Average context per request",
-      "type": "stat",
-      "datasource": {
-        "type": "grafana-clickhouse-datasource",
-        "uid": "clickhouse"
-      },
-      "gridPos": {
-        "x": 18,
-        "y": 0,
-        "w": 6,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "clickhouse"
-          },
-          "editorType": "sql",
-          "format": 1,
-          "rawSql": "SELECT avg(context_tokens) FROM otel.api_requests WHERE $__timeFilter(ts)"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          }
-        },
-        "overrides": []
-      }
-    },
-    {
-      "title": "Cost by model",
-      "type": "timeseries",
-      "datasource": {
-        "type": "grafana-clickhouse-datasource",
-        "uid": "clickhouse"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 4,
-        "w": 12,
-        "h": 8
       },
       "targets": [
         {
@@ -207,44 +31,48 @@
           },
           "editorType": "sql",
           "format": 0,
-          "rawSql": "SELECT $__timeInterval(ts) AS time, model, sum(cost_usd) AS cost FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY time, model ORDER BY time"
+          "rawSql": "SELECT $__timeInterval(ts) AS time, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY time ORDER BY time"
         }
       ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "area",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      },
       "fieldConfig": {
         "defaults": {
           "unit": "currencyUSD",
-          "custom": {
-            "drawStyle": "bars",
-            "stacking": {
-              "mode": "normal"
-            },
-            "fillOpacity": 80
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
           },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
+          "decimals": 2
         },
         "overrides": []
-      }
+      },
+      "description": "What these requests would cost at API prices."
     },
     {
-      "title": "Context tokens sent, by context size at the time of the request",
-      "type": "barchart",
+      "id": 2,
+      "type": "stat",
+      "title": "Prompts",
       "datasource": {
         "type": "grafana-clickhouse-datasource",
         "uid": "clickhouse"
       },
       "gridPos": {
-        "x": 12,
-        "y": 4,
-        "w": 12,
-        "h": 8
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 4
       },
       "targets": [
         {
@@ -254,95 +82,48 @@
             "uid": "clickhouse"
           },
           "editorType": "sql",
-          "format": 1,
-          "rawSql": "SELECT multiIf(context_tokens < 50000, '1: <50K', context_tokens < 100000, '2: 50-100K', context_tokens < 200000, '3: 100-200K', context_tokens < 300000, '4: 200-300K', context_tokens < 400000, '5: 300-400K', '6: 400K+') AS context, sum(context_tokens) AS tokens_sent FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY context ORDER BY context"
+          "format": 0,
+          "rawSql": "SELECT $__timeInterval(ts) AS time, count() AS prompts FROM otel.prompts WHERE $__timeFilter(ts) GROUP BY time ORDER BY time"
         }
       ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "area",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
+          "unit": "none",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
           }
         },
         "overrides": []
-      }
+      },
+      "description": "Messages that started a turn: yours, plus task notifications and automated reruns."
     },
     {
-      "title": "Cost by repository",
-      "type": "table",
-      "datasource": {
-        "type": "grafana-clickhouse-datasource",
-        "uid": "clickhouse"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 12,
-        "w": 8,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "clickhouse"
-          },
-          "editorType": "sql",
-          "format": 1,
-          "rawSql": "SELECT if(repo = '', '(no repo)', repo) AS repo, count() AS requests, sum(cost_usd) AS cost, sum(context_tokens + output_tokens) AS tokens FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY repo ORDER BY cost DESC"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "cost"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "currencyUSD"
-              },
-              {
-                "id": "decimals",
-                "value": 2
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cost by source and subagent",
-      "type": "table",
+      "id": 3,
+      "type": "stat",
+      "title": "Spend per prompt",
       "datasource": {
         "type": "grafana-clickhouse-datasource",
         "uid": "clickhouse"
       },
       "gridPos": {
         "x": 8,
-        "y": 12,
-        "w": 8,
-        "h": 8
+        "y": 0,
+        "w": 4,
+        "h": 4
       },
       "targets": [
         {
@@ -353,53 +134,99 @@
           },
           "editorType": "sql",
           "format": 1,
-          "rawSql": "SELECT query_source, agent, count() AS requests, sum(cost_usd) AS cost, avg(context_tokens) AS avg_context FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY query_source, agent ORDER BY cost DESC"
+          "rawSql": "SELECT sum(cost_usd) / uniqExact(prompt_id) AS spend_per_prompt FROM otel.api_requests WHERE $__timeFilter(ts)"
         }
       ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "none",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      },
       "fieldConfig": {
         "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
+          "unit": "currencyUSD",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "decimals": 2
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "cost"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "currencyUSD"
-              },
-              {
-                "id": "decimals",
-                "value": 2
-              }
-            ]
-          }
-        ]
-      }
+        "overrides": []
+      },
+      "description": "Average spend behind one prompt, counting its subagents and compactions."
     },
     {
-      "title": "Cost by skill, plugin and MCP server",
-      "type": "table",
+      "id": 4,
+      "type": "stat",
+      "title": "Average context",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT avg(context_tokens) AS average_context FROM otel.api_requests WHERE $__timeFilter(ts)"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "none",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Tokens sent with the average request. Every request resends the whole conversation."
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Cache hit rate",
       "datasource": {
         "type": "grafana-clickhouse-datasource",
         "uid": "clickhouse"
       },
       "gridPos": {
         "x": 16,
-        "y": 12,
-        "w": 8,
-        "h": 8
+        "y": 0,
+        "w": 4,
+        "h": 4
       },
       "targets": [
         {
@@ -410,53 +237,48 @@
           },
           "editorType": "sql",
           "format": 1,
-          "rawSql": "SELECT skill, plugin, mcp_server, mcp_tool, count() AS requests, sum(cost_usd) AS cost, sum(context_tokens + output_tokens) AS tokens FROM otel.api_requests WHERE $__timeFilter(ts) AND (skill != '' OR plugin != '' OR mcp_server != '') GROUP BY skill, plugin, mcp_server, mcp_tool ORDER BY cost DESC"
+          "rawSql": "SELECT sum(cache_read_tokens) / sum(context_tokens) AS cache_hit_rate FROM otel.api_requests WHERE $__timeFilter(ts)"
         }
       ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "none",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      },
       "fieldConfig": {
         "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
+          "unit": "percentunit",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "decimals": 1
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "cost"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "currencyUSD"
-              },
-              {
-                "id": "decimals",
-                "value": 2
-              }
-            ]
-          }
-        ]
-      }
+        "overrides": []
+      },
+      "description": "Share of context tokens read from cache, which costs a small fraction of uncached input."
     },
     {
-      "title": "Most expensive sessions",
-      "type": "table",
+      "id": 6,
+      "type": "stat",
+      "title": "Spent on compaction",
       "datasource": {
         "type": "grafana-clickhouse-datasource",
         "uid": "clickhouse"
       },
       "gridPos": {
-        "x": 0,
-        "y": 20,
-        "w": 24,
-        "h": 9
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 4
       },
       "targets": [
         {
@@ -467,52 +289,60 @@
           },
           "editorType": "sql",
           "format": 1,
-          "rawSql": "SELECT session_id, if(any(repo) = '', '(no repo)', any(repo)) AS repo, min(ts) AS started, max(ts) AS last, count() AS requests, max(context_tokens) AS max_context, sum(cost_usd) AS cost FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY session_id ORDER BY cost DESC LIMIT 50"
+          "rawSql": "SELECT sumIf(cost_usd, activity = 'Compaction') / sum(cost_usd) AS compaction_share FROM otel.api_requests WHERE $__timeFilter(ts)"
         }
       ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "none",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      },
       "fieldConfig": {
         "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
+          "unit": "percentunit",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "decimals": 1
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "cost"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "currencyUSD"
-              },
-              {
-                "id": "decimals",
-                "value": 2
-              }
-            ]
-          }
-        ]
-      }
+        "overrides": []
+      },
+      "description": "Share of spend on summarizing a full conversation to free up context."
     },
     {
-      "title": "Most expensive prompts",
-      "type": "table",
+      "id": 7,
+      "type": "row",
+      "title": "Where the money goes",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 8,
+      "type": "piechart",
+      "title": "Spend by activity",
       "datasource": {
         "type": "grafana-clickhouse-datasource",
         "uid": "clickhouse"
       },
       "gridPos": {
         "x": 0,
-        "y": 29,
-        "w": 24,
+        "y": 5,
+        "w": 9,
         "h": 10
       },
       "targets": [
@@ -524,35 +354,220 @@
           },
           "editorType": "sql",
           "format": 1,
-          "rawSql": "SELECT p.ts AS ts, if(p.repo = '', '(no repo)', p.repo) AS repo, left(p.prompt, 300) AS prompt, c.requests AS requests, c.max_context AS max_context, c.cost AS cost FROM otel.prompts p INNER JOIN (SELECT prompt_id, count() AS requests, max(context_tokens) AS max_context, sum(cost_usd) AS cost FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY prompt_id) c USING prompt_id ORDER BY cost DESC LIMIT 50"
+          "rawSql": "SELECT activity, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY activity ORDER BY spend DESC"
         }
       ],
+      "options": {
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
       "fieldConfig": {
         "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
+          "unit": "currencyUSD",
+          "decimals": 2,
+          "color": {
+            "mode": "palette-classic"
           }
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "cost"
+              "options": "Main conversation"
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "currencyUSD"
-              },
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Compaction"
+            },
+            "properties": [
               {
-                "id": "decimals",
-                "value": 2
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Subagent"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "purple"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Auxiliary"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Main conversation is your own session. Compaction summarizes a full conversation. Subagents are broken down by name further down."
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Spend over time, by activity",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 9,
+        "y": 5,
+        "w": 15,
+        "h": 10
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "rawSql": "SELECT $__timeInterval(ts) AS time, activity, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY time, activity ORDER BY time"
+        }
+      ],
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "displayName": "${__field.labels.activity}",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 85,
+            "lineWidth": 0,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Main conversation"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Compaction"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Subagent"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "purple"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Auxiliary"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
               }
             ]
           }
@@ -560,56 +575,31 @@
       }
     },
     {
-      "title": "Tool results by size",
-      "type": "table",
+      "id": 10,
+      "type": "row",
+      "title": "What the tokens are",
+      "gridPos": {
+        "x": 0,
+        "y": 15,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 11,
+      "type": "piechart",
+      "title": "Spend by token type",
       "datasource": {
         "type": "grafana-clickhouse-datasource",
         "uid": "clickhouse"
       },
       "gridPos": {
         "x": 0,
-        "y": 39,
-        "w": 24,
-        "h": 8
-      },
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "total_bytes"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "decbytes"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "average_bytes"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "decbytes"
-              }
-            ]
-          }
-        ]
+        "y": 16,
+        "w": 9,
+        "h": 10
       },
       "targets": [
         {
@@ -620,7 +610,1024 @@
           },
           "editorType": "sql",
           "format": 1,
-          "rawSql": "SELECT tool, mcp_server, count() AS calls, sum(result_bytes) AS total_bytes, avg(result_bytes) AS average_bytes, countIf(NOT success) AS failures FROM otel.tool_results WHERE $__timeFilter(ts) GROUP BY tool, mcp_server ORDER BY total_bytes DESC"
+          "rawSql": "SELECT \n  sum(input_cost) AS \"Input\",\n  sum(cache_read_cost) AS \"Cache reads\",\n  sum(cache_write_cost) AS \"Cache writes\",\n  sum(output_cost) AS \"Output\",\n  sum(other_cost) AS \"Other\"\nFROM otel.api_requests WHERE $__timeFilter(ts)"
+        }
+      ],
+      "options": {
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 2,
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Input"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cache reads"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cache writes"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Output"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "purple"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Other"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Input is context sent uncached, charged in full. Cache reads are context reused from cache. Cache writes store new context for the next request. Output is what the model wrote."
+    },
+    {
+      "id": 12,
+      "type": "barchart",
+      "title": "Spend by context size at the time of the request",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 9,
+        "y": 16,
+        "w": 15,
+        "h": 10
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT\n  concat(toString(intDiv(context_tokens, 50000) * 50), '-', toString((intDiv(context_tokens, 50000) + 1) * 50), 'K') AS context_size,\n  sum(input_cost) AS \"Input\",\n  sum(cache_read_cost) AS \"Cache reads\",\n  sum(cache_write_cost) AS \"Cache writes\",\n  sum(output_cost) AS \"Output\",\n  sum(other_cost) AS \"Other\"\nFROM otel.api_requests\nWHERE $__timeFilter(ts)\nGROUP BY intDiv(context_tokens, 50000) AS bucket, context_size\nORDER BY bucket"
+        }
+      ],
+      "options": {
+        "xField": "context_size",
+        "orientation": "vertical",
+        "stacking": "normal",
+        "showValue": "never",
+        "barWidth": 0.8,
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 85,
+            "lineWidth": 0
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Input"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cache reads"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cache writes"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Output"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "purple"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Other"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Longer conversations cost more per request, since every request resends the whole context."
+    },
+    {
+      "id": 13,
+      "type": "row",
+      "title": "Who spends it",
+      "gridPos": {
+        "x": 0,
+        "y": 26,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 14,
+      "type": "bargauge",
+      "title": "Models",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 27,
+        "w": 6,
+        "h": 9
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT replaceRegexpAll(model, '^claude-|-[0-9]{8}$', '') AS model, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY model ORDER BY spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-BlPu"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Spend by model."
+    },
+    {
+      "id": 15,
+      "type": "bargauge",
+      "title": "Repositories",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 6,
+        "y": 27,
+        "w": 6,
+        "h": 9
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT repo, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY repo ORDER BY spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-BlPu"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Spend by the git repository the session ran in. The desktop app does not report one."
+    },
+    {
+      "id": 16,
+      "type": "bargauge",
+      "title": "Subagents",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 27,
+        "w": 6,
+        "h": 9
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT agent, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) AND agent != '' GROUP BY agent ORDER BY spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-BlPu"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Spend inside each subagent, launched by a skill or by the main conversation."
+    },
+    {
+      "id": 17,
+      "type": "bargauge",
+      "title": "Skills",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 18,
+        "y": 27,
+        "w": 6,
+        "h": 9
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT skill, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) AND skill != '' GROUP BY skill ORDER BY spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-BlPu"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Spend while a skill was running, including the subagents it launched."
+    },
+    {
+      "id": 18,
+      "type": "row",
+      "title": "Sessions and prompts",
+      "gridPos": {
+        "x": 0,
+        "y": 36,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 19,
+      "type": "barchart",
+      "title": "Spend by session length",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 37,
+        "w": 9,
+        "h": 10
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT\n  multiIf(requests = 1, '1 request', requests <= 10, '2-10', requests <= 50, '11-50', '51+') AS session_length,\n  sum(spend) AS \"Spend\",\n  count() AS \"Sessions\"\nFROM (\n  SELECT session_id, count() AS requests, sum(cost_usd) AS spend\n  FROM otel.api_requests WHERE $__timeFilter(ts)\n  GROUP BY session_id\n)\nGROUP BY session_length\nORDER BY min(requests)"
+        }
+      ],
+      "options": {
+        "xField": "session_length",
+        "orientation": "vertical",
+        "showValue": "always",
+        "barWidth": 0.7,
+        "legend": {
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "custom": {
+            "fillOpacity": 85,
+            "lineWidth": 0
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sessions"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Sessions grouped by how many requests they made. One-request sessions are forks and headless runs that resend a whole conversation once."
+    },
+    {
+      "id": 20,
+      "type": "timeseries",
+      "title": "Context size through the costliest conversations",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 9,
+        "y": 37,
+        "w": 15,
+        "h": 10
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "rawSql": "WITH top_sessions AS (\n  SELECT session_id FROM otel.api_requests WHERE $__timeFilter(ts)\n  GROUP BY session_id HAVING countIf(activity = 'Main conversation') >= 5\n  ORDER BY sum(cost_usd) DESC LIMIT 6\n)\nSELECT\n  r.ts AS time,\n  concat(r.repo, ': ', left(replaceRegexpAll(p.first_prompt, '\\\\s+', ' '), 50)) AS session,\n  r.context_tokens AS context\nFROM otel.api_requests AS r\nLEFT JOIN otel.session_first_prompts AS p USING session_id\nWHERE $__timeFilter(ts) AND session_id IN top_sessions AND activity = 'Main conversation'\nORDER BY time"
+        }
+      ],
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "displayName": "${__field.labels.session}",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "showPoints": "always",
+            "pointSize": 4,
+            "spanNulls": true,
+            "fillOpacity": 0
+          }
+        },
+        "overrides": []
+      },
+      "description": "Each line is one of the six costliest sessions with at least five turns, named by its first prompt. Context grows with every turn and drops after a compaction."
+    },
+    {
+      "id": 21,
+      "type": "bargauge",
+      "title": "Costliest sessions",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 47,
+        "w": 12,
+        "h": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT\n  concat(s.session_repo, ': ', left(replaceRegexpAll(if(p.first_prompt = '', '(no prompt recorded)', p.first_prompt), '\\\\s+', ' '), 60), ' (', left(s.session_id, 8), ')') AS session,\n  s.spend\nFROM (\n  SELECT session_id, any(repo) AS session_repo, sum(cost_usd) AS spend\n  FROM otel.api_requests WHERE $__timeFilter(ts)\n  GROUP BY session_id ORDER BY spend DESC LIMIT 10\n) AS s\nLEFT JOIN otel.session_first_prompts AS p USING session_id\nORDER BY s.spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "top",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 34,
+        "maxVizHeight": 34,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-YlRd"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Named by the session's first prompt."
+    },
+    {
+      "id": 22,
+      "type": "bargauge",
+      "title": "Costliest prompts",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 47,
+        "w": 12,
+        "h": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT\n  left(replaceRegexpAll(if(p.prompt = '', '(no prompt recorded)', p.prompt), '\\\\s+', ' '), 80) AS prompt,\n  c.spend\nFROM (\n  SELECT prompt_id, sum(cost_usd) AS spend\n  FROM otel.api_requests WHERE $__timeFilter(ts)\n  GROUP BY prompt_id ORDER BY spend DESC LIMIT 10\n) AS c\nLEFT JOIN (SELECT prompt_id, any(prompt) AS prompt FROM otel.prompts GROUP BY prompt_id) AS p USING prompt_id\nORDER BY c.spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "top",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 34,
+        "maxVizHeight": 34,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-YlRd"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Everything one prompt set off: the main reply, its subagents and any compaction. Prompts include task notifications and automated reruns, not only messages you typed."
+    },
+    {
+      "id": 23,
+      "type": "row",
+      "title": "Tools",
+      "gridPos": {
+        "x": 0,
+        "y": 61,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 24,
+      "type": "bargauge",
+      "title": "Tool output added to context",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 62,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT if(mcp_server != '', concat('MCP: ', mcp_server), tool) AS tool_name, sum(result_bytes) AS output FROM otel.tool_results WHERE $__timeFilter(ts) GROUP BY tool_name ORDER BY output DESC LIMIT 12"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "min": 0,
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
+        },
+        "overrides": []
+      },
+      "description": "Bytes each tool returned. Every byte stays in the conversation and is resent with each later request until a compaction."
+    },
+    {
+      "id": 25,
+      "type": "bargauge",
+      "title": "Tool calls",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 62,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT if(mcp_server != '', concat('MCP: ', mcp_server), tool) AS tool_name, count() AS calls FROM otel.tool_results WHERE $__timeFilter(ts) GROUP BY tool_name ORDER BY calls DESC LIMIT 12"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "min": 0,
+          "color": {
+            "mode": "continuous-GrYlRd"
+          }
+        },
+        "overrides": []
+      },
+      "description": "How often each tool ran."
+    },
+    {
+      "id": 26,
+      "type": "row",
+      "title": "Prompt details",
+      "gridPos": {
+        "x": 0,
+        "y": 71,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "id": 27,
+          "type": "table",
+          "title": "Costliest prompts, full text",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 72,
+            "w": 24,
+            "h": 12
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "datasource": {
+                "type": "grafana-clickhouse-datasource",
+                "uid": "clickhouse"
+              },
+              "editorType": "sql",
+              "format": 1,
+              "rawSql": "SELECT\n  p.ts AS time,\n  p.repo AS repo,\n  p.prompt AS prompt,\n  c.spend AS spend,\n  c.requests AS requests\nFROM (\n  SELECT prompt_id, sum(cost_usd) AS spend, count() AS requests\n  FROM otel.api_requests WHERE $__timeFilter(ts)\n  GROUP BY prompt_id ORDER BY spend DESC LIMIT 50\n) AS c\nJOIN otel.prompts AS p USING prompt_id\nORDER BY c.spend DESC"
+            }
+          ],
+          "options": {
+            "cellHeight": "sm",
+            "showHeader": true
+          },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "spend"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "currencyUSD"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 90
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "requests"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 90
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 170
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "repo"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 110
+                  }
+                ]
+              }
+            ]
+          }
         }
       ]
     }
