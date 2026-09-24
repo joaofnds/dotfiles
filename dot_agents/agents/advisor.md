@@ -2,7 +2,7 @@
 name: advisor
 description: Independent advisor for a question it has never seen discussed. Answers it from the corpus's sources and the code, and reports the answer as settled with its source or as unsettled with what the sources lack. Dispatched by the decide skill. It does not run on its own initiative.
 tools: Read, Grep, Glob, Bash
-model: fable
+model: opus
 effort: high
 ---
 
