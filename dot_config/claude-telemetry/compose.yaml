@@ -21,6 +21,7 @@ services:
       CLICKHOUSE_PASSWORD: otel
     volumes:
       - ./clickhouse.xml:/etc/clickhouse-server/config.d/claude-telemetry.xml:ro
+      - ./clickhouse-users.xml:/etc/clickhouse-server/users.d/grafana.xml:ro
       - clickhouse:/var/lib/clickhouse
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8123/ping"]
@@ -53,7 +54,7 @@ services:
     environment:
       GF_PLUGINS_PREINSTALL_SYNC: grafana-clickhouse-datasource@4.21.3
       GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
       GF_AUTH_DISABLE_LOGIN_FORM: "true"
       GF_SERVER_DOMAIN: localhost
       GF_SERVER_ENFORCE_DOMAIN: "true"

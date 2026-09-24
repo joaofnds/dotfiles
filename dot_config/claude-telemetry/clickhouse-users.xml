@@ -1,0 +1,19 @@
+<clickhouse>
+    <profiles>
+        <grafana>
+            <readonly>2</readonly>
+        </grafana>
+    </profiles>
+    <users>
+        <grafana>
+            <password>grafana</password>
+            <profile>grafana</profile>
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+            <grants>
+                <query>GRANT SELECT ON otel.*</query>
+            </grants>
+        </grafana>
+    </users>
+</clickhouse>

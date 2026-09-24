@@ -29,6 +29,13 @@ whose model is missing from that list, or that ran at a speed other than
 normal, shows all its spend as "Other" on the dashboard.
 
 ClickHouse publishes no port to the host, because its HTTP interface answers
-any web page; reach it through Grafana or `docker compose exec`. The collector
-listens on 4327 rather than 4317 so it does not collide with an application's
-own OpenTelemetry collector.
+any web page; reach it through Grafana or `docker compose exec`. Grafana
+connects as the `grafana` user from `clickhouse-users.xml`, which may only
+select from the `otel` database. A Grafana link runs its query when opened, so
+that user must not gain writes or `url()`, `file()`, `remote()` or `s3()`
+access. Anonymous visitors are Viewers, so a link can neither open Explore nor
+add a datasource that logs in as `otel`; run ad hoc queries with the SQL
+command above.
+
+The collector listens on 4327 rather than 4317 so it does not collide with an
+application's own OpenTelemetry collector.
