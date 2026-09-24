@@ -20,11 +20,13 @@ services:
       CLICKHOUSE_USER: otel
       CLICKHOUSE_PASSWORD: otel
     volumes:
+      - ./clickhouse.xml:/etc/clickhouse-server/config.d/claude-telemetry.xml:ro
       - clickhouse:/var/lib/clickhouse
     healthcheck:
-      test: ["CMD", "clickhouse-client", "-u", "otel", "--password", "otel", "-q", "SELECT 1"]
-      interval: 2s
-      retries: 30
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8123/ping"]
+      interval: 60s
+      start_period: 60s
+      start_interval: 1s
     restart: unless-stopped
 
   schema:

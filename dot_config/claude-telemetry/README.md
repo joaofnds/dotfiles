@@ -10,8 +10,13 @@ that:
 
     docker compose -f ~/.config/claude-telemetry/compose.yaml up -d
 
-Rerun the same command after editing any file here, since the `schema` service
-reapplies `schema.sql` on every start.
+Rerun it with `--force-recreate` after editing any file here. The services read
+their files only when they start, `up -d` alone leaves a running container as
+it is, and the `schema` service reapplies `schema.sql` on every start.
+
+`clickhouse.xml` turns off ClickHouse's own system log tables, which otherwise
+double its idle CPU and memory. It lists the log sections
+of the pinned image's `config.xml`, so recheck it when bumping the image.
 
 - Dashboard: http://localhost:3030
 - SQL: `docker compose -f ~/.config/claude-telemetry/compose.yaml exec clickhouse clickhouse-client -u otel --password otel -d otel`
