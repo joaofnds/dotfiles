@@ -596,7 +596,7 @@
       "gridPos": {
         "x": 0,
         "y": 14,
-        "w": 12,
+        "w": 8,
         "h": 9
       },
       "description": "Main conversation spend on writing the prompt cache. New content is written once and cannot be avoided. The rest is the conversation being written again: a new session, a session opened on a long conversation, a model switch, a compaction, a pause, or a miss."
@@ -655,12 +655,73 @@
         "overrides": []
       },
       "gridPos": {
-        "x": 12,
+        "x": 8,
         "y": 14,
-        "w": 12,
+        "w": 8,
         "h": 9
       },
       "description": "Main conversation spend grouped by the slash command or message that started the turn. Subagents are left out, since a background subagent's requests carry whichever prompt is current when they run, often a later task notification."
+    },
+    {
+      "id": 35,
+      "type": "bargauge",
+      "title": "Main conversation spend by model",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT model_name, sum(cost_usd) AS spend\nFROM otel.api_requests\nWHERE $__timeFilter(ts) AND activity = 'Main conversation'\nGROUP BY model_name\nORDER BY spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-BlPu"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 16,
+        "y": 14,
+        "w": 8,
+        "h": 9
+      },
+      "description": "Which model the main conversation ran on. Fable 5.1 charges two and a half times Opus 5.5 for input, output and cache writes, so a session left on Fable for routine work pays more for the same tokens."
     },
     {
       "id": 33,
@@ -679,7 +740,7 @@
           },
           "editorType": "sql",
           "format": 1,
-          "rawSql": "SELECT\n  concat(s.agent, ' on ', replaceOne(s.model, 'claude-', '')) AS agent_model,\n  s.spend / c.runs AS per_run\nFROM (\n  SELECT agent, model, sum(cost_usd) AS spend\n  FROM otel.api_requests\n  WHERE $__timeFilter(ts) AND agent != ''\n  GROUP BY agent, model\n) AS s\nINNER JOIN (\n  SELECT agent, model, count() AS runs\n  FROM otel.subagent_runs\n  WHERE $__timeFilter(ts)\n  GROUP BY agent, model\n) AS c ON s.agent = c.agent AND s.model = c.model\nORDER BY per_run DESC"
+          "rawSql": "SELECT\n  concat(s.agent, ' on ', s.model_name) AS agent_model,\n  s.spend / c.runs AS per_run\nFROM (\n  SELECT agent, model, model_name, sum(cost_usd) AS spend\n  FROM otel.api_requests\n  WHERE $__timeFilter(ts) AND agent != ''\n  GROUP BY agent, model, model_name\n) AS s\nINNER JOIN (\n  SELECT agent, model, count() AS runs\n  FROM otel.subagent_runs\n  WHERE $__timeFilter(ts)\n  GROUP BY agent, model\n) AS c ON s.agent = c.agent AND s.model = c.model\nORDER BY per_run DESC"
         }
       ],
       "options": {
@@ -1363,7 +1424,7 @@
           },
           "editorType": "sql",
           "format": 1,
-          "rawSql": "SELECT replaceRegexpAll(model, '^claude-|-[0-9]{8}$', '') AS model, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY model ORDER BY spend DESC"
+          "rawSql": "SELECT model_name, sum(cost_usd) AS spend FROM otel.api_requests WHERE $__timeFilter(ts) GROUP BY model_name ORDER BY spend DESC"
         }
       ],
       "options": {

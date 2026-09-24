@@ -13,6 +13,7 @@ FROM VALUES(
 CREATE OR REPLACE VIEW otel.api_requests AS
 SELECT
   r.*,
+  replaceRegexpAll(r.model, '^claude-|-[0-9]{8}$', '') AS model_name,
   multiIf(
     query_source = 'compact', 'Compaction',
     agent != '', 'Subagent',
