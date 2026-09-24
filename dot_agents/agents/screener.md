@@ -1,6 +1,6 @@
 ---
 name: screener
-description: Assigns code-review axes, models, and effort from a change's risks. Runs only when dispatched by review-code.
+description: Assigns code-review axes and effort from a change's risks. Runs only when dispatched by review-code.
 tools: Read, Grep, Glob
 model: opus
 effort: low
@@ -23,11 +23,11 @@ Report with no preamble:
   refactoring) marked dedicated, bundled, or none, with its applicable checks or
   the reason none apply. For a review restricted to one axis, mark it dedicated
   and mark the others none because they are outside the requested scope.
-- For each dedicated or bundled axis, the model and effort its reviewer runs at,
-  opus or fable and low, medium, or high. Use opus for effects confined to the
-  change, and fable for wider or unknown effects. Choose effort by the analysis the
-  required reading needs, low for a local check, medium for relationships within
-  changed files, and high for relationships with callers or history.
+- For each dedicated or bundled axis, the effort its reviewer runs at, low,
+  medium, or high. Choose it by the analysis the required reading needs, low for a
+  local check, medium for relationships within changed files, and high for
+  relationships with callers or history and for effects that reach past the
+  change or are unknown. Where more than one level applies, take the highest.
 
 Close with the files you read and the ones you did not, so the caller knows what your
 verdict covers. State only what a tool result showed you. Where you could not read

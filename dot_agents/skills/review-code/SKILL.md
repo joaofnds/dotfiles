@@ -17,7 +17,7 @@ description: Runs independent review of code or configuration and disposes of ev
   so ask for the goal in a line before dispatching.
 - Dispatch one `screener` agent on opus, passing the model on the call, with the patch
   path, changed-file list, and goal. Pass any requested single-axis scope so it
-  assigns that axis a dedicated reviewer with a model and effort, even when its
+  assigns that axis a dedicated reviewer with an effort, even when its
   checks would not otherwise apply.
 - Run the project's suite once, with the command from the project's own manifests.
   Keep the output for the record. The reviewers do not run it. Do not give them the
@@ -26,14 +26,14 @@ description: Runs independent review of code or configuration and disposes of ev
 
 ## One round, fresh eyes
 
-Treat the screener's axis, model, and effort assignments as minimums because the
+Treat the screener's axis and effort assignments as minimums because the
 author may miss risks an independent reader sees. Record a reason for any increase.
 Read [references/axes.md](references/axes.md). Dispatch one reviewer per dedicated
 axis and one for all bundled axes, in parallel, with the patch, goal, shared brief,
-and assigned axis briefs pasted whole. Pass the selected model on the call. Use
-`reviewer`, `reviewer-medium`, or `reviewer-low` for high, medium, or low effort.
-A bundled reviewer uses the highest selected effort and fable if any assigned axis
-selected it. These assignments replace delegation's model selection for this review.
+and assigned axis briefs pasted whole. Use `reviewer`, `reviewer-medium`, or
+`reviewer-low` for high, medium, or low effort, and pass no model on the call,
+because each pins opus and a model on the call overrides the pin. A bundled
+reviewer uses the highest selected effort.
 Record each skipped axis with the screener's reason. For a requested single-axis
 review, dispatch only that axis. A reviewer that reports a changed file unexamined
 has not reviewed it, so spawn a fresh reviewer with the same axes and inputs and

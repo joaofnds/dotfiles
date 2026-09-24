@@ -254,7 +254,8 @@ edited together. The live copies are the always-loaded rule to read a rule file
 again each time the work returns to it, which rests on the `Read` entry, the relay
 skill's transcript pointer, the relay and prompt skills' lists of effort levels, the
 advisor and screener agent definitions' model and effort pins, the reviewer,
-reviewer-medium, and reviewer-low definitions' effort pins, the
+reviewer-medium, and reviewer-low definitions' model and effort pins, the
+review-code skill's rule to pass those reviewers no model, the
 hard line in your always-loaded instructions that hooks and settings take effect
 mid-session, the review-instructions skill's rule under Prefer enforcement to
 prose against proposing a Stop hook that rewrites the reply, and its rule under the
