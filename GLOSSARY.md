@@ -51,11 +51,11 @@ term when you introduce or lean on one, one term per concept.
   the goal, with proposed admissions presented as one batch.
 - **Deferred work**: work withheld from execution until reconsideration, with a
   recorded next check date and, where relevant, an observable return event.
-- **Goal**: what a board's open work is judged against, stated in `backlog/PRIORITY.md`. Triage orders the queue by it and reflect judges each increment against it.
+- **Goal**: what a board's open work is judged against, stated in the board's priority doc, doc-0. Triage orders the queue by it and reflect judges each increment against it.
   Changing it is a decision the loop does not make for itself.
 - **Milestone**: one increment of the goal, named by what becomes possible when it
   is Done, holding only the cards that produce it. A board carries several, explicitly ordered
-  in `backlog/PRIORITY.md`, which names the current one. Due dates record deadlines.
+  in the priority doc, which names the current one. Due dates record deadlines.
 - **Iteration**: one accepted card carried through its required stages by a
   supervisor. Intake, selection, and reflection are separate activities.
 - **Reflection doc**: the dated doc the reflect step leaves on the board, through the

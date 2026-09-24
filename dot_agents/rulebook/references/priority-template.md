@@ -1,3 +1,9 @@
+---
+id: doc-0
+title: 00 Priority
+type: other
+---
+
 # Project priorities
 
 ## North Star
@@ -6,7 +12,7 @@
 
 ## Current focus
 
-<Current milestone and outcome. Completion observation. Current progress.>
+<Current milestone, its outcome, and its completion observation.>
 
 ## Milestone sequence
 
@@ -16,15 +22,16 @@
 
 ### <Milestone ID or name>
 
-1. <Card ID, title, and link.>
+1. <Card ID and title, followed by Done and its date once the card is finished.>
 
 <Retain recorded ordering reasons. Mark later milestones unsequenced where no order
 has been agreed.>
 
 ## Next action
 
-<Resume or start a named card, or a blocker with evidence and the decision needed.
-Link the user's approval of any bypass and its condition for returning to the blocked card.>
+<Resume or start a named card, or name the blocked card, the decision it needs, and the
+card that holds its evidence. Link the user's approval of any bypass and its condition
+for returning to the blocked card.>
 
 ## Deferred directions
 
@@ -32,5 +39,5 @@ Link the user's approval of any bypass and its condition for returning to the bl
 
 ## Planning authority
 
-<Links to the user-approved goal, order, and specific planning changes, with their
-reasons and displaced work.>
+<One entry per user-approved change to the goal, order, or plan, with the fields the
+board rules' Project direction names.>

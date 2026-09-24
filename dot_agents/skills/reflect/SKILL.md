@@ -11,7 +11,7 @@ next step. It writes one doc and nothing else on the board.
 
 ## Read before judging
 
-Read the board's goal and current sequence from `backlog/PRIORITY.md`, and the
+Read the board's goal and current sequence in the priority doc, doc-0, and the
 milestone the card belongs to. Without a goal, write the reflection doc with only
 that finding and stop, since nothing else can be judged.
 
@@ -28,7 +28,7 @@ Then look once yourself. Run the read-only check or open the screen the card's
 observations name, so the actual condition is what you saw and not what the card
 claims.
 
-Read the open board and the planning records linked from `backlog/PRIORITY.md`, so
+Read the open board and the planning records linked from the priority doc, so
 a proposal does not re-derive an existing card or overtake an agreed next step.
 
 ## Answer the five questions

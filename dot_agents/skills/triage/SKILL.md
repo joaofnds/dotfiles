@@ -33,7 +33,7 @@ set is the fixed set of IDs recorded at entry. New arrivals wait for the next pa
 ## Establish the goal
 
 Read reflections and accepted decisions newer than the planning decision linked from
-`backlog/PRIORITY.md`. Reconcile them under the board's Project direction policy.
+the priority doc, doc-0. Reconcile them under the board's Project direction policy.
 Continue the factual audit while the goal or order remains unresolved, and mark the
 planning handoff incomplete.
 
@@ -164,8 +164,8 @@ recommend one and name what it displaces. Continue ordering the independent work
 ## Reconcile selection
 
 Check the planned next action against card readiness under the board's selection
-policy. Record blockers in `backlog/PRIORITY.md` and proposed changes on the triage doc.
-Keep consequence-based priorities independent of the pick.
+policy. Name blockers under the priority doc's Next action and proposed changes on
+the triage doc. Keep consequence-based priorities independent of the pick.
 
 ## Apply and check the sweep
 
@@ -183,10 +183,10 @@ resolve and each retained requirement has a home. Every audited To Do card has a
 accepted actionable outcome. Investigations follow the board route for answering a question. Recheck the first action against the current
 tree and resources before handing it off.
 
-The dated triage doc opens with a link to `backlog/PRIORITY.md`, the goal at the time
+The dated triage doc opens with a link to the priority doc, the goal at the time
 of the audit, what changed, the next card and its bet or blocker, and whether the
 sweep and handoff are complete. It retains the decision evidence for planning changes
-and proposals. The current sequence and next action live only in the priority file.
+and proposals. The current sequence and next action live only in the priority doc.
 It names the mode and carries its handoff, coverage audit, reversible change record,
 and unsettled decisions with recommendations. When there is a first card,
 attach the doc so its next session can find it. Record recurring card-writing defects

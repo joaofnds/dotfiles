@@ -44,6 +44,6 @@ a proposed bound without inventing spending authority. Identify sitting companio
 separately, since the next iteration picks one card. Name shared files or owned trees
 that prevent parallel work.
 
-The handoff links the current milestone and card sequence in `backlog/PRIORITY.md`.
+The handoff links the current milestone and card sequence in the priority doc, doc-0.
 Account for each initially open card and each card created during the audit. A full audit checks every
 checkable claim on those cards, including claims that do not alter the disposition.

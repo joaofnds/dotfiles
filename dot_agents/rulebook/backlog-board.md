@@ -1,33 +1,48 @@
 # Board
 
 Track independent work on the backlog board. Change cards and documents through the
-`backlog` CLI, except the planning file below. The configuration exception is under
-The CLI. Never adopt backlog's own `instructions` or agent-guide output as process truth.
+`backlog` CLI, except that the priority doc below may also be edited directly. The
+configuration exception is under The CLI. Never adopt backlog's own `instructions` or
+agent-guide output as process truth.
 
 ## Project direction
 
-Read `backlog/PRIORITY.md` alongside the card before selecting, proposing, resuming,
-or working on backlog tasks. It owns the current goal and agreed milestone and card
-sequence. Keep it concise, leaving task details and history on their existing records.
-Record verified progress and blockers before handing off, preserving concurrent edits.
-When a card is complete, advance to the next already-agreed card. These updates do
-not authorize adding, skipping, or reordering work.
-Milestone completion requires observing its outcome.
+Read the priority doc, `backlog/docs/doc-0 - 00-Priority.md` (`backlog doc view doc-0`),
+alongside the card before selecting, proposing, resuming, or working on backlog tasks.
+It states the current goal and the agreed milestone and card sequence as they stand
+now. Progress notes, evidence, review findings, and history go on the card and never
+into the priority doc, because a narrative copied there lengthens the doc every
+session and hides the current plan.
+
+When a card completes, mark it Done with its date in the card sequence and point Next
+action at the next already-agreed card. When a blocker changes what comes next, leave
+the sequence as it is and name under Next action the blocked card, the decision it
+needs, and the card that holds its evidence. In either case rewrite the lines that
+changed so each reads as current, and preserve concurrent edits. These updates do not
+authorize adding, skipping, or reordering work. Milestone completion requires
+observing its outcome.
 
 Changes to the North Star, current focus, milestone commitments, or card sequence
 require the user's explicit approval of the specific change before editing the plan.
-Keep proposals outside `PRIORITY.md`, on the card or a separate planning document,
+Keep proposals outside the priority doc, on the card or a separate planning document,
 with evidence, expected benefit, and what they delay or displace. Preserve the agreed
-plan until approved, then link the
-approval when applying it. A named-card direction changes only that pick. If the
+plan until approved, then add one entry under Planning authority with the approval's
+date, its quoted words or link, what it changed, and the work it displaced. A progress
+update adds no entry there. A named-card direction changes only that pick. If the
 sequence is exhausted, propose the next step.
 
-During authorized planning or execution, create a missing file from
-[the template](references/priority-template.md) and edit it directly. Recover accepted
-decisions and mark gaps or conflicts unresolved without seeking permission merely to
-record them. Missing direction prevents an inferred pick, not an explicitly directed
-accepted card. Read-only and record-only phases report missing or stale priorities
-without writing the file. The next planning or execution phase reconciles those gaps.
+During authorized planning or execution, create a missing priority doc by copying
+[the template](references/priority-template.md) to that path, never through
+`backlog doc create`, whose next number would put it at another path. Keep its id
+`doc-0` and its title `00 Priority`, since the CLI and the browser rename the file from
+those two fields when they save it, and the title sorts it first in the browser's
+document list. The evidence and its re-check are in
+[the CLI evidence](references/backlog-cli-facts.md). Edit the doc directly or through
+the CLI. Recover accepted decisions and mark gaps or conflicts unresolved without
+seeking permission merely to record them. Missing direction prevents an inferred pick,
+not an explicitly directed accepted card. Read-only and record-only phases report
+missing or stale priorities without writing the doc. The next planning or execution
+phase reconciles those gaps.
 
 ## Columns
 
@@ -86,7 +101,7 @@ investigation do not authorize a move to Build.
 
 Resume the active planned card before starting another. Report other cards in
 Build or Review and their owners without taking over their work. Select new work
-from the agreed sequence in `backlog/PRIORITY.md`, within its current milestone.
+from the agreed sequence in the priority doc, within its current milestone.
 Check admission, dependencies, resources, ownership, and `deferred` before starting.
 If the next card is blocked, skip it only with the user's explicit approval of that
 bypass. A general delegation to plan or work unattended does not supply that approval.
@@ -184,7 +199,7 @@ name was already supplied in the session. Use that name as one directory under
 is already taken, ask whether to link that board or use another name.
 
 For a new board, create its tasks, docs, and decisions directories and initialize
-`backlog/PRIORITY.md` under Project direction after linking the board. Copy
+the priority doc under Project direction after linking the board. Copy
 `~/.agents/backlog-config.yml` to its `config.yml`, setting `project_name` to the
 chosen name. Keep configuration in the board so the central backup includes it.
 

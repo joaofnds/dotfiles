@@ -17,9 +17,10 @@ defaults.
 The supervising agent runs one stage at a time, reads its result, checks new
 consequential claims, and carries the card into the next stage. Each ordinary
 stage call starts a fresh Claude session with that stage's skill. The card and its
-linked records carry execution details between sessions. Agents also read
-`backlog/PRIORITY.md` for the project goal, current focus, and agreed milestone and
-card sequence. They update progress as work finishes. New findings remain proposals
+linked records carry execution details between sessions. Agents also read the
+priority doc (`backlog/docs/doc-0 - 00-Priority.md`) for the project goal, current
+focus, and agreed milestone and card sequence. They mark finished cards Done there and
+advance the next action, keeping progress on the card. New findings remain proposals
 until an authorized planning decision changes the sequence.
 
 ![The supervisor calls the runner once per stage, sharing the card and its records with fresh stage sessions.](iterate-pieces.svg)
