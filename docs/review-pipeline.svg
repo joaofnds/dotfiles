@@ -47,7 +47,7 @@
 <line class="arr" x1="281" y1="320" x2="281" y2="356" marker-end="url(#arrow)"/>
 <rect class="teal" x="186" y="356" width="190" height="56" rx="8"/>
 <text class="th" x="281" y="374" text-anchor="middle" dominant-baseline="central">Screener agent</text>
-<text class="ts" x="281" y="394" text-anchor="middle" dominant-baseline="central">opus, effort low, read only</text>
+<text class="ts" x="281" y="394" text-anchor="middle" dominant-baseline="central">opus at medium, read only</text>
 
 <line class="arr" x1="376" y1="384" x2="440" y2="384" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
 <rect class="amber" x="440" y="348" width="150" height="72" rx="8"/>

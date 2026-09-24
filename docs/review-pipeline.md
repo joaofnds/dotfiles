@@ -51,8 +51,9 @@ by what a change can reach rather than how large it is. It reads the callers, th
 data the change writes, the input it accepts, and the configuration that turns it
 on, then says for each axis what that axis has to hold against this change.
 
-The screener runs on a strong model at low effort. The judgment needs a model
-that can read code well; it does not need a long deliberation.
+The screener runs on a strong model at medium effort. At low effort it sent
+architecture and refactoring review to shallower reviewers on a change whose
+duplicated and drifted code lay outside the changed files.
 
 ## The floor
 

@@ -232,7 +232,7 @@ Tool, permission, and invocation fields:
   *(model-config reference)*.
 - Agent-definition frontmatter takes `model` as one of the aliases `sonnet`, `opus`,
   `haiku`, `fable`, a full model id, or `inherit`, and `effort` as the session levels
-  above. The pins hold with no model passed. The screener, pinned `model: opus` and
+  above. The pins hold with no model passed. The screener, then pinned `model: opus` and
   `effort: low`, ran on `claude-opus-5-5` from a `claude-sonnet-5` parent, the same as
   when the call passed `opus` *(DOT-101: alias-sonnet-nomodel, alias-sonnet-opus)*. A
   `PreToolUse` hook inside it read effort `low` in those runs and under a

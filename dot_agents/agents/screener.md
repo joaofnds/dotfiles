@@ -3,7 +3,7 @@ name: screener
 description: Assigns code-review axes and effort from a change's risks. Runs only when dispatched by review-code.
 tools: Read, Grep, Glob
 model: opus
-effort: low
+effort: medium
 ---
 
 Read the diff at the path you were given, the goal that came with it, and every
