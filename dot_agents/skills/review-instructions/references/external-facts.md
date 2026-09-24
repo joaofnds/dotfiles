@@ -32,12 +32,19 @@ Load limits and delivery:
   measuring (v2.1.211+), a clause the 2.1.280 memory reference no longer states.
 - A memory write past 80% of either `MEMORY.md` cap injects a compaction instruction
   through an internal `PostToolUse` callback, naming 70% of that cap as the target and
-  prescribing one line per entry with the detail moved into the topic files. A per-note
-  size cap exists in the same code and did not fire on a 47KB note, so its value is
-  unestablished *(bundle read plus write probe, CLI 2.1.247)*. The 2.1.280 memory
-  reference documents the reminder near a limit and an error past one without naming
-  either threshold. The 80% and 70% figures came from reading the CLI bundle and were
-  not re-read on 2.1.280.
+  prescribing one line per entry with the detail moved into the topic files *(bundle
+  read plus write probe, CLI 2.1.247)*. A read of the 2.1.280 bundle on 2026-09-24
+  found the same 80% and 70% figures, the same instruction, and the same `PostToolUse`
+  return. The check runs only while auto memory is on, and for the main `MEMORY.md`,
+  unless a user-scope prompt-index setting names it, only while the feature flag
+  `tengu_moth_copse` and `CLAUDE_MEMORY_STORES` are both off. With either one on,
+  each other `.md` file in the memory directory is checked instead, at the same 80%
+  and 70%, against a limit of 200 lines or 4,096 bytes, and told to keep one fact per
+  file. The write probe was not re-run on 2.1.280, because
+  the settings here turn auto memory off *(one bundle read, no model session, DOT-101
+  `parent-criteria/memory-thresholds-2.1.280.txt`)*. The 2.1.280 memory reference
+  documents the reminder near a limit and an error past one without naming either
+  threshold.
 - Skill listing: 1,536 characters per entry (`skillListingMaxDescChars`); the listing
   overall gets 1% of the context window (`skillListingBudgetFraction`, or
   `SLASH_COMMAND_TOOL_CHAR_BUDGET` for a fixed count).
