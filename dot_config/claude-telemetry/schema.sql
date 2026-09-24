@@ -5,6 +5,7 @@ SELECT *
 FROM VALUES(
   'model String, input_usd_per_mtok Float64, cache_read_usd_per_mtok Float64, one_hour_cache_write_usd_per_mtok Float64, output_usd_per_mtok Float64',
   ('claude-opus-5-5', 4, 0.2, 8, 20),
+  ('claude-sonnet-5', 2, 0.2, 4, 10),
   ('claude-fable-5-1', 10, 0.25, 20, 50),
   ('claude-haiku-4-5-20251001', 1, 0.1, 2, 5)
 );
@@ -15,8 +16,8 @@ SELECT
   multiIf(
     query_source = 'compact', 'Compaction',
     agent != '', 'Subagent',
-    query_source IN ('sdk', 'repl_main_thread'), 'Main conversation',
-    query_source = 'auxiliary', 'Auxiliary',
+    query_source = 'sdk' OR startsWith(query_source, 'repl_main_thread'), 'Main conversation',
+    query_source = 'auxiliary' OR startsWith(query_source, 'generate_'), 'Auxiliary',
     query_source
   ) AS activity,
   p.model != '' AS priced,
@@ -64,7 +65,13 @@ SELECT
   if(LogAttributes['vcs.repository.name'] = '', '(no repo)', LogAttributes['vcs.repository.name']) AS repo,
   LogAttributes['prompt'] AS prompt,
   toUInt64OrZero(LogAttributes['prompt_length']) AS prompt_length,
-  LogAttributes['command_name'] AS command_name
+  LogAttributes['command_name'] AS command_name,
+  multiIf(
+    command_name != '', concat('/', command_name),
+    startsWith(prompt, '<task-notification'), 'Background task finished',
+    startsWith(prompt, '<local-command') OR startsWith(prompt, '<system-reminder'), 'Automated message',
+    'Typed prompt'
+  ) AS origin
 FROM otel.otel_logs
 WHERE LogAttributes['event.name'] = 'user_prompt';
 
@@ -75,6 +82,7 @@ SELECT
   LogAttributes['prompt.id'] AS prompt_id,
   if(LogAttributes['vcs.repository.name'] = '', '(no repo)', LogAttributes['vcs.repository.name']) AS repo,
   LogAttributes['tool_name'] AS tool,
+  LogAttributes['tool_input'] AS input,
   LogAttributes['tool_parameters'] AS parameters,
   JSONExtractString(parameters, 'mcp_server_name') AS mcp_server,
   LogAttributes['success'] = 'true' AS success,
@@ -83,13 +91,26 @@ SELECT
 FROM otel.otel_logs
 WHERE LogAttributes['event.name'] = 'tool_result';
 
+CREATE OR REPLACE VIEW otel.subagent_runs AS
+SELECT
+  Timestamp AS ts,
+  LogAttributes['session.id'] AS session_id,
+  LogAttributes['prompt.id'] AS prompt_id,
+  LogAttributes['agent_type'] AS agent,
+  replaceOne(LogAttributes['final_model'], '[1m]', '') AS model,
+  LogAttributes['is_async'] = 'true' AS is_async,
+  toUInt64OrZero(LogAttributes['duration_ms']) AS duration_ms,
+  toUInt64OrZero(LogAttributes['total_tokens']) AS total_tokens,
+  toUInt64OrZero(LogAttributes['total_tool_uses']) AS tool_uses
+FROM otel.otel_logs
+WHERE LogAttributes['event.name'] = 'subagent_completed';
+
 CREATE OR REPLACE VIEW otel.session_first_prompts AS
 SELECT
   session_id,
-  if(
-    countIf(NOT startsWith(prompt, '<')) > 0,
-    argMinIf(prompt, ts, NOT startsWith(prompt, '<')),
-    argMin(prompt, ts)
-  ) AS first_prompt
-FROM otel.prompts
+  if(countIf(by_person) > 0, argMinIf(prompt, ts, by_person), argMin(prompt, ts)) AS first_prompt
+FROM (
+  SELECT session_id, ts, prompt, origin NOT IN ('Background task finished', 'Automated message') AS by_person
+  FROM otel.prompts
+)
 GROUP BY session_id;

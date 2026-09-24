@@ -319,12 +319,478 @@
       "description": "Share of spend on summarizing a full conversation to free up context."
     },
     {
+      "id": 28,
+      "type": "row",
+      "title": "Where to save",
+      "collapsed": false,
+      "panels": [],
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 1
+      }
+    },
+    {
+      "id": 29,
+      "type": "timeseries",
+      "title": "Main conversation spend by context size",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "rawSql": "WITH (\n  SELECT coalesce(minIfOrNull(pre_tokens, in_range), minOrNull(pre_tokens))\n  FROM (\n    SELECT toUInt64OrZero(LogAttributes['pre_tokens']) AS pre_tokens, ($__timeFilter(Timestamp)) AS in_range\n    FROM otel.otel_logs\n    WHERE LogAttributes['event.name'] = 'compaction' AND LogAttributes['trigger'] = 'auto'\n  )\n) AS compacts_at\nSELECT\n  $__timeInterval(ts) AS time,\n  multiIf(\n    compacts_at IS NULL, 'No auto-compaction recorded',\n    context_tokens < compacts_at, 'Within auto-compaction',\n    'Past auto-compaction'\n  ) AS band,\n  sum(cost_usd) AS spend\nFROM otel.api_requests\nWHERE $__timeFilter(ts) AND activity = 'Main conversation'\nGROUP BY time, band\nORDER BY time"
+        }
+      ],
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "displayName": "${__field.labels.band}",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 85,
+            "lineWidth": 0,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Within auto-compaction"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Past auto-compaction"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "No auto-compaction recorded"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 15,
+        "h": 9
+      },
+      "description": "Every request resends the whole conversation, so a long context makes each one dearer. The split is the smallest context at which an automatic compaction fired in the range. Red is spend on requests sent above it: sessions started before auto-compaction was on, conversations opened or replayed above it, or a turn that outgrew it before compacting."
+    },
+    {
+      "id": 30,
+      "type": "timeseries",
+      "title": "Main conversation round trips",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "rawSql": "SELECT\n  $__timeInterval(started) AS time,\n  avg(requests) AS \"Requests per prompt\",\n  sum(spend) / sum(requests) AS \"Cost per request\"\nFROM (\n  SELECT prompt_id, min(ts) AS started, count() AS requests, sum(cost_usd) AS spend\n  FROM otel.api_requests\n  WHERE $__timeFilter(ts) AND activity = 'Main conversation'\n  GROUP BY prompt_id\n)\nGROUP BY time\nORDER BY time"
+        }
+      ],
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 3,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "pointSize": 4,
+            "showPoints": "auto",
+            "spanNulls": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cost per request"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Requests per prompt"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "x": 15,
+        "y": 5,
+        "w": 9,
+        "h": 9
+      },
+      "description": "How many requests one prompt takes, and what each costs. Every tool call ends a request and the next one resends the context, so batching independent calls lowers the first line, and compaction and cheaper models lower the second. Each prompt counts at the time of its first request."
+    },
+    {
+      "id": 31,
+      "type": "bargauge",
+      "title": "Cache writes by cause",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT cause, sum(cache_write_cost) AS spend\nFROM (\n  SELECT\n    ts,\n    cache_write_cost,\n    multiIf(\n      n = 1 AND context_tokens > 50000, 'Opened on a long conversation',\n      n = 1, 'Session start',\n      cache_read_tokens >= 0.5 * prev_context, 'New content',\n      model != prev_model, 'Model switch',\n      context_tokens < 0.7 * prev_context, 'After compaction',\n      gap_seconds > 3600, 'Resumed after an hour idle',\n      gap_seconds > 300, 'Resumed after 5 to 60 minutes idle',\n      'Cache miss mid-session'\n    ) AS cause\n  FROM (\n    SELECT\n      ts,\n      cache_write_cost,\n      cache_read_tokens,\n      context_tokens,\n      model,\n      lagInFrame(model, 1, '') OVER w AS prev_model,\n      lagInFrame(context_tokens, 1, 0) OVER w AS prev_context,\n      dateDiff('second', lagInFrame(ts, 1, ts) OVER w, ts) AS gap_seconds,\n      row_number() OVER w AS n\n    FROM otel.api_requests\n    WHERE ts >= $__fromTime - INTERVAL 1 DAY AND ts <= $__toTime AND activity = 'Main conversation'\n    WINDOW w AS (PARTITION BY session_id ORDER BY ts ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)\n  )\n)\nWHERE $__timeFilter(ts)\nGROUP BY cause\nORDER BY spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-YlRd"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 14,
+        "w": 12,
+        "h": 9
+      },
+      "description": "Main conversation spend on writing the prompt cache. New content is written once and cannot be avoided. The rest is the conversation being written again: a new session, a session opened on a long conversation, a model switch, a compaction, a pause, or a miss."
+    },
+    {
+      "id": 32,
+      "type": "bargauge",
+      "title": "Main conversation spend by what started the turn",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT p.origin AS started_by, sum(r.cost_usd) AS spend\nFROM otel.api_requests AS r\nINNER JOIN (\n  SELECT prompt_id, any(origin) AS origin\n  FROM otel.prompts\n  WHERE ts >= $__fromTime - INTERVAL 1 DAY AND ts <= $__toTime\n  GROUP BY prompt_id\n) AS p ON r.prompt_id = p.prompt_id\nWHERE $__timeFilter(r.ts) AND r.activity = 'Main conversation'\nGROUP BY started_by\nORDER BY spend DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-BlPu"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 14,
+        "w": 12,
+        "h": 9
+      },
+      "description": "Main conversation spend grouped by the slash command or message that started the turn. Subagents are left out, since a background subagent's requests carry whichever prompt is current when they run, often a later task notification."
+    },
+    {
+      "id": 33,
+      "type": "bargauge",
+      "title": "Subagent cost per run",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT\n  concat(s.agent, ' on ', replaceOne(s.model, 'claude-', '')) AS agent_model,\n  s.spend / c.runs AS per_run\nFROM (\n  SELECT agent, model, sum(cost_usd) AS spend\n  FROM otel.api_requests\n  WHERE $__timeFilter(ts) AND agent != ''\n  GROUP BY agent, model\n) AS s\nINNER JOIN (\n  SELECT agent, model, count() AS runs\n  FROM otel.subagent_runs\n  WHERE $__timeFilter(ts)\n  GROUP BY agent, model\n) AS c ON s.agent = c.agent AND s.model = c.model\nORDER BY per_run DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "min": 0,
+          "decimals": 2,
+          "color": {
+            "mode": "continuous-BlPu"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 23,
+        "w": 12,
+        "h": 9
+      },
+      "description": "Spend of each subagent on each model over the range, divided by its finished runs. Runs that straddle the range's edges skew it, so it reads truest over ranges much longer than one run. The same reviewer costs very different amounts depending on the model the review picks."
+    },
+    {
+      "id": 34,
+      "type": "bargauge",
+      "title": "Rule files and skills read into context",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "rawSql": "SELECT file, sum(result_bytes) AS bytes\nFROM (\n  SELECT\n    concat(input, ' ', parameters) AS src,\n    multiIf(\n      match(src, '\\\\.agents/rulebook/'), concat('rulebook/', extract(src, '\\\\.agents/rulebook/([A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)?)')),\n      match(src, '/skills/[A-Za-z0-9_-]+'), concat('skill: ', extract(src, '/skills/([A-Za-z0-9_-]+)')),\n      ''\n    ) AS file,\n    result_bytes\n  FROM otel.tool_results\n  WHERE $__timeFilter(ts)\n)\nWHERE file != ''\nGROUP BY file\nORDER BY bytes DESC"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "valueMode": "color",
+        "namePlacement": "left",
+        "showUnfilled": true,
+        "sizing": "manual",
+        "minVizHeight": 16,
+        "maxVizHeight": 22,
+        "text": {
+          "titleSize": 12,
+          "valueSize": 13
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true,
+          "limit": 12
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "decbytes",
+          "min": 0,
+          "decimals": 1,
+          "color": {
+            "mode": "continuous-YlRd"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 23,
+        "w": 12,
+        "h": 9
+      },
+      "description": "Bytes of rule files and skill files read through tools. Each read stays in the conversation and is resent with every later request until a compaction, so trimming a file saves on every read of it."
+    },
+    {
       "id": 7,
       "type": "row",
       "title": "Where the money goes",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 32,
         "w": 24,
         "h": 1
       },
@@ -341,7 +807,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 5,
+        "y": 33,
         "w": 9,
         "h": 10
       },
@@ -466,7 +932,7 @@
       },
       "gridPos": {
         "x": 9,
-        "y": 5,
+        "y": 33,
         "w": 15,
         "h": 10
       },
@@ -580,7 +1046,7 @@
       "title": "What the tokens are",
       "gridPos": {
         "x": 0,
-        "y": 15,
+        "y": 43,
         "w": 24,
         "h": 1
       },
@@ -597,7 +1063,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 16,
+        "y": 44,
         "w": 9,
         "h": 10
       },
@@ -737,7 +1203,7 @@
       },
       "gridPos": {
         "x": 9,
-        "y": 16,
+        "y": 44,
         "w": 15,
         "h": 10
       },
@@ -867,7 +1333,7 @@
       "title": "Who spends it",
       "gridPos": {
         "x": 0,
-        "y": 26,
+        "y": 54,
         "w": 24,
         "h": 1
       },
@@ -884,7 +1350,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 27,
+        "y": 55,
         "w": 6,
         "h": 9
       },
@@ -945,7 +1411,7 @@
       },
       "gridPos": {
         "x": 6,
-        "y": 27,
+        "y": 55,
         "w": 6,
         "h": 9
       },
@@ -1006,7 +1472,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 27,
+        "y": 55,
         "w": 6,
         "h": 9
       },
@@ -1067,7 +1533,7 @@
       },
       "gridPos": {
         "x": 18,
-        "y": 27,
+        "y": 55,
         "w": 6,
         "h": 9
       },
@@ -1124,7 +1590,7 @@
       "title": "Sessions and prompts",
       "gridPos": {
         "x": 0,
-        "y": 36,
+        "y": 64,
         "w": 24,
         "h": 1
       },
@@ -1141,7 +1607,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 37,
+        "y": 65,
         "w": 9,
         "h": 10
       },
@@ -1222,7 +1688,7 @@
       },
       "gridPos": {
         "x": 9,
-        "y": 37,
+        "y": 65,
         "w": 15,
         "h": 10
       },
@@ -1280,7 +1746,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 47,
+        "y": 75,
         "w": 12,
         "h": 14
       },
@@ -1341,7 +1807,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 47,
+        "y": 75,
         "w": 12,
         "h": 14
       },
@@ -1390,7 +1856,7 @@
         },
         "overrides": []
       },
-      "description": "Everything one prompt set off: the main reply, its subagents and any compaction. Prompts include task notifications and automated reruns, not only messages you typed."
+      "description": "The requests tagged with one prompt: the main reply, its compactions and the subagents it waited for. A background subagent's requests carry whichever prompt is current when they run, often a later task notification. Prompts include task notifications and automated reruns, not only messages you typed."
     },
     {
       "id": 23,
@@ -1398,7 +1864,7 @@
       "title": "Tools",
       "gridPos": {
         "x": 0,
-        "y": 61,
+        "y": 89,
         "w": 24,
         "h": 1
       },
@@ -1415,7 +1881,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 62,
+        "y": 90,
         "w": 12,
         "h": 9
       },
@@ -1475,7 +1941,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 62,
+        "y": 90,
         "w": 12,
         "h": 9
       },
@@ -1531,7 +1997,7 @@
       "title": "Prompt details",
       "gridPos": {
         "x": 0,
-        "y": 71,
+        "y": 99,
         "w": 24,
         "h": 1
       },
@@ -1547,7 +2013,7 @@
           },
           "gridPos": {
             "x": 0,
-            "y": 72,
+            "y": 100,
             "w": 24,
             "h": 12
           },
