@@ -240,7 +240,8 @@ Tool, permission, and invocation fields:
   alias-opus-nomodel, the model read from the subagent transcript and the effort from
   the hook input's `effort` field)*. A call passing a model other than the pin was not
   run, and the sub-agents reference ranks the call's model above the definition's. The
-  advisor, pinned `fable`, ran on `claude-fable-5-1` *(DOT-101: fire-shape-1)*. In
+  advisor ran on `claude-fable-5-1` while pinned `fable` *(DOT-101: fire-shape-1)*.
+  Its current `opus` pin has not been run under a parent on another model. In
   `claude -p` at `medium` effort, a definition a Bash script wrote during the session
   was still unknown to the `Agent` tool 20 seconds later, and one it rewrote kept its
   first-loaded model and body, while a fresh session spawned the rewrite *(DOT-101:
