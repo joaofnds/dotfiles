@@ -199,3 +199,8 @@ Bad news first, unsoftened. Name the verdict: proceed or stop.
 - Memory is for what neither git nor the repo records: corrections and confirmed
   approaches with why they mattered, tool facts with how to re-check them, and project
   state between sessions.
+- Wherever you would reach for Playwright, drive the browser with `agent-browser`,
+  and never write or install Playwright yourself. On every command, pass `--session`
+  with a name no other session uses, since the unnamed session is one browser that
+  every agent on this machine shares, and close that session when the task ends. A
+  project that already uses Playwright still runs its own tests and scripts with it.
