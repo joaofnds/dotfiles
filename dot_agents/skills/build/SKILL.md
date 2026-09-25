@@ -54,10 +54,23 @@ neither kind of evidence stays unchecked.
 
 ## Finish
 
-Run the pass in `~/.agents/rulebook/refactoring/after-task-pass.md`. Then run the
-review skill, the one that sends each product to its reviewer, and dispose of what
-it returns. Then check the acceptance criteria and definition-of-done items your
-evidence proves, and write the final summary naming what you observed.
+Run the pass in `~/.agents/rulebook/refactoring/after-task-pass.md`.
+
+Before you run the review skill, print the task's whole record again and read each
+document it attaches whole, since what you remember of them may be missing a
+requirement and a search finds only the requirements you expected. For a directed
+fix, the words it was directed in are the record. From that output, write one line
+to `${TMPDIR:-/tmp}/<task>-checklist.md` for each acceptance criterion,
+definition-of-done item, and requirement the description and documents state. Mark
+each line with the test or observation that shows it met, the outside report it
+waits on, the task it belongs to when it lies outside this one, or `missing`. Build
+what each missing line lacks and mark it again, because no reviewer sees work added
+after the review.
+
+Then run the review skill, the one that sends each product to its reviewer, and
+dispose of what it returns. Then check the acceptance criteria and
+definition-of-done items your evidence proves, and write the final summary naming
+what you observed.
 
 ## What the task carries forward
 
