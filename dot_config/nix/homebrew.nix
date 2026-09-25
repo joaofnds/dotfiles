@@ -11,6 +11,7 @@
     casks = [
       "appcleaner"
       "brave-browser"
+      "chatgpt"
       "claude"
       "claude-code@latest"
       "font-computer-modern"
