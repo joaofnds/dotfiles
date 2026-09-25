@@ -195,7 +195,7 @@ Bad news first, unsoftened. Name the verdict: proceed or stop.
   the software serves, the ones that exist whether or not the software does, and keep
   a term of the implementation or the tooling out of it. Read it when you start, add
   terms as you learn them, and if it's missing, create it and reference it from the
-  project's `CLAUDE.md` so it loads on return.
+  project's `AGENTS.md` so it loads on return.
 - Memory is for what neither git nor the repo records: corrections and confirmed
   approaches with why they mattered, tool facts with how to re-check them, and project
   state between sessions.
