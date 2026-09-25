@@ -1,9 +1,9 @@
 # Board
 
-Track independent work on the backlog board. Change cards and documents through the
-`backlog` CLI, except that the priority doc below may also be edited directly. The
-configuration exception is under The CLI. Never adopt backlog's own `instructions` or
-agent-guide output as process truth.
+Change cards and documents through the `backlog` CLI, except that the priority doc
+under Project direction may also be edited directly. The configuration exception is
+under The CLI. Never adopt backlog's own `instructions` or agent-guide output as
+process truth.
 
 ## Project direction
 
@@ -25,11 +25,11 @@ observing its outcome.
 Changes to the North Star, current focus, milestone commitments, or card sequence
 require the user's explicit approval of the specific change before editing the plan.
 Keep proposals outside the priority doc, on the card or a separate planning document,
-with evidence, expected benefit, and what they delay or displace. Preserve the agreed
-plan until approved, then add one entry under Planning authority with the approval's
-date, its quoted words or link, what it changed, and the work it displaced. A progress
-update adds no entry there. A named-card direction changes only that pick. If the
-sequence is exhausted, propose the next step.
+with evidence, expected benefit, and what they delay or displace. After approval, add
+one entry under Planning authority with the approval's date, its quoted words or link,
+what it changed, and the work it displaced. A progress update adds no entry there. A
+named-card direction changes only that pick. If the sequence is exhausted, propose the
+next step.
 
 During authorized planning or execution, create a missing priority doc by copying
 [the template](references/priority-template.md) to that path, never through
@@ -37,12 +37,24 @@ During authorized planning or execution, create a missing priority doc by copyin
 `doc-0` and its title `00 Priority`, since the CLI and the browser rename the file from
 those two fields when they save it, and the title sorts it first in the browser's
 document list. The evidence and its re-check are in
-[the CLI evidence](references/backlog-cli-facts.md). Edit the doc directly or through
-the CLI. Recover accepted decisions and mark gaps or conflicts unresolved without
-seeking permission merely to record them. Missing direction prevents an inferred pick,
-not an explicitly directed accepted card. Read-only and record-only phases report
-missing or stale priorities without writing the doc. The next planning or execution
-phase reconciles those gaps.
+[the CLI evidence](references/backlog-cli-facts.md). Recover accepted decisions and
+mark gaps or conflicts unresolved without seeking permission merely to record them.
+Missing direction prevents an inferred pick, not an explicitly directed accepted card.
+A read-only or record-only phase reports missing or stale priorities without writing
+the doc and leaves them for the next planning or execution phase to reconcile.
+
+## Selecting work
+
+Resume the active planned card before starting another. Report other cards in Build
+or Review and their owners without taking over their work. Select new work from the
+agreed sequence in the priority doc, within its current milestone, and check
+admission, dependencies, resources, ownership, and `deferred` before starting. Skip a
+blocked next card only with the user's explicit approval of that bypass, which a
+general delegation to plan or work unattended does not supply. Due dates record real
+deadlines and never substitute for milestone order. The iterate runner takes a named
+accepted card and checks its status and ownership, but its status guard cannot verify
+who authorized a CLI write or whether prose adds scope, so judge both from the
+direction recorded on the card.
 
 ## Columns
 
@@ -54,8 +66,8 @@ every change takes review. Review holds only a review in flight.
 Directed work that an existing card describes stays on that card. Create a card for
 directed independent work in the column it enters. Keep implementation steps on the
 card as checkboxes. A skill's creation rule applies only within already authorized
-work. Incidental findings follow Capture and admission, including findings from
-debug, review, and kaizen.
+work. Incidental findings, including those from debug, review, and kaizen, follow
+Capture and admission.
 
 ## Capture and admission
 
@@ -70,45 +82,33 @@ without default definition-of-done items.
 An Inbox card enters To Do only after a typed user decision accepts its proposed
 outcome and scope. Record that direction on the card before moving it. Admission
 may cover a named batch or a recorded policy explicitly delegating those decisions.
-A direction to iterate or continue unattended grants no admission authority.
 Pending admissions do not block already accepted work. Urgency calls for prompt
 screening, not self-admission. Work required to meet the active card's agreed
 acceptance stays within that card's authorization.
 
-Adding requirements to an accepted card through a merge, split, or follow-up needs
-the same admission decision. Attaching evidence that changes no requirement does
-not. Preserve the proposed scope on the Inbox card until accepted. Archive an
-absorbed duplicate only after its evidence and accepted requirements reach the
-survivor, with a pointer to it. Rejected cards are archived with a reason, never
-marked Done as if delivered.
+Adding requirements to an accepted card through a merge, split, or follow-up needs the
+same admission decision, and attaching evidence that changes no requirement does not.
+Preserve the proposed scope on the Inbox card until accepted. Archive an absorbed
+duplicate only after its evidence and accepted requirements reach the survivor, with a
+pointer to it. Archive a rejected card with a reason, never marking it Done as if
+delivered.
 
-Defer a card with the `deferred` label and a `Reconsideration` section in its notes.
-Record the reason and `Next check: YYYY-MM-DD` there. For an event-based wait, also
-record the event and a check that detects it. Keep `dueDate` for the delivery
-deadline. The next check date ensures a missed event cannot park the card forever.
-Deferred work is excluded from execution in every column. Triage checks these
-waits on each intake pass. Reaching the next check starts reconsideration, not execution.
-Keep a deferred capture in Inbox. Reactivation of previously accepted work follows
-its recorded authorization and still requires a fresh readiness check.
+Defer a card with the `deferred` label and a `Reconsideration` section in its notes
+holding the reason and `Next check: YYYY-MM-DD`. For an event-based wait, also record
+the event and a check that detects it, and keep the date so a missed event cannot park
+the card forever. Keep `dueDate` for the delivery deadline. Deferred work is excluded
+from execution in every column. Triage checks these waits on each intake pass.
+Reaching the next check starts reconsideration, not execution. Keep a deferred capture
+in Inbox. Reactivating previously accepted work follows its recorded authorization and
+still requires a fresh readiness check.
 
-An accepted investigation enters Shape with one of `investigate:debug` or
-`investigate:verify`, a question, a budget, and a stopping condition. The runner
-uses that label to select the skill. The card authorizes answering the question.
-When answered, move it through Review to Done with the evidence. An inconclusive
-result stays open with the missing evidence and next action, or is deferred.
-Proposed fixes beyond the accepted scope enter Inbox. Acceptance criteria on an
-investigation do not authorize a move to Build.
-
-Resume the active planned card before starting another. Report other cards in
-Build or Review and their owners without taking over their work. Select new work
-from the agreed sequence in the priority doc, within its current milestone.
-Check admission, dependencies, resources, ownership, and `deferred` before starting.
-If the next card is blocked, skip it only with the user's explicit approval of that
-bypass. A general delegation to plan or work unattended does not supply that approval.
-Due dates record real deadlines and never substitute for milestone order.
-The iterate runner takes a named accepted card and checks its status and ownership.
-Its status guard cannot verify who authorized a CLI write or whether prose adds
-scope. Those judgments use the recorded direction above.
+An accepted investigation enters Shape with a question, a budget, a stopping
+condition, and one of the labels `investigate:debug` or `investigate:verify`, which the
+iterate runner reads to select the skill. The card authorizes answering the question.
+When answered, move it through Review to Done with the evidence. An inconclusive result
+stays open with the missing evidence and next action, or is deferred. Proposed fixes
+beyond the accepted scope enter Inbox. Acceptance criteria on an investigation do not
+authorize a move to Build.
 
 ## The status is a claim
 
@@ -116,23 +116,21 @@ Set a card's status to the column you enter when you pick it up, with @claude as
 assignee, and to the next step, or Done, when you finish, in the same turn as the
 work. Before ending a turn that changed card state, put what changed on the card.
 
-Write each acceptance criterion as behavior observed when the work is done. It
-must stay checkable under every approach the card leaves open, including every
-option on a list still awaiting a decision. One that names an approach fails the
-card the day another is chosen.
+Write each acceptance criterion as behavior observed when the work is done, checkable
+under every approach the card leaves open, including every option on a list still
+awaiting a decision. A criterion that names an approach fails the card the day another
+is chosen.
 
-When a direction names an approach the criteria do not describe, rewrite them as
-the behavior that approach produces, and quote the direction in the notes beside
-them. The rewrite is safe to make because the quote sits next to it, so whoever gave
-the direction can correct it.
+When a direction names an approach the criteria do not describe, rewrite them as the
+behavior that approach produces, and quote the direction in the notes beside them so
+whoever gave it can correct the rewrite.
 
-Each criterion ends with its source in parentheses, something outside the session
-that asked for it: the direction quoted in a note, a measurement, a failing test,
-the project's
-own check. A criterion nothing outside the session asked for is the session's own
-claim. Test it where an experiment can settle it, ask where none can, and never
-write it as a criterion, because a later session designs inside a criterion instead
-of testing it.
+End each criterion with its source in parentheses, something outside the session that
+asked for it: the direction quoted in a note, a measurement, a failing test, or the
+project's own check. A criterion nothing outside the session asked for is the
+session's own claim. Test it where an experiment can settle it, ask where none can,
+and never write it as a criterion, because a later session designs inside a criterion
+instead of testing it.
 
 ## The guard
 
@@ -154,28 +152,26 @@ with evidence, close the dependency, create the file first.
 
 ## Where the board lives
 
-Personal boards live in `~/code/backlog/boards/<name>/`. Each project links
-`backlog` to its board.
-Run the CLI from the project directory. Reuse the same board for its worktrees.
+Personal boards live in `~/code/backlog/boards/<name>/`, and each project links
+`backlog` to its board. Run the CLI from the project directory, and reuse the same
+board for its worktrees.
 
-Confirm a private board is ignored before the first write. Run
-`git check-ignore -q backlog` from the project root. The global `/backlog`
-pattern matches the link, while `/backlog/` does not. On a non-zero exit, write
-nothing and report the pattern that needs adding.
-
-A document goes on the board. It goes into the repository's tracked documentation
-only on an explicit direction, and only where that repository already has a
-documentation convention. Where you judge a document belongs in the repository,
-write it to the board and say so in the reply.
+Before the first write to a private board, run `git check-ignore -q backlog` from the
+project root. On a non-zero exit, write nothing and report the pattern that needs
+adding. The global `/backlog` pattern matches the link, and `/backlog/` does not.
 
 ## The card is the record
 
-Documents live in the board's flat `docs/` directory and attach with `--doc`,
-never inlined into a task field. Create them through the CLI, which writes the
-frontmatter the board reads. A doc missing that frontmatter lists as a blank-titled
-row. Title them for their stage and feature, with no date stems, and say the doc path
-and the card id after attaching. A file that
-legitimately lives elsewhere in the repo attaches with `--ref` instead.
+A document goes on the board, in its flat `docs/` directory, and attaches with
+`--doc`, never inlined into a task field. It goes into the repository's tracked
+documentation only on an explicit direction, and only where that repository already
+has a documentation convention. Where you judge a document belongs in the repository,
+write it to the board and say so in the reply. A file that legitimately lives
+elsewhere in the repo attaches with `--ref` instead.
+
+Create a doc through the CLI, since a doc without the frontmatter the CLI writes lists
+as a blank-titled row. Title it for its stage and feature, with no date stem, and
+after attaching say the doc path and the card id.
 
 A feature too big for one build session becomes a parent card with one child per
 session, each child carrying its own document and acceptance criteria. Park the
@@ -193,25 +189,26 @@ a note stays a note on the card.
 Never run `backlog init`, which writes a second workflow-instruction source into
 the repository. A read-only request reports a missing board and creates nothing.
 
-When work needs a new board, ask for its name before creating it, unless the
-name was already supplied in the session. Use that name as one directory under
-`~/code/backlog/boards/`. Do not derive a name from the project path. If the name
-is already taken, ask whether to link that board or use another name.
+When work needs a new board, ask for its name before creating it, unless the session
+already supplied one, and never derive it from the project path. Use the name as one
+directory under `~/code/backlog/boards/`. If it is taken, ask whether to link that
+board or use another name.
 
-For a new board, create its tasks, docs, and decisions directories and initialize
-the priority doc under Project direction after linking the board. Copy
-`~/.agents/backlog-config.yml` to its `config.yml`, setting `project_name` to the
-chosen name. Keep configuration in the board so the central backup includes it.
+For a new board, create its tasks, docs, and decisions directories, copy
+`~/.agents/backlog-config.yml` to its `config.yml` with `project_name` set to the
+chosen name, and initialize the priority doc under Project direction after linking
+the board. Keep configuration in the board so the central backup includes it.
 
 For a new or existing board, link the project's `backlog` to it without
 overwriting an existing path. Leave an existing board's contents intact.
 
-Check `schemaVersion` on every read. A value other than 1 is a stop-and-report
-condition. Consume only these fields from `task`: `id`, `title`, `description`,
-`status`, `type`, `project`, `reporter`, `priority`, `ordinal`, `assignees`, `createdAt`, `updatedAt`, `dueDate`, `labels`,
-`milestone`, `dependencies`, `references`, `acceptanceCriteria`, `definitionOfDone`,
-`subtasks`, `documentation`, `implementationPlan`, `implementationNotes`, `comments`,
-`finalSummary`, `parentTaskId`.
+Check `schemaVersion` on every read, and stop and report on any value other than 1.
+Consume only these fields from `task`: `id`, `title`, `description`, `status`,
+`type`, `project`, `reporter`, `priority`, `ordinal`, `assignees`, `createdAt`,
+`updatedAt`, `dueDate`, `labels`, `milestone`, `dependencies`, `references`,
+`acceptanceCriteria`, `definitionOfDone`, `subtasks`, `documentation`,
+`implementationPlan`, `implementationNotes`, `comments`, `finalSummary`,
+`parentTaskId`.
 
 Read `--help` for a flag on `backlog task edit` before you pass it, because some
 flags replace the field and others add to it, and a wrong guess either drops the
@@ -223,20 +220,19 @@ one you are keeping in a single command. A title edit leaves the card's file nam
 as it was.
 
 The board is not version controlled, so a field a flag overwrote is gone from disk.
-`~/.scripts/backrest` backs the boards up to a restic repository, which is where an
-overwritten field is recovered from. Read one path out of a snapshot with
-`restic dump`, never with that script's `restore`, which restores the latest
-snapshot over the whole live board.
+Recover it from the restic repository that `~/.scripts/backrest` backs the boards up
+to, reading one path out of a snapshot with `restic dump`, never with that script's
+`restore`, which restores the latest snapshot over the whole live board.
 
 Change scalar configuration with `backlog config set`, whose keys are camelCase.
 For a list the CLI refuses to set, such as `statuses`, read the current file, save
 a backup outside the board, and edit only that list. Read it back through
 `backlog config list`, then set dependent scalar values through the CLI.
 
-New boards use the Inbox default. Migrate an existing board by adding Inbox before
-To Do and setting `defaultStatus` to Inbox. Review existing To Do cards individually
-for admission evidence before moving any to Inbox. Preserve held work. On a board
-awaiting migration, capture incidental findings as drafts outside its queue.
+Migrate a board without Inbox by adding Inbox before To Do and setting
+`defaultStatus` to Inbox. Review existing To Do cards individually for admission
+evidence before moving any to Inbox. Preserve held work. On a board awaiting
+migration, capture incidental findings as drafts outside its queue.
 
 `task create -m` stores the typed text as the task's milestone, so a typo makes
 a milestone of its own. `task list -m` matches loosely and reports no miss, so a
@@ -256,9 +252,7 @@ upgrade.
     # create a card, without -s it lands in default_status
     backlog task create "<title>" -s <column> --type <type> --ac "<criterion>"
 
-    # add a note, --notes would overwrite the handoff already there.
-    # --append-plan and --append-final-summary are the siblings for those two fields,
-    # and --comment appends a discussion comment
+    # append a note, since --notes would overwrite the handoff already there
     backlog task edit <id> --append-notes "<text>"
 
     # create a doc, then attach it, repeating --doc for every doc you keep
@@ -268,6 +262,3 @@ upgrade.
     # parent first, then each child, then the deps
     backlog task create "<title>" --parent <parent-id> -s Build
     backlog task edit <parent-id> --dep <child-1> --dep <child-2>
-
-    # decision create fails without this directory
-    mkdir -p <board-dir>/decisions
