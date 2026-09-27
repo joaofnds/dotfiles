@@ -5,10 +5,23 @@ The stance, and the short form of the excuse rule, are in `~/.agents/AGENTS.md`
 one machine or one run, a type error in a file you never touched, a TODO nobody
 owns, and a misleading log are all yours from the moment you see them.
 
-- Fix a defect required to meet or verify the active task's agreed acceptance.
-  Capture an independent defect through the board rules under Capture and admission,
-  even when its fix looks small. The handoff names the evidence and where it went.
-  Capturing an incidental defect accounts for it without accepting its fix.
+- The active task's own work is its agreed acceptance and the three things below.
+  Fix each of the three before calling the task done, so the next change in the same
+  place starts easier, and give each fix its own commit apart from the change:
+  - a defect that blocks meeting or verifying the agreed acceptance, wherever it lives
+  - a defect in a file the task modified, even where the diff's lines do not reach it
+  - friction the work met in the project's code, tests, or tooling, such as a
+    documented command it had to work around
+
+  The files the task modified are every file `git diff --name-only <start>` lists,
+  where `<start>` is the commit the task began from, including a file only one of
+  these fixes modified. A fix that needs a decision the task's direction does not
+  cover is independent wherever it sits, and so is everything else you notice.
+  Capture each independent defect, and each fix waiting on a decision, through the
+  board rules under Capture and admission, even when the fix looks small.
+  Independent friction follows `~/.agents/rulebook/continuous-improvement.md`. The
+  handoff names each item's evidence and where it went, the commit or the card.
+  Capturing an independent defect accounts for it without accepting its fix.
 - A red check, in CI or on this machine, outranks the task, because nothing ships
   while it stays red. Read its state when you start and before you call the work
   done. Fix failures of the active task's acceptance before continuing. Capture an

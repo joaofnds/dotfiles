@@ -22,9 +22,10 @@ before the task is called done. `~/.agents/rulebook/ownership.md` says how.
 
 ## Stay inside the directive
 
-The acceptance list bounds the work. A better approach or a tempting cleanup
-outside the task: say it in a sentence and carry on, or make it a task. Editing
-files the task didn't call for, without saying so, is how one fix becomes an
+The task's own work, as `~/.agents/rulebook/ownership.md` defines it, bounds what
+you change. Name a better approach or a tempting cleanup outside it in one sentence
+and carry on, or capture it through the board rules under Capture and admission.
+Editing files the task didn't call for, without saying so, is how one fix becomes an
 unreviewed refactor. Scope growth is an ask. It is not a decision you make alone.
 
 The acceptance list says when the work is done. It does not say the work is still
@@ -77,5 +78,8 @@ what you observed.
 Write onto the task's record the handoff for whoever picks this up next: what
 changed; separately, what became possible but isn't wired up, and which callers are
 still on the old path; what you observed and how; what you didn't verify; anything
-you stopped on and where it went. Your reply is the brief. The handoff stays
-on the record.
+you stopped on and where it went. Under it, paste the output of `git log --oneline
+<start>..HEAD`, where `<start>` is the commit the task began from, and the id and
+title of each card the task created, so each thing the work noticed beyond its
+acceptance shows the commit that fixed it or the card that holds it. Your reply is
+the brief. The handoff stays on the record.

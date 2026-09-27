@@ -83,8 +83,8 @@ An Inbox card enters To Do only after a typed user decision accepts its proposed
 outcome and scope. Record that direction on the card before moving it. Admission
 may cover a named batch or a recorded policy explicitly delegating those decisions.
 Pending admissions do not block already accepted work. Urgency calls for prompt
-screening, not self-admission. Work required to meet the active card's agreed
-acceptance stays within that card's authorization.
+screening, not self-admission. The active card's own work, as
+`~/.agents/rulebook/ownership.md` defines it, stays within that card's authorization.
 
 Adding requirements to an accepted card through a merge, split, or follow-up needs the
 same admission decision, and attaching evidence that changes no requirement does not.

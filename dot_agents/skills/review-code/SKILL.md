@@ -64,14 +64,17 @@ Two checks classify what survives:
 
 - **The revert test.** If the finding's evidence would still stand with the change
   reverted, the finding is about the codebase rather than the change. Pre-existing debt
-  cannot block this change. It becomes a note or a tracked task. The change owns
-  what it created: the duplication it introduced, the site it added to an existing
-  smell's or coupling's span, the function it grew past the point the finding rests
-  on. Line overlap does not decide it. A two-line edit inside a pre-existing
-  300-line function did not introduce that function's length. Two findings are
-  exempt and stay real wherever they sit: a concrete correctness defect (wrong
-  output a nameable input reaches), and a test whose outcome is independent of its
-  subject, which claims safety it does not provide.
+  cannot block this change. It becomes a note or a tracked task, except what
+  `~/.agents/rulebook/ownership.md` makes the task's own work, which is fixed in its
+  own commit before done. Record the files the task modified, as that file lists
+  them, with the dispositions. The change owns what it created: the duplication it
+  introduced, the site it added to an existing smell's or coupling's span, the
+  function it grew past the point the finding rests on. Line overlap does not
+  decide it. A two-line edit inside a pre-existing 300-line function did not
+  introduce that function's length. Two findings are exempt and stay real wherever
+  they sit: a concrete correctness defect (wrong output a nameable input reaches),
+  and a test whose outcome is independent of its subject, which claims safety it
+  does not provide.
 - **The stability probe.** When a coupling finding's weight rests on the coupled
   target changing, run the git-history check and apply the threshold in
   `~/.agents/rulebook/coupling.md` §Necessary or unnecessary: the stability test. Record the count with the
@@ -87,11 +90,12 @@ called blocking teaches the reader to ignore the word.
 
 - Blocking also covers a failed required suite until it is diagnosed, and a
   change-introduced test whose outcome is independent of its subject.
-- A pre-existing correctness defect belongs to the owning code. Track it there or
-  escalate it. It is never this change's blocking condition. State it apart in the
-  brief.
+- A pre-existing correctness defect outside the task's own work, as
+  `~/.agents/rulebook/ownership.md` defines it, belongs to the owning code. Track it
+  there or escalate it. It is never this change's blocking condition. State it apart
+  in the brief.
 - A refactoring finding measures friction. It is at most should-fix, and only when
-  the change created the friction. Otherwise it is a note or a tracked task.
+  the change created the friction. Otherwise the revert test disposes of it.
 - A testing finding takes its severity from what the test costs. Blocking: false
   safety, or production code contaminated by test logic. Should-fix: the test
   obstructs change or hides defects, which covers interaction assertions on code
