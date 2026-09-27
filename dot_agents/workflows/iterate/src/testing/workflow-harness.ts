@@ -29,6 +29,7 @@ type Scenario = {
   shaped?: boolean;
   mute?: boolean;
   reassignAt?: string;
+  reportedCosts?: string[];
 };
 
 export class WorkflowHarness {
@@ -128,6 +129,7 @@ export class WorkflowHarness {
       writeFile(join(directory, "assignee"), scenario.assignee ?? ""),
       writeFile(join(directory, "labels"), JSON.stringify(scenario.labels ?? [])),
       writeFile(join(directory, "reads"), "0"),
+      writeFile(join(directory, "costs"), (scenario.reportedCosts ?? []).join("\n")),
       ...[
         "notes",
         "calls",
@@ -158,6 +160,7 @@ export class WorkflowHarness {
       FAKE_INVESTIGATION_STATUS: scenario.investigationStatus ?? "",
       FAKE_CALLS: join(directory, "calls"),
       FAKE_ARGUMENTS: join(directory, "arguments"),
+      FAKE_COSTS: join(directory, "costs"),
       FAKE_UNKNOWN_COST: scenario.unknownCost ? "yes" : "",
       FAKE_FAILED_RESULT: scenario.failedResult ? "yes" : "",
       FAKE_EDITS: join(directory, "edits"),

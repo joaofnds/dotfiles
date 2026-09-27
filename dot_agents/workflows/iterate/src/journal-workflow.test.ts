@@ -191,6 +191,91 @@ describe("iterate run accounting", () => {
     expect(result.argsSeen).toContain("--resume s-shape");
   });
 
+  describe("when a resume reports its session's running total", () => {
+    const resumeBuild = async () => {
+      const driver = await harness.seed({
+        status: "Build",
+        assignee: "@claude",
+        stall: "build",
+        mute: true,
+        budget: "100",
+        runBudget: "100",
+        reportedCosts: ["17.834", "43.577"],
+      });
+      await driver.run("step", "DOT-1");
+      const resumed = await driver.run("resume", "DOT-1");
+      return { driver, resumed };
+    };
+
+    test("records only the resumed attempt's own spend", async () => {
+      const { driver } = await resumeBuild();
+
+      const status = JSON.parse((await driver.run("status", "DOT-1")).stdout);
+
+      expect(status.attempts.map((attempt: { costUsd: number }) => attempt.costUsd)).toEqual([
+        17.834, 25.743,
+      ]);
+      expect(status.totals.knownCostUsd).toBeCloseTo(43.577, 9);
+    });
+
+    test("prints the resumed attempt's own spend as the stage cost", async () => {
+      const { resumed } = await resumeBuild();
+
+      expect(resumed.stderr).toMatch(/^ {3}cost 25\.743$/m);
+    });
+
+    test("labels the session's running total as its session cost", async () => {
+      const { resumed } = await resumeBuild();
+
+      expect(resumed.stderr).toContain(" session cost 43.577 ");
+    });
+
+    test("leaves the run budget less the session's total to the next session", async () => {
+      const { driver } = await resumeBuild();
+
+      const next = await driver.run("step", "DOT-1");
+
+      expect(next.argsSeen).toContain("--max-budget-usd 56.423 ");
+    });
+  });
+
+  describe("when a resume spends nothing more", () => {
+    test("records no spend although the recorded costs sum inexactly", async () => {
+      const driver = await harness.seed({
+        stall: "shape",
+        mute: true,
+        reportedCosts: ["0.03", "0.3", "0.3"],
+      });
+      await driver.run("step", "DOT-1");
+      await driver.run("resume", "DOT-1");
+      await driver.run("resume", "DOT-1");
+
+      const status = JSON.parse((await driver.run("status", "DOT-1")).stdout);
+
+      expect(status.attempts.map((attempt: { costUsd: number }) => attempt.costUsd)).toEqual([
+        0.03, 0.27, 0,
+      ]);
+    });
+  });
+
+  describe("when a resumed session reports less than its attempts recorded", () => {
+    test("records the reported total whole", async () => {
+      const driver = await harness.seed({
+        stall: "shape",
+        mute: true,
+        reportedCosts: ["17.834", "5"],
+      });
+      await driver.run("step", "DOT-1");
+      await driver.run("resume", "DOT-1");
+
+      const status = JSON.parse((await driver.run("status", "DOT-1")).stdout);
+
+      expect(status.attempts.map((attempt: { costUsd: number }) => attempt.costUsd)).toEqual([
+        17.834, 5,
+      ]);
+    });
+  });
+
   test.each([
     ["a changed model", ["--model", "opus", "--effort", "high"]],
     ["a changed effort", ["--model", "sonnet", "--effort", "medium"]],

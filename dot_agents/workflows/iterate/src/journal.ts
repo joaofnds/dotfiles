@@ -96,6 +96,10 @@ export async function withJournalLock<T>(operation: () => Promise<T>): Promise<T
   }
 }
 
+function knownCost(attempts: readonly Attempt[]): number {
+  return attempts.reduce((sum, attempt) => sum + (attempt.costUsd ?? 0), 0);
+}
+
 export class Journal {
   private constructor(
     readonly directory: string,
@@ -163,10 +167,7 @@ export class Journal {
       ...this.record,
       directory: this.directory,
       totals: {
-        knownCostUsd: this.record.attempts.reduce(
-          (sum, attempt) => sum + (attempt.costUsd ?? 0),
-          0,
-        ),
+        knownCostUsd: knownCost(this.record.attempts),
         unknownCostAttempts: this.record.attempts.filter((attempt) => attempt.costUsd === undefined)
           .length,
         parentOnlyCostAttempts: this.record.attempts.filter(
@@ -253,7 +254,7 @@ export class Journal {
     return attempt;
   }
 
-  async finish(attempt: Attempt, result: SessionResult): Promise<void> {
+  async finish(attempt: Attempt, result: SessionResult): Promise<number | undefined> {
     const reportPath = join(this.directory, `${attempt.id}.json`);
     await atomicJson(reportPath, result);
     Object.assign(attempt, {
@@ -261,11 +262,30 @@ export class Journal {
       durationMs: result.durationMs,
       ...(result.cost === undefined
         ? {}
-        : { costUsd: result.cost.usd, costScope: result.cost.scope }),
+        : {
+            costUsd: this.attemptSpend(result.cost.usd, result.sessionId),
+            costScope: result.cost.scope,
+          }),
       ...(result.sessionId === undefined ? {} : { sessionId: result.sessionId }),
       logPath: result.logPath,
       reportPath,
     });
     await this.save();
+
+    return attempt.costUsd;
+  }
+
+  // A resumed Claude session reports its running total, so recording that whole
+  // would count its earlier attempts' spend again.
+  private attemptSpend(sessionTotal: number, sessionId: string | undefined): number {
+    if (sessionId === undefined) return sessionTotal;
+
+    const recorded = knownCost(
+      this.record.attempts.filter((earlier) => earlier.sessionId === sessionId),
+    );
+
+    const spent = Math.round((sessionTotal - recorded) * 1e9) / 1e9;
+
+    return spent < 0 ? sessionTotal : spent;
   }
 }

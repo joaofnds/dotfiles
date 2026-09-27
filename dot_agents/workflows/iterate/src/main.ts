@@ -10,7 +10,7 @@ import {
 import { type Card, card, cardId, inProgress, ours, setStatus, stageForStatus } from "./board.ts";
 import { Exit, say } from "./exit.ts";
 import { Journal, withJournalLock } from "./journal.ts";
-import { idleMinutes, SessionFailure, session } from "./session.ts";
+import { idleMinutes, SessionFailure, type SessionResult, session } from "./session.ts";
 import { stopFile, treeIsClean } from "./tree.ts";
 
 const usage = `iterate step <card> [agent options]    run one session for the card's current stage
@@ -76,6 +76,10 @@ async function runStage(
   const { budget, timeoutMs } = journal.allowances();
   const resumeSessionId = resume ? journal.resumeId(stage, agent) : undefined;
   const attempt = await journal.begin(stage, id, agent);
+  const record = async (result: SessionResult) => {
+    const spent = await journal.finish(attempt, result);
+    say(`   cost ${spent ?? "n/a"}`);
+  };
   try {
     const result = await session({
       agent,
@@ -96,9 +100,9 @@ async function runStage(
       ...(timeoutMs === undefined ? {} : { timeoutMs }),
       ...(resumeSessionId === undefined ? {} : { resumeSessionId }),
     });
-    await journal.finish(attempt, result);
+    await record(result);
   } catch (error) {
-    if (error instanceof SessionFailure) await journal.finish(attempt, error.result);
+    if (error instanceof SessionFailure) await record(error.result);
     throw error;
   }
 }

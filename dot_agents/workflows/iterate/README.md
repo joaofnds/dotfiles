@@ -88,6 +88,18 @@ durations, known dollars and counts of unknown or parent-only costs. Session
 reports retain token categories, reported models and cost scope; do not add parent
 and aggregate usage together.
 
+Each journal attempt's `costUsd` is what that attempt spent, so attempt costs add
+up to the run's. A resumed Claude session reports its running total, so an attempt
+records that total less the costs already recorded for the same session ID, and the
+stage's `cost` line on stderr prints that figure. An attempt stopped before its
+result records no cost, and the CLI sometimes carries that spend into the resume, so
+the resumed attempt's figure includes it. A total below the recorded costs means the
+CLI restarted its count, and the attempt records it whole. The per-attempt report
+keeps what the CLI said: its `cost` and the `models` and `aggregateIncludingChildren`
+under `usage` are the session's totals, while `usage.parent` and `turns` cover that
+attempt only. Stderr prints that `cost` as `session cost`. Background task
+notifications that re-invoke a session within one attempt count once.
+
 The six-attempt limit spans calls and includes failures. A completed card reopened
 for work starts a new run. Existing schema-version-1 journals retain planning
 history and its cost and duration accounting; new runs start with the named card.

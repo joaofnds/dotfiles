@@ -125,7 +125,7 @@ function sessionResult(
 }
 
 function summary(result: SessionResult): string {
-  return `   status ${result.status} duration ${result.durationMs}ms turns ${result.turns ?? "n/a"} denials ${result.permissionDenials ?? 0} cost ${result.cost?.usd ?? "n/a"} session ${result.sessionId ?? "n/a"}`;
+  return `   status ${result.status} duration ${result.durationMs}ms turns ${result.turns ?? "n/a"} denials ${result.permissionDenials ?? 0} session cost ${result.cost?.usd ?? "n/a"} session ${result.sessionId ?? "n/a"}`;
 }
 
 function agentName(agent: StageAgent): string {
