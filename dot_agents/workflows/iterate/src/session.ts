@@ -279,12 +279,9 @@ function take(stream: Stream, line: string, live: boolean): void {
         stream.turns = (stream.turns ?? 0) + event.turns;
       }
       stream.parentUsage = mergeUsage(stream.parentUsage, event.usage.parent);
-      stream.aggregateUsage = mergeUsage(
-        stream.aggregateUsage,
-        event.usage.aggregateIncludingChildren,
-      );
-      if (event.usage.models) stream.models.push(...event.usage.models);
-      stream.cost = mergeCost(stream.cost, event.cost, stream.errors);
+      stream.aggregateUsage = event.usage.aggregateIncludingChildren ?? stream.aggregateUsage;
+      if (event.usage.models) stream.models = [...event.usage.models];
+      stream.cost = latestCost(stream.cost, event.cost, stream.errors);
     }
   }
 }
@@ -293,19 +290,18 @@ function mergeUsage(current: TokenUsage | undefined, next: TokenUsage | undefine
   return next === undefined ? current : addTokens(current, next);
 }
 
-function mergeCost(
+function latestCost(
   current: SessionCost | undefined,
   next: SessionCost | undefined,
   errors: string[],
 ): SessionCost | undefined {
   if (next === undefined) return current;
-  if (current === undefined) return next;
-  if (current.scope !== next.scope) {
+  if (current !== undefined && current.scope !== next.scope) {
     errors.push(`provider mixed ${current.scope} and ${next.scope} cost scopes`);
     return current;
   }
 
-  return { usd: current.usd + next.usd, scope: current.scope };
+  return next;
 }
 
 async function* lines(stdout: ReadableStream<Uint8Array>): AsyncGenerator<string> {

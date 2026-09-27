@@ -116,6 +116,58 @@ control.on("data", (bytes) => {
       killed("b-gate");
       emit({ type: "result", result: final, is_error: false });
     }
+    if (process.env.SESSION_SCENARIO === "reinvoked") {
+      emit({
+        type: "result",
+        session_id: "claude-terminal-session",
+        result: final,
+        is_error: false,
+        num_turns: 3,
+        total_cost_usd: 0.25,
+        usage: { input_tokens: 1, cache_read_input_tokens: 2, output_tokens: 1 },
+        modelUsage: {
+          "resolved-fake": {
+            inputTokens: 14,
+            cacheReadInputTokens: 9,
+            outputTokens: 5,
+            costUSD: 0.25,
+            canonicalModel: "resolved-fake",
+            costBasis: "list",
+          },
+        },
+      });
+    }
+    if (process.env.SESSION_SCENARIO === "reinvoked-grown") {
+      emit({
+        type: "result",
+        session_id: "claude-terminal-session",
+        result: final,
+        is_error: false,
+        num_turns: 3,
+        total_cost_usd: 0.4,
+        usage: { input_tokens: 1, cache_read_input_tokens: 2, output_tokens: 1 },
+        modelUsage: {
+          "resolved-fake": {
+            inputTokens: 20,
+            cacheReadInputTokens: 30,
+            outputTokens: 8,
+            costUSD: 0.4,
+            canonicalModel: "resolved-fake",
+            costBasis: "list",
+          },
+        },
+      });
+    }
+    if (process.env.SESSION_SCENARIO === "reinvoked-uncosted") {
+      emit({
+        type: "result",
+        session_id: "claude-terminal-session",
+        result: final,
+        is_error: false,
+        num_turns: 3,
+        usage: { input_tokens: 1, cache_read_input_tokens: 2, output_tokens: 1 },
+      });
+    }
     if (process.env.SESSION_SCENARIO === "malformed") console.log('{"type":');
     stop();
   }

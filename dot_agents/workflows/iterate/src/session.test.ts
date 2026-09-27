@@ -145,6 +145,64 @@ describe("session", () => {
     }, 6000);
   });
 
+  describe("when background tasks re-invoke the session", () => {
+    test("counts the session total once and sums each invocation's turns", async () => {
+      const result = await (await harness.start("reinvoked")).finish();
+
+      expect(result.result).toMatchObject({
+        turns: 5,
+        cost: { usd: 0.25, scope: "aggregateIncludingChildren" },
+        usage: {
+          parent: { input: 11, cacheRead: 9, output: 4 },
+          aggregateIncludingChildren: { input: 14, cacheRead: 9, output: 5 },
+          models: [
+            {
+              model: "resolved-fake",
+              costUsd: 0.25,
+              tokens: { input: 14, cacheRead: 9, output: 5 },
+            },
+          ],
+        },
+      });
+    }, 6000);
+  });
+
+  describe("when a re-invocation reports a larger session total", () => {
+    test("reports the last result's cost, aggregate tokens and models", async () => {
+      const result = await (await harness.start("reinvoked-grown")).finish();
+
+      expect(result.result).toMatchObject({
+        cost: { usd: 0.4, scope: "aggregateIncludingChildren" },
+        usage: {
+          aggregateIncludingChildren: { input: 20, cacheRead: 30, output: 8 },
+          models: [
+            {
+              model: "resolved-fake",
+              costUsd: 0.4,
+              tokens: { input: 20, cacheRead: 30, output: 8 },
+            },
+          ],
+        },
+      });
+    }, 6000);
+  });
+
+  describe("when a re-invocation reports no cost or model usage", () => {
+    test("keeps the earlier result's cost, aggregate tokens and models", async () => {
+      const result = await (await harness.start("reinvoked-uncosted")).finish();
+
+      expect(result.result).toMatchObject({
+        turns: 5,
+        cost: { usd: 0.25, scope: "aggregateIncludingChildren" },
+        usage: {
+          parent: { input: 11, cacheRead: 9, output: 4 },
+          aggregateIncludingChildren: { input: 14, cacheRead: 9, output: 5 },
+          models: [{ model: "resolved-fake", costUsd: 0.25 }],
+        },
+      });
+    }, 6000);
+  });
+
   describe("when results arrive back to back", () => {
     test("names a task killed between them", async () => {
       const result = await (await harness.start("killed-between-results")).finish();

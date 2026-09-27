@@ -20,7 +20,10 @@ type Scenario =
   | "killed-at-exit"
   | "killed-unseen"
   | "killed-mid-turn"
-  | "killed-between-results";
+  | "killed-between-results"
+  | "reinvoked"
+  | "reinvoked-grown"
+  | "reinvoked-uncosted";
 const registration = z.object({
   role: z.enum(["agent", "descendant"]),
   pid: z.number().int().positive(),
