@@ -194,10 +194,12 @@ Tool, permission, and invocation fields:
   session by `--effort`, and an unknown value draws a warning naming that set and runs
   at the default *(DOT-101: effort-bogus)*. `--effort ultracode` is accepted without a
   warning, and the CLI reference describes it as `xhigh` with workflow orchestration
-  *(DOT-101: effort-ultracode-2)*. Opus 5.5 starts at `medium` unless the environment,
-  a flag, `/effort`, or a per-model setting sets a level, and a top-level `effortLevel`
-  in the user settings does not count for it. Other current models default to `high`
-  *(model-config reference)*.
+  *(DOT-101: effort-ultracode-2)*. Opus 5.5 and later models start at their own default,
+  `medium` on Opus 5.5 and Sonnet 5.5, unless the environment, a flag, `/effort`, or a
+  per-model setting sets a level. A top-level `effortLevel` in the user settings counts
+  only for Opus 5, Fable 5.1, and earlier models. Opus 4.7 defaults to `xhigh`, and
+  other models that take effort to `high` *(model-config reference, fetched
+  2026-09-28)*.
 - Agent-definition frontmatter takes `model` as one of the aliases `sonnet`, `opus`,
   `haiku`, `fable`, a full model id, or `inherit`, and `effort` as a session level
   above. The screener, then pinned `opus` and `low`, ran on `claude-opus-5-5` from a
@@ -253,12 +255,13 @@ re-measure the rest on a Claude Code or model release before citing it.
 ## Deprecated model mechanics
 
 **Re-verify on each model release**, against the extended-thinking reference and the
-newest model's prompting page at platform.claude.com. Last checked against the Opus 5.5
-release pages (What's new, Prompting, and Migrating), fetched 2026-09-22. The Fable 5
-and Mythos 5 claims, the prefill claim, the tiers before Claude 4.7, and the entry on
-rules telling the model not to think rest on Prompting Claude Fable 5, Prompting
-Claude Opus 5, and Prompting best practices, fetched 2026-08-27. The old prefill
-documentation path redirects and states none of these.
+newest model's prompting page at platform.claude.com. Last checked against the Sonnet
+5.5 release pages (What's new, Prompting, and Migrating), fetched 2026-09-28, and the
+Opus 5.5 ones, fetched 2026-09-22. The Fable 5 and Mythos 5 claims, the prefill
+claim, the tiers before Claude 4.7, and the entry on rules telling the model not to
+think rest on Prompting Claude Fable 5, Prompting Claude Opus 5, and Prompting best
+practices, fetched 2026-08-27. The old prefill documentation path redirects and
+states none of these.
 
 - **Prefilled last-assistant-turn responses** return 400 starting with Claude 4.6 and
   Claude Mythos Preview. Only the last assistant turn is refused; earlier assistant
@@ -266,12 +269,13 @@ documentation path redirects and states none of these.
   instruction, XML output tags, or tool calling.
 - **`budget_tokens` thinking caps** ride on `thinking: {type: "enabled"}`. Three
   tiers: functional on Claude 4.5 and earlier; deprecated but succeeding on Opus 4.6
-  and Sonnet 4.6; 400 on Claude 4.7 and later (Opus 4.7, 4.8, 5, 5.5; Sonnet 5; Fable
-  5, 5.1; Mythos 5, but not Mythos Preview). `thinking: {type: "disabled"}` returns
-  400 on Opus 5.5 and Fable 5.1 as well. Opus 5 accepts it at effort `high` or below,
-  and other models are unchecked. Replace either setting with `thinking: {type:
-  "adaptive"}` and set `output_config: {effort: ...}`, with `max_tokens` still the
-  ceiling.
+  and Sonnet 4.6; 400 on Claude 4.7 and later (Opus 4.7, 4.8, 5, 5.5; Sonnet 5, 5.5;
+  Fable 5, 5.1; Mythos 5, but not Mythos Preview). `thinking: {type: "disabled"}`
+  returns 400 on Opus 5.5, Sonnet 5.5, and Fable 5.1 as well, and Opus 5 accepts it at
+  effort `high` or below. Replace either setting with `thinking: {type: "adaptive"}`
+  and set `output_config: {effort: ...}`, with `max_tokens` still the ceiling. On
+  Sonnet 5.5, `thinking: {type: "between_tools"}` also replaces `disabled`, at effort
+  `high` or below.
 - **Rules telling the model not to think** increase tag leakage; remove them, and
   avoid naming thinking tags: the effective general form is "Do not include internal
   or system XML tags in your response." Vendor-asserted mechanism, no measurement,
@@ -283,10 +287,13 @@ documentation path redirects and states none of these.
   with no model output, on Opus 5.5 and on Opus 5, although the Opus 5.5 pages call the
   category new against Opus 5 *(probe on 2.1.280, one `claude -p` stream-json call per
   model with a prompt asking for its reasoning word for word, category read from
-  `stop_details`)*. The vendor also names Fable 5 and Mythos 5, and other models are
-  unchecked. Remove such instructions and read summarized `thinking` blocks
-  (`display: "summarized"`) instead.
-- **Forced tool use**, `tool_choice` of `any` or `tool`, returns 400 on Opus 5.5 and
-  Fable 5.1. The pages list it as a breaking change from Opus 5, and other models are
-  unchecked. Replace it with `auto` plus strict tool use or structured outputs, and
-  say in the prompt when the tool applies.
+  `stop_details`)*. On Sonnet 5.5 the harness stopped the first response and its one
+  retry was declined under this category *(probe on 2.1.284, board evidence
+  `DOT-151/reasoning-sonnet.jsonl`)*. The vendor also names Fable 5 and Mythos 5, and
+  other models are unchecked. Remove such instructions and read summarized `thinking`
+  blocks (`display: "summarized"`) instead.
+- **Forced tool use**, `tool_choice` of `any` or `tool`, returns 400 on Opus 5.5, Sonnet
+  5.5, and Fable 5.1. The pages list it as a breaking change from Opus 5 and Sonnet 5,
+  and the Sonnet 5.5 migration page says every earlier model it covers accepts it.
+  Replace it with `auto` plus strict tool use or structured outputs, and say in the
+  prompt when the tool applies.
