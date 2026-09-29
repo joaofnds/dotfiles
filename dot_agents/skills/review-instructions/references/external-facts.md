@@ -254,28 +254,13 @@ re-measure the rest on a Claude Code or model release before citing it.
 
 ## Deprecated model mechanics
 
-**Re-verify on each model release**, against the extended-thinking reference and the
-newest model's prompting page at platform.claude.com. Last checked against the Sonnet
-5.5 release pages (What's new, Prompting, and Migrating), fetched 2026-09-28, and the
-Opus 5.5 ones, fetched 2026-09-22. The Fable 5 and Mythos 5 claims, the prefill
-claim, the tiers before Claude 4.7, and the entry on rules telling the model not to
-think rest on Prompting Claude Fable 5, Prompting Claude Opus 5, and Prompting best
-practices, fetched 2026-08-27. The old prefill documentation path redirects and
-states none of these.
+**Re-verify on each model release**, against the newest model's prompting page at
+platform.claude.com. Last checked against the Sonnet 5.5 release pages (What's new,
+Prompting, and Migrating), fetched 2026-09-28, and the Opus 5.5 ones, fetched
+2026-09-22. The Fable 5 and Mythos 5 claims and the entry on rules telling the model
+not to think rest on Prompting Claude Fable 5 and Prompting Claude Opus 5, fetched
+2026-08-27.
 
-- **Prefilled last-assistant-turn responses** return 400 starting with Claude 4.6 and
-  Claude Mythos Preview. Only the last assistant turn is refused; earlier assistant
-  messages and earlier models are unaffected. Migrate to Structured Outputs, direct
-  instruction, XML output tags, or tool calling.
-- **`budget_tokens` thinking caps** ride on `thinking: {type: "enabled"}`. Three
-  tiers: functional on Claude 4.5 and earlier; deprecated but succeeding on Opus 4.6
-  and Sonnet 4.6; 400 on Claude 4.7 and later (Opus 4.7, 4.8, 5, 5.5; Sonnet 5, 5.5;
-  Fable 5, 5.1; Mythos 5, but not Mythos Preview). `thinking: {type: "disabled"}`
-  returns 400 on Opus 5.5, Sonnet 5.5, and Fable 5.1 as well, and Opus 5 accepts it at
-  effort `high` or below. Replace either setting with `thinking: {type: "adaptive"}`
-  and set `output_config: {effort: ...}`, with `max_tokens` still the ceiling. On
-  Sonnet 5.5, `thinking: {type: "between_tools"}` also replaces `disabled`, at effort
-  `high` or below.
 - **Rules telling the model not to think** increase tag leakage; remove them, and
   avoid naming thinking tags: the effective general form is "Do not include internal
   or system XML tags in your response." Vendor-asserted mechanism, no measurement,
@@ -292,8 +277,3 @@ states none of these.
   `DOT-151/reasoning-sonnet.jsonl`)*. The vendor also names Fable 5 and Mythos 5, and
   other models are unchecked. Remove such instructions and read summarized `thinking`
   blocks (`display: "summarized"`) instead.
-- **Forced tool use**, `tool_choice` of `any` or `tool`, returns 400 on Opus 5.5, Sonnet
-  5.5, and Fable 5.1. The pages list it as a breaking change from Opus 5 and Sonnet 5,
-  and the Sonnet 5.5 migration page says every earlier model it covers accepts it.
-  Replace it with `auto` plus strict tool use or structured outputs, and say in the
-  prompt when the tool applies.
