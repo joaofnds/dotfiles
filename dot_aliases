@@ -10,7 +10,6 @@ alias t='tmux'
 alias tatt='tmux attach -t "$(tmux list-sessions -F "#S" | fzf -1 --preview "tmux capture-pane -e -p -t {}" --preview-window right:70%)"'
 alias cm='chezmoi'
 alias rgfi='rg -Fi'
-alias linknix='sudo ln -sfn /nix/var/nix/profiles/system /run/current-system'
 alias pingcc='claude --print --safe-mode --no-session-persistence --model haiku --system-prompt "Reply exactly: OK" --tools "" <<<"ok"'
 
 alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --merge-output-format=mkv"
