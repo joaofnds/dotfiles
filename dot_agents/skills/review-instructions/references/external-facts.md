@@ -21,7 +21,12 @@ CLI, and SDK references at code.claude.com, last full pass on CLI 2.1.280 on
 fact on a desktop app release too.** A *(probe)* tag marks a local observation rather
 than documentation. A *(DOT-101: name)* tag marks a 2026-09-23 re-check on CLI 2.1.280
 and `claude-opus-5-5` unless the entry names another model, one `claude -p` session
-per name, kept under `~/code/backlog/boards/dotfiles/evidence/DOT-101/`.
+per name, kept under `~/code/backlog/boards/dotfiles/evidence/DOT-101/`. A
+*(DOT-153: name)* tag marks a 2026-10-02 run on CLI 2.1.287 under
+`claude -p --model haiku` on a Max sign-in with no managed settings, in
+`bypassPermissions` unless the entry names another mode, kept under
+`evidence/DOT-153/runs/` on the same board. Those runs cover mods alone, and no
+other entry was re-checked on 2.1.287.
 
 Load limits and delivery:
 
@@ -143,7 +148,14 @@ Tool, permission, and invocation fields:
 - Permission rules evaluate deny → ask → allow, and the first match wins with no
   reordering by specificity, so a broad deny cannot carry allowlist exceptions. A bare
   tool name in `deny` removes the tool from context entirely, while a scoped rule only
-  blocks matching calls.
+  blocks matching calls. A mod's `tool.check` hook answers after the rules. With a
+  mod loaded through `--plugin-dir` answering `allow`, a Bash call refused by a
+  `--settings` deny rule ran *(DOT-153: A2-nomod, B2-mod)*, and so did one refused
+  in `default` mode by the user-settings rule `Bash(git branch *)` *(DOT-153:
+  G1-userdeny-nomod, G2-userdeny-mod)*. The built-in guard `sec-default` was not
+  seated in those runs, and the mods administration page says a mod cannot approve
+  past a deny rule where it is seated, unprobed. Re-check the `sec-default` line in
+  a debug log after a change of plan or the arrival of managed settings.
 - `skillOverrides` has four states, `on`, `name-only`, `user-invocable-only`, and
   `off`, and absent means `on`. Keys match the skill name, so two skills sharing a
   name share one entry, and a project skill named like a user skill is the only one
@@ -157,6 +169,10 @@ Tool, permission, and invocation fields:
   fire, and for `PostModelSwitch`. A `PostToolUse` hook injects model-visible text
   through `hookSpecificOutput.additionalContext` instead *(DOT-101: hook-body)*, and
   the hooks reference gives `PreToolUse` the same field, unprobed.
+- A mod's `tool.call` hook that returns `{ deny }` blocks the call, and the model
+  reads the text as a tool error *(DOT-153: C2-mod)*. The same hook throwing before
+  `next` is skipped and the call runs *(DOT-153: D2-mod)*, and with a `.catch`
+  handler returning `{ deny }` the call is refused *(DOT-153: E-mod)*.
 - A `Stop` hook that blocks with exit 2 appends its stderr as a user message, and the
   session writes a second assistant message after the first, which stays on screen
   and in the transcript *(DOT-101: stop-hook)*. No `Stop` output field in the hooks
@@ -165,7 +181,11 @@ Tool, permission, and invocation fields:
   which continues the turn the same way. A `MessageDisplay` hook's `displayContent`
   replaces text on screen only, and the transcript and what the model sees keep the
   original *(hooks reference, unprobed)*. Re-check against the hooks reference's
-  `Stop` and `MessageDisplay` output fields.
+  `Stop` and `MessageDisplay` output fields. A mod's `session.append` hook matched
+  on `door: 'response'`, a key from the generated types, replaced the reply's text,
+  and the stream, `result`, and the transcript each held the replacement alone
+  *(DOT-153: F-rewrite)*. What an interactive screen shows before the row is stored
+  is unprobed.
 - `claude -p --output-format json` puts only the final assistant message in `result`,
   so measure a turn's visible reply from the transcript's assistant text records
   *(DOT-101: stop-hook)*. Rehearse reads this same field, so its verdict covers the
