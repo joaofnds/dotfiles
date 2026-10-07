@@ -49,7 +49,7 @@ if (group === "task" && action === "view") {
   if (reads === Number(env.FAKE_DEFER_ON_READ)) writeFileSync(env.FAKE_LABELS, JSON.stringify(["deferred"]));
   if (reads === Number(env.FAKE_STOP_ON_READ)) writeFileSync(env.FAKE_STOP_FILE, "");
 }
-const details = { type: null, project: null, reporter: null, title: "card", description: null, implementationPlan: null, finalSummary: null, documentation: [], comments: [], definitionOfDone: [], references: [], dependencies: [], priority: null, milestone: null, dueDate: null, ordinal: null, parentTaskId: null, subtasks: [] };
+const details = { type: null, reporter: null, title: "card", description: null, implementationPlan: null, finalSummary: null, documentation: [], comments: [], definitionOfDone: [], references: [], dependencies: [], priority: null, milestone: null, ordinal: null, parentTaskId: null, subtasks: [] };
 const first = {
   ...details,
   id: env.FAKE_FIRST_ID, status: read("FAKE_STATUS"), assignees: read("FAKE_ASSIGNEE") ? [read("FAKE_ASSIGNEE")] : [],

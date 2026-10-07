@@ -11,31 +11,13 @@ const stagesByStatus = new Map<string, Stage>([
   ["Review", "review"],
 ]);
 const checklistItem = z.object({ index: z.number(), text: z.string(), checked: z.boolean() });
-const taskFields = z.object({ status: z.string(), labels: z.array(z.string()) });
 const taskView = z.object({
   schemaVersion: z.literal(1),
-  task: taskFields.extend({
+  task: z.object({
+    status: z.string(),
+    labels: z.array(z.string()),
     assignees: z.array(z.string()),
     acceptanceCriteria: z.array(checklistItem),
-    definitionOfDone: z.array(checklistItem),
-    references: z.array(z.string()),
-    dependencies: z.array(z.string()),
-    priority: z.string().nullable(),
-    type: z.string().nullable(),
-    project: z.string().nullable(),
-    reporter: z.string().nullable(),
-    milestone: z.string().nullable(),
-    dueDate: z.string().nullable(),
-    ordinal: z.number().nullable(),
-    parentTaskId: z.string().nullable(),
-    subtasks: z.array(z.unknown()),
-    title: z.string(),
-    description: z.string().nullable(),
-    implementationPlan: z.string().nullable(),
-    implementationNotes: z.string().nullable(),
-    finalSummary: z.string().nullable(),
-    documentation: z.array(z.string()),
-    comments: z.array(z.unknown()),
   }),
 });
 export const ours = "@claude";
