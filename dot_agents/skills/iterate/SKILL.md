@@ -59,6 +59,12 @@ a claim nobody has checked. Run the cheapest probe that would refute it: run the
 command, read the file, plant a marker. Probe every such claim before the next step.
 A stage that only did what the card already said made no claim, so probe nothing.
 
+A stage that ends with work proposed for later, or with Inbox cards it created,
+claims the work could not be done in its session. Check that claim against
+`~/.agents/rulebook/ownership.md` before the next step. Where the stage left work
+that file makes its own, send the card back to that stage under the board rules and
+step it again, so the stage's skill does the work under its own review.
+
 A refuted claim, or a cost the card never weighed, goes on the card as a note
 before the next step, so the stage that runs next works from what you saw. The
 iteration goes on. The stop file the script's help names and the script's own

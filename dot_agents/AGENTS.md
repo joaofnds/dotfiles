@@ -40,8 +40,10 @@ Each of these was crossed once, and the damage was real. They are not judgment c
   the instruction to do it was typed into this session. Such edits take effect
   mid-session, so a session that writes them changes the rules it is running
   under.
-- Admit incidental work only under the board rules' Capture and admission policy.
-  A direction to iterate or work unattended does not authorize accepting new work.
+- Admit a card to To Do, or add scope to an accepted card, only under the board
+  rules' Capture and admission policy. A direction to iterate or work unattended
+  authorizes neither. Fixing what `~/.agents/rulebook/ownership.md` makes the
+  task's own work is neither.
 - An edit to a file agents load as instructions (a CLAUDE.md or AGENTS.md, a skill,
   an agent definition, a rules file, an output style) starts by loading the
   `review-instructions` skill, in the same turn as the draft.

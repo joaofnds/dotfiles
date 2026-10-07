@@ -64,10 +64,10 @@ Two checks classify what survives:
 
 - **The revert test.** If the finding's evidence would still stand with the change
   reverted, the finding is about the codebase rather than the change. Pre-existing debt
-  cannot block this change. It becomes a note or a tracked task, except what
-  `~/.agents/rulebook/ownership.md` makes the task's own work, which is fixed in its
-  own commit before done. Record the files the task modified, as that file lists
-  them, with the dispositions. The change owns what it created: the duplication it
+  cannot block this change. A pre-existing defect is fixed in this session or
+  captured, as `~/.agents/rulebook/ownership.md` decides, and a finding that names
+  no defect takes the advisory route under Dispose. Record each finding's
+  disposition. The change owns what it created: the duplication it
   introduced, the site it added to an existing smell's or coupling's span, the
   function it grew past the point the finding rests on. Line overlap does not
   decide it. A two-line edit inside a pre-existing 300-line function did not
@@ -112,11 +112,12 @@ enters, what authority the code exercises, what a hostile input could reach.
 
 ## Dispose
 
-Dispose of each verified finding one of four ways: fixed (small and reversible: in
-this batch); not a defect, with why; tracked as a task, with its id; escalated,
-with your recommendation. Fix blocking findings before done. Observe every
-fix: rerun the suite and the check the finding names. You verify the fixes. Never
-send the change back to a reviewer after fixing.
+Fix every verified finding that names a defect and whose fix fits in this session,
+blocking or not, before done. Dispose of the rest one of three ways: not a defect,
+with why; tracked as a task, with its id, when `~/.agents/rulebook/ownership.md`
+sends it to capture; escalated, with your recommendation. Observe every fix: rerun
+the suite and the check the finding names. You verify the fixes. Never send the
+change back to a reviewer after fixing.
 
 A disposition covers a defect: something behaves wrongly, or a result is unverified.
 A finding that names no defect, an observation about naming, scope, or documentation,
