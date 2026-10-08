@@ -71,6 +71,7 @@
   "model": "opus",
   "outputStyle": "brief",
   "permissions": {
+    "additionalDirectories": ["~/code/backlog/boards"],
     "allow": ["mcp__claude-in-chrome"],
     "defaultMode": "bypassPermissions",
     "deny": [
