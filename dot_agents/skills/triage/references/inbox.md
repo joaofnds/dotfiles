@@ -40,4 +40,4 @@ returning and future deferrals, new arrivals, and next accepted action. Carry th
 goal as audit context and link the priority doc, doc-0, for the current direction.
 Record the number of pending captures and oldest capture date, and any repeated duplicate or rewriting
 problem. Use these observations and the user's correction burden to judge whether
-intake is helping. Fewer cards alone is not evidence of success.
+intake is helping.

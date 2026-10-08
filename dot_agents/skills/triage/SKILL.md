@@ -84,9 +84,14 @@ newest is current.
 
 For each card in the audit set, record who benefits, what observable outcome serves
 the goal, and what happens if it is left undone. Test the proposed solution against that need.
+Keep a capture only when a record or a reproduction shows that its outcome changes what
+the product's user sees, waits for, or pays, or when an accepted card cannot proceed
+without it. A defect a hostile party can reach counts as reaching the user. This test
+also governs the cards ownership rules send to the board, so a shortcut or a TODO with
+no such consequence is archived, and a broken check that blocks accepted work stays.
 A simpler change, an existing capability, or removing the need can replace the
 proposal. Age, author emphasis, technical elegance, and effort already spent do not
-establish value. Maintenance earns its place through a concrete risk or cost.
+establish value.
 
 Give every audited card a disposition with its evidence and destination:
 
@@ -100,13 +105,18 @@ Give every audited card a disposition with its evidence and destination:
   definition of done under the board guard. A partial fix leaves the remainder open.
   Record a newly discovered fix for admission without implementing it during screening.
 - Merge or split work through the scope accounting below.
-- Archive a duplicate after absorption, a superseded proposal, or a need contradicted
-  by evidence or excluded by the recorded goal. Cite the survivor or the reason.
-  Uncertainty alone does not justify removal. Preserve the record rather than deleting it.
+- Archive a duplicate after absorption, a superseded proposal, a need contradicted by
+  evidence or excluded by the recorded goal, and a capture that fails the keep test.
+  Cite the survivor or the reason. Before archiving, search the open cards for the
+  card's ID and the project's records for its symptom, and run the reproduction the card
+  gives. A card an accepted card lists as a dependency stays open, kept or deferred,
+  with that dependency in place, since dropping it changes accepted work. Preserve the
+  record rather than deleting it.
 
 Record a rejection and what evidence would justify reconsidering it on the card.
 A rejection that settles a recurring product choice also becomes a board decision.
-A smaller backlog is not a success measure. Explain net growth when necessary work or splits
+Judge the pass by whether every kept card's reason to stay is evidenced, never by the
+card count in either direction. Explain net growth when necessary work or splits
 add cards. A newly discovered outcome needed for a milestone is captured for admission.
 
 ## Consolidate and split without losing scope
@@ -149,8 +159,7 @@ with the reason in the current triage verdict:
   or blocks the next necessary increment. Name the consequence and its timing.
 - Medium means a demonstrated benefit to a planned increment whose delay is affordable
   while High work is resolved.
-- Low means a valid improvement with little present cost of delay. Speculative work
-  whose need is unproven needs clarification or deferral before a build slot.
+- Low means a valid improvement with little present cost of delay.
 
 Propose order changes within that scale by cost of delay, the value of the outcomes
 unlocked, and the effort and uncertainty of the smallest useful result. State the evidence behind
@@ -174,6 +183,10 @@ Record before and after values and evidence on the triage doc as changes happen,
 including complete replaced text and newly created IDs. Read the result back so a
 successful command with an incomplete write cannot pass unnoticed. The record must
 support recovery even when the board has no git history.
+
+Bring the priority doc to the board rules under Project direction on every pass, and
+copy every line you remove onto the triage doc. Tidying changes no plan, so it needs no
+approval, and a change to the sequence still does.
 
 Re-list the board after editing. Account for every ID in the audit set and every
 card created by a merge or split, with evidence verdict, disposition, milestone or
