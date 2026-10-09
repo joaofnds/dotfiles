@@ -27,6 +27,7 @@
     pkgs.jq
     pkgs.lua
     pkgs.mise
+    pkgs.mole-cleaner
     pkgs.neovim
     pkgs.nixfmt
     pkgs.opencode
