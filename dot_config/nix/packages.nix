@@ -7,7 +7,6 @@
     pkgs.bat
     pkgs.btop
     pkgs.chezmoi
-    pkgs.codex
     pkgs.curl
     pkgs.delta
     pkgs.dust

@@ -14,6 +14,7 @@
       "chatgpt"
       "claude"
       "claude-code@latest"
+      "codex"
       "font-computer-modern"
       "font-iosevka-aile"
       "font-iosevka-ss08"
