@@ -6,7 +6,7 @@
 
     taps = [ "joaofnds/tap" ];
 
-    brews = [ "ruby" ];
+    brews = [ "ruby" "opencode" ];
 
     casks = [
       "appcleaner"
