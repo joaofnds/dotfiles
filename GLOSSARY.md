@@ -9,6 +9,13 @@ term when you introduce or lean on one, one term per concept.
   style, engineering judgment, coupling, testing, the refactoring pass and catalog,
   the wikis, the board, ownership, continuous improvement. The source for that knowledge. The global instructions
   compress it and the skills route to it.
+- **Read table**: the list in the global instructions that names, for each kind of
+  work, the rule files a session reads in the turn it does that work.
+- **Code row**: the read table's entry for writing or reviewing code: `core.md`, the
+  language file, `engineering.md`, and the testing index, which names the testing
+  module each kind of test work needs.
+- **Routed file**: a rule file the read table, or a file it names, requires for the
+  work at hand.
 - **Reply**: the final message of a turn, and the only part of it reliably read.
 - **Brief**: the reply cut to what can be acted on, in the register the brief output
   style sets.
