@@ -1,6 +1,7 @@
-local complete = function()
+-- install handles emit "closed" in a fast event context, where autocmds can't run
+local complete = vim.schedule_wrap(function()
 	vim.api.nvim_exec_autocmds("User", { pattern = "MasonUpdateAllComplete" })
-end
+end)
 
 local update_installed = function(registry)
 	local packages = registry.get_installed_packages()
