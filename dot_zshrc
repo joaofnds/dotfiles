@@ -29,6 +29,7 @@ if [[
 	-z "$TMUX" &&
 	-z "$CLAUDE_AGENT_SDK_VERSION" &&
 	-z "$INSIDE_EMACS" &&
-	"$TERM_PROGRAM" != "zed" ]]; then
+	"$TERM_PROGRAM" != "zed" &&
+	"$TERM_PROGRAM" != "Apple_Terminal" ]]; then
 	tat
 fi
