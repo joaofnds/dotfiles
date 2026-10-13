@@ -140,6 +140,7 @@
     "simplify": "off",
     "update-config": "off"
   },
+  "skipDangerousModePermissionPrompt": true,
   "skipWebFetchPreflight": true,
   "skipWorkflowUsageWarning": true,
   "spinnerTipsEnabled": false,
