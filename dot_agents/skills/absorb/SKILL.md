@@ -79,7 +79,8 @@ need is judged directly.
 
 An import lands as the principle plus the need it answers, written in our corpus's
 voice and structure. Land a mechanism only for a failure that has already happened
-here despite a stated principle. The card takes the normal steps: build writes the
+here despite a stated principle. The edit waits for a typed go-ahead on its exact
+text, as the global file's hard lines require. The card then takes the normal steps: build writes the
 edit, and before the commit the final text takes one adversarial pass, by a reviewer
 that had no part in the edit, under the review-instructions checks. Its findings land
 on the card with their verdicts. The author verifies each repair against the finding

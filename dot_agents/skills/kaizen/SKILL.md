@@ -67,15 +67,11 @@ does, since the defect shows the sentence alone did not hold. A hook or a settin
 change is never written by a session, only proposed, and only when no other change
 answers the defect. Say that in the proposal.
 
-Proposals for on-demand files (skills, rules, agent definitions) land in the same
-turn: build writes the edit, review-instructions gates it, the source file takes it
-(`chezmoi apply` on the changed targets for corpus files), and the commit names the
-defect it answers. Use a landed rule on a real task in a fresh session before copying
-it to other files. The card names that test as the next step. Proposals for hooks,
-settings, or any file that loads at session start (the global or a project's
-instruction file, output styles) wait for an explicit go- ahead, carrying their exact
-replacement text. So do findings from an invocation that asked for assessment rather
-than a fix, and a change too large for the turn, which becomes its own card. When no
+Every proposal waits for an explicit go-ahead on its exact replacement text, since the
+global file's hard lines reserve instruction edits for a typed direction. Once one
+lands, use the rule on a real task in a fresh session before copying it to other
+files, and the card names that test as the next step. A change too large for the turn
+becomes its own card. When no
 finding survives, the card says which way: nothing cleared the bar, so the
 instructions held, or the findings failed verification, recorded with their disproofs
 and already reported. Do not write an edit to have something to show.
