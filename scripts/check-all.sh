@@ -10,6 +10,8 @@ set -u
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 
+command -v bun >/dev/null || eval "$(mise activate bash --shims)"
+
 quiet=false
 [ "${1:-}" = "--quiet" ] && quiet=true
 
