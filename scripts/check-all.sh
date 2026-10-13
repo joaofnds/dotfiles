@@ -5,7 +5,7 @@
 # Usage: check-all.sh [--quiet]
 #   --quiet  print only the per-check verdicts and the summary, not each checker's output.
 #
-# Exits 0 only when every check passes. Add a new checker to the `checks` list below.
+# Exits 0 only when every check passes. Add a new checker as a `run` line below.
 set -u
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
