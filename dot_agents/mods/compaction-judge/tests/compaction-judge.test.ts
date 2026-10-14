@@ -1,4 +1,4 @@
-import type { ModelCompleteInput, ModelCompleteResult, On, PromptOrigin, SessionMessage, TurnStepChunk, TurnStepResult } from 'claude-code'
+import type { ModelCompleteInput, ModelCompleteResult, On, PromptOrigin, SessionCompactResult, SessionMessage, TurnStepChunk, TurnStepResult } from 'claude-code'
 import type { Engine, MockClock } from 'claude-code/testing'
 import { describe, expect, mock, test } from 'claude-code/testing'
 
@@ -10,18 +10,19 @@ const PAST_200K = 210_000
 const UNDER_200K = 190_000
 const AT_200K = 200_000
 const FAR_PAST_200K = 950_000
+const AFTER_COMPACTION = 30_000
 const MODEL_WINDOW = 1_000_000
 const MODEL = 'claude-opus-5-5'
 const TURN = 'turn-1'
 const NEXT_TURN = 'turn-2'
 const SUBAGENT = 'agent-1'
 const JUDGE_LATENCY_MS = 1_300
-const COMPACTION_MS = 40_000
 const LOG_FILE = '.local/state/compaction-judge/log.jsonl'
+const AUTO_COMPACT_WINDOW = 'CLAUDE_CODE_AUTO_COMPACT_WINDOW'
+const SMALLEST_WINDOW = '100000'
 const USAGE = { input_tokens: 900, output_tokens: 1, cache_read_input_tokens: 0, cache_creation_input_tokens: 0 }
-const PAUSE = 'Pausing at a breakpoint to compact the conversation.'
-const CONTINUE = 'The conversation was compacted at a breakpoint. Continue the work where you left off.'
 const REFUSED = 'Not compacted · the conversation is too short'
+const SKIPPED = 'Blocked by a PreCompact hook'
 const SUMMARY = 'This session is being continued from a previous conversation. Summary: the agent was partway through a task.'
 const NO_COMPACTION = 'no implementation for command.run'
 const BLOCKED = 'Blocked by a prompt hook'
@@ -32,9 +33,7 @@ const UNANSWERED: ModelCompleteResult = { isAnswered: false, reason: 'empty-repl
 const RESPONSE = { answer: 'Reading the next file.', toolUses: [], stopReason: 'tool_use', usage: { ...USAGE, model: MODEL } } as const
 const RESPONSE_CHUNK: TurnStepChunk = { kind: 'text', index: 0, text: RESPONSE.answer }
 const sentIn = (turnId: string) => ({ chunks: [RESPONSE_CHUNK], result: { turnId, index: 0, ...RESPONSE } })
-const pausedIn = (turnId: string) => ({ chunks: [], result: { turnId, index: 0, answer: PAUSE, toolUses: [], stopReason: 'end_turn', usage: null } })
 const SENT = sentIn(TURN)
-const PAUSED = pausedIn(TURN)
 
 const request = (text: string): SessionMessage => ({ role: 'user', text, toolUses: [] })
 
@@ -83,15 +82,17 @@ type SessionEvent = { compaction: 'ran' | 'refused' } | { prompt: string }
 class FakeSession {
   readonly events: SessionEvent[] = []
   readonly notices: string[] = []
+  readonly windowsToolsRanUnder: (string | undefined)[] = []
+  private readonly environment = new Map<string, string | undefined>()
   private messages: SessionMessage[] = [...CONVERSATION]
   private compaction: 'runs' | 'is refused' | 'fails' = 'runs'
-  private compactionMs = 0
   private isRefusingPrompts = false
 
-  constructor(
-    private tokens: number | undefined,
-    private readonly clock: MockClock,
-  ) {}
+  constructor(private tokens: number | undefined) {}
+
+  get autoCompactWindow(): string | undefined {
+    return this.environment.get(AUTO_COMPACT_WINDOW)
+  }
 
   show(messages: readonly SessionMessage[]): void {
     this.messages = [...messages]
@@ -113,10 +114,6 @@ class FakeSession {
     this.compaction = 'fails'
   }
 
-  slowCompaction(): void {
-    this.compactionMs = COMPACTION_MS
-  }
-
   install(on: On): void {
     on('session.usage', () => ({ value: { startedAt: 0, context: { tokens: this.tokens, window: MODEL_WINDOW }, rateLimits: [] } }))
     on('session.messages', () => ({ value: [...this.messages] }))
@@ -126,7 +123,16 @@ class FakeSession {
     })
     on('turn.start', (_, e) => ({ turnId: e.turnId }))
     on('turn.complete', (_, e) => ({ text: e.answer }))
-    on('command.run', { command: 'compact' }, (_, e, next) => (this.compaction === 'fails' ? next(e) : this.compact()))
+    on('tool.call', () => {
+      this.windowsToolsRanUnder.push(this.autoCompactWindow)
+      return { result: 'contents of file-next' }
+    })
+    on('session.compact', () => this.compactInTurn())
+    on('command.run', { command: 'compact' }, (_, e, next) => (this.compaction === 'fails' ? next(e) : this.compactBetweenTurns()))
+    on('env.set', (_, e) => {
+      this.environment.set(e.name, e.value)
+      return { value: undefined }
+    })
     on('ui.log', (_, e) => {
       this.notices.push(e.text)
       return { value: undefined }
@@ -139,9 +145,18 @@ class FakeSession {
     })
   }
 
-  private async compact(): Promise<{ text?: string }> {
-    if (this.compactionMs > 0) await this.clock.sleep(this.compactionMs)
+  private compactInTurn(): SessionCompactResult {
+    if (this.compaction === 'is refused') {
+      this.events.push({ compaction: 'refused' })
+      return { skip: SKIPPED }
+    }
 
+    this.tokens = undefined
+    this.events.push({ compaction: 'ran' })
+    return { messages: [request(SUMMARY)], tokensAfter: AFTER_COMPACTION }
+  }
+
+  private compactBetweenTurns(): { text?: string } {
     if (this.compaction === 'is refused') {
       this.events.push({ compaction: 'refused' })
       return { text: REFUSED }
@@ -166,16 +181,28 @@ async function step($: Engine, loop: { turnId?: string; agentId?: string } = {})
   return { chunks, result: read.value }
 }
 
+function runTool($: Engine, loop: { agentId?: string } = {}) {
+  return $.tool.call({ tool: 'Read', tool_use_id: 'toolu_next', file_path: '/repo/file-next.ts', ...loop })
+}
+
+async function stepAndRunItsTool($: Engine): Promise<void> {
+  await step($)
+  await runTool($)
+}
+
+function compactInTurn($: Engine, loop: { agentId?: string } = {}) {
+  return $.session.compact({ trigger: 'auto', messages: CONVERSATION, ...loop })
+}
+
 function submit($: Engine, text: string, origin: PromptOrigin = { kind: 'composer' }) {
   return $.prompt.submit({ text, wait: false, origin })
 }
 
-async function growPastItsOwnCompaction($: Engine, clock: MockClock, session: FakeSession): Promise<void> {
+async function growPastItsOwnCompaction($: Engine, session: FakeSession): Promise<void> {
+  await stepAndRunItsTool($)
+  await compactInTurn($)
+  session.show([request(SUMMARY), ...toolSteps(2)])
   await step($)
-  await complete($)
-  await clock.settle()
-  session.show([request(SUMMARY), request(CONTINUE), ...toolSteps(2)])
-  await step($, { turnId: NEXT_TURN })
   session.grow(PAST_200K)
 }
 
@@ -218,7 +245,7 @@ type SessionState = { tokens: number | undefined; judge: JudgeSpy; log?: FakeDec
 
 function seedSession(on: On, state: SessionState): { clock: MockClock; session: FakeSession } {
   const clock = mock.clock(on, { now: NOW })
-  const session = new FakeSession(state.tokens, clock)
+  const session = new FakeSession(state.tokens)
   state.judge.install(on, clock)
   ;(state.log ?? new FakeDecisionLog()).install(on)
   session.install(on)
@@ -230,16 +257,8 @@ function seedSession(on: On, state: SessionState): { clock: MockClock; session: 
 
 describe('compaction-judge', () => {
   describe('a step of the main conversation past 200K', () => {
-    test('ends the turn where the judge sees a breakpoint', async ($, on) => {
+    test('sends its request where the judge sees a breakpoint', async ($, on) => {
       seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-
-      const sent = await step($)
-
-      expect(sent).toEqual(PAUSED)
-    })
-
-    test('sends its request while the judge sees work in progress', async ($, on) => {
-      seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('wait')) })
 
       const sent = await step($)
 
@@ -402,43 +421,43 @@ describe('compaction-judge', () => {
 
     describe('when the judge words its verdict loosely', () => {
       for (const reply of [' NOW\n', 'Now.', 'The agent just appended its note, so compacting now is fine.\n\nnow']) {
-        test(`ends the turn on ${JSON.stringify(reply)}`, async ($, on) => {
-          seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered(reply)) })
+        test(`shrinks the auto-compact window on ${JSON.stringify(reply)}`, async ($, on) => {
+          const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered(reply)) })
 
-          const sent = await step($)
+          await stepAndRunItsTool($)
 
-          expect(sent).toEqual(PAUSED)
+          expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
         })
       }
 
       for (const reply of ['Wait', ' wait\n', 'Wait.', 'Now is not the time, since the agent is about to edit what it read.\n\nwait']) {
-        test(`sends its request on ${JSON.stringify(reply)}`, async ($, on) => {
-          seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered(reply)) })
+        test(`leaves the auto-compact window as configured on ${JSON.stringify(reply)}`, async ($, on) => {
+          const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered(reply)) })
 
-          const sent = await step($)
+          await stepAndRunItsTool($)
 
-          expect(sent).toEqual(SENT)
+          expect(session.autoCompactWindow).toBeUndefined()
         })
       }
     })
 
     describe('when the judge does not answer', () => {
-      test('sends its request', async ($, on) => {
-        seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(UNANSWERED) })
+      test('leaves the auto-compact window as configured', async ($, on) => {
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(UNANSWERED) })
 
-        const sent = await step($)
+        await stepAndRunItsTool($)
 
-        expect(sent).toEqual(SENT)
+        expect(session.autoCompactWindow).toBeUndefined()
       })
     })
 
     describe('when the judge answers neither now nor wait', () => {
-      test('sends its request', async ($, on) => {
-        seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('It depends on the next step.')) })
+      test('leaves the auto-compact window as configured', async ($, on) => {
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('It depends on the next step.')) })
 
-        const sent = await step($)
+        await stepAndRunItsTool($)
 
-        expect(sent).toEqual(SENT)
+        expect(session.autoCompactWindow).toBeUndefined()
       })
     })
 
@@ -455,235 +474,239 @@ describe('compaction-judge', () => {
     })
   })
 
-  describe('a turn it stopped', () => {
-    test('compacts the conversation and tells the agent to continue', async ($, on) => {
-      const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+  describe('a step the judge saw a breakpoint at', () => {
+    test('shrinks the auto-compact window once its tool call returns', async ($, on) => {
+      const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+
+      await stepAndRunItsTool($)
+
+      expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
+    })
+
+    test('runs each of its tool calls under the configured window', async ($, on) => {
+      const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
       await step($)
 
-      await complete($)
-      await clock.settle()
+      await runTool($)
+      await runTool($)
 
-      expect(session.events).toEqual([{ compaction: 'ran' }, { prompt: CONTINUE }])
+      expect(session.windowsToolsRanUnder).toEqual([undefined, undefined])
+    })
+
+    test('lets the engine compact the conversation before the next step', async ($, on) => {
+      const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+      await stepAndRunItsTool($)
+
+      await compactInTurn($)
+
+      expect(session.events).toEqual([{ compaction: 'ran' }])
+    })
+
+    test('restores the auto-compact window when the engine compacts', async ($, on) => {
+      const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+      await stepAndRunItsTool($)
+
+      await compactInTurn($)
+
+      expect(session.autoCompactWindow).toBeUndefined()
     })
 
     test('records the compaction', async ($, on) => {
       const log = new FakeDecisionLog()
-      const { clock } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
-      await step($)
+      seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+      await stepAndRunItsTool($)
 
-      await complete($)
-      await clock.settle()
+      await compactInTurn($)
 
-      expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'step', continuation: 'sent', output: null, error: null })
+      expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'step', skip: null, tokensAfter: AFTER_COMPACTION })
     })
 
     test('watches again once the conversation is under 200K', async ($, on) => {
-      const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-      await step($)
-      await complete($)
-      await clock.settle()
+      const judge = new JudgeSpy(answered('now'))
+      const { session } = seedSession(on, { tokens: PAST_200K, judge })
+      await stepAndRunItsTool($)
+      await compactInTurn($)
       session.grow(UNDER_200K)
-      await step($, { turnId: NEXT_TURN })
+      await step($)
       session.grow(PAST_200K)
 
-      const sent = await step($, { turnId: NEXT_TURN })
+      await stepAndRunItsTool($)
 
-      expect(sent).toEqual(pausedIn(NEXT_TURN))
+      expect(judge.asked).toHaveLength(2)
+      expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
     })
 
     test('shows the judge the request the user made before the compaction', async ($, on) => {
       const judge = new JudgeSpy(answered('now'))
-      const { clock, session } = seedSession(on, { tokens: PAST_200K, judge })
+      const { session } = seedSession(on, { tokens: PAST_200K, judge })
       await submit($, 'Fix the login redirect')
-      await growPastItsOwnCompaction($, clock, session)
+      await growPastItsOwnCompaction($, session)
 
-      await step($, { turnId: NEXT_TURN })
+      await step($)
 
       expect(judge.asked.at(-1)?.prompt).toContain('Fix the login redirect')
     })
 
-    describe('when the compaction is refused', () => {
-      test('still tells the agent to continue', async ($, on) => {
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-        session.refuseCompaction()
+    describe("when a subagent's tool call returns", () => {
+      test('leaves the auto-compact window as configured', async ($, on) => {
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
         await step($)
 
-        await complete($)
-        await clock.settle()
+        await runTool($, { agentId: SUBAGENT })
 
-        expect(session.events).toEqual([{ compaction: 'refused' }, { prompt: CONTINUE }])
+        expect(session.autoCompactWindow).toBeUndefined()
+      })
+    })
+
+    describe('when a subagent compacts while the window is shrunk', () => {
+      test('holds that compaction', async ($, on) => {
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        await stepAndRunItsTool($)
+
+        await compactInTurn($, { agentId: SUBAGENT })
+
+        expect(session.events).toEqual([])
       })
 
-      test('records what the compaction answered', async ($, on) => {
+      test('records the hold', async ($, on) => {
         const log = new FakeDecisionLog()
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
-        session.refuseCompaction()
+        seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+        await stepAndRunItsTool($)
+
+        await compactInTurn($, { agentId: SUBAGENT })
+
+        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'held', agentId: SUBAGENT })
+      })
+    })
+
+    describe('when a subagent compacts before the window shrinks', () => {
+      test('lets that compaction run', async ($, on) => {
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
         await step($)
+
+        await compactInTurn($, { agentId: SUBAGENT })
+
+        expect(session.events).toEqual([{ compaction: 'ran' }])
+      })
+    })
+
+    describe('when the turn ends before the engine compacts', () => {
+      test('restores the auto-compact window', async ($, on) => {
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        await stepAndRunItsTool($)
 
         await complete($)
         await clock.settle()
 
-        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'step', continuation: 'sent', output: REFUSED, error: null })
+        expect(session.autoCompactWindow).toBeUndefined()
+      })
+
+      test("leaves the window as configured after the next turn's tool call", async ($, on) => {
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        await step($)
+        await complete($)
+        await clock.settle()
+
+        await runTool($)
+
+        expect(session.autoCompactWindow).toBeUndefined()
+      })
+    })
+
+    describe('when the engine does not compact before the next step', () => {
+      test('restores the auto-compact window', async ($, on) => {
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        await stepAndRunItsTool($)
+
+        await step($)
+
+        expect(session.autoCompactWindow).toBeUndefined()
+      })
+
+      test('records the compaction that did not come', async ($, on) => {
+        const log = new FakeDecisionLog()
+        seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+        await stepAndRunItsTool($)
+
+        await step($)
+
+        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'missed' })
       })
 
       test('sends the next steps without asking the judge while the conversation stays past 200K', async ($, on) => {
         const judge = new JudgeSpy(answered('now'))
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge })
-        session.refuseCompaction()
-        await step($)
-        await complete($)
-        await clock.settle()
+        seedSession(on, { tokens: PAST_200K, judge })
+        await stepAndRunItsTool($)
 
-        const sent = await step($, { turnId: NEXT_TURN })
+        const sent = await step($)
 
-        expect(sent).toEqual(sentIn(NEXT_TURN))
+        expect(sent).toEqual(SENT)
         expect(judge.asked).toHaveLength(1)
       })
     })
 
-    describe('when the compaction fails', () => {
-      test('still tells the agent to continue', async ($, on) => {
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-        session.failCompaction()
-        await step($)
+    describe('when a hook skips the compaction', () => {
+      test('records the skip', async ($, on) => {
+        const log = new FakeDecisionLog()
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+        session.refuseCompaction()
+        await stepAndRunItsTool($)
 
-        await complete($)
-        await clock.settle()
+        await compactInTurn($)
 
-        expect(session.events).toEqual([{ prompt: CONTINUE }])
+        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'step', skip: SKIPPED, tokensAfter: null })
       })
 
-      test('records the failure', async ($, on) => {
-        const log = new FakeDecisionLog()
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
-        session.failCompaction()
-        await step($)
+      test('sends the next steps without asking the judge while the conversation stays past 200K', async ($, on) => {
+        const judge = new JudgeSpy(answered('now'))
+        const { session } = seedSession(on, { tokens: PAST_200K, judge })
+        session.refuseCompaction()
+        await stepAndRunItsTool($)
+        await compactInTurn($)
 
-        await complete($)
-        await clock.settle()
+        const sent = await step($)
 
-        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'step', continuation: 'sent', output: null, error: expect.stringContaining(NO_COMPACTION) })
+        expect(sent).toEqual(SENT)
+        expect(judge.asked).toHaveLength(1)
       })
 
       test("watches again after the person's next request", async ($, on) => {
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-        session.failCompaction()
-        await step($)
-        await complete($)
-        await clock.settle()
+        const judge = new JudgeSpy(answered('now'))
+        const { session } = seedSession(on, { tokens: PAST_200K, judge })
+        session.refuseCompaction()
+        await stepAndRunItsTool($)
+        await compactInTurn($)
         await submit($, 'Fix the login redirect')
 
-        const sent = await step($, { turnId: NEXT_TURN })
+        await step($, { turnId: NEXT_TURN })
 
-        expect(sent).toEqual(pausedIn(NEXT_TURN))
+        expect(judge.asked).toHaveLength(2)
       })
 
       test('sends the next steps without asking the judge after a background notice', async ($, on) => {
         const judge = new JudgeSpy(answered('now'))
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge })
-        session.failCompaction()
-        await step($)
-        await complete($)
-        await clock.settle()
+        const { session } = seedSession(on, { tokens: PAST_200K, judge })
+        session.refuseCompaction()
+        await stepAndRunItsTool($)
+        await compactInTurn($)
         await submit($, 'A background task finished', { kind: 'task-notification' })
 
-        const sent = await step($, { turnId: NEXT_TURN })
+        await step($, { turnId: NEXT_TURN })
 
-        expect(sent).toEqual(sentIn(NEXT_TURN))
         expect(judge.asked).toHaveLength(1)
       })
     })
 
     describe('when the compaction cannot be recorded', () => {
-      test('still tells the agent to continue', async ($, on) => {
+      test('restores the auto-compact window', async ($, on) => {
         const log = new FakeDecisionLog()
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
-        await step($)
+        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+        await stepAndRunItsTool($)
         log.fill()
 
-        await complete($)
-        await clock.settle()
+        await compactInTurn($)
 
-        expect(session.events).toEqual([{ compaction: 'ran' }, { prompt: CONTINUE }])
-      })
-
-      test('says so in the transcript', async ($, on) => {
-        const log = new FakeDecisionLog()
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
-        await step($)
-        log.fill()
-
-        await complete($)
-        await clock.settle()
-
-        expect(session.notices).toEqual([expect.stringContaining(NO_SPACE)])
-      })
-    })
-
-    describe('when a hook drops the continue prompt', () => {
-      test('says so in the transcript', async ($, on) => {
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-        await step($)
-        session.refusePrompts()
-
-        await complete($)
-        await clock.settle()
-
-        expect(session.notices).toEqual([expect.stringContaining(BLOCKED)])
-      })
-
-      test('records that the work did not continue', async ($, on) => {
-        const log = new FakeDecisionLog()
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
-        await step($)
-        session.refusePrompts()
-
-        await complete($)
-        await clock.settle()
-
-        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'step', continuation: 'dropped', output: null, error: null })
-      })
-    })
-
-    describe('when a prompt enters during the compaction', () => {
-      test("leaves the work to the person's new request", async ($, on) => {
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-        session.slowCompaction()
-        await step($)
-        await complete($)
-
-        await submit($, 'Run the tests instead')
-        await clock.advance(COMPACTION_MS)
-        await clock.settle()
-
-        expect(session.events).toEqual([{ prompt: 'Run the tests instead' }, { compaction: 'ran' }])
-      })
-
-      test("records that the person's request took the continue prompt's place", async ($, on) => {
-        const log = new FakeDecisionLog()
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
-        session.slowCompaction()
-        await step($)
-        await complete($)
-
-        await submit($, 'Run the tests instead')
-        await clock.advance(COMPACTION_MS)
-        await clock.settle()
-
-        expect(log.entries.at(-1)).toEqual({ at: new Date(NOW + COMPACTION_MS).toISOString(), session: SESSION_ID, compaction: 'step', continuation: 'superseded', output: null, error: null })
-      })
-
-      test('still tells the agent to continue after a background notice', async ($, on) => {
-        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
-        session.slowCompaction()
-        await step($)
-        await complete($)
-
-        await submit($, 'A background task finished', { kind: 'task-notification' })
-        await clock.advance(COMPACTION_MS)
-        await clock.settle()
-
-        expect(session.events).toEqual([{ prompt: 'A background task finished' }, { compaction: 'ran' }, { prompt: CONTINUE }])
+        expect(session.autoCompactWindow).toBeUndefined()
       })
     })
   })
@@ -724,7 +747,7 @@ describe('compaction-judge', () => {
       const judge = new JudgeSpy(answered('now'))
       const { clock, session } = seedSession(on, { tokens: PAST_200K, judge })
       await submit($, 'Fix the login redirect')
-      await growPastItsOwnCompaction($, clock, session)
+      await growPastItsOwnCompaction($, session)
 
       await complete($, { turnId: NEXT_TURN })
       await clock.settle()
@@ -756,19 +779,18 @@ describe('compaction-judge', () => {
       expect(session.events).toEqual([{ compaction: 'ran' }])
     })
 
-    test("stays as it is after a stopped turn's compaction was refused", async ($, on) => {
+    test("stays as it is after a step's compaction was skipped", async ($, on) => {
       const judge = new JudgeSpy(answered('now'))
       const { clock, session } = seedSession(on, { tokens: PAST_200K, judge })
       session.refuseCompaction()
-      await step($)
+      await stepAndRunItsTool($)
+      await compactInTurn($)
+
       await complete($)
       await clock.settle()
 
-      await complete($, { turnId: NEXT_TURN })
-      await clock.settle()
-
       expect(judge.asked).toHaveLength(1)
-      expect(session.events).toEqual([{ compaction: 'refused' }, { prompt: CONTINUE }])
+      expect(session.events).toEqual([{ compaction: 'refused' }])
     })
 
     test('stays as it is after its own compaction was refused', async ($, on) => {
@@ -782,6 +804,32 @@ describe('compaction-judge', () => {
       await clock.settle()
 
       expect(judge.asked).toHaveLength(1)
+    })
+
+    describe('when the compaction is refused', () => {
+      test('records what the compaction answered', async ($, on) => {
+        const log = new FakeDecisionLog()
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+        session.refuseCompaction()
+
+        await complete($)
+        await clock.settle()
+
+        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'turn end', output: REFUSED, error: null })
+      })
+    })
+
+    describe('when the compaction fails', () => {
+      test('records the failure', async ($, on) => {
+        const log = new FakeDecisionLog()
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+        session.failCompaction()
+
+        await complete($)
+        await clock.settle()
+
+        expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'turn end', output: null, error: expect.stringContaining(NO_COMPACTION) })
+      })
     })
 
     describe('when the log cannot be written', () => {
@@ -878,12 +926,12 @@ describe('compaction-judge', () => {
       expect(sent).toEqual(SENT)
     })
 
-    test('ends the turn where the judge sees a breakpoint', async ($, on) => {
-      seedSession(on, { tokens: FAR_PAST_200K, judge: new JudgeSpy(answered('now')) })
+    test('shrinks the auto-compact window once its tool call returns where the judge sees a breakpoint', async ($, on) => {
+      const { session } = seedSession(on, { tokens: FAR_PAST_200K, judge: new JudgeSpy(answered('now')) })
 
-      const sent = await step($)
+      await stepAndRunItsTool($)
 
-      expect(sent).toEqual(PAUSED)
+      expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
     })
   })
 

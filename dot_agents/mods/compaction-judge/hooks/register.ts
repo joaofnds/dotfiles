@@ -1,6 +1,7 @@
-import type { EngineInterface, ModelCompleteResult, ModelUsage, PromptOrigin, Register, RenderSurface, SessionMessage } from 'claude-code'
+import type { EngineInterface, ModelCompleteResult, ModelUsage, PromptOrigin, Register, RenderSurface, SessionCompactResult, SessionMessage } from 'claude-code'
 
 const COMPACT_PAST_TOKENS = 200_000
+const SMALLEST_AUTO_COMPACT_WINDOW = '100000'
 const JUDGE_MODEL = 'sonnet'
 const JUDGE_TIMEOUT_MS = 15_000
 const VERDICT_MAX_TOKENS = 10
@@ -8,8 +9,7 @@ const RECENT_MESSAGES = 12
 const EXCERPT_CHARACTERS = 400
 const APPEND_TO_LOG = 'log="$HOME/.local/state/compaction-judge/log.jsonl"; mkdir -p "${log%/*}" && cat >> "$log"'
 const LOG_TIMEOUT_MS = 5_000
-const PAUSE = 'Pausing at a breakpoint to compact the conversation.'
-const CONTINUE = 'The conversation was compacted at a breakpoint. Continue the work where you left off.'
+const HELD = 'compaction-judge holds this until the main conversation has compacted at its breakpoint'
 const PERSON_ORIGINS: ReadonlySet<PromptOrigin['kind']> = new Set(['composer', 'bridge', 'sdk', 'slack-ping'])
 
 const JUDGE_SYSTEM = `A coding agent's conversation has grown long enough to compact. Compacting replaces the conversation with a summary that the agent continues from, so the detail it was holding is lost. Decide whether this is a good moment.
@@ -38,16 +38,21 @@ type JudgedEntry = {
   judgeMs: number
   judgeUsage: ModelUsage
 }
-type Continuation = 'sent' | 'dropped' | 'superseded'
 type Compaction = { output: string | null; error: string | null }
-type CompactionEntry = Compaction & ({ compaction: 'step'; continuation: Continuation } | { compaction: 'turn end' })
+type StepCompaction = { skip: string | null; tokensAfter: number | null }
+type AutoCompactWindow = { isShrunk: boolean }
+type CompactionEntry =
+  | ({ compaction: 'step' } & StepCompaction)
+  | { compaction: 'missed' }
+  | { compaction: 'held'; agentId: string }
+  | ({ compaction: 'turn end' } & Compaction)
 
 export const register: Register = on => {
   let request: string | undefined
-  let stoppedTurn: string | undefined
+  let isCompactionDue = false
   let isStandingDown = false
-  let requests = 0
   let turns = 0
+  const autoCompactWindow: AutoCompactWindow = { isShrunk: false }
 
   on('session.start', async ($, e, next) => {
     const { version } = await $.session.version()
@@ -60,7 +65,6 @@ export const register: Register = on => {
     const result = await next(e)
     if (result.drop === undefined && PERSON_ORIGINS.has(e.origin.kind)) {
       request = result.text
-      requests += 1
       isStandingDown = false
     }
 
@@ -76,6 +80,13 @@ export const register: Register = on => {
   on('turn.step', async function* ($, e, next) {
     if (e.agentId !== undefined) return yield* next(e)
 
+    if (isCompactionDue) {
+      isCompactionDue = false
+      isStandingDown = true
+      await restoreWindow($, autoCompactWindow)
+      await record($, { compaction: 'missed' })
+    }
+
     const tokens = await contextTokens($)
     if (tokens < COMPACT_PAST_TOKENS) {
       isStandingDown = false
@@ -84,27 +95,46 @@ export const register: Register = on => {
 
     if (isStandingDown) return yield* next(e)
 
-    const decision = await judge($, { moment: 'step', tokens }, request)
-    if (decision === 'wait') return yield* next(e)
+    isCompactionDue = (await judge($, { moment: 'step', tokens }, request)) === 'compact'
 
-    stoppedTurn = e.turnId
+    return yield* next(e)
+  })
+
+  on('tool.call', async ($, e, next) => {
+    if (e.agentId !== undefined || !isCompactionDue) return next(e)
+
+    await restoreWindow($, autoCompactWindow)
+    const result = await next(e)
+    if (isCompactionDue) await shrinkWindow($, autoCompactWindow)
+
+    return result
+  }).catch(($, e, next) => next(e))
+
+  on('session.compact', { trigger: 'auto' }, async ($, e, next) => {
+    if (e.agentId !== undefined && autoCompactWindow.isShrunk) {
+      await record($, { compaction: 'held', agentId: e.agentId })
+      return { skip: HELD }
+    }
+
+    if (e.agentId !== undefined || !isCompactionDue) return next(e)
+
+    isCompactionDue = false
     isStandingDown = true
+    await restoreWindow($, autoCompactWindow)
+    const result = await next(e)
+    await record($, { compaction: 'step', ...stepCompaction(result) })
 
-    return { turnId: e.turnId, index: e.index, answer: PAUSE, toolUses: [], stopReason: 'end_turn', usage: null }
+    return result
   })
 
   on('turn.complete', async ($, e, next) => {
     const result = await next(e)
+    if (e.agentId !== undefined) return result
 
-    if (e.turnId === stoppedTurn) {
-      const requestsAtStop = requests
-      compact($)
-        .then(async compaction => {
-          const continuation = requests === requestsAtStop ? await continueWork($) : 'superseded'
-          await record($, { compaction: 'step', continuation, ...compaction })
-        })
-        .catch(error => reportFailure($, error))
-    } else if (e.agentId === undefined && e.reason === 'answer' && !isStandingDown) {
+    isCompactionDue = false
+    await restoreWindow($, autoCompactWindow)
+
+    if (e.reason === 'answer' && !isStandingDown) {
       const turnsAtEnd = turns
       isIdleAtBreakpoint($, request)
         .then(async isBreakpoint => {
@@ -120,12 +150,22 @@ export const register: Register = on => {
   })
 }
 
-async function continueWork($: EngineInterface): Promise<Continuation> {
-  const result = await $.prompt.submit({ text: CONTINUE })
-  if (result.drop === undefined) return 'sent'
+async function shrinkWindow($: EngineInterface, window: AutoCompactWindow): Promise<void> {
+  window.isShrunk = true
+  await $.env.set('CLAUDE_CODE_AUTO_COMPACT_WINDOW', SMALLEST_AUTO_COMPACT_WINDOW)
+}
 
-  await $.ui.log(`compaction-judge: the prompt to continue after compacting was dropped: ${result.drop}`)
-  return 'dropped'
+async function restoreWindow($: EngineInterface, window: AutoCompactWindow): Promise<void> {
+  if (!window.isShrunk) return
+
+  window.isShrunk = false
+  await $.env.set('CLAUDE_CODE_AUTO_COMPACT_WINDOW', undefined)
+}
+
+function stepCompaction(result: SessionCompactResult): StepCompaction {
+  if (result.skip !== undefined) return { skip: result.skip, tokensAfter: null }
+
+  return { skip: null, tokensAfter: result.tokensAfter ?? null }
 }
 
 async function isIdleAtBreakpoint($: EngineInterface, request: string | undefined): Promise<boolean> {

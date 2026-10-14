@@ -1,5 +1,5 @@
 {
   "name": "compaction-judge",
   "version": "0.1.0",
-  "description": "Once the main conversation passes 200K tokens, asks Sonnet before each step and after each answered turn whether the work is at a natural breakpoint, and at one compacts the conversation, ending a running turn first and then telling the agent to continue."
+  "description": "Once the main conversation passes 200K tokens, asks Sonnet before each step and after each answered turn whether the work is at a natural breakpoint, and at one compacts the conversation: inside a running turn by letting the engine auto-compact before the next step, so the turn goes on, and between turns with /compact."
 }
