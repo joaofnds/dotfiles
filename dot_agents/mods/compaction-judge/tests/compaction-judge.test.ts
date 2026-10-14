@@ -20,6 +20,8 @@ const JUDGE_LATENCY_MS = 1_300
 const LOG_FILE = '.local/state/compaction-judge/log.jsonl'
 const AUTO_COMPACT_WINDOW = 'CLAUDE_CODE_AUTO_COMPACT_WINDOW'
 const SMALLEST_WINDOW = '100000'
+const SLOW_TOOL = 'toolu_slow'
+const WINDOW_REFUSED = 'Blocked by another plugin'
 const USAGE = { input_tokens: 900, output_tokens: 1, cache_read_input_tokens: 0, cache_creation_input_tokens: 0 }
 const REFUSED = 'Not compacted · the conversation is too short'
 const SKIPPED = 'Blocked by a PreCompact hook'
@@ -84,14 +86,31 @@ class FakeSession {
   readonly notices: string[] = []
   readonly windowsToolsRanUnder: (string | undefined)[] = []
   private readonly environment = new Map<string, string | undefined>()
+  private readonly heldToolCalls = new Map<string, Promise<void>>()
   private messages: SessionMessage[] = [...CONVERSATION]
   private compaction: 'runs' | 'is refused' | 'fails' = 'runs'
   private isRefusingPrompts = false
+  private isRefusingWindowChange = false
 
   constructor(private tokens: number | undefined) {}
 
   get autoCompactWindow(): string | undefined {
     return this.environment.get(AUTO_COMPACT_WINDOW)
+  }
+
+  inheritShrunkWindow(): void {
+    this.environment.set(AUTO_COMPACT_WINDOW, SMALLEST_WINDOW)
+  }
+
+  refuseNextWindowChange(): void {
+    this.isRefusingWindowChange = true
+  }
+
+  holdToolCall(toolUseId: string): () => void {
+    let finish = () => {}
+    this.heldToolCalls.set(toolUseId, new Promise(resolve => (finish = resolve)))
+
+    return finish
   }
 
   show(messages: readonly SessionMessage[]): void {
@@ -123,13 +142,19 @@ class FakeSession {
     })
     on('turn.start', (_, e) => ({ turnId: e.turnId }))
     on('turn.complete', (_, e) => ({ text: e.answer }))
-    on('tool.call', () => {
+    on('tool.call', async (_, e) => {
       this.windowsToolsRanUnder.push(this.autoCompactWindow)
+      await this.heldToolCalls.get(e.tool_use_id ?? '')
       return { result: 'contents of file-next' }
     })
     on('session.compact', () => this.compactInTurn())
     on('command.run', { command: 'compact' }, (_, e, next) => (this.compaction === 'fails' ? next(e) : this.compactBetweenTurns()))
     on('env.set', (_, e) => {
+      if (this.isRefusingWindowChange) {
+        this.isRefusingWindowChange = false
+        return { deny: WINDOW_REFUSED }
+      }
+
       this.environment.set(e.name, e.value)
       return { value: undefined }
     })
@@ -181,8 +206,17 @@ async function step($: Engine, loop: { turnId?: string; agentId?: string } = {})
   return { chunks, result: read.value }
 }
 
-function runTool($: Engine, loop: { agentId?: string } = {}) {
+function runTool($: Engine, loop: { agentId?: string; tool_use_id?: string } = {}) {
   return $.tool.call({ tool: 'Read', tool_use_id: 'toolu_next', file_path: '/repo/file-next.ts', ...loop })
+}
+
+async function stepWhileItsSlowToolStarts($: Engine, clock: MockClock): Promise<void> {
+  const stream = $.turn.step({ turnId: TURN, index: 0, model: MODEL, messageCount: CONVERSATION.length })
+
+  await stream.next()
+  void runTool($, { tool_use_id: SLOW_TOOL })
+  await clock.settle()
+  await stream.next()
 }
 
 async function stepAndRunItsTool($: Engine): Promise<void> {
@@ -483,6 +517,28 @@ describe('compaction-judge', () => {
       expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
     })
 
+    test('shrinks the auto-compact window as it ends with no tool call running', async ($, on) => {
+      const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+
+      await step($)
+
+      expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
+    })
+
+    test('shrinks the auto-compact window once the last of its running tool calls returns', async ($, on) => {
+      const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+      const finishSlowTool = session.holdToolCall(SLOW_TOOL)
+      await step($)
+      const slowTool = runTool($, { tool_use_id: SLOW_TOOL })
+      await clock.settle()
+      await runTool($)
+
+      finishSlowTool()
+      await slowTool
+
+      expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
+    })
+
     test('runs each of its tool calls under the configured window', async ($, on) => {
       const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
       await step($)
@@ -547,14 +603,69 @@ describe('compaction-judge', () => {
       expect(judge.asked.at(-1)?.prompt).toContain('Fix the login redirect')
     })
 
-    describe("when a subagent's tool call returns", () => {
+    describe('when one of its tool calls returns while another runs', () => {
       test('leaves the auto-compact window as configured', async ($, on) => {
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        session.holdToolCall(SLOW_TOOL)
+        await step($)
+        void runTool($, { tool_use_id: SLOW_TOOL })
+        await clock.settle()
+
+        await runTool($)
+
+        expect(session.autoCompactWindow).toBeUndefined()
+      })
+    })
+
+    describe('when one of its tool calls starts before its response ends', () => {
+      test('leaves the auto-compact window as configured', async ($, on) => {
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        session.holdToolCall(SLOW_TOOL)
+
+        await stepWhileItsSlowToolStarts($, clock)
+
+        expect(session.autoCompactWindow).toBeUndefined()
+      })
+    })
+
+    describe("when a subagent's tool call returns while one of the turn's runs", () => {
+      test('leaves the auto-compact window as configured', async ($, on) => {
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        session.holdToolCall(SLOW_TOOL)
+        await step($)
+        void runTool($, { tool_use_id: SLOW_TOOL })
+        await clock.settle()
+
+        await runTool($, { agentId: SUBAGENT })
+
+        expect(session.autoCompactWindow).toBeUndefined()
+      })
+    })
+
+    describe("when a subagent's tool call runs while the window is shrunk", () => {
+      test('keeps the window shrunk while it runs', async ($, on) => {
         const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
         await step($)
 
         await runTool($, { agentId: SUBAGENT })
 
-        expect(session.autoCompactWindow).toBeUndefined()
+        expect(session.windowsToolsRanUnder).toEqual([SMALLEST_WINDOW])
+      })
+    })
+
+    describe('when an interrupted turn left a tool call running', () => {
+      test("shrinks the auto-compact window as the next turn's judged step ends", async ($, on) => {
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        session.holdToolCall(SLOW_TOOL)
+        await step($)
+        void runTool($, { tool_use_id: SLOW_TOOL })
+        await clock.settle()
+        await complete($, { reason: 'aborted' })
+        await clock.settle()
+
+        await step($, { turnId: NEXT_TURN })
+
+        expect(session.autoCompactWindow).toBe(SMALLEST_WINDOW)
       })
     })
 
@@ -577,16 +688,46 @@ describe('compaction-judge', () => {
 
         expect(log.entries.at(-1)).toEqual({ at: AT, session: SESSION_ID, compaction: 'held', agentId: SUBAGENT })
       })
+
+      describe('when the hold cannot be recorded', () => {
+        test('holds that compaction', async ($, on) => {
+          const log = new FakeDecisionLog()
+          const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')), log })
+          await stepAndRunItsTool($)
+          log.fill()
+
+          await compactInTurn($, { agentId: SUBAGENT })
+
+          expect(session.events).toEqual([])
+        })
+      })
     })
 
-    describe('when a subagent compacts before the window shrinks', () => {
+    describe("when a subagent compacts while one of the turn's tool calls runs", () => {
       test('lets that compaction run', async ($, on) => {
-        const { session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        session.holdToolCall(SLOW_TOOL)
         await step($)
+        void runTool($, { tool_use_id: SLOW_TOOL })
+        await clock.settle()
 
         await compactInTurn($, { agentId: SUBAGENT })
 
         expect(session.events).toEqual([{ compaction: 'ran' }])
+      })
+    })
+
+    describe('when the engine refuses to restore the window as it compacts', () => {
+      test('restores the auto-compact window when the turn ends', async ($, on) => {
+        const { clock, session } = seedSession(on, { tokens: PAST_200K, judge: new JudgeSpy(answered('now')) })
+        await stepAndRunItsTool($)
+        session.refuseNextWindowChange()
+        await compactInTurn($)
+
+        await complete($)
+        await clock.settle()
+
+        expect(session.autoCompactWindow).toBeUndefined()
       })
     })
 
@@ -980,6 +1121,16 @@ describe('compaction-judge', () => {
       await $.session.start({ cwd: '/repo', surface: 'desktop', isInteractive: true })
 
       expect(log.entries).toEqual([{ at: AT, session: SESSION_ID, started: true, surface: 'desktop', isInteractive: true, version: VERSION.version }])
+    })
+
+    test('clears an auto-compact window an earlier load left shrunk', async ($, on) => {
+      const { session } = seedSession(on, { tokens: 0, judge: new JudgeSpy(answered('wait')) })
+      on('session.start', (_, e) => ({ cwd: e.cwd }))
+      session.inheritShrunkWindow()
+
+      await $.session.start({ cwd: '/repo', surface: 'desktop', isInteractive: true })
+
+      expect(session.autoCompactWindow).toBeUndefined()
     })
   })
 })

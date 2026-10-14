@@ -1,4 +1,4 @@
-import type { EngineInterface, ModelCompleteResult, ModelUsage, PromptOrigin, Register, RenderSurface, SessionCompactResult, SessionMessage } from 'claude-code'
+import type { EngineInterface, ModelCompleteResult, ModelUsage, PromptOrigin, Register, RenderSurface, SessionCompactResult, SessionMessage, ToolCallInput } from 'claude-code'
 
 const COMPACT_PAST_TOKENS = 200_000
 const SMALLEST_AUTO_COMPACT_WINDOW = '100000'
@@ -53,8 +53,11 @@ export const register: Register = on => {
   let isStandingDown = false
   let turns = 0
   const autoCompactWindow: AutoCompactWindow = { isShrunk: false }
+  const runningTools = new Set<ToolCallInput>()
 
   on('session.start', async ($, e, next) => {
+    await unsetWindow($)
+
     const { version } = await $.session.version()
     await record($, { started: true, surface: e.surface, isInteractive: e.isInteractive, version })
 
@@ -96,23 +99,29 @@ export const register: Register = on => {
     if (isStandingDown) return yield* next(e)
 
     isCompactionDue = (await judge($, { moment: 'step', tokens }, request)) === 'compact'
+    const sent = yield* next(e)
 
-    return yield* next(e)
+    if (isCompactionDue && runningTools.size === 0) await shrinkWindow($, autoCompactWindow)
+
+    return sent
   })
 
   on('tool.call', async ($, e, next) => {
     if (e.agentId !== undefined || !isCompactionDue) return next(e)
 
-    await restoreWindow($, autoCompactWindow)
-    const result = await next(e)
-    if (isCompactionDue) await shrinkWindow($, autoCompactWindow)
-
-    return result
+    runningTools.add(e)
+    try {
+      await restoreWindow($, autoCompactWindow)
+      return await next(e)
+    } finally {
+      runningTools.delete(e)
+      if (isCompactionDue && runningTools.size === 0) await shrinkWindow($, autoCompactWindow)
+    }
   }).catch(($, e, next) => next(e))
 
   on('session.compact', { trigger: 'auto' }, async ($, e, next) => {
     if (e.agentId !== undefined && autoCompactWindow.isShrunk) {
-      await record($, { compaction: 'held', agentId: e.agentId })
+      await record($, { compaction: 'held', agentId: e.agentId }).catch(error => reportFailure($, error))
       return { skip: HELD }
     }
 
@@ -132,6 +141,7 @@ export const register: Register = on => {
     if (e.agentId !== undefined) return result
 
     isCompactionDue = false
+    runningTools.clear()
     await restoreWindow($, autoCompactWindow)
 
     if (e.reason === 'answer' && !isStandingDown) {
@@ -158,7 +168,11 @@ async function shrinkWindow($: EngineInterface, window: AutoCompactWindow): Prom
 async function restoreWindow($: EngineInterface, window: AutoCompactWindow): Promise<void> {
   if (!window.isShrunk) return
 
+  await unsetWindow($)
   window.isShrunk = false
+}
+
+async function unsetWindow($: EngineInterface): Promise<void> {
   await $.env.set('CLAUDE_CODE_AUTO_COMPACT_WINDOW', undefined)
 }
 
