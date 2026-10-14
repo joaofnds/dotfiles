@@ -14,3 +14,6 @@ scripts
 sweep
 
 **/node_modules
+
+.agents/mods/*/.claude-plugin/types
+.agents/mods/*/tsconfig.json
