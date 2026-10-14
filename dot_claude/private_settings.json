@@ -7,7 +7,6 @@
     "sessionUrl": false
   },
   "autoCompactEnabled": true,
-  "autoCompactWindow": 300000,
   "autoContinueAtUsageLimit": false,
   "autoDreamEnabled": false,
   "autoMemoryEnabled": false,
@@ -39,6 +38,7 @@
     "CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL": "1",
     "CLAUDE_CODE_DISABLE_POLICY_SKILLS": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "CLAUDE_CODE_PLUGIN_DIRS": "~/.agents/mods/compaction-judge",
     "CLAUDE_DISABLE_ADOPT": "1",
     "DISABLE_AUTOUPDATER": "1",
     "DISABLE_BUG_COMMAND": "1",

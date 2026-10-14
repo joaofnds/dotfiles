@@ -39,6 +39,18 @@ run() {
   fi
 }
 
+# A mod's manifest lives in a folder chezmoi renames on apply, so validate what apply installs.
+validate_mod() {
+  local rendered
+  rendered="$(mktemp -d)"
+  chezmoi --source "$root" archive --format tar --output "$rendered/mod.tar" "$HOME/$1" &&
+    tar -x -f "$rendered/mod.tar" -C "$rendered" &&
+    claude plugin validate "$rendered/$1"
+  local validated=$?
+  rm -rf "$rendered"
+  return "$validated"
+}
+
 run "Claude Desktop launcher" bun test "$root/scripts/test-cdl.test.js"
 run "iterate project" bun run --cwd "$root/dot_agents/workflows/iterate" check
 run "corpus reference resolver" bun test "$root/scripts/corpus-refs.test.js"
@@ -51,6 +63,8 @@ run "instruction evidence handoff" python3 \
 run "instruction frontmatter" bun test "$root/scripts/instruction-frontmatter.test.js"
 run "tmux claude switcher" bun test "$root/scripts/tmux-claude-switcher.test.js"
 run "jsonsort" bun test "$root/scripts/jsonsort.test.js"
+run "compaction-judge mod tests" claude plugin test "$root/dot_agents/mods/compaction-judge"
+run "compaction-judge mod manifest" validate_mod .agents/mods/compaction-judge
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
 [ "$failed" -eq 0 ] || exit 1
