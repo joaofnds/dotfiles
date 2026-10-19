@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+days=2
+list_only=false
+root=.
+
+usage() {
+  echo "Usage: cargokill [--days N] [--list] [dir]" >&2
+  exit 2
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --days)
+      days=${2:-}
+      shift 2 || usage
+      ;;
+    --list)
+      list_only=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      root=$1
+      shift
+      ;;
+  esac
+done
+
+[[ $days =~ ^[0-9]+$ ]] || usage
+
+cargo_target_dirs() {
+  fd --hidden --no-ignore --threads 2 \
+    --exclude .git \
+    --exclude node_modules \
+    --exclude '**/debug' \
+    --exclude '**/release' \
+    --type file \
+    --glob CACHEDIR.TAG \
+    --print0 \
+    "$root" \
+  | while IFS= read -r -d '' tag; do
+      if grep -q 'created by cargo' "$tag"; then
+        printf '%s\n' "${tag%/CACHEDIR.TAG}"
+      fi
+    done \
+  | sort
+}
+
+used_within_days() {
+  [[ -n $(find "$1" -type f ! -name CACHEDIR.TAG \( -atime "-$days" -o -mtime "-$days" \) -print -quit) ]]
+}
+
+stale_nested_target_dirs() {
+  local triples dir roots=() found=()
+  triples=$(rustc --print target-list)
+
+  while IFS= read -r dir; do
+    local nested=false folded=false r
+
+    for r in "${roots[@]}"; do
+      [[ $dir == "$r"/* ]] && nested=true
+    done
+    for r in "${found[@]}"; do
+      [[ $dir == "$r"/* ]] && folded=true
+    done
+    roots+=("$dir")
+
+    if [[ $nested == false || $folded == true ]]; then
+      continue
+    fi
+    if grep -qxF "${dir##*/}" <<< "$triples"; then
+      continue
+    fi
+    if used_within_days "$dir"; then
+      continue
+    fi
+
+    found+=("$dir")
+    printf '%s\n' "$dir"
+  done < <(cargo_target_dirs)
+}
+
+candidates=$(
+  stale_nested_target_dirs \
+  | tr '\n' '\0' \
+  | xargs -0 -r du -sh \
+  | sort --reverse --human-numeric-sort
+)
+
+if [[ -z $candidates ]]; then
+  echo "No nested target dir has gone unused for $days days." >&2
+  exit 0
+fi
+
+if [[ $list_only == true ]]; then
+  printf '%s\n' "$candidates"
+  exit 0
+fi
+
+printf '%s\n' "$candidates" \
+| fzf --multi \
+| awk -F'\t' '{ print $2 }' \
+| tr '\n' '\0' \
+| xargs -0 -p -n1 rm -rf
