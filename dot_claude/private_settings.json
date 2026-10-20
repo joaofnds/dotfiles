@@ -77,7 +77,6 @@
     "deny": [
       "Agent(isolation:worktree)",
       "Artifact",
-      "AskUserQuestion",
       "CronCreate",
       "CronDelete",
       "CronList",
