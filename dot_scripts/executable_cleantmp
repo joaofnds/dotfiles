@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+minutes=60
+dry_run=false
+root=/tmp
+
+usage() {
+  echo "Usage: cleantmp [--minutes N] [--dry-run] [dir]" >&2
+  exit 2
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --minutes)
+      minutes=${2:-}
+      shift 2 || usage
+      ;;
+    --dry-run)
+      dry_run=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      root=$1
+      shift
+      ;;
+  esac
+done
+
+[[ $minutes =~ ^[0-9]+$ ]] || usage
+root=$(realpath "$root")
+
+outermost_cargo_target_dirs() {
+  local dir kept=()
+
+  while IFS= read -r dir; do
+    local nested=false k
+
+    for k in "${kept[@]}"; do
+      [[ $dir == "$k"/* ]] && nested=true
+    done
+    if [[ $nested == true ]]; then
+      continue
+    fi
+
+    kept+=("$dir")
+    printf '%s\n' "$dir"
+  done < <(
+    fd --hidden --no-ignore --exclude .git --exclude node_modules \
+      --type file --glob CACHEDIR.TAG --print0 "$root" 2>/dev/null \
+    | while IFS= read -r -d '' tag; do
+        if grep -qs 'created by cargo' "$tag"; then
+          printf '%s\n' "${tag%/CACHEDIR.TAG}"
+        fi
+      done \
+    | sort
+  )
+}
+
+changed_recently() {
+  [[ -n $(fd . "$1" --hidden --no-ignore --type file --changed-within "${minutes}min" --max-results 1 2>/dev/null) ]]
+}
+
+holds_open_file() {
+  grep -qF "$1/" <<< "$open_files"
+}
+
+free_kb() {
+  df -k "$root" | awk 'NR == 2 { print $4 }'
+}
+
+open_files=$(lsof -n -F n 2>/dev/null | sed -n "s|^n\\($root/.*\\)|\\1|p" | sort -u || true)
+doomed=()
+
+while IFS= read -r dir; do
+  if changed_recently "$dir"; then
+    echo "keep  $dir (changed within $minutes min)" >&2
+    continue
+  fi
+
+  if ! holds_open_file "$dir"; then
+    doomed+=("$dir")
+    continue
+  fi
+
+  echo "keep  $dir (open by a running process, clearing the rest)" >&2
+  while IFS= read -r child; do
+    if ! holds_open_file "$child"; then
+      doomed+=("$child")
+    fi
+  done < <(fd . "$dir" --hidden --no-ignore --exact-depth 1 --exclude CACHEDIR.TAG --absolute-path | sed 's|/$||')
+done < <(outermost_cargo_target_dirs)
+
+if [[ ${#doomed[@]} -eq 0 ]]; then
+  echo "Nothing to delete under $root." >&2
+  exit 0
+fi
+
+if [[ $dry_run == true ]]; then
+  printf '%s\0' "${doomed[@]}" | xargs -0 du -sh | sort --reverse --human-numeric-sort
+  exit 0
+fi
+
+before=$(free_kb)
+printf 'rm    %s\n' "${doomed[@]}" >&2
+printf '%s\0' "${doomed[@]}" | xargs -0 -n1 -P8 rm -rf
+after=$(free_kb)
+
+echo "Freed $(( (after - before) / 1024 / 1024 )) GiB, $(( after / 1024 / 1024 )) GiB free." >&2
