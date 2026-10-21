@@ -3,10 +3,11 @@ set -euo pipefail
 
 days=2
 list_only=false
+assume_yes=false
 root=.
 
 usage() {
-  echo "Usage: cargokill [--days N] [--list] [dir]" >&2
+  echo "Usage: cargokill [--days N] [--list] [--yes] [dir]" >&2
   exit 2
 }
 
@@ -18,6 +19,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --list)
       list_only=true
+      shift
+      ;;
+    --yes)
+      assume_yes=true
       shift
       ;;
     -h|--help)
@@ -39,15 +44,15 @@ cargo_target_dirs() {
     --exclude '**/debug' \
     --exclude '**/release' \
     --type file \
-    --glob CACHEDIR.TAG \
+    --glob '{CACHEDIR.TAG,.rustc_info.json}' \
     --print0 \
     "$root" \
-  | while IFS= read -r -d '' tag; do
-      if grep -q 'created by cargo' "$tag"; then
-        printf '%s\n' "${tag%/CACHEDIR.TAG}"
+  | while IFS= read -r -d '' marker; do
+      if [[ $marker == */.rustc_info.json ]] || grep -qs 'created by cargo' "$marker"; then
+        printf '%s\n' "${marker%/*}"
       fi
     done \
-  | sort
+  | sort -u
 }
 
 used_within_days() {
@@ -98,6 +103,15 @@ fi
 
 if [[ $list_only == true ]]; then
   printf '%s\n' "$candidates"
+  exit 0
+fi
+
+if [[ $assume_yes == true ]]; then
+  printf '%s\n' "$candidates" >&2
+  printf '%s\n' "$candidates" \
+  | awk -F'\t' '{ print $2 }' \
+  | tr '\n' '\0' \
+  | xargs -0 rm -rf
   exit 0
 fi
 

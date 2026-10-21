@@ -1,0 +1,191 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+scratch_root=$(realpath /tmp)
+code_root=$HOME/code
+hours=6
+days=3
+dry_run=false
+
+usage() {
+  echo "Usage: cleandisk [--hours N] [--days N] [--dry-run]" >&2
+  exit 2
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --hours)
+      hours=${2:-}
+      shift 2 || usage
+      ;;
+    --days)
+      days=${2:-}
+      shift 2 || usage
+      ;;
+    --dry-run)
+      dry_run=true
+      shift
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+[[ $hours =~ ^[0-9]+$ && $days =~ ^[0-9]+$ ]] || usage
+
+outermost_cargo_target_dirs() {
+  local dir kept=()
+
+  while IFS= read -r dir; do
+    local nested=false k
+
+    for k in "${kept[@]}"; do
+      [[ $dir == "$k"/* ]] && nested=true
+    done
+    if [[ $nested == true ]]; then
+      continue
+    fi
+
+    kept+=("$dir")
+    printf '%s\n' "$dir"
+  done < <(
+    fd --hidden --no-ignore --exclude .git --exclude node_modules \
+      --type file --glob '{CACHEDIR.TAG,.rustc_info.json}' --print0 "$1" 2>/dev/null \
+    | while IFS= read -r -d '' marker; do
+        if [[ $marker == */.rustc_info.json ]] || grep -qs 'created by cargo' "$marker"; then
+          printf '%s\n' "${marker%/*}"
+        fi
+      done \
+    | sort -u
+  )
+}
+
+changed_recently() {
+  [[ -n $(fd . "$1" --hidden --no-ignore --type file --changed-within "${hours}h" --max-results 1 2>/dev/null) ]]
+}
+
+holds_open_file() {
+  grep -qF "$1/" <<< "$open_files"
+}
+
+free_kb() {
+  df -k "$code_root" | awk 'NR == 2 { print $4 }'
+}
+
+idle_scratch_targets() {
+  local dir child
+
+  while IFS= read -r dir; do
+    if changed_recently "$dir"; then
+      echo "keep  $dir (changed within $hours h)" >&2
+      continue
+    fi
+
+    if ! holds_open_file "$dir"; then
+      printf '%s\n' "$dir"
+      continue
+    fi
+
+    echo "keep  $dir (open by a running process, clearing the rest)" >&2
+    while IFS= read -r child; do
+      if ! holds_open_file "$child"; then
+        printf '%s\n' "$child"
+      fi
+    done < <(fd . "$dir" --hidden --no-ignore --exact-depth 1 --exclude CACHEDIR.TAG --absolute-path | sed 's|/$||')
+  done < <(outermost_cargo_target_dirs "$scratch_root")
+}
+
+# A build reads the fingerprint of every unit in its graph, so a unit whose
+# fingerprint went unread for $days days before the profile's latest build has
+# been superseded (old dependency version, old feature set), however idle the
+# project is. Its deps/, build/ and examples/ entries share the fingerprint's hash.
+superseded_units() {
+  local profile=$1 stale
+
+  stale=$(
+    find "$profile/.fingerprint" -type f -exec stat -f '%a %N' {} + \
+    | awk -v window=$(( days * 86400 )) '
+        {
+          hash = $2
+          sub(/\/[^\/]*$/, "", hash)
+          sub(/.*-/, "", hash)
+          if ($1 > read[hash]) read[hash] = $1
+          if ($1 > latest) latest = $1
+        }
+        END { for (h in read) if (read[h] < latest - window) print h }'
+  )
+  if [[ -z $stale ]]; then
+    return
+  fi
+
+  fd . "$profile/.fingerprint" "$profile/deps" "$profile/build" "$profile/examples" \
+      --hidden --no-ignore --exact-depth 1 --absolute-path 2>/dev/null \
+  | sed 's|/$||' \
+  | awk 'NR == FNR { stale[$1]; next }
+         {
+           hash = $0
+           sub(/.*\//, "", hash)
+           sub(/\..*$/, "", hash)
+           sub(/.*-/, "", hash)
+           if (hash in stale) print
+         }' <(printf '%s\n' "$stale") -
+}
+
+# rustc names incremental dirs by its own hash, so they are matched by crate:
+# each crate keeps its newest dir, and an older one goes once it falls $days
+# days behind the profile's newest.
+superseded_incremental_dirs() {
+  local profile=$1
+
+  [[ -d $profile/incremental ]] || return 0
+  fd . "$profile/incremental" --type directory --exact-depth 1 --absolute-path -X stat -f '%m %N' \
+  | sed 's|/$||' \
+  | sort -rn \
+  | awk -v window=$(( days * 86400 )) '
+      NR == 1 { latest = $1 }
+      {
+        crate = $2
+        sub(/.*\//, "", crate)
+        sub(/-[^-]*$/, "", crate)
+        if (crate in seen && $1 < latest - window) print $2
+        seen[crate]
+      }'
+}
+
+superseded_in_code() {
+  local target profile
+
+  while IFS= read -r target; do
+    while IFS= read -r profile; do
+      superseded_units "$profile"
+      superseded_incremental_dirs "$profile"
+    done < <(fd --hidden --no-ignore --type directory --max-depth 4 --glob .fingerprint "$target" --exec dirname)
+  done < <(outermost_cargo_target_dirs "$code_root")
+}
+
+open_files=$(lsof -n -F n 2>/dev/null | sed -n "s|^n\\(/.*\\)|\\1|p" | sort -u || true)
+before=$(free_kb)
+
+if [[ $dry_run == true ]]; then
+  cargokill --list "$code_root"
+else
+  cargokill --yes "$code_root"
+fi
+
+mapfile -t doomed < <(idle_scratch_targets; superseded_in_code)
+
+if [[ ${#doomed[@]} -eq 0 ]]; then
+  echo "Nothing superseded or idle to delete." >&2
+elif [[ $dry_run == true ]]; then
+  printf '%s\0' "${doomed[@]}" | xargs -0 du -sk \
+  | awk '{ s += $1 } END { printf "%d paths, %.1f GiB\n", NR, s / 2^20 }'
+  printf '%s\n' "${doomed[@]}" | sed -E 's#/(\.fingerprint|deps|build|examples|incremental)/[^/]*$#/\1#' | sort | uniq -c | sort -rn | head -20
+else
+  printf '%s\0' "${doomed[@]}" | xargs -0 -n 200 -P 8 rm -rf
+fi
+
+if [[ $dry_run == false ]]; then
+  after=$(free_kb)
+  echo "Freed $(( (after - before) / 1024 / 1024 )) GiB, $(( after / 1024 / 1024 )) GiB free." >&2
+fi
