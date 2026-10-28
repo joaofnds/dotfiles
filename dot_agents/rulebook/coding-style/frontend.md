@@ -38,10 +38,11 @@ Taste and aesthetic direction live in the `art-direction` skill, which is curren
 
 - **Semantic HTML first.** A `<button>` is a button, a `<nav>` is a nav, a heading hierarchy is real. `<div onClick>` is a defect: it loses focus, keyboard, and assistive-tech behavior you'd then re-implement worse.
 - **Every control has an accessible name.** A visible `<label>` for form controls; an `aria-label` for icon-only buttons. Semantics aren't enough: a `<button>` whose only child is an icon has an empty accessible name and is invisible to screen readers.
-- **Visible keyboard focus.** Every interactive element is reachable and operable by keyboard with a visible focus indicator. Never `outline: none` without a replacement.
+- **Visible keyboard focus.** Every function works from the keyboard and without dragging, a drag to reorder or resize included, and every interactive element shows a visible focus indicator. Never `outline: none` without a replacement.
 - **`prefers-reduced-motion` respected.** Gate non-essential animation behind it. Motion is an enhancement, never a requirement for using the UI.
 - **Color is never the sole carrier of meaning.** Pair it with text, icon, or shape: state, validation, and categories must survive color blindness and grayscale.
-- **Hit targets sized for touch.** Interactive targets are comfortably tappable (~44px) with adequate spacing; don't ship desktop-only click areas.
+- **Contrast meets WCAG 2.2 AA in every state.** When you write a palette, compute each foreground and background pair it will render. Text is at least 4.5:1, and text at least 24px, or 19px bold, is at least 3:1. Icons, focus rings, control boundaries, and selected or checked fills are at least 3:1 against what touches them. Disabled controls and pure decoration are exempt.
+- **Hit targets are at least 24 by 24px.** A smaller target is spaced so that a 24px circle centered on it touches no other target. Where the UI is used by touch, targets are about 44px.
 
 ## 7. Responsive
 
