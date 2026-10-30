@@ -83,3 +83,9 @@ you stopped on and where it went. Under it, paste the output of `git log --oneli
 title of each card the task created, so each thing the work noticed beyond its
 acceptance shows the commit that fixed it or the card that holds it. Your reply is
 the brief. The handoff stays on the record.
+
+When the change is one its users will see, ask for its release before any other
+question or proposal in the reply, because the change does nothing for them until
+it reaches them. Name the route the project documents for a release, or ask what it
+is where the project documents none, and give the command that shows the change
+working. The release itself waits on that explicit direction.
