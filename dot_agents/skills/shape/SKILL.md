@@ -56,6 +56,12 @@ same way (`AGENTS.md` §Acting). Where more than one way to build it survives, s
 each with what it costs and what it buys, and say plainly when only one survives the
 evidence. Two or three is the usual number.
 
+Where removal is ruled out and a user is waiting for what the task delivers, set out
+next the slice that reaches them on the code and data as they stand, naming the cases
+it leaves out. Before the task waits on another task or on a prerequisite an earlier
+finding set, compute what the slice would deliver and name a value in it that the
+prerequisite would change. Recommend the slice when there is none.
+
 Then pick, and interrogate the one you picked until it holds: where it fails, what
 it assumes, what it costs to reverse. Something the pick requires from outside the
 code, of its input, its caller, or its environment, that nothing on the card asked
