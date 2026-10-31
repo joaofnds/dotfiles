@@ -220,6 +220,24 @@ describe("a citation carrying a heading", () => {
     expect(await findBrokenReferences(root)).toEqual([]);
   });
 
+  test("resolves a heading that wraps mid-name onto an indented line", async () => {
+    const root = await corpus({
+      "rulebook/coupling.md": "# Coupling\n\n## Temporal coupling\n",
+      "AGENTS.md": "- The probe lives in (`coupling.md` §Temporal\n  coupling).\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
+  test("resolves a heading that wraps mid-name after a line ending in spaces", async () => {
+    const root = await corpus({
+      "rulebook/coupling.md": "# Coupling\n\n## Temporal coupling\n",
+      "AGENTS.md": "The probe lives in (`coupling.md` §Temporal  \ncoupling).\n",
+    });
+
+    expect(await findBrokenReferences(root)).toEqual([]);
+  });
+
   test("reports a missing file before checking its heading", async () => {
     const root = await corpus({
       "AGENTS.md": "See `gone.md` §Whatever for the probe.\n",

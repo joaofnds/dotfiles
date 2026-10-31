@@ -72,7 +72,7 @@ function paragraphsOutsideFences(text) {
       continue;
     }
 
-    prose.push(line);
+    prose.push(line.trim());
   }
 
   paragraphs.push(prose.join(" "));
