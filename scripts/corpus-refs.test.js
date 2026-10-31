@@ -153,7 +153,7 @@ describe("a citation carrying a heading", () => {
   test("resolves when the target holds it as a markdown heading", async () => {
     const root = await corpus({
       "rulebook/coupling.md": "# Coupling\n\n## Temporal coupling\n",
-      "AGENTS.md": "See `coupling.md` §Temporal coupling for the probe.\n",
+      "AGENTS.md": "See `coupling.md` §Temporal coupling.\n",
     });
 
     expect(await findBrokenReferences(root)).toEqual([]);
