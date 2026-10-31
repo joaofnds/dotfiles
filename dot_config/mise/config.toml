@@ -30,6 +30,7 @@ uv = "latest"
 yamlfmt = "latest"
 zig = "latest"
 
+"npm:@tobilu/qmd" = "latest"
 "npm:depcheck" = "latest"
 "npm:npm-check-updates" = "latest"
 "npm:vmd" = "latest"
