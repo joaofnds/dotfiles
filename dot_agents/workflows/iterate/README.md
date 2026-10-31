@@ -1,8 +1,10 @@
 # iterate
 
 A runner for a supervisor carrying one accepted card through its stages in fresh
-agent sessions. Invoke the `iterate` skill with an explicit card ID. The supervisor
-reads each stage's result before deciding how to continue.
+agent sessions. Invoke the `iterate` skill with a card ID, or without one to have
+it propose the next card for confirmation. The runner itself always takes an
+explicit card. The supervisor reads each stage's result before deciding how to
+continue.
 
 ```sh
 iterate step CARD [--STAGE-agent provider:model[:effort] ...]

@@ -1,12 +1,17 @@
 # The iterate workflow
 
 Iterate supervises one accepted card from To Do to Done. Give the `iterate` skill
-an explicit card ID in the project's directory:
+a card ID in the project's directory:
 
 ```text
 Use the iterate skill on DOT-123.
 /iterate DOT-123 --build-agent claude:sonnet:high
 ```
+
+Without a card ID, the skill proposes the card the priority doc makes next and says
+what blocks it if it is blocked. With no priority doc, or none of its sequence left,
+it ranks the ready To Do cards by milestone, then priority, then due date. No stage
+runs until you confirm the card.
 
 Stage selectors let one invocation choose independent agents for shape, debug,
 verify, build, and review. Their form is

@@ -1,16 +1,27 @@
 ---
 name: iterate
 disable-model-invocation: true
-argument-hint: "<card> [--<stage>-agent provider:model[:effort] ...]"
-description: Supervises one accepted card through its required stages in fresh sessions, reading each result before continuing. Runs only on direction with a card ID. Planning and reflection run separately.
+argument-hint: "[card] [--<stage>-agent provider:model[:effort] ...]"
+description: Supervises one accepted card through its required stages in fresh sessions, reading each result before continuing. Runs only on direction. Planning and reflection run separately.
 ---
 
 # Iterate
 
 You carry the named card to Done on the board in the current directory, one session at a time,
 and you answer between sessions what a stage left open, so the iteration reaches
-its end within the card's accepted scope. If the invocation has no card ID, ask for
-one. Intake, selecting work, writing a bet, and reflection are outside this run.
+its end within the card's accepted scope. If the invocation has no card ID, find
+the card the board rules under Selecting work make next, propose it with the reason
+it is next, and end the turn on the question whether to iterate on it. Count a
+card as blocked when its notes hold it until another card runs or an event
+happens, and never for an approval a criterion needs during the run. Where the
+next card is blocked, name what blocks it and the card you would run instead,
+since skipping it needs approval. Where the priority doc is missing or its card
+sequence has nothing left to run, propose the To Do or Shape card that passes
+those rules' checks. Take the earliest open milestone first, then the highest
+priority, then the earliest due date, and say the priority doc gave no pick. Where
+no card qualifies, say what you found and end the turn. Start the run only on a card a
+typed reply confirms, because that reply is the direction to run it. Intake,
+writing a bet, and reflection are outside this run.
 The `iterate` script starts the sessions and holds the guards, so use it for each
 stage. The stage skills own their work and required reviews.
 
