@@ -1,0 +1,44 @@
+#!/bin/sh
+set -eu
+
+usage() {
+  printf '%s\n' 'Usage: restore-cursors [--apply|--check|--dry-run|--help]' \
+    'Apply the Sequoia mouse cursors for the current macOS login session.' \
+    '  --check    Verify the currently registered cursor images.' \
+    '  --dry-run  Validate the assets and APIs without changing cursors.'
+}
+
+if [ "$#" -gt 1 ]; then usage >&2; exit 2; fi
+case "${1:---apply}" in
+  --help|-h) usage; exit 0 ;;
+  --apply|--check|--dry-run) ;;
+  *) usage >&2; exit 2 ;;
+esac
+
+if [ "$(uname -s)" != Darwin ]; then
+  printf '%s\n' 'restore-cursors requires macOS.' >&2
+  exit 1
+fi
+
+cursor_dir="$HOME/.config/classic-cursors"
+for cursor_file in cursor.m assets/sequoia.cape assets/aliases.plist; do
+  if [ ! -r "$cursor_dir/$cursor_file" ]; then
+    printf 'Missing cursor file: %s\n' "$cursor_dir/$cursor_file" >&2
+    printf '%s\n' 'Run: chezmoi apply --exclude scripts ~/.config/classic-cursors ~/.scripts/restore-cursors' >&2
+    exit 1
+  fi
+done
+
+if ! command -v xcrun >/dev/null 2>&1 || ! xcrun --find clang >/dev/null 2>&1; then
+  printf '%s\n' 'restore-cursors requires the Apple Command Line Tools (xcode-select --install).' >&2
+  exit 1
+fi
+
+cursor_build=$(mktemp -d "${TMPDIR:-/tmp}/classic-cursors.XXXXXX")
+trap 'rm -rf "$cursor_build"' EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+xcrun clang -fobjc-arc -Wno-deprecated-declarations -framework AppKit -framework ApplicationServices \
+  "$cursor_dir/cursor.m" -o "$cursor_build/cursor"
+"$cursor_build/cursor" "${1:---apply}" "$cursor_dir/assets/sequoia.cape" "$cursor_dir/assets/aliases.plist"
