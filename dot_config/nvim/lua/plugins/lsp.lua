@@ -61,7 +61,7 @@ return {
 				map("n", "<leader>cS", "<cmd>FzfLua lsp_workspace_symbols<cr>", "workspace symbols")
 				map("n", "<leader>cr", vim.lsp.buf.rename, "rename")
 				map("n", "<leader>cf", function()
-					require("conform").format({ lsp_fallback = true })
+					require("conform").format({ lsp_format = "fallback" })
 				end, "format")
 				map("n", "<leader>co", function()
 					local params = {
