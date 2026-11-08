@@ -6,8 +6,6 @@ return {
 		{ "<leader>gg", "<cmd>Neogit<cr>", desc = "neogit" },
 	},
 	opts = {
-		integrations = {
-			diffview = true,
-		},
+		diff_viewer = "diffview",
 	},
 }

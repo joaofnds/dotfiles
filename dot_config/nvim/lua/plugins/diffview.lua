@@ -7,6 +7,10 @@ return {
 		"DiffviewFocusFiles",
 		"DiffviewRefresh",
 		"DiffviewFileHistory",
+		"DiffviewLog",
+	},
+	keys = {
+		{ "<leader>gt", "<cmd>DiffviewFileHistory %<cr>", desc = "file history" },
 	},
 	opts = {
 		use_icons = false,
