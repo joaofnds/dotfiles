@@ -3,7 +3,7 @@ return {
 	event = "UIEnter",
 	opts = {
 		options = {
-			theme = "solarized",
+			theme = "parhelion",
 			icons_enabled = false,
 		},
 		sections = {
