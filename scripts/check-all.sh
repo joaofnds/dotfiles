@@ -60,6 +60,8 @@ run "visual-diff image diff" bash \
   "$root/dot_agents/skills/visual-diff/tests/image_diff_test.sh"
 run "instruction evidence handoff" python3 \
   "$root/dot_agents/skills/review-instructions/tests/evidence_handoff_test.py"
+run "oversee watcher" bun test "$root/dot_agents/skills/oversee/tests/watch.test.js"
+run "oversee thread reader" bun test "$root/dot_agents/skills/oversee/tests/threads.test.js"
 run "instruction frontmatter" bun test "$root/scripts/instruction-frontmatter.test.js"
 run "tmux claude switcher" bun test "$root/scripts/tmux-claude-switcher.test.js"
 run "jsonsort" bun test "$root/scripts/jsonsort.test.js"
