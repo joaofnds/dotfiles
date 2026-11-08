@@ -31,7 +31,7 @@ backup() {
 	fi
 
 	set_restic_vars "$project"
-	restic backup --verbose "$source"
+	restic backup --verbose --exclude artifacts --exclude evidence --exclude node_modules "$source"
 }
 
 restore() {
