@@ -493,12 +493,10 @@ describe("Journal", () => {
       resolvedModel: undefined,
       effectiveEffort: undefined,
       configuredSession: {
-        provenance: "codex.app-server.thread/start" as const,
+        provenance: "codex.sdk.requested" as const,
         model: codex.model,
         effort: codex.effort,
         cwd: directory,
-        approvalPolicy: "never",
-        sandbox: { type: "readOnly" },
       },
       providerCompleted: true,
       requiredToolOutcomeCoverage: "unknown" as const,
@@ -537,12 +535,10 @@ describe("Journal", () => {
     const codex = { provider: "codex", model: "gpt-6.1-sol", effort: "high" } as const;
     const { resolvedModel: _model, ...base } = result(2, "invocation");
     const configuredSession = {
-      provenance: "codex.app-server.thread/start" as const,
+      provenance: "codex.sdk.requested" as const,
       model: variation === "model" ? "gpt-6-luna" : codex.model,
       effort: variation === "effort" ? "low" : codex.effort,
       cwd: directory,
-      approvalPolicy: "never",
-      sandbox: { type: "readOnly" },
     };
     await journal.finish(
       await journal.begin("build", "DOT-1", codex, codexRuntime),

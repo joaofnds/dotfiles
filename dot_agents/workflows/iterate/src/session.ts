@@ -22,12 +22,7 @@ import {
   type SessionAdapter,
   type SessionInput,
 } from "./provider.ts";
-import type {
-  ConfiguredSession,
-  ModelReroute,
-  ProtocolUpdate,
-  ToolOutcome,
-} from "./provider-types.ts";
+import type { ConfiguredSession, ModelReroute, ToolOutcome } from "./provider-types.ts";
 import {
   addTokens,
   type ModelUsage,
@@ -340,11 +335,10 @@ function startCommand({
   process.on("SIGINT", onInterrupt);
   process.on("SIGTERM", onTerminate);
 
-  let child: ReturnType<typeof spawn<"pipe" | "ignore" | Uint8Array, "pipe", "pipe">>;
+  let child: ReturnType<typeof spawn<"ignore" | Uint8Array, "pipe", "pipe">>;
   try {
-    let stdin: "pipe" | "ignore" | Uint8Array = "ignore";
-    if (command.protocol) stdin = "pipe";
-    else if (command.stdin !== undefined) stdin = new TextEncoder().encode(command.stdin);
+    if (command.unavailable !== undefined) throw new Error(command.unavailable);
+    const stdin = command.stdin === undefined ? "ignore" : new TextEncoder().encode(command.stdin);
 
     child = spawn([...command.argv], {
       detached: true,
@@ -389,7 +383,6 @@ function startCommand({
   let idle: ReturnType<typeof setTimeout> | undefined;
   let wall: ReturnType<typeof setTimeout> | undefined;
   let drain: ReturnType<typeof setTimeout> | undefined;
-  let successfulProtocolClose = false;
   let stopped = false;
   let notifyStop = () => {};
   const stopping = new Promise<void>((resolve) => {
@@ -429,52 +422,18 @@ function startCommand({
   if (pendingSignal) stop(pendingSignal.reason, pendingSignal.signal);
   if (setupFailure) stop(`session output setup failed: ${message(setupFailure)}`);
 
-  const writeInput = async (update: Pick<ProtocolUpdate, "input" | "close">): Promise<void> => {
-    const sink = child.stdin;
-    if (!command.protocol || typeof sink !== "object" || sink === null) return;
-    if (shutdown || stopped) return;
-
-    try {
-      if (update.input !== undefined) {
-        sink.write(update.input);
-        await Promise.race([Promise.resolve(sink.flush()), stopping]);
-      }
-      if (update.close && !shutdown && !successfulProtocolClose) {
-        await Promise.race([Promise.resolve(sink.end()), stopping]);
-        if (!shutdown) {
-          successfulProtocolClose =
-            stream.complete && Boolean(stream.result) && stream.errors.length === 0;
-          if (!successfulProtocolClose) {
-            clearTimeout(drain);
-            drain = setTimeout(() => {
-              stop("the provider did not settle after protocol input closed");
-            }, shutdownGraceMs);
-          }
-        }
-      }
-    } catch (error) {
-      stop(`provider stdin failed: ${message(error)}`);
-    }
-  };
   const output = (async () => {
     try {
-      if (command.protocol) await writeInput({ input: command.protocol.initialInput });
       for await (const line of lines(stdout, logPath)) {
         if (stopped) break;
 
-        if (!shutdown && !successfulProtocolClose) {
+        if (!shutdown) {
           clearTimeout(idle);
           idle = setTimeout(onIdle, idleMs);
         }
 
         try {
-          const update = command.protocol?.receive(line);
-          take(
-            stream,
-            update?.events ?? command.decoder?.receive(line) ?? harness.decode(line),
-            process.env.ITERATE_LIVE !== "0",
-          );
-          if (update) await writeInput(update);
+          take(stream, harness.decode(line), process.env.ITERATE_LIVE !== "0");
         } catch (error) {
           stop(message(error));
         }
@@ -489,14 +448,10 @@ function startCommand({
         }
       }
       if (!(stopped || shutdown)) {
-        command.protocol?.end();
-        if (command.decoder) take(stream, command.decoder.end(), process.env.ITERATE_LIVE !== "0");
-        if (!successfulProtocolClose) {
-          clearTimeout(drain);
-          drain = setTimeout(() => {
-            stop("the agent closed output without settling its process group");
-          }, shutdownGraceMs);
-        }
+        clearTimeout(drain);
+        drain = setTimeout(() => {
+          stop("the agent closed output without settling its process group");
+        }, shutdownGraceMs);
       }
     } catch (error) {
       stop(message(error));

@@ -89,8 +89,8 @@ describe("iterate", () => {
 
     expect(result.code).toBe(0);
     expect(result.calls).toEqual(["/shape DOT-1"]);
-    expect(result.argsSeen).toContain("--model sonnet");
-    expect(result.argsSeen).toContain("--effort high");
+    expect(result.argsSeen).toContain("--model=sonnet");
+    expect(result.argsSeen).toContain("--effort=high");
   });
 
   test("applies a top-level stage selection only when that stage runs", async () => {
@@ -107,10 +107,10 @@ describe("iterate", () => {
 
     expect(built.code).toBe(0);
     expect(reviewed.calls).toEqual(["/shape DOT-1", "/build DOT-1", "/review DOT-1"]);
-    expect(reviewed.argsSeen.match(/--model haiku/g)).toHaveLength(1);
-    expect(reviewed.argsSeen.match(/--effort low/g)).toHaveLength(1);
-    expect(reviewed.argsSeen.match(/--model sonnet/g)).toHaveLength(1);
-    expect(reviewed.argsSeen.match(/--effort high/g)).toHaveLength(1);
+    expect(reviewed.argsSeen.match(/--model=haiku/g)).toHaveLength(1);
+    expect(reviewed.argsSeen.match(/--effort=low/g)).toHaveLength(1);
+    expect(reviewed.argsSeen.match(/--model=sonnet/g)).toHaveLength(1);
+    expect(reviewed.argsSeen.match(/--effort=high/g)).toHaveLength(1);
     expect(report.attempts.map(({ requestedAgent }) => requestedAgent)).toEqual([
       { provider: "claude", model: "haiku", effort: "low" },
       { provider: "claude", model: "sonnet", effort: "high" },
@@ -145,9 +145,9 @@ describe("iterate", () => {
 
     expect(result.code).toBe(2);
     expect(result.calls).toEqual(["/shape DOT-1", "/shape DOT-1"]);
-    expect(result.argsSeen).toContain("--resume s-shape");
-    expect(result.argsSeen.match(/--model sonnet/g)).toHaveLength(2);
-    expect(result.argsSeen.match(/--effort high/g)).toHaveLength(2);
+    expect(result.argsSeen).toContain("--resume=s-shape");
+    expect(result.argsSeen.match(/--model=sonnet/g)).toHaveLength(2);
+    expect(result.argsSeen.match(/--effort=high/g)).toHaveLength(2);
   });
 
   test("documents direct and supervised selection options", async () => {
@@ -155,7 +155,9 @@ describe("iterate", () => {
 
     expect(result.code).toBe(0);
     expect(result.stdout).toContain("--provider claude|codex,");
-    expect(result.stdout).toContain("Codex uses app-server stdio with inherited native policy.");
+    expect(result.stdout).toContain(
+      "Codex runs through the Codex SDK with inherited native policy.",
+    );
     expect(result.stdout).toContain("where the provider enforces one (Claude default 50)");
     expect(result.stdout).toContain("--model MODEL");
     expect(result.stdout).toContain("--effort LEVEL");
@@ -219,9 +221,9 @@ describe("iterate", () => {
 
     expect(result.code).toBe(0);
     expect(result.calls).toEqual(["/shape DOT-1"]);
-    expect(result.argsSeen).toContain("--model sonnet");
-    expect(result.argsSeen).toContain("--effort high");
-    expect(result.argsSeen).not.toContain("--model opus");
+    expect(result.argsSeen).toContain("--model=sonnet");
+    expect(result.argsSeen).toContain("--effort=high");
+    expect(result.argsSeen).not.toContain("--model=opus");
   });
 
   test.each(

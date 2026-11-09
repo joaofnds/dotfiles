@@ -24,22 +24,22 @@
 
 <line class="arr" x1="310" y1="84" x2="366" y2="84" marker-end="url(#arrow)"/>
 <rect class="blue" x="366" y="20" width="374" height="128" rx="8"/>
-<text class="th" x="553" y="40" text-anchor="middle" dominant-baseline="central">One Claude argument list</text>
+<text class="th" x="553" y="40" text-anchor="middle" dominant-baseline="central">One SDK session host</text>
 <text class="ts" x="553" y="62" text-anchor="middle" dominant-baseline="central">the prompt is the slash command /stage card</text>
-<text class="ts" x="553" y="80" text-anchor="middle" dominant-baseline="central">explicit model and effort pass through as arguments</text>
+<text class="ts" x="553" y="80" text-anchor="middle" dominant-baseline="central">explicit model and effort pass as SDK options</text>
 <text class="ts" x="553" y="98" text-anchor="middle" dominant-baseline="central">when omitted, the configured Claude defaults apply</text>
-<text class="ts" x="553" y="116" text-anchor="middle" dominant-baseline="central">nothing goes through a shell, so no value is expanded</text>
-<text class="ts" x="553" y="134" text-anchor="middle" dominant-baseline="central">the session budget remains a separate argument</text>
+<text class="ts" x="553" y="116" text-anchor="middle" dominant-baseline="central">the host runs the Agent SDK, which starts Claude</text>
+<text class="ts" x="553" y="134" text-anchor="middle" dominant-baseline="central">the session budget is the SDK dollar cap</text>
 
 <line class="arr" x1="553" y1="148" x2="553" y2="182" marker-end="url(#arrow)"/>
 <rect class="box" x="366" y="182" width="374" height="74" rx="8"/>
-<text class="th" x="553" y="200" text-anchor="middle" dominant-baseline="central">Spawn, detached into its own process group</text>
+<text class="th" x="553" y="200" text-anchor="middle" dominant-baseline="central">Spawn the host detached, in its own group</text>
 <text class="ts" x="553" y="220" text-anchor="middle" dominant-baseline="central">stdout piped, stderr piped, cwd inherited</text>
 <text class="ts" x="553" y="238" text-anchor="middle" dominant-baseline="central">the group is what gets signalled later</text>
 
 <line class="arr" x1="553" y1="256" x2="553" y2="290" marker-end="url(#arrow)"/>
 <rect class="box" x="366" y="290" width="374" height="74" rx="8"/>
-<text class="th" x="553" y="308" text-anchor="middle" dominant-baseline="central">Read stdout, one JSON line at a time</text>
+<text class="th" x="553" y="308" text-anchor="middle" dominant-baseline="central">Read stdout, one SDK message per line</text>
 <text class="ts" x="553" y="328" text-anchor="middle" dominant-baseline="central">every line is appended to the raw event log</text>
 <text class="ts" x="553" y="346" text-anchor="middle" dominant-baseline="central">each line resets the ten-minute silence timer</text>
 

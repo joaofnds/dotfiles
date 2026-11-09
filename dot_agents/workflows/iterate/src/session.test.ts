@@ -395,16 +395,16 @@ describe("session", () => {
     );
   });
 
-  test("preserves a truncated raw tail byte for byte", async () => {
+  test("preserves an unreadable provider tail byte for byte", async () => {
     const result = await (await harness.start("truncated-tail")).finish();
 
     expect(await readFile(String(result.result?.logPath), "utf8")).toContain(
-      '{"type":"result","result":[stderr]',
+      '\n{"type":"result","result":\n',
     );
   });
 
   test.each(["stdin", "argv"] as const)(
-    "transports literal %s content through another protocol",
+    "transports literal %s content to the provider",
     async (transport) => {
       const prompt = "$HOME \"double\" 'single' `touch unexpected` with spaces\nand a new line";
       const driver = await harness.start(`fixture-${transport}`, { prompt });
@@ -561,148 +561,6 @@ describe("prepareSession", () => {
       },
     );
   });
-
-  test.each(["protocol-cleanup-open", "protocol-cleanup-eof"] as const)(
-    "allows successful %s beyond one second within the existing idle allowance",
-    async (scenario) => {
-      const running = harness.prepare(scenario, { idleTimeoutMs: 2500 }).start();
-
-      const result = await harness.finish(running);
-
-      expect(result).toMatchObject({
-        status: "completed",
-        result: "protocol final",
-        processExit: { code: 0, signal: null },
-        settlement: { state: "settled" },
-        errors: [],
-      });
-      expect(result.durationMs).toBeGreaterThan(1000);
-    },
-    5000,
-  );
-
-  test("reads the complete input receipt after delayed publication", async () => {
-    const running = harness.prepare("protocol-delayed-receipt", { idleTimeoutMs: 2500 }).start();
-
-    const input = await harness.inputClosed(running);
-    await running.cancel("receipt control finished");
-
-    expect(input).toBe("start\n");
-  });
-
-  test.each([
-    "protocol-stalled",
-    "protocol-stalled-eof",
-    "protocol-noisy",
-    "protocol-repeated-close",
-  ] as const)(
-    "bounds successful %s by the existing idle allowance without a wall budget",
-    async (scenario) => {
-      const running = harness.prepare(scenario, { idleTimeoutMs: 350 }).start();
-      const input = await harness.inputClosed(running);
-
-      const result = await harness.finish(running);
-
-      expect(result).toMatchObject({
-        status: "failed",
-        result: "protocol final",
-        errors: ["silent for 350ms, so it was stopped"],
-        settlement: { state: "settled" },
-      });
-      expect(input).toBe("start\n");
-      expect(result.durationMs).toBeLessThan(1200);
-    },
-    5000,
-  );
-
-  test("honors an earlier wall budget during successful protocol closure", async () => {
-    const running = harness
-      .prepare("protocol-stalled", { idleTimeoutMs: 2500, timeoutMs: 250 })
-      .start();
-    await harness.inputClosed(running);
-
-    const result = await harness.finish(running);
-
-    expect(result).toMatchObject({
-      status: "failed",
-      errors: ["exceeded the 250ms wall-time budget, so it was stopped"],
-      settlement: { state: "settled" },
-    });
-    expect(result.durationMs).toBeLessThan(1200);
-  });
-
-  test("honors caller cancellation during successful protocol closure", async () => {
-    const running = harness.prepare("protocol-stalled", { idleTimeoutMs: 2500 }).start();
-    await harness.inputClosed(running);
-
-    const settlement = await running.cancel("caller cancelled protocol cleanup");
-    const result = await harness.finish(running);
-
-    expect(result).toMatchObject({
-      status: "failed",
-      errors: ["caller cancelled protocol cleanup"],
-      settlement: { state: "settled" },
-    });
-    expect(result.settlement).toEqual(settlement);
-    expect(result.durationMs).toBeLessThan(1200);
-  });
-
-  test.each([
-    "protocol-missing-final",
-    "protocol-incomplete",
-    "protocol-error",
-    "protocol-config-error",
-  ] as const)(
-    "keeps the short failure drain for %s despite a close request",
-    async (scenario) => {
-      const running = harness.prepare(scenario, { idleTimeoutMs: 2500 }).start();
-
-      const result = await harness.finish(running);
-
-      expect(result).toMatchObject({ status: "failed", settlement: { state: "settled" } });
-      expect(result.errors).toContain("the provider did not settle after protocol input closed");
-      expect(result.durationMs).toBeLessThan(2000);
-    },
-    5000,
-  );
-
-  test("rejects malformed protocol output before it can request successful closure", async () => {
-    const running = harness.prepare("protocol-malformed", { idleTimeoutMs: 2500 }).start();
-
-    const result = await harness.finish(running);
-
-    expect(result).toMatchObject({
-      status: "failed",
-      result: "",
-      settlement: { state: "settled" },
-    });
-    expect(result.errors.length).toBeGreaterThan(0);
-    expect(result.durationMs).toBeLessThan(1200);
-  });
-
-  test("rejects nonzero exit after successful protocol closure", async () => {
-    const running = harness.prepare("protocol-nonzero", { idleTimeoutMs: 2500 }).start();
-
-    const result = await harness.finish(running);
-
-    expect(result).toMatchObject({
-      status: "failed",
-      processExit: { code: 7, signal: null },
-      errors: ["exit 7: no stderr output"],
-      settlement: { state: "settled" },
-    });
-  });
-
-  test("bounds inherited output after the successfully closing protocol root exits", async () => {
-    const running = harness.prepare("protocol-inherited-pipes", { idleTimeoutMs: 2500 }).start();
-
-    const result = await harness.finish(running);
-
-    expect(result.status).toBe("failed");
-    expect(result.errors).toContain("the agent exited with inherited output still open");
-    expect(result.durationMs).toBeLessThan(4500);
-    expect(result.settlement).toEqual(await running.settlement);
-  }, 5000);
 
   test.each(["closed-output", "malformed-stalled", "output-error"] as const)(
     "bounds a live provider after %s",

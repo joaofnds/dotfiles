@@ -1,9 +1,11 @@
 import { which } from "bun";
 import type { AgentSelection } from "./agents.ts";
-import { claudeAdapter } from "./claude.ts";
-import { codexAdapter } from "./codex.ts";
+import { claudeHarness } from "./claude.ts";
+import { codexHarness } from "./codex.ts";
 import { diagnostic, Exit } from "./exit.ts";
+import { hosted } from "./hosted.ts";
 import type {
+  Harness,
   HarnessAdapter,
   ProviderAdapter,
   RuntimeContract,
@@ -22,12 +24,22 @@ export type {
 export const providerNames = ["claude", "codex"] as const;
 export type ProviderName = (typeof providerNames)[number];
 
-const registry: Readonly<Record<ProviderName, HarnessAdapter>> = {
-  claude: claudeAdapter,
-  codex: codexAdapter,
+const harnesses: Readonly<Record<ProviderName, Harness>> = {
+  claude: claudeHarness,
+  codex: codexHarness,
 };
 
-export const adapters: readonly HarnessAdapter[] = providerNames.map((name) => registry[name]);
+export const adapters: readonly HarnessAdapter[] = providerNames.map((name) =>
+  hosted(harnesses[name]),
+);
+
+export function harnessFor(provider: string): Harness {
+  const harness = Object.values(harnesses).find((candidate) => candidate.provider === provider);
+  if (!harness)
+    throw new Exit(1, `${provider} is not implemented; providers are ${providerNames.join(", ")}`);
+
+  return harness;
+}
 
 export function adapterFor(provider: string): HarnessAdapter {
   const adapter = adapters.find((candidate) => candidate.provider === provider);
@@ -35,10 +47,6 @@ export function adapterFor(provider: string): HarnessAdapter {
     throw new Exit(1, `${provider} is not implemented; providers are ${providerNames.join(", ")}`);
 
   return adapter;
-}
-
-export function commandFor(input: SessionInput) {
-  return adapterFor(input.agent.provider).command(input);
 }
 
 // Capabilities come from the selected adapter. An omitted model table means only

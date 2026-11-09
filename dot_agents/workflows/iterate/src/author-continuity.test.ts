@@ -53,12 +53,10 @@ describe("Journal author continuity", () => {
       name: "Codex",
       author: { provider: "codex", model: "gpt-6.1-sol", effort: "xhigh" },
       configuration: {
-        provenance: "codex.app-server.thread/start" as const,
+        provenance: "codex.sdk.requested" as const,
         model: "gpt-6.1-sol",
         effort: "xhigh",
         cwd: "/fixture",
-        approvalPolicy: "never",
-        sandbox: { type: "readOnly" },
       },
     },
   ])(
@@ -162,12 +160,10 @@ describe("Journal author continuity", () => {
         resolvedModel: codex.model,
         effectiveEffort: codex.effort,
         configuredSession: {
-          provenance: "codex.app-server.thread/start",
+          provenance: "codex.sdk.requested",
           model: codex.model,
           effort: codex.effort,
           cwd: "/fixture",
-          approvalPolicy: "never",
-          sandbox: { type: "readOnly" },
         },
       }),
     );

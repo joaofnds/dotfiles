@@ -1,3 +1,5 @@
+import process from "node:process";
+
 export const fakeClaude = `#!/usr/bin/env bash
 if [ "$1" = --version ]; then
   if [ -n "$FAKE_VERSION_DESCENDANT" ]; then
@@ -16,11 +18,18 @@ if [ -n "$FAKE_DISPATCH_GATE" ]; then
   printf ready > "$FAKE_DISPATCH_GATE.ready"
   while [ ! -f "$FAKE_DISPATCH_GATE" ]; do sleep 0.02; done
 fi
-prompt=""
-system=""
+read -r initialize
+read -r request
+system=$(printf '%s' "$initialize" | "${process.execPath}" -e 'process.stdout.write(JSON.parse(await Bun.stdin.text()).request.appendSystemPrompt ?? "")')
+prompt=$(printf '%s' "$request" | "${process.execPath}" -e 'process.stdout.write(JSON.parse(await Bun.stdin.text()).message.content[0].text)')
 resumed=""
 model="sonnet"
-while [ $# -gt 0 ]; do prompt="$1"; [ "$1" = "--append-system-prompt" ] && system="$2"; [ "$1" = "--resume" ] && resumed="$2"; [ "$1" = "--model" ] && model="$2"; shift; done
+for argument in "$@"; do
+  case "$argument" in
+    --resume=*) resumed="\${argument#--resume=}";;
+    --model=*) model="\${argument#--model=}";;
+  esac
+done
 skill=$(echo "$prompt" | cut -c2- | cut -d' ' -f1)
 echo "$prompt" >> "$FAKE_CALLS"
 call=$(grep -cx -- "$prompt" "$FAKE_CALLS")
@@ -42,8 +51,8 @@ if [ "$skill" = "$FAKE_REASSIGN_AT" ]; then echo "@someone-else" > "$FAKE_ASSIGN
 if [ "$skill" = boom ] || [ "$FAKE_STALL" = boom ]; then echo "boom" >&2; exit 1; fi
 if [ -n "$resumed" ] && [ -n "$FAKE_RESUMED_MODEL" ]; then model="$FAKE_RESUMED_MODEL"; fi
 echo '{"type":"system","subtype":"init","session_id":"'"$session"'","model":"'"$model"'","permissionMode":"auto"}'
-if [ -n "$resumed" ] && [ -n "$FAKE_MISSING_HISTORY" ]; then echo '{"type":"result","is_error":true,"result":"remote session history missing","session_id":"'"$session"'"}'; exit 1; fi
-if [ -n "$FAKE_FAILED_RESULT" ]; then echo '{"type":"result","is_error":true,"result":"failed after work","num_turns":1,"total_cost_usd":'"$cost"',"session_id":"'"$session"'"}'; exit 1; fi
+if [ -n "$resumed" ] && [ -n "$FAKE_MISSING_HISTORY" ]; then echo '{"type":"result","subtype":"error_during_execution","is_error":true,"errors":["remote session history missing"],"result":"remote session history missing","session_id":"'"$session"'"}'; exit 1; fi
+if [ -n "$FAKE_FAILED_RESULT" ]; then echo '{"type":"result","subtype":"error_during_execution","is_error":true,"errors":["failed after work"],"result":"failed after work","num_turns":1,"total_cost_usd":'"$cost"',"session_id":"'"$session"'"}'; exit 1; fi
 if [ "$skill" = shape ] && [ -n "$FAKE_SHAPE_INVESTIGATION" ]; then printf '["%s"]' "$FAKE_SHAPE_INVESTIGATION" > "$FAKE_LABELS"; fi
 if [ "$FAKE_STALL" = none ]; then
   if [ "$(cat "$FAKE_STATUS")" = "To Do" ]; then echo Shape > "$FAKE_STATUS"; else echo "To Do" > "$FAKE_STATUS"; fi

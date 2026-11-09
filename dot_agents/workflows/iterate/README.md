@@ -59,12 +59,18 @@ cards and writes the shape promotion through the backlog CLI. `journal.ts` keeps
 attempts and limits across invocations. `session.ts` starts the selected
 harness, retains raw output and reports, and handles cancellation and timeouts.
 Each harness has an adapter, `claude.ts` or `codex.ts` with its `*-runtime.ts`
-helper, that builds its command, decodes its events, and declares its runtime
-contract, completion rule and resume rules. `provider.ts` registers the adapters,
-resolves a provider name to one, and checks selections and dollar caps against the
-capabilities each adapter declares. A harness that runs as one executable on `PATH`
-and answers `--version` is added by writing its adapter and registering it there.
-Each ordinary `step` starts a fresh process on the host. The
+helper, that drives its vendor SDK (`@anthropic-ai/claude-agent-sdk` or
+`@openai/codex-sdk`), turns the SDK's messages into the runner's events, and
+declares its runtime contract, completion rule and resume rules. `harness-host.ts`
+runs one adapter as the session's process-group leader, so the SDK and the CLI it
+starts are descendants that a cancel or timeout stops together. It writes each SDK
+message with its events as one JSON line, which `hosted.ts` decodes for the session.
+`provider.ts` registers the adapters, resolves a provider name to one, and checks
+selections and dollar caps against the capabilities each adapter declares. A harness
+whose CLI is one executable on `PATH`, answers `--version`, and has an SDK is added
+by writing its adapter and registering it there. The SDK versions in
+`package.json` track the installed CLIs. Each ordinary `step` starts a fresh
+process on the host. The
 [session diagram](../../../docs/iterate-session.svg) shows that lifecycle for
 Claude.
 
@@ -77,17 +83,19 @@ A stage selector has the form
 defaults. `claude` and `codex` can dispatch. An unknown provider is refused when
 the options are parsed, and an unsupported model or effort when its stage is
 reached. A journal that names a retired provider stays readable by `status`, and
-its saved plan is not reused. Codex uses one public app-server stdio process per attempt.
-It inherits native permissions and sends the literal `$STAGE CARD` plus the supplied
-stage guards as turn input. Explicit pins are checked against the advertised
+its saved plan is not reused. Codex runs one `codex exec` per attempt through the
+Codex SDK. It inherits native permissions and sends the literal `$STAGE CARD` plus
+the supplied stage guards as turn input. Explicit pins are checked against the advertised
 Codex 0.166.0 catalog; they are never substituted or clamped.
-Codex protocol completion and final reply are recorded separately from stage success.
-Required-tool outcome coverage remains unknown in the captured public protocol.
+Codex turn completion and final reply are recorded separately from stage success.
+Required-tool outcome coverage remains unknown in the SDK's events.
 A settled completed turn with a final reply may complete the session when observed
-tool lifecycles and the existing protocol, configuration and process guards pass.
+tool items and the existing configuration and process guards pass.
 The runner still requires the card transition, and native editing, resume,
 permissions and cancellation acceptance require separate evidence.
-Configured thread model/effort and policy receipts are not execution telemetry.
+The SDK reports no effective configuration, so the attempt records the model,
+effort and working directory the runner requested, and these are not execution
+telemetry.
 Token receipts stay raw where scope/basis is unknown; dollars remain unknown.
 Explicit dollar caps refuse before Codex dispatch. Native instruction/configuration
 fingerprints record their bounded coverage and unknowns, excluding credentials and
@@ -108,8 +116,8 @@ changes, finish and commit that card's work, and preserve other changes. Done re
 
 Claude stages ask for auto permission mode, so its tool calls pass Claude
 Code's classifier rather than skipping permission checks. A session that starts in
-any other mode is stopped and fails, because in print mode nobody can answer a
-permission prompt. Claude falls back that way on models without auto mode, Haiku
+any other mode is stopped and fails, because nobody can answer a permission prompt
+in an unattended session. Claude falls back that way on models without auto mode, Haiku
 among them on CLI 2.1.280. The status line counts the tool calls Claude denied, and
 the attempt report carries the count as `permissionDenials`.
 

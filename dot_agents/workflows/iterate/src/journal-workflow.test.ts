@@ -35,7 +35,7 @@ describe("iterate run accounting", () => {
     expect(result.code).toBe(1);
     expect(result.calls).toEqual(["/shape DOT-1", "/build DOT-1"]);
     expect(result.stderr).toContain("run dollar budget is exhausted");
-    expect(result.argsSeen).toContain("--max-budget-usd 0.1");
+    expect(result.argsSeen).toContain("--max-budget-usd=0.1");
   }, 20_000);
 
   test("a failed stage records its reported spend and consumes the run budget", async () => {
@@ -214,7 +214,7 @@ describe("iterate run accounting", () => {
 
     expect(result.code).toBe(2);
     expect(result.calls).toEqual(["/shape DOT-1", "/shape DOT-1"]);
-    expect(result.argsSeen).toContain("--resume s-shape");
+    expect(result.argsSeen).toContain("--resume=s-shape");
   });
 
   describe("when a resume reports its session's running total", () => {
@@ -260,7 +260,7 @@ describe("iterate run accounting", () => {
 
       const next = await driver.run("step", "DOT-1", "--model", "sonnet", "--effort", "high");
 
-      expect(next.argsSeen).toContain("--max-budget-usd 56.423 ");
+      expect(next.argsSeen).toContain("--max-budget-usd=56.423 ");
     }, 20_000);
   });
 
@@ -324,7 +324,7 @@ describe("iterate run accounting", () => {
 
     expect(result.code).toBe(2);
     expect(result.calls).toEqual(["/shape DOT-1", "/shape DOT-1"]);
-    expect(result.argsSeen).toContain("--resume s-shape");
+    expect(result.argsSeen).toContain("--resume=s-shape");
   });
 
   test("a repeated step starts a fresh author session", async () => {

@@ -75,9 +75,10 @@ iterate --help
 
 Direct options are --provider ${providerNames.join("|")}, --model MODEL and --effort LEVEL for this
 call. Bare calls reuse a saved supervised plan, or use Claude CLI defaults for direct runs.
-${adapters.map((adapter) => adapter.summary).join(" ")} A stage advances only after its
-protocol/process checks and required card transition. Provider completion is
-recorded separately; missing cost or tool-coverage data stays unknown.
+${adapters.map((adapter) => adapter.summary).join("\n")}
+A stage advances only after its process checks and required card transition.
+Provider completion is recorded separately; missing cost or tool-coverage data
+stays unknown.
 
 Supervised selection options (pass the complete selector set to every call):
   --default-provider PROVIDER  --default-model MODEL  --default-effort LEVEL

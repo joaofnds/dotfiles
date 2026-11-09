@@ -7,6 +7,8 @@
     "check": "bun test && tsc --noEmit && tsc --noEmit -p evals/tsconfig.json && biome check . && biome check --config-path evals/biome.json evals"
   },
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.319",
+    "@openai/codex-sdk": "0.167.0",
     "zod": "^4.6.0"
   },
   "devDependencies": {

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type TemporalBasis = "invocation" | "sessionCumulative";
 
 export type TokenUsage = {
@@ -32,6 +34,43 @@ export type SessionCost = {
   readonly basis: TemporalBasis;
   readonly scope: "parent" | "aggregateIncludingChildren";
 };
+
+const nonnegative = z.number().finite().nonnegative();
+const temporalBasis = z.enum(["invocation", "sessionCumulative"]);
+const tokensSchema = z.object({
+  input: nonnegative.optional(),
+  cacheRead: nonnegative.optional(),
+  cacheWrite: nonnegative.optional(),
+  output: nonnegative.optional(),
+  reasoning: nonnegative.optional(),
+});
+export const usageSchema = z.object({
+  parent: tokensSchema.optional(),
+  aggregateIncludingChildren: tokensSchema.optional(),
+  parentBasis: temporalBasis.exactOptional(),
+  aggregateBasis: temporalBasis.exactOptional(),
+  modelsBasis: temporalBasis.exactOptional(),
+  models: z
+    .array(
+      z
+        .object({
+          model: z.string(),
+          resolvedModel: z.string().exactOptional(),
+          provider: z.string().exactOptional(),
+          costUsd: nonnegative.exactOptional(),
+          costBasis: z.string().exactOptional(),
+          tokens: tokensSchema,
+        })
+        .passthrough(),
+    )
+    .exactOptional(),
+  raw: z.array(z.unknown()).exactOptional(),
+});
+export const costSchema = z.object({
+  usd: nonnegative,
+  scope: z.enum(["parent", "aggregateIncludingChildren"]),
+  basis: temporalBasis,
+});
 
 export function addTokens(left: TokenUsage | undefined, right: TokenUsage): TokenUsage {
   if (left === undefined) return right;

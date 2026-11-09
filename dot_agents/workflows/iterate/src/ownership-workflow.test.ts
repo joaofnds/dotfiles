@@ -658,7 +658,7 @@ describe("real board run ownership", () => {
       expect(after.attempts[1].requestedAgent.model).toBe("opus");
       expect(after.attempts[1].resolvedModel).toBe("opus");
       const argv = (await driver.providerArguments())[1] ?? [];
-      expect(argv[argv.indexOf("--model") + 1]).toBe("opus");
+      expect(argv).toContain("--model=opus");
       expect(await driver.providerBypass()).toBe("unset\nunset\n");
       expect(after.selectionHistory.at(-1)).toMatchObject({ next: after.supervisedPlan });
       expect(after.selectionHistory.at(-1).previous).toEqual(before.supervisedPlan);
@@ -1516,7 +1516,7 @@ describe("real board run ownership", () => {
     });
     expect(await readFile(stage.value.reportPath ?? "", "utf8")).toBe(report);
     expect(resumed.calls).toHaveLength(2);
-    expect(resumed.argsSeen).toContain("--resume s-build");
+    expect(resumed.argsSeen).toContain("--resume=s-build");
     expect(after.id).toBe(before.id);
     expect(after.runClaim).toEqual(before.runClaim);
     expect(after.limits).toEqual(before.limits);

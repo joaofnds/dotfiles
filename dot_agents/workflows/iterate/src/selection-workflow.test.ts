@@ -272,7 +272,7 @@ describe("persisted iterate selection", () => {
     const state = JSON.parse((await driver.run("status", "DOT-1")).stdout);
 
     expect(result.code).toBe(2);
-    expect(result.argsSeen).toContain("--resume s-build");
+    expect(result.argsSeen).toContain("--resume=s-build");
     expect(state.supervisedPlan.originalRequest).toEqual(supervised);
     expect(state.selectionHistory).toHaveLength(1);
   });
@@ -388,7 +388,7 @@ describe("persisted iterate selection", () => {
 
     expect(result.code).toBe(2);
     expect(result.calls).toHaveLength(2);
-    expect(result.argsSeen).toContain("--resume s-build");
+    expect(result.argsSeen).toContain("--resume=s-build");
   });
 
   test("ambiguous native defaults refuse resume before another attempt", async () => {
@@ -428,7 +428,7 @@ describe("persisted iterate selection", () => {
 
     expect(result.code).toBe(2);
     expect(result.calls).toHaveLength(2);
-    expect(result.argsSeen).toContain("--resume s-build");
+    expect(result.argsSeen).toContain("--resume=s-build");
     expect(after.attempts[1].runtime).toEqual(before.attempts[0].runtime);
     expect(after.attempts[1].sessionId).toBe(before.attempts[0].sessionId);
   });
@@ -494,7 +494,7 @@ describe("persisted iterate selection", () => {
 
     expect(result.code).toBe(2);
     expect(result.calls).toHaveLength(2);
-    expect(result.argsSeen).toContain("--resume s-build");
+    expect(result.argsSeen).toContain("--resume=s-build");
   });
 
   test("changed native tool configuration refuses resume before dispatch", async () => {
@@ -600,7 +600,7 @@ describe("persisted iterate selection", () => {
 
     expect(result.code).toBe(1);
     expect(result.calls).toHaveLength(2);
-    expect(result.argsSeen).toContain("--resume s-build");
+    expect(result.argsSeen).toContain("--resume=s-build");
     expect(state.attempts).toHaveLength(2);
     expect(state.attempts[1]).toMatchObject({ status: "failed", sessionId: "s-build" });
   });
@@ -613,7 +613,7 @@ describe("persisted iterate selection", () => {
     const state = JSON.parse((await driver.run("status", "DOT-1")).stdout);
 
     expect(result.code).toBe(1);
-    expect(result.argsSeen).toContain("--resume s-build");
+    expect(result.argsSeen).toContain("--resume=s-build");
     expect(state.attempts[1]).toMatchObject({ status: "failed", sessionId: "s-build" });
     expect(result.stderr).toContain("the resumed session did not establish the pinned model");
   });
@@ -641,7 +641,7 @@ describe("persisted iterate selection", () => {
     const state = JSON.parse((await driver.run("status", "DOT-1")).stdout);
 
     expect(result.code).toBe(2);
-    expect(result.argsSeen.split("--max-budget-usd 0.12")).toHaveLength(3);
+    expect(result.argsSeen.split("--max-budget-usd=0.12")).toHaveLength(3);
     expect(state.attempts[1].costUsd).toBe(0.003_12);
     expect(state.totals.knownCostUsd).toBe(0.133_056_8);
   });

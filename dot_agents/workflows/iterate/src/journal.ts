@@ -19,14 +19,16 @@ import { definedFields } from "./defined-fields.ts";
 import { Exit } from "./exit.ts";
 import { atomicJson, type JsonWriter, readOptionalFile } from "./files.ts";
 import { adapterFor, providerNames } from "./provider.ts";
-import type { RuntimeContract } from "./provider-types.ts";
+import { configuredSessionSchema, type RuntimeContract } from "./provider-types.ts";
 import type { SessionResult } from "./session.ts";
 import {
   addTokens,
+  costSchema,
   type SessionCost,
   type TokenUsage,
   tokenDelta,
   type UsageReport,
+  usageSchema,
 } from "./usage.ts";
 
 export const sessionCap = 6;
@@ -42,38 +44,11 @@ export const runtimeContractSchema = z.object({
   coverage: z.array(z.string()).readonly().optional(),
   unknowns: z.array(z.string()).readonly().optional(),
 });
-const temporalBasis = z.enum(["invocation", "sessionCumulative"]);
-const tokensSchema = z.object({
-  input: nonnegative.optional(),
-  cacheRead: nonnegative.optional(),
-  cacheWrite: nonnegative.optional(),
-  output: nonnegative.optional(),
-  reasoning: nonnegative.optional(),
-});
-const usageSchema = z.object({
-  parent: tokensSchema.optional(),
-  aggregateIncludingChildren: tokensSchema.optional(),
-  parentBasis: temporalBasis.optional(),
-  aggregateBasis: temporalBasis.optional(),
-  modelsBasis: temporalBasis.optional(),
-  models: z.array(z.object({ model: z.string(), tokens: tokensSchema }).passthrough()).optional(),
-  raw: z.array(z.unknown()).optional(),
-});
-const costSchema = z.object({
-  usd: nonnegative,
-  scope: z.enum(["parent", "aggregateIncludingChildren"]),
-  basis: temporalBasis,
-});
 /** Providers an earlier runner dispatched. Stored history may name them; nothing dispatches them. */
 const retiredProviders = ["opencode", "antigravity", "agy"] as const;
 const recordedProviders = [...providerNames, ...retiredProviders] as const;
 type RecordedProvider = (typeof recordedProviders)[number];
 /** Each harness owns its configuration shape; the journal keeps whatever the harness recorded. */
-const configuredSessionSchema = z.looseObject({
-  provenance: z.string(),
-  model: z.string().nullable().optional(),
-  effort: z.string().nullable().optional(),
-});
 const requestSchema = z.object({
   provider: z.enum(recordedProviders),
   model: z.string().optional(),

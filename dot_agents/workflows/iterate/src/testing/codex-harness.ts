@@ -19,87 +19,58 @@ export const syntheticCodexCompletion = {
 };
 export const syntheticCodexReply = JSON.stringify(syntheticCodexCompletion);
 
-// Synthetic public-schema peer. It never starts a native provider.
+// Synthetic codex exec --experimental-json peer. It never starts a native provider.
 export const fakeCodex = `#!${process.execPath}
-import { appendFileSync, closeSync, writeFileSync } from 'node:fs';
-import { createInterface } from 'node:readline';
+import { appendFileSync, writeFileSync } from 'node:fs';
 import { spawn, spawnSync } from 'bun';
 const root = process.env.FAKE_CODEX_DIRECTORY;
 const scenario = process.env.FAKE_CODEX_SCENARIO;
-if (process.argv.includes('--version')) { console.log('codex-cli 0.166.0'); process.exit(0); }
-appendFileSync(root + '/launches', JSON.stringify({pid:process.pid,argv:process.argv.slice(2),cwd:process.cwd()})+'\\n');
-process.stderr.write('synthetic app-server diagnostic\\n');
+const argv = process.argv.slice(2);
+if (argv.includes('--version')) { console.log('codex-cli 0.166.0'); process.exit(0); }
+const prompt = await new Response(Bun.stdin.stream()).text();
+const schemaPath = argv[argv.indexOf('--output-schema') + 1];
+appendFileSync(root + '/launches', JSON.stringify({pid:process.pid,argv,cwd:process.cwd(),prompt,outputSchema:argv.includes('--output-schema') ? JSON.parse(await Bun.file(schemaPath).text()) : null})+'\\n');
+process.stderr.write('synthetic exec diagnostic\\n');
 if (scenario === 'unavailable') process.exit(1);
+if (scenario === 'silent') setInterval(()=>{}, 1000);
+if (scenario === 'silent') await new Promise(()=>{});
+if (scenario === 'missing-history') { console.error('history missing'); process.exit(1); }
 const send = (x) => console.log(JSON.stringify(x));
-let threadId = 'thread-owned-'+process.pid; const turnId = 'turn-owned';
-const input = createInterface({input:process.stdin});
+const resumed = argv.indexOf('resume');
+send({type:'thread.started',thread_id: resumed === -1 ? 'thread-owned-'+process.pid : argv[resumed + 1]});
+send({type:'turn.started'});
 const completion = ${JSON.stringify(syntheticCodexCompletion)};
 if (scenario === 'blocked' || scenario === 'failed') completion.outcome = scenario;
 if (scenario === 'blocked' || scenario === 'required-blocker') completion.requiredToolBlockers = [{tool:'apply_patch',reason:'denied',evidencePath:'synthetic-tool.log'}];
 const finalReply = scenario === 'legacy-completion' ? 'synthetic final reply' : scenario === 'malformed-completion' ? '{' : JSON.stringify(completion);
-const turnError = scenario === 'optional-error' ? {} : {error:null};
-if (scenario === 'silent') setInterval(()=>{}, 1000);
-input.on('line', async line => {
-  appendFileSync(root + '/requests', line+'\\n');
-  const request = JSON.parse(line);
-  if (scenario === 'silent') return;
-  if (request.method === 'initialize') {
-    if (scenario === 'stdin-closed') {
-      input.on('error',()=>{});
-      process.stdin.on('error',()=>{});
-      const interfaceClosed = new Promise(resolve=>input.once('close',resolve));
-      input.close();
-      await interfaceClosed;
-      const streamClosed = new Promise(resolve=>process.stdin.once('close',resolve));
-      process.stdin.destroy();
-      await streamClosed;
-      try { closeSync(0); } catch (error) { if (error.code !== 'EBADF') throw error; }
-      appendFileSync(root+'/stdin-closed','closed\\n');
-      setInterval(()=>{},1000);
-    }
-    send({id:request.id,result:{userAgent:'codex-cli 0.166.0'}});
-  }
-  if (request.method === 'thread/start' || request.method === 'thread/resume') {
-    threadId = request.params.threadId || threadId;
-    if (scenario === 'missing-history') { send({id:request.id,error:{code:-32000,message:'history missing'}}); return; }
-    send({id:request.id,result:{thread:{id:request.params.threadId || threadId},model:scenario === 'mismatch' ? 'gpt-6-luna' : request.params.model || 'gpt-6.1-sol',reasoningEffort:request.params.config?.model_reasoning_effort || 'high',cwd:process.cwd(),approvalPolicy:'never',sandbox:scenario === 'edit-check-transition' ? {type:'workspaceWrite',writableRoots:[process.cwd()],networkAccess:false} : scenario === 'policy-mismatch' ? {type:'readOnly',networkAccess:true} : {type:'readOnly',networkAccess:false}}});
-    if (scenario === 'backpressure') { input.pause(); process.stdin.pause(); setInterval(()=>{},1000); }
-  }
-  if (request.method === 'turn/start') {
-    send({id:request.id,result:{turn:{id:turnId,status:'inProgress',...turnError,items:[]}}});
-    if (scenario === 'reroute') send({method:'model/rerouted',params:{threadId,turnId,fromModel:'gpt-6.1-sol',toModel:'gpt-6-luna',reason:'syntheticModelChange'}});
-    if (scenario === 'hold') { writeFileSync(root+'/codex-ready',String(process.pid)); setInterval(()=>{},1000); return; }
-    if (scenario === 'descendant' || scenario === 'cancel') {
-      const child=spawn([process.execPath,'-e','setInterval(()=>{},1000)'],{stdin:'ignore',stdout:'inherit',stderr:'inherit'});
-      writeFileSync(root+'/descendant',String(child.pid));
-      setInterval(()=>{},1000); return;
-    }
-    if (scenario === 'truncated') { process.stdout.write('{"method":"turn/compl'); input.close(); process.stdin.destroy(); return; }
-    if (scenario === 'no-terminal') { input.close(); process.stdin.destroy(); return; }
-    if (scenario === 'unfinished-tool') send({method:'item/started',params:{threadId,turnId,item:{type:'commandExecution',id:'unfinished',command:'check',cwd:process.cwd(),commandActions:[],status:'inProgress'}}});
-    if (scenario === 'edit-check-transition') {
-      const check = () => spawnSync(['/bin/test','-f','requested.txt'],{stdout:'pipe',stderr:'pipe'});
-      const red=check();
-      send({method:'item/completed',params:{threadId,turnId,item:{type:'commandExecution',id:'red',command:'test -f requested.txt',cwd:process.cwd(),commandActions:[],status:'failed',exitCode:red.exitCode}}});
-      writeFileSync(process.cwd()+'/requested.txt','verified\\n');
-      send({method:'item/completed',params:{threadId,turnId,item:{type:'fileChange',id:'write',changes:[{path:'requested.txt',diff:'+verified',kind:{type:'add'}}],status:'completed'}}});
-      const green=check();
-      send({method:'item/completed',params:{threadId,turnId,item:{type:'commandExecution',id:'green',command:'test -f requested.txt',cwd:process.cwd(),commandActions:[],status:'completed',exitCode:green.exitCode}}});
-      const board=spawnSync(['backlog','task','edit','TASK-1','--status','Review'],{stdout:'pipe',stderr:'pipe'});
-      writeFileSync(root+'/editing-check.json',JSON.stringify({cwd:process.cwd(),red:red.exitCode,green:green.exitCode,transition:board.exitCode,transitionStdout:board.stdout.toString(),transitionStderr:board.stderr.toString()}));
-      if(red.exitCode!==1 || green.exitCode!==0 || board.exitCode!==0) process.exit(1);
-    }
-    if (scenario === 'native-error') send({method:'error',params:{threadId,turnId,error:{message:'synthetic native error'},willRetry:false}});
-    if (scenario === 'native-tool-failure') send({method:'item/completed',params:{threadId,turnId,item:{type:'mcpToolCall',id:'failed-native-tool',server:'synthetic',tool:'required_read',arguments:{},status:'failed',error:{message:'synthetic native tool error'}}}});
-    if (scenario === 'expected-probe') send({method:'item/completed',params:{threadId,turnId,item:{type:'commandExecution',id:'probe',command:'test -f absent',cwd:process.cwd(),commandActions:[],status:'failed',exitCode:1}}});
-    const items=scenario === 'no-final' ? [] : [{type:'agentMessage',id:'reply',text:finalReply,phase:'final_answer'}];
-    send({method:'thread/tokenUsage/updated',params:{threadId,turnId,tokenUsage:{total:{inputTokens:11,cachedInputTokens:3,outputTokens:2,reasoningOutputTokens:1,totalTokens:13},last:{inputTokens:5,cachedInputTokens:1,outputTokens:1,reasoningOutputTokens:1,totalTokens:6}}}});
-    send({method:'turn/completed',params:{threadId,turn:{id:turnId,status:'completed',...turnError,items}}});
-    if (scenario === 'nonzero') process.exitCode=7;
-    if (scenario === 'terminal-hang') setInterval(()=>{},1000);
-  }
-});
-input.on('close',()=>{ appendFileSync(root+'/eof','closed\\n'); });
+if (scenario === 'hold') { writeFileSync(root+'/codex-ready',String(process.pid)); await new Promise(()=>{}); }
+if (scenario === 'descendant' || scenario === 'cancel') {
+  const child=spawn([process.execPath,'-e','setInterval(()=>{},1000)'],{stdin:'ignore',stdout:'inherit',stderr:'inherit'});
+  writeFileSync(root+'/descendant',String(child.pid));
+  await new Promise(()=>{});
+}
+if (scenario === 'truncated') { process.stdout.write('{"type":"turn.compl'); process.exit(0); }
+if (scenario === 'no-terminal') process.exit(0);
+if (scenario === 'unfinished-tool') send({type:'item.started',item:{type:'command_execution',id:'unfinished',command:'check',aggregated_output:'',status:'in_progress'}});
+if (scenario === 'edit-check-transition') {
+  const check = () => spawnSync(['/bin/test','-f','requested.txt'],{stdout:'pipe',stderr:'pipe'});
+  const red=check();
+  send({type:'item.completed',item:{type:'command_execution',id:'red',command:'test -f requested.txt',aggregated_output:'',status:'failed',exit_code:red.exitCode}});
+  writeFileSync(process.cwd()+'/requested.txt','verified\\n');
+  send({type:'item.completed',item:{type:'file_change',id:'write',changes:[{path:'requested.txt',kind:'add'}],status:'completed'}});
+  const green=check();
+  send({type:'item.completed',item:{type:'command_execution',id:'green',command:'test -f requested.txt',aggregated_output:'',status:'completed',exit_code:green.exitCode}});
+  const board=spawnSync(['backlog','task','edit','TASK-1','--status','Review'],{stdout:'pipe',stderr:'pipe'});
+  writeFileSync(root+'/editing-check.json',JSON.stringify({cwd:process.cwd(),red:red.exitCode,green:green.exitCode,transition:board.exitCode,transitionStdout:board.stdout.toString(),transitionStderr:board.stderr.toString()}));
+  if(red.exitCode!==1 || green.exitCode!==0 || board.exitCode!==0) process.exit(1);
+}
+if (scenario === 'native-error') send({type:'error',message:'synthetic native error'});
+if (scenario === 'native-tool-failure') send({type:'item.completed',item:{type:'mcp_tool_call',id:'failed-native-tool',server:'synthetic',tool:'required_read',arguments:{},status:'failed',error:{message:'synthetic native tool error'}}});
+if (scenario === 'expected-probe') send({type:'item.completed',item:{type:'command_execution',id:'probe',command:'test -f absent',aggregated_output:'',status:'failed',exit_code:1}});
+if (scenario !== 'no-final') send({type:'item.completed',item:{type:'agent_message',id:'reply',text:finalReply}});
+send({type:'turn.completed',usage:{input_tokens:11,cached_input_tokens:3,cache_write_input_tokens:0,output_tokens:2,reasoning_output_tokens:1}});
+if (scenario === 'nonzero') process.exit(7);
+if (scenario === 'terminal-hang') await new Promise(()=>{});
 `;
 
 export class CodexHarness {
@@ -174,11 +145,6 @@ finally { clearTimeout(timer); }
         stdout,
         stderr,
         result,
-        requests: async (): Promise<unknown[]> =>
-          (await readFile(join(root, "requests"), "utf8"))
-            .trim()
-            .split("\n")
-            .map((line) => JSON.parse(line)),
         launches: async (): Promise<unknown[]> =>
           (await readFile(join(root, "launches"), "utf8"))
             .trim()

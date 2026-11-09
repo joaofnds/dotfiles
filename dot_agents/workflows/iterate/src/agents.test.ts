@@ -517,7 +517,6 @@ describe(validateAgentSelection.name, () => {
     resume: true,
     model: true,
     efforts: ["low", "medium", "high", "xhigh", "max", "ultra"],
-    promptTransport: "stdin" as const,
     dollarCap: false,
     modelEfforts: {
       "gpt-6.1-sol": ["low", "medium", "high", "xhigh", "max", "ultra"],

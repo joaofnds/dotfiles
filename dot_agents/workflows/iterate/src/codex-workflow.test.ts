@@ -51,7 +51,7 @@ describe("Codex workflow persistence", () => {
         status: "Build",
         assignees: [record.runClaim.assignee],
       });
-      expect(await driver.codexRequests()).toHaveLength(4);
+      expect(await driver.codexLaunches()).toHaveLength(1);
     },
     20_000,
   );
@@ -74,7 +74,7 @@ describe("Codex workflow persistence", () => {
     expect(await driver.journalBytes("TASK-1")).toBe(before);
     expect(history.attempts).toHaveLength(1);
     expect(history.attempts[0].runtime.fingerprint).toBe("legacy-unversioned-completion-contract");
-    expect(await driver.codexRequests()).toHaveLength(4);
+    expect(await driver.codexLaunches()).toHaveLength(1);
   }, 20_000);
 
   test("accepts a permitted edit and check only with the actual card transition", async () => {
@@ -127,7 +127,7 @@ describe("Codex workflow persistence", () => {
       requiredToolOutcomeCoverage: "unknown",
       requestedAgent: { provider: "codex", model: "gpt-6.1-sol", effort: "high" },
       configuredSession: {
-        provenance: "codex.app-server.thread/resume",
+        provenance: "codex.sdk.requested",
         model: "gpt-6.1-sol",
         effort: "high",
       },
@@ -136,19 +136,16 @@ describe("Codex workflow persistence", () => {
     expect(after.attempts[1].costUsd).toBeUndefined();
     expect(after.completed).toBe(false);
     expect(after.totals.unknownCostAttempts).toBe(2);
-    const requests = await driver.codexRequests();
-    expect(
-      requests.filter((request) => JSON.stringify(request).includes('"method":"turn/start"')),
-    ).toHaveLength(2);
-    expect(
-      requests.filter((request) => JSON.stringify(request).includes('"outputSchema"')),
-    ).toHaveLength(2);
+    const launches = await driver.codexLaunches();
+    expect(launches).toHaveLength(2);
+    expect(launches.every((launch) => launch.outputSchema !== null)).toBe(true);
     expect(after.attempts[1].runtime.coverage).toContain(
       "structured completion protocol/schema v1",
     );
-    expect(
-      requests.filter((request) => JSON.stringify(request).includes('"method":"thread/resume"')),
-    ).toHaveLength(1);
+    expect(launches[0]?.argv).not.toContain("resume");
+    expect(launches[1]?.argv).toEqual(
+      expect.arrayContaining(["resume", before.attempts[0].sessionId]),
+    );
     const report = JSON.parse(await readFile(after.attempts[1].reportPath, "utf8"));
     expect(report).toMatchObject({
       status: "completed",
@@ -188,7 +185,7 @@ describe("Codex workflow persistence", () => {
       expect(before.attempts[1].providerCompleted).toBe(true);
       expect(resumed.code).toBe(1);
       expect(resumed.stderr).toContain("author contract is unknown or changed");
-      expect(await driver.codexRequests()).toHaveLength(8);
+      expect(await driver.codexLaunches()).toHaveLength(2);
       expect(await driver.journalBytes("TASK-1")).toBe(journal);
       expect(after).toEqual(before);
     },
@@ -228,7 +225,7 @@ describe("Codex workflow persistence", () => {
       expect(await readFile(input.selectedFile, "utf8")).not.toBe(selected);
       expect(outcome.code).toBe(1);
       expect(outcome.stderr).toContain("author contract is unknown or changed");
-      expect(await driver.codexRequests()).toHaveLength(8);
+      expect(await driver.codexLaunches()).toHaveLength(2);
       expect(await driver.journalBytes("TASK-1")).toBe(journal);
       expect(after).toEqual(before);
     },
@@ -253,7 +250,7 @@ describe("Codex workflow persistence", () => {
       expect(before.attempts[1].runtime.localInputs).toEqual({ established: true, reasons: [] });
       expect(outcome.stderr).toContain("author contract is unknown or changed");
       expect(after).toEqual(before);
-      expect(await driver.codexRequests()).toHaveLength(8);
+      expect(await driver.codexLaunches()).toHaveLength(2);
     },
     20_000,
   );
@@ -281,7 +278,7 @@ describe("Codex workflow persistence", () => {
       expect(before.attempts[0].runtime.localInputs.reasons.length).toBeGreaterThan(0);
       expect(outcome.stderr).toContain("local runtime inputs are unestablished");
       expect(after).toEqual(before);
-      expect(await driver.codexRequests()).toHaveLength(4);
+      expect(await driver.codexLaunches()).toHaveLength(1);
     },
     20_000,
   );
@@ -302,7 +299,7 @@ describe("Codex workflow persistence", () => {
     expect(record.attempts).toHaveLength(2);
     expect(record.attempts[1].providerCompleted).toBe(true);
     expect(record.attempts[1].runtime).toEqual(record.attempts[0].runtime);
-    expect(await driver.codexRequests()).toHaveLength(8);
+    expect(await driver.codexLaunches()).toHaveLength(2);
   }, 20_000);
 
   test("distinguishes a missing instruction from the literal absence marker", async () => {
@@ -317,7 +314,7 @@ describe("Codex workflow persistence", () => {
 
     expect(outcome.stderr).toContain("author contract is unknown or changed");
     expect(after).toEqual(before);
-    expect(await driver.codexRequests()).toHaveLength(4);
+    expect(await driver.codexLaunches()).toHaveLength(1);
   }, 20_000);
 
   test("preserves compatibility when project profile settings are ignored natively", async () => {
@@ -332,34 +329,7 @@ describe("Codex workflow persistence", () => {
     expect(record.attempts).toHaveLength(2);
     expect(record.attempts[1].runtime.localInputs).toEqual({ established: true, reasons: [] });
     expect(record.attempts[1].providerCompleted).toBe(true);
-    expect(await driver.codexRequests()).toHaveLength(8);
-  }, 20_000);
-
-  test("never promotes a rejected resume receipt into the next author contract", async () => {
-    const driver = await harness.seedReal();
-    await driver.useCodex();
-    await driver.run("step", "TASK-1", ...pins);
-    const accepted = JSON.parse((await driver.run("status", "TASK-1")).stdout);
-    driver.env.FAKE_CODEX_SCENARIO = "policy-mismatch";
-    const rejected = await driver.run("resume", "TASK-1", ...pins);
-    const before = JSON.parse((await driver.run("status", "TASK-1")).stdout);
-    const journal = await driver.journalBytes("TASK-1");
-
-    const repeated = await driver.run("resume", "TASK-1", ...pins);
-    const after = JSON.parse((await driver.run("status", "TASK-1")).stdout);
-
-    expect(accepted.attempts[0].providerCompleted).toBe(true);
-    expect(rejected.stderr).toContain("no turn was started");
-    expect(before.attempts).toHaveLength(2);
-    expect(before.attempts[1].providerCompleted).toBe(false);
-    expect(before.attempts[1].configuredSession).toBeUndefined();
-    expect(await readFile(before.attempts[1].logPath, "utf8")).toContain(
-      '"sandbox":{"type":"readOnly","networkAccess":true}',
-    );
-    expect(repeated.stderr).toContain("author contract is unknown or changed");
-    expect(await driver.codexRequests()).toHaveLength(7);
-    expect(await driver.journalBytes("TASK-1")).toBe(journal);
-    expect(after).toEqual(before);
+    expect(await driver.codexLaunches()).toHaveLength(2);
   }, 20_000);
 
   test.each([
@@ -388,7 +358,7 @@ describe("Codex workflow persistence", () => {
       expect(before.attempts[1].runtime).toEqual(first.attempts[0].runtime);
       expect(before.attempts[1].providerCompleted).toBe(true);
       expect(outcome.stderr).toContain("local runtime inputs are unestablished");
-      expect(await driver.codexRequests()).toHaveLength(8);
+      expect(await driver.codexLaunches()).toHaveLength(2);
       expect(await driver.journalBytes("TASK-1")).toBe(journal);
       expect(after).toEqual(before);
     },
@@ -407,7 +377,7 @@ describe("Codex workflow persistence", () => {
     expect(outcome.stderr).toContain("reading Codex runtime inputs at ");
     expect(outcome.stderr).toContain("ELOOP");
     expect(state.attempts).toEqual([]);
-    expect(await driver.codexRequests()).toEqual([]);
+    expect(await driver.codexLaunches()).toEqual([]);
   }, 20_000);
 
   test("records missing remote history as a failed attempt without a fresh fallback", async () => {
@@ -421,40 +391,12 @@ describe("Codex workflow persistence", () => {
     expect(outcome.code).toBe(1);
     expect(record.attempts).toHaveLength(2);
     expect(record.attempts[1]).toMatchObject({ status: "failed", providerCompleted: false });
-    const requests = await driver.codexRequests();
-    expect(requests).toHaveLength(7);
-    expect(JSON.stringify(requests.at(-1))).toContain('"method":"thread/resume"');
+    const launches = await driver.codexLaunches();
+    expect(launches).toHaveLength(2);
+    expect(launches[1]?.argv).toContain("resume");
     expect(
       JSON.parse(await readFile(record.attempts[1].reportPath, "utf8")).errors.join(),
     ).toContain("history missing");
-  }, 20_000);
-
-  test("retains different-model routing and refuses author resume before dispatch", async () => {
-    const driver = await harness.seedReal();
-    await driver.useCodex("reroute");
-    await driver.run("step", "TASK-1", ...pins);
-
-    const resumed = await driver.run("resume", "TASK-1", ...pins);
-    const record = JSON.parse((await driver.run("status", "TASK-1")).stdout);
-    const receipt = {
-      fromModel: "gpt-6.1-sol",
-      toModel: "gpt-6-luna",
-      reason: "syntheticModelChange",
-    };
-
-    expect(resumed.code).toBe(1);
-    expect(resumed.stderr).toContain("author contract is unknown or changed");
-    expect(record.attempts).toHaveLength(1);
-    expect(record.attempts[0]).toMatchObject({
-      providerCompleted: true,
-      status: "failed",
-      modelReroutes: [receipt],
-    });
-    expect(record.attempts[0].resolvedModel).toBeUndefined();
-    const report = JSON.parse(await readFile(record.attempts[0].reportPath, "utf8"));
-    expect(report.modelReroutes).toEqual([receipt]);
-    expect(report.result).toBe(syntheticCodexReply);
-    expect(await driver.codexRequests()).toHaveLength(4);
   }, 20_000);
 
   test("requires fresh review sessions and refuses their resume locally", async () => {
@@ -463,14 +405,14 @@ describe("Codex workflow persistence", () => {
     await driver.run("step", "TASK-1", ...pins);
     await driver.run("step", "TASK-1", ...pins);
     const resumed = await driver.run("resume", "TASK-1", ...pins);
-    const requests = await driver.codexRequests();
+    const launches = await driver.codexLaunches();
 
     expect(resumed.code).toBe(1);
     expect(resumed.stderr).toContain("fresh independent judgment");
-    expect(requests).toHaveLength(8);
+    expect(launches).toHaveLength(2);
     const record = JSON.parse((await driver.run("status", "TASK-1")).stdout);
     expect(record.attempts[0].sessionId).not.toBe(record.attempts[1].sessionId);
-    expect(JSON.stringify(requests)).not.toContain('"method":"thread/resume"');
+    expect(launches.some((launch) => launch.argv.includes("resume"))).toBe(false);
   }, 20_000);
 
   test("refuses local configuration drift before launching an author resume", async () => {
@@ -486,7 +428,7 @@ describe("Codex workflow persistence", () => {
 
     expect(outcome.code).toBe(1);
     expect(outcome.stderr).toContain("author contract is unknown or changed");
-    expect(await driver.codexRequests()).toHaveLength(4);
+    expect(await driver.codexLaunches()).toHaveLength(1);
     expect(record.attempts).toHaveLength(1);
   }, 20_000);
 
@@ -523,7 +465,7 @@ describe("Codex workflow persistence", () => {
     expect(resumed.code).toBe(1);
     expect(resumed.stderr).toContain("author contract is unknown or changed");
     expect(record.attempts).toHaveLength(1);
-    expect(await driver.codexRequests()).toHaveLength(4);
+    expect(await driver.codexLaunches()).toHaveLength(1);
   }, 20_000);
 
   test("refuses explicit dollars before any native provider launch", async () => {
@@ -532,7 +474,7 @@ describe("Codex workflow persistence", () => {
     const outcome = await driver.run("step", "TASK-1", ...pins);
     expect(outcome.code).toBe(1);
     expect(outcome.stderr).toContain("cannot enforce an explicit dollar cap");
-    expect(await driver.codexRequests()).toEqual([]);
+    expect(await driver.codexLaunches()).toEqual([]);
   }, 20_000);
 
   test("keeps the unknown-dollar guard and durable attempt limits across calls", async () => {
@@ -562,6 +504,6 @@ describe("Codex workflow persistence", () => {
     expect(after.attempts).toHaveLength(6);
     expect(after.id).toBe(before.id);
     expect(after.runClaim).toEqual(before.runClaim);
-    expect(await driver.codexRequests()).toHaveLength(24);
+    expect(await driver.codexLaunches()).toHaveLength(6);
   }, 60_000);
 });

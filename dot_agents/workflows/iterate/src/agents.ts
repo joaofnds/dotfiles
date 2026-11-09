@@ -54,7 +54,7 @@ export type AgentSelection<P extends string = ProviderName> = {
   readonly model?: string | undefined;
   readonly effort?: string | undefined;
 };
-const agentSchema = selectionSchema.extend({
+export const agentSchema = selectionSchema.extend({
   provider: z.enum(providerNames),
 });
 export type StageAgent = Readonly<z.infer<typeof agentSchema>>;

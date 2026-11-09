@@ -3,6 +3,8 @@ import { z } from "zod";
 import { WorkflowHarness } from "./testing/workflow-harness.ts";
 
 const pins = ["--provider", "claude", "--model", "sonnet", "--effort", "high"];
+const resumeArguments = (argv: readonly string[] | undefined) =>
+  (argv ?? []).filter((argument) => argument.startsWith("--resume"));
 const runState = z.object({
   id: z.uuid(),
   attempts: z.array(
@@ -43,7 +45,7 @@ describe("iterate author continuity", () => {
       { stage: "build", sessionId: "s-shape", status: "completed" },
     ]);
     expect(built.calls).toEqual(["/shape TASK-1", "/build TASK-1"]);
-    expect(built.argsSeen).toContain("--resume s-shape");
+    expect(built.argsSeen).toContain("--resume=s-shape");
     expect(state.totals.knownCostUsd).toBe(0.2);
   }, 20_000);
 
@@ -55,7 +57,7 @@ describe("iterate author continuity", () => {
 
     expect(built.code).toBe(2);
     expect(state.attempts.map((attempt) => attempt.sessionId)).toEqual(["s-shape", "s-build"]);
-    expect((await driver.providerArguments())[1]).not.toContain("--resume");
+    expect(resumeArguments((await driver.providerArguments())[1])).toEqual([]);
   }, 20_000);
 
   test("starts Review fresh after a continued Build", async () => {
@@ -72,7 +74,7 @@ describe("iterate author continuity", () => {
       ["build", "s-shape"],
       ["review", "s-review"],
     ]);
-    expect((await driver.providerArguments())[2]).not.toContain("--resume");
+    expect(resumeArguments((await driver.providerArguments())[2])).toEqual([]);
   }, 20_000);
 
   test("resumes the continued Build through the existing same-stage command", async () => {
@@ -98,7 +100,7 @@ describe("iterate author continuity", () => {
     const shaped = await driver.run("step", "TASK-1", ...codexPins);
     expect(shaped.code).toBe(2);
     await driver.boardCommand("task", "edit", "TASK-1", "--status", "Build");
-    const before = await driver.codexRequests();
+    const before = await driver.codexLaunches();
 
     const refused = await driver.run("step", "TASK-1", "--continue-author", ...codexPins);
     const state = runState.parse(JSON.parse((await driver.run("status", "TASK-1")).stdout));
@@ -112,7 +114,7 @@ describe("iterate author continuity", () => {
       status: "completed",
       requiredToolOutcomeCoverage: "unknown",
     });
-    expect(await driver.codexRequests()).toEqual(before);
+    expect(await driver.codexLaunches()).toEqual(before);
   }, 20_000);
 
   describe("when author continuity is inadmissible", () => {

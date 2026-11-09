@@ -393,21 +393,6 @@ export class SessionLifecycleHarness {
     return descendantPid;
   }
 
-  async inputClosed(running: RunningSession): Promise<string> {
-    const directory = this.fixtures.get(running.pid);
-    if (directory === undefined) throw new Error("unknown fixture");
-
-    const path = join(directory, "closed-input");
-    const deadline = performance.now() + 4000;
-    while (!existsSync(path)) {
-      if (performance.now() >= deadline) throw new Error("session test handshake timed out");
-
-      await wait(5, undefined, { signal: this.stopped.signal });
-    }
-
-    return readFileSync(path, "utf8");
-  }
-
   async finish(running: RunningSession): Promise<SessionResult> {
     try {
       return await running.result;

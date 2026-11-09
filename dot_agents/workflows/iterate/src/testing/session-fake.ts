@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { closeSync, existsSync, renameSync, writeFileSync } from "node:fs";
+import { closeSync, existsSync, writeFileSync } from "node:fs";
 import { connect } from "node:net";
 import { join } from "node:path";
 import process from "node:process";
@@ -11,7 +11,6 @@ async function lifecycleFixture(): Promise<never> {
   const scenario = process.argv[3];
   const directory = process.argv[4] ?? "";
   const emit = (event: unknown) => console.log(JSON.stringify(event));
-  if (scenario?.startsWith("protocol-")) return protocolLifecycleFixture(scenario, directory);
 
   if (scenario === "success") {
     emit({ phase: "done", body: "prepared final" });
@@ -55,54 +54,6 @@ async function lifecycleFixture(): Promise<never> {
   }
   return new Promise<never>(() => {
     setInterval(() => {}, 1000);
-  });
-}
-
-async function protocolLifecycleFixture(scenario: string, directory: string): Promise<never> {
-  const emit = (event: unknown) => console.log(JSON.stringify(event));
-  if (scenario === "protocol-malformed") console.log('{"phase":');
-  else {
-    const phase = ["missing-final", "incomplete", "error", "config-error"].find(
-      (name) => scenario === `protocol-${name}`,
-    );
-    emit({ phase: phase ?? "done", body: "protocol final" });
-  }
-
-  const input = await stdin.text();
-  const receipt = join(directory, "closed-input.tmp");
-
-  if (scenario === "protocol-delayed-receipt") {
-    writeFileSync(receipt, "");
-    await new Promise<void>((resolve) => setTimeout(resolve, 100));
-  }
-
-  writeFileSync(receipt, input);
-  renameSync(receipt, join(directory, "closed-input"));
-
-  if (scenario === "protocol-nonzero") process.exit(7);
-
-  if (scenario === "protocol-inherited-pipes") {
-    const inherited = spawn(["/bin/sleep", "30"], {
-      stdin: "ignore",
-      stdout: "inherit",
-      stderr: "inherit",
-    });
-    writeFileSync(join(directory, "descendant"), String(inherited.pid));
-    process.exit(0);
-  }
-
-  if (scenario === "protocol-cleanup-eof" || scenario === "protocol-stalled-eof") closeSync(1);
-
-  if (scenario === "protocol-cleanup-open" || scenario === "protocol-cleanup-eof") {
-    await new Promise<void>((resolve) => setTimeout(resolve, 1250));
-    process.exit(0);
-  }
-
-  return new Promise<never>(() => {
-    setInterval(() => {
-      if (scenario === "protocol-noisy") emit({ phase: "noise", body: "ignored" });
-      if (scenario === "protocol-repeated-close") emit({ phase: "close", body: "" });
-    }, 50);
   });
 }
 

@@ -1,8 +1,20 @@
+import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
+import process from "node:process";
+import { Transform, type TransformCallback } from "node:stream";
+import { StringDecoder } from "node:string_decoder";
+import type {
+  Options,
+  PermissionMode,
+  SettingSource,
+  SpawnedProcess,
+  SpawnOptions,
+} from "@anthropic-ai/claude-agent-sdk";
 import { z } from "zod";
 import { claudeRuntimeContract } from "./claude-runtime.ts";
-import { definedFields } from "./defined-fields.ts";
-import type { HarnessAdapter, ProviderEvent, SessionInput } from "./provider-types.ts";
+import { definedFields, nonEmpty } from "./defined-fields.ts";
+import { InvalidProviderMessage } from "./hosted.ts";
+import type { Harness, HarnessRun, ProviderEvent, SessionInput } from "./provider-types.ts";
 import {
   addTokens,
   type ModelUsage,
@@ -12,60 +24,153 @@ import {
 } from "./usage.ts";
 
 const executableName = "claude";
+const efforts = ["low", "medium", "high", "xhigh", "max"] as const;
+const permissionMode: PermissionMode = "auto";
 
-export const claudeAdapter: HarnessAdapter = {
+export const claudeHarness: Harness = {
   provider: "claude",
   displayName: "Claude",
   executableName,
-  summary: "Claude uses print stream-json argv in auto permission mode.",
+  summary: "Claude runs through the Claude Agent SDK in auto permission mode.",
   capabilities: {
     resume: true,
     model: true,
-    efforts: ["low", "medium", "high", "xhigh", "max"],
-    promptTransport: "argv",
+    efforts,
     dollarCap: true,
     dollarCapBasis: "invocation",
     defaultDollarCap: 50,
   },
   providerCompletion: false,
+  permissionMode,
   runtimeContract: claudeRuntimeContract,
   resume: {
     requiresEstablishedLocalInputs: false,
     resolvedModelMustMatchPin: true,
     configurationMatches: ({ previous, agent }) => previous.resolvedModel === agent.model,
   },
-  command: commandFor,
-  decode: eventsFrom,
+  run: runClaude,
 };
 
-function commandFor(input: SessionInput): {
-  readonly argv: readonly string[];
-  readonly permissionMode: string;
-} {
-  const { agent, stage, card, systemPrompt, budget, resumeSessionId } = input;
-  const argv = [executableName, "--print", "--verbose", "--output-format", "stream-json"];
-  if (agent.model) argv.push("--model", agent.model);
-  if (agent.effort) argv.push("--effort", agent.effort);
-  if (budget !== undefined) argv.push("--max-budget-usd", budget);
-  argv.push("--append-system-prompt", systemPrompt);
-  if (resumeSessionId) argv.push("--resume", resumeSessionId);
-  const permissionMode = "auto";
-  argv.push("--permission-mode", permissionMode, card ? `/${stage} ${card}` : `/${stage}`);
-
-  return { argv, permissionMode };
-}
-
-function eventsFrom(line: string): ProviderEvent[] {
-  if (!line.trimStart().startsWith("{")) return [];
+async function* runClaude(input: SessionInput, { executable }: HarnessRun) {
+  const { query } = await import("@anthropic-ai/claude-agent-sdk");
+  const unreadable = new UnreadableLines();
+  const { prompt, options } = claudeQuery(input, executable);
+  const spawnClaudeCodeProcess = (spawnOptions: SpawnOptions) =>
+    spawnRead(spawnOptions, unreadable);
 
   try {
-    const raw: unknown = JSON.parse(line);
-    const { type } = z.object({ type: z.string() }).parse(raw);
-    if (type === "error") return [errorFrom(raw)];
+    for await (const message of query({
+      prompt,
+      options: Object.assign(options, { spawnClaudeCodeProcess }),
+    })) {
+      unreadable.reject();
+      yield { message, events: claudeEvents(message) };
+    }
+  } catch (error) {
+    unreadable.reject();
+    throw error;
+  }
+  unreadable.reject();
+}
 
-    return claudeEvents(type, raw, line);
+// The CLI's stderr goes straight to the host's, so the session log keeps it whole.
+function spawnRead(
+  { command, args, cwd, env, signal }: SpawnOptions,
+  unreadable: UnreadableLines,
+): SpawnedProcess {
+  const child = spawn(command, args, { cwd, env, signal, stdio: ["pipe", "pipe", "inherit"] });
+  child.stdout.pipe(unreadable);
+
+  return Object.assign(child, { stdout: unreadable });
+}
+
+/**
+ * Passes the CLI's stdout to the SDK unchanged and keeps each line that is not JSON,
+ * since the SDK skips such a line without a word and the session would look complete.
+ */
+class UnreadableLines extends Transform {
+  private readonly decoder = new StringDecoder("utf8");
+  private pending = "";
+  private first: string | undefined;
+
+  override _transform(chunk: Buffer, _encoding: BufferEncoding, done: TransformCallback): void {
+    this.inspect(this.decoder.write(chunk));
+    done(null, chunk);
+  }
+
+  override _flush(done: TransformCallback): void {
+    this.inspect(this.decoder.end());
+    this.check(this.pending);
+    done();
+  }
+
+  /** Throws once the CLI has written a line the SDK could not read. */
+  reject(): void {
+    if (this.first === undefined) return;
+
+    throw new InvalidProviderMessage(`unreadable Claude output: ${this.first.slice(0, 200)}`);
+  }
+
+  private inspect(text: string): void {
+    const lines = `${this.pending}${text}`.split("\n");
+    this.pending = lines.pop() ?? "";
+    for (const line of lines) this.check(line);
+  }
+
+  // The raw line goes to stderr byte for byte, because the session log keeps the
+  // host's lines and the SDK never hands this one over.
+  private check(line: string): void {
+    if (line.trim() === "" || isJson(line)) return;
+
+    process.stderr.write(`\n${line}\n`);
+    this.first ??= line;
+  }
+}
+
+function isJson(line: string): boolean {
+  try {
+    JSON.parse(line);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function claudeQuery(input: SessionInput, executable: string) {
+  const { agent, stage, card, systemPrompt, budget } = input;
+  const effort = efforts.find((level) => level === agent.effort);
+  if (agent.effort && !effort) throw new Error(`Claude does not offer effort ${agent.effort}`);
+  const options: Options = Object.assign(
+    {
+      pathToClaudeCodeExecutable: executable,
+      cwd: process.cwd(),
+      permissionMode,
+      settingSources: ["user", "project", "local"] satisfies SettingSource[],
+      systemPrompt: {
+        type: "preset" as const,
+        preset: "claude_code" as const,
+        append: systemPrompt,
+      },
+    },
+    definedFields({
+      model: nonEmpty(agent.model),
+      effort,
+      maxBudgetUsd: budget === undefined ? undefined : Number(budget),
+      resume: nonEmpty(input.resumeSessionId),
+    }),
+  );
+
+  return { prompt: card ? `/${stage} ${card}` : `/${stage}`, options };
+}
+
+export function claudeEvents(message: unknown): ProviderEvent[] {
+  try {
+    const { type } = z.object({ type: z.string() }).parse(message);
+    if (type === "error") return [errorFrom(message)];
+
+    return messageEvents(type, message);
   } catch (cause) {
-    throw new Error("invalid Claude stream event", { cause });
+    throw new InvalidProviderMessage("invalid Claude SDK message", { cause });
   }
 }
 
@@ -137,7 +242,7 @@ function errorFrom(raw: unknown): ProviderEvent {
   };
 }
 
-function claudeEvents(type: string, raw: unknown, line: string): ProviderEvent[] {
+function messageEvents(type: string, raw: unknown): ProviderEvent[] {
   if (type === "system") {
     const event = z.object({ subtype: z.string() }).parse(raw);
 
@@ -218,7 +323,7 @@ function claudeEvents(type: string, raw: unknown, line: string): ProviderEvent[]
       Object.assign(
         {
           type: "usage" as const,
-          receiptId: event.uuid ?? createHash("sha256").update(line).digest("hex"),
+          receiptId: event.uuid ?? createHash("sha256").update(JSON.stringify(raw)).digest("hex"),
           usage,
         },
         definedFields({ turns: event.num_turns, cost: claudeCost(event.total_cost_usd) }),

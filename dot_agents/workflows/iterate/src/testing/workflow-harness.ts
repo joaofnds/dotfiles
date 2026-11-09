@@ -725,9 +725,10 @@ class WorkflowDriver {
     return target;
   }
 
-  async codexRequests(): Promise<unknown[]> {
+  /** Each Codex exec the fake saw: its argv, working directory, prompt, and output schema. */
+  async codexLaunches(): Promise<{ argv: string[]; outputSchema: unknown }[]> {
     try {
-      return (await readFile(join(this.directory, "requests"), "utf8"))
+      return (await readFile(join(this.directory, "launches"), "utf8"))
         .trim()
         .split("\n")
         .filter(Boolean)

@@ -1,3 +1,4 @@
+import { z } from "zod";
 import type { Stage, StageAgent } from "./agents.ts";
 import type { SessionCost, UsageReport } from "./usage.ts";
 
@@ -24,12 +25,12 @@ export type SessionInput = {
 };
 
 /** Settings a harness reports for its session. Each adapter owns and checks its own shape. */
-export type ConfiguredSession = {
-  readonly provenance: string;
-  readonly model?: string | null | undefined;
-  readonly effort?: string | null | undefined;
-  readonly [field: string]: unknown;
-};
+export const configuredSessionSchema = z.looseObject({
+  provenance: z.string(),
+  model: z.string().nullable().optional(),
+  effort: z.string().nullable().optional(),
+});
+export type ConfiguredSession = Readonly<z.infer<typeof configuredSessionSchema>>;
 
 export type ModelReroute = {
   readonly fromModel: string;
@@ -42,19 +43,6 @@ export type ToolOutcome = {
   readonly kind: string;
   readonly status: string;
   readonly raw: unknown;
-};
-
-export type ProtocolUpdate = {
-  readonly events: readonly ProviderEvent[];
-  readonly input?: string;
-  readonly close?: boolean;
-};
-
-// Constructed once per prepared attempt. No transport or process ownership here.
-export type ProviderProtocol = {
-  readonly initialInput: string;
-  readonly receive: (line: string) => ProtocolUpdate;
-  readonly end: () => void;
 };
 
 export type ProviderEvent =
@@ -85,26 +73,24 @@ export type ProviderEvent =
 export type ProviderCommand = {
   readonly argv: readonly string[];
   readonly stdin?: string;
-  readonly protocol?: ProviderProtocol;
-  readonly decoder?: {
-    readonly receive: (line: string) => readonly ProviderEvent[];
-    readonly end: () => readonly ProviderEvent[];
-  };
   readonly permissionMode?: string;
+  /** Why the command cannot start, so the session records a failure with no child. */
+  readonly unavailable?: string;
+};
+
+export type Capabilities = {
+  readonly resume: boolean;
+  readonly model: boolean;
+  readonly efforts: readonly string[];
+  readonly modelEfforts?: Readonly<Record<string, readonly string[]>>;
+  readonly dollarCap: boolean;
+  readonly dollarCapBasis?: "invocation" | "sessionCumulative";
+  readonly defaultDollarCap?: number;
 };
 
 export type ProviderAdapter = {
   readonly provider: string;
-  readonly capabilities: {
-    readonly resume: boolean;
-    readonly model: boolean;
-    readonly efforts: readonly string[];
-    readonly modelEfforts?: Readonly<Record<string, readonly string[]>>;
-    readonly promptTransport: "argv" | "stdin";
-    readonly dollarCap: boolean;
-    readonly dollarCapBasis?: "invocation" | "sessionCumulative";
-    readonly defaultDollarCap?: number;
-  };
+  readonly capabilities: Capabilities;
   readonly command: (input: SessionInput) => ProviderCommand;
   readonly decode: (line: string) => readonly ProviderEvent[];
 };
@@ -121,6 +107,35 @@ export type HarnessAdapter = SessionAdapter & {
   readonly summary: string;
   readonly runtimeContract: (input: RuntimeContractInput) => Promise<RuntimeContract>;
   readonly resume: ResumePolicy;
+};
+
+/** One vendor SDK behind the runner. Its session runs inside the runner's owned process group. */
+export type Harness = {
+  readonly provider: string;
+  readonly displayName: string;
+  readonly executableName: string;
+  readonly summary: string;
+  readonly capabilities: Capabilities;
+  readonly providerCompletion: boolean;
+  readonly permissionMode?: string;
+  readonly resume: ResumePolicy;
+  readonly runtimeContract: (input: RuntimeContractInput) => Promise<RuntimeContract>;
+  /** Refuses a session the harness cannot run as asked, before anything launches. */
+  readonly admit?: (input: SessionInput) => void;
+  readonly run: (input: SessionInput, context: HarnessRun) => AsyncIterable<HarnessMessage>;
+};
+
+/**
+ * One provider message as the SDK delivered it, with its events as one batch so a
+ * replayed message is recognized whole. The raw message keeps the session log faithful.
+ */
+export type HarnessMessage = {
+  readonly message?: unknown;
+  readonly events: readonly ProviderEvent[];
+};
+
+export type HarnessRun = {
+  readonly executable: string;
 };
 
 export type RuntimeContractInput = {
