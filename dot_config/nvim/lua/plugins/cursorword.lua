@@ -1,5 +1,5 @@
 return {
 	"echasnovski/mini.cursorword",
-	event = "BufReadPost",
+	event = "User LazyFile",
 	config = true,
 }

@@ -11,6 +11,26 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local lazy_file_group = vim.api.nvim_create_augroup("jf_lazy_file", { clear = true })
+
+local fire_lazy_file = function()
+	vim.api.nvim_exec_autocmds("User", { pattern = "LazyFile", modeline = false })
+end
+
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+	group = lazy_file_group,
+	callback = function()
+		vim.api.nvim_del_augroup_by_id(lazy_file_group)
+
+		if vim.v.vim_did_enter == 1 then
+			fire_lazy_file()
+			return
+		end
+
+		vim.api.nvim_create_autocmd("User", { pattern = "VeryLazy", once = true, callback = fire_lazy_file })
+	end,
+})
+
 require("lazy").setup({
 	spec = { { import = "plugins" } },
 	rocks = { enabled = false, hererocks = false },

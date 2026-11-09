@@ -3,12 +3,8 @@ local buf = require("util.buf")
 return {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "master",
-	dependencies = { "nvim-treesitter/nvim-treesitter-context" },
 	event = { "BufNewFile", "BufReadPost" },
 	cmd = "TSUpdate",
-	keys = {
-		{ "<leader>tc", "<cmd>TSContext toggle<cr>", desc = "toggle context" },
-	},
 	main = "nvim-treesitter.configs",
 	opts = {
 		auto_install = true,

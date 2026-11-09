@@ -1,6 +1,6 @@
 return {
 	"williamboman/mason.nvim",
-	event = "BufReadPost",
+	event = "User LazyFile",
 	cmd = { "Mason", "MasonUpdate", "MasonUpdateAll" },
 	keys = {
 		{ "<leader>cls", "<cmd>LspStart<cr>", desc = "start" },
