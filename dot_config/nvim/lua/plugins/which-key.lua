@@ -72,6 +72,7 @@ return {
 			-- toggle
 			{ "<leader>ti", "<cmd>set invlist<cr>", desc = "invisible chars" },
 			{ "<leader>tl", "<cmd>set relativenumber!<cr>", desc = "relative number" },
+			{ "<leader>tu", "<cmd>packadd nvim.undotree | Undotree<cr>", desc = "undo tree" },
 			{ "<leader>tw", "<cmd>set wrap!<cr>", desc = "toggle wrap" },
 
 			-- visual mode

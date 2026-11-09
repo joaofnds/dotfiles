@@ -27,12 +27,11 @@ vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.listchars = { tab = "▸ ", trail = "·", eol = "↴" }
-vim.opt.fillchars = { eob = " " }
 
 -- remove ~ from end of buffer
+vim.opt.fillchars = { eob = " " }
 
 -- refresh buffer when file changes
-vim.opt.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 	group = vim.api.nvim_create_augroup("jf_checktime", { clear = true }),
 	command = "checktime",
@@ -67,21 +66,9 @@ vim.opt.wildignore = {
 	"tmp/**",
 }
 
--- search
-vim.opt.incsearch = true
-
--- find the next match as we type the search
-vim.opt.hlsearch = true
-
--- highlight searches by default
-vim.opt.ignorecase = true
-
 -- ignore case when searching...
+vim.opt.ignorecase = true
+-- ...unless we type a capital
 vim.opt.smartcase = true
 
--- ...unless we type a capital
-
-vim.opt.timeout = true
 vim.opt.timeoutlen = 500
-
-vim.cmd.filetype("plugin indent on")

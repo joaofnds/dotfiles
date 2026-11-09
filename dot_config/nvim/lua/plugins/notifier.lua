@@ -1,5 +1,5 @@
 return {
-	"echasnovski/mini.notify",
+	"nvim-mini/mini.notify",
 	event = { "LspAttach" },
 	init = function()
 		local function temp_notify(...)

@@ -8,7 +8,7 @@ return {
 			gleam = { "gleam" },
 			python = { "black" },
 			sql = { "sqlfluff" },
-			nix = { "alejandra" },
+			nix = { "nixfmt" },
 			json = { "biome", "oxfmt", stop_after_first = true },
 			javascript = { "biome", "oxfmt", stop_after_first = true },
 			typescript = { "biome", "oxfmt", stop_after_first = true },

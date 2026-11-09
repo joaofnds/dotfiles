@@ -1,5 +1,5 @@
 return {
-	"echasnovski/mini.cursorword",
+	"nvim-mini/mini.cursorword",
 	event = "User LazyFile",
 	config = true,
 }
