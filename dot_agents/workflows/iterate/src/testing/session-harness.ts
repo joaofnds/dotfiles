@@ -136,7 +136,8 @@ class SessionDriver {
       this.server.once("error", reject);
       this.server.listen(controlPath, resolve);
     });
-    const executable = join(this.directory, "claude");
+    const executable = join(this.directory, "cli", "claude");
+    mkdirSync(dirname(executable));
     copyFileSync(join(import.meta.dir, "session-fake.ts"), executable);
     chmodSync(executable, 0o700);
     this.child = spawn(process.execPath, [join(import.meta.dir, "session-entry.ts")], {

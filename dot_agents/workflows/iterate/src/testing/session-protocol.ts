@@ -21,7 +21,7 @@ export function fixtureAdapter(transport: "argv" | "stdin"): SessionAdapter {
       Object.assign(
         {
           argv: [
-            "claude",
+            String(process.env.ITERATE_CLAUDE_CLI),
             `--fixture-${transport}`,
             ...(transport === "argv" ? [input.systemPrompt] : []),
           ],

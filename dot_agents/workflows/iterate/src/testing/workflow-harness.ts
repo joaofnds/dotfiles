@@ -393,16 +393,17 @@ export class WorkflowHarness {
   async seed(scenario: Scenario = {}): Promise<WorkflowDriver> {
     const directory = this.directory;
     const bin = join(directory, "bin");
+    const cli = join(directory, "cli");
     const repo = join(directory, "repo");
     const home = join(directory, "home");
     const config = join(home, ".claude");
-    await Promise.all([mkdir(bin), mkdir(repo), mkdir(config, { recursive: true })]);
+    await Promise.all([mkdir(bin), mkdir(cli), mkdir(repo), mkdir(config, { recursive: true })]);
     await mkdir(join(repo, "backlog"));
     await writeFile(join(repo, "backlog", "config.yml"), "project_name: fixture\n");
     await writeFile(join(repo, ".gitignore"), "backlog\n.gitignore\n");
     await Promise.all([
-      writeFile(join(bin, "claude"), fakeClaude),
-      writeFile(join(bin, "codex"), fakeCodex),
+      writeFile(join(cli, "claude"), fakeClaude),
+      writeFile(join(cli, "codex"), fakeCodex),
       writeFile(join(bin, "backlog"), `#!${process.execPath}\n${fakeBacklog}`),
       writeFile(join(directory, "status"), `${scenario.status ?? "To Do"}\n`),
       writeFile(join(directory, "assignee"), scenario.assignee ?? ""),
@@ -430,9 +431,9 @@ export class WorkflowHarness {
       ].map((name) => writeFile(join(directory, name), "")),
     ]);
     await Promise.all([
-      chmod(join(bin, "claude"), 0o755),
+      chmod(join(cli, "claude"), 0o755),
       chmod(join(bin, "backlog"), 0o755),
-      chmod(join(bin, "codex"), 0o700),
+      chmod(join(cli, "codex"), 0o700),
     ]);
 
     const env = {
@@ -444,8 +445,8 @@ export class WorkflowHarness {
       FAKE_CODEX_DIRECTORY: directory,
       FAKE_CODEX_SCENARIO: "unavailable",
       PATH: `${bin}:${process.env.PATH}`,
-      ITERATE_CLAUDE_CLI: join(bin, "claude"),
-      ITERATE_CODEX_CLI: join(bin, "codex"),
+      ITERATE_CLAUDE_CLI: join(cli, "claude"),
+      ITERATE_CODEX_CLI: join(cli, "codex"),
       TMPDIR: directory,
       FAKE_STATUS: join(directory, "status"),
       FAKE_LABELS: join(directory, "labels"),
@@ -533,7 +534,7 @@ class WorkflowDriver {
   }
 
   async useCodex(scenario = "complete"): Promise<void> {
-    const path = join(this.directory, "bin", "codex");
+    const path = join(this.directory, "cli", "codex");
     await writeFile(path, fakeCodex);
     await chmod(path, 0o700);
     this.env.CODEX_HOME = join(this.directory, "home", ".codex");
@@ -1365,7 +1366,7 @@ if(kind === "later-drift" && args[0] === "--version" && existsSync(phase)) appen
   async providerUnavailableAfterPreflight(): Promise<void> {
     this.env.PATH = `${join(this.directory, "bin")}:/usr/bin:/bin`;
     await writeFile(
-      join(this.directory, "bin", "claude"),
+      join(this.directory, "cli", "claude"),
       '#!/bin/bash\nif [ "$1" = --version ]; then\n  rm -- "$0"\n  echo 2.1.fixture\n  exit 0\nfi\nexit 91\n',
       { mode: 0o755 },
     );
@@ -1582,7 +1583,7 @@ if(kind === "later-drift" && args[0] === "--version" && existsSync(phase)) appen
   }
 
   async fileChangeDuringPreflight(kind: "stop" | "dirty" | "allowance"): Promise<void> {
-    const executable = join(this.directory, "bin", "claude");
+    const executable = join(this.directory, "cli", "claude");
     await rename(executable, `${executable}.real`);
     await writeFile(
       executable,
@@ -1608,7 +1609,7 @@ process.stdout.write(result.stdout); process.stderr.write(result.stderr); proces
   }
 
   async editDuringPreflight(args: readonly string[]): Promise<void> {
-    const executable = join(this.directory, "bin", "claude");
+    const executable = join(this.directory, "cli", "claude");
     await rename(executable, `${executable}.real`);
     await writeFile(
       executable,

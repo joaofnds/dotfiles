@@ -84,9 +84,9 @@ export class CodexHarness {
   ) {
     const root = await mkdtemp(join(tmpdir(), "iterate-codex-"));
     this.roots.push(root);
-    await mkdir(join(root, "bin"));
-    await writeFile(join(root, "bin", "codex"), fakeCodex);
-    await chmod(join(root, "bin", "codex"), 0o700);
+    await mkdir(join(root, "cli"));
+    await writeFile(join(root, "cli", "codex"), fakeCodex);
+    await chmod(join(root, "cli", "codex"), 0o700);
     await writeFile(
       join(root, "runner.ts"),
       `
@@ -116,8 +116,8 @@ finally { clearTimeout(timer); }
       detached: true,
       env: {
         ...process.env,
-        PATH: `${join(root, "bin")}:/usr/bin:/bin`,
-        ITERATE_CODEX_CLI: join(root, "bin", "codex"),
+        PATH: "/usr/bin:/bin",
+        ITERATE_CODEX_CLI: join(root, "cli", "codex"),
         ITERATE_LIVE: "0",
         FAKE_CODEX_DIRECTORY: root,
         FAKE_CODEX_SCENARIO: scenario,
