@@ -3,8 +3,14 @@ return {
 	event = "User LazyFile",
 	cmd = { "Mason", "MasonUpdate", "MasonUpdateAll" },
 	keys = {
-		{ "<leader>cls", "<cmd>LspStart<cr>", desc = "start" },
-		{ "<leader>clS", "<cmd>LspStop<cr>", desc = "stop" },
+		{
+			"<leader>cls",
+			function()
+				vim.lsp.enable(require("mason-lspconfig").get_installed_servers())
+			end,
+			desc = "start",
+		},
+		{ "<leader>clS", "<cmd>lsp disable<cr>", desc = "stop" },
 	},
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
