@@ -2,6 +2,7 @@ export TZ=Europe/Madrid
 export HISTSIZE=1000000000
 
 export EDITOR=nvim
+export NVIM_NOTTYFAST=1
 export MANPAGER="col -b | bat --language=man --plain "
 export OPENCODE_DB="$HOME/.local/share/opencode/opencode.db"
 
