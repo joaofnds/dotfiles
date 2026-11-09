@@ -37,3 +37,4 @@ zig = "latest"
 "npm:zx" = "latest"
 
 "npm:agent-browser" = "latest"
+"npm:agent-desktop" = "latest"
