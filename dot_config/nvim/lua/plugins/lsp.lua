@@ -1,5 +1,5 @@
 return {
-	"williamboman/mason.nvim",
+	"mason-org/mason.nvim",
 	event = "User LazyFile",
 	cmd = { "Mason", "MasonUpdate", "MasonUpdateAll" },
 	keys = {
@@ -7,7 +7,7 @@ return {
 		{ "<leader>clS", "<cmd>lsp stop<cr>", desc = "stop" },
 	},
 	dependencies = {
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 		"Saghen/blink.cmp",
 	},
@@ -22,15 +22,13 @@ return {
 			severity_sort = true,
 		})
 
-		vim.lsp.config("*", {
-			capabilities = require("blink.cmp").get_lsp_capabilities(),
-		})
+		vim.lsp.config("*", { exit_timeout = 1000 })
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(args)
 				local bufnr = args.buf
 				local map = function(mode, lhs, rhs, desc)
-					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, nowait = true, desc = desc })
 				end
 
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -121,15 +119,13 @@ return {
 				"bashls",
 				"jsonls",
 				"yamlls",
-				"pyright",
+				"basedpyright",
 				"html",
 				"cssls",
-				"elixirls",
+				"expert",
 				"sqlls",
 				"nil_ls",
 			},
-			-- mason-lspconfig v2: auto-calls vim.lsp.enable() for installed servers
-			automatic_enable = true,
 		})
 	end,
 }
