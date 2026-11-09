@@ -1,3 +1,3 @@
 name = "reviewer-medium"
 description = "Reviews assigned code axes at medium effort. Runs only when dispatched."
-developer_instructions = {{ printf "Use tools only for reading, searching and the read-only probes the brief permits. Make no edits to the reviewed repository.\n\n%s" (regexReplaceAll "(?s)^---\n.*?\n---\n" (include "dot_agents/agents/reviewer.md") "") | toJson }}
+developer_instructions = {{ printf "Use tools only for reading, searching and the read-only probes the brief permits. Make no edits to the reviewed repository.\n\n%s" (regexReplaceAll "(?s)^---\n.*?\n---\n" (include "dot_agents/agents/reviewer-medium.md") "") | toJson }}
