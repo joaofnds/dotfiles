@@ -1,13 +1,13 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import process from "node:process";
-import type { ThreadEvent } from "@openai/codex-sdk";
+import type { ThreadEvent, ThreadItem } from "@openai/codex-sdk";
 import { agentFromArgs } from "./agents.ts";
 import { CodexTurn, codexHarness, codexPrompt, codexThreadOptions } from "./codex.ts";
 import { codexCompletionOutputSchema } from "./codex-completion.ts";
 import { definedFields } from "./defined-fields.ts";
 import { sessionReportSchema } from "./journal.ts";
-import { budgetFor } from "./provider.ts";
+import { adapterFor, budgetFor } from "./provider.ts";
 import type { ProviderEvent, SessionInput } from "./provider-types.ts";
 import {
   CodexHarness,
@@ -169,6 +169,91 @@ describe(CodexTurn.name, () => {
     ]);
 
     expect(errorsOf(events)).toEqual(["Codex mcp_tool_call failed"]);
+  });
+
+  test("fails a tool reported completed while still in progress", () => {
+    const events = turnOf([
+      started,
+      {
+        type: "item.completed",
+        item: {
+          type: "command_execution",
+          id: "check",
+          command: "check",
+          aggregated_output: "",
+          status: "in_progress",
+        },
+      },
+      reply(syntheticCodexReply),
+      completed,
+    ]);
+
+    expect(errorsOf(events)).toEqual(["Codex completed command_execution still in progress"]);
+  });
+
+  test("fails a tool that completed with an error", () => {
+    const events = turnOf([
+      started,
+      {
+        type: "item.completed",
+        item: {
+          type: "mcp_tool_call",
+          id: "read",
+          server: "synthetic",
+          tool: "required_read",
+          arguments: {},
+          status: "completed",
+          error: { message: "synthetic native tool error" },
+        },
+      },
+      reply(syntheticCodexReply),
+      completed,
+    ]);
+
+    expect(errorsOf(events)).toEqual(["Codex mcp_tool_call failed"]);
+  });
+
+  test.each<ThreadItem>([
+    {
+      type: "command_execution",
+      id: "tool",
+      command: "x",
+      aggregated_output: "",
+      status: "in_progress",
+    },
+    { type: "file_change", id: "tool", changes: [], status: "completed" },
+    {
+      type: "mcp_tool_call",
+      id: "tool",
+      server: "s",
+      tool: "t",
+      arguments: {},
+      status: "in_progress",
+    },
+    { type: "web_search", id: "tool", query: "q" },
+  ])("fails a turn whose $type never finished", (item) => {
+    const events = turnOf([
+      started,
+      { type: "item.started", item },
+      reply(syntheticCodexReply),
+      completed,
+    ]);
+
+    expect(errorsOf(events)).toEqual([
+      `Codex completed with unfinished tool items: ${item.type}:tool`,
+    ]);
+  });
+
+  test("keeps a reported Codex error item as text", () => {
+    const events = turnOf([
+      started,
+      { type: "item.completed", item: { type: "error", id: "note", message: "synthetic note" } },
+      reply(syntheticCodexReply),
+      completed,
+    ]);
+
+    expect(events).toContainEqual({ type: "text", text: "Codex reported: synthetic note" });
+    expect(errorsOf(events)).toEqual([]);
   });
 
   test("names each tool once however many times it is updated", () => {
@@ -344,30 +429,38 @@ describe("codexHarness", () => {
     ).toThrow("Codex author resume requires matching pinned configuration; review starts fresh");
   });
 
-  test("matches a prior author only on its requested configuration", () => {
-    const agent = input.agent;
+  test.each([
+    { name: "the same requested configuration", previous: requested, matches: true },
+    { name: "another effort", previous: { ...requested, effort: "low" }, matches: false },
+    { name: "another model", previous: { ...requested, model: "gpt-6-luna" }, matches: false },
+    {
+      name: "another harness's configuration",
+      previous: { ...requested, provenance: "codex.app-server.thread/start" },
+      matches: false,
+    },
+  ])("matches a prior author with $name: $matches", ({ previous, matches }) => {
+    expect(
+      codexHarness.resume.configurationMatches({
+        previous: { configuredSession: previous },
+        agent: input.agent,
+      }),
+    ).toBe(matches);
+  });
 
-    expect(
-      codexHarness.resume.configurationMatches({
-        previous: { configuredSession: requested },
-        agent,
+  test("refuses a resume ID that would read as a Codex flag", () => {
+    expect(() =>
+      codexHarness.admit?.({
+        ...input,
+        resumeSessionId: "--dangerously-bypass-approvals-and-sandbox",
+        resumeConfiguration: requested,
       }),
-    ).toBe(true);
-    expect(
-      codexHarness.resume.configurationMatches({
-        previous: { configuredSession: { ...requested, effort: "low" } },
-        agent,
-      }),
-    ).toBe(false);
-    expect(
-      codexHarness.resume.configurationMatches({
-        previous: {
-          configuredSession: requested,
-          modelReroutes: [{ fromModel: "gpt-6.1-sol", toModel: "gpt-6-luna", reason: "x" }],
-        },
-        agent,
-      }),
-    ).toBe(false);
+    ).toThrow("Codex resume ID --dangerously-bypass-approvals-and-sandbox is not a thread ID");
+  });
+
+  test("refuses explicit dollars where the session starts it", () => {
+    expect(() => adapterFor("codex").command({ ...input, budget: "1" })).toThrow(
+      "codex cannot enforce an explicit dollar cap",
+    );
   });
 });
 
@@ -455,9 +548,21 @@ describe("Codex session host", () => {
     const observed = await harness.run("nonzero");
 
     expect(observed.result.providerCompleted).toBe(true);
-    expect(observed.result.errors.join()).toContain("Codex Exec exited with code 7");
     expect(observed.result.status).toBe("failed");
+    expect(await readFile(String(observed.result.logPath), "utf8")).toMatch(
+      /\[stderr\]\n.*synthetic exec diagnostic/,
+    );
   });
+
+  test("bounds a peer that never writes a line by the idle limit", async () => {
+    const observed = await harness.run("silent", { timeoutMs: 4000, idleTimeoutMs: 300 });
+
+    expect(observed.result).toMatchObject({
+      status: "failed",
+      errors: ["silent for 300ms, so it was stopped"],
+      settlement: { state: "settled" },
+    });
+  }, 6000);
 
   test("bounds a peer that stays alive after its completed turn", async () => {
     const observed = await harness.run("terminal-hang", { timeoutMs: 4000, idleTimeoutMs: 1500 });
@@ -480,6 +585,22 @@ describe("Codex session host", () => {
       expect(observed.result.status).toBe("failed");
       expect(observed.result.providerCompleted).toBe(false);
       expect(observed.result.settlement?.state).toBe("settled");
+    },
+    6000,
+  );
+
+  // An unreadable line stops the session at once, before the host's own exit is reported.
+  test.each([
+    ["truncated", 'Failed to parse item: {"type":"turn.compl'],
+    ["malformed-event", 'invalid Codex SDK message: {"type":"turn.failed"}'],
+    ["no-usage", "undefined is not an object"],
+  ])(
+    "stops on unreadable %s Codex output",
+    async (scenario, reason) => {
+      const observed = await harness.run(scenario);
+
+      expect(observed.result.status).toBe("failed");
+      expect(observed.result.errors).toEqual([expect.stringContaining(reason)]);
     },
     6000,
   );

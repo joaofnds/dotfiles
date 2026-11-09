@@ -32,6 +32,9 @@ export const configuredSessionSchema = z.looseObject({
 });
 export type ConfiguredSession = Readonly<z.infer<typeof configuredSessionSchema>>;
 
+/** A provider message the harness could not read, which leaves the session unobserved. */
+export class InvalidProviderMessage extends Error {}
+
 export type ModelReroute = {
   readonly fromModel: string;
   readonly toModel: string;

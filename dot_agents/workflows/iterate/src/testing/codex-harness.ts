@@ -42,7 +42,7 @@ send({type:'turn.started'});
 const completion = ${JSON.stringify(syntheticCodexCompletion)};
 if (scenario === 'blocked' || scenario === 'failed') completion.outcome = scenario;
 if (scenario === 'blocked' || scenario === 'required-blocker') completion.requiredToolBlockers = [{tool:'apply_patch',reason:'denied',evidencePath:'synthetic-tool.log'}];
-const finalReply = scenario === 'legacy-completion' ? 'synthetic final reply' : scenario === 'malformed-completion' ? '{' : JSON.stringify(completion);
+const finalReply = JSON.stringify(completion);
 if (scenario === 'hold') { writeFileSync(root+'/codex-ready',String(process.pid)); await new Promise(()=>{}); }
 if (scenario === 'descendant' || scenario === 'cancel') {
   const child=spawn([process.execPath,'-e','setInterval(()=>{},1000)'],{stdin:'ignore',stdout:'inherit',stderr:'inherit'});
@@ -51,7 +51,8 @@ if (scenario === 'descendant' || scenario === 'cancel') {
 }
 if (scenario === 'truncated') { process.stdout.write('{"type":"turn.compl'); process.exit(0); }
 if (scenario === 'no-terminal') process.exit(0);
-if (scenario === 'unfinished-tool') send({type:'item.started',item:{type:'command_execution',id:'unfinished',command:'check',aggregated_output:'',status:'in_progress'}});
+if (scenario === 'malformed-event') { send({type:'turn.failed'}); process.exit(0); }
+if (scenario === 'no-usage') { send({type:'turn.completed'}); process.exit(0); }
 if (scenario === 'edit-check-transition') {
   const check = () => spawnSync(['/bin/test','-f','requested.txt'],{stdout:'pipe',stderr:'pipe'});
   const red=check();
@@ -64,9 +65,6 @@ if (scenario === 'edit-check-transition') {
   writeFileSync(root+'/editing-check.json',JSON.stringify({cwd:process.cwd(),red:red.exitCode,green:green.exitCode,transition:board.exitCode,transitionStdout:board.stdout.toString(),transitionStderr:board.stderr.toString()}));
   if(red.exitCode!==1 || green.exitCode!==0 || board.exitCode!==0) process.exit(1);
 }
-if (scenario === 'native-error') send({type:'error',message:'synthetic native error'});
-if (scenario === 'native-tool-failure') send({type:'item.completed',item:{type:'mcp_tool_call',id:'failed-native-tool',server:'synthetic',tool:'required_read',arguments:{},status:'failed',error:{message:'synthetic native tool error'}}});
-if (scenario === 'expected-probe') send({type:'item.completed',item:{type:'command_execution',id:'probe',command:'test -f absent',aggregated_output:'',status:'failed',exit_code:1}});
 if (scenario !== 'no-final') send({type:'item.completed',item:{type:'agent_message',id:'reply',text:finalReply}});
 send({type:'turn.completed',usage:{input_tokens:11,cached_input_tokens:3,cache_write_input_tokens:0,output_tokens:2,reasoning_output_tokens:1}});
 if (scenario === 'nonzero') process.exit(7);

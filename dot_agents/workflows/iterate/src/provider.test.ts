@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import process from "node:process";
 import { claudeEvents, claudeQuery } from "./claude.ts";
 import { adapterFor, adapters, budgetFor } from "./provider.ts";
+import { InvalidProviderMessage } from "./provider-types.ts";
 
 const eventsFrom = (line: string) => claudeEvents(JSON.parse(line));
 
@@ -259,7 +260,7 @@ describe(claudeEvents.name, () => {
     '{"type":"assistant","message":{"content":[{"type":"text","text":42}]}}',
     '{"subtype":"init"}',
   ])("rejects malformed Claude records: %s", (line) => {
-    expect(() => eventsFrom(line)).toThrow(new Error("invalid Claude SDK message"));
+    expect(() => eventsFrom(line)).toThrow(InvalidProviderMessage);
   });
 });
 

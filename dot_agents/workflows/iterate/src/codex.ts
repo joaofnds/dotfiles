@@ -4,12 +4,14 @@ import { z } from "zod";
 import { codexCompletionError, codexCompletionOutputSchema } from "./codex-completion.ts";
 import { codexRuntimeContract } from "./codex-runtime.ts";
 import { definedFields, nonEmpty } from "./defined-fields.ts";
-import type {
-  ConfiguredSession,
-  Harness,
-  HarnessRun,
-  ProviderEvent,
-  SessionInput,
+import { diagnostic } from "./exit.ts";
+import {
+  type ConfiguredSession,
+  type Harness,
+  type HarnessRun,
+  InvalidProviderMessage,
+  type ProviderEvent,
+  type SessionInput,
 } from "./provider-types.ts";
 
 // Public model/list capture, Codex 0.166.0, 2026-11-04. Advertised capabilities,
@@ -44,8 +46,7 @@ export const codexHarness: Harness = {
         configuration !== undefined &&
         configuration.model === agent.model &&
         configuration.effort === agent.effort &&
-        (previous.resolvedModel === undefined || previous.resolvedModel === agent.model) &&
-        !previous.modelReroutes?.some((route) => route.toModel !== agent.model)
+        (previous.resolvedModel === undefined || previous.resolvedModel === agent.model)
       );
     },
   },
@@ -70,6 +71,9 @@ export const codexHarness: Harness = {
   admit: (input) => {
     if (input.budget !== undefined) throw new Error("codex cannot enforce an explicit dollar cap");
     if (!input.resumeSessionId) return;
+    // The SDK passes the ID as its own argument, so one that starts with a dash is a flag.
+    if (input.resumeSessionId.startsWith("-"))
+      throw new Error(`Codex resume ID ${input.resumeSessionId} is not a thread ID`);
 
     const previous = codexConfigurationSchema.safeParse(input.resumeConfiguration).data;
     if (
@@ -96,11 +100,54 @@ async function* runCodex(input: SessionInput, { executable }: HarnessRun) {
     : codex.startThread(options);
   const turn = new CodexTurn(input);
 
-  const { events } = await thread.runStreamed(codexPrompt(input), {
-    outputSchema: codexCompletionOutputSchema,
-  });
-  for await (const message of events) yield { message, events: turn.receive(message) };
+  try {
+    const { events } = await thread.runStreamed(codexPrompt(input), {
+      outputSchema: codexCompletionOutputSchema,
+    });
+    for await (const message of events)
+      yield { message, events: turn.receive(checkedEvent(message)) };
+  } catch (error) {
+    throw unreadable(error)
+      ? new InvalidProviderMessage(diagnostic(error), { cause: error })
+      : error;
+  }
   yield { events: turn.end() };
+}
+
+// The SDK yields each line it parses without checking its shape, and reads a turn's
+// usage before yielding it, so a line it could not read surfaces as one of these.
+function unreadable(error: unknown): boolean {
+  return (
+    error instanceof TypeError ||
+    (error instanceof Error && error.message.startsWith("Failed to parse item"))
+  );
+}
+
+const text = z.string();
+const eventType = z.looseObject({ type: text });
+const itemSchema = z
+  .looseObject({ id: text, type: text, text: text.optional(), message: text.optional() })
+  .refine((item) => item.type !== "agent_message" || item.text !== undefined)
+  .refine((item) => item.type !== "error" || item.message !== undefined);
+const itemEvent = z.looseObject({ item: itemSchema });
+// The fields CodexTurn reads, by event type. Other event types pass unread.
+const eventShapes: Readonly<Record<string, z.ZodType>> = {
+  "thread.started": z.looseObject({ thread_id: text }),
+  "item.started": itemEvent,
+  "item.updated": itemEvent,
+  "item.completed": itemEvent,
+  "turn.completed": z.looseObject({ usage: z.looseObject({}) }),
+  "turn.failed": z.looseObject({ error: z.looseObject({ message: text }) }),
+  error: z.looseObject({ message: text }),
+};
+
+function checkedEvent(message: ThreadEvent): ThreadEvent {
+  const type = eventType.safeParse(message).data?.type;
+  const shape = type === undefined ? undefined : eventShapes[type];
+  if (type === undefined || (shape !== undefined && !shape.safeParse(message).success))
+    throw new InvalidProviderMessage(`invalid Codex SDK message: ${JSON.stringify(message)}`);
+
+  return message;
 }
 
 export function codexThreadOptions({ agent }: SessionInput): ThreadOptions {

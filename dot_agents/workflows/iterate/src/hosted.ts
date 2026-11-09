@@ -57,9 +57,6 @@ const lineSchema = z.union([
   z.object({ failure: text }),
 ]);
 
-/** A provider message the harness could not read, which leaves the session unobserved. */
-export class InvalidProviderMessage extends Error {}
-
 export function hosted(harness: Harness): HarnessAdapter {
   return {
     provider: harness.provider,
