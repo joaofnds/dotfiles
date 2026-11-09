@@ -3,4 +3,11 @@ set -euo pipefail
 
 root="$HOME/.agents/workflows/iterate"
 bun install --cwd "$root" --frozen-lockfile --silent
-exec bun "$root/src/main.ts" "$@"
+bun="$(command -v bun)"
+# Without this, a run started outside a mise-hooked shell uses the default Claude
+# and Codex accounts instead of the ones this folder's mise config names.
+if command -v mise >/dev/null; then
+  folder_env="$(mise --quiet env --shell bash)"
+  eval "$folder_env"
+fi
+exec "$bun" "$root/src/main.ts" "$@"

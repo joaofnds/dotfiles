@@ -79,7 +79,11 @@ Claude.
 
 This directory installs to `~/.agents/workflows/iterate`. The launcher at
 `~/.scripts/iterate` reconciles pinned dependencies with Bun, then runs
-`src/main.ts` with the caller's arguments and working directory.
+`src/main.ts` with the caller's arguments and working directory. Where `mise` is
+installed, the launcher first loads the environment mise gives that directory, so a
+stage uses the Claude or Codex account the directory's mise config names even when
+the calling shell never ran mise's hook. It refuses to run where that config is
+untrusted, because the stage would otherwise use another account.
 
 A stage selector has the form
 `--STAGE-agent provider:model[:effort]`. A stage without one uses the Claude CLI

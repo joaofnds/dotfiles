@@ -153,8 +153,9 @@ Deleting the journal deletes its enforcement history.
 
 Chezmoi installs `dot_agents/workflows/iterate/` to
 `~/.agents/workflows/iterate/` and `dot_scripts/executable_iterate` to
-`~/.scripts/iterate`. The launcher reconciles pinned Bun dependencies before
-running `src/main.ts`. Stage skills install under `~/.agents/skills/`.
+`~/.scripts/iterate`. The launcher reconciles pinned Bun dependencies and loads
+the environment mise gives the calling directory before running `src/main.ts`, so a
+stage uses the account that directory's mise config names. Stage skills install under `~/.agents/skills/`.
 
 Run `bun run check` in the workflow source directory for runner and Claude stream
 tests, type checks and lint. These tests use fake Claude and backlog executables
