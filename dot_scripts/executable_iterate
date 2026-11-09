@@ -3,11 +3,14 @@ set -euo pipefail
 
 root="$HOME/.agents/workflows/iterate"
 bun install --cwd "$root" --frozen-lockfile --silent
+# Resolved before the folder's environment loads, which can put another bun on PATH.
 bun="$(command -v bun)"
-# Without this, a run started outside a mise-hooked shell uses the default Claude
-# and Codex accounts instead of the ones this folder's mise config names.
+# A stage gets the environment a mise-hooked shell would have in this folder, its
+# Claude and Codex accounts included. mise env fails on an untrusted config, which
+# hook-env would skip without a word and leave the stage on another account.
 if command -v mise >/dev/null; then
-  folder_env="$(mise --quiet env --shell bash)"
+  mise --quiet env --shell bash >/dev/null
+  folder_env="$(mise --quiet hook-env --force --shell bash)"
   eval "$folder_env"
 fi
 exec "$bun" "$root/src/main.ts" "$@"

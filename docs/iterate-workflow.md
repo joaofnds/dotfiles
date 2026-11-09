@@ -21,7 +21,7 @@ defaults.
 
 The supervising agent runs one stage at a time, reads its result, checks new
 consequential claims, and carries the card into the next stage. Each ordinary
-stage call starts a fresh Claude session with that stage's skill. The card and its
+stage call starts a fresh agent session, Claude unless a selector names Codex, with that stage's skill. The card and its
 linked records carry execution details between sessions. Agents also read the
 priority doc (`backlog/docs/doc-0 - 00-Priority.md`) for the project goal, current
 focus, and agreed milestone and card sequence. They mark finished cards Done there and
@@ -131,8 +131,8 @@ one-second grace period.
 
 ## Interrupted or unfinished work
 
-A dirty tree normally refuses a run. For a card assigned to `@claude`, the runner
-allows continuation and tells the stage to inspect the changes, finish and commit
+A dirty tree normally refuses a run. For a card held by the run's own
+`@iterate-RUN` claim, the runner allows continuation and tells the stage to inspect the changes, finish and commit
 that card's work, and preserve other changes. This assignee convention is the
 runner's ownership check; it does not prove which session wrote each file. Done
 requires a clean tree with no ownership exception. An untracked `.iterate-stop`
@@ -154,12 +154,14 @@ Deleting the journal deletes its enforcement history.
 Chezmoi installs `dot_agents/workflows/iterate/` to
 `~/.agents/workflows/iterate/` and `dot_scripts/executable_iterate` to
 `~/.scripts/iterate`. The launcher reconciles pinned Bun dependencies and loads
-the environment mise gives the calling directory before running `src/main.ts`, so a
-stage uses the account that directory's mise config names. Stage skills install under `~/.agents/skills/`.
+the environment a mise-hooked shell would have in the calling directory before
+running `src/main.ts`, so a stage uses the account that directory's mise config
+names, and it refuses a directory whose mise config is untrusted. Stage skills install under `~/.agents/skills/`.
 
-Run `bun run check` in the workflow source directory for runner and Claude stream
-tests, type checks and lint. These tests use fake Claude and backlog executables
-to exercise the runner. They do not establish task quality with real agents.
+Run `bun run check` in the workflow source directory for runner and adapter
+tests, type checks and lint. These tests use fake Claude, Codex and backlog
+executables to exercise the runner, and run the bundled CLIs only to read their
+versions. They do not establish task quality with real agents.
 The [workflow README](../dot_agents/workflows/iterate/README.md) describes the
 implementation and retained experiment harness. The [session diagram](iterate-session.svg)
 shows how one Claude process runs and reports its result.
