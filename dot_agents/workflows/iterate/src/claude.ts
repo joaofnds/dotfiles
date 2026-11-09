@@ -14,6 +14,7 @@ import type {
 import { z } from "zod";
 import { claudeRuntimeContract } from "./claude-runtime.ts";
 import { definedFields, nonEmpty } from "./defined-fields.ts";
+import { resolveModule } from "./executable.ts";
 import {
   type Harness,
   type HarnessRun,
@@ -56,15 +57,17 @@ export const claudeHarness: Harness = {
   run: runClaude,
 };
 
+// The SDK ships one native package per platform, with a musl build beside the glibc one.
 function bundledClaude(): string | undefined {
-  const platform = `${process.platform}-${process.arch}`;
-  try {
-    return createRequire(import.meta.url).resolve(
-      `@anthropic-ai/claude-agent-sdk-${platform}/claude`,
-    );
-  } catch {
-    return undefined;
+  const name = `@anthropic-ai/claude-agent-sdk-${process.platform}-${process.arch}`;
+  const binary = process.platform === "win32" ? "claude.exe" : "claude";
+  const require = createRequire(import.meta.url);
+
+  for (const variant of [name, `${name}-musl`]) {
+    const executable = resolveModule(require, `${variant}/${binary}`);
+    if (executable !== undefined) return executable;
   }
+  return undefined;
 }
 
 async function* runClaude(input: SessionInput, { executable }: HarnessRun) {

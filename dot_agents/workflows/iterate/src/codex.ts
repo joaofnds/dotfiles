@@ -1,12 +1,13 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { statSync } from "node:fs";
 import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
+import { delimiter, dirname, join } from "node:path";
 import process from "node:process";
 import type { ThreadEvent, ThreadItem, ThreadOptions, Usage } from "@openai/codex-sdk";
 import { z } from "zod";
 import { codexCompletionError, codexCompletionOutputSchema } from "./codex-completion.ts";
 import { codexRuntimeContract } from "./codex-runtime.ts";
 import { definedFields, nonEmpty } from "./defined-fields.ts";
+import { resolveModule } from "./executable.ts";
 import { diagnostic } from "./exit.ts";
 import {
   type ConfiguredSession,
@@ -93,27 +94,79 @@ export const codexHarness: Harness = {
   run: runCodex,
 };
 
-const codexPackageSchema = z.object({ entrypoint: z.string().min(1) });
+const codexTargets: Readonly<Record<string, string>> = {
+  "darwin-arm64": "aarch64-apple-darwin",
+  "darwin-x64": "x86_64-apple-darwin",
+  "linux-arm64": "aarch64-unknown-linux-musl",
+  "linux-x64": "x86_64-unknown-linux-musl",
+};
+// The two layouts the Codex SDK accepts inside a target directory, newest first.
+const codexLayouts = [
+  { executable: "bin/codex", marker: "codex-package.json", pathDirectory: "codex-path" },
+  { executable: "codex/codex", marker: "codex/codex", pathDirectory: "path" },
+] as const;
 
-// The Codex SDK finds its CLI this way, inside the platform package its CLI package depends on.
 function bundledCodex(): string | undefined {
-  let vendor: string;
-  try {
-    const cli = createRequire(import.meta.url).resolve("@openai/codex/package.json");
-    const platform = `@openai/codex-${process.platform}-${process.arch}/package.json`;
-    vendor = join(dirname(createRequire(cli).resolve(platform)), "vendor");
-  } catch {
-    return undefined;
-  }
+  const target = codexTargets[`${process.platform}-${process.arch}`];
+  const platform = resolvePackage(`@openai/codex-${process.platform}-${process.arch}`);
+  if (target === undefined || platform === undefined) return undefined;
 
-  const [target = ""] = readdirSync(vendor);
-  const layout = JSON.parse(readFileSync(join(vendor, target, "codex-package.json"), "utf8"));
-  return join(vendor, target, codexPackageSchema.parse(layout).entrypoint);
+  const root = join(platform, "vendor", target);
+  const layout = codexLayouts.find((candidate) => isFile(join(root, candidate.marker)));
+  return layout && join(root, layout.executable);
+}
+
+/** The bundled tool directories the Codex SDK puts first on PATH for its own CLI. */
+export function codexPathDirectories(executable: string): string[] {
+  const layout = codexLayouts.find((candidate) => executable.endsWith(`/${candidate.executable}`));
+  if (layout === undefined) return [];
+
+  const root = executable.slice(0, -layout.executable.length);
+  const directory = join(root, layout.pathDirectory);
+  return isFile(join(root, layout.marker)) && isDirectory(directory) ? [directory] : [];
+}
+
+// Each package resolves from the one that depends on it, as the SDK resolves them:
+// the SDK depends on the CLI package, which depends on the platform package.
+function resolvePackage(name: string): string | undefined {
+  const sdk = createRequire(import.meta.resolve("@openai/codex-sdk"));
+  const cli = resolveModule(sdk, "@openai/codex/package.json");
+  const manifest = cli && resolveModule(createRequire(cli), `${name}/package.json`);
+
+  return manifest && dirname(manifest);
+}
+
+function isFile(path: string): boolean {
+  return statSync(path, { throwIfNoEntry: false })?.isFile() ?? false;
+}
+
+function isDirectory(path: string): boolean {
+  return statSync(path, { throwIfNoEntry: false })?.isDirectory() ?? false;
+}
+
+function definedEnv(env: NodeJS.ProcessEnv): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(env).filter((entry): entry is [string, string] => entry[1] !== undefined),
+  );
 }
 
 async function* runCodex(input: SessionInput, { executable }: HarnessRun) {
   const { Codex } = await import("@openai/codex-sdk");
-  const codex = new Codex({ codexPathOverride: executable });
+  const directories = codexPathDirectories(executable);
+  const codex = new Codex(
+    Object.assign(
+      { codexPathOverride: executable },
+      definedFields({
+        env:
+          directories.length === 0
+            ? undefined
+            : definedEnv({
+                ...process.env,
+                PATH: [...directories, process.env.PATH].join(delimiter),
+              }),
+      }),
+    ),
+  );
   const options = codexThreadOptions(input);
   const thread = input.resumeSessionId
     ? codex.resumeThread(input.resumeSessionId, options)
