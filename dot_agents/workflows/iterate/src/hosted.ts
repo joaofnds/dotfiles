@@ -8,6 +8,7 @@ import {
   type HarnessAdapter,
   type ProviderEvent,
   providerEventSchema,
+  type SessionInput,
 } from "./provider-types.ts";
 
 const host = join(import.meta.dir, "harness-host.ts");
@@ -21,16 +22,10 @@ const lineSchema = z.union([
 
 /** Runs a harness in its own host process, which writes one line per SDK message. */
 export function hosted(harness: Harness): HarnessAdapter {
-  return {
-    provider: harness.provider,
-    displayName: harness.displayName,
-    bundledExecutable: harness.bundledExecutable,
-    summary: harness.summary,
-    capabilities: harness.capabilities,
-    providerCompletion: harness.providerCompletion,
-    resume: harness.resume,
-    runtimeContract: harness.runtimeContract,
-    command: (input) => {
+  const { run: _run, admit: _admit, permissionMode: _permissionMode, ...profile } = harness;
+
+  return Object.assign(profile, {
+    command: (input: SessionInput) => {
       harness.admit?.(input);
       const executable = executableFor(harness);
 
@@ -42,12 +37,12 @@ export function hosted(harness: Harness): HarnessAdapter {
         }),
       );
     },
-    decode: (line) => {
+    decode: (line: string) => {
       const parsed = lineSchema.parse(JSON.parse(line));
       if ("failure" in parsed) throw new Error(parsed.failure);
 
       const events: ProviderEvent[] = parsed.events;
       return events;
     },
-  };
+  });
 }
