@@ -73,6 +73,8 @@ return {
 			end,
 		})
 
+		vim.lsp.config("biome", { exit_timeout = 1000 })
+
 		vim.lsp.config("lua_ls", {
 			settings = { Lua = { hint = { enable = true } } },
 		})
