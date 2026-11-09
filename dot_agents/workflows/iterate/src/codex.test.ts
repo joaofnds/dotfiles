@@ -1,7 +1,10 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { dirname } from "node:path";
 import process from "node:process";
 import type { ThreadEvent, ThreadItem } from "@openai/codex-sdk";
+import { z } from "zod";
 import { agentFromArgs } from "./agents.ts";
 import { CodexTurn, codexHarness, codexPrompt, codexThreadOptions } from "./codex.ts";
 import { codexCompletionOutputSchema } from "./codex-completion.ts";
@@ -621,6 +624,26 @@ describe("Codex session host", () => {
         scenario === "cancel" ? "caller cancellation" : "wall-time",
       );
       expect(observed.result.settlement?.state).toBe("settled");
+    },
+    6000,
+  );
+
+  test.each(["silent", "cancel"])(
+    "removes the completion schema the SDK wrote when %s stops the session",
+    async (scenario) => {
+      const observed = await harness.run(
+        scenario,
+        Object.assign(
+          { timeoutMs: 1000 },
+          definedFields({ cancelMs: scenario === "cancel" ? 600 : undefined }),
+        ),
+      );
+      const [launch] = await observed.launches();
+      const { argv } = z.object({ argv: z.array(z.string()) }).parse(launch);
+      const schema = argv[argv.indexOf("--output-schema") + 1] ?? "";
+
+      expect(schema).toContain("codex-output-schema-");
+      expect(existsSync(dirname(schema))).toBe(false);
     },
     6000,
   );
