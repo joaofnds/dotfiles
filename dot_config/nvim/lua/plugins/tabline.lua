@@ -1,6 +1,9 @@
 return {
 	"akinsho/bufferline.nvim",
-	event = "UIEnter",
+	event = "VeryLazy",
+	init = function()
+		vim.o.showtabline = 2
+	end,
 	keys = {
 		{ "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", desc = "previous" },
 		{ "<leader>bn", "<cmd>BufferLineCycleNext<cr>", desc = "next" },
