@@ -7,7 +7,7 @@ return {
 	event = { "BufNewFile", "BufReadPost" },
 	cmd = "TSUpdate",
 	keys = {
-		{ "<leader>tc", "<cmd>TSContextToggle<cr>", desc = "toggle context" },
+		{ "<leader>tc", "<cmd>TSContext toggle<cr>", desc = "toggle context" },
 	},
 	main = "nvim-treesitter.configs",
 	opts = {
