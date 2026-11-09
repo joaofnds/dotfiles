@@ -35,3 +35,5 @@ zig = "latest"
 "npm:npm-check-updates" = "latest"
 "npm:vmd" = "latest"
 "npm:zx" = "latest"
+
+"npm:agent-browser" = "latest"
