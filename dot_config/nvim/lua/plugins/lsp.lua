@@ -91,7 +91,6 @@ return {
 			settings = { ["js/ts"] = { inlayHints = { parameterNames = { enabled = "all" } } } },
 		})
 
-		vim.lsp.enable("nixd")
 
 		require("mason").setup()
 		vim.api.nvim_create_user_command("MasonUpdateAll", require("util.mason").update_all, {})
@@ -110,6 +109,8 @@ return {
 				"cssls",
 				"expert",
 			},
+			automatic_enable = false,
 		})
+		vim.lsp.enable(vim.list_extend(require("mason-lspconfig").get_installed_servers(), { "nixd" }))
 	end,
 }
