@@ -62,11 +62,7 @@ return {
 					require("conform").format({ lsp_format = "fallback" })
 				end, "format")
 				map("n", "<leader>co", function()
-					local params = {
-						command = "_typescript.organizeImports",
-						arguments = { vim.api.nvim_buf_get_name(bufnr) },
-					}
-					vim.lsp.buf_request(bufnr, "workspace/executeCommand", params)
+					vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
 				end, "organize imports")
 			end,
 		})
@@ -91,21 +87,11 @@ return {
 			},
 		})
 
-		local ts_inlay_hints = {
-			parameterNames = { enabled = "all" },
-			parameterTypes = { enabled = true },
-			variableTypes = { enabled = true },
-			propertyDeclarationTypes = { enabled = true },
-			functionLikeReturnTypes = { enabled = true },
-			enumMemberValues = { enabled = true },
-		}
-
-		vim.lsp.config("vtsls", {
-			settings = {
-				typescript = { inlayHints = ts_inlay_hints },
-				javascript = { inlayHints = ts_inlay_hints },
-			},
+		vim.lsp.config("tsc", {
+			settings = { ["js/ts"] = { inlayHints = { parameterNames = { enabled = "all" } } } },
 		})
+
+		vim.lsp.enable("nixd")
 
 		require("mason").setup()
 		vim.api.nvim_create_user_command("MasonUpdateAll", require("util.mason").update_all, {})
@@ -114,7 +100,7 @@ return {
 			ensure_installed = {
 				"biome",
 				"lua_ls",
-				"vtsls",
+				"tsc",
 				"gopls",
 				"bashls",
 				"jsonls",
@@ -123,8 +109,6 @@ return {
 				"html",
 				"cssls",
 				"expert",
-				"sqlls",
-				"nil_ls",
 			},
 		})
 	end,

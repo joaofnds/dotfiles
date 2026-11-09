@@ -28,6 +28,7 @@
     pkgs.mise
     pkgs.mole-cleaner
     pkgs.neovim
+    pkgs.nixd
     pkgs.nixfmt
     pkgs.pinentry_mac
     pkgs.rclone
