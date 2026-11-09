@@ -1,22 +1,8 @@
 {
-  "kind": "captured public app-server messages, minimized",
+  "kind": "captured public model/list catalog, minimized",
   "version": "0.166.0",
   "captured": "2026-11-04",
-  "originalPublicSha256": "18071a2d490d52ecf4b5b3f4bd6c369746065909bdff0ec417459fd4767c2135",
-  "auditedCandidateSha256": "9b552fb70734f67b3b3365c3dacb422246b4cb6fc1415a64a29ad921daa99350",
-  "candidatePhysicalLines": [1, 2, 3, 4, 6, 7, 8, 27, 28, 29, 30, 31, 32, 34],
-  "transform": "Audited candidate string-only anonymization; replace the fixture workspace path prefix with /fixture/workspace. Drop other messages without rearranging retained messages. No schema-derived message in captured.jsonl.",
-  "limits": [
-    "Only the successful existence-check command is publicly captured. Required nested denied write is not a captured public item.",
-    "File/MCP/error/decline/reroute/resume cases in tests are synthetic. No native acceptance is established."
-  ],
-  "originalPhysicalLines": [1, 3, 4, 8, 11, 18, 19, 38, 39, 41, 42, 43, 154, 157],
-  "replayRelocation": "Tests replace /fixture/workspace string prefixes with their disposable working directory; semantic fields remain captured.",
-  "catalog": {
-    "version": "0.166.0",
-    "captured": "2026-11-04",
-    "originalPublicSha256": "f1ce99f980d32507627fbe19080f68391cbb1cee21ef9a87ea1ad0bd8ed739e4",
-    "originalPhysicalLine": 3,
-    "fields": "data[].model and supportedReasoningEfforts[].reasoningEffort only; advertised capability, no entitlement/tool-mode/execution claim"
-  }
+  "originalPublicSha256": "f1ce99f980d32507627fbe19080f68391cbb1cee21ef9a87ea1ad0bd8ed739e4",
+  "originalPhysicalLine": 3,
+  "fields": "data[].model and supportedReasoningEfforts[].reasoningEffort only; advertised capability, no entitlement/tool-mode/execution claim"
 }

@@ -65,6 +65,8 @@ declares its runtime contract, completion rule and resume rules. `harness-host.t
 runs one adapter as the session's process-group leader, so the SDK and the CLI it
 starts are descendants that a cancel or timeout stops together. It writes each SDK
 message with its events as one JSON line, which `hosted.ts` decodes for the session.
+Output an adapter cannot read stops the session: a Claude stdout line that is not
+JSON, or a Codex event missing a field the adapter reads.
 `provider.ts` registers the adapters, resolves a provider name to one, and checks
 selections and dollar caps against the capabilities each adapter declares. A harness
 whose CLI is one executable on `PATH`, answers `--version`, and has an SDK is added
@@ -95,7 +97,11 @@ The runner still requires the card transition, and native editing, resume,
 permissions and cancellation acceptance require separate evidence.
 The SDK reports no effective configuration, so the attempt records the model,
 effort and working directory the runner requested, and these are not execution
-telemetry.
+telemetry. Its events carry no model reroute, declined tool or approval request,
+so the runner cannot check for any of them. Codex's stderr reaches the raw log only
+when the CLI exits nonzero, because the SDK holds it until then. A Codex session
+recorded before the switch to the SDK has another configuration record and does not
+resume.
 Token receipts stay raw where scope/basis is unknown; dollars remain unknown.
 Explicit dollar caps refuse before Codex dispatch. Native instruction/configuration
 fingerprints record their bounded coverage and unknowns, excluding credentials and
@@ -121,8 +127,8 @@ in an unattended session. Claude falls back that way on models without auto mode
 among them on CLI 2.1.280. The status line counts the tool calls Claude denied, and
 the attempt report carries the count as `permissionDenials`.
 
-Claude kills a background shell command still running when a print-mode session
-ends (CLI 2.1.280), so a check the stage started in the background and never saw
+Claude kills a background shell command still running when its session ends
+(observed on CLI 2.1.280 in print mode), so a check the stage started in the background and never saw
 finish produces no result. The runner names each task Claude killed after a result
 and before the stage wrote anything more, on stderr as `killed at exit` and in the
 attempt report as `killedAtExit`.
@@ -172,7 +178,7 @@ history and its cost and duration accounting; new runs start with the named card
 Run limits are fixed at creation. Claude receives the smaller of its session cap
 and remaining run dollars. Unknown or parent-only costs block the next stage when
 a run dollar ceiling is set. Known costs are Claude-reported estimates. Ten minutes
-without stdout or expiration of a time ceiling stops the child process group,
+without a line from the harness host or expiration of a time ceiling stops the child process group,
 allowing a one-second grace period before forced shutdown.
 
 One writer holds a lock per Git metadata directory. After an abrupt termination,
@@ -184,8 +190,8 @@ run's enforcement history. Records have no automatic retention cleanup.
 ## Output and verification
 
 The stage's final reply goes to stdout. Stderr includes live agent text and tool
-calls by default, plus stage identity, evidence paths, usage and errors. Raw
-Claude events remain on disk in both output modes. The completion reply is asked
+calls by default, plus stage identity, evidence paths, usage and errors. Every SDK
+message stays in the raw log in both output modes. The completion reply is asked
 to preserve outcome, consequential claims and evidence, errors, scope changes,
 unresolved decisions and detailed-record paths. The supervisor reads both streams
 and probes new consequential claims before proceeding.
