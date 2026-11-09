@@ -2,7 +2,6 @@ return {
 	"Saghen/blink.cmp",
 	version = "1.*",
 	event = "InsertEnter",
-	dependencies = { "folke/lazydev.nvim" },
 	opts = {
 		keymap = { preset = "enter" },
 		signature = { enabled = true },
@@ -10,7 +9,10 @@ return {
 			documentation = { auto_show = true },
 		},
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer", "lazydev" },
+			default = { "lsp", "path", "snippets", "buffer" },
+			per_filetype = {
+				lua = { inherit_defaults = true, "lazydev" },
+			},
 			providers = {
 				lazydev = {
 					name = "LazyDev",
