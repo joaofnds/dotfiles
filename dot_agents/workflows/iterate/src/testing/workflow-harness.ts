@@ -444,6 +444,8 @@ export class WorkflowHarness {
       FAKE_CODEX_DIRECTORY: directory,
       FAKE_CODEX_SCENARIO: "unavailable",
       PATH: `${bin}:${process.env.PATH}`,
+      ITERATE_CLAUDE_CLI: join(bin, "claude"),
+      ITERATE_CODEX_CLI: join(bin, "codex"),
       TMPDIR: directory,
       FAKE_STATUS: join(directory, "status"),
       FAKE_LABELS: join(directory, "labels"),

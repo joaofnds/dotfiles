@@ -1,8 +1,8 @@
 import { join } from "node:path";
 import process from "node:process";
-import { which } from "bun";
 import { z } from "zod";
 import { definedFields } from "./defined-fields.ts";
+import { executableFor } from "./executable.ts";
 import {
   type Harness,
   type HarnessAdapter,
@@ -24,7 +24,7 @@ export function hosted(harness: Harness): HarnessAdapter {
   return {
     provider: harness.provider,
     displayName: harness.displayName,
-    executableName: harness.executableName,
+    bundledExecutable: harness.bundledExecutable,
     summary: harness.summary,
     capabilities: harness.capabilities,
     providerCompletion: harness.providerCompletion,
@@ -32,7 +32,7 @@ export function hosted(harness: Harness): HarnessAdapter {
     runtimeContract: harness.runtimeContract,
     command: (input) => {
       harness.admit?.(input);
-      const executable = which(harness.executableName);
+      const executable = executableFor(harness);
 
       return Object.assign(
         { argv: [process.execPath, host], stdin: JSON.stringify({ input, executable }) },

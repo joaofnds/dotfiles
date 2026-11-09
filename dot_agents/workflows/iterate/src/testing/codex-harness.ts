@@ -117,6 +117,7 @@ finally { clearTimeout(timer); }
       env: {
         ...process.env,
         PATH: `${join(root, "bin")}:/usr/bin:/bin`,
+        ITERATE_CODEX_CLI: join(root, "bin", "codex"),
         ITERATE_LIVE: "0",
         FAKE_CODEX_DIRECTORY: root,
         FAKE_CODEX_SCENARIO: scenario,

@@ -96,7 +96,8 @@ export type SessionAdapter = ProviderAdapter & {
 export type HarnessProfile = {
   readonly provider: string;
   readonly displayName: string;
-  readonly executableName: string;
+  /** The CLI the harness's SDK ships with, or undefined where it ships none for this platform. */
+  readonly bundledExecutable: () => string | undefined;
   readonly summary: string;
   readonly capabilities: Capabilities;
   readonly providerCompletion: boolean;

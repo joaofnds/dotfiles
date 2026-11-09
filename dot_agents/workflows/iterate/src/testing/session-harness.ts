@@ -145,6 +145,7 @@ class SessionDriver {
       env: {
         ...process.env,
         PATH: `${this.directory}:${dirname(process.execPath)}:/usr/bin:/bin`,
+        ITERATE_CLAUDE_CLI: executable,
         TMPDIR: this.directory,
         SESSION_SCENARIO: scenario,
         SESSION_CONTROL: controlPath,

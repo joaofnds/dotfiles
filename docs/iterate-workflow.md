@@ -98,20 +98,19 @@ the ID shows the most recently opened run. Card IDs are case-insensitive.
 ![The supervisor reads each result, continues after progress or an answered question, and ends the run on repeated stalls, refusals or a stop file.](iterate-stops.svg)
 
 Inbox, unknown columns and cards labeled `deferred` are refused. Build or Review
-assigned to someone other than `@claude` is also refused. An iterate invocation
+held by an assignee other than the run's own `@iterate-RUN` claim is also refused. An iterate invocation
 authorizes work on the named card under the existing scope and admission rules.
 
 ## Agent, output and limits
 
-Every stage currently uses the `claude` executable. Explicit model and effort
-values pass through to Claude. With no selector for a stage, the Claude CLI's
-configured defaults apply. The provider field preserves the provider interface,
-but another provider is rejected when its selected stage is reached until its
-adapter exists. Selection comes from invocation arguments.
+A stage runs Claude or Codex through its vendor SDK, with the CLI that SDK
+bundles. Explicit model and effort values pass through to the selected CLI. With
+no selector for a stage, that CLI's configured defaults apply. Selection comes
+from invocation arguments.
 
 Stage replies go to stdout. Stderr carries live progress, tool calls, errors and
 paths to retained evidence. `ITERATE_LIVE=0` suppresses live text and tool output;
-the final reply and raw Claude logs remain. The supervisor reads both streams
+the final reply and raw logs remain. The supervisor reads both streams
 and checks the consequential claims reported by the stage.
 
 Each run allows six stage attempts, including failures, across separate `step`

@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
+import { createRequire } from "node:module";
 import process from "node:process";
 import { Transform, type TransformCallback } from "node:stream";
 import { StringDecoder } from "node:string_decoder";
@@ -28,14 +29,13 @@ import {
   type UsageReport,
 } from "./usage.ts";
 
-const executableName = "claude";
 const efforts = ["low", "medium", "high", "xhigh", "max"] as const;
 const permissionMode: PermissionMode = "auto";
 
 export const claudeHarness: Harness = {
   provider: "claude",
   displayName: "Claude",
-  executableName,
+  bundledExecutable: bundledClaude,
   summary: "Claude runs through the Claude Agent SDK in auto permission mode.",
   capabilities: {
     resume: true,
@@ -55,6 +55,17 @@ export const claudeHarness: Harness = {
   },
   run: runClaude,
 };
+
+function bundledClaude(): string | undefined {
+  const platform = `${process.platform}-${process.arch}`;
+  try {
+    return createRequire(import.meta.url).resolve(
+      `@anthropic-ai/claude-agent-sdk-${platform}/claude`,
+    );
+  } catch {
+    return undefined;
+  }
+}
 
 async function* runClaude(input: SessionInput, { executable }: HarnessRun) {
   const { query } = await import("@anthropic-ai/claude-agent-sdk");

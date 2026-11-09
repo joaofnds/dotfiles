@@ -1,7 +1,7 @@
-import { which } from "bun";
 import type { AgentSelection } from "./agents.ts";
 import { claudeHarness } from "./claude.ts";
 import { codexHarness } from "./codex.ts";
+import { executableFor } from "./executable.ts";
 import { diagnostic, Exit } from "./exit.ts";
 import { hosted } from "./hosted.ts";
 import type {
@@ -120,7 +120,7 @@ export async function runtimeContract({
   readonly rolePolicy: string;
 }): Promise<RuntimeContract> {
   const adapter = adapterFor(provider);
-  const executable = which(adapter.executableName);
+  const executable = executableFor(adapter);
   if (!executable) throw new Exit(1, `${provider} executable is unavailable`);
 
   let cliVersion: string;

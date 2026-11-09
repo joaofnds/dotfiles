@@ -1,3 +1,6 @@
+import { readdirSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import { dirname, join } from "node:path";
 import process from "node:process";
 import type { ThreadEvent, ThreadItem, ThreadOptions, Usage } from "@openai/codex-sdk";
 import { z } from "zod";
@@ -18,7 +21,6 @@ import {
 // not entitlement, execution telemetry, or required-tool visibility guarantees.
 const standardEfforts = ["low", "medium", "high", "xhigh", "max"] as const;
 const extendedEfforts = [...standardEfforts, "ultra"] as const;
-const executableName = "codex";
 const toolKinds = ["command_execution", "file_change", "mcp_tool_call", "web_search"];
 
 /** What the runner asked Codex for. The SDK reports no effective configuration. */
@@ -32,7 +34,7 @@ const codexConfigurationSchema = z.object({
 export const codexHarness: Harness = {
   provider: "codex",
   displayName: "Codex",
-  executableName,
+  bundledExecutable: bundledCodex,
   summary: "Codex runs through the Codex SDK with inherited native policy.",
   providerCompletion: true,
   runtimeContract: codexRuntimeContract,
@@ -90,6 +92,24 @@ export const codexHarness: Harness = {
   },
   run: runCodex,
 };
+
+const codexPackageSchema = z.object({ entrypoint: z.string().min(1) });
+
+// The Codex SDK finds its CLI this way, inside the platform package its CLI package depends on.
+function bundledCodex(): string | undefined {
+  let vendor: string;
+  try {
+    const cli = createRequire(import.meta.url).resolve("@openai/codex/package.json");
+    const platform = `@openai/codex-${process.platform}-${process.arch}/package.json`;
+    vendor = join(dirname(createRequire(cli).resolve(platform)), "vendor");
+  } catch {
+    return undefined;
+  }
+
+  const [target = ""] = readdirSync(vendor);
+  const layout = JSON.parse(readFileSync(join(vendor, target, "codex-package.json"), "utf8"));
+  return join(vendor, target, codexPackageSchema.parse(layout).entrypoint);
+}
 
 async function* runCodex(input: SessionInput, { executable }: HarnessRun) {
   const { Codex } = await import("@openai/codex-sdk");

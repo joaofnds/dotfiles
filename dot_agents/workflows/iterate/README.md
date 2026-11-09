@@ -68,10 +68,11 @@ message with its events as one JSON line, which `hosted.ts` decodes for the sess
 Output an adapter cannot read stops the session: a Claude stdout line that is not
 JSON, or a Codex event missing a field the adapter reads.
 `provider.ts` registers the adapters, resolves a provider name to one, and checks
-selections and dollar caps against the capabilities each adapter declares. A harness
-whose CLI is one executable on `PATH`, answers `--version`, and has an SDK is added
-by writing its adapter and registering it there. The SDK versions in
-`package.json` track the installed CLIs. Each ordinary `step` starts a fresh
+selections and dollar caps against the capabilities each adapter declares. Each
+adapter runs the CLI its SDK bundles, so the SDK pin in `package.json` also pins the
+CLI, and the session cannot pair an SDK with a CLI it was not built for. A harness
+whose SDK bundles a CLI that answers `--version` is added by writing its adapter and
+registering it there. Each ordinary `step` starts a fresh
 process on the host. The
 [session diagram](../../../docs/iterate-session.svg) shows that lifecycle for
 Claude.
@@ -174,6 +175,7 @@ history and its cost and duration accounting; new runs start with the named card
 | `ITERATE_RUN_BUDGET` | Optional dollar ceiling across the run. |
 | `ITERATE_RUN_MINUTES` | Optional cumulative stage wall-time ceiling; waiting between calls does not count. |
 | `ITERATE_LIVE=0` | Suppress live text and tool output; keep the final reply and raw logs. |
+| `ITERATE_CLAUDE_CLI`, `ITERATE_CODEX_CLI` | Run this CLI instead of the one the SDK bundles. |
 
 Run limits are fixed at creation. Claude receives the smaller of its session cap
 and remaining run dollars. Unknown or parent-only costs block the next stage when
