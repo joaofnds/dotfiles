@@ -72,17 +72,21 @@ security review, the session runs a security review.
 
 ## Model and effort
 
-Every reviewer definition pins `model: opus`, and `review-code` passes no model
-on the spawn call, because a model on the call overrides the pin. Effort appears
-to be settable only in an agent definition's frontmatter, which is why three
-reviewer definitions exist,
-`reviewer`, `reviewer-medium`, and `reviewer-low`, identical but for their effort.
-That constraint was read from the harness documentation and never probed directly;
-`references/external-facts.md` in the review-instructions skill records it with
-the same caveat. If a later release accepts effort on the spawn call, the two
-lighter definitions become unnecessary and should go. The two lighter ones are two
-sentences each that point at `reviewer.md`, so the brief has one copy. Their
-frontmatter is duplicated and can drift.
+The reviewer definitions pin no model, so a reviewer runs on the host's model
+unless the role selection names one. Three reviewer definitions exist,
+`reviewer`, `reviewer-medium`, and `reviewer-low`, identical but for the effort
+in their frontmatter. Claude Code's `Agent` tool has an `effort` field, but its
+own description reserves it for an effort the user or an instruction explicitly
+asks for, so on Claude the variant's frontmatter is what carries the screener's
+effort. The two lighter definitions are two sentences each that point at
+`reviewer.md`, so the brief has one copy. Their frontmatter is duplicated and can
+drift.
+
+On Codex each role has an adapter in `dot_codex/agents/` that renders the shared
+body. Codex's `spawn_agent` takes `reasoning_effort`, and a role file that sets
+`model_reasoning_effort` locks it against that override, so the adapters set no
+effort and the parent passes it on the call. A Codex reviewer spawned without
+`reasoning_effort` inherits the parent's effort whatever its name says.
 
 Effort follows how far the reviewer has to read: low when the axis has one thing
 in front of it, medium when it has to relate the changed files to each other, and
