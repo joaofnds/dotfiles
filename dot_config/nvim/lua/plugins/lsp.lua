@@ -22,8 +22,6 @@ return {
 			severity_sort = true,
 		})
 
-		vim.lsp.config("*", { exit_timeout = 1000 })
-
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(args)
 				local bufnr = args.buf
