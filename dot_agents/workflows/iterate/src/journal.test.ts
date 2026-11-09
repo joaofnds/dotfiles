@@ -491,7 +491,6 @@ describe("Journal", () => {
       requestedAgent: codex,
       status: "failed" as const,
       resolvedModel: undefined,
-      effectiveEffort: undefined,
       configuredSession: {
         provenance: "codex.sdk.requested" as const,
         model: codex.model,
@@ -502,7 +501,7 @@ describe("Journal", () => {
       requiredToolOutcomeCoverage: "unknown" as const,
       errors: ["required-tool outcome coverage unknown"],
     };
-    const { resolvedModel: _model, effectiveEffort: _effort, ...report } = receipt;
+    const { resolvedModel: _model, ...report } = receipt;
     await journal.finish(await journal.begin("build", "DOT-1", codex, codexRuntime), report);
     const loaded = await requiredJournal("DOT-1");
 

@@ -228,7 +228,9 @@ export class CodexTurn {
       this.finalReply = item.text;
       return [{ type: "text", text: item.text }];
     }
+
     if (item.type === "error") return [{ type: "text", text: `Codex reported: ${item.message}` }];
+
     if (!toolKinds.includes(item.type)) return [];
 
     const events = this.started(item);
@@ -251,6 +253,7 @@ export class CodexTurn {
 
   private completedTurn(usage: Usage): ProviderEvent[] {
     this.terminal = true;
+
     const events: ProviderEvent[] = [
       { type: "usage", usage: { raw: [{ type: "turn.completed", usage }] } },
     ];

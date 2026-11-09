@@ -22,7 +22,7 @@ import {
   type SessionAdapter,
   type SessionInput,
 } from "./provider.ts";
-import type { ConfiguredSession, ModelReroute, ToolOutcome } from "./provider-types.ts";
+import type { ConfiguredSession, ToolOutcome } from "./provider-types.ts";
 import {
   addTokens,
   type ModelUsage,
@@ -45,10 +45,8 @@ export type SessionResult = {
   readonly processExit?: { readonly code: number | null; readonly signal: string | null };
   readonly requiredToolOutcomeCoverage?: "unknown";
   readonly configuredSession?: ConfiguredSession;
-  readonly modelReroutes?: readonly ModelReroute[];
   readonly toolOutcomes?: readonly ToolOutcome[];
   readonly resolvedModel?: string;
-  readonly effectiveEffort?: string;
   readonly accountingComplete: boolean;
   readonly permissionDenials?: number;
   readonly killedAtExit?: readonly string[];
@@ -76,12 +74,10 @@ type Stream = {
   configuredSession: ConfiguredSession | undefined;
   requiredToolOutcomeCoverage: "unknown" | undefined;
   toolOutcomes: ToolOutcome[];
-  modelReroutes: ModelReroute[];
   errors: string[];
   sessionId: string;
   accountingSessionId: string | undefined;
   resolvedModel: string;
-  effectiveEffort: string;
   usageReceipts: Map<string, readonly unknown[]>;
   rawUsage: unknown[];
   usageBasis: Pick<UsageReport, "parentBasis" | "aggregateBasis" | "modelsBasis">;
@@ -226,13 +222,6 @@ function finishSession(
   ) {
     stream.errors.push("the resumed session did not establish the pinned model");
   }
-  if (
-    input.resumeSessionId &&
-    stream.effectiveEffort &&
-    stream.effectiveEffort !== input.agent.effort
-  ) {
-    stream.errors.push("the resumed session reported a different effective effort");
-  }
 
   if (!(stream.complete && stream.result) && stream.errors.length === 0) {
     stream.errors.push(`the ${stage} session ended without a completed result`);
@@ -287,9 +276,7 @@ function sessionResult(
       configuredSession: stream.configuredSession,
       requiredToolOutcomeCoverage: stream.requiredToolOutcomeCoverage,
       toolOutcomes: nonEmpty(stream.toolOutcomes),
-      modelReroutes: nonEmpty(stream.modelReroutes),
       settlement,
-      effectiveEffort: nonEmpty(stream.effectiveEffort),
       sessionId: nonEmpty(stream.sessionId),
       resolvedModel: nonEmpty(stream.resolvedModel),
       permissionDenials: stream.permissionDenials === 0 ? undefined : stream.permissionDenials,
@@ -609,12 +596,10 @@ function emptyStream(): Stream {
     configuredSession: undefined,
     requiredToolOutcomeCoverage: undefined,
     toolOutcomes: [],
-    modelReroutes: [],
     errors: [],
     sessionId: "",
     accountingSessionId: undefined,
     resolvedModel: "",
-    effectiveEffort: "",
     usageReceipts: new Map(),
     rawUsage: [],
     usageBasis: {},
@@ -654,7 +639,6 @@ function take(stream: Stream, events: readonly ProviderEvent[], live: boolean): 
   }
 
   for (const event of events) {
-    if (event.type === "model_reroute") stream.modelReroutes.push(event.receipt);
     if (event.type === "configured_session") stream.configuredSession = event.configuration;
     if (event.type === "required_tool_coverage")
       stream.requiredToolOutcomeCoverage = event.coverage;
@@ -673,7 +657,6 @@ function take(stream: Stream, events: readonly ProviderEvent[], live: boolean): 
       stream.sessionId = event.sessionId;
     }
     if (event.type === "resolved_model") stream.resolvedModel = event.model;
-    if (event.type === "effective_effort") stream.effectiveEffort = event.effort;
     if (event.type === "permission_mode") stream.permissionMode = event.mode;
     if (event.type === "permission_denials") stream.permissionDenials += event.count;
     if (event.type === "text" || event.type === "tool_call") {

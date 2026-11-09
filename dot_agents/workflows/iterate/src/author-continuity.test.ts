@@ -20,7 +20,6 @@ function completed(overrides: Partial<SessionResult> = {}): SessionResult {
   return {
     requestedAgent: agent,
     resolvedModel: agent.model,
-    effectiveEffort: agent.effort,
     sessionId: "shape-session",
     status: "completed",
     accountingComplete: true,
@@ -68,7 +67,6 @@ describe("Journal author continuity", () => {
         completed({
           requestedAgent: author,
           resolvedModel: author.model,
-          effectiveEffort: author.effort,
           configuredSession: configuration,
         }),
       );
@@ -102,7 +100,6 @@ describe("Journal author continuity", () => {
   test.each([
     { name: "unknown tool coverage", report: { requiredToolOutcomeCoverage: "unknown" as const } },
     { name: "model reroute", report: { resolvedModel: "opus" } },
-    { name: "effective effort drift", report: { effectiveEffort: "low" } },
   ])("refuses $name evidence", async ({ report }) => {
     const journal = await Journal.open("TASK-1");
     await journal.finish(await journal.begin("shape", "TASK-1", agent, runtime), completed(report));
@@ -137,7 +134,6 @@ describe("Journal author continuity", () => {
       completed({
         requestedAgent: codex,
         resolvedModel: codex.model,
-        effectiveEffort: codex.effort,
         configuredSession: {
           provenance: "other.harness/init",
           model: codex.model,
@@ -158,7 +154,6 @@ describe("Journal author continuity", () => {
       completed({
         requestedAgent: codex,
         resolvedModel: codex.model,
-        effectiveEffort: codex.effort,
         configuredSession: {
           provenance: "codex.sdk.requested",
           model: codex.model,

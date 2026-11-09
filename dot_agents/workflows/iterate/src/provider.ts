@@ -9,7 +9,6 @@ import type {
   HarnessAdapter,
   ProviderAdapter,
   RuntimeContract,
-  SessionInput,
 } from "./provider-types.ts";
 import { versionFor } from "./version-probe.ts";
 
@@ -28,25 +27,29 @@ const harnesses: Readonly<Record<ProviderName, Harness>> = {
   claude: claudeHarness,
   codex: codexHarness,
 };
+const hostedHarnesses: Readonly<Record<ProviderName, HarnessAdapter>> = {
+  claude: hosted(claudeHarness),
+  codex: hosted(codexHarness),
+};
 
-export const adapters: readonly HarnessAdapter[] = providerNames.map((name) =>
-  hosted(harnesses[name]),
+export const adapters: readonly HarnessAdapter[] = providerNames.map(
+  (name) => hostedHarnesses[name],
 );
 
-export function harnessFor(provider: string): Harness {
-  const harness = Object.values(harnesses).find((candidate) => candidate.provider === provider);
-  if (!harness)
+function providerName(provider: string): ProviderName {
+  const name = providerNames.find((candidate) => candidate === provider);
+  if (!name)
     throw new Exit(1, `${provider} is not implemented; providers are ${providerNames.join(", ")}`);
 
-  return harness;
+  return name;
+}
+
+export function harnessFor(provider: string): Harness {
+  return harnesses[providerName(provider)];
 }
 
 export function adapterFor(provider: string): HarnessAdapter {
-  const adapter = adapters.find((candidate) => candidate.provider === provider);
-  if (!adapter)
-    throw new Exit(1, `${provider} is not implemented; providers are ${providerNames.join(", ")}`);
-
-  return adapter;
+  return hostedHarnesses[providerName(provider)];
 }
 
 // Capabilities come from the selected adapter. An omitted model table means only

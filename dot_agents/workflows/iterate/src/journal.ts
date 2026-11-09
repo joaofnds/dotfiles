@@ -19,7 +19,11 @@ import { definedFields } from "./defined-fields.ts";
 import { Exit } from "./exit.ts";
 import { atomicJson, type JsonWriter, readOptionalFile } from "./files.ts";
 import { adapterFor, providerNames } from "./provider.ts";
-import { configuredSessionSchema, type RuntimeContract } from "./provider-types.ts";
+import {
+  configuredSessionSchema,
+  type RuntimeContract,
+  toolOutcomeSchema,
+} from "./provider-types.ts";
 import type { SessionResult } from "./session.ts";
 import {
   addTokens,
@@ -48,7 +52,6 @@ export const runtimeContractSchema = z.object({
 const retiredProviders = ["opencode", "antigravity", "agy"] as const;
 const recordedProviders = [...providerNames, ...retiredProviders] as const;
 type RecordedProvider = (typeof recordedProviders)[number];
-/** Each harness owns its configuration shape; the journal keeps whatever the harness recorded. */
 const requestSchema = z.object({
   provider: z.enum(recordedProviders),
   model: z.string().optional(),
@@ -58,12 +61,6 @@ const modelRerouteSchema = z.object({
   fromModel: z.string(),
   toModel: z.string(),
   reason: z.string(),
-});
-const toolOutcomeSchema = z.object({
-  itemId: z.string(),
-  kind: z.string(),
-  status: z.string(),
-  raw: z.unknown(),
 });
 export const sessionReportSchema = z.object({
   status: z.enum(["completed", "failed"]),
@@ -81,7 +78,6 @@ export const sessionReportSchema = z.object({
   toolOutcomes: z.array(toolOutcomeSchema).optional(),
   modelReroutes: z.array(modelRerouteSchema).optional(),
   resolvedModel: z.string().optional(),
-  effectiveEffort: z.string().optional(),
   accountingComplete: z.boolean(),
   permissionDenials: nonnegative.optional(),
   killedAtExit: z.array(z.string()).optional(),
@@ -133,7 +129,6 @@ const attemptSchema = z
       .optional(),
     requiredToolOutcomeCoverage: z.literal("unknown").optional(),
     resolvedModel: z.string().optional(),
-    effectiveEffort: z.string().optional(),
     accountingComplete: z.boolean().optional(),
     costReceipt: costSchema.optional(),
     usageReceipt: usageSchema.optional(),
@@ -503,7 +498,6 @@ export class Journal {
     const configurationMatches = adapter.resume.configurationMatches({ previous, agent });
     if (
       !(agent.model && agent.effort && configurationMatches) ||
-      (previous.effectiveEffort !== undefined && previous.effectiveEffort !== agent.effort) ||
       !previous.runtime ||
       !runtime ||
       JSON.stringify(previous.runtime) !== JSON.stringify(runtime)
@@ -641,7 +635,6 @@ export class Journal {
         reportPath,
       },
       definedFields({
-        modelReroutes: result.modelReroutes,
         processExit: result.processExit,
         configuredSession: result.configuredSession,
         providerCompleted: result.providerCompleted,
@@ -650,7 +643,6 @@ export class Journal {
         costScope: result.cost?.scope,
         costUsd,
         resolvedModel: result.resolvedModel,
-        effectiveEffort: result.effectiveEffort,
         sessionId: result.sessionId,
       }),
     );

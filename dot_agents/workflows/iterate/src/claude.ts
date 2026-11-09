@@ -145,6 +145,7 @@ export function claudeQuery(input: SessionInput, executable: string) {
   const { agent, stage, card, systemPrompt, budget } = input;
   const effort = efforts.find((level) => level === agent.effort);
   if (agent.effort && !effort) throw new Error(`Claude does not offer effort ${agent.effort}`);
+
   const options: Options = Object.assign(
     {
       pathToClaudeCodeExecutable: executable,

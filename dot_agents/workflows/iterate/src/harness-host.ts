@@ -1,33 +1,16 @@
 import process from "node:process";
 import { stdin } from "bun";
 import { z } from "zod";
-import { agentSchema, stages } from "./agents.ts";
 import { diagnostic } from "./exit.ts";
 import { harnessFor } from "./provider.ts";
-import {
-  configuredSessionSchema,
-  InvalidProviderMessage,
-  type SessionInput,
-} from "./provider-types.ts";
+import { InvalidProviderMessage } from "./provider-types.ts";
+import { sessionInputSchema } from "./session-input.ts";
 
 // The session's process-group leader. The vendor SDK and the CLI it starts run as its
 // descendants, so cancelling the group stops all of them.
-const text = z.string();
-const inputSchema = z.object({
-  agent: agentSchema,
-  stage: z.enum(stages),
-  card: text,
-  systemPrompt: text,
-  budget: text.exactOptional(),
-  logDirectory: text.exactOptional(),
-  resumeSessionId: text.exactOptional(),
-  resumeConfiguration: configuredSessionSchema.exactOptional(),
-  timeoutMs: z.number().exactOptional(),
-  idleTimeoutMs: z.number().exactOptional(),
-});
 
-const { input, executable }: { input: SessionInput; executable: string } = z
-  .object({ input: inputSchema, executable: text })
+const { input, executable } = z
+  .object({ input: sessionInputSchema, executable: z.string() })
   .parse(JSON.parse(await stdin.text()));
 const write = (line: unknown) => process.stdout.write(`${JSON.stringify(line)}\n`);
 try {
