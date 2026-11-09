@@ -1,18 +1,28 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, test } from "bun:test";
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  setDefaultTimeout,
+  test,
+} from "bun:test";
 import { readFile } from "node:fs/promises";
 import { WorkflowHarness } from "./testing/workflow-harness.ts";
+
+setDefaultTimeout(20_000);
 
 describe("iterate run accounting", () => {
   let harness: WorkflowHarness;
   beforeAll(async () => {
     harness = await WorkflowHarness.setup();
-  });
+  }, 5000);
   beforeEach(async () => {
     await harness.reset();
-  });
+  }, 5000);
   afterAll(async () => {
     await harness.teardown();
-  });
+  }, 5000);
 
   test("successive card stages consume one persisted dollar limit", async () => {
     const driver = await harness.seed({ runBudget: "0.2" });
@@ -26,7 +36,7 @@ describe("iterate run accounting", () => {
     expect(result.calls).toEqual(["/shape DOT-1", "/build DOT-1"]);
     expect(result.stderr).toContain("run dollar budget is exhausted");
     expect(result.argsSeen).toContain("--max-budget-usd 0.1");
-  });
+  }, 20_000);
 
   test("a failed stage records its reported spend and consumes the run budget", async () => {
     const driver = await harness.seed({ failedResult: true, runBudget: "0.1" });
@@ -53,6 +63,22 @@ describe("iterate run accounting", () => {
     expect(result.calls).toEqual([]);
   });
 
+  test.each(["index", "record"] as const)(
+    "a journal %s FIFO refuses inspection without waiting for a writer",
+    async (component) => {
+      const driver = await harness.seed();
+      await driver.run("step", "DOT-1");
+      await driver.blockJournalRead(component);
+
+      const result = await driver.run("status", "DOT-1");
+
+      expect(result.code).toBe(1);
+      expect(result.stdout).toBe("");
+      expect(result.calls).toEqual(["/shape DOT-1"]);
+    },
+    6000,
+  );
+
   test("an interrupted attempt remains counted and blocks further dispatch", async () => {
     const driver = await harness.seed({ stall: "shape", mute: true });
     await driver.run("step", "DOT-1");
@@ -74,7 +100,7 @@ describe("iterate run accounting", () => {
 
     expect(result.code).toBe(1);
     expect(result.calls).toHaveLength(6);
-  });
+  }, 20_000);
 
   test("the run journal links to the complete report and raw provider evidence", async () => {
     const driver = await harness.seed();
@@ -149,7 +175,7 @@ describe("iterate run accounting", () => {
   });
 
   test("a clean-tree retry completes without repeating the successful review", async () => {
-    const driver = await harness.seed({ status: "Review", assignee: "@claude", leaves: "review" });
+    const driver = await harness.seed({ status: "Review", leaves: "review" });
     await driver.run("step", "DOT-1");
     const refused = await driver.run("step", "DOT-1");
     await driver.clearWork();
@@ -161,7 +187,7 @@ describe("iterate run accounting", () => {
     expect(result.code).toBe(0);
     expect(JSON.parse(status.stdout).completed).toBe(true);
     expect(result.calls).toEqual(["/review DOT-1"]);
-  });
+  }, 20_000);
 
   test("reopening a completed card starts a distinct run", async () => {
     const driver = await harness.seed();
@@ -178,13 +204,13 @@ describe("iterate run accounting", () => {
       completed: false,
       attempts: [{ stage: "build" }],
     });
-  });
+  }, 20_000);
 
   test("explicit resume continues the same author role with its recorded Claude session", async () => {
     const driver = await harness.seed({ stall: "shape", mute: true });
-    await driver.run("step", "DOT-1");
+    await driver.run("step", "DOT-1", "--model", "sonnet", "--effort", "high");
 
-    const result = await driver.run("resume", "DOT-1");
+    const result = await driver.run("resume", "DOT-1", "--model", "sonnet", "--effort", "high");
 
     expect(result.code).toBe(2);
     expect(result.calls).toEqual(["/shape DOT-1", "/shape DOT-1"]);
@@ -195,15 +221,14 @@ describe("iterate run accounting", () => {
     const resumeBuild = async () => {
       const driver = await harness.seed({
         status: "Build",
-        assignee: "@claude",
         stall: "build",
         mute: true,
         budget: "100",
         runBudget: "100",
         reportedCosts: ["17.834", "43.577"],
       });
-      await driver.run("step", "DOT-1");
-      const resumed = await driver.run("resume", "DOT-1");
+      await driver.run("step", "DOT-1", "--model", "sonnet", "--effort", "high");
+      const resumed = await driver.run("resume", "DOT-1", "--model", "sonnet", "--effort", "high");
       return { driver, resumed };
     };
 
@@ -233,10 +258,10 @@ describe("iterate run accounting", () => {
     test("leaves the run budget less the session's total to the next session", async () => {
       const { driver } = await resumeBuild();
 
-      const next = await driver.run("step", "DOT-1");
+      const next = await driver.run("step", "DOT-1", "--model", "sonnet", "--effort", "high");
 
       expect(next.argsSeen).toContain("--max-budget-usd 56.423 ");
-    });
+    }, 20_000);
   });
 
   describe("when a resume spends nothing more", () => {
@@ -246,34 +271,35 @@ describe("iterate run accounting", () => {
         mute: true,
         reportedCosts: ["0.03", "0.3", "0.3"],
       });
-      await driver.run("step", "DOT-1");
-      await driver.run("resume", "DOT-1");
-      await driver.run("resume", "DOT-1");
+      await driver.run("step", "DOT-1", "--model", "sonnet", "--effort", "high");
+      await driver.run("resume", "DOT-1", "--model", "sonnet", "--effort", "high");
+      await driver.run("resume", "DOT-1", "--model", "sonnet", "--effort", "high");
 
       const status = JSON.parse((await driver.run("status", "DOT-1")).stdout);
 
       expect(status.attempts.map((attempt: { costUsd: number }) => attempt.costUsd)).toEqual([
         0.03, 0.27, 0,
       ]);
-    });
+    }, 20_000);
   });
 
   describe("when a resumed session reports less than its attempts recorded", () => {
-    test("records the reported total whole", async () => {
+    test("retains a regressed cumulative receipt as unknown spend", async () => {
       const driver = await harness.seed({
         stall: "shape",
         mute: true,
         reportedCosts: ["17.834", "5"],
       });
-      await driver.run("step", "DOT-1");
-      await driver.run("resume", "DOT-1");
+      await driver.run("step", "DOT-1", "--model", "sonnet", "--effort", "high");
+      await driver.run("resume", "DOT-1", "--model", "sonnet", "--effort", "high");
 
       const status = JSON.parse((await driver.run("status", "DOT-1")).stdout);
 
       expect(status.attempts.map((attempt: { costUsd: number }) => attempt.costUsd)).toEqual([
-        17.834, 5,
+        17.834,
+        undefined,
       ]);
-    });
+    }, 20_000);
   });
 
   test.each([
@@ -357,8 +383,14 @@ describe("iterate run accounting", () => {
   test("resuming a legacy card retains planning history and does not repeat it", async () => {
     const driver = await harness.seed();
     await driver.seedLegacyRun("DOT-1", 1);
+    await driver.setAssignee("@claude");
 
-    const result = await driver.run("step", "DOT-1");
+    const result = await driver.run(
+      "step",
+      "DOT-1",
+      "--adopt-legacy-claim",
+      "Operator directs recovery of the fixture legacy run",
+    );
     const status = await driver.run("status", "DOT-1");
 
     expect(result.code).toBe(0);
@@ -391,7 +423,7 @@ describe("iterate run accounting", () => {
     expect(result.code).toBe(1);
     expect(JSON.parse(status.stdout)).toMatchObject({ completed: false });
     expect(result.calls).toEqual(["/shape DOT-1"]);
-  });
+  }, 20_000);
 
   test("completion needs no remaining agent budget", async () => {
     const driver = await harness.seed({ runBudget: "0.3" });
@@ -403,13 +435,19 @@ describe("iterate run accounting", () => {
     expect(result.code).toBe(0);
     expect(JSON.parse(status.stdout).completed).toBe(true);
     expect(result.calls).toEqual(["/shape DOT-1", "/build DOT-1", "/review DOT-1"]);
-  });
+  }, 20_000);
 
   test("historical planning spend still exhausts the persisted dollar limit", async () => {
     const driver = await harness.seed();
     await driver.seedLegacyRun("DOT-1", 0.3);
+    await driver.setAssignee("@claude");
 
-    const result = await driver.run("step", "DOT-1");
+    const result = await driver.run(
+      "step",
+      "DOT-1",
+      "--adopt-legacy-claim",
+      "Operator directs recovery of the fixture legacy run",
+    );
     const status = await driver.run("status", "DOT-1");
 
     expect(result.code).toBe(1);

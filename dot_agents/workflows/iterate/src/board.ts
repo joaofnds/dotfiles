@@ -1,6 +1,12 @@
 import { $ } from "bun";
 import { z } from "zod";
 import type { Stage } from "./agents.ts";
+import {
+  BoardCommandFailure,
+  type BoardOperations,
+  backlogCommand,
+  type NativeGate,
+} from "./board-transaction.ts";
 import { Exit } from "./exit.ts";
 
 const cardPattern = /^[A-Z]+-[0-9]+(\.[0-9]+)*$/;
@@ -18,14 +24,16 @@ const taskView = z.object({
     labels: z.array(z.string()),
     assignees: z.array(z.string()),
     acceptanceCriteria: z.array(checklistItem),
+    definitionOfDone: z.array(checklistItem),
   }),
 });
-export const ours = "@claude";
 
 export type Card = {
   readonly status: string;
   readonly assignee: string;
+  readonly assignees: readonly string[];
   readonly criteria: number;
+  readonly uncheckedRequirements: number;
   readonly labels: readonly string[];
 };
 
@@ -33,6 +41,8 @@ export async function tool<T>(run: () => Promise<T>, what: string): Promise<T> {
   try {
     return await run();
   } catch (error) {
+    if (error instanceof BoardCommandFailure) throw error;
+
     throw new Exit(1, `${what}: ${describe(error)}`);
   }
 }
@@ -53,16 +63,29 @@ export function cardId(value: string): string {
   return id;
 }
 
-export async function card(id: string): Promise<Card> {
+export async function card(
+  id: string,
+  gate?: NativeGate,
+  operations: BoardOperations = {},
+): Promise<Card> {
   const { task } = await tool(
-    async () => taskView.parse(await $`backlog task view ${id} --json`.json()),
+    async () =>
+      taskView.parse(
+        JSON.parse(
+          await backlogCommand(["task", "view", id, "--json"], gate, false, undefined, operations),
+        ),
+      ),
     `reading ${id} failed`,
   );
 
   return {
     status: task.status,
     assignee: task.assignees.join(", "),
+    assignees: task.assignees,
     criteria: task.acceptanceCriteria.length,
+    uncheckedRequirements: [...task.acceptanceCriteria, ...task.definitionOfDone].filter(
+      (item) => !item.checked,
+    ).length,
     labels: task.labels,
   };
 }
@@ -75,9 +98,22 @@ export function inProgress(status: string): boolean {
   return status === "Build" || status === "Review";
 }
 
-export async function setStatus(id: string, status: string): Promise<void> {
-  await tool(
-    () => $`backlog task edit ${id} --status ${status}`.quiet(),
-    `moving ${id} to ${status} failed`,
-  );
+export async function setStatus({
+  gate,
+  status,
+}: {
+  readonly gate: NativeGate;
+  readonly status: string;
+}): Promise<void> {
+  await gate.edit(["--status", status]);
+}
+
+export async function setAssignee({
+  gate,
+  assignee,
+}: {
+  readonly gate: NativeGate;
+  readonly assignee: string;
+}): Promise<void> {
+  await gate.edit(["--assignee", assignee]);
 }

@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "format": "biome format --write . && biome format --write --config-path evals/biome.json evals",
     "check": "bun test && tsc --noEmit && tsc --noEmit -p evals/tsconfig.json && biome check . && biome check --config-path evals/biome.json evals"
   },
   "dependencies": {

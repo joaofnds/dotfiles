@@ -1,10 +1,121 @@
 #!/usr/bin/env bun
+import { closeSync, existsSync, renameSync, writeFileSync } from "node:fs";
 import { connect } from "node:net";
+import { join } from "node:path";
 import process from "node:process";
-import { spawn } from "bun";
+import { spawn, stdin } from "bun";
+
+if (process.argv[2] === "--lifecycle") await lifecycleFixture();
+
+async function lifecycleFixture(): Promise<never> {
+  const scenario = process.argv[3];
+  const directory = process.argv[4] ?? "";
+  const emit = (event: unknown) => console.log(JSON.stringify(event));
+  if (scenario?.startsWith("protocol-")) return protocolLifecycleFixture(scenario, directory);
+
+  if (scenario === "success") {
+    emit({ phase: "done", body: "prepared final" });
+    process.exit(0);
+  }
+  if (scenario === "malformed-stalled") console.log('{"phase":');
+  else emit({ phase: "progress", body: "lifecycle ready" });
+
+  if (scenario === "descendant") {
+    process.on("SIGTERM", () => {});
+    process.on("SIGINT", () => {});
+    writeFileSync(join(directory, "descendant"), String(process.pid));
+    if (existsSync(join(directory, "close-pipes"))) {
+      closeSync(1);
+      closeSync(2);
+    }
+  }
+  if (
+    scenario === "inherited-pipes" ||
+    scenario === "closed-descendant" ||
+    scenario === "escaped-pipes"
+  ) {
+    if (scenario === "closed-descendant") writeFileSync(join(directory, "close-pipes"), "yes");
+    spawn([process.execPath, import.meta.path, "--lifecycle", "descendant", directory], {
+      detached: scenario === "escaped-pipes",
+      stdin: "ignore",
+      stdout: "inherit",
+      stderr: "inherit",
+    });
+    while (!existsSync(join(directory, "descendant")))
+      await new Promise<void>((resolve) => setTimeout(resolve, 5));
+    writeFileSync(join(directory, "ready"), "ready");
+    while (!existsSync(join(directory, "release")))
+      await new Promise<void>((resolve) => setTimeout(resolve, 5));
+    emit({ phase: "done", body: "leader final" });
+    process.exit(0);
+  }
+  if (scenario === "closed-output") {
+    closeSync(1);
+    closeSync(2);
+  }
+  return new Promise<never>(() => {
+    setInterval(() => {}, 1000);
+  });
+}
+
+async function protocolLifecycleFixture(scenario: string, directory: string): Promise<never> {
+  const emit = (event: unknown) => console.log(JSON.stringify(event));
+  if (scenario === "protocol-malformed") console.log('{"phase":');
+  else {
+    const phase = ["missing-final", "incomplete", "error", "config-error"].find(
+      (name) => scenario === `protocol-${name}`,
+    );
+    emit({ phase: phase ?? "done", body: "protocol final" });
+  }
+
+  const input = await stdin.text();
+  const receipt = join(directory, "closed-input.tmp");
+
+  if (scenario === "protocol-delayed-receipt") {
+    writeFileSync(receipt, "");
+    await new Promise<void>((resolve) => setTimeout(resolve, 100));
+  }
+
+  writeFileSync(receipt, input);
+  renameSync(receipt, join(directory, "closed-input"));
+
+  if (scenario === "protocol-nonzero") process.exit(7);
+
+  if (scenario === "protocol-inherited-pipes") {
+    const inherited = spawn(["/bin/sleep", "30"], {
+      stdin: "ignore",
+      stdout: "inherit",
+      stderr: "inherit",
+    });
+    writeFileSync(join(directory, "descendant"), String(inherited.pid));
+    process.exit(0);
+  }
+
+  if (scenario === "protocol-cleanup-eof" || scenario === "protocol-stalled-eof") closeSync(1);
+
+  if (scenario === "protocol-cleanup-open" || scenario === "protocol-cleanup-eof") {
+    await new Promise<void>((resolve) => setTimeout(resolve, 1250));
+    process.exit(0);
+  }
+
+  return new Promise<never>(() => {
+    setInterval(() => {
+      if (scenario === "protocol-noisy") emit({ phase: "noise", body: "ignored" });
+      if (scenario === "protocol-repeated-close") emit({ phase: "close", body: "" });
+    }, 50);
+  });
+}
 
 const descendant = process.argv.includes("--descendant");
-const interrupted = ["interrupt", "timeout"].includes(process.env.SESSION_SCENARIO ?? "");
+const scenario = process.env.SESSION_SCENARIO;
+const fixtureProtocol = scenario?.startsWith("fixture-");
+if (fixtureProtocol && process.env.SESSION_INPUT_PATH) {
+  const input = process.argv.includes("--fixture-stdin")
+    ? await stdin.text()
+    : process.argv[process.argv.indexOf("--fixture-argv") + 1];
+  writeFileSync(process.env.SESSION_INPUT_PATH, JSON.stringify(input));
+}
+const interrupted = ["interrupt", "timeout", "idle"].includes(process.env.SESSION_SCENARIO ?? "");
 const control = connect(process.env.SESSION_CONTROL ?? "");
 let child: ReturnType<typeof spawn> | undefined;
 const deadline = setTimeout(() => process.exit(2), 10_000);
@@ -15,7 +126,7 @@ const killed = (taskId: string) =>
 function stop() {
   clearTimeout(deadline);
   child?.kill("SIGKILL");
-  process.exit(0);
+  process.exit(scenario === "nonzero" ? 7 : 0);
 }
 
 control.on("error", stop);
@@ -43,7 +154,9 @@ control.on("data", (bytes) => {
         });
       }
     }
-    if (!descendant) {
+    if (!descendant && fixtureProtocol) {
+      emit({ phase: "progress", body: "fixture progress" });
+    } else if (!descendant) {
       emit({
         type: "system",
         subtype: "init",
@@ -59,6 +172,11 @@ control.on("data", (bytes) => {
     control.write("ready\n");
   }
   if (command === "finish") {
+    if (fixtureProtocol) {
+      emit({ phase: "done", body: "fixture final reply" });
+      stop();
+    }
+    if (scenario === "no-result") stop();
     const final = process.env.SESSION_SCENARIO === "long" ? "x".repeat(100_000) : "final reply";
     if (process.env.SESSION_SCENARIO === "truncated") {
       emit({
@@ -67,7 +185,7 @@ control.on("data", (bytes) => {
       });
       stop();
     }
-    console.error("fixture diagnostic");
+    console.error(scenario === "raw-stderr" ? "\n fixture diagnostic \n" : "fixture diagnostic");
     const killedAtExit = process.env.SESSION_SCENARIO === "killed-at-exit";
     if (killedAtExit) {
       for (const [taskId, description] of [
@@ -78,19 +196,35 @@ control.on("data", (bytes) => {
       }
       killed("b-stopped");
     }
-    emit({
+    if (scenario === "unknown-tools") {
+      emit({ type: "future.event", payload: { unrecognized: true } });
+      emit({
+        type: "assistant",
+        message: {
+          content: [{ type: "tool_use", name: "Bash", input: { command: "literal tool" } }],
+        },
+      });
+    }
+    const terminal = {
       type: "result",
+      uuid: ["conflicting-terminal", "reordered-terminal"].includes(scenario ?? "")
+        ? "same-terminal"
+        : undefined,
       session_id: "claude-terminal-session",
-      result: final,
+      result: scenario === "no-final" ? undefined : final,
       is_error: process.env.SESSION_SCENARIO === "error",
       errors: process.env.SESSION_SCENARIO === "error" ? ["provider failed"] : [],
-      permission_denials:
-        process.env.SESSION_SCENARIO === "denials"
-          ? [
-              { tool_name: "Bash", tool_use_id: "denied-1", tool_input: {} },
-              { tool_name: "Edit", tool_use_id: "denied-2", tool_input: {} },
-            ]
-          : [],
+      permission_denials: [
+        "denials",
+        "duplicate-terminal",
+        "reordered-terminal",
+        "anonymous-reordered-terminal",
+      ].includes(scenario ?? "")
+        ? [
+            { tool_name: "Bash", tool_use_id: "denied-1", tool_input: {} },
+            { tool_name: "Edit", tool_use_id: "denied-2", tool_input: {} },
+          ]
+        : [],
       num_turns: 2,
       total_cost_usd: 0.25,
       usage: { input_tokens: 10, cache_read_input_tokens: 7, output_tokens: 3 },
@@ -104,13 +238,60 @@ control.on("data", (bytes) => {
           costBasis: "list",
         },
       },
-    });
+    };
+    emit(terminal);
+    if (scenario === "duplicate-terminal") emit(terminal);
+    if (scenario === "reordered-terminal" || scenario === "anonymous-reordered-terminal")
+      emit(Object.fromEntries(Object.entries(terminal).reverse()));
+    if (scenario === "conflicting-terminal") emit({ ...terminal, total_cost_usd: 0.4 });
+    if (scenario === "anonymous-replayed-terminal") {
+      emit({ type: "assistant", message: { content: [{ type: "text", text: "new work" }] } });
+      emit(Object.fromEntries(Object.entries(terminal).reverse()));
+    }
+    if (scenario === "changed-accounting-session") {
+      emit({
+        ...terminal,
+        uuid: "other-session",
+        session_id: "other-session",
+        total_cost_usd: 0.4,
+      });
+    }
+    if (scenario === "regressed-cost" || scenario === "regressed-tokens") {
+      emit({
+        ...terminal,
+        uuid: "regressed-terminal",
+        total_cost_usd: scenario === "regressed-cost" ? 0.1 : 0.4,
+        modelUsage: {
+          "resolved-fake": {
+            inputTokens: scenario === "regressed-tokens" ? 5 : 14,
+            cacheReadInputTokens: 9,
+            outputTokens: 5,
+          },
+        },
+      });
+    }
+    if (scenario === "replayed-terminal" || scenario === "new-terminal-after-progress") {
+      emit({ type: "assistant", message: { content: [{ type: "text", text: "new work" }] } });
+      emit(
+        scenario === "replayed-terminal"
+          ? terminal
+          : { ...terminal, uuid: "new-terminal", result: "new final reply", total_cost_usd: 0.4 },
+      );
+    }
+    if (scenario === "later-no-final") emit({ type: "result", is_error: false });
     if (killedAtExit) killed("b-gate");
     if (process.env.SESSION_SCENARIO === "killed-unseen") killed("b-unseen");
-    if (process.env.SESSION_SCENARIO === "killed-mid-turn") {
+    if (["killed-mid-turn", "unfinished-text", "unfinished-tool"].includes(scenario ?? "")) {
       killed("b-monitor");
-      emit({ type: "assistant", message: { content: [{ type: "text", text: "next turn" }] } });
+      const content =
+        scenario === "unfinished-tool"
+          ? { type: "tool_use", name: "Bash", input: { command: "later work" } }
+          : { type: "text", text: "next turn" };
+      emit({ type: "assistant", message: { content: [content] } });
       killed("b-late");
+      if (scenario === "killed-mid-turn") {
+        emit({ type: "result", result: final, is_error: false });
+      }
     }
     if (process.env.SESSION_SCENARIO === "killed-between-results") {
       killed("b-gate");
@@ -168,6 +349,9 @@ control.on("data", (bytes) => {
         usage: { input_tokens: 1, cache_read_input_tokens: 2, output_tokens: 1 },
       });
     }
+    if (scenario === "malformed-recognized")
+      emit({ type: "assistant", message: { content: [{ type: "text", text: 42 }] } });
+    if (scenario === "truncated-tail") process.stdout.write('{"type":"result","result":');
     if (process.env.SESSION_SCENARIO === "malformed") console.log('{"type":');
     stop();
   }

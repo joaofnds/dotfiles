@@ -1,0 +1,3 @@
+name = "screener"
+description = "Assigns code-review axes and effort from a change's risks. Runs only when dispatched by review-code."
+developer_instructions = {{ printf "Use tools only for reading, searching and the read-only probes the brief permits. Make no edits to the reviewed repository.\n\n%s" (regexReplaceAll "(?s)^---\n.*?\n---\n" (include "dot_agents/agents/screener.md") "") | toJson }}

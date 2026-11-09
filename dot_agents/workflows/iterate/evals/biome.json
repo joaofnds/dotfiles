@@ -4,6 +4,7 @@
   "files": {
     "includes": ["*.ts", "cases/**/*.json", "*.json"]
   },
+  "plugins": ["../no-conditional-spread.grit"],
   "formatter": {
     "indentStyle": "space",
     "lineWidth": 100
@@ -16,7 +17,10 @@
       "qwik": "none"
     },
     "rules": {
-      "preset": "all"
+      "preset": "all",
+      "style": {
+        "useObjectSpread": "off"
+      }
     }
   }
 }

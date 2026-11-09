@@ -230,21 +230,20 @@ Tool, permission, and invocation fields:
   alias-opus-nomodel)*. A call passing a model other than the pin was not run, and the
   sub-agents reference ranks the call's model above the definition's. The advisor ran
   on `claude-fable-5-1` while pinned `fable` *(DOT-101: fire-shape-1)*, and its
-  current `opus` pin has not been run under a parent on another model. In `claude -p`
+  later `opus` pin was not run under a parent on another model. In `claude -p`
   at `medium` effort, a definition written mid-session stayed unknown to the `Agent`
   tool 20 seconds later, and a rewritten one kept its first-loaded model and body,
   while a fresh session spawned the rewrite *(DOT-101: reload-*)*. The sub-agents
   reference says the next spawn picks up an edit within seconds, which these runs did
   not show, so verify an edit to a definition from a fresh session, and re-check
-  the pins from fresh sessions too.
+  definition and call settings from fresh sessions too.
 
 Mirror mark: where a rule elsewhere in the corpus rests on a fact above, the two are
 edited together. The live copies are the always-loaded rule to read a rule file
 again each time the work returns to it, which rests on the `Read` entry, the relay
 skill's transcript pointer, the relay and prompt skills' lists of effort levels, the
-advisor and screener agent definitions' model and effort pins, the reviewer,
-reviewer-medium, and reviewer-low definitions' model and effort pins, the
-review-code skill's rule to pass those reviewers no model, the
+shared agent definitions' model and effort metadata, the review-code skill's
+native role-selection rule, the
 hard line in your always-loaded instructions that hooks and settings take effect
 mid-session, the review-instructions skill's rule under Prefer enforcement to
 prose against proposing a Stop hook that rewrites the reply, and its rule under the

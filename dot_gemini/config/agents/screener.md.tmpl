@@ -1,0 +1,8 @@
+---
+name: screener
+description: Assigns code-review axes and effort from a change's risks. Runs only when dispatched by review-code.
+tools: [view_file, grep_search]
+subagent: true
+mainAgent: false
+---
+{{ regexReplaceAll "(?s)^---\n.*?\n---\n" (include "dot_agents/agents/screener.md") "" }}

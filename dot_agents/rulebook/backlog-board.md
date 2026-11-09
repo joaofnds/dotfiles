@@ -119,9 +119,10 @@ authorize a move to Build.
 
 ## The status is a claim
 
-Set a card's status to the column you enter when you pick it up, with @claude as
-assignee, and to the next step, or Done, when you finish, in the same turn as the
-work. Before ending a turn that changed card state, put what changed on the card.
+Set a card's status to the column you enter when you pick it up and to the next step,
+or Done, when you finish, in the same turn as the work. Preserve an active iterate
+run's existing assignee through every move. Outside an iterate run, assign the
+session that owns the work. Before ending a turn that changed card state, put what changed on the card.
 
 Write each acceptance criterion as behavior observed when the work is done, checkable
 under every approach the card leaves open, including every option on a list still

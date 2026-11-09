@@ -1,5 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { commandFor, eventsFrom } from "./provider.ts";
+import { createHash } from "node:crypto";
+import { claudeAdapter } from "./claude.ts";
+import { adapterFor, adapters, budgetFor, commandFor } from "./provider.ts";
+
+const { decode: eventsFrom } = claudeAdapter;
 
 describe(commandFor.name, () => {
   test("uses the Claude CLI default while keeping values as separate arguments", () => {
@@ -88,7 +92,7 @@ describe(commandFor.name, () => {
   });
 });
 
-describe(eventsFrom.name, () => {
+describe("claudeAdapter.decode", () => {
   test("normalizes a Claude session with text, tool activity, and a completed result", () => {
     const records = [
       {
@@ -148,9 +152,14 @@ describe(eventsFrom.name, () => {
       { type: "result", result: "Checks passed." },
       {
         type: "usage",
+        receiptId: createHash("sha256").update(JSON.stringify(records[2])).digest("hex"),
         turns: 3,
-        cost: { usd: 0.42, scope: "aggregateIncludingChildren" },
+        cost: { usd: 0.42, scope: "aggregateIncludingChildren", basis: "sessionCumulative" },
         usage: {
+          parentBasis: "invocation",
+          aggregateBasis: "sessionCumulative",
+          modelsBasis: "sessionCumulative",
+          raw: [records[2]],
           parent: { input: 7, cacheWrite: 11, cacheRead: 13, output: 17, reasoning: 5 },
           aggregateIncludingChildren: {
             input: 19,
@@ -279,5 +288,62 @@ describe(eventsFrom.name, () => {
     '{"type":',
   ])("rejects malformed Claude records: %s", (line) => {
     expect(() => eventsFrom(line)).toThrow(new Error("invalid Claude stream event"));
+  });
+});
+
+describe(adapterFor.name, () => {
+  test("declares the implemented protocols and Claude transport capabilities", () => {
+    expect(adapters.map((adapter) => adapter.provider)).toEqual(["claude", "codex"]);
+    expect(adapterFor("claude").capabilities).toEqual({
+      resume: true,
+      model: true,
+      efforts: ["low", "medium", "high", "xhigh", "max"],
+      promptTransport: "argv",
+      dollarCap: true,
+      dollarCapBasis: "invocation",
+      defaultDollarCap: 50,
+    });
+  });
+
+  test("refuses an unavailable protocol without choosing another provider", () => {
+    expect(() => adapterFor("unavailable")).toThrow("unavailable is not implemented");
+  });
+});
+
+describe("budgetFor", () => {
+  const unsupported = { ...adapterFor("claude").capabilities, dollarCap: false };
+
+  test("a provider that cannot cap dollars receives no default cap", () => {
+    expect(budgetFor({ provider: "codex", capabilities: unsupported })).toBeUndefined();
+  });
+
+  test.each([{ explicitSession: "1" }, { runRemaining: 2 }])(
+    "unsupported dollar caps refuse before launch for %j",
+    (limits) => {
+      expect(() =>
+        budgetFor({ provider: "codex", capabilities: unsupported, ...limits }),
+      ).toThrow();
+    },
+  );
+
+  test("the demonstrated Claude cap is invocation spend bounded by remaining run headroom", () => {
+    expect(
+      budgetFor({
+        provider: "claude",
+        capabilities: adapterFor("claude").capabilities,
+        explicitSession: "0.12",
+        runRemaining: 0.09,
+      }),
+    ).toBe("0.09");
+  });
+
+  test("an unestablished provider cap basis refuses rather than assuming cumulative semantics", () => {
+    expect(() =>
+      budgetFor({
+        provider: "codex",
+        capabilities: { ...unsupported, dollarCap: true, dollarCapBasis: "sessionCumulative" },
+        explicitSession: "1",
+      }),
+    ).toThrow();
   });
 });

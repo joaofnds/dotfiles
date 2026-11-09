@@ -1,9 +1,9 @@
 import hostProcess from "node:process";
 
-export async function runProcess(argv: string[], timeoutMs: number, cwd?: string) {
+export async function runProcess(argv: string[], timeoutMs: number, cwd = hostProcess.cwd()) {
   const child = Bun.spawn(argv, {
     detached: true,
-    ...(cwd ? { cwd } : {}),
+    cwd,
     stdout: "pipe",
     stderr: "pipe",
   });

@@ -815,7 +815,7 @@ export async function runExperiment(
         timedOut: provider.timedOut,
         interrupted: provider.interrupted,
         elapsedMs,
-        ...(error === undefined ? {} : { error }),
+        error,
       };
       await writeJson(join(attemptDirectory, "attempt.json"), attempt);
       summaries.push(attempt);

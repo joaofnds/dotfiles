@@ -10,3 +10,7 @@ export class Exit extends Error {
 export function say(message: string): void {
   console.error(message);
 }
+
+export function diagnostic(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}

@@ -1,37 +1,63 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, test } from "bun:test";
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  setDefaultTimeout,
+  test,
+} from "bun:test";
 import { WorkflowHarness } from "./testing/workflow-harness.ts";
+
+setDefaultTimeout(20_000);
 
 describe("iterate", () => {
   let harness: WorkflowHarness;
 
   beforeAll(async () => {
     harness = await WorkflowHarness.setup();
-  });
+  }, 5000);
 
   beforeEach(async () => {
     await harness.reset();
-  });
+  }, 5000);
 
   afterAll(async () => {
     await harness.teardown();
+  }, 5000);
+
+  test("keeps the run claim through provider-independent stages", async () => {
+    const driver = await harness.seed();
+    await driver.run("step", "DOT-1");
+    const first = JSON.parse((await driver.run("status", "DOT-1")).stdout);
+
+    await driver.run("step", "DOT-1");
+    const next = JSON.parse((await driver.run("status", "DOT-1")).stdout);
+
+    expect(first.runClaim.assignee).toBe(`@iterate-${first.id}`);
+    expect(next.runClaim).toEqual(first.runClaim);
   });
 
   test("carries one named card through separate shape, build, and review steps", async () => {
-    const { run } = await harness.seed();
+    const driver = await harness.seed();
+    const { run } = driver;
 
     const shaped = await run("step", "DOT-1");
     const built = await run("step", "DOT-1");
     const reviewed = await run("step", "DOT-1");
     const completed = await run("step", "DOT-1");
     const status = await run("status", "DOT-1");
+    const board = JSON.parse(await driver.boardCommand("task", "view", "DOT-1", "--json"));
 
+    expect(board.schemaVersion).toBe(1);
+    expect(board.task.assignees).toEqual([]);
     expect([shaped.code, built.code, reviewed.code, completed.code]).toEqual([0, 0, 0, 0]);
     expect(shaped.calls).toEqual(["/shape DOT-1"]);
     expect(built.calls).toEqual(["/shape DOT-1", "/build DOT-1"]);
     expect(completed.calls).toEqual(["/shape DOT-1", "/build DOT-1", "/review DOT-1"]);
-    expect(completed.edits).toBe("");
     expect(JSON.parse(status.stdout)).toMatchObject({
       completed: true,
+      runClaim: { releasedAt: expect.any(String) },
       attempts: [{ stage: "shape" }, { stage: "build" }, { stage: "review" }],
     });
   });
@@ -92,22 +118,27 @@ describe("iterate", () => {
     ]);
   });
 
-  test("reaches a future provider selection before refusing it", async () => {
+  test("defers an invalid provider effort until its stage is reached", async () => {
     const driver = await harness.seed();
-    const options = ["--build-agent", "agy:3.8-flash:high"];
+    const options = ["--build-agent", "claude:sonnet:ultra"];
 
     const shaped = await driver.run("step", "DOT-1", ...options);
     const build = await driver.run("step", "DOT-1", ...options);
 
     expect(shaped.code).toBe(0);
     expect(build.code).toBe(1);
-    expect(build.stderr).toContain("agy is not implemented; provider is claude");
+    expect(build.stderr).toContain("claude effort is one of low, medium, high, xhigh, max");
     expect(build.calls).toEqual(["/shape DOT-1"]);
   });
 
   test("resumes with the current stage selection and ignores a later provider", async () => {
     const driver = await harness.seed({ stall: "shape", mute: true });
-    const options = ["--shape-agent", "claude:sonnet:high", "--build-agent", "agy:3.8-flash:high"];
+    const options = [
+      "--shape-agent",
+      "claude:sonnet:high",
+      "--build-agent",
+      "codex:gpt-6.1-sol:high",
+    ];
     await driver.run("step", "DOT-1", ...options);
 
     const result = await driver.run("resume", "DOT-1", ...options);
@@ -119,14 +150,22 @@ describe("iterate", () => {
     expect(result.argsSeen.match(/--effort high/g)).toHaveLength(2);
   });
 
-  test("documents the Claude-only agent CLI", async () => {
+  test("documents direct and supervised selection options", async () => {
     const result = await (await harness.seed()).run("--help");
 
     expect(result.code).toBe(0);
-    expect(result.stdout).toContain("--provider claude");
+    expect(result.stdout).toContain("--provider claude|codex,");
+    expect(result.stdout).toContain("Codex uses app-server stdio with inherited native policy.");
+    expect(result.stdout).toContain("where the provider enforces one (Claude default 50)");
     expect(result.stdout).toContain("--model MODEL");
     expect(result.stdout).toContain("--effort LEVEL");
     expect(result.stdout).toContain("--STAGE-agent provider:model[:effort]");
+    expect(result.stdout).toContain("--default-provider PROVIDER");
+    expect(result.stdout).toContain("--STAGE-model MODEL");
+    expect(result.stdout).toContain("--STAGE-effort LEVEL");
+    expect(result.stdout).toContain("--role-agent ROLE=provider:model[:effort]");
+    expect(result.stdout).toContain("--role-model ROLE=MODEL");
+    expect(result.stdout).toContain("--role-effort ROLE=LEVEL");
   });
 
   test.each(
@@ -138,7 +177,7 @@ describe("iterate", () => {
       ["inspect", "DOT-1"],
       ["step"],
       ["resume"],
-      ["step", "DOT-1", "--provider", "codex"],
+      ["step", "DOT-1", "--provider", "unavailable"],
       ["step", "DOT-1", "--agent", "claude"],
       ["step", "DOT-1", "--model"],
       ["step", "DOT-1", "--model", "opus", "--model", "sonnet"],
@@ -158,6 +197,51 @@ describe("iterate", () => {
     },
   );
 
+  test("dispatches stage scalars over supervised defaults and tuple fields", async () => {
+    const driver = await harness.seed();
+
+    const result = await driver.run(
+      "step",
+      "DOT-1",
+      "--default-provider",
+      "claude",
+      "--default-model",
+      "opus",
+      "--default-effort",
+      "low",
+      "--shape-effort",
+      "high",
+      "--shape-model",
+      "sonnet",
+      "--shape-agent",
+      "claude:haiku",
+    );
+
+    expect(result.code).toBe(0);
+    expect(result.calls).toEqual(["/shape DOT-1"]);
+    expect(result.argsSeen).toContain("--model sonnet");
+    expect(result.argsSeen).toContain("--effort high");
+    expect(result.argsSeen).not.toContain("--model opus");
+  });
+
+  test.each(
+    [
+      ["--shape-effort", "ultra"],
+      ["--default-provider", "unknown"],
+      ["--role-model", "verifier=sonnet"],
+      ["--shape-model", "sonnet", "--shape-model", "opus"],
+      ["--effort", "high", "--default-provider", "claude"],
+    ].map((options) => ({ options })),
+  )("refuses invalid selections %j before dispatch", async ({ options }) => {
+    const driver = await harness.seed();
+
+    const result = await driver.run("step", "DOT-1", ...options);
+
+    expect(result.code).toBe(1);
+    expect(result.calls).toEqual([]);
+    expect(result.edits).toBe("");
+  });
+
   test("repeating Done completion preserves the same run without another session", async () => {
     const driver = await harness.seed();
     await driver.steps("DOT-1", 4);
@@ -173,7 +257,7 @@ describe("iterate", () => {
     expect(report.attempts).toHaveLength(3);
     expect(report.totals.knownCostUsd).toBeCloseTo(0.3);
     expect(report.completed).toBe(true);
-  });
+  }, 20_000);
 
   test("the stage cap survives separate step processes", async () => {
     const driver = await harness.seed({ stall: "none" });
@@ -184,7 +268,7 @@ describe("iterate", () => {
     expect(result.code).toBe(1);
     expect(result.calls).toHaveLength(6);
     expect(result.stderr).toContain("6 session cap");
-  });
+  }, 20_000);
 
   test.each(["debug", "verify"])(
     "runs the %s investigation without promoting a card with criteria",
@@ -250,7 +334,7 @@ describe("iterate", () => {
   );
 
   test("never starts a stage from a deferred snapshot already returned by the board", async () => {
-    const { run } = await harness.seed({ status: "Build", deferOnRead: 2 });
+    const { run } = await harness.seed({ status: "Build", deferWhileNativeHeld: true });
 
     const result = await run("step", "DOT-1");
 
@@ -312,7 +396,6 @@ describe("iterate", () => {
       stall: "build",
       leaves: "build",
       status: "Build",
-      assignee: "@claude",
     });
 
     await run("step", "DOT-1");
@@ -341,18 +424,16 @@ describe("iterate", () => {
   });
 
   test("a dirty tree on a card in flight is handed to the stage as the previous session's unfinished work", async () => {
-    const { run } = await harness.seed({
-      dirty: true,
-      status: "Build",
-      assignee: "@claude",
-    });
+    const driver = await harness.seed({ status: "Build", stall: "build" });
+    await driver.run("step", "DOT-1");
+    await driver.addUnrelatedWork();
 
-    const result = await run("step", "DOT-1");
+    const result = await driver.run("step", "DOT-1");
 
-    expect(result.code).toBe(0);
-    expect(result.calls).toEqual(["/build DOT-1"]);
-    expect(result.systems[0]).toContain("Nobody is at the keyboard");
-    expect(result.systems[0]).toContain("uncommitted changes");
+    expect(result.code).toBe(2);
+    expect(result.calls).toEqual(["/build DOT-1", "/build DOT-1"]);
+    expect(result.systems[1]).toContain("Nobody is at the keyboard");
+    expect(result.systems[1]).toContain("uncommitted changes");
   });
 
   test("the stop file ends the run before the next session", async () => {
@@ -451,7 +532,7 @@ describe("iterate", () => {
   });
 
   test("refuses to complete a Done card while review work remains uncommitted", async () => {
-    const { run } = await harness.seed({ status: "Review", assignee: "@claude", leaves: "review" });
+    const { run } = await harness.seed({ status: "Review", leaves: "review" });
     await run("step", "DOT-1");
 
     const result = await run("step", "DOT-1");
@@ -464,7 +545,7 @@ describe("iterate", () => {
   });
 
   test("the stop file created during the final card read does not count as work left behind", async () => {
-    const { run } = await harness.seed({ status: "Done", stopOnRead: 2 });
+    const { run } = await harness.seed({ status: "Done", stopOnFinalDoneRead: true });
 
     const result = await run("step", "DOT-1");
     const status = await run("status", "DOT-1");

@@ -8,8 +8,10 @@ continue.
 
 ```sh
 iterate step CARD [--STAGE-agent provider:model[:effort] ...]
+iterate step CARD --continue-author [agent options]
 iterate resume CARD [--STAGE-agent provider:model[:effort] ...]
 iterate status [CARD]  # read the run journal; omit CARD for the most recent run
+iterate recover CARD --run UUID --intent UUID --evidence "typed inspection"
 iterate --help
 ```
 
@@ -22,8 +24,29 @@ To Do and Shape run `shape`; Build runs `build`; Review runs `review`. A Shape c
 with `investigate:debug` or `investigate:verify` runs that skill. If a normal shape
 session leaves the card in the same Shape column with acceptance criteria, the
 runner promotes it to Build; investigations require their own verdict and column
-change. After a stage reports Done, one final `step` checks the tree and closes the
-run without starting another agent.
+change. After a stage reports Done, one final `step` requires a clean tree and checked
+acceptance criteria and definition-of-done items before closing the run without
+starting another agent. Cards explicitly labeled `partial` or `abandoned` retain
+the board policy's checklist exception. A refused run remains incomplete and can be
+retried after its requirements are checked. Checking boxes does not prove the work's
+correctness.
+
+To retain a completed shaping author's context for Build, pass `--continue-author`
+on that Build step. Both stages must use the same explicit provider, model and
+effort, and the recorded native session, runtime inputs and role policy must still
+be compatible. Use the exact native model identifier; an alias resolving to a
+different model name is incompatible. For example, use the same `MODEL_ID` in
+`step CARD --provider claude --model MODEL_ID --effort high` for Shape and
+`step CARD --continue-author --provider claude --model MODEL_ID --effort high` for Build.
+The flag applies to one call; ordinary steps and Review remain fresh. It refuses
+missing, failed or incompatible history without starting a fresh author instead.
+After a continued Build stalls, use ordinary `resume` for that Build session.
+The current Build task and role instructions are sent to the retained session.
+
+This is a CLI option; the installed supervisor skill and its defaults are unchanged.
+Unknown required-tool outcome coverage blocks author continuity even when a Shape
+attempt is otherwise recorded as completed. Source and fixture checks establish
+routing and accounting, not native instruction uptake or accepted-delivery savings.
 
 Each stage retains the review requirements of its skill. Build may complete those
 reviews and move the card to Done itself. Triage and reflection remain separate
@@ -33,32 +56,57 @@ skills for screening work and assessing outcomes against the broader goal.
 
 `main.ts` validates the requested card and advances one stage. `board.ts` reads
 cards and writes the shape promotion through the backlog CLI. `journal.ts` keeps
-attempts and limits across invocations. `session.ts` starts Claude, retains raw
-output and reports, and handles cancellation and timeouts. `provider.ts` builds
-the Claude argument array and normalizes its events. Each ordinary `step` starts
-a fresh process on the host.
-The [session diagram](../../../docs/iterate-session.svg) shows that lifecycle.
+attempts and limits across invocations. `session.ts` starts the selected
+harness, retains raw output and reports, and handles cancellation and timeouts.
+Each harness has an adapter, `claude.ts` or `codex.ts` with its `*-runtime.ts`
+helper, that builds its command, decodes its events, and declares its runtime
+contract, completion rule and resume rules. `provider.ts` registers the adapters,
+resolves a provider name to one, and checks selections and dollar caps against the
+capabilities each adapter declares. A harness that runs as one executable on `PATH`
+and answers `--version` is added by writing its adapter and registering it there.
+Each ordinary `step` starts a fresh process on the host. The
+[session diagram](../../../docs/iterate-session.svg) shows that lifecycle for
+Claude.
 
 This directory installs to `~/.agents/workflows/iterate`. The launcher at
 `~/.scripts/iterate` reconciles pinned dependencies with Bun, then runs
 `src/main.ts` with the caller's arguments and working directory.
 
-Every stage currently uses the `claude` executable. A stage selector has the form
+A stage selector has the form
 `--STAGE-agent provider:model[:effort]`. A stage without one uses the Claude CLI
-defaults. Only `claude` is implemented, so a future provider selection is refused
-when its stage is reached. The direct `--provider`, `--model`, and `--effort`
+defaults. `claude` and `codex` can dispatch. An unknown provider is refused when
+the options are parsed, and an unsupported model or effort when its stage is
+reached. A journal that names a retired provider stays readable by `status`, and
+its saved plan is not reused. Codex uses one public app-server stdio process per attempt.
+It inherits native permissions and sends the literal `$STAGE CARD` plus the supplied
+stage guards as turn input. Explicit pins are checked against the advertised
+Codex 0.166.0 catalog; they are never substituted or clamped.
+Codex protocol completion and final reply are recorded separately from stage success.
+Required-tool outcome coverage remains unknown in the captured public protocol.
+A settled completed turn with a final reply may complete the session when observed
+tool lifecycles and the existing protocol, configuration and process guards pass.
+The runner still requires the card transition, and native editing, resume,
+permissions and cancellation acceptance require separate evidence.
+Configured thread model/effort and policy receipts are not execution telemetry.
+Token receipts stay raw where scope/basis is unknown; dollars remain unknown.
+Explicit dollar caps refuse before Codex dispatch. Native instruction/configuration
+fingerprints record their bounded coverage and unknowns, excluding credentials and
+mutable session stores. Compatible Codex resume requires an established local-input
+receipt; unsupported or unavailable configuration references require a fresh step.
+Unknown execution telemetry and required-tool visibility remain separate. The direct `--provider`, `--model`, and `--effort`
 options remain available for one runner call and cannot be mixed with stage
 selectors. Selection does not come from environment configuration.
 
 ## Guards and continuation
 
 Inbox, unknown columns and deferred cards are refused. Build or Review held by an
-assignee other than `@claude` is refused. A dirty tree is allowed only for a card
-assigned to `@claude`; the stage is told to inspect changes, finish and commit that
-card's work, and preserve other changes. Done requires a clean tree. An untracked
+assignee other than the run's own `@iterate-RUN` claim is refused, and a legacy
+`@claude` assignee is adopted only with `--adopt-legacy-claim`. A dirty tree is
+allowed only under the run's claim and its journal; the stage is told to inspect
+changes, finish and commit that card's work, and preserve other changes. Done requires a clean tree. An untracked
 `.iterate-stop` is excluded from that check but stops dispatch with exit 3.
 
-Every stage asks Claude for auto permission mode, so its tool calls pass Claude
+Claude stages ask for auto permission mode, so its tool calls pass Claude
 Code's classifier rather than skipping permission checks. A session that starts in
 any other mode is stopped and fails, because in print mode nobody can answer a
 permission prompt. Claude falls back that way on models without auto mode, Haiku
@@ -138,9 +186,14 @@ and probes new consequential claims before proceeding.
 bun run check
 ```
 
-The check runs workflow and Claude stream tests, runtime and evaluation type checks,
-and lint. Tests with fake Claude and backlog executables establish runner
-behavior under those fixtures. They do not establish real-agent task quality.
+The check runs workflow and Claude and Codex stream tests, runtime and evaluation
+type checks, and lint. Tests with fake Claude, Codex and backlog executables
+establish runner behavior under those fixtures. They do not establish real-agent task quality.
+
+`bun run format` applies formatting only, so `bun run check` can still report lint or
+import order afterward. `biome check --write` also applies the lint preset's safe
+fixes and assist actions, such as import sorting, to every line of each file it
+touches.
 
 The [paired-trial harness](evals/README.md) retains historical tool-free judgment
 experiments, instruction snapshots, first outputs and raw provider evidence. Its

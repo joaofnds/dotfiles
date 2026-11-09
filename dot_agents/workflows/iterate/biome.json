@@ -1,6 +1,10 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
   "files": { "includes": ["src/**"] },
+  "plugins": ["./no-conditional-spread.grit"],
   "formatter": { "indentStyle": "space", "lineWidth": 100 },
-  "linter": { "domains": { "qwik": "none" }, "rules": { "preset": "all" } }
+  "linter": {
+    "domains": { "qwik": "none" },
+    "rules": { "preset": "all", "style": { "useObjectSpread": "off" } }
+  }
 }

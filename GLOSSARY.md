@@ -49,6 +49,9 @@ term when you introduce or lean on one, one term per concept.
   guard.
 - **Runner**: the script outside the harness that starts each stage's session, reads
   the card between stages, and applies the guards.
+- **Harness**: the agent program a session runs in, which hosts a model and the tools
+  it acts through. Each harness starts, reports, resumes and finishes sessions in its
+  own way.
 - **Held card**: a card in Build or Review with an assignee, belonging to the session
   that set it. Another session may add a note and never changes its status.
 - **Inbox**: captured observations and proposed work awaiting an admission decision.

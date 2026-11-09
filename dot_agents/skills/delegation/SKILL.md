@@ -9,34 +9,54 @@ Work that is independent and sizeable goes to a sub-agent while you keep working
 Before spawning, check whether an agent you already ran holds the context;
 continuing it is often cheaper than a fresh spawn.
 
-## The two shapes
+## Native dispatch
 
-Two shapes, picked per spawn. When you need the result before you can continue, spawn
-one agent in the foreground and its report arrives in that turn's tool result.
-Otherwise spawn in the background, whether it is one agent or a fan-out of several,
-and each report arrives on its own notification. The selector is needing the result
-now, not the count: a single agent you are not waiting on runs in the background,
-same as a fan-out member.
+Use this host's native child dispatch and wait operations. When the next action
+needs the report, wait on the returned handle. Otherwise keep working and collect
+the report through the host's supported notification or wait route. Retain each
+child handle and its result location. A launch receipt is not a finished report.
+
+Give a fresh child the shared role body through its native role adapter, or include
+the body in its brief when the host accepts only a general child. Independent
+reviewers and advisors start without the author's conversation history. Include the
+session's Codex provider policy in every Codex child brief.
+A denied or unavailable native child leaves required independent work incomplete.
+Continue other permitted work in the parent and report the missing capability,
+without switching providers or substituting the author's judgment for review.
 
 ## A review spawn is read-only
 
-A general agent inherits the editing and shell tools, and the spawn call has no
-tools field, so the brief is the only lever. A review, refutation, or audit brief
-says in words that the agent makes no edits and runs no mutating commands, and
-returns findings. The `reviewer` agent carries a read-only tool set of its own and
-needs no such clause, except where the review is meant to run tests.
+Every review, refutation, or audit brief tells the child to return findings without
+editing files or running mutating commands. Name any exception for required test
+commands in that brief.
 
 ## Model
 
-A spawn inherits the parent's model unless the definition pins one or the call
-passes it, and the call outranks the pin. Inheriting the top model is the
-expensive default. Pick by mandate: the small fast model for mechanical retrieval,
-sweeps, locating files, existence probes, extracting a value from a file you can
-name; the middle model where a named artifact settles the work, a deep dive or a
-subsystem summary; and the parent's model only where the mandate needs it, an
-unprimed review whose findings set your next step, or analysis no artifact
-settles. A definition's pin already encodes this choice, so override it only for a
-reason you can state.
+An iterate stage receives an `ITERATE_ROLE_SELECTION` receipt containing the
+requested stage selection and raw role overrides. Read the shared role definition
+for its assigned effort before dispatch. A review's axis assignment replaces that
+effort. Reviewer variants share the reviewer override.
+
+Start with `requestedAgent` and replace its effort with the assignment, if present.
+Replace that entire selection with the role's agent tuple when supplied, including
+removing effort when the tuple omits it. Apply role model and effort fields last.
+Preserve any target-supported assignment through this order. Omitted fields use
+the native entry point's configured defaults, which can include role metadata.
+Record omitted requests as omitted and effective settings only when observed.
+
+Outside iterate, inherit this host's provider and model unless the typed direction
+selects another. Keep assigned role effort unless explicitly overridden. Where the
+selection is open, use a smaller model for mechanical retrieval, a middle model for
+a bounded analysis, and the parent's model for an independent judgment. Record the
+choice and its basis. Shared metadata never selects another provider.
+
+Pass the requested model and effort through supported native fields. If the native
+API cannot express an exact requested selection, report it unavailable and leave
+required work incomplete. Do not guess an alias or drop effort. Keep native role
+adapters free of pins that outrank the request. Record requested settings, native
+child ID, actual provider and observed model/effort separately. Cross-provider
+selection requires typed authority or a selection recorded from it. The Codex
+provider policy overrides conflicting shared pins and forbids automatic fallback.
 
 ## Continuing an agent
 
@@ -45,9 +65,6 @@ the harness supports it. Refresh changed code, card state, and user steering bef
 it acts. Use the runner's resume policy for stage sessions. Start fresh when context
 is stale or continuation is unsupported. An independent assessment needs a fresh
 reviewer, so never resume the author into that role.
-
-Never pass a name on a spawn. A named spawn has returned a receipt in place of its
-report, and the cause is unsettled.
 
 ## Recovering a truncated report
 

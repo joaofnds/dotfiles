@@ -1,0 +1,8 @@
+language js
+
+or {
+  `...($test ? {} : $value)`,
+  `...($test ? $value : {})`
+} as $spread where {
+  register_diagnostic(span=$spread, message="Build the object with Object.assign and definedFields instead of a conditional spread.", severity="error")
+}

@@ -1,6 +1,7 @@
-import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { afterAll, afterEach, beforeAll, describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { SessionHarness } from "./testing/session-harness.ts";
+import process from "node:process";
+import { SessionHarness, SessionLifecycleHarness } from "./testing/session-harness.ts";
 
 describe("session", () => {
   let harness: SessionHarness;
@@ -8,6 +9,9 @@ describe("session", () => {
     harness = SessionHarness.setup();
   });
   afterAll(async () => {
+    await harness.teardown();
+  });
+  afterEach(async () => {
     await harness.teardown();
   });
 
@@ -48,6 +52,116 @@ describe("session", () => {
     expect(JSON.parse(JSON.stringify(result.result))).toEqual(result.result);
   }, 6000);
 
+  test.each(["clock-backward", "clock-forward"] as const)(
+    "keeps elapsed duration independent of %s movement",
+    async (scenario) => {
+      const driver = await harness.start(scenario);
+
+      const result = await driver.finish();
+
+      expect(result.code).toBe(0);
+      expect(result.result?.durationMs).toBeGreaterThanOrEqual(0);
+      expect(result.result?.durationMs).toBeLessThan(10_000);
+      expect(driver.recordedAttempt()).toMatchObject({
+        durationMs: result.result?.durationMs,
+        report: { durationMs: result.result?.durationMs },
+      });
+    },
+  );
+
+  test("a provider returning another session cannot satisfy explicit resume", async () => {
+    const result = await (
+      await harness.start("success", { resumeSessionId: "requested-session" })
+    ).finish();
+
+    expect(result.code).toBe(1);
+    expect(result.stdout).toBe("");
+    expect(result.result).toMatchObject({ status: "failed", sessionId: "claude-terminal-session" });
+  });
+
+  test.each(["duplicate-terminal", "reordered-terminal", "anonymous-reordered-terminal"] as const)(
+    "%s envelopes count token usage and turns once",
+    async (scenario) => {
+      const result = await (await harness.start(scenario)).finish();
+
+      expect(result.code).toBe(0);
+      expect(result.result).toMatchObject({
+        turns: 2,
+        permissionDenials: 2,
+        usage: {
+          parent: { input: 10, output: 3 },
+          aggregateIncludingChildren: { input: 14, output: 5 },
+        },
+        cost: { usd: 0.25, basis: "sessionCumulative" },
+        accountingComplete: true,
+      });
+    },
+  );
+
+  test.each(["replayed-terminal", "anonymous-replayed-terminal"] as const)(
+    "%s cannot complete newer unfinished work",
+    async (scenario) => {
+      const result = await (await harness.start(scenario)).finish();
+
+      expect(result.code).toBe(1);
+      expect(result.stdout).toBe("");
+      expect(result.result).toMatchObject({ status: "failed", accountingComplete: false });
+    },
+  );
+
+  test("a reused terminal identity with conflicting data cannot prove complete accounting", async () => {
+    const result = await (await harness.start("conflicting-terminal")).finish();
+
+    expect(result.code).toBe(1);
+    expect(result.stdout).toBe("");
+    expect(result.result).toMatchObject({ status: "failed", accountingComplete: false });
+  });
+
+  test("a distinct terminal completes the newer work", async () => {
+    const result = await (await harness.start("new-terminal-after-progress")).finish();
+
+    expect(result.code).toBe(0);
+    expect(result.stdout).toBe("new final reply\n");
+    expect(result.result).toMatchObject({ status: "completed", accountingComplete: true });
+  });
+
+  test.each(["regressed-cost", "regressed-tokens"] as const)(
+    "%s cannot establish fully known accounting",
+    async (scenario) => {
+      const result = await (await harness.start(scenario)).finish();
+
+      expect(result.code).toBe(1);
+      expect(result.stdout).toBe("");
+      expect(result.result).toMatchObject({ status: "failed", accountingComplete: false });
+    },
+  );
+
+  test("a new session identity cannot replace an existing accounting ledger", async () => {
+    const result = await (await harness.start("changed-accounting-session")).finish();
+
+    expect(result.code).toBe(1);
+    expect(result.stdout).toBe("");
+    expect(result.result).toMatchObject({
+      status: "failed",
+      sessionId: "claude-terminal-session",
+      accountingComplete: false,
+    });
+  });
+
+  test.each([
+    "unfinished-text",
+    "unfinished-tool",
+    "reinvoked-uncosted",
+    "malformed-recognized",
+  ] as const)(
+    "%s retains earlier evidence without claiming fully known accounting",
+    async (scenario) => {
+      const result = await (await harness.start(scenario)).finish();
+
+      expect(result.result).toMatchObject({ cost: { usd: 0.25 }, accountingComplete: false });
+    },
+  );
+
   test("suppresses progress only when compact transport is selected", async () => {
     const result = await (await harness.start("success", { live: false })).finish();
 
@@ -85,6 +199,31 @@ describe("session", () => {
     },
     6000,
   );
+
+  test.each([
+    ["interrupt-on-spawn", "SIGINT"],
+    ["terminate-on-spawn", "SIGTERM"],
+  ] as const)("records %s before any startup handshake", async (scenario, signal) => {
+    const driver = await harness.start(scenario);
+
+    const result = await driver.stopped();
+
+    expect(result.code).toBe(1);
+    expect(result.result).toMatchObject({
+      status: "failed",
+      result: "",
+      errors: [`received ${signal}`],
+      settlement: { state: "settled" },
+    });
+    expect(driver.stdout).toBe("");
+    expect(driver.processes()).toEqual([
+      { role: "agent", pid: expect.any(Number), running: false },
+    ]);
+    expect(driver.recordedAttempt()).toMatchObject({
+      status: "failed",
+      report: { status: "failed", result: "", errors: [`received ${signal}`] },
+    });
+  });
 
   test("stops the agent and its signal-resistant descendant on SIGINT", async () => {
     const result = await (await harness.start("interrupt")).interrupt();
@@ -140,6 +279,9 @@ describe("session", () => {
     test("names no task killed before or during that turn", async () => {
       const result = await (await harness.start("killed-mid-turn")).finish();
 
+      expect(result.code).toBe(0);
+      expect(result.stdout).toBe("final reply\n");
+      expect(result.result?.status).toBe("completed");
       expect(result.result?.killedAtExit).toBeUndefined();
       expect(result.stderr).not.toContain("killed at exit");
     }, 6000);
@@ -209,5 +351,400 @@ describe("session", () => {
 
       expect(result.result).toMatchObject({ status: "completed", killedAtExit: ["b-gate"] });
     }, 6000);
+  });
+  test("keeps tools and unknown events out of the final reply", async () => {
+    const result = await (await harness.start("unknown-tools")).finish();
+
+    expect(result.code).toBe(0);
+    expect(result.stdout).toBe("final reply\n");
+    expect(result.stderr).toContain("> Bash: literal tool");
+    expect(await readFile(String(result.result?.logPath), "utf8")).toContain('"future.event"');
+  });
+
+  test.each([
+    "malformed-recognized",
+    "error",
+    "nonzero",
+    "no-result",
+    "no-final",
+    "later-no-final",
+    "unfinished-text",
+    "unfinished-tool",
+    "truncated-tail",
+  ] as const)(
+    "retains failed %s evidence without emitting a successful reply",
+    async (scenario) => {
+      const driver = await harness.start(scenario);
+
+      const result = await driver.finish();
+
+      expect(result.code).toBe(1);
+      expect(result.stdout).toBe("");
+      expect(result.result).toMatchObject({ status: "failed" });
+      expect(driver.recordedAttempt()).toMatchObject({ status: "failed", report: result.result });
+      expect(await readFile(String(result.result?.logPath), "utf8")).toContain('"type":"system"');
+    },
+    6000,
+  );
+
+  test("preserves stderr whitespace in the raw log", async () => {
+    const result = await (await harness.start("raw-stderr")).finish();
+
+    expect(await readFile(String(result.result?.logPath), "utf8")).toEndWith(
+      "[stderr]\n\n fixture diagnostic \n\n",
+    );
+  });
+
+  test("preserves a truncated raw tail byte for byte", async () => {
+    const result = await (await harness.start("truncated-tail")).finish();
+
+    expect(await readFile(String(result.result?.logPath), "utf8")).toContain(
+      '{"type":"result","result":[stderr]',
+    );
+  });
+
+  test.each(["stdin", "argv"] as const)(
+    "transports literal %s content through another protocol",
+    async (transport) => {
+      const prompt = "$HOME \"double\" 'single' `touch unexpected` with spaces\nand a new line";
+      const driver = await harness.start(`fixture-${transport}`, { prompt });
+
+      const result = await driver.finish();
+
+      expect(result.code).toBe(0);
+      expect(result.stdout).toBe("fixture final reply\n");
+      expect(result.stderr).toContain("fixture progress");
+      expect(driver.capturedInput()).toBe(prompt);
+    },
+  );
+
+  test.each([
+    ["idle", { idleTimeoutMs: 300 }, "silent for 300ms, so it was stopped"],
+    ["timeout", { timeoutMs: 300 }, "exceeded the 300ms wall-time budget, so it was stopped"],
+  ] as const)(
+    "persists %s failure and terminates both process IDs",
+    async (scenario, options, reason) => {
+      const driver = await harness.start(scenario, options);
+
+      const result = await driver.stopped();
+
+      expect(result.code).toBe(1);
+      expect(result.stopped).toEqual(["agent", "descendant"]);
+      expect(driver.processes().map(({ role, running }) => ({ role, running }))).toEqual([
+        { role: "agent", running: false },
+        { role: "descendant", running: false },
+      ]);
+      expect(driver.stdout).toBe("");
+      expect(driver.recordedAttempt()).toMatchObject({
+        status: "failed",
+        report: { status: "failed", result: "", errors: [reason] },
+      });
+    },
+    6000,
+  );
+
+  test("persists interrupted failure with no invented successful result", async () => {
+    const driver = await harness.start("interrupt");
+
+    await driver.interrupt();
+
+    expect(driver.stdout).toBe("");
+    expect(driver.processes().every(({ running }) => !running)).toBe(true);
+    expect(driver.recordedAttempt()).toMatchObject({
+      status: "failed",
+      report: { status: "failed", result: "", errors: ["received SIGINT"] },
+    });
+  }, 6000);
+});
+
+describe("prepareSession", () => {
+  let harness: SessionLifecycleHarness;
+  beforeAll(() => {
+    harness = new SessionLifecycleHarness();
+  });
+  afterAll(async () => {
+    await harness.teardown();
+  });
+
+  test("prepares without creating a process", () => {
+    const prepared = harness.prepare("missing-executable");
+    const interruptions = process.listenerCount("SIGINT");
+    const terminations = process.listenerCount("SIGTERM");
+    let failure: unknown;
+
+    try {
+      prepared.start();
+    } catch (error) {
+      failure = error;
+    }
+
+    expect(failure).toMatchObject({
+      result: {
+        status: "failed",
+        durationMs: 0,
+        accountingComplete: false,
+        logPath: prepared.logPath,
+        usage: {},
+      },
+    });
+    expect(process.listenerCount("SIGINT")).toBe(interruptions);
+    expect(process.listenerCount("SIGTERM")).toBe(terminations);
+  });
+
+  test("creates the real process synchronously with cancellation already armed", async () => {
+    const prepared = harness.prepare("stalled");
+
+    const running = prepared.start();
+    const exists = process.kill(running.pid, 0);
+    const first = running.cancel("caller could not persist the PID");
+    const repeated = running.cancel("caller could not release its mutex");
+    const settlement = await first;
+    const result = await harness.finish(running);
+
+    expect(exists).toBe(true);
+    expect(running.processGroupId).toBe(running.pid);
+    expect(running.processGroupIdentity).toMatchObject({
+      pid: running.pid,
+      processGroupId: running.pid,
+    });
+    expect(JSON.parse(JSON.stringify(running.processGroupIdentity))).toEqual(
+      running.processGroupIdentity,
+    );
+    expect(running.logPath).toBe(prepared.logPath);
+    expect(first).toBe(repeated);
+    expect(settlement.state).toBe("settled");
+    expect(result).toMatchObject({ status: "failed", accountingComplete: false, settlement });
+    expect(result.errors).toContain("caller could not persist the PID");
+    expect(() => prepared.start()).toThrow();
+  });
+
+  test("returns normalized completion through the explicit start seam", async () => {
+    const running = harness.prepare("success").start();
+
+    const result = await running.result;
+
+    expect(result).toMatchObject({ status: "completed", result: "prepared final" });
+    expect(result.settlement).toEqual(await running.settlement);
+  });
+
+  describe("judges the result by the rules of the adapter it runs", () => {
+    test.each([
+      [true, true],
+      [false, undefined],
+    ])("provider completion declared %p reports %p", async (providerCompletion, reported) => {
+      const result = await harness.finish(
+        harness.prepare("success", { rules: { providerCompletion } }).start(),
+      );
+
+      expect(result.providerCompleted).toBe(reported);
+    });
+
+    test.each([
+      [true, true],
+      [false, false],
+    ])(
+      "a resumed session missing its pinned model fails when the pin rule is %p",
+      async (resolvedModelMustMatchPin, fails) => {
+        const result = await harness.finish(
+          harness
+            .prepare("success", {
+              resumeSessionId: "pinned-session",
+              model: "pinned-model",
+              rules: { resume: { resolvedModelMustMatchPin } },
+            })
+            .start(),
+        );
+
+        expect(
+          result.errors.includes("the resumed session did not establish the pinned model"),
+        ).toBe(fails);
+      },
+    );
+  });
+
+  test.each(["protocol-cleanup-open", "protocol-cleanup-eof"] as const)(
+    "allows successful %s beyond one second within the existing idle allowance",
+    async (scenario) => {
+      const running = harness.prepare(scenario, { idleTimeoutMs: 2500 }).start();
+
+      const result = await harness.finish(running);
+
+      expect(result).toMatchObject({
+        status: "completed",
+        result: "protocol final",
+        processExit: { code: 0, signal: null },
+        settlement: { state: "settled" },
+        errors: [],
+      });
+      expect(result.durationMs).toBeGreaterThan(1000);
+    },
+    5000,
+  );
+
+  test("reads the complete input receipt after delayed publication", async () => {
+    const running = harness.prepare("protocol-delayed-receipt", { idleTimeoutMs: 2500 }).start();
+
+    const input = await harness.inputClosed(running);
+    await running.cancel("receipt control finished");
+
+    expect(input).toBe("start\n");
+  });
+
+  test.each([
+    "protocol-stalled",
+    "protocol-stalled-eof",
+    "protocol-noisy",
+    "protocol-repeated-close",
+  ] as const)(
+    "bounds successful %s by the existing idle allowance without a wall budget",
+    async (scenario) => {
+      const running = harness.prepare(scenario, { idleTimeoutMs: 350 }).start();
+      const input = await harness.inputClosed(running);
+
+      const result = await harness.finish(running);
+
+      expect(result).toMatchObject({
+        status: "failed",
+        result: "protocol final",
+        errors: ["silent for 350ms, so it was stopped"],
+        settlement: { state: "settled" },
+      });
+      expect(input).toBe("start\n");
+      expect(result.durationMs).toBeLessThan(1200);
+    },
+    5000,
+  );
+
+  test("honors an earlier wall budget during successful protocol closure", async () => {
+    const running = harness
+      .prepare("protocol-stalled", { idleTimeoutMs: 2500, timeoutMs: 250 })
+      .start();
+    await harness.inputClosed(running);
+
+    const result = await harness.finish(running);
+
+    expect(result).toMatchObject({
+      status: "failed",
+      errors: ["exceeded the 250ms wall-time budget, so it was stopped"],
+      settlement: { state: "settled" },
+    });
+    expect(result.durationMs).toBeLessThan(1200);
+  });
+
+  test("honors caller cancellation during successful protocol closure", async () => {
+    const running = harness.prepare("protocol-stalled", { idleTimeoutMs: 2500 }).start();
+    await harness.inputClosed(running);
+
+    const settlement = await running.cancel("caller cancelled protocol cleanup");
+    const result = await harness.finish(running);
+
+    expect(result).toMatchObject({
+      status: "failed",
+      errors: ["caller cancelled protocol cleanup"],
+      settlement: { state: "settled" },
+    });
+    expect(result.settlement).toEqual(settlement);
+    expect(result.durationMs).toBeLessThan(1200);
+  });
+
+  test.each([
+    "protocol-missing-final",
+    "protocol-incomplete",
+    "protocol-error",
+    "protocol-config-error",
+  ] as const)(
+    "keeps the short failure drain for %s despite a close request",
+    async (scenario) => {
+      const running = harness.prepare(scenario, { idleTimeoutMs: 2500 }).start();
+
+      const result = await harness.finish(running);
+
+      expect(result).toMatchObject({ status: "failed", settlement: { state: "settled" } });
+      expect(result.errors).toContain("the provider did not settle after protocol input closed");
+      expect(result.durationMs).toBeLessThan(2000);
+    },
+    5000,
+  );
+
+  test("rejects malformed protocol output before it can request successful closure", async () => {
+    const running = harness.prepare("protocol-malformed", { idleTimeoutMs: 2500 }).start();
+
+    const result = await harness.finish(running);
+
+    expect(result).toMatchObject({
+      status: "failed",
+      result: "",
+      settlement: { state: "settled" },
+    });
+    expect(result.errors.length).toBeGreaterThan(0);
+    expect(result.durationMs).toBeLessThan(1200);
+  });
+
+  test("rejects nonzero exit after successful protocol closure", async () => {
+    const running = harness.prepare("protocol-nonzero", { idleTimeoutMs: 2500 }).start();
+
+    const result = await harness.finish(running);
+
+    expect(result).toMatchObject({
+      status: "failed",
+      processExit: { code: 7, signal: null },
+      errors: ["exit 7: no stderr output"],
+      settlement: { state: "settled" },
+    });
+  });
+
+  test("bounds inherited output after the successfully closing protocol root exits", async () => {
+    const running = harness.prepare("protocol-inherited-pipes", { idleTimeoutMs: 2500 }).start();
+
+    const result = await harness.finish(running);
+
+    expect(result.status).toBe("failed");
+    expect(result.errors).toContain("the agent exited with inherited output still open");
+    expect(result.durationMs).toBeLessThan(4500);
+    expect(result.settlement).toEqual(await running.settlement);
+  }, 5000);
+
+  test.each(["closed-output", "malformed-stalled", "output-error"] as const)(
+    "bounds a live provider after %s",
+    async (scenario) => {
+      const running = harness.prepare(scenario).start();
+
+      const result = await harness.finish(running);
+
+      expect(result).toMatchObject({
+        status: "failed",
+        accountingComplete: false,
+        settlement: { state: "settled" },
+      });
+      expect(result.durationMs).toBeLessThan(4000);
+    },
+    5000,
+  );
+
+  test.each(["inherited-pipes", "closed-descendant"] as const)(
+    "retains bounded uncertainty for %s after losing every owned identity anchor",
+    async (scenario) => {
+      const running = harness.prepare(scenario).start();
+      await harness.releaseLeader(running);
+
+      const result = await harness.finish(running);
+
+      expect(result).toMatchObject({ status: "failed", accountingComplete: false });
+      expect(result.settlement?.state).toBe("uncertain");
+      expect(result.durationMs).toBeLessThan(4500);
+      expect(result.settlement).toEqual(await running.settlement);
+    },
+    6000,
+  );
+
+  test("retains output-drain uncertainty after the owned group disappears", async () => {
+    const running = harness.prepare("escaped-pipes").start();
+    await harness.releaseLeader(running);
+
+    const result = await harness.finish(running);
+
+    expect(result).toMatchObject({ status: "failed", settlement: { state: "uncertain" } });
+    expect(result.settlement).toEqual(await running.cancel());
+    expect(result.durationMs).toBeLessThan(2500);
   });
 });

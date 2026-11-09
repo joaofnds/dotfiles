@@ -1,9 +1,11 @@
+export type TemporalBasis = "invocation" | "sessionCumulative";
+
 export type TokenUsage = {
-  readonly input?: number;
-  readonly cacheRead?: number;
-  readonly cacheWrite?: number;
-  readonly output?: number;
-  readonly reasoning?: number;
+  readonly input?: number | undefined;
+  readonly cacheRead?: number | undefined;
+  readonly cacheWrite?: number | undefined;
+  readonly output?: number | undefined;
+  readonly reasoning?: number | undefined;
 };
 
 export type ModelUsage = {
@@ -16,13 +18,18 @@ export type ModelUsage = {
 };
 
 export type UsageReport = {
-  readonly parent?: TokenUsage;
-  readonly aggregateIncludingChildren?: TokenUsage;
+  readonly parent?: TokenUsage | undefined;
+  readonly parentBasis?: TemporalBasis;
+  readonly aggregateBasis?: TemporalBasis;
+  readonly modelsBasis?: TemporalBasis;
+  readonly raw?: readonly unknown[];
+  readonly aggregateIncludingChildren?: TokenUsage | undefined;
   readonly models?: readonly ModelUsage[];
 };
 
 export type SessionCost = {
   readonly usd: number;
+  readonly basis: TemporalBasis;
   readonly scope: "parent" | "aggregateIncludingChildren";
 };
 
@@ -48,4 +55,27 @@ function add(
   if (first === undefined || second === undefined) return {};
 
   return { [field]: first + second };
+}
+
+export function tokenDelta(current: TokenUsage, previous: TokenUsage | undefined): TokenUsage {
+  const delta: {
+    input?: number;
+    cacheRead?: number;
+    cacheWrite?: number;
+    output?: number;
+    reasoning?: number;
+  } = {};
+  for (const key of ["input", "cacheRead", "cacheWrite", "output", "reasoning"] as const) {
+    const value = current[key];
+    const before = previous?.[key];
+    if (
+      value !== undefined &&
+      (previous === undefined || before !== undefined) &&
+      value >= (before ?? 0)
+    ) {
+      delta[key] = value - (before ?? 0);
+    }
+  }
+
+  return delta;
 }
