@@ -4,6 +4,7 @@
     pkgs.aspell
     pkgs.ast-grep
     pkgs.bat
+    pkgs.betterleaks
     pkgs.btop
     pkgs.chezmoi
     pkgs.curl
