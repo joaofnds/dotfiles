@@ -11,6 +11,7 @@ alias tatt='tmux attach -t "$(tmux list-sessions -F "#S" | fzf -1 --preview "tmu
 alias cm='chezmoi'
 alias rgfi='rg -Fi'
 alias pingcc='claude --print --safe-mode --no-session-persistence --model haiku --system-prompt "Reply exactly: OK" --tools "" <<<"ok"'
+alias applynix='sudo darwin-rebuild switch --flake ~/.config/nix'
 
 alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --merge-output-format=mkv"
 alias musicdl="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail"
