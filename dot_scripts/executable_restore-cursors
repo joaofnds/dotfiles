@@ -42,3 +42,5 @@ trap 'exit 143' TERM
 xcrun clang -fobjc-arc -Wno-deprecated-declarations -framework AppKit -framework ApplicationServices \
   "$cursor_dir/cursor.m" -o "$cursor_build/cursor"
 "$cursor_build/cursor" "${1:---apply}" "$cursor_dir/assets/sequoia.cape" "$cursor_dir/assets/aliases.plist"
+
+defaults write com.apple.universalaccess mouseDriverCursorSize -float 1.2
