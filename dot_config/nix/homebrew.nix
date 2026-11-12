@@ -12,7 +12,6 @@
     ];
 
     casks = [
-      "appcleaner"
       "brave-browser"
       "chatgpt"
       "claude"
@@ -29,6 +28,7 @@
       "mongodb-compass"
       "obsidian"
       "orbstack"
+      "peel"
       "raycast"
       "setapp"
       "shottr"
