@@ -50,11 +50,12 @@ export function withBoardCommandContext<T>(operation: () => Promise<T>): Promise
 }
 
 const deadlineMs = 5000;
+const observedBacklogVersions = z.enum(["1.50.1", "1.55.3"]);
 const ownerSchema = z
   .object({ host: z.string(), pid: z.number().int().positive(), user: z.number().int() })
   .readonly();
 const backendSchema = z
-  .object({ executable: z.string(), version: z.literal("1.50.1"), sha256: z.string() })
+  .object({ executable: z.string(), version: observedBacklogVersions, sha256: z.string() })
   .readonly();
 export const lockSnapshotSchema = z.object({
   path: z.string(),
@@ -363,13 +364,14 @@ export async function withNativeGate<T>(
     throw new Exit(1, `backlog executable is not a regular file: ${actual}`);
 
   const writeJson = operations.writeJson ?? durableJson;
-  const version = (
+  const reported = (
     await backlogCommand(["--version"], undefined, false, actual, operations)
   ).trim();
-  if (version !== "1.50.1")
+  const version = observedBacklogVersions.safeParse(reported);
+  if (!version.success)
     throw new Exit(
       1,
-      `unsupported Backlog native lock protocol ${version}; only observed 1.50.1 is supported`,
+      `unsupported Backlog native lock protocol ${reported} from ${actual}; only observed ${observedBacklogVersions.options.join(" and ")} are supported`,
     );
 
   const sha256 = createHash("sha256")
@@ -387,7 +389,7 @@ export async function withNativeGate<T>(
     ...input,
     owner: { host: hostname(), pid: process.pid, user: process.getuid?.() ?? 0 },
     intent,
-    backend: { executable: actual, version, sha256 },
+    backend: { executable: actual, version: version.data, sha256 },
     locks: await Promise.all([
       snapshotExecutionLock(join(input.board, ".iterate", `${input.card}.lock`)),
       snapshotExecutionLock(join(input.journal, "..", "lock")),
@@ -551,7 +553,7 @@ export async function recoverNativeGate(input: {
   )
     throw new Exit(
       1,
-      "recovery backend differs from the originally observed 1.50.1 executable; retain exclusion",
+      "recovery backend differs from the originally observed executable; retain exclusion",
     );
 
   if (!marker.execution)

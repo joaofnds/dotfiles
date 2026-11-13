@@ -355,14 +355,14 @@ export class WorkflowHarness {
     const mise = which("mise");
     if (!mise) throw new Error("the already installed mise backlog route is required");
 
-    const installed = spawnSync([mise, "which", "backlog", "--tool", "npm:backlog.md@1.50.1"], {
+    const installed = spawnSync([mise, "which", "backlog", "--tool", "npm:backlog.md@1.55.3"], {
       env: process.env,
     });
     if (installed.exitCode !== 0) throw new Error(installed.stderr.toString());
     const shim = installed.stdout.toString().trim();
     const resolver = join(
       dirname(shim),
-      "../.mise/backlog.md@1.50.1/node_modules/backlog.md/resolveBinary.cjs",
+      "../.mise/backlog.md@1.55.3/node_modules/backlog.md/resolveBinary.cjs",
     );
     const native = spawnSync([
       process.execPath,
