@@ -1,10 +1,12 @@
-import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { afterEach, beforeEach, describe, expect, test } from "bun:test";
+import { readFileSync, realpathSync } from "node:fs";
+import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { delimiter, join } from "node:path";
 import { spawnSync } from "bun";
 import { claudeHarness } from "./claude.ts";
 import { codexHarness, codexPathDirectories } from "./codex.ts";
-import { executableFor } from "./executable.ts";
+import { backlogExecutable, executableFor } from "./executable.ts";
 
 const manifest = (name: string) =>
   JSON.parse(
@@ -61,5 +63,56 @@ describe(codexPathDirectories.name, () => {
 
   test("adds nothing for a CLI outside the bundle", () => {
     expect(codexPathDirectories("/bin/sh")).toEqual([]);
+  });
+});
+
+describe(backlogExecutable.name, () => {
+  let directory: string;
+  beforeEach(async () => {
+    directory = realpathSync(await mkdtemp(join(tmpdir(), "iterate-backlog-executable-")));
+  });
+  afterEach(async () => {
+    await rm(directory, { recursive: true, force: true });
+  });
+
+  const program = async (path: string) => {
+    await mkdir(join(directory, path, ".."), { recursive: true });
+    await writeFile(join(directory, path), "#!/bin/sh\n", { mode: 0o755 });
+    return join(directory, path);
+  };
+  const link = async (path: string, target: string) => {
+    await mkdir(join(directory, path, ".."), { recursive: true });
+    await symlink(target, join(directory, path));
+  };
+  const searchPath = (...directories: string[]) =>
+    directories.map((name) => join(directory, name)).join(delimiter);
+
+  test("returns the file the first backlog on PATH resolves to", async () => {
+    const native = await program("cellar/backlog");
+    await link("bin/backlog", native);
+
+    const executable = await backlogExecutable(searchPath("bin"));
+
+    expect(executable).toBe(native);
+  });
+
+  describe("when a mise shim comes first", () => {
+    test("returns the backlog the shim would run", async () => {
+      const mise = await program("mise/mise");
+      await link("shims/backlog", mise);
+      const native = await program("brew/backlog");
+
+      const executable = await backlogExecutable(searchPath("shims", "mise", "brew"));
+
+      expect(executable).toBe(native);
+    });
+  });
+
+  describe("when PATH holds no backlog", () => {
+    test("reports it unavailable", async () => {
+      await program("brew/other");
+
+      expect(await backlogExecutable(searchPath("brew"))).toBeUndefined();
+    });
   });
 });

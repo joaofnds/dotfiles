@@ -1,6 +1,8 @@
 import { existsSync } from "node:fs";
-import { isAbsolute } from "node:path";
+import { realpath } from "node:fs/promises";
+import { delimiter, isAbsolute } from "node:path";
 import process from "node:process";
+import { which } from "bun";
 import { z } from "zod";
 import type { HarnessProfile } from "./provider-types.ts";
 
@@ -28,4 +30,25 @@ export function resolveModule(require: NodeJS.Require, specifier: string): strin
 
     throw error;
   }
+}
+
+/**
+ * The file the first `backlog` on PATH resolves to, passing over mise shims: a shim resolves to
+ * mise itself, which reports its own version and runs as mise when called by that path.
+ */
+export async function backlogExecutable(
+  path: string = process.env.PATH ?? "",
+): Promise<string | undefined> {
+  const mise = which("mise", { PATH: path });
+  const shimTarget = mise ? await realpath(mise) : undefined;
+
+  for (const directory of path.split(delimiter)) {
+    const candidate = which("backlog", { PATH: directory });
+    if (!candidate) continue;
+
+    const resolved = await realpath(candidate);
+    if (resolved !== shimTarget) return resolved;
+  }
+
+  return undefined;
 }

@@ -2,17 +2,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { spawn } from "node:child_process";
 import { createHash, randomUUID } from "node:crypto";
 import { closeSync, openSync } from "node:fs";
-import {
-  link,
-  lstat,
-  mkdir,
-  open,
-  readdir,
-  readFile,
-  realpath,
-  stat,
-  unlink,
-} from "node:fs/promises";
+import { link, lstat, mkdir, open, readdir, readFile, stat, unlink } from "node:fs/promises";
 import { hostname } from "node:os";
 import { dirname, join } from "node:path";
 import process from "node:process";
@@ -20,6 +10,7 @@ import { which } from "bun";
 import { z } from "zod";
 import { BoardTarget, boardTargetSchema, discoverBoard } from "./board-target.ts";
 import { definedFields } from "./defined-fields.ts";
+import { backlogExecutable } from "./executable.ts";
 import { Exit } from "./exit.ts";
 import {
   atomicJson as durableJson,
@@ -356,10 +347,9 @@ export async function withNativeGate<T>(
   await operations.target?.validate();
   if (operations.target && operations.target.board !== input.board)
     throw new Exit(1, "native gate board differs from its recorded target");
-  const executable = which("backlog");
-  if (!executable) throw new Exit(1, "backlog executable is unavailable");
+  const actual = await backlogExecutable();
+  if (!actual) throw new Exit(1, "backlog executable is unavailable");
 
-  const actual = await realpath(executable);
   if (!(await stat(actual)).isFile())
     throw new Exit(1, `backlog executable is not a regular file: ${actual}`);
 
@@ -539,11 +529,9 @@ export async function recoverNativeGate(input: {
       "original execution-lock byte/inode proof is missing from this intent; retain exclusion",
     );
 
-  const executable = which("backlog");
-  if (!executable)
-    throw new Exit(1, "recovery backend executable proof is missing; retain exclusion");
+  const actual = await backlogExecutable();
+  if (!actual) throw new Exit(1, "recovery backend executable proof is missing; retain exclusion");
 
-  const actual = await realpath(executable);
   if (
     !(await stat(actual)).isFile() ||
     actual !== marker.backend.executable ||
