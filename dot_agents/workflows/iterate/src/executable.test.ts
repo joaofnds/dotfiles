@@ -75,9 +75,9 @@ describe(backlogExecutable.name, () => {
     await rm(directory, { recursive: true, force: true });
   });
 
-  const program = async (path: string) => {
+  const program = async (path: string, body = "") => {
     await mkdir(join(directory, path, ".."), { recursive: true });
-    await writeFile(join(directory, path), "#!/bin/sh\n", { mode: 0o755 });
+    await writeFile(join(directory, path), `#!/bin/sh\n${body}`, { mode: 0o755 });
     return join(directory, path);
   };
   const link = async (path: string, target: string) => {
@@ -90,21 +90,49 @@ describe(backlogExecutable.name, () => {
   test("returns the file the first backlog on PATH resolves to", async () => {
     const native = await program("cellar/backlog");
     await link("bin/backlog", native);
+    await program("later/backlog");
 
-    const executable = await backlogExecutable(searchPath("bin"));
+    const executable = await backlogExecutable(searchPath("bin", "later"));
 
     expect(executable).toBe(native);
   });
 
   describe("when a mise shim comes first", () => {
-    test("returns the backlog the shim would run", async () => {
-      const mise = await program("mise/mise");
-      await link("shims/backlog", mise);
+    const mise = (activated?: string) =>
+      program(
+        "mise/mise",
+        activated
+          ? `[ "$1 $2" = "which backlog" ] && echo ${activated} && exit 0\nexit 1\n`
+          : "exit 1\n",
+      );
+
+    test("returns the backlog mise activates", async () => {
+      const pinned = await program("installs/backlog");
+      await link("shims/backlog", await mise(pinned));
+      await program("brew/backlog");
+
+      const executable = await backlogExecutable(searchPath("shims", "mise", "brew"));
+
+      expect(executable).toBe(pinned);
+    });
+
+    test("returns the next backlog on PATH where mise activates none", async () => {
+      await link("shims/backlog", await mise());
       const native = await program("brew/backlog");
 
       const executable = await backlogExecutable(searchPath("shims", "mise", "brew"));
 
       expect(executable).toBe(native);
+    });
+
+    test("asks the mise the shim links to when PATH holds no mise", async () => {
+      const pinned = await program("installs/backlog");
+      await link("shims/backlog", await mise(pinned));
+      await program("brew/backlog");
+
+      const executable = await backlogExecutable(searchPath("shims", "brew"));
+
+      expect(executable).toBe(pinned);
     });
   });
 

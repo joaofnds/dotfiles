@@ -41,7 +41,8 @@ export function withBoardCommandContext<T>(operation: () => Promise<T>): Promise
 }
 
 const deadlineMs = 5000;
-const observedBacklogVersions = z.enum(["1.50.1", "1.55.3"]);
+/** The Backlog releases whose native lock protocol the gate was checked against. */
+export const observedBacklogVersions = z.enum(["1.50.1", "1.55.3"]);
 const ownerSchema = z
   .object({ host: z.string(), pid: z.number().int().positive(), user: z.number().int() })
   .readonly();
@@ -129,7 +130,8 @@ export async function backlogCommand(
   const writeJson = operations.writeJson ?? durableJson;
   const target = operations.target;
   await target?.validate();
-  const executable = selectedExecutable ?? gate?.marker.backend.executable ?? which("backlog");
+  const executable =
+    selectedExecutable ?? gate?.marker.backend.executable ?? (await backlogExecutable());
   if (!executable) throw new Exit(1, "backlog executable is unavailable");
 
   if (

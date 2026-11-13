@@ -2,6 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, test } from "bun:tes
 import { lstat, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { file } from "bun";
+import { observedBacklogVersions } from "./board-transaction.ts";
 import { WorkflowHarness } from "./testing/workflow-harness.ts";
 
 const pinned = ["--model", "sonnet", "--effort", "high"];
@@ -350,34 +351,42 @@ describe("real board run ownership", () => {
     expect(await driver.journalBytes("TASK-1")).toBe(journal);
   }, 20_000);
 
-  test("an existing ordinary native directory lock is never replaced", async () => {
-    const driver = await harness.seedReal({ failedResult: true });
-    const path = await driver.holdNativeLock();
-    const before = await driver.boardBytes();
+  test.each(observedBacklogVersions.options)(
+    "an existing ordinary native directory lock is never replaced (Backlog %s)",
+    async (backlog) => {
+      const driver = await harness.seedReal({ failedResult: true, backlog });
+      const path = await driver.holdNativeLock();
+      const before = await driver.boardBytes();
 
-    const result = await driver.run("step", "TASK-1", ...pinned);
+      const result = await driver.run("step", "TASK-1", ...pinned);
 
-    expect(result.calls).toHaveLength(0);
-    expect(result.code).toBe(1);
-    expect(await readFile(join(path, "fixture-owner"), "utf8")).toBe(
-      "ordinary native lock must not be removed",
-    );
-    expect(await driver.boardBytes()).toBe(before);
-  }, 20_000);
+      expect(result.calls).toHaveLength(0);
+      expect(result.code).toBe(1);
+      expect(await readFile(join(path, "fixture-owner"), "utf8")).toBe(
+        "ordinary native lock must not be removed",
+      );
+      expect(await driver.boardBytes()).toBe(before);
+    },
+    20_000,
+  );
 
-  test("Done releases only while the real native gate excludes human edits", async () => {
-    const driver = await harness.seedReal({ failedResult: true });
-    await driver.run("step", "TASK-1", ...pinned);
-    await driver.boardCommand("task", "edit", "TASK-1", "--status", "Done");
+  test.each(observedBacklogVersions.options)(
+    "Done releases only while the real native gate excludes human edits (Backlog %s)",
+    async (backlog) => {
+      const driver = await harness.seedReal({ failedResult: true, backlog });
+      await driver.run("step", "TASK-1", ...pinned);
+      await driver.boardCommand("task", "edit", "TASK-1", "--status", "Done");
 
-    const result = await driver.nativeGateScenario(false, true);
+      const result = await driver.nativeGateScenario(false, true);
 
-    expect(result.heldEdit).toBe(1);
-    expect(result.markerPreserved).toBe(true);
-    expect(result.runner.code).toBe(0);
-    expect(result.runner.calls).toHaveLength(1);
-    expect(JSON.parse((await driver.run("status", "TASK-1")).stdout).completed).toBe(true);
-  }, 20_000);
+      expect(result.heldEdit).toBe(1);
+      expect(result.markerPreserved).toBe(true);
+      expect(result.runner.code).toBe(0);
+      expect(result.runner.calls).toHaveLength(1);
+      expect(JSON.parse((await driver.run("status", "TASK-1")).stdout).completed).toBe(true);
+    },
+    20_000,
+  );
 
   test("an unbound same-card native gate refuses before launching a board edit", async () => {
     const driver = await harness.seedReal({ failedResult: true });

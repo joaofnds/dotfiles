@@ -30,7 +30,7 @@ import {
 } from "bun";
 import { z } from "zod";
 import { boardTargetRecordSchema, type boardTargetSchema } from "../board-target.ts";
-import { markerSchema } from "../board-transaction.ts";
+import { markerSchema, observedBacklogVersions } from "../board-transaction.ts";
 import { definedFields } from "../defined-fields.ts";
 import { OwnedProcessGroup } from "../process-group.ts";
 import { stageReceiptSchema } from "../stage-receipt.ts";
@@ -38,6 +38,7 @@ import { fakeCodex } from "./codex-harness.ts";
 import { fakeBacklog, fakeClaude } from "./workflow-fakes.ts";
 
 type Scenario = {
+  backlog?: z.infer<typeof observedBacklogVersions>;
   firstId?: string;
   deferWhileNativeHeld?: boolean;
   shapeInvestigation?: string;
@@ -355,14 +356,15 @@ export class WorkflowHarness {
     const mise = which("mise");
     if (!mise) throw new Error("the already installed mise backlog route is required");
 
-    const installed = spawnSync([mise, "which", "backlog", "--tool", "npm:backlog.md@1.55.3"], {
+    const version = scenario.backlog ?? "1.55.3";
+    const installed = spawnSync([mise, "which", "backlog", "--tool", `npm:backlog.md@${version}`], {
       env: process.env,
     });
     if (installed.exitCode !== 0) throw new Error(installed.stderr.toString());
     const shim = installed.stdout.toString().trim();
     const resolver = join(
       dirname(shim),
-      "../.mise/backlog.md@1.55.3/node_modules/backlog.md/resolveBinary.cjs",
+      `../.mise/backlog.md@${version}/node_modules/backlog.md/resolveBinary.cjs`,
     );
     const native = spawnSync([
       process.execPath,

@@ -1,8 +1,8 @@
 import { existsSync } from "node:fs";
 import { realpath } from "node:fs/promises";
-import { delimiter, isAbsolute } from "node:path";
+import { basename, delimiter, isAbsolute } from "node:path";
 import process from "node:process";
-import { which } from "bun";
+import { spawnSync, which } from "bun";
 import { z } from "zod";
 import type { HarnessProfile } from "./provider-types.ts";
 
@@ -33,22 +33,34 @@ export function resolveModule(require: NodeJS.Require, specifier: string): strin
 }
 
 /**
- * The file the first `backlog` on PATH resolves to, passing over mise shims: a shim resolves to
- * mise itself, which reports its own version and runs as mise when called by that path.
+ * The file `backlog` runs from on this PATH. A mise shim is a link to mise, which reports its own
+ * version and runs as mise when called by that path, so a shim is resolved the way it dispatches:
+ * the backlog mise activates for the working directory, else the next `backlog` on PATH.
  */
 export async function backlogExecutable(
-  path: string = process.env.PATH ?? "",
+  searchPath: string = process.env.PATH ?? "",
 ): Promise<string | undefined> {
-  const mise = which("mise", { PATH: path });
-  const shimTarget = mise ? await realpath(mise) : undefined;
-
-  for (const directory of path.split(delimiter)) {
+  for (const directory of searchPath.split(delimiter)) {
     const candidate = which("backlog", { PATH: directory });
     if (!candidate) continue;
 
     const resolved = await realpath(candidate);
-    if (resolved !== shimTarget) return resolved;
+    if (basename(resolved) !== "mise") return resolved;
+
+    const activated = miseActivated(resolved, searchPath);
+    if (activated) return realpath(activated);
   }
 
   return undefined;
+}
+
+function miseActivated(mise: string, searchPath: string): string | undefined {
+  const answer = spawnSync([mise, "which", "backlog"], {
+    env: { ...process.env, PATH: searchPath },
+    stdout: "pipe",
+    stderr: "ignore",
+  });
+  const path = answer.stdout.toString().trim();
+
+  return answer.exitCode === 0 && isAbsolute(path) ? path : undefined;
 }
