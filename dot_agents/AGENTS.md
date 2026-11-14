@@ -27,7 +27,10 @@ disagrees.
 Each of these was crossed once, and the damage was real. They are not judgment calls.
 
 - Never set or override git identity, whether through a flag, `git config`, or the
-  environment.
+  environment, because a commit keeps that name in every repository it reaches. In a
+  repository you created under `/tmp` in this session, you may set it for that
+  repository alone, as long as no commit made there reaches another repository by any
+  route. Delete that repository before the handoff.
 - Stage and commit exactly the paths you were directed to, or the files a fix under
   Ownership touched. Never blanket-stage (`git add -A`, `git add .`, `git commit -a`).
 - A directed fix ends in a commit, in the same turn, unless the file is git-ignored
