@@ -71,7 +71,8 @@ and dense columns. The other is the template software look, and it is where this
 lands unsteered: Inter or Poppins throughout, a purple-to-blue gradient hero,
 rounded-2xl cards in a three-column grid, everything centered, untouched shadcn grays
 and default-state buttons, Lucide icons as decoration, and an aspirational headline
-with no object.
+with no object. Italic accent words inside a headline, monospace labels, and
+pill-shaped buttons are defaults as well, inside either cluster or on their own.
 
 The component library the frontend rules prescribe is the right floor, and its defaults
 are not a direction.
@@ -90,7 +91,7 @@ element the page will be remembered by. Sketch more than one layout that way, so
 is something to compare against.
 
 Then review that plan against the brief before building anything. Revise any choice
-that would suit an unrelated subject, and any choice that landed in a cluster above
+that would suit an unrelated subject, and any choice that matches a default above
 without the brief asking for it.
 
 ## Write the direction down, and get it ratified
