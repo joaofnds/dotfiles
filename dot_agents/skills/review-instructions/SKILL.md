@@ -197,14 +197,13 @@ other change answers a defect. Never propose a Stop hook that rewrites the reply
 an agent that rewrites it, whatever the defect, and leave the rewrite to the typed
 /brief pass. A blocked stop appends the rewrite under a draft the reader has already
 seen (`references/external-facts.md` §Harness mechanics), and an agent never sees the
-request, so it cut detail the reader had asked for. On a destructive path, require a
-gate or a deny rule,
-never stronger adjectives. A guard enforces the rule itself. Leave the rule as prose
-where only a proxy could be enforced, because a numeric proxy for a judgment rule
-replaces the principle with a count, obeyed or breached exactly where judgment was
-needed. Split a rule with a mechanical part and a judgment part: a script for the
-first, prose for the second. Give a rule only judgment can check the verdict "test in
-use".
+request, so it can cut detail the reader asked for. On a destructive path, require a
+gate or a deny rule, never stronger adjectives. A guard enforces the rule itself.
+Leave the rule as prose where only a proxy could be enforced, because a numeric proxy
+for a judgment rule replaces the principle with a count, obeyed or breached exactly
+where judgment was needed. Split a rule with a mechanical part and a judgment part: a
+script for the first, prose for the second. Give a rule only judgment can check the
+verdict "test in use".
 
 **State the complement.** Leave no part of a set to inference, because inference is
 where behavior regresses silently across model swaps. Where a rule enumerates part
