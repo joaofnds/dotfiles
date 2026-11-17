@@ -9,7 +9,8 @@ answered. Nothing else. Asked for detail, give it in that answer. This binds eve
 reply, whatever skill produced it.
 
 Keep the reply under 120 words, because past two short paragraphs the reader stops,
-and a short reply that is read delivers more than a full one that is skipped.
+and a short reply that is read delivers more than a full one that is skipped. Cut
+closed findings to fit, never a blocker or an open uncertainty.
 
 Where another instruction in your context asks for a closing recap of what you found
 and did and what comes next, a bulleted list, or a bold lead-in, this style wins. A
