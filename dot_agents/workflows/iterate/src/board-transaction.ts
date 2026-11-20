@@ -41,13 +41,11 @@ export function withBoardCommandContext<T>(operation: () => Promise<T>): Promise
 }
 
 const deadlineMs = 5000;
-/** The Backlog releases whose native lock protocol the gate was checked against. */
-export const observedBacklogVersions = z.enum(["1.50.1", "1.55.3"]);
 const ownerSchema = z
   .object({ host: z.string(), pid: z.number().int().positive(), user: z.number().int() })
   .readonly();
 const backendSchema = z
-  .object({ executable: z.string(), version: observedBacklogVersions, sha256: z.string() })
+  .object({ executable: z.string(), version: z.string(), sha256: z.string() })
   .readonly();
 export const lockSnapshotSchema = z.object({
   path: z.string(),
@@ -356,15 +354,9 @@ export async function withNativeGate<T>(
     throw new Exit(1, `backlog executable is not a regular file: ${actual}`);
 
   const writeJson = operations.writeJson ?? durableJson;
-  const reported = (
+  const version = (
     await backlogCommand(["--version"], undefined, false, actual, operations)
   ).trim();
-  const version = observedBacklogVersions.safeParse(reported);
-  if (!version.success)
-    throw new Exit(
-      1,
-      `unsupported Backlog native lock protocol ${reported} from ${actual}; only observed ${observedBacklogVersions.options.join(" and ")} are supported`,
-    );
 
   const sha256 = createHash("sha256")
     .update(await readFile(actual))
@@ -381,7 +373,7 @@ export async function withNativeGate<T>(
     ...input,
     owner: { host: hostname(), pid: process.pid, user: process.getuid?.() ?? 0 },
     intent,
-    backend: { executable: actual, version: version.data, sha256 },
+    backend: { executable: actual, version, sha256 },
     locks: await Promise.all([
       snapshotExecutionLock(join(input.board, ".iterate", `${input.card}.lock`)),
       snapshotExecutionLock(join(input.journal, "..", "lock")),

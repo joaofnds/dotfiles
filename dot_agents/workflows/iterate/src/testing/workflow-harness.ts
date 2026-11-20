@@ -30,15 +30,15 @@ import {
 } from "bun";
 import { z } from "zod";
 import { boardTargetRecordSchema, type boardTargetSchema } from "../board-target.ts";
-import { markerSchema, observedBacklogVersions } from "../board-transaction.ts";
+import { markerSchema } from "../board-transaction.ts";
 import { definedFields } from "../defined-fields.ts";
+import { backlogExecutable } from "../executable.ts";
 import { OwnedProcessGroup } from "../process-group.ts";
 import { stageReceiptSchema } from "../stage-receipt.ts";
 import { fakeCodex } from "./codex-harness.ts";
 import { fakeBacklog, fakeClaude } from "./workflow-fakes.ts";
 
 type Scenario = {
-  backlog?: z.infer<typeof observedBacklogVersions>;
   firstId?: string;
   deferWhileNativeHeld?: boolean;
   shapeInvestigation?: string;
@@ -70,7 +70,7 @@ type Scenario = {
   versionDescendant?: boolean;
 };
 
-type FixtureIOBoundary = {
+type FixtureIoBoundary = {
   evidenceDirectory?: string;
   collectEvidence?: (read: () => Promise<string[]>) => Promise<string[]>;
   afterRunnersStopped?: () => Promise<void>;
@@ -102,12 +102,12 @@ export class WorkflowHarness {
     private readonly props: {
       readonly root: string;
       readonly runnerDeadlineMs: number;
-      readonly fixtureIOBoundary: FixtureIOBoundary | undefined;
+      readonly fixtureIOBoundary: FixtureIoBoundary | undefined;
     },
   ) {}
 
   static async setup(
-    options: { runnerDeadlineMs?: number; fixtureIOBoundary?: FixtureIOBoundary } = {},
+    options: { runnerDeadlineMs?: number; fixtureIOBoundary?: FixtureIoBoundary } = {},
   ): Promise<WorkflowHarness> {
     return new WorkflowHarness({
       root: await mkdtemp(join(tmpdir(), "iterate-workflow-test-")),
@@ -353,26 +353,8 @@ export class WorkflowHarness {
     );
     await rm(join(driver.repo, "backlog"), { recursive: true });
     await symlink(board, join(driver.repo, "backlog"));
-    const mise = which("mise");
-    if (!mise) throw new Error("the already installed mise backlog route is required");
-
-    const version = scenario.backlog ?? "1.55.3";
-    const installed = spawnSync([mise, "which", "backlog", "--tool", `npm:backlog.md@${version}`], {
-      env: process.env,
-    });
-    if (installed.exitCode !== 0) throw new Error(installed.stderr.toString());
-    const shim = installed.stdout.toString().trim();
-    const resolver = join(
-      dirname(shim),
-      `../.mise/backlog.md@${version}/node_modules/backlog.md/resolveBinary.cjs`,
-    );
-    const native = spawnSync([
-      process.execPath,
-      "-e",
-      `console.log(require(${JSON.stringify(resolver)}).resolveBinaryPath())`,
-    ]);
-    if (native.exitCode !== 0) throw new Error(native.stderr.toString());
-    const executable = native.stdout.toString().trim();
+    const executable = await backlogExecutable();
+    if (!executable) throw new Error("the real board scenarios need backlog on PATH");
     await writeFile(
       join(this.directory, "bin", "backlog"),
       `#!/bin/sh\nexec '${executable}' "$@"\n`,
@@ -2083,9 +2065,9 @@ process.stdout.write(result.stdout); process.stderr.write(result.stderr); proces
     return readFile(join(this.directory, "provider-bypass"), "utf8");
   }
 
-  async unsupportedBoardVersion(): Promise<void> {
+  async reportBoardVersion(version: string): Promise<void> {
     await this.wrapRealBoard(
-      'if (args[0] === "--version") { console.log("9.0.0"); process.exit(0); }',
+      `if (args[0] === "--version") { console.log(${JSON.stringify(version)}); process.exit(0); }`,
     );
   }
 
