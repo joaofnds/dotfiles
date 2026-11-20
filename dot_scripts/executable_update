@@ -23,16 +23,8 @@ tmux split-window -v -d "zsh -c '{ cd ~/.config/nix; nix flake update; chezmoi a
 tmux split-window -v -d "zsh -c '{ nvim -c \"lua require(\\\"lazy\\\").update({ wait = true })\" -c \"qa\" } ; tmux wait-for -S $CHAN_LAZY'"
 tmux split-window -v -d "zsh -c '{ nvim -c \"autocmd User MasonUpdateAllComplete quitall\" -c \"MasonUpdateAll\" } ; tmux wait-for -S $CHAN_MASON'"
 tmux split-window -v -d "zsh -c 'backrest backlogs backup; tmux wait-for -S $CHAN_BACKLOGS'"
-
-
-{{- if eq .chezmoi.os "linux" }}
-paru
-{{- end }}
-
-{{- if eq .chezmoi.os "darwin" }}
 brew upgrade --yes
 brew cleanup
-{{- end }}
 
 tmux wait-for "$CHAN_DOOM"
 tmux wait-for "$CHAN_MISE"
