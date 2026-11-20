@@ -11,7 +11,15 @@
   size = 16
 
 [groups]
-personal = [".private.env", ".config/astro/token"]
+personal = [
+  ".private.env",
+  ".personal.env",
+  ".config/astro",
+  ".config/restic",
+  ".scripts/backrest",
+  ".config/doom",
+  "org",
+]
 livefire = [".claude-livefire", ".gitconfig-livefire"]
 runsmith = [".claude-runsmith", ".gitconfig-runsmith"]
 

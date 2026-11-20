@@ -10,7 +10,6 @@
     pkgs.curl
     pkgs.delta
     pkgs.dust
-    pkgs.emacs
     pkgs.entr
     pkgs.fd
     pkgs.ffmpeg
@@ -32,7 +31,6 @@
     pkgs.nixfmt
     pkgs.pinentry_mac
     pkgs.rclone
-    pkgs.restic
     pkgs.ripgrep
     pkgs.sd
     pkgs.sqlite

@@ -1,5 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 {
+  environment.systemPackages = [
+    pkgs.emacs
+    pkgs.restic
+  ];
+
   system.defaults.dock.persistent-apps = [
     "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
     "/Applications/Brave Browser.app"

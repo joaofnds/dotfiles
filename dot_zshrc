@@ -20,6 +20,7 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 [ -f $HOME/.env ] && source $HOME/.env
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.private.env ] && source $HOME/.private.env
+[ -f $HOME/.personal.env ] && source $HOME/.personal.env
 [ -x "$(command -v fzf)" ] && source <(fzf --zsh)
 [ -x "$(command -v mise)" ] && source <(mise activate zsh)
 [ -x "$(command -v zoxide)" ] && eval "$(zoxide init zsh)"
