@@ -3,11 +3,12 @@ set -euo pipefail
 
 days=2
 list_only=false
+targets_only=false
 assume_yes=false
 root=.
 
 usage() {
-  echo "Usage: cargokill [--days N] [--list] [--yes] [dir]" >&2
+  echo "Usage: cargokill [--days N] [--list | --targets] [--yes] [dir]" >&2
   exit 2
 }
 
@@ -19,6 +20,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --list)
       list_only=true
+      shift
+      ;;
+    --targets)
+      targets_only=true
       shift
       ;;
     --yes)
@@ -48,6 +53,9 @@ cargo_target_dirs() {
     --print0 \
     "$root" \
   | while IFS= read -r -d '' marker; do
+      if [[ $marker == *$'\n'* ]]; then
+        continue
+      fi
       if [[ $marker == */.rustc_info.json ]] || grep -qs 'created by cargo' "$marker"; then
         printf '%s\n' "${marker%/*}"
       fi
@@ -88,6 +96,11 @@ stale_nested_target_dirs() {
     printf '%s\n' "$dir"
   done < <(cargo_target_dirs)
 }
+
+if [[ $targets_only == true ]]; then
+  cargo_target_dirs
+  exit 0
+fi
 
 candidates=$(
   stale_nested_target_dirs \

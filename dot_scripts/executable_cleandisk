@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-scratch_root=$(realpath /tmp)
-code_root=$HOME/code
+if [[ -n ${CLEANDISK_SCRATCH_ROOT:-} ]]; then
+  temp_roots=("$(realpath "$CLEANDISK_SCRATCH_ROOT")")
+else
+  mapfile -t temp_roots < <(realpath /tmp "${TMPDIR:-/tmp}" | sort -u)
+fi
+code_root=$(realpath "$HOME/code")
 hours=6
-days=3
+days=14
 dry_run=false
 
 usage() {
@@ -49,20 +53,15 @@ outermost_cargo_target_dirs() {
 
     kept+=("$dir")
     printf '%s\n' "$dir"
-  done < <(
-    fd --hidden --no-ignore --exclude .git --exclude node_modules \
-      --type file --glob '{CACHEDIR.TAG,.rustc_info.json}' --print0 "$1" 2>/dev/null \
-    | while IFS= read -r -d '' marker; do
-        if [[ $marker == */.rustc_info.json ]] || grep -qs 'created by cargo' "$marker"; then
-          printf '%s\n' "${marker%/*}"
-        fi
-      done \
-    | sort -u
-  )
+  done < <(cargokill --targets "$1" 2>/dev/null)
 }
 
-changed_recently() {
-  [[ -n $(fd . "$1" --hidden --no-ignore --type file --changed-within "${hours}h" --max-results 1 2>/dev/null) ]]
+# A dir that cannot be searched in full counts as used.
+used_within_days() {
+  local found
+
+  found=$(find "$1" -type f \( -atime "-$days" -o -mtime "-$days" \) -print -quit 2>/dev/null) || return 0
+  [[ -n $found ]]
 }
 
 holds_open_file() {
@@ -73,27 +72,40 @@ free_kb() {
   df -k "$code_root" | awk 'NR == 2 { print $4 }'
 }
 
-idle_scratch_targets() {
-  local dir child
-
-  while IFS= read -r dir; do
-    if changed_recently "$dir"; then
-      echo "keep  $dir (changed within $hours h)" >&2
-      continue
-    fi
-
-    if ! holds_open_file "$dir"; then
-      printf '%s\n' "$dir"
-      continue
-    fi
-
-    echo "keep  $dir (open by a running process, clearing the rest)" >&2
-    while IFS= read -r child; do
-      if ! holds_open_file "$child"; then
-        printf '%s\n' "$child"
+top_level_temp_dirs() {
+  fd . "${temp_roots[@]}" --no-ignore --exact-depth 1 --type directory --owner "$USER" --print0 2>/dev/null \
+  | while IFS= read -r -d '' dir; do
+      if [[ $dir != *$'\n'* ]]; then
+        printf '%s\n' "${dir%/}"
       fi
-    done < <(fd . "$dir" --hidden --no-ignore --exact-depth 1 --exclude CACHEDIR.TAG --absolute-path | sed 's|/$||')
-  done < <(outermost_cargo_target_dirs "$scratch_root")
+    done
+}
+
+# Most idle temp dirs are a daemon's near-empty state dir, which frees nothing
+# and which the daemon may expect to find.
+big_enough() {
+  local kib
+
+  kib=$(du -sk "$1" 2>/dev/null | cut -f1)
+  (( ${kib:-0} >= 100 * 1024 ))
+}
+
+# A temp dir goes whole, cargo output and all, once nothing in it was read or
+# written for $days days and no running process holds a file in it.
+idle_temp_dirs() {
+  local dir
+
+  for dir in "${temp_dirs[@]}"; do
+    if used_within_days "$dir" || ! big_enough "$dir"; then
+      continue
+    fi
+    if holds_open_file "$dir"; then
+      echo "keep  $dir (open by a running process)" >&2
+      continue
+    fi
+
+    printf '%s\n' "$dir"
+  done
 }
 
 # A build reads the fingerprint of every unit in its graph, so a unit whose
@@ -153,33 +165,139 @@ superseded_incremental_dirs() {
       }'
 }
 
+# A macOS debug build leaves each compile's objects beside the artifact, named
+# <unit>.<cgu>.<compile>.rcgu.o, and never removes an earlier compile's. The
+# artifact names the compile it came from: an rlib holds that compile's objects
+# as members, and a binary's debug map points at them.
+unit_artifact() {
+  local dir=$1 unit=$2 path
+
+  for path in "$dir/lib$unit.rlib" "$dir/lib$unit.a" "$dir/$unit" "$dir/lib$unit.dylib"; do
+    if [[ -f $path ]]; then
+      printf '%s\n' "$path"
+      return
+    fi
+  done
+}
+
+artifact_compile() {
+  local artifact=$1 unit=$2 names
+
+  if [[ $artifact == *.rlib || $artifact == *.a ]]; then
+    names=$(ar t "$artifact" 2>/dev/null) || names=unreadable
+  else
+    names=$(LC_ALL=C grep -ao "$unit\.[0-9a-z]*\.[0-9a-z]*\.rcgu\.o" "$artifact") || [[ $? -eq 1 ]] || names=unreadable
+  fi
+
+  if [[ $names == unreadable ]]; then
+    echo "keep  objects of $unit ($artifact is unreadable)" >&2
+    return
+  fi
+  awk -F. -v unit="$unit" '$1 == unit && NF == 5 && compile == "" { compile = $3 } END { print compile }' <<< "$names"
+}
+
+# Prints "<unit> <compile> <ctime> <path>" for each object.
+compiled_objects() {
+  find "$1" -maxdepth 1 -name '*.rcgu.o' -exec stat -f '%Fc %N' {} + 2>/dev/null \
+  | awk '{
+      path = substr($0, length($1) + 2)
+      name = path
+      sub(/.*\//, "", name)
+      if (split(name, field, ".") == 5) print field[1], field[3], $1, path
+    }'
+}
+
+# Prints "<unit> <kept compile> <artifact mtime>" for each unit with an
+# artifact, and "<unit> - <cutoff>" for an orphan, whose objects all go once
+# unchanged for $hours hours.
+kept_compiles() {
+  local dir=$1 objects=$2 unit artifact built compile cutoff
+
+  cutoff=$(awk -v now="$EPOCHREALTIME" -v hours="$hours" 'BEGIN { printf "%.6f", now - hours * 3600 }')
+  while IFS= read -r unit; do
+    artifact=$(unit_artifact "$dir" "$unit")
+    if [[ -z $artifact ]]; then
+      printf '%s - %s\n' "$unit" "$cutoff"
+      continue
+    fi
+
+    built=$(stat -f '%Fm' "$artifact")
+    compile=$(artifact_compile "$artifact" "$unit")
+    if [[ -n $compile ]]; then
+      printf '%s %s %s\n' "$unit" "$compile" "$built"
+    fi
+  done < <(awk '{ print $1 }' "$objects" | sort -u)
+}
+
+# An object that changed after its unit's artifact belongs to a build still
+# running, which reads it when it links.
+superseded_objects() {
+  local dir=$1 objects
+
+  [[ -d $dir ]] || return 0
+  objects=$(mktemp)
+  compiled_objects "$dir" > "$objects"
+
+  kept_compiles "$dir" "$objects" \
+  | awk 'NR == FNR { kept[$1] = $2; before[$1] = $3; next }
+         ($1 in kept) && $2 != kept[$1] && $3 < before[$1] { print substr($0, length($1) + length($2) + length($3) + 4) }' - "$objects"
+
+  rm -f "$objects"
+}
+
 superseded_in_code() {
   local target profile
 
-  while IFS= read -r target; do
+  for target in "${code_targets[@]}"; do
     while IFS= read -r profile; do
       superseded_units "$profile"
       superseded_incremental_dirs "$profile"
+      superseded_objects "$profile/deps"
+      superseded_objects "$profile/examples"
     done < <(fd --hidden --no-ignore --type directory --max-depth 4 --glob .fingerprint "$target" --exec dirname)
-  done < <(outermost_cargo_target_dirs "$code_root")
+  done
+}
+
+# Paths travel one per line, so a name holding a newline splits into
+# fragments that can name anything. Only a path inside a cargo target dir
+# this run found may reach rm.
+inside_targets() {
+  awk 'NR == FNR { if ($0 != "") target[$0]; next }
+       {
+         path = $0
+         while (path != "") {
+           if (path in target) { print; next }
+           if (!sub(/\/[^\/]*$/, "", path)) next
+         }
+       }' <(printf '%s\n' "${temp_dirs[@]}" "${code_targets[@]}") -
+}
+
+# Most objects are hard links into incremental dirs or other compiles, so a
+# file frees space only when every one of its names is doomed.
+reclaimable() {
+  printf '%s\0' "${doomed[@]}" \
+  | xargs -0 -J % find % -type f -exec stat -f '%d:%i %l %b' {} + \
+  | awk '{ names[$1]++; links[$1] = $2; blocks[$1] = $3 }
+         END { for (i in names) if (names[i] >= links[i]) s += blocks[i]; printf "%.1f GiB\n", s * 512 / 2^30 }'
 }
 
 open_files=$(lsof -n -F n 2>/dev/null | sed -n "s|^n\\(/.*\\)|\\1|p" | sort -u || true)
 before=$(free_kb)
 
 if [[ $dry_run == true ]]; then
-  cargokill --list "$code_root"
+  cargokill --days "$days" --list "$code_root"
 else
-  cargokill --yes "$code_root"
+  cargokill --days "$days" --yes "$code_root"
 fi
 
-mapfile -t doomed < <(idle_scratch_targets; superseded_in_code)
+mapfile -t temp_dirs < <(top_level_temp_dirs)
+mapfile -t code_targets < <(outermost_cargo_target_dirs "$code_root")
+mapfile -t doomed < <({ idle_temp_dirs; superseded_in_code; } | inside_targets | sort -u)
 
 if [[ ${#doomed[@]} -eq 0 ]]; then
   echo "Nothing superseded or idle to delete." >&2
 elif [[ $dry_run == true ]]; then
-  printf '%s\0' "${doomed[@]}" | xargs -0 du -sk \
-  | awk '{ s += $1 } END { printf "%d paths, %.1f GiB\n", NR, s / 2^20 }'
+  printf '%d paths, %s\n' "${#doomed[@]}" "$(reclaimable)"
   printf '%s\n' "${doomed[@]}" | sed -E 's#/(\.fingerprint|deps|build|examples|incremental)/[^/]*$#/\1#' | sort | uniq -c | sort -rn | head -20
 else
   printf '%s\0' "${doomed[@]}" | xargs -0 -n 200 -P 8 rm -rf

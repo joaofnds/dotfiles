@@ -66,6 +66,7 @@ run "instruction frontmatter" bun test "$root/scripts/instruction-frontmatter.te
 run "Codex role adapters" bun test "$root/scripts/codex-role-adapters.test.js"
 run "tmux claude switcher" bun test "$root/scripts/tmux-claude-switcher.test.js"
 run "jsonsort" bun test "$root/scripts/jsonsort.test.js"
+run "cleandisk" bun test "$root/scripts/cleandisk.test.js"
 run "compaction-judge mod tests" claude plugin test "$root/dot_agents/mods/compaction-judge"
 run "compaction-judge mod manifest" validate_mod .agents/mods/compaction-judge
 
