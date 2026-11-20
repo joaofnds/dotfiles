@@ -2,6 +2,7 @@
 {
   environment.systemPackages = [
     pkgs.emacs
+    pkgs.flyctl
     pkgs.restic
   ];
 

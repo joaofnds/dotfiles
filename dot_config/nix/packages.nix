@@ -13,19 +13,16 @@
     pkgs.entr
     pkgs.fd
     pkgs.ffmpeg
-    pkgs.flyctl
     pkgs.fzf
     pkgs.gh
     pkgs.git
     pkgs.gnupg
-    pkgs.go-task
     pkgs.hexyl
     pkgs.hyperfine
     pkgs.imagemagick
     pkgs.jq
     pkgs.lua
     pkgs.mise
-    pkgs.mole-cleaner
     pkgs.neovim
     pkgs.nixd
     pkgs.nixfmt
