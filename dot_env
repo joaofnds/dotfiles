@@ -10,10 +10,8 @@ export LC_ALL=en_US.UTF-8
 export LANG=$LC_ALL
 export LANGUAGE=$LC_ALL
 
-export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
-
-export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 [ -d "$HOME/.config/emacs/bin" ] && export PATH="$HOME/.config/emacs/bin:$PATH"
 
