@@ -30,9 +30,9 @@ Treat the screener's axis and effort assignments as minimums because the
 author may miss risks an independent reader sees. Record a reason for any increase.
 Read [references/axes.md](references/axes.md). Dispatch one reviewer per dedicated
 axis and one for all bundled axes, in parallel, with the patch, goal, shared brief,
-and assigned axis briefs pasted whole. Use the shared reviewer role with its assigned
-high, medium or low effort through the delegation contract. The reviewer variants
-carry that same body. Apply explicit role overrides after the assigned effort.
+and assigned axis briefs pasted whole. Use the shared reviewer role, and pass its
+assigned high, medium or low effort on the dispatch call through the delegation
+contract. Apply explicit role overrides after the assigned effort.
 A bundled reviewer uses the highest selected effort.
 Record each skipped axis with the screener's reason. For a requested single-axis
 review, dispatch only that axis. A reviewer that reports a changed file unexamined

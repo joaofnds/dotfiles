@@ -35,7 +35,7 @@ commands in that brief.
 An iterate stage receives an `ITERATE_ROLE_SELECTION` receipt containing the
 requested stage selection and raw role overrides. Read the shared role definition
 for its assigned effort before dispatch. A review's axis assignment replaces that
-effort. Reviewer variants share the reviewer override.
+effort.
 
 Start with `requestedAgent` and replace its effort with the assignment, if present.
 Replace that entire selection with the role's agent tuple when supplied, including

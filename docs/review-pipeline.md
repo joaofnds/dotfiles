@@ -73,20 +73,22 @@ security review, the session runs a security review.
 ## Model and effort
 
 The reviewer definitions pin no model, so a reviewer runs on the host's model
-unless the role selection names one. Three reviewer definitions exist,
-`reviewer`, `reviewer-medium`, and `reviewer-low`, identical but for the effort
-in their frontmatter. Claude Code's `Agent` tool has an `effort` field, but its
-own description reserves it for an effort the user or an instruction explicitly
-asks for, so on Claude the variant's frontmatter is what carries the screener's
-effort. The two lighter definitions are two sentences each that point at
-`reviewer.md`, so the brief has one copy. Their frontmatter is duplicated and can
-drift.
+unless the role selection names one. One reviewer definition serves every axis.
+On Claude its frontmatter sets effort high, the level a dispatch gets when it
+names none, such as kaizen's or absorb's. review-code passes the screener's
+assigned effort on each call, through the `effort` field of Claude Code's `Agent`
+tool, and that field outranks the definition's frontmatter. On Claude Code 2.1.326
+a `reviewer` spawned with `effort: "low"` sent `output_config.effort: "low"` in its
+API request, so the field reaches the model. A `/review-code` run on the same
+release passed the screener's assignments on its calls, and its reviewers ran at
+`low` and `medium`. Re-check it on a Claude Code release that changes the `Agent`
+tool.
 
 On Codex each role has an adapter in `dot_codex/agents/` that renders the shared
 body. Codex's `spawn_agent` takes `reasoning_effort`, and a role file that sets
 `model_reasoning_effort` locks it against that override, so the adapters set no
 effort and the parent passes it on the call. A Codex reviewer spawned without
-`reasoning_effort` inherits the parent's effort whatever its name says.
+`reasoning_effort` inherits the parent's effort.
 
 Effort follows how far the reviewer has to read: low when the axis has one thing
 in front of it, medium when it has to relate the changed files to each other, and
