@@ -81,3 +81,11 @@ term when you introduce or lean on one, one term per concept.
   to fix, to put on a card, or to ask about, whoever caused it. Its failure is
   **dismissal**: a defect the session saw that sits in no commit, on no card, and in
   no ask.
+- **Host**: one Mac, named by its hostname. Its entry in `.chezmoidata.toml`
+  says which groups of files it takes and its email, which is both its Git
+  email and its GPG recipient. Its module under `dot_config/nix/hosts/` adds
+  apps only it needs.
+- **Group**: a named list of paths in `.chezmoidata.toml` that installs only
+  on the hosts that list it, such as one client's Claude account and Git email.
+- **Extras**: the optional apps in `bloat.nix`, which a host takes on top of the
+  base set when its nix-darwin configuration in `flake.nix` includes the file.

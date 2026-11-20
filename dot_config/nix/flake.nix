@@ -27,6 +27,7 @@
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.primaryUser = "joaofnds";
           system.stateVersion = 6;
+          nixpkgs.hostPlatform = "aarch64-darwin";
         };
       common = [
         configuration
@@ -42,25 +43,18 @@
             user = "joaofnds";
           };
         }
-        {{- if .installBloat }}
-        ./bloat.nix
-        {{- end }}
       ];
     in
     {
       darwinConfigurations."joaofnds-m5p" = nix-darwin.lib.darwinSystem {
         modules = common ++ [
-          { nixpkgs.hostPlatform = "aarch64-darwin"; }
+          ./bloat.nix
+          ./hosts/joaofnds-m5p.nix
         ];
       };
-      darwinConfigurations."joaofnds-m1p" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."joaofnds-delta" = nix-darwin.lib.darwinSystem {
         modules = common ++ [
-          { nixpkgs.hostPlatform = "aarch64-darwin"; }
-        ];
-      };
-      darwinConfigurations."joaofnds-mbp-16" = nix-darwin.lib.darwinSystem {
-        modules = common ++ [
-          { nixpkgs.hostPlatform = "x86_64-darwin"; }
+          ./hosts/joaofnds-delta.nix
         ];
       };
     };

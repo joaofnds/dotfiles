@@ -17,3 +17,15 @@ sweep
 
 .agents/mods/*/.claude-plugin/types
 .agents/mods/*/tsconfig.json
+
+{{- $host := index .hosts .chezmoi.hostname }}
+{{- range $group, $paths := .groups }}
+{{-   if not (has $group $host.groups) }}
+{{-     range $paths }}
+{{ . }}
+{{-     end }}
+{{-   end }}
+{{- end }}
+{{- range $host.ignore }}
+{{ . }}
+{{- end }}

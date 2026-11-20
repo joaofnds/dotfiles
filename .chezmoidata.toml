@@ -1,5 +1,3 @@
-installBloat = true
-
 [code.font]
   family = "PragmataPro"
   size = 16
@@ -11,3 +9,18 @@ installBloat = true
 [ghostty.font]
   family = "PragmataPro"
   size = 16
+
+[groups]
+personal = [".private.env", ".config/astro/token"]
+livefire = [".claude-livefire", ".gitconfig-livefire"]
+runsmith = [".claude-runsmith", ".gitconfig-runsmith"]
+
+[hosts.joaofnds-m5p]
+email = "joaofnds@joaofnds.com"
+groups = ["personal", "livefire", "runsmith"]
+ignore = []
+
+[hosts.joaofnds-delta]
+email = "joao.fernandes@uscca.com"
+groups = []
+ignore = []

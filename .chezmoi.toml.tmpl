@@ -1,0 +1,9 @@
+{{- $hosts := (include ".chezmoidata.toml" | fromToml).hosts -}}
+{{- if not (hasKey $hosts .chezmoi.hostname) -}}
+{{-   fail (printf "add [hosts.%s] to .chezmoidata.toml" .chezmoi.hostname) -}}
+{{- end -}}
+sourceDir = "~/code/dotfiles"
+encryption = "gpg"
+
+[gpg]
+recipient = {{ (index $hosts .chezmoi.hostname).email | quote }}

@@ -1,7 +1,10 @@
 [user]
   name = João Fernandes
-  email = joaofnds@joaofnds.com
-  signingkey = 1D7295B27D3BC292068A6533064E0BACE9889F9C
+  email = {{ (index .hosts .chezmoi.hostname).email }}
+  signingkey = ~/.ssh/id_ed25519.pub
+
+[gpg]
+  format = ssh
 
 [format]
   signoff = true
