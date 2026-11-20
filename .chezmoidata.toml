@@ -2,14 +2,6 @@
   family = "PragmataPro"
   size = 16
 
-[emacs.font]
-  family = "PragmataPro"
-  size = 16
-
-[ghostty.font]
-  family = "PragmataPro"
-  size = 16
-
 [groups]
 personal = [
   ".private.env",
