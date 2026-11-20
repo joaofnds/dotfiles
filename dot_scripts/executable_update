@@ -1,12 +1,6 @@
 #!/usr/bin/env zsh
 
-UUID="$$"
-CHAN_DOOM="sync_doom_${UUID}"
-CHAN_MISE="sync_mise_${UUID}"
-CHAN_NIX="sync_nix_${UUID}"
-CHAN_LAZY="sync_lazy_${UUID}"
-CHAN_MASON="sync_mason_${UUID}"
-CHAN_BACKLOGS="sync_backlogs_${UUID}"
+channels=()
 
 cleanup() {
   tmux set-hook -uw after-split-window
@@ -14,21 +8,35 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
+needs() {
+  local tool
+  for tool in "$@"; do
+    (( $+commands[$tool] )) || return 1
+  done
+}
+
+pane() {
+  local channel="update_${#channels}_$$"
+  channels+=("$channel")
+  tmux split-window -v -d zsh -c "$1; tmux wait-for -S $channel"
+}
+
 tmux set-hook -w after-split-window 'select-layout even-vertical'
 tmux set-hook -w pane-exited 'select-layout even-vertical'
 
-tmux split-window -v -d "zsh -c '{ git -C \$(brew --repository joaofnds/tap) pull; doom upgrade --force; doom sync --gc } ; tmux wait-for -S $CHAN_DOOM'"
-tmux split-window -v -d "zsh -c '{ mise upgrade; mise prune --yes } ; tmux wait-for -S $CHAN_MISE'"
-tmux split-window -v -d "zsh -c '{ cd ~/.config/nix; nix flake update; chezmoi add ~/.config/nix/flake.lock } ; tmux wait-for -S $CHAN_NIX'"
-tmux split-window -v -d "zsh -c '{ nvim -c \"lua require(\\\"lazy\\\").update({ wait = true })\" -c \"qa\" } ; tmux wait-for -S $CHAN_LAZY'"
-tmux split-window -v -d "zsh -c '{ nvim -c \"autocmd User MasonUpdateAllComplete quitall\" -c \"MasonUpdateAll\" } ; tmux wait-for -S $CHAN_MASON'"
-tmux split-window -v -d "zsh -c 'backrest backlogs backup; tmux wait-for -S $CHAN_BACKLOGS'"
-brew upgrade --yes
-brew cleanup
+needs doom && pane 'doom upgrade --force; doom sync --gc'
+needs mise && pane 'mise upgrade; mise prune --yes'
+needs nix chezmoi && pane 'cd ~/.config/nix; nix flake update; chezmoi add ~/.config/nix/flake.lock'
+needs nvim && pane 'nvim -c "lua require(\"lazy\").update({ wait = true })" -c "qa"'
+needs nvim && pane 'nvim -c "autocmd User MasonUpdateAllComplete quitall" -c "MasonUpdateAll"'
+needs backrest && pane 'backrest backlogs backup'
 
-tmux wait-for "$CHAN_DOOM"
-tmux wait-for "$CHAN_MISE"
-tmux wait-for "$CHAN_NIX"
-tmux wait-for "$CHAN_LAZY"
-tmux wait-for "$CHAN_MASON"
-tmux wait-for "$CHAN_BACKLOGS"
+if needs brew; then
+  needs git && git -C "$(brew --repository joaofnds/tap)" pull
+  brew upgrade --yes
+  brew cleanup
+fi
+
+for channel in $channels; do
+  tmux wait-for "$channel"
+done
