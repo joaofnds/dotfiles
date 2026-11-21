@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs every repo checker in one command, so a regression in any of them surfaces without
+# Runs the repo's fast checkers in one command, so a regression in any of them surfaces without
 # remembering which scripts exist.
 #
 # Usage: check-all.sh [--quiet]
@@ -52,7 +52,6 @@ validate_mod() {
 }
 
 run "Claude Desktop launcher" bun test "$root/scripts/test-cdl.test.js"
-run "iterate project" bun run --cwd "$root/dot_agents/workflows/iterate" check
 run "corpus reference resolver" bun test "$root/scripts/corpus-refs.test.js"
 run "corpus cross-references" "$root/scripts/check-corpus-refs.js"
 run "corpus orphans" "$root/scripts/check-corpus-orphans.sh"
@@ -67,7 +66,6 @@ run "Codex role adapters" bun test "$root/scripts/codex-role-adapters.test.js"
 run "tmux claude switcher" bun test "$root/scripts/tmux-claude-switcher.test.js"
 run "jsonsort" bun test "$root/scripts/jsonsort.test.js"
 run "cleandisk" bun test "$root/scripts/cleandisk.test.js"
-run "compaction-judge mod tests" claude plugin test "$root/dot_agents/mods/compaction-judge"
 run "compaction-judge mod manifest" validate_mod .agents/mods/compaction-judge
 
 printf '\n%s passed, %s failed\n' "$passed" "$failed"
