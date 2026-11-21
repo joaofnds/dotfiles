@@ -1,5 +1,8 @@
 { ... }:
 {
+  networking.computerName = "joaofnds-delta";
+  networking.localHostName = "joaofnds-delta";
+
   system.defaults.dock.persistent-apps = [
     "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
     "/Applications/Brave Browser.app"

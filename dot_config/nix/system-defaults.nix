@@ -18,6 +18,7 @@
 
   system.defaults = {
     NSGlobalDomain = {
+      AppleEnableSwipeNavigateWithScrolls = false;
       ApplePressAndHoldEnabled = false;
       AppleShowScrollBars = "WhenScrolling";
       AppleMeasurementUnits = "Centimeters";
@@ -50,29 +51,78 @@
       FXEnableExtensionChangeWarning = true;
       FXPreferredViewStyle = "clmv";
       NewWindowTarget = "Home";
+      ShowExternalHardDrivesOnDesktop = true;
+      ShowHardDrivesOnDesktop = false;
       ShowPathbar = true;
+      ShowRemovableMediaOnDesktop = true;
       _FXSortFoldersFirst = true;
       _FXSortFoldersFirstOnDesktop = true;
     };
 
     iCal = {
       "first day of week" = "Monday";
+      "TimeZone support enabled" = true;
+      CalendarSidebarShown = false;
     };
 
+    hitoolbox.AppleFnUsageType = "Do Nothing";
+
     menuExtraClock = {
+      ShowAMPM = true;
+      # 0 shows the date when space allows, 1 always shows it, and 2 hides it.
+      ShowDate = 0;
+      ShowDayOfWeek = true;
       ShowSeconds = true;
     };
 
+    SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
+
+    trackpad = {
+      Clicking = false;
+      Dragging = false;
+      ForceSuppressed = false;
+      TrackpadFourFingerHorizSwipeGesture = 2;
+      TrackpadFourFingerPinchGesture = 2;
+      TrackpadPinch = true;
+      TrackpadRightClick = true;
+      TrackpadRotate = true;
+      TrackpadThreeFingerDrag = false;
+      TrackpadThreeFingerTapGesture = 0;
+      TrackpadTwoFingerDoubleTapGesture = true;
+      TrackpadTwoFingerFromRightEdgeSwipeGesture = 3;
+    };
+
+    universalaccess.mouseDriverCursorSize = 1.2;
+
     WindowManager = {
       EnableStandardClickToShowDesktop = false;
+      EnableTiledWindowMargins = false;
+      EnableTilingByEdgeDrag = false;
+      EnableTopTilingByEdgeDrag = false;
     };
 
     CustomUserPreferences = {
+      "com.apple.AdLib".allowApplePersonalizedAdvertising = false;
+      "com.apple.desktopservices" = {
+        DSDontWriteNetworkStores = true;
+        DSDontWriteUSBStores = true;
+      };
+      "com.apple.finder".ShowRecentTags = false;
+
+      "com.apple.iCal" = {
+        "Show Week Numbers" = true;
+        "last minute of work hours" = 1200; # 8 p.m.
+        "number of hours displayed" = 8;
+      };
+
       "com.apple.BezelServices" = {
         kDim = true;
         kDimTime = 10;
       };
       NSGlobalDomain = {
+        AppleLanguages = [ "en-US" ];
+        AppleLocale = "en_US";
+        NSGlassTintAmount = 1.0;
         NSUserKeyEquivalents = {
           "Show Writing Tools" = "@^.";
         };
@@ -84,7 +134,6 @@
         AccessibilityEnabled = true;
         ApplicationAccessibilityEnabled = true;
         SpeakThisEnabled = true;
-        # System voice: Siri Voice 3 (Damon).
         SpokenContentDefaultVoiceSelectionsByLanguage = [
           "en"
           {
@@ -135,6 +184,15 @@
           };
         };
       };
+    };
+
+    CustomSystemPreferences = {
+      "/Library/Preferences/com.apple.SoftwareUpdate" = {
+        AutomaticDownload = true;
+        ConfigDataInstall = true;
+        CriticalUpdateInstall = true;
+      };
+      "/Library/Preferences/com.apple.commerce".AutoUpdate = true;
     };
 
     loginwindow = {

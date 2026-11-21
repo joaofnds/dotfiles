@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+  networking.computerName = "joaofnds-m5p";
+  networking.localHostName = "joaofnds-m5p";
+
   environment.systemPackages = [
     pkgs.emacs
     pkgs.flyctl
