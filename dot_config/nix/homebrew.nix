@@ -34,6 +34,7 @@
       "shottr"
       "soundsource"
       "spotify"
+      "t3-code"
       "tailscale-app"
       "the-unarchiver"
       "vlc"
