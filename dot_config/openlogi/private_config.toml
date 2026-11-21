@@ -1,0 +1,128 @@
+# Schema 11 requires OpenLogi 0.9.0 or newer.
+schema_version = 11
+
+[app_settings]
+# Startup and updates
+launch_at_login = true
+check_for_updates = true
+auto_install_updates = false
+update_channel = "stable"
+update_prompt_seen = true
+
+# Appearance and notifications
+show_in_menu_bar = true
+app_icon = "openlogi"
+appearance = "system"
+ui_scale = "normal"
+device_view_mode = "grid"
+low_battery_notifications = true
+lock_key_notifications = true
+
+# Device artwork
+auto_download_assets = true
+asset_source = "automatic"
+
+# Mouse and desktop behavior
+capture_mouse_events = true
+mouse_profile_target = "pointer"
+animate_desktop_switch = true
+
+[keyboard]
+
+# MX Master 4 preferences and gestures
+[devices."serial:2628zacbdap8"]
+custom_name = "joaofnds-mxm4"
+invert_scroll = true
+force_sensing = 4704
+
+[devices."serial:2628zacbdap8".bindings.HapticPanel]
+Click = "MissionControl"
+Up = "AppExpose"
+Down = "LaunchpadShow"
+Left = "NextDesktop"
+Right = "PreviousDesktop"
+
+# DPI button gestures adjust volume and send macOS display brightness keys.
+[devices."serial:2628zacbdap8".bindings.DpiToggle]
+Click.CustomShortcut = "Cmd+Shift+2"
+Up.RunShellCommand = """osascript -e 'tell application "System Events" to key code 144'"""
+Down.RunShellCommand = """osascript -e 'tell application "System Events" to key code 145'"""
+Left = "VolumeDown"
+Right = "VolumeUp"
+
+# Keep the main wheel in free-spin.
+[devices."serial:2628zacbdap8".smartshift]
+mode = "free"
+auto_disengage = 15
+tunable_torque = 70
+
+[devices."serial:2628zacbdap8".action_ring]
+enabled = false
+haptics = false
+size = "medium"
+
+[devices."serial:2628zacbdap8".action_ring.default]
+
+# OpenLogi records the device identity and the capabilities it sees on each link.
+[devices."serial:2628zacbdap8".identity]
+display_name = "MX Master 4"
+codename = "MX Master 4"
+kind = "mouse"
+
+[devices."serial:2628zacbdap8".identity.model_info]
+entity_count = 4
+unit_id = [0, 0, 0, 0]
+model_ids = [45122, 0, 0]
+extended_model_id = 5
+
+[devices."serial:2628zacbdap8".identity.model_info.transports]
+usb = false
+equad = false
+btle = true
+bluetooth = false
+
+[devices."serial:2628zacbdap8".identity.capabilities]
+buttons = true
+pointer = true
+lighting = false
+scroll_inversion = true
+hires_wheel = true
+thumbwheel = true
+haptic_feedback = true
+haptic_panel = true
+dpi_gestures = true
+fn_lock = false
+os_layout = false
+report_rate = false
+backlight = false
+easy_switch = true
+virtual_thumbwheel = false
+pointer_scaling = false
+force_sensing = true
+disable_keys = false
+onboard_profiles = false
+button_spy = false
+sidetone = false
+
+[devices."serial:2628zacbdap8".links."receiver:cfc273400d6b3d07:slot:2".capabilities]
+buttons = true
+pointer = true
+lighting = false
+scroll_inversion = true
+hires_wheel = true
+thumbwheel = true
+haptic_feedback = true
+haptic_panel = true
+dpi_gestures = true
+fn_lock = false
+os_layout = false
+report_rate = false
+backlight = false
+easy_switch = true
+virtual_thumbwheel = false
+pointer_scaling = false
+force_sensing = true
+disable_keys = false
+onboard_profiles = false
+button_spy = false
+sidetone = false
