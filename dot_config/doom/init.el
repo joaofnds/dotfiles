@@ -20,7 +20,7 @@
        (undo +tree)        ; persistent, smarter undo for your inevitable mistakes
 
        :term
-       vterm               ; the best terminal emulation in Emacs
+       ghostel             ; the best terminal emulation in Emacs
 
        :tools
        magit               ; a git porcelain for Emacs
