@@ -1,0 +1,2 @@
+#!/bin/sh
+jq -sS add - "$CHEZMOI_SOURCE_DIR/private_dot_t3/private_userdata/t3-appearance.json"

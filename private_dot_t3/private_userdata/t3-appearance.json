@@ -1,0 +1,21 @@
+{
+  "appearanceContrast": 100,
+  "glassOpacity": 80,
+  "panelAnimationDurationMs": 0,
+  "chatWidth": "comfortable",
+  "diffColorScheme": "red-green",
+  "effortDisplay": "label",
+  "mathRenderingEnabled": false,
+  "fontFamilySans": "",
+  "fontFamilyCode": "PragmataPro",
+  "fontFamilyComposer": "",
+  "fontFamilyTerminal": "",
+  "fontSizeInterface": 16,
+  "fontSizePrompt": 14,
+  "fontSizeCode": 13,
+  "fontSizeTerminal": 12,
+  "fontSmoothing": true,
+  "followUpBehavior": "queue",
+  "diffFilesCollapsed": false,
+  "pullRequestLinksOpenInApp": false
+}
