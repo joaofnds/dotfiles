@@ -26,6 +26,7 @@
       "joaofnds/tap/trunk"
       "mongodb-compass"
       "obsidian"
+      "openlogi"
       "orbstack"
       "peel"
       "raycast"
