@@ -35,6 +35,11 @@ custom_name = "joaofnds-mxm4"
 invert_scroll = true
 force_sensing = 4704
 
+# Invert thumb wheel
+[devices."serial:2628zacbdap8".bindings]
+ThumbwheelScrollUp = "HorizontalScrollRight"
+ThumbwheelScrollDown = "HorizontalScrollLeft"
+
 [devices."serial:2628zacbdap8".bindings.HapticPanel]
 Click = "MissionControl"
 Up = "AppExpose"
