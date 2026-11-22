@@ -31,7 +31,5 @@ would not make sense without it.
 A message that does not say to resume, such as a question, gets its answer, and the pause
 holds.
 
-When a message says to resume, check the paths this session touched against the note
-before anything else (`git status` in a repository), since other sessions may write to the
-same tree. Then restart what you stopped and take the next move the note named, and plan
-again only where that check or the message itself changed something.
+When a message says to resume, follow `~/.agents/skills/unpause/SKILL.md`, which holds
+the resume steps whether or not `/unpause` was typed.
