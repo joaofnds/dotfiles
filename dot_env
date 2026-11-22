@@ -15,6 +15,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 [ -d "$HOME/.config/emacs/bin" ] && export PATH="$HOME/.config/emacs/bin:$PATH"
 
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 export FZF_DEFAULT_COMMAND='fd --type file --hidden'
 export FZF_UNRESTRICTED_COMMAND='fd --type file --unrestricted --exclude .git --exclude node_modules'
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
