@@ -1,5 +1,8 @@
 { ... }:
 {
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToEscape = true;
+
   networking.applicationFirewall.enable = true;
   networking.applicationFirewall.blockAllIncoming = false;
   networking.applicationFirewall.allowSigned = true;
@@ -108,6 +111,7 @@
         DSDontWriteUSBStores = true;
       };
       "com.apple.finder".ShowRecentTags = false;
+      "com.raycast.macos".raycastGlobalHotkey = "Command-49";
 
       "com.apple.iCal" = {
         "Show Week Numbers" = true;
