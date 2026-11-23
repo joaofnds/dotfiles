@@ -1,68 +1,35 @@
 ---
 name: deslop
-description: Removes the writing patterns that mark prose as machine-written from documents, commit bodies, comments, and essays. Use before delivering prose others will read. Standing instruction files go to review-instructions, and the brief output style governs replies.
+description: Cuts repetition and stilted phrasing in prose. Use when drafting or revising text for people. Standing agent instructions go to review-instructions.
 ---
 
 # Deslop
 
-Prose written by a model carries patterns a reader recognizes. They survive rereading
-because they read as fluent. Two inventories hold them.
-[references/phrases.md](references/phrases.md) covers the patterns that live in a
-word or a phrase, and [references/structures.md](references/structures.md) covers the
-ones that live in a sentence's shape or a paragraph's rhythm.
-[references/examples.md](references/examples.md) shows the pairs. Each file's own
-headings are the full set, so open it rather than working from a summary.
+## What to say
 
-## What this covers
+Write for what the reader needs to know, given what they already know.
+Include the context they need to understand the point or act on it.
 
-A document read once and acted on is in scope: a shaped task, a diagnosis, a handoff,
-a README, a design record, a commit body, a comment.
+In a reply, cut explanations the reader already gave. If you accepted a
+suggestion, acknowledge it and say what changed. If you disagree, give your
+decision and reason. Stop there if the reader asked for a decision. Omit
+directions for actions they already proposed, even paraphrased. Omit their
+command and flags unless they ask you to check or repeat them.
 
-A file that loads as standing instructions is not: AGENTS.md and CLAUDE.md, a skill and
-everything under it, an agent definition, an output style, a rules file, a memory note,
-or any other file an agent reads as instructions rather than as work. The
-review-instructions skill governs those, and its register rules differ. Where the
-direction names one, run review-instructions on it instead of this pass, because this
-pass's checks strip the prohibitions that skill treats as a rule's force.
+Link to the exact primary source when it settles an open technical question.
+Put multiple links in a plain Markdown list.
 
-## The pass
+## How to say it
 
-Run the fast checks below before delivering prose. Open an inventory when a check
-fires and you need the exact pattern, and walk both when the whole document needs the
-pass.
+State the point in words you'd use with a colleague. Preserve the facts,
+scope, and uncertainty. If a source gives a suspected cause, report it as
+such. Leave out any explanation of how it happened or what would prove it
+unless the evidence establishes that too. Flag a missing fact only if it
+blocks an accurate answer. When editing someone else's prose, preserve their
+voice and make the smallest change that answers the request.
 
-- An adverb carrying no degree, timing, frequency, or uncertainty goes.
-- An opener that announces the point instead of making it goes.
-- An emphasis crutch goes, where the causal or qualifying content survives without it.
-- Business jargon becomes the plain word.
-- The passive voice names its actor, where the actor matters and is known.
-- An inanimate subject doing a human verb names the person, where responsibility is
-  the point, and stays where it is a precise technical term with no actor to name.
-- "Not X, it's Y" becomes Y, unless the distinction is load-bearing.
-- Negative listing becomes the positive statement.
-- A rhetorical setup becomes the point it was circling.
-- A vague declarative names the specific thing.
-- An extreme word ("every", "always", "never") doing vague work names the real scope.
-- Sentences clipped or stacked for rhythm become whole sentences.
-- A third list item padding a pair goes, unless the three are a complete set.
-- An em dash becomes a comma or a full stop.
-- Softening that reassures the reader goes. State the fact.
+Use [phrases](references/phrases.md), [structures](references/structures.md), or
+[examples](references/examples.md) when you need help spotting a pattern.
 
-## What not to break
-
-The passage asserts something, and the pass preserves it. Where a check calls for a
-specific the text does not supply, leave the sentence and name it for the author.
-Never invent a fact, an actor, a scope, or an implication to satisfy a check.
-
-In text you did not draft, confine each edit to the sentence that carries the pattern,
-or to the span for a rhythm pattern, and prefer the smallest edit that kills it. Prose
-that passes stays as written. Your own draft has no original to protect, though
-inventing to satisfy a check is barred there the same as anywhere.
-
-Before polishing a comment, apply the test in `~/.agents/rulebook/coding-style/core.md`
-§Comments default to zero, whether the code gets misread or silently broken without
-it. A comment that survives the pass and fails that test is deleted rather than
-rewritten.
-
-In a commit message, clean the body and leave the subject alone, since its format is
-the project's convention.
+Apply the [code comment rule](../../rulebook/coding-style/core.md) to comments
+in code. Keep commit subjects in the project's format.
