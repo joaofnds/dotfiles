@@ -6,10 +6,7 @@
 
     taps = [ "joaofnds/tap" ];
 
-    brews = [
-      "ruby"
-      "opencode"
-    ];
+    brews = [ "ruby" ];
 
     casks = [
       "brave-browser"
