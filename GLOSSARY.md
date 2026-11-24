@@ -86,6 +86,7 @@ term when you introduce or lean on one, one term per concept.
   email and its GPG recipient. Its module under `dot_config/nix/hosts/` adds
   apps only it needs.
 - **Group**: a named list of paths in `.chezmoidata.toml` that installs only
-  on the hosts that list it, such as one client's Claude account and Git email.
+  on the hosts that list it, such as one client's Claude account and Git email,
+  or one app's settings, listed by the hosts whose module installs that app.
 - **Extras**: the optional apps in `bloat.nix`, which a host takes on top of the
   base set when its nix-darwin configuration in `flake.nix` includes the file.

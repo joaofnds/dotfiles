@@ -3,26 +3,22 @@
   size = 16
 
 [groups]
-personal = [
-  ".private.env",
-  ".personal.env",
-  ".config/astro",
-  ".config/restic",
-  ".scripts/backrest",
-  ".config/doom",
-  "org",
-]
+personal = [".private.env", ".personal.env", "org"]
+astro = [".config/astro"]
+doom = [".config/doom"]
+openlogi = [".config/openlogi"]
+restic = [".config/restic", ".scripts/backrest"]
 livefire = [".claude-livefire", ".gitconfig-livefire"]
 runsmith = [".claude-runsmith", ".gitconfig-runsmith"]
 
 [hosts.joaofnds-m5p]
 email = "joaofnds@joaofnds.com"
-groups = ["personal", "livefire", "runsmith"]
+groups = ["personal", "livefire", "runsmith", "astro", "doom", "openlogi", "restic"]
 ignore = []
 
 [hosts.joaofnds-delta]
 email = "joaofnds@joaofnds.com"
-groups = []
+groups = ["astro", "openlogi"]
 ignore = []
 
 [hosts.joaofnds-uscca]
