@@ -10,7 +10,6 @@
     "/Applications/Ghostty.app"
     "/Applications/Zed.app"
     "/Applications/Trunk.app"
-    "/Applications/Claude.app"
     "/Applications/Obsidian.app"
     "/System/Applications/Messages.app"
     "/System/Applications/Mail.app"
