@@ -21,6 +21,11 @@ groups = ["personal", "livefire", "runsmith"]
 ignore = []
 
 [hosts.joaofnds-delta]
+email = "joaofnds@joaofnds.com"
+groups = []
+ignore = []
+
+[hosts.joaofnds-uscca]
 email = "joao.fernandes@uscca.com"
 groups = []
 ignore = []

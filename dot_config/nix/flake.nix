@@ -25,7 +25,6 @@
           security.pam.services.sudo_local.touchIdAuth = true;
           security.pam.services.sudo_local.reattach = true;
           system.configurationRevision = self.rev or self.dirtyRev or null;
-          system.primaryUser = "joaofnds";
           system.stateVersion = 6;
           nixpkgs.hostPlatform = "aarch64-darwin";
         };
@@ -35,14 +34,17 @@
         ./packages.nix
         ./homebrew.nix
         nix-homebrew.darwinModules.nix-homebrew
-        {
-          nix-homebrew = {
-            enable = true;
-            autoMigrate = true;
-            enableRosetta = false;
-            user = "joaofnds";
-          };
-        }
+        (
+          { config, ... }:
+          {
+            nix-homebrew = {
+              enable = true;
+              autoMigrate = true;
+              enableRosetta = false;
+              user = config.system.primaryUser;
+            };
+          }
+        )
       ];
     in
     {
@@ -55,6 +57,11 @@
       darwinConfigurations."joaofnds-delta" = nix-darwin.lib.darwinSystem {
         modules = common ++ [
           ./hosts/joaofnds-delta.nix
+        ];
+      };
+      darwinConfigurations."joaofnds-uscca" = nix-darwin.lib.darwinSystem {
+        modules = common ++ [
+          ./hosts/joaofnds-uscca.nix
         ];
       };
     };

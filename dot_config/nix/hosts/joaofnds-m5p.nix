@@ -2,6 +2,7 @@
 {
   networking.computerName = "joaofnds-m5p";
   networking.localHostName = "joaofnds-m5p";
+  system.primaryUser = "joaofnds";
 
   environment.systemPackages = [
     pkgs.emacs
