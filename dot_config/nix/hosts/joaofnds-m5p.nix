@@ -26,4 +26,25 @@
     "/System/Applications/iPhone Mirroring.app"
     "/System/Applications/System Settings.app"
   ];
+
+  homebrew = {
+    casks = [
+      "chatgpt"
+      "claude"
+      "handy"
+      "joaofnds/tap/astro"
+      "openlogi"
+      "setapp"
+      "shottr"
+      "soundsource"
+      "spotify"
+      "tailscale-app"
+      "the-unarchiver"
+      "vlc"
+    ];
+
+    masApps = {
+      Magnet = 441258766;
+    };
+  };
 }
