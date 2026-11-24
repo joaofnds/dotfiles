@@ -1,5 +1,5 @@
 return {
-	dir = "~/code/parhelion.nvim",
+	"joaofnds/parhelion.nvim",
 	init = function()
 		local function state_theme()
 			local state = vim.env.XDG_STATE_HOME or (vim.env.HOME .. "/.local/state")
