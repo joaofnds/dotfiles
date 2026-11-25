@@ -137,8 +137,8 @@ promote every canned value into a class.
 A shared stateful Fake satisfies all of:
 
 - **Implement the real interface.** The interface is the contract; the Fake is a second valid implementation of it, same as the production adapter. Compile-time check required.
-- **Stateful when the role is stateful.** `FakeClock` holds a moment. `InMemoryUserRepository` holds users. `FakeHTTPClient` holds a queue of canned responses and a captured list of received requests.
-- **Deterministic.** No wall-clock calls, no randomness, no network. A `FakeClock.now()` returns a fixed moment; an `IncrementalIdGenerator` counts up from 1.
+- **Stateful when the role is stateful.** `FakeClock` holds a moment and the timers due after it. `InMemoryUserRepository` holds users. `FakeHTTPClient` holds a queue of canned responses and a captured list of received requests.
+- **Deterministic.** No wall-clock calls, no randomness, no network. A `FakeClock.now()` returns the moment the test set, and `advance()` fires each timer due by the new moment. An `IncrementalIdGenerator` counts up from 1.
 - **Expose explicit seed methods.** `addResponse(r)`, `setNextStatus("down")`, `seedUser(user)`. The test arranges state through named, domain-level verbs: not by poking internal fields.
 - **Expose a `reset()` method.** Called in `beforeEach`. Clears captured state and queued responses. A Fake that can't be reset will leak state between tests.
 - **Capture inputs for optional inspection.** `requests[]`, `generatedIds[]`. This is how a Fake plays a Spy role when the test wants to assert on the outbound call.
