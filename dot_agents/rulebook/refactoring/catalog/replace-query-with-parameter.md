@@ -56,8 +56,8 @@ function netPrice(order, taxRate) {
 
 ## House-rule interactions
 
-- `core.md`: control non-deterministic side effects: "pass clocks,
-  network clients, and random or ID generators explicitly"; this refactoring is that
+- `core.md`: control non-deterministic side effects: "pass clocks, timers, network
+  clients, and random or ID generators in as arguments". This refactoring is that
   rule's mechanical form for any hidden input.
 - `core.md`: inject side-effecting or replaceable dependencies: for a
   long-lived collaborator, constructor injection is the sibling move; a per-call
