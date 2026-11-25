@@ -48,7 +48,7 @@ safety net. Only then choose the next scenario. Pick the green tactic by confide
 **F.I.R.S.T.** (Martin, *Clean Code*).
 - **Fast**: milliseconds for unit, sub-second for integration. Slow tests stop getting run.
 - **Independent**: any order, in parallel, no shared mutable state.
-- **Repeatable**: same input → same result, everywhere. Inject every non-deterministic seam (clock, random, network, IDs).
+- **Repeatable**: same input → same result, everywhere. Inject every non-deterministic seam (clock and timers, random, network, IDs).
 - **Self-validating**: pass/fail, no log inspection, no "run twice and diff".
 - **Timely**: written just before the production code it describes, not after.
 

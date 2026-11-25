@@ -109,9 +109,17 @@ dependency *cycle* it produces is still reportable.
 - **One shape per class.** A data structure exposes data and carries no behavior. An object hides data behind behavior. A class that does both is the worst of both, and its callers split into camps that break its invariants. Field chains through plain data structures are normal access, not a coupling violation.
 - **Don't return null, don't pass null.** When absence is normal flow, return an empty collection or a special-case object. When absence is exceptional, throw or return a domain error. A null argument is a bug at the call site.
 - **Event-driven integration across domains when the requirement calls for it.** Use events or messaging for asynchronous delivery, independent ownership, or decoupled evolution. Prefer direct orchestration when immediate consistency and one owner make it simpler. *(See: event-sourcing, responsibility-layers)*
-- **Control non-deterministic side effects.** Pass clocks, network clients, and random or
-  ID generators explicitly when tests, lifecycle, or replacement require control.
-  Production wiring uses the real collaborator; tests use a deterministic Fake.
+- **Control non-deterministic side effects.** Pass clocks, timers, network clients, and
+  random or ID generators in as arguments as soon as behavior depends on them, because a
+  test of that behavior otherwise has to wait in real time or accept whatever value it
+  gets, and a direct call left in place has to be found and changed once a test needs
+  control. A timer is anything that schedules work for later. That dependence is the
+  need the port rule under Infrastructure & Adapters waits for, whether or not a test
+  has asked for a Fake yet. Whichever task first injects each of them into a project
+  also adds a lint or architecture check that fails any direct call to the replaced
+  global outside the real implementation that wraps it, because one direct call
+  escapes the tests' control without failing any test. Production wiring uses the real
+  collaborator, and tests use a deterministic Fake.
 - **Probe / instrumentation pattern when needed.** Introduce a `Probe` port only when
   business-level observability must remain independent of an adapter. Keep generic
   infrastructure telemetry at the adapter boundary.
